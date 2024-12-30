@@ -10,20 +10,35 @@ const vscode = require('vscode');
  */
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
 	const disposable = vscode.commands.registerCommand('fbo-autocomplete.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
 		vscode.window.showInformationMessage('Hello World from fbo-autocomplete!');
 	});
+	
+	const provider = vscode.languages.registerCompletionItemProvider(
+		{language: 'xml', scheme: 'file'},
+		{
+			provideCompletionItems(document, position, token, context){
+				const completionItems = [];
+				const item = new vscode.CompletionItem("$f.ma_kh", vscode.CompletionItemKind.Snippet);
+				item.insertText = new vscode.SnippetString(`<field name="ma_kh" clientDefault="Default">
+					<header v="Mã khách hàng" e="Customer ID"></header>
+					<items style="AutoComplete" controller="Customer" reference="ten_kh%l" key="status = '1' and (kh_yn = 1 or nv_yn = 1)" check="kh_yn = 1 or nv_yn = 1" information="ma_kh$dmkh.ten_kh%l" new="Default" row="1"/>
+				</field>
+				<field name="ten_kh%l" readOnly="true" external="true" clientDefault="Default" defaultValue="''">
+					<header v="" e=""></header>
+				</field>`);
+				item.documentation = new vscode.MarkdownString("Autocomplete cho `ma_kh`.");
+				completionItems.push(item);
+				return completionItems; 
+			}
 
+
+		}, 
+		'$'// Ký tự kích hoạt autocomplete
+	)
+	context.subscriptions.push(provider);
 	context.subscriptions.push(disposable);
 }
 

@@ -7,15 +7,35 @@
     "vscode": "^1.96.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Snippets"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:xml" 
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [{
       "command": "fbo-autocomplete.helloWorld",
       "title": "Hello World"
-    }]
+    }
+  ],
+  "languages": [
+    {
+      "id": "xml",
+      "aliases": ["XML", "xml"],
+      "extensions": [".xml"],
+      "configuration":"./language-configuration.json"
+    }
+
+  ],
+  "grammars": [
+      {
+        "language": "xml",
+        "scopeName": "text.xml",
+        "path": "./syntaxes/xml.tmLanguage.json"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
