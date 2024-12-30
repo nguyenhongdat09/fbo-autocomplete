@@ -15,13 +15,31 @@ function activate(context) {
 	const disposable = vscode.commands.registerCommand('fbo-autocomplete.helloWorld', function () {
 		vscode.window.showInformationMessage('Hello World from fbo-autocomplete!');
 	}); 
+	
+	const applyCompletionItem = vscode.commands.registerCommand('default:applyCompletionItem',  function (line) {
+		const { activeTextEditor } = vscode.window;
+		const { document } = activeTextEditor;
+		const edit = new vscode.WorkspaceEdit();
+		var { lineNumber } = line;
+		var textToReplace = line.b;
+		var text = document.lineAt(lineNumber).text.replace(textToReplace, '');
+		// Thay thế nội dung trong dòng bằng chuỗi rỗng new(startLine:Int, startCharacter:Int, endLine:Int, endCharacter:Int)
+		edit.replace(document.uri, new vscode.Range(lineNumber, 0, lineNumber, document.lineAt(lineNumber).text.length), text);
+		vscode.workspace.applyEdit(edit);
+		 
+		
+	});
+	
 
-	const provider = vscode.languages.registerCompletionItemProvider(
-		{language: 'xml', scheme: 'file'},
-		CompletionProvider,
-		'$f.'// Ký tự kích hoạt autocomplete,
-	)
+	const provider = vscode.languages.registerInlineCompletionItemProvider(
+        { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
+        {
+            provideInlineCompletionItems: CompletionProvider.provideCompletionItems
+        }
+    );
+	
 	context.subscriptions.push(provider);
+	context.subscriptions.push(applyCompletionItem);
 	context.subscriptions.push(disposable);
 }
 

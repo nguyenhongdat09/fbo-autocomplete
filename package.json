@@ -18,7 +18,11 @@
     "commands": [{
       "command": "fbo-autocomplete.helloWorld",
       "title": "Hello World"
-    }
+    },
+    {
+      "command": "default:applyCompletionItem",
+      "title": "Replace with completion"
+  }
   ],
   "languages": [
     {
