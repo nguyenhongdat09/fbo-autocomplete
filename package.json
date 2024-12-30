@@ -28,14 +28,7 @@
       "configuration":"./language-configuration.json"
     }
 
-  ],
-  "grammars": [
-      {
-        "language": "xml",
-        "scopeName": "text.xml",
-        "path": "./syntaxes/xml.tmLanguage.json"
-      }
-    ]
+  ]
   },
   "scripts": {
     "lint": "eslint .",
