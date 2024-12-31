@@ -9,17 +9,18 @@ class CompletionProvider {
         var completionItems = [];
         
         // Kiểm tra xem có bắt đầu với $f.ma_kh hay không
-        if (!textBeforeCursor.startsWith('$f.')) {
+        if (!textBeforeCursor.startsWith('$f.m')) {
             return completionItems; // Không trả về gợi ý nếu không phải $f.
         }
-
+        
         const dbPath = path.join(__dirname, 'Dir');
         const db = level(dbPath);
-
+            
         try {
             // Đợi dữ liệu từ cơ sở dữ liệu
-            const text = await db.get('so_luong');
             // Tạo nội dung gợi ý sau khi dữ liệu được tải xong
+            var key = line.b.split('.')[1].replace(';', '');
+            const text = await db.get(key);
             const completionItem = new vscode.InlineCompletionItem(text.trim());
             completionItem.command = {
                 command: 'fbo-autocomplete.applyCompletionItem',
@@ -28,7 +29,7 @@ class CompletionProvider {
             };
             completionItems.push(completionItem);
         } catch (error) {
-            console.error('Error reading from LevelRocksDB:', error);
+            //console.error('Error reading from LevelRocksDB:', error);
         } finally {
             db.close(); // Đóng cơ sở dữ liệu
         }
