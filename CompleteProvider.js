@@ -4,22 +4,19 @@ const path = require('path');
 
 class CompletionProvider {
     static async provideCompletionItems(document, position) {
-        var line = document.lineAt(position) 
+        const line = document.lineAt(position);
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
-        var completionItems = [];
-        
-        // Kiểm tra xem có bắt đầu với $f.ma_kh hay không
-        if (!textBeforeCursor.startsWith('$f.m')) {
-            return completionItems; // Không trả về gợi ý nếu không phải $f.
+        const completionItems = []; 
+        console.log('textBeforeCursor: ', CompletionProvider.getFolderName(textBeforeCursor, document));
+        const folderName = CompletionProvider.getFolderName(textBeforeCursor, document); 
+        if (folderName == '') {
+            return completionItems;
         }
-        
-        const dbPath = path.join(__dirname, 'Dir');
+        const dbPath = path.join(__dirname, folderName);
         const db = level(dbPath);
-            
+        
         try {
-            // Đợi dữ liệu từ cơ sở dữ liệu
-            // Tạo nội dung gợi ý sau khi dữ liệu được tải xong
-            var key = line.b.split('.')[1].replace(';', '');
+            const key = line.b.split('.')[1].replace(';', '');
             const text = await db.get(key);
             const completionItem = new vscode.InlineCompletionItem(text.trim());
             completionItem.command = {
@@ -29,13 +26,37 @@ class CompletionProvider {
             };
             completionItems.push(completionItem);
         } catch (error) {
-            //console.error('Error reading from LevelRocksDB:', error);
+           
         } finally {
-            db.close(); // Đóng cơ sở dữ liệu
+            db.close();
         }
-
+    
         return completionItems;
     }
+    
+    
+    static getFolderName(inputText, document) {
+        let prefixFolder = '';
+        const path = document.uri.path;
+        
+        if (inputText.startsWith('$f')) {
+            if (path.includes('Dir')) {
+                prefixFolder = 'Dir';
+            } else if (path.includes('Filter')) {
+                prefixFolder = 'Filter';
+            }
+        } else if (path.includes('Grid')) {
+            if (inputText.startsWith('$gv')) {
+                prefixFolder = 'GridView';
+            } else if (inputText.startsWith('$gi')) {
+                prefixFolder = 'GridInput';
+            }
+        }
+    
+        return prefixFolder;
+    }
+    
+
 
     static applyCompletionItem(line){
         const { activeTextEditor } = vscode.window;

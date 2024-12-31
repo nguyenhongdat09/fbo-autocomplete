@@ -15,10 +15,19 @@ class RenderXMLToDB {
         } 
         const document = activeEditor.document;
         let basePath = document.uri.authority + document.uri.path;
-        const prefixesToLoop = ['Dir'];
+        const prefixesToLoop = ['Dir', 'Grid', 'Filter'];
+        //path theo công ty 
+        //basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
+        //Path theo đường dẫn cứng 
+        basePath = document.uri.path
+        let endIndex = basePath.indexOf('Controllers/') + 'Controllers/'.length;
+        if (endIndex !== -1) {
+            let result = basePath.substring(1, endIndex); // Bỏ dấu "/" đầu tiên
+            basePath = result;
+        } else {
+            console.log('Không tìm thấy "Controllers/" trong đường dẫn.');
+        }
 
-        basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
-        
         try{
             //Đợi đọc xong hết tất cả rồi mới nhảy xuống filePaths = results.flat();
             const results = await Promise.all(
@@ -28,7 +37,7 @@ class RenderXMLToDB {
                     const allFile = files.map(file => path.join(subPath, file));
                     const xmlFiles = allFile.filter(file => file.endsWith('.xml'));
                     let fFiles = allFile.filter(file => file.endsWith('.f'));
-        
+                    
                     for (const xmlFile of xmlFiles) {
                         const baseName = path.basename(xmlFile, '.xml');
                         fFiles = fFiles.filter(fFile => path.basename(fFile, '.f') !== baseName);
@@ -38,12 +47,13 @@ class RenderXMLToDB {
                 })
             );
             var FolderPaths = results.flat();  
+            
               /*
             var filePath = '\\\\172.168.5.14\\CustomerPro\\FBO\\CUBES\\SP2255\\App_Data\\Controllers\\Dir\\User.f'
             const keyValuePairs = await this.parseXMLFile(filePath);
             console.log(keyValuePairs);
             */
-          
+            
             const keyValuePairs_arr = await Promise.all(
                 FolderPaths.map(async (Folder) => {
                     const folderName = Folder.prefix;
@@ -63,8 +73,7 @@ class RenderXMLToDB {
                 })
             );
             
-            var kvl_result = keyValuePairs_arr.flat();  
-            
+            var kvl_result = keyValuePairs_arr.flat();   
             kvl_result.forEach(async (keyValuePairs) => {
                 var folderName = keyValuePairs.folderName;
                 var value = keyValuePairs.keyValuePairs;
@@ -104,19 +113,21 @@ class RenderXMLToDB {
                     const parser = new xml2js.Parser({ explicitArray: false });
                     //Xóa luôn theo cặp <clientScript>...</clientScript>
                     value = value.replace(/<clientScript>.*?<\/clientScript>\s*/g, '');
+                    value = value.replace(/<query>.*?<\/query>\s*/g, '');
                     const fieldJSON = await parser.parseStringPromise(value);
                     var key = match[1].replace('%l', ''); // Giá trị của name bỏ phần %l
                     //nếu lookup thì tách riêng với autocomplete
                     if(fieldJSON.field.items){
                         var style = fieldJSON.field.items.$.style;
                         if(style === 'Lookup'){
-                            key = key + 'lookup'
+                            key = key + 'lk'
+                        }else if (style === 'AutoComplete'){
+                            key = key + 'at'
                         }
                     } 
                     keyValuePairs[key] = value; // Thêm vào object
                 }
                 catch (error) {
-                   // console.error(`Error parsing XML: ${error} at ${filePath}`);
                    continue;
                 }
             }
@@ -127,17 +138,35 @@ class RenderXMLToDB {
         }
     }
     static async saveToRocksDB(nameDb, keyValuePairs) {
-        const dbPath = path.join(__dirname, nameDb);
+        var dbPath = path.join(__dirname, nameDb), dbView;
+        if(nameDb == 'Grid'){
+            dbPath = path.join(__dirname, 'GridInput')
+        }
         const db = level(dbPath);
+        if(nameDb == 'Grid'){
+            dbView = level(path.join(__dirname, 'GridView'));
+        }
         try {
             for (const key in keyValuePairs) {
                 const value = keyValuePairs[key];
-                await db.put(key, value); 
+                if(nameDb == 'Grid'){
+                    if((value.indexOf('allowFilter') > 0 || value.indexOf('allowSort') > 0 || value.indexOf('aggregate') > 0) ){
+                        await dbView.put(key, value);  
+                    }else{
+                        await db.put(key, value); 
+                    }
+                }else{
+                    await db.put(key, value); 
+                }
+                
             } 
         } catch (error) {
             console.error('Error saving to LevelRocksDB:', error);
         } finally {
             db.close();  
+            if(nameDb == 'Grid'){
+                dbView.close();  
+            }
         } 
     } 
 }
