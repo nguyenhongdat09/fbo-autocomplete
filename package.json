@@ -11,28 +11,37 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onLanguage:xml" 
+    "onLanguage:xml"
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "fbo-autocomplete.helloWorld",
-      "title": "Hello World"
-    },
-    {
-      "command": "default:applyCompletionItem",
-      "title": "Replace with completion"
-  }
-  ],
-  "languages": [
-    {
-      "id": "xml",
-      "aliases": ["XML", "xml"],
-      "extensions": [".xml"],
-      "configuration":"./language-configuration.json"
-    }
-
-  ]
+    "commands": [
+      {
+        "command": "fbo-autocomplete.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "fbo-autocomplete.applyCompletionItem",
+        "title": "Replace with completion"
+      },
+      {
+        "command": "fbo-autocomplete.renderXmlTodDB",
+        "title": "Render XML To Database"
+      }
+    ],
+    "languages": [
+      {
+        "id": "xml",
+        "aliases": [
+          "XML",
+          "xml"
+        ],
+        "extensions": [
+          ".xml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
@@ -40,11 +49,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.96.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "eslint": "^9.16.0",
+    "@types/vscode": "^1.96.0",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.16.0"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.1",
+    "level-rocksdb": "^5.0.0",
+    "rocksdb": "^5.2.1",
+    "xml2js": "^0.6.2"
   }
 }
