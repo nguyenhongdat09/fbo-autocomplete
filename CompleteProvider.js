@@ -14,17 +14,22 @@ class CompletionProvider {
         } 
         try { 
             const text = await pvd.getTextComplete(line.b, folderName);
-            const completionItem = new vscode.InlineCompletionItem(text.trim());
-            completionItem.command = {
-                command: 'fbo-autocomplete.applyCompletionItem',
-                title: 'Replace with completion',
-                arguments: [line]
-            };
+            const completionItem = pvd.createCompleteItem(text, line);
             completionItems.push(completionItem);
         } catch (error) {
             console.error('Error ', error);
         }  
         return completionItems;
+    }
+
+    createCompleteItem(text, line) {
+        const completionItem = new vscode.InlineCompletionItem(text.trim());
+        completionItem.command = {
+            command: 'fbo-autocomplete.applyCompletionItem',
+            title: 'zlkqlksk',
+            arguments: [line]
+        };
+        return completionItem;
     }
 
     async getTextComplete(inputKey, folderName) {
@@ -78,20 +83,61 @@ class CompletionProvider {
                 prefixFolder = 'GridInput';
             }
         }
-        
         return prefixFolder;
     } 
     applyCompletionItem(line){
-        const { activeTextEditor } = vscode.window;
-        const { document } = activeTextEditor;
+        const activeTextEditor = vscode.window.activeTextEditor;
+        const document = activeTextEditor.document;
         const edit = new vscode.WorkspaceEdit();
-        var { lineNumber } = line;
+        var lineNumber = line.a;
         var textToReplace = line.b;
         var text = document.lineAt(lineNumber).text.replace(textToReplace, '');
+        
         // Thay thế nội dung trong dòng bằng chuỗi rỗng new(startLine:Int, startCharacter:Int, endLine:Int, endCharacter:Int)
         edit.replace(document.uri, new vscode.Range(lineNumber, 0, lineNumber, document.lineAt(lineNumber).text.length), text);
         vscode.workspace.applyEdit(edit); 
     }
+    async genViewFromFields(document, position){
+        var pvd = new CompletionProvider();
+        const line = document.lineAt(position);
+        const completionItems = [];
+        const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
+        if (textBeforeCursor != '$gff;') {
+            return completionItems;
+        }
+        if(!document.uri.path.includes('Grid')){
+            return completionItems;
+        }
+        const content = document.getText();
+        const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
+        const fieldsMatches = content.match(fieldsRegex);
+        if (!fieldsMatches) {
+            console.error('No fields found');
+            return completionItems;
+        }
+        var xmlFields = fieldsMatches[0];
+        let match;
+        const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
+        var textComplete = '';
+        // Lặp qua từng kết quả match
+        while ((match = fieldRegex.exec(xmlFields)) !== null) {
+            try { 
+                console.log();
+                const match_name = match[0].match(/name="([^"]+)"/);
+                if(match_name){
+                    textComplete += textComplete == '' ? `<field name="${match_name[1]}"/>` : `\n<field name="${match_name[1]}"/>`;
+                }
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+         
+        const completionItem = pvd.createCompleteItem(textComplete, line);
+        completionItems.push(completionItem);
+        return completionItems;
+    }
+
 }
 
 module.exports = CompletionProvider;

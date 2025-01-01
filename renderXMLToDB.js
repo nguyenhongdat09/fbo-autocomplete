@@ -72,7 +72,6 @@ class RenderXMLToDB {
                     return { folderName, keyValuePairs };
                 })
             );
-            
             var kvl_result = keyValuePairs_arr.flat();   
             kvl_result.forEach(async (keyValuePairs) => {
                 var folderName = keyValuePairs.folderName;
@@ -86,23 +85,22 @@ class RenderXMLToDB {
         } 
     }   
     static async parseXMLFile(filePath) {
-    try {
-       
-        const data = await fs.promises.readFile(filePath, 'utf8');
-        // Regex để lấy tất cả các <field> nằm trong <fields>
-        const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
-        //Regex ra fields    
-        const fieldsMatches = data.match(fieldsRegex);
-        if (!fieldsMatches) {
-            console.error('No fields found');
-            return;
-        }
-        var xmlFields = fieldsMatches[0];
-        //Regex ra từng field
-        const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
-        const keyValuePairs = {};
-        let match;
-        var replaceNone = ['isPrimaryKey="true"', 'allowNulls="false"', 'clientDefault="Default"']
+        try {
+            const content = await fs.promises.readFile(filePath, 'utf8');
+            // Regex để lấy tất cả các <field> nằm trong <fields>
+            const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
+            //Regex ra fields    
+            const fieldsMatches = content.match(fieldsRegex);
+            if (!fieldsMatches) {
+                console.error('No fields found');
+                return;
+            }
+            var xmlFields = fieldsMatches[0];
+            //Regex ra từng field
+            const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
+            const keyValuePairs = {};
+            var replaceNone = ['isPrimaryKey="true"', 'allowNulls="false"', 'clientDefault="Default"']
+            let match;
             // Lặp qua từng kết quả match
             while ((match = fieldRegex.exec(xmlFields)) !== null) {
                 try { 
@@ -128,7 +126,7 @@ class RenderXMLToDB {
                     keyValuePairs[key] = value; // Thêm vào object
                 }
                 catch (error) {
-                   throw error;
+                    throw error;
                 }
             }
             return keyValuePairs;
