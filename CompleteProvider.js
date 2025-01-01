@@ -3,21 +3,17 @@ const level = require('level-rocksdb');
 const path = require('path');
 
 class CompletionProvider {
-    static async provideCompletionItems(document, position) {
+     async provideCompletionItems(document, position) {
+        var pvd = new CompletionProvider();
         const line = document.lineAt(position);
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
         const completionItems = []; 
-        console.log('textBeforeCursor: ', CompletionProvider.getFolderName(textBeforeCursor, document));
-        const folderName = CompletionProvider.getFolderName(textBeforeCursor, document); 
+        const folderName = pvd.getFolderName(textBeforeCursor, document); 
         if (folderName == '') {
             return completionItems;
-        }
-        const dbPath = path.join(__dirname, folderName);
-        const db = level(dbPath);
-        
-        try {
-            const key = line.b.split('.')[1].replace(';', '');
-            const text = await db.get(key);
+        } 
+        try { 
+            const text = await pvd.getTextComplete(line.b, folderName);
             const completionItem = new vscode.InlineCompletionItem(text.trim());
             completionItem.command = {
                 command: 'fbo-autocomplete.applyCompletionItem',
@@ -26,16 +22,46 @@ class CompletionProvider {
             };
             completionItems.push(completionItem);
         } catch (error) {
-           
-        } finally {
-            db.close();
-        }
-    
+            console.error('Error ', error);
+        }  
         return completionItems;
+    }
+
+    async getTextComplete(inputKey, folderName) {
+        var db_path_name = '/Database/';
+        const dbPath = path.join(__dirname, db_path_name, folderName);
+        const db = level(dbPath, { createIfMissing: false }, function (err) {
+            if (err instanceof level.errors.OpenError) {
+              console.log('failed to open database')
+            }
+         });
+        const key_split = inputKey.split('.');
+        try {
+            if (key_split.length < 2 || !key_split[1].includes(';')) {
+                return '';
+            }
+            const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
+            var text = await db.get(key); // Sử dụng Promise API của level
+            const match = text.match(/reference="([^"]+)"/);
+            if (match) {
+                const reference = match[1].replace('%l', ''); // Tách lấy reference từ text
+                text += '\n' + await db.get(reference);
+            } 
+            return text; // Trả về kết quả nếu tìm thấy
+        } catch (err) {
+            if (err.notFound) {
+                console.error(`Key not found: ${key_split[1].replace(';', '')}`);
+                return ''; // Trả về chuỗi rỗng nếu không tìm thấy
+            }
+            console.error('Error accessing database:', err);
+            throw err; // Ném lỗi ra nếu gặp vấn đề khác
+        } finally {
+            db.close(); // Đảm bảo đóng database
+        }
     }
     
     
-    static getFolderName(inputText, document) {
+    getFolderName(inputText, document) {
         let prefixFolder = '';
         const path = document.uri.path;
         
@@ -52,13 +78,10 @@ class CompletionProvider {
                 prefixFolder = 'GridInput';
             }
         }
-    
+        
         return prefixFolder;
-    }
-    
-
-
-    static applyCompletionItem(line){
+    } 
+    applyCompletionItem(line){
         const { activeTextEditor } = vscode.window;
         const { document } = activeTextEditor;
         const edit = new vscode.WorkspaceEdit();

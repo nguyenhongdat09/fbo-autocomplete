@@ -14,22 +14,23 @@ function activate(context) {
 	const disposable = vscode.commands.registerCommand('fbo-autocomplete.helloWorld', function () {
 		vscode.window.showInformationMessage('Hello World from fbo-autocomplete!');
 	}); 
+	const provider = new CompletionProvider();
 	
 	const applyCompletionItem = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line) => {
-		CompletionProvider.applyCompletionItem(line); 
+		provider.applyCompletionItem(line); 
 	});	
 	const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
 		renderXMLToDB.render(); 
 	});	
 
-	const provider = vscode.languages.registerInlineCompletionItemProvider(
+	const providerAutoComplete = vscode.languages.registerInlineCompletionItemProvider(
         { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
         {
-            provideInlineCompletionItems: CompletionProvider.provideCompletionItems
+            provideInlineCompletionItems: provider.provideCompletionItems
         }
     );
 	context.subscriptions.push(render);
-	context.subscriptions.push(provider);
+	context.subscriptions.push(providerAutoComplete);
 	context.subscriptions.push(applyCompletionItem);
 	context.subscriptions.push(disposable);
 }

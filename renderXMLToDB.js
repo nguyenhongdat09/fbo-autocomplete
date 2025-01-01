@@ -78,8 +78,8 @@ class RenderXMLToDB {
                 var folderName = keyValuePairs.folderName;
                 var value = keyValuePairs.keyValuePairs;
                 await this.saveToRocksDB(folderName, value);
-                
             });  
+            console.log('Done');
         }
         catch(e){
             console.log(e);
@@ -128,7 +128,7 @@ class RenderXMLToDB {
                     keyValuePairs[key] = value; // Thêm vào object
                 }
                 catch (error) {
-                   continue;
+                   throw error;
                 }
             }
             return keyValuePairs;
@@ -138,37 +138,38 @@ class RenderXMLToDB {
         }
     }
     static async saveToRocksDB(nameDb, keyValuePairs) {
-        var dbPath = path.join(__dirname, nameDb), dbView;
-        if(nameDb == 'Grid'){
-            dbPath = path.join(__dirname, 'GridInput')
+        var db_path_name =  '/Database/';
+        let dbPath = path.join(__dirname, db_path_name, nameDb);
+        let dbView;
+        if (nameDb === 'Grid') {
+            dbPath = path.join(__dirname, db_path_name, 'GridInput');
+            dbView = level(path.join(__dirname, db_path_name, 'GridView'));
         }
         const db = level(dbPath);
-        if(nameDb == 'Grid'){
-            dbView = level(path.join(__dirname, 'GridView'));
-        }
+        
         try {
             for (const key in keyValuePairs) {
                 const value = keyValuePairs[key];
-                if(nameDb == 'Grid'){
-                    if((value.indexOf('allowFilter') > 0 || value.indexOf('allowSort') > 0 || value.indexOf('aggregate') > 0) ){
-                        await dbView.put(key, value);  
-                    }else{
-                        await db.put(key, value); 
+                if (nameDb === 'Grid') {
+                    if (value.includes('allowFilter') || value.includes('allowSort') || value.includes('aggregate')) {
+                        await dbView.put(key, value);
+                    } else {
+                        await db.put(key, value);
                     }
-                }else{
-                    await db.put(key, value); 
+                } else {
+                    await db.put(key, value);
                 }
-                
-            } 
+            }
         } catch (error) {
             console.error('Error saving to LevelRocksDB:', error);
         } finally {
-            db.close();  
-            if(nameDb == 'Grid'){
-                dbView.close();  
+            await db.close();
+            if (dbView) {
+                await dbView.close();
             }
-        } 
-    } 
+        }
+    }
+    
 }
 
 module.exports = RenderXMLToDB;
