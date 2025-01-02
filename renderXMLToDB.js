@@ -17,8 +17,9 @@ class RenderXMLToDB {
         let basePath = document.uri.authority + document.uri.path;
         const prefixesToLoop = ['Dir', 'Grid', 'Filter'];
         //path theo công ty 
-        //basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
+        basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
         //Path theo đường dẫn cứng 
+        /*
         basePath = document.uri.path
         let endIndex = basePath.indexOf('Controllers/') + 'Controllers/'.length;
         if (endIndex !== -1) {
@@ -27,7 +28,7 @@ class RenderXMLToDB {
         } else {
             console.log('Không tìm thấy "Controllers/" trong đường dẫn.');
         }
-
+        */
         try{
             //Đợi đọc xong hết tất cả rồi mới nhảy xuống filePaths = results.flat();
             const results = await Promise.all(

@@ -35,16 +35,16 @@ class CompletionProvider {
     async getTextComplete(inputKey, folderName) {
         var db_path_name = '/Database/';
         const dbPath = path.join(__dirname, db_path_name, folderName);
+        const key_split = inputKey.split('.');
+        if (key_split.length < 2 || !key_split[1].includes(';')) {
+            return '';
+        }
         const db = level(dbPath, { createIfMissing: false }, function (err) {
             if (err instanceof level.errors.OpenError) {
-              console.log('failed to open database')
+              console.log('failed to open database: ', err)
             }
          });
-        const key_split = inputKey.split('.');
-        try {
-            if (key_split.length < 2 || !key_split[1].includes(';')) {
-                return '';
-            }
+        try {  
             const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
             var text = await db.get(key); // Sử dụng Promise API của level
             const match = text.match(/reference="([^"]+)"/);
