@@ -15,9 +15,9 @@
 ## Giải thích tổng quát cách thức hoạt động
 - Khi **Render XML To Database** Gói sẽ tìm các file trong cả 3 folder là Grid, Dir, Filter phân tích các trường `<field>` lấy name ra và lưu vào database. Lúc này mới bắt đầu nhập `$f, $gi, $gv` thì mới ra dữ liệu
     - #### Quy tắc nhập
-        - Nếu là trường bình thường thì nhập `$f.field`
-        - Nếu là lookup thì nhập `$f.fieldlk`
-        - Nếu là AutoComplete thì nhập `$f.fieldat`
+        - Nếu là trường bình thường thì nhập `$f.field;`
+        - Nếu là lookup thì nhập `$f.fieldlk;`
+        - Nếu là AutoComplete thì nhập `$f.fieldat;`
         
 
 
