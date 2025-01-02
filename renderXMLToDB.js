@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 var xml2js = require('xml2js');
 const level = require('level-rocksdb');
+const { spawn } = require('child_process');
 
 class RenderXMLToDB {
     static async render() {
@@ -54,32 +55,40 @@ class RenderXMLToDB {
             const keyValuePairs = await this.parseXMLFile(filePath);
             console.log(keyValuePairs);
             */
-            
-            const keyValuePairs_arr = await Promise.all(
-                FolderPaths.map(async (Folder) => {
-                    const folderName = Folder.prefix;
-                    const filePaths = Folder.filePath;
-            
-                    // Đợi tất cả các file được xử lý và trả về mảng keyValuePairs
-                    const keyValuePairsArray = await Promise.all(
-                        filePaths.map(async (filePath) => {
-                            return await this.parseXMLFile(filePath); // parse từng file
-                        })
-                    );
-            
-                    // Gộp tất cả keyValuePairs lại thành một object duy nhất
-                    const keyValuePairs = Object.assign({}, ...keyValuePairsArray);
-            
-                    return { folderName, keyValuePairs };
-                })
-            );
-            var kvl_result = keyValuePairs_arr.flat();   
-            kvl_result.forEach(async (keyValuePairs) => {
-                var folderName = keyValuePairs.folderName;
-                var value = keyValuePairs.keyValuePairs;
-                await this.saveToRocksDB(folderName, value);
-            });  
-            console.log('Done');
+            vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: `Analyst And Inserting to Database`,
+                cancellable: false
+            }, async (progress, token) => {
+                const keyValuePairs_arr = await Promise.all( 
+                    FolderPaths.map(async (Folder) => {
+                        const folderName = Folder.prefix;
+                        const filePaths = Folder.filePath;
+                        
+                        // Đợi tất cả các file được xử lý và trả về mảng keyValuePairs
+                        const keyValuePairsArray = [];
+                        for (const filePath of filePaths) {
+                            const dirName = path.dirname(filePath).split('\\').pop(); // lấy thư mục trước file
+                            const baseName = path.basename(filePath); // lấy tên file
+                            progress.report({ message: `${dirName}/${baseName}` });
+                            const keyValuePair = await this.parseXMLFile(filePath); // parse từng file
+                            keyValuePairsArray.push(keyValuePair);
+                        }
+                        // Gộp tất cả keyValuePairs lại thành một object duy nhất
+                        const keyValuePairs = Object.assign({}, ...keyValuePairsArray);
+                
+                        return { folderName, keyValuePairs };
+                    })
+                );
+                var kvl_result = keyValuePairs_arr.flat();   
+                 
+                kvl_result.forEach(async (keyValuePairs) => {
+                    var folderName = keyValuePairs.folderName;
+                    var value = keyValuePairs.keyValuePairs;
+                    await this.saveToRocksDB(folderName, value);
+                });  
+            });
+             
         }
         catch(e){
             console.log(e);

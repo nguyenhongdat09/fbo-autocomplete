@@ -97,7 +97,6 @@ class CompletionProvider {
         // Tìm vị trí chính xác của từ trong dòng (bao gồm khoảng trắng)
         const lineText = document.lineAt(lineNumber).text;
         var index = lineText.indexOf(textToReplace.trim());
-          
         // Thay thế nội dung trong dòng bằng chuỗi rỗng new(startLine:Int, startCharacter:Int, endLine:Int, endCharacter:Int)
         edit.replace(document.uri, new vscode.Range(lineNumber, index, lineNumber, document.lineAt(lineNumber).text.length), text);
         
