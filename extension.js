@@ -12,11 +12,7 @@ const OpenWithVS2008 = require('./openWithVS2008');
  */
 function activate(context) {
 	console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
-	const disposable = vscode.commands.registerCommand('fbo-autocomplete.helloWorld', function () {
-		vscode.window.showInformationMessage('Hello World from fbo-autocomplete!');
-	}); 
 	const provider = new CompletionProvider();
-	
 	const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
 		provider.applyCompletionItem(line, position); 
 	});	
@@ -48,7 +44,6 @@ function activate(context) {
 	context.subscriptions.push(providerAutoComplete);
 	context.subscriptions.push(autoCompleteFields);
 	context.subscriptions.push(genViewFromFields);
-	context.subscriptions.push(disposable);
 	context.subscriptions.push(openWithVS2008);
 }
 

@@ -76,7 +76,6 @@ class RenderXMLToDB {
                         }
                         // Gộp tất cả keyValuePairs lại thành một object duy nhất
                         const keyValuePairs = Object.assign({}, ...keyValuePairsArray);
-                
                         return { folderName, keyValuePairs };
                     })
                 );

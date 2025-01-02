@@ -18,6 +18,7 @@
     "onLanguage:xml"
   ],
   "main": "./extension.js",
+  "publisher": "Nguyen-Hong-Dat",
   "contributes": {
     "menus": {
       "editor/context": [
