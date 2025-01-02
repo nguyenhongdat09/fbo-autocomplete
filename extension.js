@@ -3,6 +3,7 @@
 const vscode = require('vscode');
 const CompletionProvider = require('./CompleteProvider');
 const renderXMLToDB = require('./renderXMLToDB');
+const OpenWithVS2008 = require('./openWithVS2008');
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 
@@ -37,11 +38,18 @@ function activate(context) {
             provideInlineCompletionItems: provider.genViewFromFields
         }
     );
+	let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
+		OpenWithVS2008.open(uri);
+    });
+
+
+
 	context.subscriptions.push(render);
 	context.subscriptions.push(providerAutoComplete);
 	context.subscriptions.push(autoCompleteFields);
 	context.subscriptions.push(genViewFromFields);
 	context.subscriptions.push(disposable);
+	context.subscriptions.push(openWithVS2008);
 }
 
 // This method is called when your extension is deactivated
