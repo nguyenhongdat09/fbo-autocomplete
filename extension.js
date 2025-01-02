@@ -17,8 +17,8 @@ function activate(context) {
 	}); 
 	const provider = new CompletionProvider();
 	
-	const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line) => {
-		provider.applyCompletionItem(line); 
+	const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
+		provider.applyCompletionItem(line, position); 
 	});	
 
 	const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {

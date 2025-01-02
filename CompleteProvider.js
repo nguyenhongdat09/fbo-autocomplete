@@ -14,7 +14,7 @@ class CompletionProvider {
         } 
         try { 
             const text = await pvd.getTextComplete(line.b, folderName);
-            const completionItem = pvd.createCompleteItem(text, line);
+            const completionItem = pvd.createCompleteItem(text, line, position);
             completionItems.push(completionItem);
         } catch (error) {
             console.error('Error ', error);
@@ -22,13 +22,15 @@ class CompletionProvider {
         return completionItems;
     }
 
-    createCompleteItem(text, line) {
+    createCompleteItem(text, line, position) {
         const completionItem = new vscode.InlineCompletionItem(text.trim());
         completionItem.command = {
             command: 'fbo-autocomplete.applyCompletionItem',
             title: 'zlkqlksk',
-            arguments: [line]
+            arguments: [line, position]
         };
+        completionItem.range = new vscode.Range(position, position); // Đảm bảo chỉ thay đổi từ vị trí hiện tại
+
         return completionItem;
     }
 
@@ -85,16 +87,20 @@ class CompletionProvider {
         }
         return prefixFolder;
     } 
-    applyCompletionItem(line){
+    applyCompletionItem(line, position){
         const activeTextEditor = vscode.window.activeTextEditor;
         const document = activeTextEditor.document;
         const edit = new vscode.WorkspaceEdit();
         var lineNumber = line.a;
         var textToReplace = line.b;
         var text = document.lineAt(lineNumber).text.replace(textToReplace, '');
-        
+        // Tìm vị trí chính xác của từ trong dòng (bao gồm khoảng trắng)
+        const lineText = document.lineAt(lineNumber).text;
+        var index = lineText.indexOf(textToReplace.trim());
+          
         // Thay thế nội dung trong dòng bằng chuỗi rỗng new(startLine:Int, startCharacter:Int, endLine:Int, endCharacter:Int)
-        edit.replace(document.uri, new vscode.Range(lineNumber, 0, lineNumber, document.lineAt(lineNumber).text.length), text);
+        edit.replace(document.uri, new vscode.Range(lineNumber, index, lineNumber, document.lineAt(lineNumber).text.length), text);
+        
         vscode.workspace.applyEdit(edit); 
     }
     async genViewFromFields(document, position){
@@ -122,7 +128,6 @@ class CompletionProvider {
         // Lặp qua từng kết quả match
         while ((match = fieldRegex.exec(xmlFields)) !== null) {
             try { 
-                console.log();
                 const match_name = match[0].match(/name="([^"]+)"/);
                 if(match_name){
                     textComplete += textComplete == '' ? `<field name="${match_name[1]}"/>` : `\n<field name="${match_name[1]}"/>`;
@@ -133,7 +138,7 @@ class CompletionProvider {
             }
         }
          
-        const completionItem = pvd.createCompleteItem(textComplete, line);
+        const completionItem = pvd.createCompleteItem(textComplete, line, position);
         completionItems.push(completionItem);
         return completionItems;
     }
