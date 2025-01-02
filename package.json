@@ -54,7 +54,7 @@
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "Render XML To Database"
-      },
+      }
       
     ],
     "languages": [
