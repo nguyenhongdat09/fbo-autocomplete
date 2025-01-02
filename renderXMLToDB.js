@@ -18,18 +18,17 @@ class RenderXMLToDB {
         let basePath = document.uri.authority + document.uri.path;
         const prefixesToLoop = ['Dir', 'Grid', 'Filter'];
         //path theo công ty 
-        basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
-        //Path theo đường dẫn cứng 
-        /*
+        //basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
+        //Path theo đường dẫn cứng  
         basePath = document.uri.path
         let endIndex = basePath.indexOf('Controllers/') + 'Controllers/'.length;
         if (endIndex !== -1) {
             let result = basePath.substring(1, endIndex); // Bỏ dấu "/" đầu tiên
             basePath = result;
         } else {
-            console.log('Không tìm thấy "Controllers/" trong đường dẫn.');
+            vscode.window.showErrorMessage('Không tìm thấy "Controllers/" trong đường dẫn.');
         }
-        */
+         
         try{
             //Đợi đọc xong hết tất cả rồi mới nhảy xuống filePaths = results.flat();
             const results = await Promise.all(
@@ -141,7 +140,7 @@ class RenderXMLToDB {
             return keyValuePairs;
         }
         catch (error) {
-            console.error(`Error parsing XML: ${error} at ${filePath}`);
+           // console.error(`Error parsing XML: ${error} at ${filePath}`);
         }
     }
     static async saveToRocksDB(nameDb, keyValuePairs) {
@@ -153,7 +152,6 @@ class RenderXMLToDB {
             dbView = level(path.join(__dirname, db_path_name, 'GridView'));
         }
         const db = level(dbPath);
-        
         try {
             for (const key in keyValuePairs) {
                 const value = keyValuePairs[key];

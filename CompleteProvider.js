@@ -17,7 +17,7 @@ class CompletionProvider {
             const completionItem = pvd.createCompleteItem(text, line, position);
             completionItems.push(completionItem);
         } catch (error) {
-            console.error('Error ', error);
+            vscode.window.showErrorMessage(error);
         }  
         return completionItems;
     }
@@ -30,7 +30,6 @@ class CompletionProvider {
             arguments: [line, position]
         };
         completionItem.range = new vscode.Range(position, position); // Đảm bảo chỉ thay đổi từ vị trí hiện tại
-
         return completionItem;
     }
 
@@ -43,7 +42,7 @@ class CompletionProvider {
         }
         const db = level(dbPath, { createIfMissing: false }, function (err) {
             if (err instanceof level.errors.OpenError) {
-              console.log('failed to open database: ', err)
+              vscode.window.showErrorMessage(`failed to open database: ${err}`);
             }
          });
         try {  
@@ -57,11 +56,11 @@ class CompletionProvider {
             return text; // Trả về kết quả nếu tìm thấy
         } catch (err) {
             if (err.notFound) {
-                console.error(`Key not found: ${key_split[1].replace(';', '')}`);
+                vscode.window.showErrorMessage(`Key not found: ${key_split[1].replace(';', '')}`);
                 return ''; // Trả về chuỗi rỗng nếu không tìm thấy
-            }
-            console.error('Error accessing database:', err);
-            throw err; // Ném lỗi ra nếu gặp vấn đề khác
+            } 
+            vscode.window.showErrorMessage(err);
+            return '';
         } finally {
             db.close(); // Đảm bảo đóng database
         }
@@ -99,7 +98,6 @@ class CompletionProvider {
         var index = lineText.indexOf(textToReplace.trim());
         // Thay thế nội dung trong dòng bằng chuỗi rỗng new(startLine:Int, startCharacter:Int, endLine:Int, endCharacter:Int)
         edit.replace(document.uri, new vscode.Range(lineNumber, index, lineNumber, document.lineAt(lineNumber).text.length), text);
-        
         vscode.workspace.applyEdit(edit); 
     }
     async genViewFromFields(document, position){
@@ -117,7 +115,6 @@ class CompletionProvider {
         const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
         const fieldsMatches = content.match(fieldsRegex);
         if (!fieldsMatches) {
-            console.error('No fields found');
             return completionItems;
         }
         var xmlFields = fieldsMatches[0];
@@ -135,8 +132,7 @@ class CompletionProvider {
             catch (error) {
                 throw error;
             }
-        }
-         
+        } 
         const completionItem = pvd.createCompleteItem(textComplete, line, position);
         completionItems.push(completionItem);
         return completionItems;

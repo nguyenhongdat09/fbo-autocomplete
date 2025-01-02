@@ -22,13 +22,12 @@
   "contributes": {
     "menus": {
       "editor/context": [
-          {
-              "command": "my-fbo-toolkit.openWithVS2008",
-              "group": "fbo"
-          } 
+        {
+          "command": "my-fbo-toolkit.openWithVS2008",
+          "group": "fbo"
+        }
       ]
-      
-  },
+    },
     "commands": [
       {
         "command": "my-fbo-toolkit.openWithVS2008",
@@ -42,7 +41,6 @@
         "command": "fbo-autocomplete.applyCompletionItem",
         "title": "zlkqlksk"
       },
-     
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "Render XML To Database"
@@ -55,12 +53,10 @@
         "command": "fbo-autocomplete.applyCompletionItem",
         "title": "zlkqlksk"
       },
-     
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "Render XML To Database"
       }
-      
     ],
     "languages": [
       {
