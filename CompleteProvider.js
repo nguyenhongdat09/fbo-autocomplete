@@ -1,6 +1,7 @@
 const vscode = require('vscode');
 const level = require('level-rocksdb');
 const path = require('path');
+const ana = require('./AnalystXMLFile');
 
 class CompletionProvider {
      async provideCompletionItems(document, position) {
@@ -111,28 +112,13 @@ class CompletionProvider {
         if(!document.uri.path.includes('Grid')){
             return completionItems;
         }
-        const content = document.getText();
-        const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
-        const fieldsMatches = content.match(fieldsRegex);
-        if (!fieldsMatches) {
-            return completionItems;
-        }
-        var xmlFields = fieldsMatches[0];
-        let match;
-        const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
+        var name_and_field = await ana.getListField('', document.getText());
         var textComplete = '';
-        // Lặp qua từng kết quả match
-        while ((match = fieldRegex.exec(xmlFields)) !== null) {
-            try { 
-                const match_name = match[0].match(/name="([^"]+)"/);
-                if(match_name){
-                    textComplete += textComplete == '' ? `<field name="${match_name[1]}"/>` : `\n<field name="${match_name[1]}"/>`;
-                }
-            }
-            catch (error) {
-                throw error;
-            }
-        } 
+        name_and_field.forEach(item => {
+            var key = item.key;
+            if (key != '')
+                textComplete += textComplete == '' ? `<field name="${key}"/>` : `\n<field name="${key}"/>`;
+        });
         const completionItem = pvd.createCompleteItem(textComplete, line, position);
         completionItems.push(completionItem);
         return completionItems;
