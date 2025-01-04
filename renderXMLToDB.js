@@ -18,8 +18,9 @@ class RenderXMLToDB {
         let basePath = document.uri.authority + document.uri.path;
         const prefixesToLoop = ['Dir', 'Grid', 'Filter'];
         //path theo công ty 
-        //basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
+        basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
         //Path theo đường dẫn cứng  
+        /*
         basePath = document.uri.path
         let endIndex = basePath.indexOf('Controllers/') + 'Controllers/'.length;
         if (endIndex !== -1) {
@@ -28,7 +29,7 @@ class RenderXMLToDB {
         } else {
             vscode.window.showErrorMessage('Không tìm thấy "Controllers/" trong đường dẫn.');
         }
-         
+        */
         try{
             //Đợi đọc xong hết tất cả rồi mới nhảy xuống filePaths = results.flat();
             const results = await Promise.all(
@@ -48,9 +49,8 @@ class RenderXMLToDB {
                 })
             );
             var FolderPaths = results.flat();  
-            
               /*
-            var filePath = '\\\\172.168.5.14\\CustomerPro\\FBO\\CUBES\\SP2255\\App_Data\\Controllers\\Dir\\User.f'
+            var filePath = '\\\\172.168.5.14\\CustomerPro\\FBO\\CUBES\\SP2255\\App_Data\\Controllers\\Grid\\SIDetail.xml'
             const keyValuePairs = await this.parseXMLFile(filePath);
             console.log(keyValuePairs);
             */
@@ -100,7 +100,7 @@ class RenderXMLToDB {
             name_and_field.forEach(item => {
                 var key_t = item.key;
                 var value_t = item.value;
-                const {key, value} = this.KeyValueCleaner(key_t, value_t); // Xử lý key và value
+                const {key, value} = this.KeyValueCleaner(key_t, value_t, filePath); // Xử lý key và value
                 if (key != '')
                     keyValuePairs[key] = value; 
             });
@@ -112,10 +112,10 @@ class RenderXMLToDB {
         }
     }
 
-    static KeyValueCleaner(key, value) {
+    static KeyValueCleaner(key, value, filePath) {
         if (value.includes('ForeignKey')) 
             return {key: '', value: ''};
-
+        
         var replaceNone = ['isPrimaryKey="true"', 'allowNulls="false"', 'clientDefault="Default"'];
         replaceNone.forEach(item => {
             value = value.replace(item, '');
@@ -124,6 +124,7 @@ class RenderXMLToDB {
         //Xóa luôn theo cặp <clientScript>...</clientScript>
         value = value.replace(/<clientScript>.*?<\/clientScript>\s*/g, '');
         value = value.replace(/<query>.*?<\/query>\s*/g, ''); 
+
         
         //nếu lookup thì tách riêng với autocomplete
         const regex = /style\s*=\s*"([^"]*)"/;
@@ -131,10 +132,14 @@ class RenderXMLToDB {
         if (style) {
             if(style[1] === 'Lookup'){
                 key = key + 'lk'
-            }else if (style[1] === 'AutoComplete'){
-                key = key + 'at'
+            }else if (style[1] === 'AutoComplete'){ 
+                key = key + 'at' 
             }
         } 
+        if(filePath.includes('SVDetail')){
+            if(key.includes('ma_vtat'))
+                console.log(key, value);
+        }
         return {key, value};
     }
  
@@ -154,9 +159,8 @@ class RenderXMLToDB {
                 if (nameDb === 'Grid') {  
                     if (value.includes('allowFilter') || value.includes('allowSort') || value.includes('aggregate')) {
                         await dbView.put(key, value);
-                    } else {
-
-                        await db.put(key, value);
+                    } else { 
+                        await db.put(key, value); 
                     }
                 } else {
                     await db.put(key, value);

@@ -1,5 +1,6 @@
 const vscode = require('vscode');
 const path = require('path');
+const cp = require('child_process');
 class OpenWithVS2008 {
     static open(uri) {
         const filePath = uri.fsPath;
@@ -26,22 +27,28 @@ class OpenWithVS2008 {
             {
                 baseName: 'Upload',
                 file_xsd: 'Import.xsd',
-            },
-        ];
+            }
+            ,
+            {
+                baseName: 'Lookup',
+                file_xsd: 'Lookup.xsd',
+            }
+        ]
         var file_xsd = '';
-        for (const item of baseNameArr) {
-            if (baseName.includes(item.baseName)) {
-                file_xsd = item.file_xsd;
-                break;
+        baseNameArr.forEach(ele => {
+            if(baseName == ele.baseName){
+                if(baseName == 'Filter') 
+                    file_xsd =  dir.replace('Filter', 'Dir')  + '\\' + 'Dir.xsd';
+                else
+                file_xsd =  dir  + '\\' + ele.file_xsd;
             }
-        }
-        const filePath_xsd = path.join(dir, file_xsd);
-        const command = `${filePath_xsd} ${vs2008Path} `;
-        require('child_process').exec(command, (err, stdout, stderr) => {
+        })  
+        // Thêm tham số /edit để mở file trong cửa sổ hiện tại
+        const command = `${vs2008Path} /edit "${filePath}" "${file_xsd}"`;
+        cp.exec(command, (err) => {
             if (err) {
-                console.error(err);
-                return;
-            }
+                vscode.window.showErrorMessage(`Failed to open file in Visual Studio 2008: ${err.message} file: ${filePath}`);
+            } 
         });
     }
 }

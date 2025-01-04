@@ -48,15 +48,24 @@ class CompletionProvider {
          });
         try {  
             const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
+            
             var text = await db.get(key); // Sử dụng Promise API của level
+            console.log(db, folderName, text);
             const match = text.match(/reference="([^"]+)"/);
             if (match) {
                 const reference = match[1].replace('%l', ''); // Tách lấy reference từ text
-                text += '\n' + await db.get(reference);
+                var ref_text = await db.get(reference, function (err, value) {
+                    if (err.notFound) {
+                        vscode.window.showErrorMessage(`Key not found: ${reference}`);
+                    }
+                });
+                if(ref_text)
+                    text += '\n' + ref_text;
             } 
             return text; // Trả về kết quả nếu tìm thấy
         } catch (err) {
             if (err.notFound) {
+                console.log(err);
                 vscode.window.showErrorMessage(`Key not found: ${key_split[1].replace(';', '')}`);
                 return ''; // Trả về chuỗi rỗng nếu không tìm thấy
             } 
