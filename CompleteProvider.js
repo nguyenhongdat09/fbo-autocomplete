@@ -46,31 +46,26 @@ class CompletionProvider {
               vscode.window.showErrorMessage(`failed to open database: ${err}`);
             }
          });
+        var text = '';
         try {  
             const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
             
             var text = await db.get(key); // Sử dụng Promise API của level
-            console.log(db, folderName, text);
             const match = text.match(/reference="([^"]+)"/);
             if (match) {
-                const reference = match[1].replace('%l', ''); // Tách lấy reference từ text
-                var ref_text = await db.get(reference, function (err, value) {
-                    if (err.notFound) {
-                        vscode.window.showErrorMessage(`Key not found: ${reference}`);
-                    }
-                });
+                const reference = match[1] + 'ex' // Tách lấy reference từ text
+                var ref_text = await db.get(reference) 
                 if(ref_text)
                     text += '\n' + ref_text;
             } 
             return text; // Trả về kết quả nếu tìm thấy
         } catch (err) {
             if (err.notFound) {
-                console.log(err);
-                vscode.window.showErrorMessage(`Key not found: ${key_split[1].replace(';', '')}`);
-                return ''; // Trả về chuỗi rỗng nếu không tìm thấy
+                vscode.window.showErrorMessage(err);
+                return text ? text : '';  
             } 
             vscode.window.showErrorMessage(err);
-            return '';
+            return text ? text : '';
         } finally {
             db.close(); // Đảm bảo đóng database
         }
