@@ -51,9 +51,7 @@ function activate(context) {
             ReadXMLVS2008.readXml(document.uri.fsPath);
         }
     });
-    
-
-
+      
     const entityHoverProvider = new EntityHoverProvider(__dirname);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
