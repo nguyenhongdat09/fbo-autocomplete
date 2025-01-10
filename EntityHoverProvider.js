@@ -5,22 +5,14 @@ const path = require("path");
 class EntityHoverProvider {
     constructor(extensionDirectory) {
         this.jsonEntityFolder = path.join(extensionDirectory, "ReadXML" , "JsonEntity");
-    } 
-    normalizePath(filePath) {
-        // Loại bỏ UNC prefix nếu tồn tại
-        if (filePath.startsWith("\\\\")) {
-            filePath = filePath.replace(/^\\\\[^\\]+\\/, ""); // Bỏ \\hostname\
-        }
-        return path.normalize(filePath);
-    }
+    }  
     provideHover(document, position) {
         const range = document.getWordRangeAtPosition(position, /&[\w.]+;/);
         if (!range) {
             return null;
         }
         const entity = document.getText(range).slice(1, -1); // Bỏ '&' và ';'
-        const filePath = this.normalizePath(document.uri.fsPath); // Chuẩn hóa filePath
-        
+        const filePath = document.uri.fsPath
         // Kiểm tra thư mục JsonEntity
         if (!fs.existsSync(this.jsonEntityFolder)) {
             return new vscode.Hover("Error: JsonEntity folder not found.");
@@ -33,6 +25,7 @@ class EntityHoverProvider {
                 // Đọc và tìm kiếm entity trong file JSON
                 const fileContent = JSON.parse(fs.readFileSync(path.join(this.jsonEntityFolder, file), "utf8"));
                 const entityContent = fileContent.find((item) => item.Name === entity);
+                
                 if (entityContent) {
                     // Markdown để hiển thị nội dung nổi bật
                     const markdownContent = new vscode.MarkdownString();
@@ -47,7 +40,6 @@ class EntityHoverProvider {
         return new vscode.Hover("Entity not found.");
     }
     findContent (entity, filePath) {
-        filePath = this.normalizePath(filePath); // Chuẩn hóa filePath
         // Kiểm tra thư mục JsonEntity
         if (!fs.existsSync(this.jsonEntityFolder)) {
             return new vscode.Hover("Error: JsonEntity folder not found.");

@@ -5,7 +5,6 @@ const vscode = require("vscode");
 class ReadXMLVS2008 {
     static readXml(filePath) {
         const exePath = path.join(__dirname, "ReadXML", "ReadXML.exe");
-        console.log(`"${exePath}" "${filePath}"`)
         // Gọi file .exe với đường dẫn file XML
         exec(`"${exePath}" "${filePath}"`, (error, stdout, stderr) => {
             if (error) {
