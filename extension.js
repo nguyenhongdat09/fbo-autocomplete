@@ -4,8 +4,9 @@ const vscode = require('vscode');
 const CompletionProvider = require('./CompleteProvider');
 const renderXMLToDB = require('./renderXMLToDB');
 const OpenWithVS2008 = require('./openWithVS2008');
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const ReadXMLVS2008 = require('./ReadXMLVS2008');
+const EntityHoverProvider = require("./EntityHoverProvider");
+const EntityCodeLensProvider = require("./EntityCodeLensProvider");
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -38,13 +39,56 @@ function activate(context) {
 		OpenWithVS2008.open(uri);
     });
 
+	// Thêm sự kiện mở file XML
+    const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
+        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
+            ReadXMLVS2008.readXml(document.uri.fsPath);
+        }
+    });
+    // Thêm sự kiện lưu file XML
+    const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
+        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
+            ReadXMLVS2008.readXml(document.uri.fsPath);
+        }
+    });
+    
 
 
+    const entityHoverProvider = new EntityHoverProvider(__dirname);
+    var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
+        provideHover(document, position) {
+            return entityHoverProvider.provideHover(document, position);
+        },
+    })
+    // Đăng ký CodeLens provider
+    context.subscriptions.push(
+        vscode.languages.registerCodeLensProvider(
+            { language: "xml", scheme: "file" },
+            {
+                provideCodeLenses(document) {
+                    return EntityCodeLensProvider.provideCodeLenses(document);
+                },
+            }
+        )
+    );
+    
+    // Đăng ký lệnh Copy
+    const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
+        var content = entityHoverProvider.findContent(entity, document.uri.fsPath); 
+        vscode.env.clipboard.writeText(content).then(() => {
+            vscode.window.showInformationMessage(`Copied: ${content}`);
+        });
+    });
+
+    context.subscriptions.push(copyEntityCommand);
+    context.subscriptions.push( onHoverEntity);
 	context.subscriptions.push(render);
 	context.subscriptions.push(providerAutoComplete);
 	context.subscriptions.push(autoCompleteFields);
 	context.subscriptions.push(genViewFromFields);
 	context.subscriptions.push(openWithVS2008);
+	context.subscriptions.push(onDidOpenTextDocument);
+    context.subscriptions.push(onDidSaveTextDocument);
 }
 
 // This method is called when your extension is deactivated
