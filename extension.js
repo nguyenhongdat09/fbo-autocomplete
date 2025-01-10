@@ -65,15 +65,15 @@ function activate(context) {
         vscode.languages.registerCodeLensProvider(
             { language: "xml", scheme: "file" },
             {
-                provideCodeLenses(document) {
-                    return EntityCodeLensProvider.provideCodeLenses(document);
+                provideCodeLenses(document, position) {
+                    return EntityCodeLensProvider.provideCodeLenses(document, position);
                 },
             }
         )
     );
     
     // Đăng ký lệnh Copy
-    const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
+    const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document, position) => {
         var content = entityHoverProvider.findContent(entity, document.uri.fsPath); 
         vscode.env.clipboard.writeText(content).then(() => {
             vscode.window.showInformationMessage(`Copied: ${content}`);
