@@ -56,6 +56,10 @@
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "Render XML To Database"
+      },
+      {
+        "command": "fbo-autocomplete.showEntityCodeLens",
+        "title": "Show Entity CodeLens"
       }
     ],
     "languages": [

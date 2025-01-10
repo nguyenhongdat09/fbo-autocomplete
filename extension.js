@@ -58,18 +58,18 @@ function activate(context) {
             return entityHoverProvider.provideHover(document, position);
         },
     })
-    // Đăng ký CodeLens provider
-    context.subscriptions.push(
-        vscode.languages.registerCodeLensProvider(
+
+    const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
+		vscode.languages.registerCodeLensProvider(
             { language: "xml", scheme: "file" },
             {
                 provideCodeLenses(document, position) {
                     return EntityCodeLensProvider.provideCodeLenses(document, position);
                 },
             }
-        )
-    );
-    
+    ) 
+	});	 
+
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document, position) => {
         var content = entityHoverProvider.findContent(entity, document.uri.fsPath); 
@@ -78,6 +78,7 @@ function activate(context) {
         });
     });
 
+    context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push( onHoverEntity);
 	context.subscriptions.push(render);
