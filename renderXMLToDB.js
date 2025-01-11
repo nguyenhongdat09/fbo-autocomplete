@@ -2,9 +2,7 @@
 const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
-var xml2js = require('xml2js');
 const level = require('level-rocksdb');
-const { spawn } = require('child_process');
 const ana = require('./AnalystXMLFile');
 class RenderXMLToDB {
     static async render() {

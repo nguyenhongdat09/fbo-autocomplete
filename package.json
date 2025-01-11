@@ -59,7 +59,7 @@
       },
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
-        "title": "Show Entity CodeLens"
+        "title": "Show/Hide Entity CodeLens"
       }
     ],
     "languages": [
@@ -76,6 +76,7 @@
       }
     ]
   },
+  "updateUrl": "https://github.com/nguyenhongdat09/fbo-autocomplete/blob/company/update.json",
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
@@ -90,9 +91,9 @@
     "eslint": "^9.16.0"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "fast-xml-parser": "^4.5.1",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1",
-    "xml2js": "^0.6.2"
+    "rocksdb": "^5.2.1"
   }
 }

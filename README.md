@@ -19,7 +19,7 @@
         - Nếu là lookup thì nhập `$f.fieldlk;`
         - Nếu là AutoComplete thì nhập `$f.fieldat;`
 ## Hiện Code Lens 
-- Nhập **Ctrl + Shift + P** Nhập **Show Entity CodeLens** 
+- Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
 ![My Image](images/showcodelens.png)
 
 

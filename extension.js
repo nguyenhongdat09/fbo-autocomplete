@@ -7,7 +7,9 @@ const OpenWithVS2008 = require('./openWithVS2008');
 const ReadXMLVS2008 = require('./ReadXMLVS2008');
 const EntityHoverProvider = require("./EntityHoverProvider");
 const EntityCodeLensProvider = require("./EntityCodeLensProvider");
-
+const UpdateChecker = require('./UpdateChecker');  // Import class UpdateChecker
+let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
+let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -59,24 +61,34 @@ function activate(context) {
         },
     })
 
+   
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
-		vscode.languages.registerCodeLensProvider(
-            { language: "xml", scheme: "file" },
-            {
-                provideCodeLenses(document, position) {
-                    return EntityCodeLensProvider.provideCodeLenses(document, position);
-                },
+        if (isCodeLensEnabled) {
+            // Nếu đang bật, hủy CodeLensProvider
+            if (codeLensDisposable) {
+                codeLensDisposable.dispose();
+                codeLensDisposable = null;
             }
-    ) 
-	});	 
-
+        } else {
+            // Nếu đang tắt, đăng ký lại CodeLensProvider
+            codeLensDisposable = vscode.languages.registerCodeLensProvider(
+                { language: "xml", scheme: "file" },
+                {
+                    provideCodeLenses(document, position) {
+                        return EntityCodeLensProvider.provideCodeLenses(document, position);
+                    },
+                }
+            )  
+        }
+        isCodeLensEnabled = !isCodeLensEnabled; // Cập nhật trạng thái
+    });
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document, position) => {
         var content = entityHoverProvider.findContent(entity, document.uri.fsPath); 
         vscode.env.clipboard.writeText(content).then(() => {
             vscode.window.showInformationMessage(`Copied: ${content}`);
         });
-    });
+    }); 
 
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
