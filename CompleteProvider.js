@@ -127,7 +127,7 @@ class CompletionProvider {
         completionItems.push(completionItem);
         return completionItems;
     }
-
+ 
 }
 
 module.exports = CompletionProvider;

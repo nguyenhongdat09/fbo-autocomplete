@@ -2,9 +2,7 @@
 const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
-var xml2js = require('xml2js');
 const level = require('level-rocksdb');
-const { spawn } = require('child_process');
 const ana = require('./AnalystXMLFile');
 class RenderXMLToDB {
     static async render() {
@@ -48,12 +46,7 @@ class RenderXMLToDB {
                     return {prefix: prefix, filePath: xmlFiles.concat(fFiles)};
                 })
             );
-            var FolderPaths = results.flat();  
-              /*
-            var filePath = '\\\\172.168.5.14\\CustomerPro\\FBO\\CUBES\\SP2255\\App_Data\\Controllers\\Grid\\SIDetail.xml'
-            const keyValuePairs = await this.parseXMLFile(filePath);
-            console.log(keyValuePairs);
-            */
+            var FolderPaths = results.flat();   
             vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
                 title: `Analyst And Inserting to Database`,
@@ -77,11 +70,8 @@ class RenderXMLToDB {
                         const keyValuePairs = Object.assign({}, ...keyValuePairsArray);
                         return { folderName, keyValuePairs };
                     })
-                );
-                
-                var kvl_result = keyValuePairs_arr.flat();   
-                
-
+                ); 
+                var kvl_result = keyValuePairs_arr.flat();    
                 kvl_result.forEach(async (keyValuePairs) => {
                     var folderName = keyValuePairs.folderName;
                     var value = keyValuePairs.keyValuePairs; 
@@ -154,25 +144,57 @@ class RenderXMLToDB {
             dbView = level(path.join(__dirname, db_path_name, 'GridView'));
         }
         const db = level(dbPath);
+        var array1 = [], array2 = [];
         try {
             for (const key in keyValuePairs) {
                 const value = keyValuePairs[key];
-               
                 if (nameDb === 'Grid') {   
                     if (value.includes('allowFilter') || value.includes('allowSort') || value.includes('aggregate')) {
                         await dbView.put(key, value);
-                        
+                        array2.push( {
+                                "label": key,
+                                "detail": "field GridView",
+                                "insertText": key
+                        })
                     } else { 
-                        await db.put(key, value); 
-                         
+                        await db.put(key, value);  
+                        array1.push( {
+                            "label": key,
+                            "detail": `field ${nameDb === 'Grid' ? 'GridInput' : nameDb}`,
+                            "insertText": key
+                        })
                     }
                 } else {
                     await db.put(key, value);
+                    array1.push( {
+                        "label": key,
+                        "detail": `field ${nameDb === 'Grid' ? 'GridInput' : nameDb}`,
+                        "insertText": key
+                    })
                 }
             }
         } catch (error) {
             console.error('Error saving to LevelRocksDB:', error);
         } finally {
+            const gridViewJsonPath = path.join(__dirname, './Database/AutoComplete/GridView.json');
+            const gridInputJsonPath = path.join(__dirname, './Database/AutoComplete/GridInput.json');
+            const dirJsonPath = path.join(__dirname, './Database/AutoComplete/Dir.json');
+            const filterInputJsonPath = path.join(__dirname, './Database/AutoComplete/Filter.json');
+            switch (nameDb) {
+                case 'Grid':
+                    fs.writeFileSync(gridViewJsonPath, JSON.stringify(array2, null, 2), 'utf8');
+                    fs.writeFileSync(gridInputJsonPath, JSON.stringify(array1, null, 2), 'utf8');
+                    break;
+                case 'Dir':
+                    fs.writeFileSync(dirJsonPath, JSON.stringify(array1, null, 2), 'utf8');
+                    break;
+                case 'Filter':
+                    fs.writeFileSync(filterInputJsonPath, JSON.stringify(array1, null, 2), 'utf8');
+                    break;
+                default:
+                    break;
+            }
+            
             await db.close();
             if (dbView) {
                 await dbView.close();

@@ -4,13 +4,17 @@ const vscode = require('vscode');
 const CompletionProvider = require('./CompleteProvider');
 const renderXMLToDB = require('./renderXMLToDB');
 const OpenWithVS2008 = require('./openWithVS2008');
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const ReadXMLVS2008 = require('./ReadXMLVS2008');
+const EntityHoverProvider = require("./EntityHoverProvider");
+const EntityCodeLensProvider = require("./EntityCodeLensProvider");
+const CompleteCodeByHandle = require("./CompleteCodeByHandle");
 
+let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
+let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
  * @param {vscode.ExtensionContext} context
- */
-function activate(context) {
+ */ 
+async function activate(context) {
 	console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
 	const provider = new CompletionProvider();
 	const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
@@ -25,7 +29,6 @@ function activate(context) {
         { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
         {
             provideInlineCompletionItems: provider.provideCompletionItems,
-			
         }
     );
 	const genViewFromFields = vscode.languages.registerInlineCompletionItemProvider(
@@ -38,13 +41,91 @@ function activate(context) {
 		OpenWithVS2008.open(uri);
     });
 
+	// Thêm sự kiện mở file XML
+    const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
+        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
+            ReadXMLVS2008.readXml(document.uri.fsPath);
+        }
+    });
+    // Thêm sự kiện lưu file XML
+    const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
+        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
+            ReadXMLVS2008.readXml(document.uri.fsPath);
+        }
+    });
+      
+    const entityHoverProvider = new EntityHoverProvider(__dirname);
+    var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
+        provideHover(document, position) {
+            return entityHoverProvider.provideHover(document, position);
+        },
+    })
  
+    const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
+        if (isCodeLensEnabled) {
+            // Nếu đang bật, hủy CodeLensProvider
+            if (codeLensDisposable) {
+                codeLensDisposable.dispose();
+                codeLensDisposable = null;
+            }
+        } else {
+            // Nếu đang tắt, đăng ký lại CodeLensProvider
+            codeLensDisposable = vscode.languages.registerCodeLensProvider(
+                { language: "xml", scheme: "file" },
+                {
+                    provideCodeLenses(document, position) {
+                        return EntityCodeLensProvider.provideCodeLenses(document, position);
+                    },
+                }
+            )  
+        }
+        isCodeLensEnabled = !isCodeLensEnabled; // Cập nhật trạng thái
+    });
+    // Đăng ký lệnh Copy
+    const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
+        var content = entityHoverProvider.findContent(entity, document.uri.fsPath); 
+        vscode.env.clipboard.writeText(content).then(() => {
+            vscode.window.showInformationMessage(`Copied: ${content}`);
+        });
+    });  
  
+    //const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
+    const sheetId = '1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA'; // ID Google Sheet
+    const completeCodeByHandle = new CompleteCodeByHandle(sheetId);
+
+    const getDataGGS =   vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {
+        console.log('Running Get Data Autocomplete...');
+        await completeCodeByHandle.loadFunctions();
+    })
+    completeCodeByHandle.loadFromJson(); // Load từ JSON khi extension khởi động
+    const providerHandle = vscode.languages.registerCompletionItemProvider(
+        { language: 'xml' }, // Áp dụng cho file XML
+        {
+            provideCompletionItems: completeCodeByHandle.provideCompletionItems.bind(completeCodeByHandle),
+        },
+        '.' // Các ký tự kích hoạt autocomplete
+    ); 
+    const providerHandleField = vscode.languages.registerCompletionItemProvider(
+        { language: 'xml' }, // Áp dụng cho file XML
+        {
+            provideCompletionItems: completeCodeByHandle.provideCompletionFieldItems.bind(completeCodeByHandle),
+        },
+        '.' // Các ký tự kích hoạt autocomplete
+    ); 
+  
+    context.subscriptions.push(getDataGGS);  
+    context.subscriptions.push(providerHandle);  
+    context.subscriptions.push(providerHandleField);  
+    context.subscriptions.push(showEntityCodeLens);
+    context.subscriptions.push(copyEntityCommand);
+    context.subscriptions.push(onHoverEntity);
 	context.subscriptions.push(render);
 	context.subscriptions.push(providerAutoComplete);
 	context.subscriptions.push(autoCompleteFields);
 	context.subscriptions.push(genViewFromFields);
 	context.subscriptions.push(openWithVS2008);
+	context.subscriptions.push(onDidOpenTextDocument);
+    context.subscriptions.push(onDidSaveTextDocument);
 }
 
 // This method is called when your extension is deactivated

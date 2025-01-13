@@ -1,0 +1,32 @@
+[
+  {
+    "label": "setItemValue",
+    "detail": "f.setItemValue(key, value)",
+    "insertText": "setItemValue(${1:''}, ${2:value})"
+  },
+  {
+    "label": "setRefferenceFilterkey",
+    "detail": "f.setRefferenceFilterkey(key)",
+    "insertText": "setRefferenceFilterkey(${1:''})"
+  },
+  {
+    "label": "_getColumnOrder",
+    "detail": "g._getColumnOrder(field)",
+    "insertText": "_getColumnOrder(${1:''})"
+  },
+  {
+    "label": "_getItemValue",
+    "detail": "g._getItemValue(row(int), column (int))",
+    "insertText": "_getItemValue(row, column)"
+  },
+  {
+    "label": "_setColumnVisible",
+    "detail": "g._setColumnVisible(colunm (int), bool)",
+    "insertText": "_setColumnVisible(0, true)"
+  },
+  {
+    "label": "setItemControlBehavior",
+    "detail": "f.setItemControlBehavior(field, value, valueOfRefference)",
+    "insertText": "setItemControlBehavior('', '', '')"
+  }
+]

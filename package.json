@@ -56,6 +56,14 @@
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "Render XML To Database"
+      },
+      {
+        "command": "fbo-autocomplete.showEntityCodeLens",
+        "title": "Show/Hide Entity CodeLens"
+      },
+      {
+        "command": "fbo-autocomplete.getDataAutocomplete",
+        "title": "Get Data Autocomplete"
       }
     ],
     "languages": [
@@ -69,18 +77,10 @@
           ".xml"
         ],
         "configuration": "./language-configuration.json"
-      },
-      {
-        "id": "xml-script-processor",
-        "aliases": [
-          "XML with Script Processor"
-        ],
-        "extensions": [
-          ".xml"
-        ]
       }
     ]
   },
+  "updateUrl": "https://github.com/nguyenhongdat09/fbo-autocomplete/blob/company/update.json",
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
@@ -95,9 +95,10 @@
     "eslint": "^9.16.0"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "fast-xml-parser": "^4.5.1",
+    "googleapis": "^144.0.0",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1",
-    "xml2js": "^0.6.2"
+    "rocksdb": "^5.2.1"
   }
 }
