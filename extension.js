@@ -38,8 +38,8 @@ function activate(context) {
 		OpenWithVS2008.open(uri);
     });
 
-
-
+ 
+ 
 	context.subscriptions.push(render);
 	context.subscriptions.push(providerAutoComplete);
 	context.subscriptions.push(autoCompleteFields);

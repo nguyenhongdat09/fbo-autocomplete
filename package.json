@@ -69,6 +69,15 @@
           ".xml"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "xml-script-processor",
+        "aliases": [
+          "XML with Script Processor"
+        ],
+        "extensions": [
+          ".xml"
+        ]
       }
     ]
   },
