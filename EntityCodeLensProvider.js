@@ -21,7 +21,7 @@ class EntityCodeLensProvider {
                     title: `${match[0]}`,
                     tooltip: "Copy this entity's content to clipboard",
                     command: "fbo-autocomplete.copyEntity",
-                    arguments: [match[0], document, position], // Truyền entity vào lệnh
+                    arguments: [match[0], document], // Truyền entity vào lệnh
                 })
             );
         } 

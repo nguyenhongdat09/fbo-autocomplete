@@ -20,7 +20,7 @@
         - Nếu là AutoComplete thì nhập `$f.fieldat;`
 ## Hiện Code Lens 
 - Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
-![My Image](images/showcodelens.png)
+![My Image](/images/ShowCodeLens.PNG)
 
 
 

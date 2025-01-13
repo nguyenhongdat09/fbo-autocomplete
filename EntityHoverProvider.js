@@ -64,8 +64,7 @@ class EntityHoverProvider {
         }
         return new vscode.Hover("Entity not found.");
     }
-
-    
+ 
 
     findContent (entity, filePath) {
         // Kiểm tra thư mục JsonEntity

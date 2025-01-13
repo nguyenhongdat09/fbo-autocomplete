@@ -7,13 +7,14 @@ const OpenWithVS2008 = require('./openWithVS2008');
 const ReadXMLVS2008 = require('./ReadXMLVS2008');
 const EntityHoverProvider = require("./EntityHoverProvider");
 const EntityCodeLensProvider = require("./EntityCodeLensProvider");
-const UpdateChecker = require('./UpdateChecker');  // Import class UpdateChecker
+const CompleteCodeByHandle = require("./CompleteCodeByHandle");
+
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
  * @param {vscode.ExtensionContext} context
- */
-function activate(context) {
+ */ 
+async function activate(context) {
 	console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
 	const provider = new CompletionProvider();
 	const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
@@ -83,13 +84,32 @@ function activate(context) {
         isCodeLensEnabled = !isCodeLensEnabled; // Cập nhật trạng thái
     });
     // Đăng ký lệnh Copy
-    const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document, position) => {
+    const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
         var content = entityHoverProvider.findContent(entity, document.uri.fsPath); 
         vscode.env.clipboard.writeText(content).then(() => {
             vscode.window.showInformationMessage(`Copied: ${content}`);
         });
-    }); 
+    });  
+ 
 
+    const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
+    const completeCodeByHandle = new CompleteCodeByHandle(sheetId);
+
+    const getDataGGS =   vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {
+        console.log('Running Get Data Autocomplete...');
+        await completeCodeByHandle.loadFunctions();
+    })
+    completeCodeByHandle.loadFromJson(); // Load từ JSON khi extension khởi động
+    const providerHandle = vscode.languages.registerCompletionItemProvider(
+        { language: 'xml' }, // Áp dụng cho file XML
+        {
+            provideCompletionItems: completeCodeByHandle.provideCompletionItems.bind(completeCodeByHandle),
+        },
+        '.' // Các ký tự kích hoạt autocomplete
+    ); 
+  
+    context.subscriptions.push(getDataGGS);  
+    context.subscriptions.push(providerHandle);  
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push( onHoverEntity);
