@@ -21,7 +21,8 @@
 ## Hiện Code Lens 
 - Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
 ![My Image](/images/ShowCodeLens.PNG)
-
+## Autocomplete code dạng hàm, biến 
+- Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
 
 
  
