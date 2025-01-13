@@ -29,7 +29,6 @@ async function activate(context) {
         { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
         {
             provideInlineCompletionItems: provider.provideCompletionItems,
-			
         }
     );
 	const genViewFromFields = vscode.languages.registerInlineCompletionItemProvider(
@@ -61,8 +60,7 @@ async function activate(context) {
             return entityHoverProvider.provideHover(document, position);
         },
     })
-
-   
+ 
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
             // Nếu đang bật, hủy CodeLensProvider
@@ -92,7 +90,8 @@ async function activate(context) {
     });  
  
 
-    const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
+    //const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
+    const sheetId = '1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA'; // ID Google Sheet
     const completeCodeByHandle = new CompleteCodeByHandle(sheetId);
 
     const getDataGGS =   vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {

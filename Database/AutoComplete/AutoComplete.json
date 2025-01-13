@@ -23,5 +23,10 @@
     "label": "_setColumnVisible",
     "detail": "g._setColumnVisible(colunm (int), bool)",
     "insertText": "_setColumnVisible(0, true)"
+  },
+  {
+    "label": "setItemControlBehavior",
+    "detail": "f.setItemControlBehavior(field, value, valueOfRefference)",
+    "insertText": "setItemControlBehavior('', '', '')"
   }
 ]
