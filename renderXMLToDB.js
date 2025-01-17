@@ -16,9 +16,9 @@ class RenderXMLToDB {
         let basePath = document.uri.authority + document.uri.path;
         const prefixesToLoop = ['Dir', 'Grid', 'Filter'];
         //path theo công ty 
-       // basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
+        basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`; 
         //Path theo đường dẫn cứng  
-       
+       /*
         basePath = document.uri.path
         let endIndex = basePath.indexOf('Controllers/') + 'Controllers/'.length;
         if (endIndex !== -1) {
@@ -27,7 +27,7 @@ class RenderXMLToDB {
         } else {
             vscode.window.showErrorMessage('Không tìm thấy "Controllers/" trong đường dẫn.');
         }
-        
+        */
         try{
             //Đợi đọc xong hết tất cả rồi mới nhảy xuống filePaths = results.flat();
             const results = await Promise.all(
@@ -92,7 +92,7 @@ class RenderXMLToDB {
                 var key_t = item.key;
                 var value_t = item.value;
                 const {key, value} = this.KeyValueCleaner(key_t, value_t, filePath); // Xử lý key và value 
-                if (key != '')
+                if (key != '' && !(key.includes(';')))
                     keyValuePairs[key] = value; 
             });
             return keyValuePairs;
@@ -102,11 +102,11 @@ class RenderXMLToDB {
             return {};
         }
     }
-
+    
     static KeyValueCleaner(key, value, filePath) {
-        if (value.includes('ForeignKey')) 
-            return {key: '', value: ''};
         
+        if (/ForeignKey|&/.test(value)) 
+            return { key: '', value: '' };
         var replaceNone = ['isPrimaryKey="true"', 'allowNulls="false"', 'clientDefault="Default"'];
         replaceNone.forEach(item => {
             value = value.replace(item, '');
@@ -115,6 +115,8 @@ class RenderXMLToDB {
         //Xóa luôn theo cặp <clientScript>...</clientScript>
         value = value.replace(/<clientScript>.*?<\/clientScript>\s*/g, '');
         value = value.replace(/<query>.*?<\/query>\s*/g, ''); 
+        value = value.replace(/\s+(filterSource|categoryIndex|operation)="[^"]*"/g, '');
+
         //nếu lookup thì tách riêng với autocomplete
         const regex = /style\s*=\s*"([^"]*)"/;
         const style = value.match(regex);
@@ -126,12 +128,14 @@ class RenderXMLToDB {
             }
         }  
         const externalRegex = /external="([^"]+)"/;
+        
         const external = value.match(externalRegex);
         if (external) {
             if(external[1].toLowerCase() === 'true'){
                 key = key + 'ex'
             }
         }
+        
         return {key, value};
     }
  
@@ -194,7 +198,6 @@ class RenderXMLToDB {
                 default:
                     break;
             }
-            
             await db.close();
             if (dbView) {
                 await dbView.close();

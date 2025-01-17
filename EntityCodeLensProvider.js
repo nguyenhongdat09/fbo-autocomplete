@@ -1,9 +1,6 @@
 const vscode = require("vscode");
 
 class EntityCodeLensProvider {
-    constructor(extensionDirectory) {
-        this.extensionDirectory = extensionDirectory;
-    } 
     static provideCodeLenses(document, position) {
         const codeLenses = [];
         const regex =  /&[\w.]+;/g; // Regex tìm entity dạng &EntityName;

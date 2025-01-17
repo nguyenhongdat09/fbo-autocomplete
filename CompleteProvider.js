@@ -5,17 +5,17 @@ const ana = require('./AnalystXMLFile');
 
 class CompletionProvider {
      async provideCompletionItems(document, position) {
-        var pvd = new CompletionProvider();
+        
         const line = document.lineAt(position);
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
         const completionItems = []; 
-        const folderName = pvd.getFolderName(textBeforeCursor, document); 
+        const folderName = this.getFolderName(textBeforeCursor, document); 
         if (folderName == '') {
             return completionItems;
         } 
         try { 
-            const text = await pvd.getTextComplete(line.b, folderName);
-            const completionItem = pvd.createCompleteItem(text, line, position);
+            const text = await this.getTextComplete(line.b, folderName);
+            const completionItem = this.createCompleteItem(text, line, position);
             completionItems.push(completionItem);
         } catch (error) {
             vscode.window.showErrorMessage(error);
@@ -106,7 +106,6 @@ class CompletionProvider {
         vscode.workspace.applyEdit(edit); 
     }
     async genViewFromFields(document, position){
-        var pvd = new CompletionProvider();
         const line = document.lineAt(position);
         const completionItems = [];
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
@@ -123,7 +122,7 @@ class CompletionProvider {
             if (key != '')
                 textComplete += textComplete == '' ? `<field name="${key}"/>` : `\n<field name="${key}"/>`;
         });
-        const completionItem = pvd.createCompleteItem(textComplete, line, position);
+        const completionItem = this.createCompleteItem(textComplete, line, position);
         completionItems.push(completionItem);
         return completionItems;
     }

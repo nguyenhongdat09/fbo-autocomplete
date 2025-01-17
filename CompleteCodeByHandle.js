@@ -104,13 +104,27 @@ class CompleteCodeByHandle {
         // Nếu không có objectPrefix, trả về undefined (không gợi ý gì)
         return undefined;
     }
-
-
-    provideCompletionFieldItems(document, position) {
+    //Xử lý lúc nhập có 2 dấu chấm a.get().
+    provideCompletionTwoDotItems(document, position) {
         // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
         const linePrefix = document.lineAt(position).text.substr(0, position.character);
     
-    
+        // Regex để kiểm tra xem có hai dấu chấm liên tiếp trước đó không
+        const twoDotsMatch = linePrefix.match(/([a-zA-Z_][a-zA-Z0-9_]*)\(([^)]*)\)\.$/);
+        if (twoDotsMatch) {
+            // Nếu phát hiện hai dấu chấm sau hàm, cung cấp gợi ý phù hợp
+            return [
+                this.createCompletionItem({ label: 'value', detail: 'Get or set the value', insertText: 'value' }),
+                this.createCompletionItem({ label: 'focus', detail: 'Set focus to the element', insertText: 'focus()' }),
+            ];
+        }
+     
+        return undefined; // Không có gợi ý nếu không khớp
+    } 
+
+    provideCompletionFieldItems(document, position) {
+        // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
+        const linePrefix = document.lineAt(position).text.substr(0, position.character); 
         // Biểu thức chính quy kiểm tra tiền tố hợp lệ 
         var f_prefix = linePrefix.trim().substring(0, 2); 
         var gi_prefix = linePrefix.trim().substring(0, 3);

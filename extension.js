@@ -28,13 +28,13 @@ async function activate(context) {
 	const providerAutoComplete = vscode.languages.registerInlineCompletionItemProvider(
         { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
         {
-            provideInlineCompletionItems: provider.provideCompletionItems,
+            provideInlineCompletionItems: provider.provideCompletionItems.bind(provider),
         }
     );
 	const genViewFromFields = vscode.languages.registerInlineCompletionItemProvider(
         { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
         {
-            provideInlineCompletionItems: provider.genViewFromFields
+            provideInlineCompletionItems: provider.genViewFromFields.bind(provider),
         }
     );
 	let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
@@ -105,6 +105,14 @@ async function activate(context) {
         },
         '.' // Các ký tự kích hoạt autocomplete
     ); 
+    const providerTwpDotHandle = vscode.languages.registerCompletionItemProvider(
+        { language: 'xml' }, // Áp dụng cho file XML
+        {
+            provideCompletionItems: completeCodeByHandle.provideCompletionTwoDotItems.bind(completeCodeByHandle),
+        },
+        '.' // Các ký tự kích hoạt autocomplete
+    ); 
+    //Complete cho $f, $gi, $gv
     const providerHandleField = vscode.languages.registerCompletionItemProvider(
         { language: 'xml' }, // Áp dụng cho file XML
         {
@@ -114,6 +122,7 @@ async function activate(context) {
     ); 
   
     context.subscriptions.push(getDataGGS);  
+    context.subscriptions.push(providerTwpDotHandle);  
     context.subscriptions.push(providerHandle);  
     context.subscriptions.push(providerHandleField);  
     context.subscriptions.push(showEntityCodeLens);

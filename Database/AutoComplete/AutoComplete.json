@@ -1,22 +1,22 @@
 [
   {
     "label": "setItemValue",
-    "detail": "f.setItemValue(key, value)",
+    "detail": "f.setItemValue('key', 'value')",
     "insertText": "setItemValue(${1:''}, ${2:value})"
   },
   {
-    "label": "setRefferenceFilterkey",
-    "detail": "f.setRefferenceFilterkey(key)",
-    "insertText": "setRefferenceFilterkey(${1:''})"
+    "label": "setReferenceKeyFilter",
+    "detail": "f.setReferenceKeyFilter('key')",
+    "insertText": "setReferenceKeyFilter(${1:''})"
   },
   {
     "label": "_getColumnOrder",
-    "detail": "g._getColumnOrder(field)",
+    "detail": "g._getColumnOrder('field')",
     "insertText": "_getColumnOrder(${1:''})"
   },
   {
     "label": "_getItemValue",
-    "detail": "g._getItemValue(row(int), column (int))",
+    "detail": "g._getItemValue(row (int), column (int))",
     "insertText": "_getItemValue(row, column)"
   },
   {
@@ -28,5 +28,35 @@
     "label": "setItemControlBehavior",
     "detail": "f.setItemControlBehavior(field, value, valueOfRefference)",
     "insertText": "setItemControlBehavior('', '', '')"
+  },
+  {
+    "label": "setItemValues",
+    "detail": "f.setItemValues('List of Field', [Array Of Value] )",
+    "insertText": "setItemValues('', [])"
+  },
+  {
+    "label": "_findButton",
+    "detail": "f._findButton('ID Of Tag HTML')",
+    "insertText": "_findButton('')"
+  },
+  {
+    "label": "setReadOnlyFields",
+    "detail": "f.setReadOnlyFields('List Field')",
+    "insertText": "setReadOnlyFields('');"
+  },
+  {
+    "label": "getItem('field').value",
+    "detail": "f.getItem('field').value",
+    "insertText": "getItem(${1:''}).value"
+  },
+  {
+    "label": "request(o, 'ResID','ResID', ['field'], null, true);",
+    "detail": "Grid: request(o, 'ResID','ResID', ['detail field'], ['master field'], bool (Not Replace when null));",
+    "insertText": "request(o, ${1:''},${2:''}, [${3:''}], [${4:''}], ${5:true})"
+  },
+  {
+    "label": "_rowCount",
+    "detail": "Return Int",
+    "insertText": "_rowCount"
   }
 ]
