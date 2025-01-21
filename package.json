@@ -25,6 +25,10 @@
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "fbo"
+        },
+        {
+          "command": "fbo-autocomplete.ApplyTranslateFBO",
+          "group": "fbo"
         }
       ]
     },
@@ -32,6 +36,10 @@
       {
         "command": "my-fbo-toolkit.openWithVS2008",
         "title": "Open With VS 2008"
+      },
+      {
+        "command": "fbo-autocomplete.ApplyTranslateFBO",
+        "title": "Apply Translate FBO (v -> e)"
       },
       {
         "command": "fbo-autocomplete.helloWorld",
@@ -95,6 +103,7 @@
     "eslint": "^9.16.0"
   },
   "dependencies": {
+    "@vitalets/google-translate-api": "^9.2.0",
     "axios": "^1.7.9",
     "fast-xml-parser": "^4.5.1",
     "googleapis": "^144.0.0",

@@ -1,0 +1,6037 @@
+[
+  {
+    "label": "thue_suat",
+    "detail": "field GridView",
+    "insertText": "thue_suat"
+  },
+  {
+    "label": "ma_dvcs",
+    "detail": "field GridView",
+    "insertText": "ma_dvcs"
+  },
+  {
+    "label": "ma_kh",
+    "detail": "field GridView",
+    "insertText": "ma_kh"
+  },
+  {
+    "label": "ma_nt",
+    "detail": "field GridView",
+    "insertText": "ma_nt"
+  },
+  {
+    "label": "ten_kh",
+    "detail": "field GridView",
+    "insertText": "ten_kh"
+  },
+  {
+    "label": "tien0",
+    "detail": "field GridView",
+    "insertText": "tien0"
+  },
+  {
+    "label": "tien_nt0",
+    "detail": "field GridView",
+    "insertText": "tien_nt0"
+  },
+  {
+    "label": "ngay_giao",
+    "detail": "field GridView",
+    "insertText": "ngay_giao"
+  },
+  {
+    "label": "muc_thue",
+    "detail": "field GridView",
+    "insertText": "muc_thue"
+  },
+  {
+    "label": "ma_vt0",
+    "detail": "field GridView",
+    "insertText": "ma_vt0"
+  },
+  {
+    "label": "sai_can_duoi",
+    "detail": "field GridView",
+    "insertText": "sai_can_duoi"
+  },
+  {
+    "label": "sai_can_tren",
+    "detail": "field GridView",
+    "insertText": "sai_can_tren"
+  },
+  {
+    "label": "ghi_chu",
+    "detail": "field GridView",
+    "insertText": "ghi_chu"
+  },
+  {
+    "label": "ngay_ct1",
+    "detail": "field GridView",
+    "insertText": "ngay_ct1"
+  },
+  {
+    "label": "tl_pb",
+    "detail": "field GridView",
+    "insertText": "tl_pb"
+  },
+  {
+    "label": "ma_bp",
+    "detail": "field GridView",
+    "insertText": "ma_bp"
+  },
+  {
+    "label": "ma_vv",
+    "detail": "field GridView",
+    "insertText": "ma_vv"
+  },
+  {
+    "label": "ten_ct%l",
+    "detail": "field GridView",
+    "insertText": "ten_ct%l"
+  },
+  {
+    "label": "loai_nh",
+    "detail": "field GridView",
+    "insertText": "loai_nh"
+  },
+  {
+    "label": "ma_nh",
+    "detail": "field GridView",
+    "insertText": "ma_nh"
+  },
+  {
+    "label": "ten_nh%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh%l"
+  },
+  {
+    "label": "loai_yt",
+    "detail": "field GridView",
+    "insertText": "loai_yt"
+  },
+  {
+    "label": "ma_sp",
+    "detail": "field GridView",
+    "insertText": "ma_sp"
+  },
+  {
+    "label": "ten_sp%l",
+    "detail": "field GridView",
+    "insertText": "ten_sp%l"
+  },
+  {
+    "label": "so_lsx",
+    "detail": "field GridView",
+    "insertText": "so_lsx"
+  },
+  {
+    "label": "ten_phan_loai%lex",
+    "detail": "field GridView",
+    "insertText": "ten_phan_loai%lex"
+  },
+  {
+    "label": "ten_bt",
+    "detail": "field GridView",
+    "insertText": "ten_bt"
+  },
+  {
+    "label": "loai_kc",
+    "detail": "field GridView",
+    "insertText": "loai_kc"
+  },
+  {
+    "label": "tk_no",
+    "detail": "field GridView",
+    "insertText": "tk_no"
+  },
+  {
+    "label": "tk_co",
+    "detail": "field GridView",
+    "insertText": "tk_co"
+  },
+  {
+    "label": "ten_kh%l",
+    "detail": "field GridView",
+    "insertText": "ten_kh%l"
+  },
+  {
+    "label": "dia_chi",
+    "detail": "field GridView",
+    "insertText": "dia_chi"
+  },
+  {
+    "label": "ma_so_thue",
+    "detail": "field GridView",
+    "insertText": "ma_so_thue"
+  },
+  {
+    "label": "tk_nh",
+    "detail": "field GridView",
+    "insertText": "tk_nh"
+  },
+  {
+    "label": "nguoi_thu_huong",
+    "detail": "field GridView",
+    "insertText": "nguoi_thu_huong"
+  },
+  {
+    "label": "ngan_hang",
+    "detail": "field GridView",
+    "insertText": "ngan_hang"
+  },
+  {
+    "label": "chi_nhanh",
+    "detail": "field GridView",
+    "insertText": "chi_nhanh"
+  },
+  {
+    "label": "tt",
+    "detail": "field GridView",
+    "insertText": "tt"
+  },
+  {
+    "label": "tien_cl_nt",
+    "detail": "field GridView",
+    "insertText": "tien_cl_nt"
+  },
+  {
+    "label": "so_the_ts",
+    "detail": "field GridView",
+    "insertText": "so_the_ts"
+  },
+  {
+    "label": "ten_ts%l",
+    "detail": "field GridView",
+    "insertText": "ten_ts%l"
+  },
+  {
+    "label": "tk_kh",
+    "detail": "field GridView",
+    "insertText": "tk_kh"
+  },
+  {
+    "label": "tk_cp",
+    "detail": "field GridView",
+    "insertText": "tk_cp"
+  },
+  {
+    "label": "ma_bp_ts",
+    "detail": "field GridView",
+    "insertText": "ma_bp_ts"
+  },
+  {
+    "label": "ma_hd",
+    "detail": "field GridView",
+    "insertText": "ma_hd"
+  },
+  {
+    "label": "header%l",
+    "detail": "field GridView",
+    "insertText": "header%l"
+  },
+  {
+    "label": "ten_qh%l",
+    "detail": "field GridView",
+    "insertText": "ten_qh%l"
+  },
+  {
+    "label": "ma_nx",
+    "detail": "field GridView",
+    "insertText": "ma_nx"
+  },
+  {
+    "label": "ma_px",
+    "detail": "field GridView",
+    "insertText": "ma_px"
+  },
+  {
+    "label": "ma_may",
+    "detail": "field GridView",
+    "insertText": "ma_may"
+  },
+  {
+    "label": "ten_vt%l",
+    "detail": "field GridView",
+    "insertText": "ten_vt%l"
+  },
+  {
+    "label": "dvt2",
+    "detail": "field GridView",
+    "insertText": "dvt2"
+  },
+  {
+    "label": "ten_ngan",
+    "detail": "field GridView",
+    "insertText": "ten_ngan"
+  },
+  {
+    "label": "ps_no_nt",
+    "detail": "field GridView",
+    "insertText": "ps_no_nt"
+  },
+  {
+    "label": "ps_co_nt",
+    "detail": "field GridView",
+    "insertText": "ps_co_nt"
+  },
+  {
+    "label": "ps_no",
+    "detail": "field GridView",
+    "insertText": "ps_no"
+  },
+  {
+    "label": "ps_co",
+    "detail": "field GridView",
+    "insertText": "ps_co"
+  },
+  {
+    "label": "so_ct0",
+    "detail": "field GridView",
+    "insertText": "so_ct0"
+  },
+  {
+    "label": "ma_ku",
+    "detail": "field GridView",
+    "insertText": "ma_ku"
+  },
+  {
+    "label": "khoi_luong_keo",
+    "detail": "field GridView",
+    "insertText": "khoi_luong_keo"
+  },
+  {
+    "label": "so_ku",
+    "detail": "field GridView",
+    "insertText": "so_ku"
+  },
+  {
+    "label": "ten_ku%l",
+    "detail": "field GridView",
+    "insertText": "ten_ku%l"
+  },
+  {
+    "label": "so_ngay_tl",
+    "detail": "field GridView",
+    "insertText": "so_ngay_tl"
+  },
+  {
+    "label": "lai_vay",
+    "detail": "field GridView",
+    "insertText": "lai_vay"
+  },
+  {
+    "label": "tien_tt",
+    "detail": "field GridView",
+    "insertText": "tien_tt"
+  },
+  {
+    "label": "tien_tt_nt",
+    "detail": "field GridView",
+    "insertText": "tien_tt_nt"
+  },
+  {
+    "label": "ten_vi_tri%l",
+    "detail": "field GridView",
+    "insertText": "ten_vi_tri%l"
+  },
+  {
+    "label": "ten_lo%l",
+    "detail": "field GridView",
+    "insertText": "ten_lo%l"
+  },
+  {
+    "label": "so_chat_luong",
+    "detail": "field GridView",
+    "insertText": "so_chat_luong"
+  },
+  {
+    "label": "ngay_lct",
+    "detail": "field GridView",
+    "insertText": "ngay_lct"
+  },
+  {
+    "label": "ma_ct0",
+    "detail": "field GridView",
+    "insertText": "ma_ct0"
+  },
+  {
+    "label": "ong_ba",
+    "detail": "field GridView",
+    "insertText": "ong_ba"
+  },
+  {
+    "label": "ma_phi",
+    "detail": "field GridView",
+    "insertText": "ma_phi"
+  },
+  {
+    "label": "ten_phi%l",
+    "detail": "field GridView",
+    "insertText": "ten_phi%l"
+  },
+  {
+    "label": "ma_td1",
+    "detail": "field GridView",
+    "insertText": "ma_td1"
+  },
+  {
+    "label": "ten_dtqt",
+    "detail": "field GridView",
+    "insertText": "ten_dtqt"
+  },
+  {
+    "label": "idLog",
+    "detail": "field GridView",
+    "insertText": "idLog"
+  },
+  {
+    "label": "ngay_ct_log",
+    "detail": "field GridView",
+    "insertText": "ngay_ct_log"
+  },
+  {
+    "label": "so_ct_log",
+    "detail": "field GridView",
+    "insertText": "so_ct_log"
+  },
+  {
+    "label": "c1",
+    "detail": "field GridView",
+    "insertText": "c1"
+  },
+  {
+    "label": "c1log",
+    "detail": "field GridView",
+    "insertText": "c1log"
+  },
+  {
+    "label": "c2",
+    "detail": "field GridView",
+    "insertText": "c2"
+  },
+  {
+    "label": "c2log",
+    "detail": "field GridView",
+    "insertText": "c2log"
+  },
+  {
+    "label": "c3",
+    "detail": "field GridView",
+    "insertText": "c3"
+  },
+  {
+    "label": "c3log",
+    "detail": "field GridView",
+    "insertText": "c3log"
+  },
+  {
+    "label": "c4",
+    "detail": "field GridView",
+    "insertText": "c4"
+  },
+  {
+    "label": "c4log",
+    "detail": "field GridView",
+    "insertText": "c4log"
+  },
+  {
+    "label": "c5",
+    "detail": "field GridView",
+    "insertText": "c5"
+  },
+  {
+    "label": "c5log",
+    "detail": "field GridView",
+    "insertText": "c5log"
+  },
+  {
+    "label": "datetime0",
+    "detail": "field GridView",
+    "insertText": "datetime0"
+  },
+  {
+    "label": "comment0",
+    "detail": "field GridView",
+    "insertText": "comment0"
+  },
+  {
+    "label": "datetime2",
+    "detail": "field GridView",
+    "insertText": "datetime2"
+  },
+  {
+    "label": "comment2",
+    "detail": "field GridView",
+    "insertText": "comment2"
+  },
+  {
+    "label": "ten_ky",
+    "detail": "field GridView",
+    "insertText": "ten_ky"
+  },
+  {
+    "label": "ten_key%l",
+    "detail": "field GridView",
+    "insertText": "ten_key%l"
+  },
+  {
+    "label": "ton_dau",
+    "detail": "field GridView",
+    "insertText": "ton_dau"
+  },
+  {
+    "label": "ma",
+    "detail": "field GridView",
+    "insertText": "ma"
+  },
+  {
+    "label": "ten%l",
+    "detail": "field GridView",
+    "insertText": "ten%l"
+  },
+  {
+    "label": "ten_kho%l",
+    "detail": "field GridView",
+    "insertText": "ten_kho%l"
+  },
+  {
+    "label": "ten_dc%l",
+    "detail": "field GridView",
+    "insertText": "ten_dc%l"
+  },
+  {
+    "label": "ma_trongtai",
+    "detail": "field GridView",
+    "insertText": "ma_trongtai"
+  },
+  {
+    "label": "ten_taitrong%l",
+    "detail": "field GridView",
+    "insertText": "ten_taitrong%l"
+  },
+  {
+    "label": "ma_thue",
+    "detail": "field GridView",
+    "insertText": "ma_thue"
+  },
+  {
+    "label": "so_pg",
+    "detail": "field GridView",
+    "insertText": "so_pg"
+  },
+  {
+    "label": "nguyen_gia_nt",
+    "detail": "field GridView",
+    "insertText": "nguyen_gia_nt"
+  },
+  {
+    "label": "gt_da_pb_nt",
+    "detail": "field GridView",
+    "insertText": "gt_da_pb_nt"
+  },
+  {
+    "label": "gt_pb_ky_nt",
+    "detail": "field GridView",
+    "insertText": "gt_pb_ky_nt"
+  },
+  {
+    "label": "nguyen_gia",
+    "detail": "field GridView",
+    "insertText": "nguyen_gia"
+  },
+  {
+    "label": "gt_da_pb",
+    "detail": "field GridView",
+    "insertText": "gt_da_pb"
+  },
+  {
+    "label": "gt_pb_ky",
+    "detail": "field GridView",
+    "insertText": "gt_pb_ky"
+  },
+  {
+    "label": "ten_dvcs%l",
+    "detail": "field GridView",
+    "insertText": "ten_dvcs%l"
+  },
+  {
+    "label": "so_dt",
+    "detail": "field GridView",
+    "insertText": "so_dt"
+  },
+  {
+    "label": "ten_ktt%l",
+    "detail": "field GridView",
+    "insertText": "ten_ktt%l"
+  },
+  {
+    "label": "ma_vt2",
+    "detail": "field GridView",
+    "insertText": "ma_vt2"
+  },
+  {
+    "label": "status",
+    "detail": "field GridView",
+    "insertText": "status"
+  },
+  {
+    "label": "so_ct_dh",
+    "detail": "field GridView",
+    "insertText": "so_ct_dh"
+  },
+  {
+    "label": "ma_ct_dh",
+    "detail": "field GridView",
+    "insertText": "ma_ct_dh"
+  },
+  {
+    "label": "xkey",
+    "detail": "field GridView",
+    "insertText": "xkey"
+  },
+  {
+    "label": "mat_ab",
+    "detail": "field GridView",
+    "insertText": "mat_ab"
+  },
+  {
+    "label": "nh_vt3",
+    "detail": "field GridView",
+    "insertText": "nh_vt3"
+  },
+  {
+    "label": "ten_bp%l",
+    "detail": "field GridView",
+    "insertText": "ten_bp%l"
+  },
+  {
+    "label": "sl_tu",
+    "detail": "field GridView",
+    "insertText": "sl_tu"
+  },
+  {
+    "label": "sl_den",
+    "detail": "field GridView",
+    "insertText": "sl_den"
+  },
+  {
+    "label": "so_mau_tu",
+    "detail": "field GridView",
+    "insertText": "so_mau_tu"
+  },
+  {
+    "label": "so_mau_den",
+    "detail": "field GridView",
+    "insertText": "so_mau_den"
+  },
+  {
+    "label": "sl_theo_mau",
+    "detail": "field GridView",
+    "insertText": "sl_theo_mau"
+  },
+  {
+    "label": "ti_le",
+    "detail": "field GridView",
+    "insertText": "ti_le"
+  },
+  {
+    "label": "bhao_toi_thieu",
+    "detail": "field GridView",
+    "insertText": "bhao_toi_thieu"
+  },
+  {
+    "label": "ma_cang",
+    "detail": "field GridView",
+    "insertText": "ma_cang"
+  },
+  {
+    "label": "ten_cang%l",
+    "detail": "field GridView",
+    "insertText": "ten_cang%l"
+  },
+  {
+    "label": "ma_loai",
+    "detail": "field GridView",
+    "insertText": "ma_loai"
+  },
+  {
+    "label": "ten_loai%l",
+    "detail": "field GridView",
+    "insertText": "ten_loai%l"
+  },
+  {
+    "label": "tk_cn",
+    "detail": "field GridView",
+    "insertText": "tk_cn"
+  },
+  {
+    "label": "ma_hai_quan",
+    "detail": "field GridView",
+    "insertText": "ma_hai_quan"
+  },
+  {
+    "label": "ten_hai_quan%l",
+    "detail": "field GridView",
+    "insertText": "ten_hai_quan%l"
+  },
+  {
+    "label": "ma_doi",
+    "detail": "field GridView",
+    "insertText": "ma_doi"
+  },
+  {
+    "label": "ma_kho_bac",
+    "detail": "field GridView",
+    "insertText": "ma_kho_bac"
+  },
+  {
+    "label": "ma_co_quan",
+    "detail": "field GridView",
+    "insertText": "ma_co_quan"
+  },
+  {
+    "label": "ma_quan_he_ns",
+    "detail": "field GridView",
+    "insertText": "ma_quan_he_ns"
+  },
+  {
+    "label": "tk_thu",
+    "detail": "field GridView",
+    "insertText": "tk_thu"
+  },
+  {
+    "label": "tk_gui",
+    "detail": "field GridView",
+    "insertText": "tk_gui"
+  },
+  {
+    "label": "tk_phi",
+    "detail": "field GridView",
+    "insertText": "tk_phi"
+  },
+  {
+    "label": "tinh_gia_yn",
+    "detail": "field GridView",
+    "insertText": "tinh_gia_yn"
+  },
+  {
+    "label": "sl_to_in",
+    "detail": "field GridView",
+    "insertText": "sl_to_in"
+  },
+  {
+    "label": "ma_mayin",
+    "detail": "field GridView",
+    "insertText": "ma_mayin"
+  },
+  {
+    "label": "ten_mayin%l",
+    "detail": "field GridView",
+    "insertText": "ten_mayin%l"
+  },
+  {
+    "label": "so_mau",
+    "detail": "field GridView",
+    "insertText": "so_mau"
+  },
+  {
+    "label": "gear",
+    "detail": "field GridView",
+    "insertText": "gear"
+  },
+  {
+    "label": "step",
+    "detail": "field GridView",
+    "insertText": "step"
+  },
+  {
+    "label": "distortion",
+    "detail": "field GridView",
+    "insertText": "distortion"
+  },
+  {
+    "label": "ma_chuong",
+    "detail": "field GridView",
+    "insertText": "ma_chuong"
+  },
+  {
+    "label": "ten_chuong%l",
+    "detail": "field GridView",
+    "insertText": "ten_chuong%l"
+  },
+  {
+    "label": "ten_pt%l",
+    "detail": "field GridView",
+    "insertText": "ten_pt%l"
+  },
+  {
+    "label": "ma_taitrong",
+    "detail": "field GridView",
+    "insertText": "ma_taitrong"
+  },
+  {
+    "label": "sl_mau_tu",
+    "detail": "field GridView",
+    "insertText": "sl_mau_tu"
+  },
+  {
+    "label": "sl_mau_den",
+    "detail": "field GridView",
+    "insertText": "sl_mau_den"
+  },
+  {
+    "label": "sl_cong_them",
+    "detail": "field GridView",
+    "insertText": "sl_cong_them"
+  },
+  {
+    "label": "ma_tieu_muc",
+    "detail": "field GridView",
+    "insertText": "ma_tieu_muc"
+  },
+  {
+    "label": "ten_tieu_muc%l",
+    "detail": "field GridView",
+    "insertText": "ten_tieu_muc%l"
+  },
+  {
+    "label": "name_user",
+    "detail": "field GridView",
+    "insertText": "name_user"
+  },
+  {
+    "label": "ten_vt",
+    "detail": "field GridView",
+    "insertText": "ten_vt"
+  },
+  {
+    "label": "nh_vt2",
+    "detail": "field GridView",
+    "insertText": "nh_vt2"
+  },
+  {
+    "label": "ten_nh%lex",
+    "detail": "field GridView",
+    "insertText": "ten_nh%lex"
+  },
+  {
+    "label": "stt_cd",
+    "detail": "field GridView",
+    "insertText": "stt_cd"
+  },
+  {
+    "label": "xcode",
+    "detail": "field GridView",
+    "insertText": "xcode"
+  },
+  {
+    "label": "xcode_me",
+    "detail": "field GridView",
+    "insertText": "xcode_me"
+  },
+  {
+    "label": "xcode_truoc",
+    "detail": "field GridView",
+    "insertText": "xcode_truoc"
+  },
+  {
+    "label": "ten_qt",
+    "detail": "field GridView",
+    "insertText": "ten_qt"
+  },
+  {
+    "label": "ten_qt2",
+    "detail": "field GridView",
+    "insertText": "ten_qt2"
+  },
+  {
+    "label": "kieu",
+    "detail": "field GridView",
+    "insertText": "kieu"
+  },
+  {
+    "label": "ma_nvbh",
+    "detail": "field GridView",
+    "insertText": "ma_nvbh"
+  },
+  {
+    "label": "ten_kk",
+    "detail": "field GridView",
+    "insertText": "ten_kk"
+  },
+  {
+    "label": "ngay_kk",
+    "detail": "field GridView",
+    "insertText": "ngay_kk"
+  },
+  {
+    "label": "ma_ca",
+    "detail": "field GridView",
+    "insertText": "ma_ca"
+  },
+  {
+    "label": "ma_cong",
+    "detail": "field GridView",
+    "insertText": "ma_cong"
+  },
+  {
+    "label": "gioi_tinh",
+    "detail": "field GridView",
+    "insertText": "gioi_tinh"
+  },
+  {
+    "label": "ten_gt%l",
+    "detail": "field GridView",
+    "insertText": "ten_gt%l"
+  },
+  {
+    "label": "tuoi_nam",
+    "detail": "field GridView",
+    "insertText": "tuoi_nam"
+  },
+  {
+    "label": "tuoi_thang",
+    "detail": "field GridView",
+    "insertText": "tuoi_thang"
+  },
+  {
+    "label": "ten_tk%l",
+    "detail": "field GridView",
+    "insertText": "ten_tk%l"
+  },
+  {
+    "label": "loai_tk",
+    "detail": "field GridView",
+    "insertText": "loai_tk"
+  },
+  {
+    "label": "tk_sc",
+    "detail": "field GridView",
+    "insertText": "tk_sc"
+  },
+  {
+    "label": "bac_tk",
+    "detail": "field GridView",
+    "insertText": "bac_tk"
+  },
+  {
+    "label": "du_no00",
+    "detail": "field GridView",
+    "insertText": "du_no00"
+  },
+  {
+    "label": "du_co00",
+    "detail": "field GridView",
+    "insertText": "du_co00"
+  },
+  {
+    "label": "du_no_nt00",
+    "detail": "field GridView",
+    "insertText": "du_no_nt00"
+  },
+  {
+    "label": "du_co_nt00",
+    "detail": "field GridView",
+    "insertText": "du_co_nt00"
+  },
+  {
+    "label": "ds_tk",
+    "detail": "field GridView",
+    "insertText": "ds_tk"
+  },
+  {
+    "label": "tk_lkvv",
+    "detail": "field GridView",
+    "insertText": "tk_lkvv"
+  },
+  {
+    "label": "no_co",
+    "detail": "field GridView",
+    "insertText": "no_co"
+  },
+  {
+    "label": "name",
+    "detail": "field GridView",
+    "insertText": "name"
+  },
+  {
+    "label": "comment",
+    "detail": "field GridView",
+    "insertText": "comment"
+  },
+  {
+    "label": "lastchange",
+    "detail": "field GridView",
+    "insertText": "lastchange"
+  },
+  {
+    "label": "ten_ns%l",
+    "detail": "field GridView",
+    "insertText": "ten_ns%l"
+  },
+  {
+    "label": "ngay",
+    "detail": "field GridView",
+    "insertText": "ngay"
+  },
+  {
+    "label": "comment%l",
+    "detail": "field GridView",
+    "insertText": "comment%l"
+  },
+  {
+    "label": "ip_address",
+    "detail": "field GridView",
+    "insertText": "ip_address"
+  },
+  {
+    "label": "user_id",
+    "detail": "field GridView",
+    "insertText": "user_id"
+  },
+  {
+    "label": "tieu_de",
+    "detail": "field GridView",
+    "insertText": "tieu_de"
+  },
+  {
+    "label": "user_name",
+    "detail": "field GridView",
+    "insertText": "user_name"
+  },
+  {
+    "label": "ten_kieu%l",
+    "detail": "field GridView",
+    "insertText": "ten_kieu%l"
+  },
+  {
+    "label": "dvcs",
+    "detail": "field GridView",
+    "insertText": "dvcs"
+  },
+  {
+    "label": "ma_md",
+    "detail": "field GridView",
+    "insertText": "ma_md"
+  },
+  {
+    "label": "nh_kh1",
+    "detail": "field GridView",
+    "insertText": "nh_kh1"
+  },
+  {
+    "label": "nh_kh2",
+    "detail": "field GridView",
+    "insertText": "nh_kh2"
+  },
+  {
+    "label": "nh_kh3",
+    "detail": "field GridView",
+    "insertText": "nh_kh3"
+  },
+  {
+    "label": "ma_vung",
+    "detail": "field GridView",
+    "insertText": "ma_vung"
+  },
+  {
+    "label": "ma_bp0",
+    "detail": "field GridView",
+    "insertText": "ma_bp0"
+  },
+  {
+    "label": "ten_md%l",
+    "detail": "field GridView",
+    "insertText": "ten_md%l"
+  },
+  {
+    "label": "ten_nh1%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh1%l"
+  },
+  {
+    "label": "ten_nh2%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh2%l"
+  },
+  {
+    "label": "ten_nh3%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh3%l"
+  },
+  {
+    "label": "ten_vung%l",
+    "detail": "field GridView",
+    "insertText": "ten_vung%l"
+  },
+  {
+    "label": "ten_bp0%l",
+    "detail": "field GridView",
+    "insertText": "ten_bp0%l"
+  },
+  {
+    "label": "ten_nh0%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh0%l"
+  },
+  {
+    "label": "u_status",
+    "detail": "field GridView",
+    "insertText": "u_status"
+  },
+  {
+    "label": "u_status_name%l",
+    "detail": "field GridView",
+    "insertText": "u_status_name%l"
+  },
+  {
+    "label": "ma_quyen",
+    "detail": "field GridView",
+    "insertText": "ma_quyen"
+  },
+  {
+    "label": "ten_quyen%l",
+    "detail": "field GridView",
+    "insertText": "ten_quyen%l"
+  },
+  {
+    "label": "ngay_hl2",
+    "detail": "field GridView",
+    "insertText": "ngay_hl2"
+  },
+  {
+    "label": "order_type_name%l",
+    "detail": "field GridView",
+    "insertText": "order_type_name%l"
+  },
+  {
+    "label": "order_field_name%l",
+    "detail": "field GridView",
+    "insertText": "order_field_name%l"
+  },
+  {
+    "label": "ma_vi_tri_x",
+    "detail": "field GridView",
+    "insertText": "ma_vi_tri_x"
+  },
+  {
+    "label": "ma_lo_x",
+    "detail": "field GridView",
+    "insertText": "ma_lo_x"
+  },
+  {
+    "label": "lo_yn",
+    "detail": "field GridView",
+    "insertText": "lo_yn"
+  },
+  {
+    "label": "vi_tri_yn",
+    "detail": "field GridView",
+    "insertText": "vi_tri_yn"
+  },
+  {
+    "label": "ten_vi_tri",
+    "detail": "field GridView",
+    "insertText": "ten_vi_tri"
+  },
+  {
+    "label": "ten_kho",
+    "detail": "field GridView",
+    "insertText": "ten_kho"
+  },
+  {
+    "label": "ma_so",
+    "detail": "field GridView",
+    "insertText": "ma_so"
+  },
+  {
+    "label": "chi_tieu%l",
+    "detail": "field GridView",
+    "insertText": "chi_tieu%l"
+  },
+  {
+    "label": "thuyet_minh",
+    "detail": "field GridView",
+    "insertText": "thuyet_minh"
+  },
+  {
+    "label": "cach_tinh",
+    "detail": "field GridView",
+    "insertText": "cach_tinh"
+  },
+  {
+    "label": "in_ck",
+    "detail": "field GridView",
+    "insertText": "in_ck"
+  },
+  {
+    "label": "tknh",
+    "detail": "field GridView",
+    "insertText": "tknh"
+  },
+  {
+    "label": "ma_cp",
+    "detail": "field GridView",
+    "insertText": "ma_cp"
+  },
+  {
+    "label": "ten_cp%l",
+    "detail": "field GridView",
+    "insertText": "ten_cp%l"
+  },
+  {
+    "label": "ma_nh_dt",
+    "detail": "field GridView",
+    "insertText": "ma_nh_dt"
+  },
+  {
+    "label": "ma_citad",
+    "detail": "field GridView",
+    "insertText": "ma_citad"
+  },
+  {
+    "label": "ten_cn%l",
+    "detail": "field GridView",
+    "insertText": "ten_cn%l"
+  },
+  {
+    "label": "ma_kn",
+    "detail": "field GridView",
+    "insertText": "ma_kn"
+  },
+  {
+    "label": "ten_kn%l",
+    "detail": "field GridView",
+    "insertText": "ten_kn%l"
+  },
+  {
+    "label": "so_tk_nh",
+    "detail": "field GridView",
+    "insertText": "so_tk_nh"
+  },
+  {
+    "label": "cif_code",
+    "detail": "field GridView",
+    "insertText": "cif_code"
+  },
+  {
+    "label": "user_nh",
+    "detail": "field GridView",
+    "insertText": "user_nh"
+  },
+  {
+    "label": "ten_khex",
+    "detail": "field GridView",
+    "insertText": "ten_khex"
+  },
+  {
+    "label": "chu_tk",
+    "detail": "field GridView",
+    "insertText": "chu_tk"
+  },
+  {
+    "label": "ten_nh",
+    "detail": "field GridView",
+    "insertText": "ten_nh"
+  },
+  {
+    "label": "phi_nhan_yn",
+    "detail": "field GridView",
+    "insertText": "phi_nhan_yn"
+  },
+  {
+    "label": "rp_name%l",
+    "detail": "field GridView",
+    "insertText": "rp_name%l"
+  },
+  {
+    "label": "c_acc",
+    "detail": "field GridView",
+    "insertText": "c_acc"
+  },
+  {
+    "label": "d_acc",
+    "detail": "field GridView",
+    "insertText": "d_acc"
+  },
+  {
+    "label": "giam_tru",
+    "detail": "field GridView",
+    "insertText": "giam_tru"
+  },
+  {
+    "label": "ma_nguon",
+    "detail": "field GridView",
+    "insertText": "ma_nguon"
+  },
+  {
+    "label": "r_new",
+    "detail": "field GridView",
+    "insertText": "r_new"
+  },
+  {
+    "label": "r_edit",
+    "detail": "field GridView",
+    "insertText": "r_edit"
+  },
+  {
+    "label": "r_del",
+    "detail": "field GridView",
+    "insertText": "r_del"
+  },
+  {
+    "label": "r_access",
+    "detail": "field GridView",
+    "insertText": "r_access"
+  },
+  {
+    "label": "ty_le",
+    "detail": "field GridView",
+    "insertText": "ty_le"
+  },
+  {
+    "label": "ma_kv",
+    "detail": "field GridView",
+    "insertText": "ma_kv"
+  },
+  {
+    "label": "ten_kv%l",
+    "detail": "field GridView",
+    "insertText": "ten_kv%l"
+  },
+  {
+    "label": "ket_qua",
+    "detail": "field GridView",
+    "insertText": "ket_qua"
+  },
+  {
+    "label": "ma_qg",
+    "detail": "field GridView",
+    "insertText": "ma_qg"
+  },
+  {
+    "label": "ten_qg%l",
+    "detail": "field GridView",
+    "insertText": "ten_qg%l"
+  },
+  {
+    "label": "ten_ph_loai%l",
+    "detail": "field GridView",
+    "insertText": "ten_ph_loai%l"
+  },
+  {
+    "label": "ma_loi",
+    "detail": "field GridView",
+    "insertText": "ma_loi"
+  },
+  {
+    "label": "ten_loi%l",
+    "detail": "field GridView",
+    "insertText": "ten_loi%l"
+  },
+  {
+    "label": "sl_loi",
+    "detail": "field GridView",
+    "insertText": "sl_loi"
+  },
+  {
+    "label": "ma_cn",
+    "detail": "field GridView",
+    "insertText": "ma_cn"
+  },
+  {
+    "label": "ngay_hl_tu",
+    "detail": "field GridView",
+    "insertText": "ngay_hl_tu"
+  },
+  {
+    "label": "ngay_hl_den",
+    "detail": "field GridView",
+    "insertText": "ngay_hl_den"
+  },
+  {
+    "label": "ma_cd",
+    "detail": "field GridView",
+    "insertText": "ma_cd"
+  },
+  {
+    "label": "trong_so",
+    "detail": "field GridView",
+    "insertText": "trong_so"
+  },
+  {
+    "label": "ten_nguon%l",
+    "detail": "field GridView",
+    "insertText": "ten_nguon%l"
+  },
+  {
+    "label": "ten_diem%l",
+    "detail": "field GridView",
+    "insertText": "ten_diem%l"
+  },
+  {
+    "label": "ten_mau%l",
+    "detail": "field GridView",
+    "insertText": "ten_mau%l"
+  },
+  {
+    "label": "mc_yn",
+    "detail": "field GridView",
+    "insertText": "mc_yn"
+  },
+  {
+    "label": "nd_yn",
+    "detail": "field GridView",
+    "insertText": "nd_yn"
+  },
+  {
+    "label": "diem_so",
+    "detail": "field GridView",
+    "insertText": "diem_so"
+  },
+  {
+    "label": "ten_dac_tinh%l",
+    "detail": "field GridView",
+    "insertText": "ten_dac_tinh%l"
+  },
+  {
+    "label": "ma_phan_he",
+    "detail": "field GridView",
+    "insertText": "ma_phan_he"
+  },
+  {
+    "label": "descript%l",
+    "detail": "field GridView",
+    "insertText": "descript%l"
+  },
+  {
+    "label": "val_view%l",
+    "detail": "field GridView",
+    "insertText": "val_view%l"
+  },
+  {
+    "label": "loai_dt",
+    "detail": "field GridView",
+    "insertText": "loai_dt"
+  },
+  {
+    "label": "ma_tt",
+    "detail": "field GridView",
+    "insertText": "ma_tt"
+  },
+  {
+    "label": "dvt1",
+    "detail": "field GridView",
+    "insertText": "dvt1"
+  },
+  {
+    "label": "ten_rb%l",
+    "detail": "field GridView",
+    "insertText": "ten_rb%l"
+  },
+  {
+    "label": "ty_trong",
+    "detail": "field GridView",
+    "insertText": "ty_trong"
+  },
+  {
+    "label": "ma_kq",
+    "detail": "field GridView",
+    "insertText": "ma_kq"
+  },
+  {
+    "label": "ten_kq%l",
+    "detail": "field GridView",
+    "insertText": "ten_kq%l"
+  },
+  {
+    "label": "diem",
+    "detail": "field GridView",
+    "insertText": "diem"
+  },
+  {
+    "label": "so_tc",
+    "detail": "field GridView",
+    "insertText": "so_tc"
+  },
+  {
+    "label": "loai_gh",
+    "detail": "field GridView",
+    "insertText": "loai_gh"
+  },
+  {
+    "label": "tien_sai_can_duoi",
+    "detail": "field GridView",
+    "insertText": "tien_sai_can_duoi"
+  },
+  {
+    "label": "tien_sai_can_tren",
+    "detail": "field GridView",
+    "insertText": "tien_sai_can_tren"
+  },
+  {
+    "label": "danh_gia",
+    "detail": "field GridView",
+    "insertText": "danh_gia"
+  },
+  {
+    "label": "sl_lo_kd",
+    "detail": "field GridView",
+    "insertText": "sl_lo_kd"
+  },
+  {
+    "label": "sl_qdsd",
+    "detail": "field GridView",
+    "insertText": "sl_qdsd"
+  },
+  {
+    "label": "statusname",
+    "detail": "field GridView",
+    "insertText": "statusname"
+  },
+  {
+    "label": "ma_loai_qd",
+    "detail": "field GridView",
+    "insertText": "ma_loai_qd"
+  },
+  {
+    "label": "ten_loai_qd%l",
+    "detail": "field GridView",
+    "insertText": "ten_loai_qd%l"
+  },
+  {
+    "label": "ngay_hong",
+    "detail": "field GridView",
+    "insertText": "ngay_hong"
+  },
+  {
+    "label": "tieu_chuan",
+    "detail": "field GridView",
+    "insertText": "tieu_chuan"
+  },
+  {
+    "label": "ma_nv",
+    "detail": "field GridView",
+    "insertText": "ma_nv"
+  },
+  {
+    "label": "ten_nv%l",
+    "detail": "field GridView",
+    "insertText": "ten_nv%l"
+  },
+  {
+    "label": "t_thue_nt",
+    "detail": "field GridView",
+    "insertText": "t_thue_nt"
+  },
+  {
+    "label": "so_seri0",
+    "detail": "field GridView",
+    "insertText": "so_seri0"
+  },
+  {
+    "label": "ma_yt",
+    "detail": "field GridView",
+    "insertText": "ma_yt"
+  },
+  {
+    "label": "ten_thue%l",
+    "detail": "field GridView",
+    "insertText": "ten_thue%l"
+  },
+  {
+    "label": "xl",
+    "detail": "field GridView",
+    "insertText": "xl"
+  },
+  {
+    "label": "tb",
+    "detail": "field GridView",
+    "insertText": "tb"
+  },
+  {
+    "label": "tb2",
+    "detail": "field GridView",
+    "insertText": "tb2"
+  },
+  {
+    "label": "cp_bt",
+    "detail": "field GridView",
+    "insertText": "cp_bt"
+  },
+  {
+    "label": "cp_ql",
+    "detail": "field GridView",
+    "insertText": "cp_ql"
+  },
+  {
+    "label": "cp_tv",
+    "detail": "field GridView",
+    "insertText": "cp_tv"
+  },
+  {
+    "label": "khac",
+    "detail": "field GridView",
+    "insertText": "khac"
+  },
+  {
+    "label": "ten_hd%l",
+    "detail": "field GridView",
+    "insertText": "ten_hd%l"
+  },
+  {
+    "label": "han_tt",
+    "detail": "field GridView",
+    "insertText": "han_tt"
+  },
+  {
+    "label": "ten_dot%l",
+    "detail": "field GridView",
+    "insertText": "ten_dot%l"
+  },
+  {
+    "label": "tang_giam",
+    "detail": "field GridView",
+    "insertText": "tang_giam"
+  },
+  {
+    "label": "tk_gt",
+    "detail": "field GridView",
+    "insertText": "tk_gt"
+  },
+  {
+    "label": "ten_vv%l",
+    "detail": "field GridView",
+    "insertText": "ten_vv%l"
+  },
+  {
+    "label": "cong_suat",
+    "detail": "field GridView",
+    "insertText": "cong_suat"
+  },
+  {
+    "label": "so_ngay",
+    "detail": "field GridView",
+    "insertText": "so_ngay"
+  },
+  {
+    "label": "ma_nl",
+    "detail": "field GridView",
+    "insertText": "ma_nl"
+  },
+  {
+    "label": "ten_nl%l",
+    "detail": "field GridView",
+    "insertText": "ten_nl%l"
+  },
+  {
+    "label": "tk_cltg",
+    "detail": "field GridView",
+    "insertText": "tk_cltg"
+  },
+  {
+    "label": "info%l",
+    "detail": "field GridView",
+    "insertText": "info%l"
+  },
+  {
+    "label": "cd_truoc",
+    "detail": "field GridView",
+    "insertText": "cd_truoc"
+  },
+  {
+    "label": "cd_sau",
+    "detail": "field GridView",
+    "insertText": "cd_sau"
+  },
+  {
+    "label": "tg_cho",
+    "detail": "field GridView",
+    "insertText": "tg_cho"
+  },
+  {
+    "label": "sl_may",
+    "detail": "field GridView",
+    "insertText": "sl_may"
+  },
+  {
+    "label": "nang_suat",
+    "detail": "field GridView",
+    "insertText": "nang_suat"
+  },
+  {
+    "label": "nc_cai_dat",
+    "detail": "field GridView",
+    "insertText": "nc_cai_dat"
+  },
+  {
+    "label": "nc_th",
+    "detail": "field GridView",
+    "insertText": "nc_th"
+  },
+  {
+    "label": "ten_dvt%l",
+    "detail": "field GridView",
+    "insertText": "ten_dvt%l"
+  },
+  {
+    "label": "ten_ccv%l",
+    "detail": "field GridView",
+    "insertText": "ten_ccv%l"
+  },
+  {
+    "label": "hieu_suat",
+    "detail": "field GridView",
+    "insertText": "hieu_suat"
+  },
+  {
+    "label": "hs_sd",
+    "detail": "field GridView",
+    "insertText": "hs_sd"
+  },
+  {
+    "label": "pt_lich",
+    "detail": "field GridView",
+    "insertText": "pt_lich"
+  },
+  {
+    "label": "cs_gh",
+    "detail": "field GridView",
+    "insertText": "cs_gh"
+  },
+  {
+    "label": "ten_nt%l",
+    "detail": "field GridView",
+    "insertText": "ten_nt%l"
+  },
+  {
+    "label": "bo_phan",
+    "detail": "field GridView",
+    "insertText": "bo_phan"
+  },
+  {
+    "label": "ma_dashboard",
+    "detail": "field GridView",
+    "insertText": "ma_dashboard"
+  },
+  {
+    "label": "ten_dashboard%l",
+    "detail": "field GridView",
+    "insertText": "ten_dashboard%l"
+  },
+  {
+    "label": "f1_name%l",
+    "detail": "field GridView",
+    "insertText": "f1_name%l"
+  },
+  {
+    "label": "f2_name%l",
+    "detail": "field GridView",
+    "insertText": "f2_name%l"
+  },
+  {
+    "label": "f3_name%l",
+    "detail": "field GridView",
+    "insertText": "f3_name%l"
+  },
+  {
+    "label": "f4_name%l",
+    "detail": "field GridView",
+    "insertText": "f4_name%l"
+  },
+  {
+    "label": "f1",
+    "detail": "field GridView",
+    "insertText": "f1"
+  },
+  {
+    "label": "f2",
+    "detail": "field GridView",
+    "insertText": "f2"
+  },
+  {
+    "label": "f3",
+    "detail": "field GridView",
+    "insertText": "f3"
+  },
+  {
+    "label": "f4",
+    "detail": "field GridView",
+    "insertText": "f4"
+  },
+  {
+    "label": "ngam_dinh",
+    "detail": "field GridView",
+    "insertText": "ngam_dinh"
+  },
+  {
+    "label": "e_mail",
+    "detail": "field GridView",
+    "insertText": "e_mail"
+  },
+  {
+    "label": "luu_tru%l",
+    "detail": "field GridView",
+    "insertText": "luu_tru%l"
+  },
+  {
+    "label": "ngay_dn",
+    "detail": "field GridView",
+    "insertText": "ngay_dn"
+  },
+  {
+    "label": "status_name%l",
+    "detail": "field GridView",
+    "insertText": "status_name%l"
+  },
+  {
+    "label": "ngay_th",
+    "detail": "field GridView",
+    "insertText": "ngay_th"
+  },
+  {
+    "label": "ten_ma_dvcs%l",
+    "detail": "field GridView",
+    "insertText": "ten_ma_dvcs%l"
+  },
+  {
+    "label": "ten_loai_ct%l",
+    "detail": "field GridView",
+    "insertText": "ten_loai_ct%l"
+  },
+  {
+    "label": "nh_kho",
+    "detail": "field GridView",
+    "insertText": "nh_kho"
+  },
+  {
+    "label": "ten_nh_kho%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_kho%l"
+  },
+  {
+    "label": "ma_nk",
+    "detail": "field GridView",
+    "insertText": "ma_nk"
+  },
+  {
+    "label": "ten_nk%l",
+    "detail": "field GridView",
+    "insertText": "ten_nk%l"
+  },
+  {
+    "label": "para_value%l",
+    "detail": "field GridView",
+    "insertText": "para_value%l"
+  },
+  {
+    "label": "ma_bt",
+    "detail": "field GridView",
+    "insertText": "ma_bt"
+  },
+  {
+    "label": "so_ky_pb",
+    "detail": "field GridView",
+    "insertText": "so_ky_pb"
+  },
+  {
+    "label": "ma_ncc",
+    "detail": "field GridView",
+    "insertText": "ma_ncc"
+  },
+  {
+    "label": "ten_ncc",
+    "detail": "field GridView",
+    "insertText": "ten_ncc"
+  },
+  {
+    "label": "ma_tn",
+    "detail": "field GridView",
+    "insertText": "ma_tn"
+  },
+  {
+    "label": "ten_tn",
+    "detail": "field GridView",
+    "insertText": "ten_tn"
+  },
+  {
+    "label": "ma_kho_n",
+    "detail": "field GridView",
+    "insertText": "ma_kho_n"
+  },
+  {
+    "label": "ma_kho_x",
+    "detail": "field GridView",
+    "insertText": "ma_kho_x"
+  },
+  {
+    "label": "trang_thai",
+    "detail": "field GridView",
+    "insertText": "trang_thai"
+  },
+  {
+    "label": "ten_ngan%l",
+    "detail": "field GridView",
+    "insertText": "ten_ngan%l"
+  },
+  {
+    "label": "stt_in",
+    "detail": "field GridView",
+    "insertText": "stt_in"
+  },
+  {
+    "label": "ten_ck%l",
+    "detail": "field GridView",
+    "insertText": "ten_ck%l"
+  },
+  {
+    "label": "serial_cert",
+    "detail": "field GridView",
+    "insertText": "serial_cert"
+  },
+  {
+    "label": "user_hddt",
+    "detail": "field GridView",
+    "insertText": "user_hddt"
+  },
+  {
+    "label": "kieu_ky_so",
+    "detail": "field GridView",
+    "insertText": "kieu_ky_so"
+  },
+  {
+    "label": "so_ct_hddt",
+    "detail": "field GridView",
+    "insertText": "so_ct_hddt"
+  },
+  {
+    "label": "so_seri_hddt",
+    "detail": "field GridView",
+    "insertText": "so_seri_hddt"
+  },
+  {
+    "label": "tinh_trang",
+    "detail": "field GridView",
+    "insertText": "tinh_trang"
+  },
+  {
+    "label": "ky_hieu",
+    "detail": "field GridView",
+    "insertText": "ky_hieu"
+  },
+  {
+    "label": "mau_so",
+    "detail": "field GridView",
+    "insertText": "mau_so"
+  },
+  {
+    "label": "nguoi_mua",
+    "detail": "field GridView",
+    "insertText": "nguoi_mua"
+  },
+  {
+    "label": "dia_chi_kh",
+    "detail": "field GridView",
+    "insertText": "dia_chi_kh"
+  },
+  {
+    "label": "mst_kh",
+    "detail": "field GridView",
+    "insertText": "mst_kh"
+  },
+  {
+    "label": "t_tien",
+    "detail": "field GridView",
+    "insertText": "t_tien"
+  },
+  {
+    "label": "t_ck",
+    "detail": "field GridView",
+    "insertText": "t_ck"
+  },
+  {
+    "label": "t_thanh_toan",
+    "detail": "field GridView",
+    "insertText": "t_thanh_toan"
+  },
+  {
+    "label": "trang_thai_ct",
+    "detail": "field GridView",
+    "insertText": "trang_thai_ct"
+  },
+  {
+    "label": "status_cqt",
+    "detail": "field GridView",
+    "insertText": "status_cqt"
+  },
+  {
+    "label": "loai_hd",
+    "detail": "field GridView",
+    "insertText": "loai_hd"
+  },
+  {
+    "label": "ma_kh_tc",
+    "detail": "field GridView",
+    "insertText": "ma_kh_tc"
+  },
+  {
+    "label": "ma_vt_tc",
+    "detail": "field GridView",
+    "insertText": "ma_vt_tc"
+  },
+  {
+    "label": "so_ct1",
+    "detail": "field GridView",
+    "insertText": "so_ct1"
+  },
+  {
+    "label": "ngay_ct_tu",
+    "detail": "field GridView",
+    "insertText": "ngay_ct_tu"
+  },
+  {
+    "label": "so_ct_tu",
+    "detail": "field GridView",
+    "insertText": "so_ct_tu"
+  },
+  {
+    "label": "ip",
+    "detail": "field GridView",
+    "insertText": "ip"
+  },
+  {
+    "label": "message",
+    "detail": "field GridView",
+    "insertText": "message"
+  },
+  {
+    "label": "ngay_kh1",
+    "detail": "field GridView",
+    "insertText": "ngay_kh1"
+  },
+  {
+    "label": "loai_tg_ts",
+    "detail": "field GridView",
+    "insertText": "loai_tg_ts"
+  },
+  {
+    "label": "ma_tg_ts",
+    "detail": "field GridView",
+    "insertText": "ma_tg_ts"
+  },
+  {
+    "label": "ten_tg_ts%l",
+    "detail": "field GridView",
+    "insertText": "ten_tg_ts%l"
+  },
+  {
+    "label": "ten_yt%l",
+    "detail": "field GridView",
+    "insertText": "ten_yt%l"
+  },
+  {
+    "label": "ma_giam_ts",
+    "detail": "field GridView",
+    "insertText": "ma_giam_ts"
+  },
+  {
+    "label": "ngay_giam",
+    "detail": "field GridView",
+    "insertText": "ngay_giam"
+  },
+  {
+    "label": "post_yn",
+    "detail": "field GridView",
+    "insertText": "post_yn"
+  },
+  {
+    "label": "style_name%l",
+    "detail": "field GridView",
+    "insertText": "style_name%l"
+  },
+  {
+    "label": "format_type_name%l",
+    "detail": "field GridView",
+    "insertText": "format_type_name%l"
+  },
+  {
+    "label": "allownulls_yn",
+    "detail": "field GridView",
+    "insertText": "allownulls_yn"
+  },
+  {
+    "label": "client_default",
+    "detail": "field GridView",
+    "insertText": "client_default"
+  },
+  {
+    "label": "status_import",
+    "detail": "field GridView",
+    "insertText": "status_import"
+  },
+  {
+    "label": "order_type_name_import%l",
+    "detail": "field GridView",
+    "insertText": "order_type_name_import%l"
+  },
+  {
+    "label": "order_field_name_import%l",
+    "detail": "field GridView",
+    "insertText": "order_field_name_import%l"
+  },
+  {
+    "label": "stt_ntxt",
+    "detail": "field GridView",
+    "insertText": "stt_ntxt"
+  },
+  {
+    "label": "stt_ctntxt",
+    "detail": "field GridView",
+    "insertText": "stt_ctntxt"
+  },
+  {
+    "label": "dvt%l",
+    "detail": "field GridView",
+    "insertText": "dvt%l"
+  },
+  {
+    "label": "ds_ma_dvcs",
+    "detail": "field GridView",
+    "insertText": "ds_ma_dvcs"
+  },
+  {
+    "label": "ds_ma_kh",
+    "detail": "field GridView",
+    "insertText": "ds_ma_kh"
+  },
+  {
+    "label": "ma_kh_thieu",
+    "detail": "field GridView",
+    "insertText": "ma_kh_thieu"
+  },
+  {
+    "label": "dien_giai_thieu",
+    "detail": "field GridView",
+    "insertText": "dien_giai_thieu"
+  },
+  {
+    "label": "tk_kk_thieu",
+    "detail": "field GridView",
+    "insertText": "tk_kk_thieu"
+  },
+  {
+    "label": "ma_nx_thieu",
+    "detail": "field GridView",
+    "insertText": "ma_nx_thieu"
+  },
+  {
+    "label": "ma_kh_thua",
+    "detail": "field GridView",
+    "insertText": "ma_kh_thua"
+  },
+  {
+    "label": "dien_giai_thua",
+    "detail": "field GridView",
+    "insertText": "dien_giai_thua"
+  },
+  {
+    "label": "tk_kk_thua",
+    "detail": "field GridView",
+    "insertText": "tk_kk_thua"
+  },
+  {
+    "label": "ma_nx_thua",
+    "detail": "field GridView",
+    "insertText": "ma_nx_thua"
+  },
+  {
+    "label": "ma_hrbp",
+    "detail": "field GridView",
+    "insertText": "ma_hrbp"
+  },
+  {
+    "label": "ten_hrbp%l",
+    "detail": "field GridView",
+    "insertText": "ten_hrbp%l"
+  },
+  {
+    "label": "tien_tu",
+    "detail": "field GridView",
+    "insertText": "tien_tu"
+  },
+  {
+    "label": "tien_den",
+    "detail": "field GridView",
+    "insertText": "tien_den"
+  },
+  {
+    "label": "ma_nhom",
+    "detail": "field GridView",
+    "insertText": "ma_nhom"
+  },
+  {
+    "label": "ten_nhom",
+    "detail": "field GridView",
+    "insertText": "ten_nhom"
+  },
+  {
+    "label": "ma_tdhv",
+    "detail": "field GridView",
+    "insertText": "ma_tdhv"
+  },
+  {
+    "label": "loai_quyen",
+    "detail": "field GridView",
+    "insertText": "loai_quyen"
+  },
+  {
+    "label": "ten_tn%l",
+    "detail": "field GridView",
+    "insertText": "ten_tn%l"
+  },
+  {
+    "label": "ho_tenex",
+    "detail": "field GridView",
+    "insertText": "ho_tenex"
+  },
+  {
+    "label": "sttex",
+    "detail": "field GridView",
+    "insertText": "sttex"
+  },
+  {
+    "label": "ma_pc",
+    "detail": "field GridView",
+    "insertText": "ma_pc"
+  },
+  {
+    "label": "ten_pc%l",
+    "detail": "field GridView",
+    "insertText": "ten_pc%l"
+  },
+  {
+    "label": "name2",
+    "detail": "field GridView",
+    "insertText": "name2"
+  },
+  {
+    "label": "ten_nv",
+    "detail": "field GridView",
+    "insertText": "ten_nv"
+  },
+  {
+    "label": "ten_vtr%l",
+    "detail": "field GridView",
+    "insertText": "ten_vtr%l"
+  },
+  {
+    "label": "chi_tieu",
+    "detail": "field GridView",
+    "insertText": "chi_tieu"
+  },
+  {
+    "label": "ten",
+    "detail": "field GridView",
+    "insertText": "ten"
+  },
+  {
+    "label": "ma_ky",
+    "detail": "field GridView",
+    "insertText": "ma_ky"
+  },
+  {
+    "label": "ten_ky%l",
+    "detail": "field GridView",
+    "insertText": "ten_ky%l"
+  },
+  {
+    "label": "ten_nd",
+    "detail": "field GridView",
+    "insertText": "ten_nd"
+  },
+  {
+    "label": "ngay_duyet",
+    "detail": "field GridView",
+    "insertText": "ngay_duyet"
+  },
+  {
+    "label": "ly_do",
+    "detail": "field GridView",
+    "insertText": "ly_do"
+  },
+  {
+    "label": "ngay_thang",
+    "detail": "field GridView",
+    "insertText": "ngay_thang"
+  },
+  {
+    "label": "nam_hl",
+    "detail": "field GridView",
+    "insertText": "nam_hl"
+  },
+  {
+    "label": "ten_cc%l",
+    "detail": "field GridView",
+    "insertText": "ten_cc%l"
+  },
+  {
+    "label": "pt_bhxhtn",
+    "detail": "field GridView",
+    "insertText": "pt_bhxhtn"
+  },
+  {
+    "label": "noi_dung_khac",
+    "detail": "field GridView",
+    "insertText": "noi_dung_khac"
+  },
+  {
+    "label": "ho_so_gk",
+    "detail": "field GridView",
+    "insertText": "ho_so_gk"
+  },
+  {
+    "label": "luong_tt",
+    "detail": "field GridView",
+    "insertText": "luong_tt"
+  },
+  {
+    "label": "ma_loai_lg",
+    "detail": "field GridView",
+    "insertText": "ma_loai_lg"
+  },
+  {
+    "label": "ten_loai_lg%l",
+    "detail": "field GridView",
+    "insertText": "ten_loai_lg%l"
+  },
+  {
+    "label": "so_phep",
+    "detail": "field GridView",
+    "insertText": "so_phep"
+  },
+  {
+    "label": "ngay_ks",
+    "detail": "field GridView",
+    "insertText": "ngay_ks"
+  },
+  {
+    "label": "ten_thu%l",
+    "detail": "field GridView",
+    "insertText": "ten_thu%l"
+  },
+  {
+    "label": "ten_ca%l",
+    "detail": "field GridView",
+    "insertText": "ten_ca%l"
+  },
+  {
+    "label": "ma_ca_ct",
+    "detail": "field GridView",
+    "insertText": "ma_ca_ct"
+  },
+  {
+    "label": "gio_tu",
+    "detail": "field GridView",
+    "insertText": "gio_tu"
+  },
+  {
+    "label": "gio_den",
+    "detail": "field GridView",
+    "insertText": "gio_den"
+  },
+  {
+    "label": "nv_ql_cu",
+    "detail": "field GridView",
+    "insertText": "nv_ql_cu"
+  },
+  {
+    "label": "ten_ql_cu",
+    "detail": "field GridView",
+    "insertText": "ten_ql_cu"
+  },
+  {
+    "label": "nv_ql_moi",
+    "detail": "field GridView",
+    "insertText": "nv_ql_moi"
+  },
+  {
+    "label": "ten_ql_moi",
+    "detail": "field GridView",
+    "insertText": "ten_ql_moi"
+  },
+  {
+    "label": "ma_kl",
+    "detail": "field GridView",
+    "insertText": "ma_kl"
+  },
+  {
+    "label": "ma_tinh",
+    "detail": "field GridView",
+    "insertText": "ma_tinh"
+  },
+  {
+    "label": "ma_quan",
+    "detail": "field GridView",
+    "insertText": "ma_quan"
+  },
+  {
+    "label": "ten_quan%l",
+    "detail": "field GridView",
+    "insertText": "ten_quan%l"
+  },
+  {
+    "label": "ngay_tu",
+    "detail": "field GridView",
+    "insertText": "ngay_tu"
+  },
+  {
+    "label": "ngay_den",
+    "detail": "field GridView",
+    "insertText": "ngay_den"
+  },
+  {
+    "label": "ma_so_bhxh",
+    "detail": "field GridView",
+    "insertText": "ma_so_bhxh"
+  },
+  {
+    "label": "ten_quan%lex",
+    "detail": "field GridView",
+    "insertText": "ten_quan%lex"
+  },
+  {
+    "label": "ten_phuong%lex",
+    "detail": "field GridView",
+    "insertText": "ten_phuong%lex"
+  },
+  {
+    "label": "cmnd_so",
+    "detail": "field GridView",
+    "insertText": "cmnd_so"
+  },
+  {
+    "label": "loai_nghi",
+    "detail": "field GridView",
+    "insertText": "loai_nghi"
+  },
+  {
+    "label": "ma_ly_do",
+    "detail": "field GridView",
+    "insertText": "ma_ly_do"
+  },
+  {
+    "label": "ten_ly_do%l",
+    "detail": "field GridView",
+    "insertText": "ten_ly_do%l"
+  },
+  {
+    "label": "ngay_lam_viec",
+    "detail": "field GridView",
+    "insertText": "ngay_lam_viec"
+  },
+  {
+    "label": "ngay_vao",
+    "detail": "field GridView",
+    "insertText": "ngay_vao"
+  },
+  {
+    "label": "ngay_chinh_thuc",
+    "detail": "field GridView",
+    "insertText": "ngay_chinh_thuc"
+  },
+  {
+    "label": "loai_kt",
+    "detail": "field GridView",
+    "insertText": "loai_kt"
+  },
+  {
+    "label": "tien_cl",
+    "detail": "field GridView",
+    "insertText": "tien_cl"
+  },
+  {
+    "label": "ngay_thay_doi",
+    "detail": "field GridView",
+    "insertText": "ngay_thay_doi"
+  },
+  {
+    "label": "loai_thay_doi",
+    "detail": "field GridView",
+    "insertText": "loai_thay_doi"
+  },
+  {
+    "label": "ma_ttnv",
+    "detail": "field GridView",
+    "insertText": "ma_ttnv"
+  },
+  {
+    "label": "ten_ttnv%l",
+    "detail": "field GridView",
+    "insertText": "ten_ttnv%l"
+  },
+  {
+    "label": "gio",
+    "detail": "field GridView",
+    "insertText": "gio"
+  },
+  {
+    "label": "gio0",
+    "detail": "field GridView",
+    "insertText": "gio0"
+  },
+  {
+    "label": "hs_yn",
+    "detail": "field GridView",
+    "insertText": "hs_yn"
+  },
+  {
+    "label": "vao_ra",
+    "detail": "field GridView",
+    "insertText": "vao_ra"
+  },
+  {
+    "label": "ten_dt%l",
+    "detail": "field GridView",
+    "insertText": "ten_dt%l"
+  },
+  {
+    "label": "ten_tsmbc%l",
+    "detail": "field GridView",
+    "insertText": "ten_tsmbc%l"
+  },
+  {
+    "label": "ma_tc",
+    "detail": "field GridView",
+    "insertText": "ma_tc"
+  },
+  {
+    "label": "ten_tcbh%l",
+    "detail": "field GridView",
+    "insertText": "ten_tcbh%l"
+  },
+  {
+    "label": "tl_bhxh0",
+    "detail": "field GridView",
+    "insertText": "tl_bhxh0"
+  },
+  {
+    "label": "tl_bhyt0",
+    "detail": "field GridView",
+    "insertText": "tl_bhyt0"
+  },
+  {
+    "label": "tl_bhtn0",
+    "detail": "field GridView",
+    "insertText": "tl_bhtn0"
+  },
+  {
+    "label": "tl_kpcd0",
+    "detail": "field GridView",
+    "insertText": "tl_kpcd0"
+  },
+  {
+    "label": "loai_bh",
+    "detail": "field GridView",
+    "insertText": "loai_bh"
+  },
+  {
+    "label": "ten_qt%l",
+    "detail": "field GridView",
+    "insertText": "ten_qt%l"
+  },
+  {
+    "label": "ngay_ps",
+    "detail": "field GridView",
+    "insertText": "ngay_ps"
+  },
+  {
+    "label": "tg_bhtn",
+    "detail": "field GridView",
+    "insertText": "tg_bhtn"
+  },
+  {
+    "label": "ht_cu",
+    "detail": "field GridView",
+    "insertText": "ht_cu"
+  },
+  {
+    "label": "ht_moi",
+    "detail": "field GridView",
+    "insertText": "ht_moi"
+  },
+  {
+    "label": "ngay_th_tu",
+    "detail": "field GridView",
+    "insertText": "ngay_th_tu"
+  },
+  {
+    "label": "ngay_th_den",
+    "detail": "field GridView",
+    "insertText": "ngay_th_den"
+  },
+  {
+    "label": "ma_nn",
+    "detail": "field GridView",
+    "insertText": "ma_nn"
+  },
+  {
+    "label": "ten_bp",
+    "detail": "field GridView",
+    "insertText": "ten_bp"
+  },
+  {
+    "label": "email",
+    "detail": "field GridView",
+    "insertText": "email"
+  },
+  {
+    "label": "status_name",
+    "detail": "field GridView",
+    "insertText": "status_name"
+  },
+  {
+    "label": "ma_bac",
+    "detail": "field GridView",
+    "insertText": "ma_bac"
+  },
+  {
+    "label": "ten_bac%l",
+    "detail": "field GridView",
+    "insertText": "ten_bac%l"
+  },
+  {
+    "label": "ma_tthn",
+    "detail": "field GridView",
+    "insertText": "ma_tthn"
+  },
+  {
+    "label": "ten_tthn%l",
+    "detail": "field GridView",
+    "insertText": "ten_tthn%l"
+  },
+  {
+    "label": "ma_kcb",
+    "detail": "field GridView",
+    "insertText": "ma_kcb"
+  },
+  {
+    "label": "ten_kcb%l",
+    "detail": "field GridView",
+    "insertText": "ten_kcb%l"
+  },
+  {
+    "label": "benh_vien",
+    "detail": "field GridView",
+    "insertText": "benh_vien"
+  },
+  {
+    "label": "ten_cong%l",
+    "detail": "field GridView",
+    "insertText": "ten_cong%l"
+  },
+  {
+    "label": "ma_tang_ca",
+    "detail": "field GridView",
+    "insertText": "ma_tang_ca"
+  },
+  {
+    "label": "name%l",
+    "detail": "field GridView",
+    "insertText": "name%l"
+  },
+  {
+    "label": "val",
+    "detail": "field GridView",
+    "insertText": "val"
+  },
+  {
+    "label": "ma_ngach",
+    "detail": "field GridView",
+    "insertText": "ma_ngach"
+  },
+  {
+    "label": "ten_ngach%l",
+    "detail": "field GridView",
+    "insertText": "ten_ngach%l"
+  },
+  {
+    "label": "ds_loai_lg",
+    "detail": "field GridView",
+    "insertText": "ds_loai_lg"
+  },
+  {
+    "label": "ds_loai_luong",
+    "detail": "field GridView",
+    "insertText": "ds_loai_luong"
+  },
+  {
+    "label": "ten_bc%l",
+    "detail": "field GridView",
+    "insertText": "ten_bc%l"
+  },
+  {
+    "label": "cong_thuc",
+    "detail": "field GridView",
+    "insertText": "cong_thuc"
+  },
+  {
+    "label": "ten_tc%l",
+    "detail": "field GridView",
+    "insertText": "ten_tc%l"
+  },
+  {
+    "label": "ten_kt%l",
+    "detail": "field GridView",
+    "insertText": "ten_kt%l"
+  },
+  {
+    "label": "ten_pv%l",
+    "detail": "field GridView",
+    "insertText": "ten_pv%l"
+  },
+  {
+    "label": "ngay_tot_nghiep",
+    "detail": "field GridView",
+    "insertText": "ngay_tot_nghiep"
+  },
+  {
+    "label": "ten_cm%l",
+    "detail": "field GridView",
+    "insertText": "ten_cm%l"
+  },
+  {
+    "label": "ten_ktr%l",
+    "detail": "field GridView",
+    "insertText": "ten_ktr%l"
+  },
+  {
+    "label": "ngay_ktr",
+    "detail": "field GridView",
+    "insertText": "ngay_ktr"
+  },
+  {
+    "label": "ten_mh%l",
+    "detail": "field GridView",
+    "insertText": "ten_mh%l"
+  },
+  {
+    "label": "ten_dvdt%l",
+    "detail": "field GridView",
+    "insertText": "ten_dvdt%l"
+  },
+  {
+    "label": "vi_tri",
+    "detail": "field GridView",
+    "insertText": "vi_tri"
+  },
+  {
+    "label": "ngay_tn",
+    "detail": "field GridView",
+    "insertText": "ngay_tn"
+  },
+  {
+    "label": "ma_vtr",
+    "detail": "field GridView",
+    "insertText": "ma_vtr"
+  },
+  {
+    "label": "ten_cv",
+    "detail": "field GridView",
+    "insertText": "ten_cv"
+  },
+  {
+    "label": "ten_tinh%l",
+    "detail": "field GridView",
+    "insertText": "ten_tinh%l"
+  },
+  {
+    "label": "dvt_nt",
+    "detail": "field GridView",
+    "insertText": "dvt_nt"
+  },
+  {
+    "label": "ten_ns",
+    "detail": "field GridView",
+    "insertText": "ten_ns"
+  },
+  {
+    "label": "ngay_sinh_pt",
+    "detail": "field GridView",
+    "insertText": "ngay_sinh_pt"
+  },
+  {
+    "label": "ma_so_thue_pt",
+    "detail": "field GridView",
+    "insertText": "ma_so_thue_pt"
+  },
+  {
+    "label": "ten_loai_gt",
+    "detail": "field GridView",
+    "insertText": "ten_loai_gt"
+  },
+  {
+    "label": "cmnd_pt",
+    "detail": "field GridView",
+    "insertText": "cmnd_pt"
+  },
+  {
+    "label": "quan_he_pt",
+    "detail": "field GridView",
+    "insertText": "quan_he_pt"
+  },
+  {
+    "label": "so_khai_sinh_pt",
+    "detail": "field GridView",
+    "insertText": "so_khai_sinh_pt"
+  },
+  {
+    "label": "quyen_so_pt",
+    "detail": "field GridView",
+    "insertText": "quyen_so_pt"
+  },
+  {
+    "label": "quoc_gia_pt",
+    "detail": "field GridView",
+    "insertText": "quoc_gia_pt"
+  },
+  {
+    "label": "tinh_thanh_pt",
+    "detail": "field GridView",
+    "insertText": "tinh_thanh_pt"
+  },
+  {
+    "label": "quan_huyen_pt",
+    "detail": "field GridView",
+    "insertText": "quan_huyen_pt"
+  },
+  {
+    "label": "phuong_xa_pt",
+    "detail": "field GridView",
+    "insertText": "phuong_xa_pt"
+  },
+  {
+    "label": "tu_thang",
+    "detail": "field GridView",
+    "insertText": "tu_thang"
+  },
+  {
+    "label": "den_thang",
+    "detail": "field GridView",
+    "insertText": "den_thang"
+  },
+  {
+    "label": "uq_yn",
+    "detail": "field GridView",
+    "insertText": "uq_yn"
+  },
+  {
+    "label": "br_cn_nn_duoi12",
+    "detail": "field GridView",
+    "insertText": "br_cn_nn_duoi12"
+  },
+  {
+    "label": "thue_mien50",
+    "detail": "field GridView",
+    "insertText": "thue_mien50"
+  },
+  {
+    "label": "cu_tru_yn",
+    "detail": "field GridView",
+    "insertText": "cu_tru_yn"
+  },
+  {
+    "label": "ten_vtr",
+    "detail": "field GridView",
+    "insertText": "ten_vtr"
+  },
+  {
+    "label": "cot1",
+    "detail": "field GridView",
+    "insertText": "cot1"
+  },
+  {
+    "label": "cot2",
+    "detail": "field GridView",
+    "insertText": "cot2"
+  },
+  {
+    "label": "cot3",
+    "detail": "field GridView",
+    "insertText": "cot3"
+  },
+  {
+    "label": "cot4",
+    "detail": "field GridView",
+    "insertText": "cot4"
+  },
+  {
+    "label": "cot5",
+    "detail": "field GridView",
+    "insertText": "cot5"
+  },
+  {
+    "label": "ma_tinh_trang",
+    "detail": "field GridView",
+    "insertText": "ma_tinh_trang"
+  },
+  {
+    "label": "ten_tthn",
+    "detail": "field GridView",
+    "insertText": "ten_tthn"
+  },
+  {
+    "label": "tong",
+    "detail": "field GridView",
+    "insertText": "tong"
+  },
+  {
+    "label": "ho_ten_nv",
+    "detail": "field GridView",
+    "insertText": "ho_ten_nv"
+  },
+  {
+    "label": "hoan_thanh",
+    "detail": "field GridView",
+    "insertText": "hoan_thanh"
+  },
+  {
+    "label": "so_hdld",
+    "detail": "field GridView",
+    "insertText": "so_hdld"
+  },
+  {
+    "label": "ngay_ky_hd",
+    "detail": "field GridView",
+    "insertText": "ngay_ky_hd"
+  },
+  {
+    "label": "so_plhd",
+    "detail": "field GridView",
+    "insertText": "so_plhd"
+  },
+  {
+    "label": "ngay_ky_plhd",
+    "detail": "field GridView",
+    "insertText": "ngay_ky_plhd"
+  },
+  {
+    "label": "trinh_do_cm",
+    "detail": "field GridView",
+    "insertText": "trinh_do_cm"
+  },
+  {
+    "label": "bac_ky_nang",
+    "detail": "field GridView",
+    "insertText": "bac_ky_nang"
+  },
+  {
+    "label": "loai_hdld",
+    "detail": "field GridView",
+    "insertText": "loai_hdld"
+  },
+  {
+    "label": "ngay_lv",
+    "detail": "field GridView",
+    "insertText": "ngay_lv"
+  },
+  {
+    "label": "tham_gia_bh",
+    "detail": "field GridView",
+    "insertText": "tham_gia_bh"
+  },
+  {
+    "label": "ngay_tg",
+    "detail": "field GridView",
+    "insertText": "ngay_tg"
+  },
+  {
+    "label": "nang_bac_luong",
+    "detail": "field GridView",
+    "insertText": "nang_bac_luong"
+  },
+  {
+    "label": "ten_ttnv",
+    "detail": "field GridView",
+    "insertText": "ten_ttnv"
+  },
+  {
+    "label": "thoi_diem",
+    "detail": "field GridView",
+    "insertText": "thoi_diem"
+  },
+  {
+    "label": "dan_toc",
+    "detail": "field GridView",
+    "insertText": "dan_toc"
+  },
+  {
+    "label": "si_no",
+    "detail": "field GridView",
+    "insertText": "si_no"
+  },
+  {
+    "label": "loai_kl",
+    "detail": "field GridView",
+    "insertText": "loai_kl"
+  },
+  {
+    "label": "ngay_kl",
+    "detail": "field GridView",
+    "insertText": "ngay_kl"
+  },
+  {
+    "label": "sysRow",
+    "detail": "field GridView",
+    "insertText": "sysRow"
+  },
+  {
+    "label": "sysRowName",
+    "detail": "field GridView",
+    "insertText": "sysRowName"
+  },
+  {
+    "label": "ho_va_ten",
+    "detail": "field GridView",
+    "insertText": "ho_va_ten"
+  },
+  {
+    "label": "nguoi_quan_ly",
+    "detail": "field GridView",
+    "insertText": "nguoi_quan_ly"
+  },
+  {
+    "label": "ngay_bp_bd",
+    "detail": "field GridView",
+    "insertText": "ngay_bp_bd"
+  },
+  {
+    "label": "ngay_bp_kt",
+    "detail": "field GridView",
+    "insertText": "ngay_bp_kt"
+  },
+  {
+    "label": "ld_dau_ky",
+    "detail": "field GridView",
+    "insertText": "ld_dau_ky"
+  },
+  {
+    "label": "tang_moi",
+    "detail": "field GridView",
+    "insertText": "tang_moi"
+  },
+  {
+    "label": "dieu_chuyen_den",
+    "detail": "field GridView",
+    "insertText": "dieu_chuyen_den"
+  },
+  {
+    "label": "tong_ld_tang",
+    "detail": "field GridView",
+    "insertText": "tong_ld_tang"
+  },
+  {
+    "label": "nghi_viec",
+    "detail": "field GridView",
+    "insertText": "nghi_viec"
+  },
+  {
+    "label": "dieu_chuyen_di",
+    "detail": "field GridView",
+    "insertText": "dieu_chuyen_di"
+  },
+  {
+    "label": "tong_ld_giam",
+    "detail": "field GridView",
+    "insertText": "tong_ld_giam"
+  },
+  {
+    "label": "ld_cuoi_ky",
+    "detail": "field GridView",
+    "insertText": "ld_cuoi_ky"
+  },
+  {
+    "label": "ngay_bd_hl",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_hl"
+  },
+  {
+    "label": "ngay_kt_hl",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_hl"
+  },
+  {
+    "label": "ngay_chuyen",
+    "detail": "field GridView",
+    "insertText": "ngay_chuyen"
+  },
+  {
+    "label": "ngay_nghi",
+    "detail": "field GridView",
+    "insertText": "ngay_nghi"
+  },
+  {
+    "label": "ten_loai_td",
+    "detail": "field GridView",
+    "insertText": "ten_loai_td"
+  },
+  {
+    "label": "ho_ten_nt",
+    "detail": "field GridView",
+    "insertText": "ho_ten_nt"
+  },
+  {
+    "label": "ten_qh",
+    "detail": "field GridView",
+    "insertText": "ten_qh"
+  },
+  {
+    "label": "ns_nt",
+    "detail": "field GridView",
+    "insertText": "ns_nt"
+  },
+  {
+    "label": "bang_cap",
+    "detail": "field GridView",
+    "insertText": "bang_cap"
+  },
+  {
+    "label": "so_bh",
+    "detail": "field GridView",
+    "insertText": "so_bh"
+  },
+  {
+    "label": "muc_do",
+    "detail": "field GridView",
+    "insertText": "muc_do"
+  },
+  {
+    "label": "ten_loai_nghi",
+    "detail": "field GridView",
+    "insertText": "ten_loai_nghi"
+  },
+  {
+    "label": "phep_dn",
+    "detail": "field GridView",
+    "insertText": "phep_dn"
+  },
+  {
+    "label": "phep_hh",
+    "detail": "field GridView",
+    "insertText": "phep_hh"
+  },
+  {
+    "label": "phep_tn",
+    "detail": "field GridView",
+    "insertText": "phep_tn"
+  },
+  {
+    "label": "t1",
+    "detail": "field GridView",
+    "insertText": "t1"
+  },
+  {
+    "label": "t2",
+    "detail": "field GridView",
+    "insertText": "t2"
+  },
+  {
+    "label": "t3",
+    "detail": "field GridView",
+    "insertText": "t3"
+  },
+  {
+    "label": "t4",
+    "detail": "field GridView",
+    "insertText": "t4"
+  },
+  {
+    "label": "t5",
+    "detail": "field GridView",
+    "insertText": "t5"
+  },
+  {
+    "label": "t6",
+    "detail": "field GridView",
+    "insertText": "t6"
+  },
+  {
+    "label": "t7",
+    "detail": "field GridView",
+    "insertText": "t7"
+  },
+  {
+    "label": "t8",
+    "detail": "field GridView",
+    "insertText": "t8"
+  },
+  {
+    "label": "t9",
+    "detail": "field GridView",
+    "insertText": "t9"
+  },
+  {
+    "label": "t10",
+    "detail": "field GridView",
+    "insertText": "t10"
+  },
+  {
+    "label": "t11",
+    "detail": "field GridView",
+    "insertText": "t11"
+  },
+  {
+    "label": "t12",
+    "detail": "field GridView",
+    "insertText": "t12"
+  },
+  {
+    "label": "phep_th",
+    "detail": "field GridView",
+    "insertText": "phep_th"
+  },
+  {
+    "label": "phep_cl",
+    "detail": "field GridView",
+    "insertText": "phep_cl"
+  },
+  {
+    "label": "tham_nien",
+    "detail": "field GridView",
+    "insertText": "tham_nien"
+  },
+  {
+    "label": "phep_den_ngay",
+    "detail": "field GridView",
+    "insertText": "phep_den_ngay"
+  },
+  {
+    "label": "sl_di_muon",
+    "detail": "field GridView",
+    "insertText": "sl_di_muon"
+  },
+  {
+    "label": "sp_di_muon",
+    "detail": "field GridView",
+    "insertText": "sp_di_muon"
+  },
+  {
+    "label": "sl_ve_som",
+    "detail": "field GridView",
+    "insertText": "sl_ve_som"
+  },
+  {
+    "label": "sp_ve_som",
+    "detail": "field GridView",
+    "insertText": "sp_ve_som"
+  },
+  {
+    "label": "t_so_lan",
+    "detail": "field GridView",
+    "insertText": "t_so_lan"
+  },
+  {
+    "label": "t_so_phut",
+    "detail": "field GridView",
+    "insertText": "t_so_phut"
+  },
+  {
+    "label": "show_stt",
+    "detail": "field GridView",
+    "insertText": "show_stt"
+  },
+  {
+    "label": "tt_cu",
+    "detail": "field GridView",
+    "insertText": "tt_cu"
+  },
+  {
+    "label": "tt_moi",
+    "detail": "field GridView",
+    "insertText": "tt_moi"
+  },
+  {
+    "label": "s_tg",
+    "detail": "field GridView",
+    "insertText": "s_tg"
+  },
+  {
+    "label": "so_sbh",
+    "detail": "field GridView",
+    "insertText": "so_sbh"
+  },
+  {
+    "label": "nv_ql",
+    "detail": "field GridView",
+    "insertText": "nv_ql"
+  },
+  {
+    "label": "cmnd_ngay_hl",
+    "detail": "field GridView",
+    "insertText": "cmnd_ngay_hl"
+  },
+  {
+    "label": "noi_cap_cmnd",
+    "detail": "field GridView",
+    "insertText": "noi_cap_cmnd"
+  },
+  {
+    "label": "dia_chi_th_tru",
+    "detail": "field GridView",
+    "insertText": "dia_chi_th_tru"
+  },
+  {
+    "label": "ma_tinh_KCB",
+    "detail": "field GridView",
+    "insertText": "ma_tinh_KCB"
+  },
+  {
+    "label": "quyen_loi",
+    "detail": "field GridView",
+    "insertText": "quyen_loi"
+  },
+  {
+    "label": "ngay_bd_lc",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_lc"
+  },
+  {
+    "label": "ngay_bd_lm",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_lm"
+  },
+  {
+    "label": "ngay_td_dk",
+    "detail": "field GridView",
+    "insertText": "ngay_td_dk"
+  },
+  {
+    "label": "ten_bac",
+    "detail": "field GridView",
+    "insertText": "ten_bac"
+  },
+  {
+    "label": "ten_bp_moi",
+    "detail": "field GridView",
+    "insertText": "ten_bp_moi"
+  },
+  {
+    "label": "ten_vtr_moi",
+    "detail": "field GridView",
+    "insertText": "ten_vtr_moi"
+  },
+  {
+    "label": "ngay_vao_cty",
+    "detail": "field GridView",
+    "insertText": "ngay_vao_cty"
+  },
+  {
+    "label": "nam_lv",
+    "detail": "field GridView",
+    "insertText": "nam_lv"
+  },
+  {
+    "label": "so_hd",
+    "detail": "field GridView",
+    "insertText": "so_hd"
+  },
+  {
+    "label": "tong_nv",
+    "detail": "field GridView",
+    "insertText": "tong_nv"
+  },
+  {
+    "label": "tong_nghi",
+    "detail": "field GridView",
+    "insertText": "tong_nghi"
+  },
+  {
+    "label": "ld_dk",
+    "detail": "field GridView",
+    "insertText": "ld_dk"
+  },
+  {
+    "label": "ld_tang",
+    "detail": "field GridView",
+    "insertText": "ld_tang"
+  },
+  {
+    "label": "ld_dc_tang",
+    "detail": "field GridView",
+    "insertText": "ld_dc_tang"
+  },
+  {
+    "label": "ld_tong_tang",
+    "detail": "field GridView",
+    "insertText": "ld_tong_tang"
+  },
+  {
+    "label": "ld_nghi",
+    "detail": "field GridView",
+    "insertText": "ld_nghi"
+  },
+  {
+    "label": "ld_dc_giam",
+    "detail": "field GridView",
+    "insertText": "ld_dc_giam"
+  },
+  {
+    "label": "ld_tong_giam",
+    "detail": "field GridView",
+    "insertText": "ld_tong_giam"
+  },
+  {
+    "label": "tong_ld_hd",
+    "detail": "field GridView",
+    "insertText": "tong_ld_hd"
+  },
+  {
+    "label": "tong_ld_vang",
+    "detail": "field GridView",
+    "insertText": "tong_ld_vang"
+  },
+  {
+    "label": "chitieu_01",
+    "detail": "field GridView",
+    "insertText": "chitieu_01"
+  },
+  {
+    "label": "chitieu_02",
+    "detail": "field GridView",
+    "insertText": "chitieu_02"
+  },
+  {
+    "label": "chitieu_03",
+    "detail": "field GridView",
+    "insertText": "chitieu_03"
+  },
+  {
+    "label": "chitieu_04",
+    "detail": "field GridView",
+    "insertText": "chitieu_04"
+  },
+  {
+    "label": "chitieu_05",
+    "detail": "field GridView",
+    "insertText": "chitieu_05"
+  },
+  {
+    "label": "chitieu_06",
+    "detail": "field GridView",
+    "insertText": "chitieu_06"
+  },
+  {
+    "label": "chitieu_07",
+    "detail": "field GridView",
+    "insertText": "chitieu_07"
+  },
+  {
+    "label": "chitieu_08",
+    "detail": "field GridView",
+    "insertText": "chitieu_08"
+  },
+  {
+    "label": "chitieu_09",
+    "detail": "field GridView",
+    "insertText": "chitieu_09"
+  },
+  {
+    "label": "chitieu_10",
+    "detail": "field GridView",
+    "insertText": "chitieu_10"
+  },
+  {
+    "label": "cccd",
+    "detail": "field GridView",
+    "insertText": "cccd"
+  },
+  {
+    "label": "bac_quan_ly",
+    "detail": "field GridView",
+    "insertText": "bac_quan_ly"
+  },
+  {
+    "label": "quan_ly_yn",
+    "detail": "field GridView",
+    "insertText": "quan_ly_yn"
+  },
+  {
+    "label": "kt_bac_cao",
+    "detail": "field GridView",
+    "insertText": "kt_bac_cao"
+  },
+  {
+    "label": "kt_bac_trung",
+    "detail": "field GridView",
+    "insertText": "kt_bac_trung"
+  },
+  {
+    "label": "kt_bac_khac",
+    "detail": "field GridView",
+    "insertText": "kt_bac_khac"
+  },
+  {
+    "label": "phu_cap_luong",
+    "detail": "field GridView",
+    "insertText": "phu_cap_luong"
+  },
+  {
+    "label": "phu_cap_khac",
+    "detail": "field GridView",
+    "insertText": "phu_cap_khac"
+  },
+  {
+    "label": "ngay_dh_tu",
+    "detail": "field GridView",
+    "insertText": "ngay_dh_tu"
+  },
+  {
+    "label": "ngay_dh_den",
+    "detail": "field GridView",
+    "insertText": "ngay_dh_den"
+  },
+  {
+    "label": "ngay_bd_hd_kxd",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_hd_kxd"
+  },
+  {
+    "label": "ngay_bd_hd_xd",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_hd_xd"
+  },
+  {
+    "label": "ngay_kt_hd_xd",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_hd_xd"
+  },
+  {
+    "label": "ngay_bd_hd_khac",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_hd_khac"
+  },
+  {
+    "label": "ngay_kt_hd_khac",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_hd_khac"
+  },
+  {
+    "label": "ngay_bd_bhxh",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_bhxh"
+  },
+  {
+    "label": "ngay_kt_bhxh",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_bhxh"
+  },
+  {
+    "label": "dot",
+    "detail": "field GridView",
+    "insertText": "dot"
+  },
+  {
+    "label": "tra_bhyt",
+    "detail": "field GridView",
+    "insertText": "tra_bhyt"
+  },
+  {
+    "label": "ngay_bd_dong",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_dong"
+  },
+  {
+    "label": "ngay_kt_dong",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_dong"
+  },
+  {
+    "label": "loai_trich",
+    "detail": "field GridView",
+    "insertText": "loai_trich"
+  },
+  {
+    "label": "ngay_bd_cvdh",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_cvdh"
+  },
+  {
+    "label": "ngay_kt_cvdh",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_cvdh"
+  },
+  {
+    "label": "ky_sau_yn",
+    "detail": "field GridView",
+    "insertText": "ky_sau_yn"
+  },
+  {
+    "label": "s_ngay_cham_tu",
+    "detail": "field GridView",
+    "insertText": "s_ngay_cham_tu"
+  },
+  {
+    "label": "s_ngay_cham_den",
+    "detail": "field GridView",
+    "insertText": "s_ngay_cham_den"
+  },
+  {
+    "label": "xRowName",
+    "detail": "field GridView",
+    "insertText": "xRowName"
+  },
+  {
+    "label": "xNorm",
+    "detail": "field GridView",
+    "insertText": "xNorm"
+  },
+  {
+    "label": "stt2",
+    "detail": "field GridView",
+    "insertText": "stt2"
+  },
+  {
+    "label": "ten_sp",
+    "detail": "field GridView",
+    "insertText": "ten_sp"
+  },
+  {
+    "label": "loai_luong",
+    "detail": "field GridView",
+    "insertText": "loai_luong"
+  },
+  {
+    "label": "kieu_tinh",
+    "detail": "field GridView",
+    "insertText": "kieu_tinh"
+  },
+  {
+    "label": "ma_ngach_m",
+    "detail": "field GridView",
+    "insertText": "ma_ngach_m"
+  },
+  {
+    "label": "ma_bac_m",
+    "detail": "field GridView",
+    "insertText": "ma_bac_m"
+  },
+  {
+    "label": "ma_ngach_ct",
+    "detail": "field GridView",
+    "insertText": "ma_ngach_ct"
+  },
+  {
+    "label": "ma_bac_ct",
+    "detail": "field GridView",
+    "insertText": "ma_bac_ct"
+  },
+  {
+    "label": "ngay_hl_ct",
+    "detail": "field GridView",
+    "insertText": "ngay_hl_ct"
+  },
+  {
+    "label": "ngay_hl_bh",
+    "detail": "field GridView",
+    "insertText": "ngay_hl_bh"
+  },
+  {
+    "label": "ten_pc",
+    "detail": "field GridView",
+    "insertText": "ten_pc"
+  },
+  {
+    "label": "tien_pc",
+    "detail": "field GridView",
+    "insertText": "tien_pc"
+  },
+  {
+    "label": "ngay_hl_tu_pc",
+    "detail": "field GridView",
+    "insertText": "ngay_hl_tu_pc"
+  },
+  {
+    "label": "ngay_hl_den_pc",
+    "detail": "field GridView",
+    "insertText": "ngay_hl_den_pc"
+  },
+  {
+    "label": "ma_bp_phi",
+    "detail": "field GridView",
+    "insertText": "ma_bp_phi"
+  },
+  {
+    "label": "ten_dot",
+    "detail": "field GridView",
+    "insertText": "ten_dot"
+  },
+  {
+    "label": "ten_vong",
+    "detail": "field GridView",
+    "insertText": "ten_vong"
+  },
+  {
+    "label": "ma_uv",
+    "detail": "field GridView",
+    "insertText": "ma_uv"
+  },
+  {
+    "label": "ho_ten_uv",
+    "detail": "field GridView",
+    "insertText": "ho_ten_uv"
+  },
+  {
+    "label": "ngay_hs",
+    "detail": "field GridView",
+    "insertText": "ngay_hs"
+  },
+  {
+    "label": "vong_ut",
+    "detail": "field GridView",
+    "insertText": "vong_ut"
+  },
+  {
+    "label": "ten_cm",
+    "detail": "field GridView",
+    "insertText": "ten_cm"
+  },
+  {
+    "label": "t_tnc_thue_nt",
+    "detail": "field GridView",
+    "insertText": "t_tnc_thue_nt"
+  },
+  {
+    "label": "t_tnt_thue_nt",
+    "detail": "field GridView",
+    "insertText": "t_tnt_thue_nt"
+  },
+  {
+    "label": "datetime3",
+    "detail": "field GridView",
+    "insertText": "datetime3"
+  },
+  {
+    "label": "u3",
+    "detail": "field GridView",
+    "insertText": "u3"
+  },
+  {
+    "label": "ngay_ph",
+    "detail": "field GridView",
+    "insertText": "ngay_ph"
+  },
+  {
+    "label": "mau_hddt",
+    "detail": "field GridView",
+    "insertText": "mau_hddt"
+  },
+  {
+    "label": "n01",
+    "detail": "field GridView",
+    "insertText": "n01"
+  },
+  {
+    "label": "n02",
+    "detail": "field GridView",
+    "insertText": "n02"
+  },
+  {
+    "label": "n03",
+    "detail": "field GridView",
+    "insertText": "n03"
+  },
+  {
+    "label": "n04",
+    "detail": "field GridView",
+    "insertText": "n04"
+  },
+  {
+    "label": "n05",
+    "detail": "field GridView",
+    "insertText": "n05"
+  },
+  {
+    "label": "n06",
+    "detail": "field GridView",
+    "insertText": "n06"
+  },
+  {
+    "label": "n07",
+    "detail": "field GridView",
+    "insertText": "n07"
+  },
+  {
+    "label": "n08",
+    "detail": "field GridView",
+    "insertText": "n08"
+  },
+  {
+    "label": "n09",
+    "detail": "field GridView",
+    "insertText": "n09"
+  },
+  {
+    "label": "n10",
+    "detail": "field GridView",
+    "insertText": "n10"
+  },
+  {
+    "label": "n11",
+    "detail": "field GridView",
+    "insertText": "n11"
+  },
+  {
+    "label": "n12",
+    "detail": "field GridView",
+    "insertText": "n12"
+  },
+  {
+    "label": "n13",
+    "detail": "field GridView",
+    "insertText": "n13"
+  },
+  {
+    "label": "n14",
+    "detail": "field GridView",
+    "insertText": "n14"
+  },
+  {
+    "label": "n15",
+    "detail": "field GridView",
+    "insertText": "n15"
+  },
+  {
+    "label": "n16",
+    "detail": "field GridView",
+    "insertText": "n16"
+  },
+  {
+    "label": "n17",
+    "detail": "field GridView",
+    "insertText": "n17"
+  },
+  {
+    "label": "n18",
+    "detail": "field GridView",
+    "insertText": "n18"
+  },
+  {
+    "label": "n19",
+    "detail": "field GridView",
+    "insertText": "n19"
+  },
+  {
+    "label": "n20",
+    "detail": "field GridView",
+    "insertText": "n20"
+  },
+  {
+    "label": "n21",
+    "detail": "field GridView",
+    "insertText": "n21"
+  },
+  {
+    "label": "n22",
+    "detail": "field GridView",
+    "insertText": "n22"
+  },
+  {
+    "label": "n23",
+    "detail": "field GridView",
+    "insertText": "n23"
+  },
+  {
+    "label": "n24",
+    "detail": "field GridView",
+    "insertText": "n24"
+  },
+  {
+    "label": "n25",
+    "detail": "field GridView",
+    "insertText": "n25"
+  },
+  {
+    "label": "n26",
+    "detail": "field GridView",
+    "insertText": "n26"
+  },
+  {
+    "label": "n27",
+    "detail": "field GridView",
+    "insertText": "n27"
+  },
+  {
+    "label": "n28",
+    "detail": "field GridView",
+    "insertText": "n28"
+  },
+  {
+    "label": "n29",
+    "detail": "field GridView",
+    "insertText": "n29"
+  },
+  {
+    "label": "n30",
+    "detail": "field GridView",
+    "insertText": "n30"
+  },
+  {
+    "label": "n31",
+    "detail": "field GridView",
+    "insertText": "n31"
+  },
+  {
+    "label": "n32",
+    "detail": "field GridView",
+    "insertText": "n32"
+  },
+  {
+    "label": "n33",
+    "detail": "field GridView",
+    "insertText": "n33"
+  },
+  {
+    "label": "n34",
+    "detail": "field GridView",
+    "insertText": "n34"
+  },
+  {
+    "label": "n35",
+    "detail": "field GridView",
+    "insertText": "n35"
+  },
+  {
+    "label": "n36",
+    "detail": "field GridView",
+    "insertText": "n36"
+  },
+  {
+    "label": "n37",
+    "detail": "field GridView",
+    "insertText": "n37"
+  },
+  {
+    "label": "n38",
+    "detail": "field GridView",
+    "insertText": "n38"
+  },
+  {
+    "label": "n39",
+    "detail": "field GridView",
+    "insertText": "n39"
+  },
+  {
+    "label": "n40",
+    "detail": "field GridView",
+    "insertText": "n40"
+  },
+  {
+    "label": "s_ngay_tinh_tu",
+    "detail": "field GridView",
+    "insertText": "s_ngay_tinh_tu"
+  },
+  {
+    "label": "s_ngay_tinh_den",
+    "detail": "field GridView",
+    "insertText": "s_ngay_tinh_den"
+  },
+  {
+    "label": "ma_khoa",
+    "detail": "field GridView",
+    "insertText": "ma_khoa"
+  },
+  {
+    "label": "ten_khoa",
+    "detail": "field GridView",
+    "insertText": "ten_khoa"
+  },
+  {
+    "label": "mon_hoc",
+    "detail": "field GridView",
+    "insertText": "mon_hoc"
+  },
+  {
+    "label": "loai_hinh_dt",
+    "detail": "field GridView",
+    "insertText": "loai_hinh_dt"
+  },
+  {
+    "label": "doi_tuong_dt",
+    "detail": "field GridView",
+    "insertText": "doi_tuong_dt"
+  },
+  {
+    "label": "ten_mh",
+    "detail": "field GridView",
+    "insertText": "ten_mh"
+  },
+  {
+    "label": "ten_loai",
+    "detail": "field GridView",
+    "insertText": "ten_loai"
+  },
+  {
+    "label": "ma_mh",
+    "detail": "field GridView",
+    "insertText": "ma_mh"
+  },
+  {
+    "label": "ngay_hh_cc",
+    "detail": "field GridView",
+    "insertText": "ngay_hh_cc"
+  },
+  {
+    "label": "ten_xep_loai",
+    "detail": "field GridView",
+    "insertText": "ten_xep_loai"
+  },
+  {
+    "label": "loai_giam",
+    "detail": "field GridView",
+    "insertText": "loai_giam"
+  },
+  {
+    "label": "cot0",
+    "detail": "field GridView",
+    "insertText": "cot0"
+  },
+  {
+    "label": "tn_nam",
+    "detail": "field GridView",
+    "insertText": "tn_nam"
+  },
+  {
+    "label": "thang1",
+    "detail": "field GridView",
+    "insertText": "thang1"
+  },
+  {
+    "label": "thang2",
+    "detail": "field GridView",
+    "insertText": "thang2"
+  },
+  {
+    "label": "thang3",
+    "detail": "field GridView",
+    "insertText": "thang3"
+  },
+  {
+    "label": "thang4",
+    "detail": "field GridView",
+    "insertText": "thang4"
+  },
+  {
+    "label": "thang5",
+    "detail": "field GridView",
+    "insertText": "thang5"
+  },
+  {
+    "label": "thang6",
+    "detail": "field GridView",
+    "insertText": "thang6"
+  },
+  {
+    "label": "thang7",
+    "detail": "field GridView",
+    "insertText": "thang7"
+  },
+  {
+    "label": "thang8",
+    "detail": "field GridView",
+    "insertText": "thang8"
+  },
+  {
+    "label": "thang9",
+    "detail": "field GridView",
+    "insertText": "thang9"
+  },
+  {
+    "label": "thang10",
+    "detail": "field GridView",
+    "insertText": "thang10"
+  },
+  {
+    "label": "thang11",
+    "detail": "field GridView",
+    "insertText": "thang11"
+  },
+  {
+    "label": "thang12",
+    "detail": "field GridView",
+    "insertText": "thang12"
+  },
+  {
+    "label": "ma_tg",
+    "detail": "field GridView",
+    "insertText": "ma_tg"
+  },
+  {
+    "label": "ten_tg%l",
+    "detail": "field GridView",
+    "insertText": "ten_tg%l"
+  },
+  {
+    "label": "ma_ldnv",
+    "detail": "field GridView",
+    "insertText": "ma_ldnv"
+  },
+  {
+    "label": "ten_ldnv%l",
+    "detail": "field GridView",
+    "insertText": "ten_ldnv%l"
+  },
+  {
+    "label": "ma_kt",
+    "detail": "field GridView",
+    "insertText": "ma_kt"
+  },
+  {
+    "label": "ten_tt%l",
+    "detail": "field GridView",
+    "insertText": "ten_tt%l"
+  },
+  {
+    "label": "ma_kenh",
+    "detail": "field GridView",
+    "insertText": "ma_kenh"
+  },
+  {
+    "label": "ten_kenh%l",
+    "detail": "field GridView",
+    "insertText": "ten_kenh%l"
+  },
+  {
+    "label": "noi_sinh",
+    "detail": "field GridView",
+    "insertText": "noi_sinh"
+  },
+  {
+    "label": "ngay_nop",
+    "detail": "field GridView",
+    "insertText": "ngay_nop"
+  },
+  {
+    "label": "ten_status%l",
+    "detail": "field GridView",
+    "insertText": "ten_status%l"
+  },
+  {
+    "label": "ten_ht%l",
+    "detail": "field GridView",
+    "insertText": "ten_ht%l"
+  },
+  {
+    "label": "ma_pv",
+    "detail": "field GridView",
+    "insertText": "ma_pv"
+  },
+  {
+    "label": "ma_vong",
+    "detail": "field GridView",
+    "insertText": "ma_vong"
+  },
+  {
+    "label": "ten_vong%l",
+    "detail": "field GridView",
+    "insertText": "ten_vong%l"
+  },
+  {
+    "label": "ma_ktr",
+    "detail": "field GridView",
+    "insertText": "ma_ktr"
+  },
+  {
+    "label": "ma_tcbh",
+    "detail": "field GridView",
+    "insertText": "ma_tcbh"
+  },
+  {
+    "label": "ma_cm",
+    "detail": "field GridView",
+    "insertText": "ma_cm"
+  },
+  {
+    "label": "f_ma_tinh",
+    "detail": "field GridView",
+    "insertText": "f_ma_tinh"
+  },
+  {
+    "label": "ten_tinh%lex",
+    "detail": "field GridView",
+    "insertText": "ten_tinh%lex"
+  },
+  {
+    "label": "f_ma_quan",
+    "detail": "field GridView",
+    "insertText": "f_ma_quan"
+  },
+  {
+    "label": "f_ma_phuong",
+    "detail": "field GridView",
+    "insertText": "f_ma_phuong"
+  },
+  {
+    "label": "tc_ma_tinh",
+    "detail": "field GridView",
+    "insertText": "tc_ma_tinh"
+  },
+  {
+    "label": "tc_ma_quan",
+    "detail": "field GridView",
+    "insertText": "tc_ma_quan"
+  },
+  {
+    "label": "tc_ma_phuong",
+    "detail": "field GridView",
+    "insertText": "tc_ma_phuong"
+  },
+  {
+    "label": "ma_dvdt",
+    "detail": "field GridView",
+    "insertText": "ma_dvdt"
+  },
+  {
+    "label": "ma_phuong",
+    "detail": "field GridView",
+    "insertText": "ma_phuong"
+  },
+  {
+    "label": "ten_phuong%l",
+    "detail": "field GridView",
+    "insertText": "ten_phuong%l"
+  },
+  {
+    "label": "ngay_gh",
+    "detail": "field GridView",
+    "insertText": "ngay_gh"
+  },
+  {
+    "label": "unit_code",
+    "detail": "field GridView",
+    "insertText": "unit_code"
+  },
+  {
+    "label": "host",
+    "detail": "field GridView",
+    "insertText": "host"
+  },
+  {
+    "label": "port",
+    "detail": "field GridView",
+    "insertText": "port"
+  },
+  {
+    "label": "timeout",
+    "detail": "field GridView",
+    "insertText": "timeout"
+  },
+  {
+    "label": "subject_filter",
+    "detail": "field GridView",
+    "insertText": "subject_filter"
+  },
+  {
+    "label": "kind",
+    "detail": "field GridView",
+    "insertText": "kind"
+  },
+  {
+    "label": "nguong_thue",
+    "detail": "field GridView",
+    "insertText": "nguong_thue"
+  },
+  {
+    "label": "nguong_thue_nt",
+    "detail": "field GridView",
+    "insertText": "nguong_thue_nt"
+  },
+  {
+    "label": "ma_thue_tp",
+    "detail": "field GridView",
+    "insertText": "ma_thue_tp"
+  },
+  {
+    "label": "ma_vvct",
+    "detail": "field GridView",
+    "insertText": "ma_vvct"
+  },
+  {
+    "label": "ma_cqt",
+    "detail": "field GridView",
+    "insertText": "ma_cqt"
+  },
+  {
+    "label": "keys",
+    "detail": "field GridView",
+    "insertText": "keys"
+  },
+  {
+    "label": "ten_cn",
+    "detail": "field GridView",
+    "insertText": "ten_cn"
+  },
+  {
+    "label": "lk_no",
+    "detail": "field GridView",
+    "insertText": "lk_no"
+  },
+  {
+    "label": "lk_co",
+    "detail": "field GridView",
+    "insertText": "lk_co"
+  },
+  {
+    "label": "lk_no_nt",
+    "detail": "field GridView",
+    "insertText": "lk_no_nt"
+  },
+  {
+    "label": "lk_co_nt",
+    "detail": "field GridView",
+    "insertText": "lk_co_nt"
+  },
+  {
+    "label": "quy",
+    "detail": "field GridView",
+    "insertText": "quy"
+  },
+  {
+    "label": "ten_loai_hd%l",
+    "detail": "field GridView",
+    "insertText": "ten_loai_hd%l"
+  },
+  {
+    "label": "so_seri",
+    "detail": "field GridView",
+    "insertText": "so_seri"
+  },
+  {
+    "label": "ma_loai_vt",
+    "detail": "field GridView",
+    "insertText": "ma_loai_vt"
+  },
+  {
+    "label": "ten_loai_vt%l",
+    "detail": "field GridView",
+    "insertText": "ten_loai_vt%l"
+  },
+  {
+    "label": "so_ctgs",
+    "detail": "field GridView",
+    "insertText": "so_ctgs"
+  },
+  {
+    "label": "ngay_ctgs",
+    "detail": "field GridView",
+    "insertText": "ngay_ctgs"
+  },
+  {
+    "label": "ds_ct",
+    "detail": "field GridView",
+    "insertText": "ds_ct"
+  },
+  {
+    "label": "ton00",
+    "detail": "field GridView",
+    "insertText": "ton00"
+  },
+  {
+    "label": "du00",
+    "detail": "field GridView",
+    "insertText": "du00"
+  },
+  {
+    "label": "du_nt00",
+    "detail": "field GridView",
+    "insertText": "du_nt00"
+  },
+  {
+    "label": "alias_name",
+    "detail": "field GridView",
+    "insertText": "alias_name"
+  },
+  {
+    "label": "mail_from",
+    "detail": "field GridView",
+    "insertText": "mail_from"
+  },
+  {
+    "label": "ssl",
+    "detail": "field GridView",
+    "insertText": "ssl"
+  },
+  {
+    "label": "ten_dh",
+    "detail": "field GridView",
+    "insertText": "ten_dh"
+  },
+  {
+    "label": "ngay_dat",
+    "detail": "field GridView",
+    "insertText": "ngay_dat"
+  },
+  {
+    "label": "ten_cb",
+    "detail": "field GridView",
+    "insertText": "ten_cb"
+  },
+  {
+    "label": "form_name%lex",
+    "detail": "field GridView",
+    "insertText": "form_name%lex"
+  },
+  {
+    "label": "kieu_hd",
+    "detail": "field GridView",
+    "insertText": "kieu_hd"
+  },
+  {
+    "label": "ten_spex",
+    "detail": "field GridView",
+    "insertText": "ten_spex"
+  },
+  {
+    "label": "ma_qt",
+    "detail": "field GridView",
+    "insertText": "ma_qt"
+  },
+  {
+    "label": "sms",
+    "detail": "field GridView",
+    "insertText": "sms"
+  },
+  {
+    "label": "ds_tb",
+    "detail": "field GridView",
+    "insertText": "ds_tb"
+  },
+  {
+    "label": "ma_gia_tri",
+    "detail": "field GridView",
+    "insertText": "ma_gia_tri"
+  },
+  {
+    "label": "uname",
+    "detail": "field GridView",
+    "insertText": "uname"
+  },
+  {
+    "label": "cube",
+    "detail": "field GridView",
+    "insertText": "cube"
+  },
+  {
+    "label": "descript%lex",
+    "detail": "field GridView",
+    "insertText": "descript%lex"
+  },
+  {
+    "label": "val_view%lex",
+    "detail": "field GridView",
+    "insertText": "val_view%lex"
+  },
+  {
+    "label": "dia_chi%l",
+    "detail": "field GridView",
+    "insertText": "dia_chi%l"
+  },
+  {
+    "label": "in_nl_yn",
+    "detail": "field GridView",
+    "insertText": "in_nl_yn"
+  },
+  {
+    "label": "ten_tb%l",
+    "detail": "field GridView",
+    "insertText": "ten_tb%l"
+  },
+  {
+    "label": "ma_nvmh",
+    "detail": "field GridView",
+    "insertText": "ma_nvmh"
+  },
+  {
+    "label": "ten_nvmh%l",
+    "detail": "field GridView",
+    "insertText": "ten_nvmh%l"
+  },
+  {
+    "label": "ten_nx%l",
+    "detail": "field GridView",
+    "insertText": "ten_nx%l"
+  },
+  {
+    "label": "loai_qh",
+    "detail": "field GridView",
+    "insertText": "loai_qh"
+  },
+  {
+    "label": "ma_kh1",
+    "detail": "field GridView",
+    "insertText": "ma_kh1"
+  },
+  {
+    "label": "ten_kh1%lex",
+    "detail": "field GridView",
+    "insertText": "ten_kh1%lex"
+  },
+  {
+    "label": "ma_nt1",
+    "detail": "field GridView",
+    "insertText": "ma_nt1"
+  },
+  {
+    "label": "ten_vt0%l",
+    "detail": "field GridView",
+    "insertText": "ten_vt0%l"
+  },
+  {
+    "label": "ten_snk%l",
+    "detail": "field GridView",
+    "insertText": "ten_snk%l"
+  },
+  {
+    "label": "logo_id",
+    "detail": "field GridView",
+    "insertText": "logo_id"
+  },
+  {
+    "label": "logo_name%l",
+    "detail": "field GridView",
+    "insertText": "logo_name%l"
+  },
+  {
+    "label": "ma_ct_in",
+    "detail": "field GridView",
+    "insertText": "ma_ct_in"
+  },
+  {
+    "label": "mst",
+    "detail": "field GridView",
+    "insertText": "mst"
+  },
+  {
+    "label": "ten_dn",
+    "detail": "field GridView",
+    "insertText": "ten_dn"
+  },
+  {
+    "label": "tinh_tp",
+    "detail": "field GridView",
+    "insertText": "tinh_tp"
+  },
+  {
+    "label": "ds_chi_tieu",
+    "detail": "field GridView",
+    "insertText": "ds_chi_tieu"
+  },
+  {
+    "label": "tk_0_gt",
+    "detail": "field GridView",
+    "insertText": "tk_0_gt"
+  },
+  {
+    "label": "xpivot",
+    "detail": "field GridView",
+    "insertText": "xpivot"
+  },
+  {
+    "label": "nc_dk",
+    "detail": "field GridView",
+    "insertText": "nc_dk"
+  },
+  {
+    "label": "nc_ck",
+    "detail": "field GridView",
+    "insertText": "nc_ck"
+  },
+  {
+    "label": "nc_dk2",
+    "detail": "field GridView",
+    "insertText": "nc_dk2"
+  },
+  {
+    "label": "nc_ck2",
+    "detail": "field GridView",
+    "insertText": "nc_ck2"
+  },
+  {
+    "label": "chuc_nang",
+    "detail": "field GridView",
+    "insertText": "chuc_nang"
+  },
+  {
+    "label": "ten_chuc_nang",
+    "detail": "field GridView",
+    "insertText": "ten_chuc_nang"
+  },
+  {
+    "label": "nguoi_duyet",
+    "detail": "field GridView",
+    "insertText": "nguoi_duyet"
+  },
+  {
+    "label": "ten_nguoi_duyet",
+    "detail": "field GridView",
+    "insertText": "ten_nguoi_duyet"
+  },
+  {
+    "label": "quyen",
+    "detail": "field GridView",
+    "insertText": "quyen"
+  },
+  {
+    "label": "ten_quyen",
+    "detail": "field GridView",
+    "insertText": "ten_quyen"
+  },
+  {
+    "label": "kieu_duyet",
+    "detail": "field GridView",
+    "insertText": "kieu_duyet"
+  },
+  {
+    "label": "ten_kieu_duyet",
+    "detail": "field GridView",
+    "insertText": "ten_kieu_duyet"
+  },
+  {
+    "label": "tu_trang_thai",
+    "detail": "field GridView",
+    "insertText": "tu_trang_thai"
+  },
+  {
+    "label": "ten_tu_trang_thai",
+    "detail": "field GridView",
+    "insertText": "ten_tu_trang_thai"
+  },
+  {
+    "label": "trang_thai_duyet",
+    "detail": "field GridView",
+    "insertText": "trang_thai_duyet"
+  },
+  {
+    "label": "ten_trang_thai_duyet",
+    "detail": "field GridView",
+    "insertText": "ten_trang_thai_duyet"
+  },
+  {
+    "label": "trang_thai_huy",
+    "detail": "field GridView",
+    "insertText": "trang_thai_huy"
+  },
+  {
+    "label": "ten_trang_thai_huy",
+    "detail": "field GridView",
+    "insertText": "ten_trang_thai_huy"
+  },
+  {
+    "label": "loai_thue",
+    "detail": "field GridView",
+    "insertText": "loai_thue"
+  },
+  {
+    "label": "ma_hh",
+    "detail": "field GridView",
+    "insertText": "ma_hh"
+  },
+  {
+    "label": "ten_hh%l",
+    "detail": "field GridView",
+    "insertText": "ten_hh%l"
+  },
+  {
+    "label": "ten_nhex",
+    "detail": "field GridView",
+    "insertText": "ten_nhex"
+  },
+  {
+    "label": "ten_tt",
+    "detail": "field GridView",
+    "insertText": "ten_tt"
+  },
+  {
+    "label": "ten_tt_gd",
+    "detail": "field GridView",
+    "insertText": "ten_tt_gd"
+  },
+  {
+    "label": "ten_ph_loai",
+    "detail": "field GridView",
+    "insertText": "ten_ph_loai"
+  },
+  {
+    "label": "ten_loai_loi",
+    "detail": "field GridView",
+    "insertText": "ten_loai_loi"
+  },
+  {
+    "label": "ten_loi",
+    "detail": "field GridView",
+    "insertText": "ten_loi"
+  },
+  {
+    "label": "status2",
+    "detail": "field GridView",
+    "insertText": "status2"
+  },
+  {
+    "label": "phan_loai_loi",
+    "detail": "field GridView",
+    "insertText": "phan_loai_loi"
+  },
+  {
+    "label": "loai_loi",
+    "detail": "field GridView",
+    "insertText": "loai_loi"
+  },
+  {
+    "label": "ngay_bat_dau",
+    "detail": "field GridView",
+    "insertText": "ngay_bat_dau"
+  },
+  {
+    "label": "ngay_ket_thuc",
+    "detail": "field GridView",
+    "insertText": "ngay_ket_thuc"
+  },
+  {
+    "label": "ten_diem",
+    "detail": "field GridView",
+    "insertText": "ten_diem"
+  },
+  {
+    "label": "xDetail",
+    "detail": "field GridView",
+    "insertText": "xDetail"
+  },
+  {
+    "label": "ten_key",
+    "detail": "field GridView",
+    "insertText": "ten_key"
+  },
+  {
+    "label": "ma1",
+    "detail": "field GridView",
+    "insertText": "ma1"
+  },
+  {
+    "label": "ngay_giao_yc",
+    "detail": "field GridView",
+    "insertText": "ngay_giao_yc"
+  },
+  {
+    "label": "ngay_giao_ncc",
+    "detail": "field GridView",
+    "insertText": "ngay_giao_ncc"
+  },
+  {
+    "label": "diem_tong",
+    "detail": "field GridView",
+    "insertText": "diem_tong"
+  },
+  {
+    "label": "diem_tb",
+    "detail": "field GridView",
+    "insertText": "diem_tb"
+  },
+  {
+    "label": "chenh_lech",
+    "detail": "field GridView",
+    "insertText": "chenh_lech"
+  },
+  {
+    "label": "diem1",
+    "detail": "field GridView",
+    "insertText": "diem1"
+  },
+  {
+    "label": "diem2",
+    "detail": "field GridView",
+    "insertText": "diem2"
+  },
+  {
+    "label": "diem3",
+    "detail": "field GridView",
+    "insertText": "diem3"
+  },
+  {
+    "label": "diem4",
+    "detail": "field GridView",
+    "insertText": "diem4"
+  },
+  {
+    "label": "diem5",
+    "detail": "field GridView",
+    "insertText": "diem5"
+  },
+  {
+    "label": "ngay_lo_kd",
+    "detail": "field GridView",
+    "insertText": "ngay_lo_kd"
+  },
+  {
+    "label": "so_lo_kd",
+    "detail": "field GridView",
+    "insertText": "so_lo_kd"
+  },
+  {
+    "label": "ten_kq",
+    "detail": "field GridView",
+    "insertText": "ten_kq"
+  },
+  {
+    "label": "diem_kn",
+    "detail": "field GridView",
+    "insertText": "diem_kn"
+  },
+  {
+    "label": "diem_kt",
+    "detail": "field GridView",
+    "insertText": "diem_kt"
+  },
+  {
+    "label": "ky_cuoi",
+    "detail": "field GridView",
+    "insertText": "ky_cuoi"
+  },
+  {
+    "label": "pt_nt",
+    "detail": "field GridView",
+    "insertText": "pt_nt"
+  },
+  {
+    "label": "t_tien_nt0",
+    "detail": "field GridView",
+    "insertText": "t_tien_nt0"
+  },
+  {
+    "label": "t_tien_nt",
+    "detail": "field GridView",
+    "insertText": "t_tien_nt"
+  },
+  {
+    "label": "t_tien_cl_nt",
+    "detail": "field GridView",
+    "insertText": "t_tien_cl_nt"
+  },
+  {
+    "label": "t_pt_nt",
+    "detail": "field GridView",
+    "insertText": "t_pt_nt"
+  },
+  {
+    "label": "pt",
+    "detail": "field GridView",
+    "insertText": "pt"
+  },
+  {
+    "label": "t_tien0",
+    "detail": "field GridView",
+    "insertText": "t_tien0"
+  },
+  {
+    "label": "t_tien_cl",
+    "detail": "field GridView",
+    "insertText": "t_tien_cl"
+  },
+  {
+    "label": "t_pt",
+    "detail": "field GridView",
+    "insertText": "t_pt"
+  },
+  {
+    "label": "ma_so2",
+    "detail": "field GridView",
+    "insertText": "ma_so2"
+  },
+  {
+    "label": "ten_tk_du",
+    "detail": "field GridView",
+    "insertText": "ten_tk_du"
+  },
+  {
+    "label": "ngay_dh",
+    "detail": "field GridView",
+    "insertText": "ngay_dh"
+  },
+  {
+    "label": "nguon_dl",
+    "detail": "field GridView",
+    "insertText": "nguon_dl"
+  },
+  {
+    "label": "ma_so_in",
+    "detail": "field GridView",
+    "insertText": "ma_so_in"
+  },
+  {
+    "label": "ten_ct",
+    "detail": "field GridView",
+    "insertText": "ten_ct"
+  },
+  {
+    "label": "kt1",
+    "detail": "field GridView",
+    "insertText": "kt1"
+  },
+  {
+    "label": "kt2",
+    "detail": "field GridView",
+    "insertText": "kt2"
+  },
+  {
+    "label": "kt3",
+    "detail": "field GridView",
+    "insertText": "kt3"
+  },
+  {
+    "label": "ten_tk",
+    "detail": "field GridView",
+    "insertText": "ten_tk"
+  },
+  {
+    "label": "kt4",
+    "detail": "field GridView",
+    "insertText": "kt4"
+  },
+  {
+    "label": "kt5",
+    "detail": "field GridView",
+    "insertText": "kt5"
+  },
+  {
+    "label": "field_type_log",
+    "detail": "field GridView",
+    "insertText": "field_type_log"
+  },
+  {
+    "label": "field_key_log",
+    "detail": "field GridView",
+    "insertText": "field_key_log"
+  },
+  {
+    "label": "field_name",
+    "detail": "field GridView",
+    "insertText": "field_name"
+  },
+  {
+    "label": "field_type",
+    "detail": "field GridView",
+    "insertText": "field_type"
+  },
+  {
+    "label": "field_key",
+    "detail": "field GridView",
+    "insertText": "field_key"
+  },
+  {
+    "label": "f5",
+    "detail": "field GridView",
+    "insertText": "f5"
+  },
+  {
+    "label": "gr_name",
+    "detail": "field GridView",
+    "insertText": "gr_name"
+  },
+  {
+    "label": "user_action",
+    "detail": "field GridView",
+    "insertText": "user_action"
+  },
+  {
+    "label": "old_value",
+    "detail": "field GridView",
+    "insertText": "old_value"
+  },
+  {
+    "label": "new_value",
+    "detail": "field GridView",
+    "insertText": "new_value"
+  },
+  {
+    "label": "ten_nl",
+    "detail": "field GridView",
+    "insertText": "ten_nl"
+  },
+  {
+    "label": "ten_vv",
+    "detail": "field GridView",
+    "insertText": "ten_vv"
+  },
+  {
+    "label": "ten_hd",
+    "detail": "field GridView",
+    "insertText": "ten_hd"
+  },
+  {
+    "label": "ten_ku",
+    "detail": "field GridView",
+    "insertText": "ten_ku"
+  },
+  {
+    "label": "ten_phi",
+    "detail": "field GridView",
+    "insertText": "ten_phi"
+  },
+  {
+    "label": "ten_lsx",
+    "detail": "field GridView",
+    "insertText": "ten_lsx"
+  },
+  {
+    "label": "value",
+    "detail": "field GridView",
+    "insertText": "value"
+  },
+  {
+    "label": "ten_dg",
+    "detail": "field GridView",
+    "insertText": "ten_dg"
+  },
+  {
+    "label": "ten_hd_exex",
+    "detail": "field GridView",
+    "insertText": "ten_hd_exex"
+  },
+  {
+    "label": "so_ngay_dh",
+    "detail": "field GridView",
+    "insertText": "so_ngay_dh"
+  },
+  {
+    "label": "so_ct_hddt0",
+    "detail": "field GridView",
+    "insertText": "so_ct_hddt0"
+  },
+  {
+    "label": "so_seri_hddt0",
+    "detail": "field GridView",
+    "insertText": "so_seri_hddt0"
+  },
+  {
+    "label": "mau_hddt0",
+    "detail": "field GridView",
+    "insertText": "mau_hddt0"
+  },
+  {
+    "label": "ma_nt0",
+    "detail": "field GridView",
+    "insertText": "ma_nt0"
+  },
+  {
+    "label": "nguoi_th",
+    "detail": "field GridView",
+    "insertText": "nguoi_th"
+  },
+  {
+    "label": "thanh_toan",
+    "detail": "field GridView",
+    "insertText": "thanh_toan"
+  },
+  {
+    "label": "tax_status_name",
+    "detail": "field GridView",
+    "insertText": "tax_status_name"
+  },
+  {
+    "label": "hs_yt",
+    "detail": "field GridView",
+    "insertText": "hs_yt"
+  },
+  {
+    "label": "gt_ps",
+    "detail": "field GridView",
+    "insertText": "gt_ps"
+  },
+  {
+    "label": "ngay_mua",
+    "detail": "field GridView",
+    "insertText": "ngay_mua"
+  },
+  {
+    "label": "nuoc_sx",
+    "detail": "field GridView",
+    "insertText": "nuoc_sx"
+  },
+  {
+    "label": "ngay_dvsd",
+    "detail": "field GridView",
+    "insertText": "ngay_dvsd"
+  },
+  {
+    "label": "so_hieu_ts",
+    "detail": "field GridView",
+    "insertText": "so_hieu_ts"
+  },
+  {
+    "label": "tl_kh",
+    "detail": "field GridView",
+    "insertText": "tl_kh"
+  },
+  {
+    "label": "so_ct_giam",
+    "detail": "field GridView",
+    "insertText": "so_ct_giam"
+  },
+  {
+    "label": "ly_do_giam",
+    "detail": "field GridView",
+    "insertText": "ly_do_giam"
+  },
+  {
+    "label": "ngay_kh0",
+    "detail": "field GridView",
+    "insertText": "ngay_kh0"
+  },
+  {
+    "label": "so_ky_kh",
+    "detail": "field GridView",
+    "insertText": "so_ky_kh"
+  },
+  {
+    "label": "tk_ts",
+    "detail": "field GridView",
+    "insertText": "tk_ts"
+  },
+  {
+    "label": "nh_ts1",
+    "detail": "field GridView",
+    "insertText": "nh_ts1"
+  },
+  {
+    "label": "nh_ts2",
+    "detail": "field GridView",
+    "insertText": "nh_ts2"
+  },
+  {
+    "label": "nh_ts3",
+    "detail": "field GridView",
+    "insertText": "nh_ts3"
+  },
+  {
+    "label": "ten_tk_kh%l",
+    "detail": "field GridView",
+    "insertText": "ten_tk_kh%l"
+  },
+  {
+    "label": "ten_tk_cp%l",
+    "detail": "field GridView",
+    "insertText": "ten_tk_cp%l"
+  },
+  {
+    "label": "ten_tk_kh",
+    "detail": "field GridView",
+    "insertText": "ten_tk_kh"
+  },
+  {
+    "label": "so_ky_kh_qd",
+    "detail": "field GridView",
+    "insertText": "so_ky_kh_qd"
+  },
+  {
+    "label": "ten_ts",
+    "detail": "field GridView",
+    "insertText": "ten_ts"
+  },
+  {
+    "label": "ngay_kt_kh",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_kh"
+  },
+  {
+    "label": "ten_tg_ts",
+    "detail": "field GridView",
+    "insertText": "ten_tg_ts"
+  },
+  {
+    "label": "gt",
+    "detail": "field GridView",
+    "insertText": "gt"
+  },
+  {
+    "label": "lk",
+    "detail": "field GridView",
+    "insertText": "lk"
+  },
+  {
+    "label": "ts",
+    "detail": "field GridView",
+    "insertText": "ts"
+  },
+  {
+    "label": "xRow",
+    "detail": "field GridView",
+    "insertText": "xRow"
+  },
+  {
+    "label": "ten_dg%l",
+    "detail": "field GridView",
+    "insertText": "ten_dg%l"
+  },
+  {
+    "label": "sc_yn",
+    "detail": "field GridView",
+    "insertText": "sc_yn"
+  },
+  {
+    "label": "ma_khon",
+    "detail": "field GridView",
+    "insertText": "ma_khon"
+  },
+  {
+    "label": "ma_mau_ct",
+    "detail": "field GridView",
+    "insertText": "ma_mau_ct"
+  },
+  {
+    "label": "chi_tieu2",
+    "detail": "field GridView",
+    "insertText": "chi_tieu2"
+  },
+  {
+    "label": "so_td",
+    "detail": "field GridView",
+    "insertText": "so_td"
+  },
+  {
+    "label": "so_ph",
+    "detail": "field GridView",
+    "insertText": "so_ph"
+  },
+  {
+    "label": "t_so_sd",
+    "detail": "field GridView",
+    "insertText": "t_so_sd"
+  },
+  {
+    "label": "so_sd",
+    "detail": "field GridView",
+    "insertText": "so_sd"
+  },
+  {
+    "label": "so_xoa",
+    "detail": "field GridView",
+    "insertText": "so_xoa"
+  },
+  {
+    "label": "so_mat",
+    "detail": "field GridView",
+    "insertText": "so_mat"
+  },
+  {
+    "label": "so_huy",
+    "detail": "field GridView",
+    "insertText": "so_huy"
+  },
+  {
+    "label": "so_min",
+    "detail": "field GridView",
+    "insertText": "so_min"
+  },
+  {
+    "label": "so_max",
+    "detail": "field GridView",
+    "insertText": "so_max"
+  },
+  {
+    "label": "ngay_ku1",
+    "detail": "field GridView",
+    "insertText": "ngay_ku1"
+  },
+  {
+    "label": "ngay_ku2",
+    "detail": "field GridView",
+    "insertText": "ngay_ku2"
+  },
+  {
+    "label": "ma_ku_in",
+    "detail": "field GridView",
+    "insertText": "ma_ku_in"
+  },
+  {
+    "label": "ngay_vay",
+    "detail": "field GridView",
+    "insertText": "ngay_vay"
+  },
+  {
+    "label": "ma_dtqt",
+    "detail": "field GridView",
+    "insertText": "ma_dtqt"
+  },
+  {
+    "label": "ten_dtqt%l",
+    "detail": "field GridView",
+    "insertText": "ten_dtqt%l"
+  },
+  {
+    "label": "no_dk_nt",
+    "detail": "field GridView",
+    "insertText": "no_dk_nt"
+  },
+  {
+    "label": "no_dk",
+    "detail": "field GridView",
+    "insertText": "no_dk"
+  },
+  {
+    "label": "co_dk_nt",
+    "detail": "field GridView",
+    "insertText": "co_dk_nt"
+  },
+  {
+    "label": "co_dk",
+    "detail": "field GridView",
+    "insertText": "co_dk"
+  },
+  {
+    "label": "no_ck_nt",
+    "detail": "field GridView",
+    "insertText": "no_ck_nt"
+  },
+  {
+    "label": "no_ck",
+    "detail": "field GridView",
+    "insertText": "no_ck"
+  },
+  {
+    "label": "co_ck_nt",
+    "detail": "field GridView",
+    "insertText": "co_ck_nt"
+  },
+  {
+    "label": "co_ck",
+    "detail": "field GridView",
+    "insertText": "co_ck"
+  },
+  {
+    "label": "du_no_nt",
+    "detail": "field GridView",
+    "insertText": "du_no_nt"
+  },
+  {
+    "label": "du_co_nt",
+    "detail": "field GridView",
+    "insertText": "du_co_nt"
+  },
+  {
+    "label": "du_no",
+    "detail": "field GridView",
+    "insertText": "du_no"
+  },
+  {
+    "label": "du_co",
+    "detail": "field GridView",
+    "insertText": "du_co"
+  },
+  {
+    "label": "ngay_pb0",
+    "detail": "field GridView",
+    "insertText": "ngay_pb0"
+  },
+  {
+    "label": "han_sd",
+    "detail": "field GridView",
+    "insertText": "han_sd"
+  },
+  {
+    "label": "so_ngay_cl",
+    "detail": "field GridView",
+    "insertText": "so_ngay_cl"
+  },
+  {
+    "label": "ten_vtex",
+    "detail": "field GridView",
+    "insertText": "ten_vtex"
+  },
+  {
+    "label": "group_code",
+    "detail": "field GridView",
+    "insertText": "group_code"
+  },
+  {
+    "label": "group_name",
+    "detail": "field GridView",
+    "insertText": "group_name"
+  },
+  {
+    "label": "title",
+    "detail": "field GridView",
+    "insertText": "title"
+  },
+  {
+    "label": "subtitle",
+    "detail": "field GridView",
+    "insertText": "subtitle"
+  },
+  {
+    "label": "sent_status",
+    "detail": "field GridView",
+    "insertText": "sent_status"
+  },
+  {
+    "label": "so_ngay_qua",
+    "detail": "field GridView",
+    "insertText": "so_ngay_qua"
+  },
+  {
+    "label": "thue_suat_giam",
+    "detail": "field GridView",
+    "insertText": "thue_suat_giam"
+  },
+  {
+    "label": "tl_thue",
+    "detail": "field GridView",
+    "insertText": "tl_thue"
+  },
+  {
+    "label": "tl_thue_giam",
+    "detail": "field GridView",
+    "insertText": "tl_thue_giam"
+  },
+  {
+    "label": "dot_tt",
+    "detail": "field GridView",
+    "insertText": "dot_tt"
+  },
+  {
+    "label": "ngay_tt0",
+    "detail": "field GridView",
+    "insertText": "ngay_tt0"
+  },
+  {
+    "label": "ten_bt%l",
+    "detail": "field GridView",
+    "insertText": "ten_bt%l"
+  },
+  {
+    "label": "ten_md",
+    "detail": "field GridView",
+    "insertText": "ten_md"
+  },
+  {
+    "label": "dept_id",
+    "detail": "field GridView",
+    "insertText": "dept_id"
+  },
+  {
+    "label": "so_ct2",
+    "detail": "field GridView",
+    "insertText": "so_ct2"
+  },
+  {
+    "label": "xstatus_name",
+    "detail": "field GridView",
+    "insertText": "xstatus_name"
+  },
+  {
+    "label": "ten_hd_ex",
+    "detail": "field GridView",
+    "insertText": "ten_hd_ex"
+  },
+  {
+    "label": "so_pn",
+    "detail": "field GridView",
+    "insertText": "so_pn"
+  },
+  {
+    "label": "ngay_pn",
+    "detail": "field GridView",
+    "insertText": "ngay_pn"
+  },
+  {
+    "label": "ten_kt",
+    "detail": "field GridView",
+    "insertText": "ten_kt"
+  },
+  {
+    "label": "ten_nx",
+    "detail": "field GridView",
+    "insertText": "ten_nx"
+  },
+  {
+    "label": "ky_bc",
+    "detail": "field GridView",
+    "insertText": "ky_bc"
+  },
+  {
+    "label": "ten_row",
+    "detail": "field GridView",
+    "insertText": "ten_row"
+  },
+  {
+    "label": "dien_giai_ct",
+    "detail": "field GridView",
+    "insertText": "dien_giai_ct"
+  },
+  {
+    "label": "ma_lsx",
+    "detail": "field GridView",
+    "insertText": "ma_lsx"
+  },
+  {
+    "label": "ngay_bd_th",
+    "detail": "field GridView",
+    "insertText": "ngay_bd_th"
+  },
+  {
+    "label": "gio_bd_th",
+    "detail": "field GridView",
+    "insertText": "gio_bd_th"
+  },
+  {
+    "label": "ngay_kt_th",
+    "detail": "field GridView",
+    "insertText": "ngay_kt_th"
+  },
+  {
+    "label": "gio_kt_th",
+    "detail": "field GridView",
+    "insertText": "gio_kt_th"
+  },
+  {
+    "label": "so_ngay_th",
+    "detail": "field GridView",
+    "insertText": "so_ngay_th"
+  },
+  {
+    "label": "so_gio_th",
+    "detail": "field GridView",
+    "insertText": "so_gio_th"
+  },
+  {
+    "label": "ty_le_th",
+    "detail": "field GridView",
+    "insertText": "ty_le_th"
+  },
+  {
+    "label": "x_name",
+    "detail": "field GridView",
+    "insertText": "x_name"
+  },
+  {
+    "label": "x_paint",
+    "detail": "field GridView",
+    "insertText": "x_paint"
+  },
+  {
+    "label": "x_paint_th",
+    "detail": "field GridView",
+    "insertText": "x_paint_th"
+  },
+  {
+    "label": "so_luong_th",
+    "detail": "field GridView",
+    "insertText": "so_luong_th"
+  },
+  {
+    "label": "kieu_cd",
+    "detail": "field GridView",
+    "insertText": "kieu_cd"
+  },
+  {
+    "label": "ten_gd",
+    "detail": "field GridView",
+    "insertText": "ten_gd"
+  },
+  {
+    "label": "xname",
+    "detail": "field GridView",
+    "insertText": "xname"
+  },
+  {
+    "label": "ten_may",
+    "detail": "field GridView",
+    "insertText": "ten_may"
+  },
+  {
+    "label": "ngay_xuat",
+    "detail": "field GridView",
+    "insertText": "ngay_xuat"
+  },
+  {
+    "label": "nhom_vt",
+    "detail": "field GridView",
+    "insertText": "nhom_vt"
+  },
+  {
+    "label": "ten_nhom_vt",
+    "detail": "field GridView",
+    "insertText": "ten_nhom_vt"
+  },
+  {
+    "label": "dien_giai2",
+    "detail": "field GridView",
+    "insertText": "dien_giai2"
+  },
+  {
+    "label": "dvt_kk",
+    "detail": "field GridView",
+    "insertText": "dvt_kk"
+  },
+  {
+    "label": "ten_hh",
+    "detail": "field GridView",
+    "insertText": "ten_hh"
+  },
+  {
+    "label": "tk_dc",
+    "detail": "field GridView",
+    "insertText": "tk_dc"
+  },
+  {
+    "label": "tk_pb",
+    "detail": "field GridView",
+    "insertText": "tk_pb"
+  },
+  {
+    "label": "ma_bp_in",
+    "detail": "field GridView",
+    "insertText": "ma_bp_in"
+  },
+  {
+    "label": "ngay_tang",
+    "detail": "field GridView",
+    "insertText": "ngay_tang"
+  },
+  {
+    "label": "ma_dc",
+    "detail": "field GridView",
+    "insertText": "ma_dc"
+  },
+  {
+    "label": "ngay_sd",
+    "detail": "field GridView",
+    "insertText": "ngay_sd"
+  },
+  {
+    "label": "so_hieu_dc",
+    "detail": "field GridView",
+    "insertText": "so_hieu_dc"
+  },
+  {
+    "label": "muc_pb_nt",
+    "detail": "field GridView",
+    "insertText": "muc_pb_nt"
+  },
+  {
+    "label": "pb_dk_nt",
+    "detail": "field GridView",
+    "insertText": "pb_dk_nt"
+  },
+  {
+    "label": "pb_ck_nt",
+    "detail": "field GridView",
+    "insertText": "pb_ck_nt"
+  },
+  {
+    "label": "pb_lk_nt",
+    "detail": "field GridView",
+    "insertText": "pb_lk_nt"
+  },
+  {
+    "label": "muc_pb",
+    "detail": "field GridView",
+    "insertText": "muc_pb"
+  },
+  {
+    "label": "pb_dk",
+    "detail": "field GridView",
+    "insertText": "pb_dk"
+  },
+  {
+    "label": "pb_ck",
+    "detail": "field GridView",
+    "insertText": "pb_ck"
+  },
+  {
+    "label": "pb_lk",
+    "detail": "field GridView",
+    "insertText": "pb_lk"
+  },
+  {
+    "label": "nh_dc1",
+    "detail": "field GridView",
+    "insertText": "nh_dc1"
+  },
+  {
+    "label": "nh_dc2",
+    "detail": "field GridView",
+    "insertText": "nh_dc2"
+  },
+  {
+    "label": "nh_dc3",
+    "detail": "field GridView",
+    "insertText": "nh_dc3"
+  },
+  {
+    "label": "ma_bp_dc",
+    "detail": "field GridView",
+    "insertText": "ma_bp_dc"
+  },
+  {
+    "label": "ten_ld_dc",
+    "detail": "field GridView",
+    "insertText": "ten_ld_dc"
+  },
+  {
+    "label": "ten_tk_pb%l",
+    "detail": "field GridView",
+    "insertText": "ten_tk_pb%l"
+  },
+  {
+    "label": "ten_tk_pb",
+    "detail": "field GridView",
+    "insertText": "ten_tk_pb"
+  },
+  {
+    "label": "ngay_pb_kt",
+    "detail": "field GridView",
+    "insertText": "ngay_pb_kt"
+  },
+  {
+    "label": "ma_bp1",
+    "detail": "field GridView",
+    "insertText": "ma_bp1"
+  },
+  {
+    "label": "ma_bp2",
+    "detail": "field GridView",
+    "insertText": "ma_bp2"
+  },
+  {
+    "label": "lay_tu",
+    "detail": "field GridView",
+    "insertText": "lay_tu"
+  },
+  {
+    "label": "ten_nk",
+    "detail": "field GridView",
+    "insertText": "ten_nk"
+  },
+  {
+    "label": "so_gd",
+    "detail": "field GridView",
+    "insertText": "so_gd"
+  },
+  {
+    "label": "so_trung",
+    "detail": "field GridView",
+    "insertText": "so_trung"
+  },
+  {
+    "label": "so_ngoai",
+    "detail": "field GridView",
+    "insertText": "so_ngoai"
+  },
+  {
+    "label": "so_sai",
+    "detail": "field GridView",
+    "insertText": "so_sai"
+  },
+  {
+    "label": "so_hl",
+    "detail": "field GridView",
+    "insertText": "so_hl"
+  },
+  {
+    "label": "userID",
+    "detail": "field GridView",
+    "insertText": "userID"
+  },
+  {
+    "label": "userName",
+    "detail": "field GridView",
+    "insertText": "userName"
+  },
+  {
+    "label": "ngay_th1",
+    "detail": "field GridView",
+    "insertText": "ngay_th1"
+  },
+  {
+    "label": "ngay_th2",
+    "detail": "field GridView",
+    "insertText": "ngay_th2"
+  },
+  {
+    "label": "ma_nc",
+    "detail": "field GridView",
+    "insertText": "ma_nc"
+  },
+  {
+    "label": "ten_nvbh%l",
+    "detail": "field GridView",
+    "insertText": "ten_nvbh%l"
+  },
+  {
+    "label": "loai_gia",
+    "detail": "field GridView",
+    "insertText": "loai_gia"
+  },
+  {
+    "label": "ten_nh_kh1%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_kh1%l"
+  },
+  {
+    "label": "ten_nh_kh2%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_kh2%l"
+  },
+  {
+    "label": "ten_nh_kh3%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_kh3%l"
+  },
+  {
+    "label": "nh_kh9",
+    "detail": "field GridView",
+    "insertText": "nh_kh9"
+  },
+  {
+    "label": "ten_nh_kh9%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_kh9%l"
+  },
+  {
+    "label": "ngay_ban",
+    "detail": "field GridView",
+    "insertText": "ngay_ban"
+  },
+  {
+    "label": "ten_id%l",
+    "detail": "field GridView",
+    "insertText": "ten_id%l"
+  },
+  {
+    "label": "ntype%l",
+    "detail": "field GridView",
+    "insertText": "ntype%l"
+  },
+  {
+    "label": "gio_th",
+    "detail": "field GridView",
+    "insertText": "gio_th"
+  },
+  {
+    "label": "ngay_cuoi_thang",
+    "detail": "field GridView",
+    "insertText": "ngay_cuoi_thang"
+  },
+  {
+    "label": "last_time",
+    "detail": "field GridView",
+    "insertText": "last_time"
+  },
+  {
+    "label": "ten_nc%l",
+    "detail": "field GridView",
+    "insertText": "ten_nc%l"
+  },
+  {
+    "label": "ten_may%l",
+    "detail": "field GridView",
+    "insertText": "ten_may%l"
+  },
+  {
+    "label": "cp_tt",
+    "detail": "field GridView",
+    "insertText": "cp_tt"
+  },
+  {
+    "label": "tk_cptt",
+    "detail": "field GridView",
+    "insertText": "tk_cptt"
+  },
+  {
+    "label": "cp_gt",
+    "detail": "field GridView",
+    "insertText": "cp_gt"
+  },
+  {
+    "label": "tk_cpgt",
+    "detail": "field GridView",
+    "insertText": "tk_cpgt"
+  },
+  {
+    "label": "tk_cpql",
+    "detail": "field GridView",
+    "insertText": "tk_cpql"
+  },
+  {
+    "label": "cp_dv",
+    "detail": "field GridView",
+    "insertText": "cp_dv"
+  },
+  {
+    "label": "toi_han",
+    "detail": "field GridView",
+    "insertText": "toi_han"
+  },
+  {
+    "label": "ma_ld",
+    "detail": "field GridView",
+    "insertText": "ma_ld"
+  },
+  {
+    "label": "ten_ld%l",
+    "detail": "field GridView",
+    "insertText": "ten_ld%l"
+  },
+  {
+    "label": "ten_px%l",
+    "detail": "field GridView",
+    "insertText": "ten_px%l"
+  },
+  {
+    "label": "ma_htvc",
+    "detail": "field GridView",
+    "insertText": "ma_htvc"
+  },
+  {
+    "label": "ten_htvc%l",
+    "detail": "field GridView",
+    "insertText": "ten_htvc%l"
+  },
+  {
+    "label": "nh_vt1",
+    "detail": "field GridView",
+    "insertText": "nh_vt1"
+  },
+  {
+    "label": "ten_nh_vt1%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_vt1%l"
+  },
+  {
+    "label": "ten_nh_vt2%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_vt2%l"
+  },
+  {
+    "label": "ten_nh_vt3%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_vt3%l"
+  },
+  {
+    "label": "nh_vt9",
+    "detail": "field GridView",
+    "insertText": "nh_vt9"
+  },
+  {
+    "label": "ten_nh_vt9%l",
+    "detail": "field GridView",
+    "insertText": "ten_nh_vt9%l"
+  },
+  {
+    "label": "ma_vc",
+    "detail": "field GridView",
+    "insertText": "ma_vc"
+  },
+  {
+    "label": "bien_so",
+    "detail": "field GridView",
+    "insertText": "bien_so"
+  },
+  {
+    "label": "tt_yn",
+    "detail": "field GridView",
+    "insertText": "tt_yn"
+  },
+  {
+    "label": "hd_yn",
+    "detail": "field GridView",
+    "insertText": "hd_yn"
+  },
+  {
+    "label": "tg_kk",
+    "detail": "field GridView",
+    "insertText": "tg_kk"
+  },
+  {
+    "label": "hostname",
+    "detail": "field GridView",
+    "insertText": "hostname"
+  },
+  {
+    "label": "content%l",
+    "detail": "field GridView",
+    "insertText": "content%l"
+  },
+  {
+    "label": "tieu_de2",
+    "detail": "field GridView",
+    "insertText": "tieu_de2"
+  },
+  {
+    "label": "ten_pl%lex",
+    "detail": "field GridView",
+    "insertText": "ten_pl%lex"
+  },
+  {
+    "label": "nhom_thue",
+    "detail": "field GridView",
+    "insertText": "nhom_thue"
+  },
+  {
+    "label": "ten_vc%l",
+    "detail": "field GridView",
+    "insertText": "ten_vc%l"
+  },
+  {
+    "label": "ma_ld_giam",
+    "detail": "field GridView",
+    "insertText": "ma_ld_giam"
+  },
+  {
+    "label": "ma_bp_tu",
+    "detail": "field GridView",
+    "insertText": "ma_bp_tu"
+  },
+  {
+    "label": "ma_bp_den",
+    "detail": "field GridView",
+    "insertText": "ma_bp_den"
+  },
+  {
+    "label": "ma_bp_cc",
+    "detail": "field GridView",
+    "insertText": "ma_bp_cc"
+  },
+  {
+    "label": "user_lst2",
+    "detail": "field GridView",
+    "insertText": "user_lst2"
+  },
+  {
+    "label": "kb_yn",
+    "detail": "field GridView",
+    "insertText": "kb_yn"
+  },
+  {
+    "label": "ten_nkt%l",
+    "detail": "field GridView",
+    "insertText": "ten_nkt%l"
+  },
+  {
+    "label": "ma_ct_me",
+    "detail": "field GridView",
+    "insertText": "ma_ct_me"
+  },
+  {
+    "label": "statusname%l",
+    "detail": "field GridView",
+    "insertText": "statusname%l"
+  },
+  {
+    "label": "status_id",
+    "detail": "field GridView",
+    "insertText": "status_id"
+  },
+  {
+    "label": "ten_mau_ct%l",
+    "detail": "field GridView",
+    "insertText": "ten_mau_ct%l"
+  }
+]

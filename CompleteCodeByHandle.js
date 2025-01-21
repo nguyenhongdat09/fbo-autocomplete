@@ -21,6 +21,7 @@ class CompleteCodeByHandle {
         this.gridInputField = [];
         this.gridViewField = [];
         this.filterField = [];
+        this.optionField = [];
     }
 
     // Gọi API và lưu dữ liệu vào file JSON
@@ -66,6 +67,7 @@ class CompleteCodeByHandle {
         const gridInputJsonPath = path.join(__dirname, './Database/AutoComplete/GridInput.json');
         const dirJsonPath = path.join(__dirname, './Database/AutoComplete/Dir.json');
         const filterInputJsonPath = path.join(__dirname, './Database/AutoComplete/Filter.json');
+        const optionsJsonPath = path.join(__dirname, './Database/AutoComplete/Options.json');
         try {
             if (fs.existsSync(autocompleteJsonPath)) {
                 this.companyFunctions = JSON.parse(fs.readFileSync(autocompleteJsonPath, 'utf8')); 
@@ -73,6 +75,7 @@ class CompleteCodeByHandle {
                 this.gridInputField = JSON.parse(fs.readFileSync(gridInputJsonPath, 'utf8')); 
                 this.dirField = JSON.parse(fs.readFileSync(dirJsonPath, 'utf8')); 
                 this.filterField = JSON.parse(fs.readFileSync(filterInputJsonPath, 'utf8'));  
+                this.optionField = JSON.parse(fs.readFileSync(optionsJsonPath, 'utf8'));  
             } else {
                 console.warn('AutoComplete.json not found. Please run "Get Data Autocomplete" command.');
             }
@@ -103,6 +106,13 @@ class CompleteCodeByHandle {
     
         // Nếu không có objectPrefix, trả về undefined (không gợi ý gì)
         return undefined;
+    }
+    provideOptionsCompletionItems(document, position) {
+        const linePrefix = document.lineAt(position).text.substr(0, position.character);
+        // Nếu ký tự đầu tiên là '@', gợi ý các giá trị tương ứng
+        if (linePrefix.startsWith('@')) {
+            return this.optionField.map(func => this.createCompletionItem(func));
+        }
     }
     //Xử lý lúc nhập có 2 dấu chấm a.get().
     provideCompletionTwoDotItems(document, position) {

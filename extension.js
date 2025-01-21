@@ -8,6 +8,7 @@ const ReadXMLVS2008 = require('./ReadXMLVS2008');
 const EntityHoverProvider = require("./EntityHoverProvider");
 const EntityCodeLensProvider = require("./EntityCodeLensProvider");
 const CompleteCodeByHandle = require("./CompleteCodeByHandle");
+const Trans = require("./Translate/Translate")
 
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
@@ -120,7 +121,25 @@ async function activate(context) {
         },
         '.' // Các ký tự kích hoạt autocomplete
     ); 
-  
+    //Translate
+    const trans = new Trans()
+    let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {
+        
+		await trans.translateXmlFile.bind(trans)()
+    });
+    const provideroptionsHandle = vscode.languages.registerCompletionItemProvider(
+        { language: 'xml' }, // Áp dụng cho file XML
+        {
+            provideCompletionItems: completeCodeByHandle.provideOptionsCompletionItems.bind(completeCodeByHandle),
+        },
+        '@' // Ký tự kích hoạt autocomplete
+    );
+    
+    
+
+    context.subscriptions.push(provideroptionsHandle);  
+
+    context.subscriptions.push(transAll);  
     context.subscriptions.push(getDataGGS);  
     context.subscriptions.push(providerTwpDotHandle);  
     context.subscriptions.push(providerHandle);  
