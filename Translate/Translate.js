@@ -1,4 +1,4 @@
-const { translate } = require('@vitalets/google-translate-api');
+const tr = require("googletrans").default;
 const vscode = require('vscode');
 
 class TranslatedText {
@@ -9,7 +9,7 @@ class TranslatedText {
     }
 
     async trans_to_vi(text_to_trans) {
-        const { text } = await translate(text_to_trans, { from: 'vi', to: 'en' });
+        const { text } = await tr(text_to_trans, { from: "vi", to: "en" })
         return text
     }
     

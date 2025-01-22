@@ -29,7 +29,6 @@ function formatXml(xml) {
 class EntityHoverProvider {
     constructor(extensionDirectory) {
         this.jsonEntityFolder = path.join(extensionDirectory, "ReadXML" , "JsonEntity");
-         
     }  
     provideHover(document, position) {
         const range = document.getWordRangeAtPosition(position, /&[\w.]+;/);
@@ -56,6 +55,7 @@ class EntityHoverProvider {
                     markdownContent.appendMarkdown(`### 🎯 Entity Content 🎯 \n`);
                     let formattedContent;
                     formattedContent = formatXml( entityContent.Content);
+                    formattedContent = formattedContent.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
                     markdownContent.appendMarkdown(`\`\`\`xml\n${formattedContent}\n\`\`\``);
                     markdownContent.isTrusted = true; // Cho phép markdown có nội dung nhúng
                     return new vscode.Hover(markdownContent);

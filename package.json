@@ -32,6 +32,14 @@
         }
       ]
     },
+    "keybindings": [
+      {
+        "command": "fbo-autocomplete.translatePaste",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v",
+        "when": "editorTextFocus"
+      }
+    ],
     "commands": [
       {
         "command": "my-fbo-toolkit.openWithVS2008",
@@ -103,10 +111,10 @@
     "eslint": "^9.16.0"
   },
   "dependencies": {
-    "@vitalets/google-translate-api": "^9.2.0",
     "axios": "^1.7.9",
     "fast-xml-parser": "^4.5.1",
     "googleapis": "^144.0.0",
+    "googletrans": "^1.0.21",
     "level-rocksdb": "^5.0.0",
     "rocksdb": "^5.2.1"
   }

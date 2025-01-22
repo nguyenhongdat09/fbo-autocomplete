@@ -83,7 +83,7 @@ class CompleteCodeByHandle {
             console.error('Error loading data from JSON:', error);
         }
     }
-
+    
     provideCompletionItems(document, position) {
         // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
         const linePrefix = document.lineAt(position).text.substr(0, position.character);
@@ -108,9 +108,11 @@ class CompleteCodeByHandle {
         return undefined;
     }
     provideOptionsCompletionItems(document, position) {
-        const linePrefix = document.lineAt(position).text.substr(0, position.character);
-        // Nếu ký tự đầu tiên là '@', gợi ý các giá trị tương ứng
-        if (linePrefix.startsWith('@')) {
+        const lineText = document.lineAt(position).text;
+        const linePrefix = lineText.substr(0, position.character);
+    
+        // Kiểm tra nếu con trỏ đứng ngay sau dấu '@'
+        if (linePrefix.endsWith('@')) {
             return this.optionField.map(func => this.createCompletionItem(func));
         }
     }
@@ -131,7 +133,7 @@ class CompleteCodeByHandle {
      
         return undefined; // Không có gợi ý nếu không khớp
     } 
-
+ 
     provideCompletionFieldItems(document, position) {
         // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
         const linePrefix = document.lineAt(position).text.substr(0, position.character); 
