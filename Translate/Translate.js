@@ -12,7 +12,10 @@ class TranslatedText {
         const { text } = await tr(text_to_trans, { from: "vi", to: "en" })
         return text
     }
-    
+    async trans_to_vi_batch(texts) {
+        const {textArray} = await tr(texts, { from: "vi", to: "en" });
+        return textArray
+    }
     async  translateXmlFile() {
         const editor = vscode.window.activeTextEditor;
     
@@ -29,24 +32,39 @@ class TranslatedText {
                         title: `Translating`,
                         cancellable: false
         }, async (progress, token) => {
-            while ((match = regex.exec(text)) !== null) {
+            let match;
+            const matches = [], vietnameseTexts = [];
+            while ((match = regex.exec(document.getText())) !== null) {
                 const vietnameseText = match[1];
-                try {
-                    // Sử dụng Translator để dịch
-                    const translatedText = await this.trans_to_vi(vietnameseText);
-                    // Xác định vị trí cần thay thế trong văn bản
-                    // Lấy vị trí bắt đầu và kết thúc của match
-                    const start = document.positionAt(match.index);
-                    const end = document.positionAt(match.index + match[0].length); 
-                    // Chuẩn bị đoạn văn bản thay thế
-                    const updatedSegment = `v="${vietnameseText}" e="${translatedText}"`; 
-                    // Áp dụng thay thế vào WorkspaceEdit
+                matches.push({
+                    match,
+                    vietnameseText,
+                    start: document.positionAt(match.index),
+                    end: document.positionAt(match.index + match[0].length)
+                });
+                vietnameseTexts.push(vietnameseText);
+            }
+            if (vietnameseTexts.length === 0) {
+                return undefined;
+            }
+            try {
+                // Dịch toàn bộ mảng từ tiếng Việt sang tiếng Anh
+                const translatedTexts = await this.trans_to_vi_batch(vietnameseTexts);
+        
+                // Áp dụng thay thế cho từng kết quả đã dịch
+                const edit = new vscode.WorkspaceEdit();
+                matches.forEach((item, index) => {
+                    const { match, vietnameseText, start, end } = item;
+                    const translatedText = translatedTexts[index];
+                    const updatedSegment = `v="${vietnameseText}" e="${translatedText}"`;
                     edit.replace(document.uri, new vscode.Range(start, end), updatedSegment);
-                } catch (error) {
-                    vscode.window.showErrorMessage(`Translation failed: ${error.message}`);
-                }
+                });
+        
+                // Thực thi chỉnh sửa trên tệp
+                await vscode.workspace.applyEdit(edit);
+            } catch (error) {
+                vscode.window.showErrorMessage(`Batch translation failed: ${error.message}`);
             } 
-            await vscode.workspace.applyEdit(edit);
         }); 
     }
     
