@@ -156,7 +156,14 @@ async function activate(context) {
 
                 // Đảm bảo gọi lệnh paste khi có editor mở và sẵn sàng
                 editor.edit(editBuilder => {
-                    editBuilder.insert(editor.selection.active, translatedText);
+                    const selection = editor.selection;
+                    if (!selection.isEmpty) {
+                        // Nếu có vùng chọn, thay thế nội dung vùng chọn
+                        editBuilder.replace(selection, translatedText);
+                    } else {
+                        // Nếu không có vùng chọn, chèn tại vị trí con trỏ
+                        editBuilder.insert(selection.active, translatedText);
+                    }
                 });
             });
             // Dịch nội dung qua Google Translate API 
