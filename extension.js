@@ -178,13 +178,15 @@ async function activate(context) {
     let arr_line = []
     let overwriteE = vscode.workspace.onDidChangeTextDocument(async (event) => {
         if (isEditing) return; // Đang chỉnh sửa → bỏ qua
-
+        if(event.reason === vscode.TextDocumentChangeReason.Undo || event.reason === vscode.TextDocumentChangeReason.Redo ||  event.contentChanges.length === 0)
+            return// Ctrl +z hoặc shift + z không chạy
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
+
         const document = event.document;
         const position = editor.selection.active;
         const lineText = document.lineAt(position.line).text;
-    
+        
         // Regex tìm `v="..."` trên dòng hiện tại
         const regex = /v="([^"]*)"/g;
         let match;
