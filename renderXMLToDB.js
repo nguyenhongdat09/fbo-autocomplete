@@ -104,7 +104,6 @@ class RenderXMLToDB {
     }
     
     static KeyValueCleaner(key, value, filePath) {
-        
         if (/ForeignKey|&/.test(value)) 
             return { key: '', value: '' };
         var replaceNone = ['isPrimaryKey="true"', 'allowNulls="false"', 'clientDefault="Default"'];
@@ -129,9 +128,7 @@ class RenderXMLToDB {
         }  
         const externalRegex = /external="([^"]+)"/;
         
-        const external = value.match(externalRegex);
-
-
+        const external = value.match(externalRegex); 
        
         if (external) {
             if(external[1].toLowerCase() === 'true'){

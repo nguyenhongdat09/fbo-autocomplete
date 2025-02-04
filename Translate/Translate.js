@@ -8,7 +8,7 @@ class TranslatedText {
         this.to_lan = 'en'
     }
 
-    async trans_to_vi(text_to_trans) {
+    async trans_to_en(text_to_trans) {
         const { text } = await tr(text_to_trans, { from: "vi", to: "en" })
         return text
     }

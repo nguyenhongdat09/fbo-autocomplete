@@ -153,7 +153,7 @@ async function activate(context) {
                 cancellable: false
             }, async (progress, token) => {
                 const selection = editor.selection;
-                const translatedText = await trans.trans_to_vi.bind(trans)(text)
+                const translatedText = await trans.trans_to_en.bind(trans)(text)
                 // Ghi lại văn bản đã dịch vào clipboard
                 await vscode.env.clipboard.writeText(translatedText);
 
@@ -173,62 +173,77 @@ async function activate(context) {
 
         }
     });
-    let lastTranslatedLine = "";
     let timeout = null;
-    let isEditing = false; // Cờ kiểm soát vòng lặp
+    let isEditing = false; // Chặn vòng lặp vô tận
+    let arr_line = []
     let overwriteE = vscode.workspace.onDidChangeTextDocument(async (event) => {
-        if (isEditing) return; // Nếu đang chỉnh sửa thì bỏ qua
+        if (isEditing) return; // Đang chỉnh sửa → bỏ qua
+
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
-
         const document = event.document;
         const position = editor.selection.active;
-        const line = document.lineAt(position.line);
-        let lineText = line.text; // Giữ nguyên khoảng trắng (không dùng trim)
-
-        if (lineText === lastTranslatedLine) return; // Nếu dòng không thay đổi thì không làm gì cả
-
-        clearTimeout(timeout);
-
-        timeout = setTimeout(async () => {
-            const regex = /(<\w+\s+v="([^"]*)"\s+e=")([^"]*)(")/;
-            const match = regex.exec(lineText);
-
-            if (match) {
-                let matchStart = match.index;  // Vị trí bắt đầu của match trong dòng
-                let matchEnd = matchStart + match[0].length; // Vị trí kết thúc của match
-                let tagStart = match[1];      // Phần trước e=""
-                let vietnameseText = match[2]; // Giá trị trong v=""
-                let tagEnd = match[4];        // Dấu ngoặc đóng của e=""
-                vscode.window.withProgress({
-                    location: vscode.ProgressLocation.Notification,
-                    title: `Translating`,
-                    cancellable: false
-                }, async (progress, token) => {
-                    if (vietnameseText && vietnameseText.trim() !== "") {
-                        let translatedText = await trans.trans_to_vi(vietnameseText);
-                        console.log(translatedText)
-                        if (translatedText) {
-                            let newText = `${tagStart}${translatedText}${tagEnd}`;
+        const lineText = document.lineAt(position.line).text;
     
-                            if (newText !== match[0]) { // Chỉ replace nếu có thay đổi
-                                let startPos = new vscode.Position(position.line, matchStart);
-                                let endPos = new vscode.Position(position.line, matchEnd);
-                                isEditing = true; // Bật cờ để chặn sự kiện lặp lại    
-                                editor.edit(editBuilder => {
-                                    editBuilder.replace(new vscode.Range(startPos, endPos), newText);
-                                }).then(() => {
-                                    isEditing = false; // Tắt cờ sau khi sửa xong
-                                });
-                                lastTranslatedLine = newText; // Lưu trạng thái đã dịch
-                            }
-                        }
-                    }
-                });
+        // Regex tìm `v="..."` trên dòng hiện tại
+        const regex = /v="([^"]*)"/g;
+        let match;
+        let insideV = false;
+        
+        while ((match = regex.exec(lineText)) !== null) {
+            let start = match.index + 3; // Vị trí sau `v="`
+            let end = start + match[1].length; // Kết thúc trước dấu `"`
+    
+            if (position.character >= start && position.character <= end) {
+                insideV = true;
+                break;
             }
-        }, 500); // Đợi 1 giây sau khi ngừng nhập
+        }
+        if (!insideV) return; // Con trỏ không nằm trong `v=""`, bỏ qua
+
+        if (!arr_line.includes(position.line)) {
+            arr_line.push(position.line);
+        }
+        clearTimeout(timeout); 
+        timeout = setTimeout(async () => {
+            while (arr_line.length > 0) {
+                const position_line = arr_line.shift();
+                const line = document.lineAt(position_line);
+                const regex = /(<\w+\s+v="([^"]*)"\s+e=")([^"]*)(")/;
+                const match = regex.exec(line.text);
+                if (match) {
+                    let vietnameseText = match[2]; 
+                    if (arr_line.includes(position_line))
+                        return
+                    // 🔹 Chỉ dịch khi `v=""` thay đổi
+                    if ( vietnameseText.trim() !== "") {
+                        vscode.window.withProgress({
+                            location: vscode.ProgressLocation.Notification,
+                            title: `Translating`,
+                            cancellable: false
+                        }, async (progress, token) => {
+                            let translatedText = await trans.trans_to_en(vietnameseText);
+                            if (translatedText) {
+                                // 🔹 Thay đúng phần `e="..."`, không thay cả dòng
+                                let newLine = line.text.replace(/e="([^"]*)"/, `e="${translatedText}"`);
+                                if (newLine !== line.text) { // Kiểm tra tránh thay thế dư thừa
+                                    isEditing = true;
+                                    editor.edit(editBuilder => {
+                                        let startPos = new vscode.Position(position_line, 0);
+                                        let endPos = document.lineAt(position_line).range.end; // Lấy vị trí cuối dòng
+                                        editBuilder.replace(new vscode.Range(startPos, endPos), newLine);
+                                    }).then(() => {
+                                        isEditing = false;
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }, 1000); // Đợi 1 giây sau khi người dùng ngừng nhập
     });
-    
+
 
     const cvtToEx = new cnv()
     let convertToExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', function () {
