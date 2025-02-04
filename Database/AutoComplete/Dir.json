@@ -1,5 +1,55 @@
 [
   {
+    "label": "nam",
+    "detail": "field Dir",
+    "insertText": "nam"
+  },
+  {
+    "label": "ma_dvcsat",
+    "detail": "field Dir",
+    "insertText": "ma_dvcsat"
+  },
+  {
+    "label": "ten_dvcs%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dvcs%lex"
+  },
+  {
+    "label": "ten_tk%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk%lex"
+  },
+  {
+    "label": "du_co00",
+    "detail": "field Dir",
+    "insertText": "du_co00"
+  },
+  {
+    "label": "du_no_nt00",
+    "detail": "field Dir",
+    "insertText": "du_no_nt00"
+  },
+  {
+    "label": "du_co_nt00",
+    "detail": "field Dir",
+    "insertText": "du_co_nt00"
+  },
+  {
+    "label": "du_co1",
+    "detail": "field Dir",
+    "insertText": "du_co1"
+  },
+  {
+    "label": "du_no_nt1",
+    "detail": "field Dir",
+    "insertText": "du_no_nt1"
+  },
+  {
+    "label": "du_co_nt1",
+    "detail": "field Dir",
+    "insertText": "du_co_nt1"
+  },
+  {
     "label": "stt_rec",
     "detail": "field Dir",
     "insertText": "stt_rec"
@@ -25,14 +75,29 @@
     "insertText": "dien_giai"
   },
   {
+    "label": "tkat",
+    "detail": "field Dir",
+    "insertText": "tkat"
+  },
+  {
+    "label": "so_ct0",
+    "detail": "field Dir",
+    "insertText": "so_ct0"
+  },
+  {
+    "label": "so_seri0",
+    "detail": "field Dir",
+    "insertText": "so_seri0"
+  },
+  {
+    "label": "ngay_ct0",
+    "detail": "field Dir",
+    "insertText": "ngay_ct0"
+  },
+  {
     "label": "so_ct",
     "detail": "field Dir",
     "insertText": "so_ct"
-  },
-  {
-    "label": "so_seri",
-    "detail": "field Dir",
-    "insertText": "so_seri"
   },
   {
     "label": "ngay_lct",
@@ -65,59 +130,14 @@
     "insertText": "ten_tt%lex"
   },
   {
-    "label": "ma_thueat",
+    "label": "t_tien_nt",
     "detail": "field Dir",
-    "insertText": "ma_thueat"
+    "insertText": "t_tien_nt"
   },
   {
-    "label": "ten_thue%lex",
+    "label": "t_tien",
     "detail": "field Dir",
-    "insertText": "ten_thue%lex"
-  },
-  {
-    "label": "thue_suatex",
-    "detail": "field Dir",
-    "insertText": "thue_suatex"
-  },
-  {
-    "label": "ten_tk_thue_no%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tk_thue_no%lex"
-  },
-  {
-    "label": "tk_thue_coat",
-    "detail": "field Dir",
-    "insertText": "tk_thue_coat"
-  },
-  {
-    "label": "ten_tk_thue_co%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tk_thue_co%lex"
-  },
-  {
-    "label": "ma_kh2at",
-    "detail": "field Dir",
-    "insertText": "ma_kh2at"
-  },
-  {
-    "label": "ten_kh_thue%lex",
-    "detail": "field Dir",
-    "insertText": "ten_kh_thue%lex"
-  },
-  {
-    "label": "t_tien_nt2",
-    "detail": "field Dir",
-    "insertText": "t_tien_nt2"
-  },
-  {
-    "label": "t_tien2",
-    "detail": "field Dir",
-    "insertText": "t_tien2"
-  },
-  {
-    "label": "t_thue_nt",
-    "detail": "field Dir",
-    "insertText": "t_thue_nt"
+    "insertText": "t_tien"
   },
   {
     "label": "t_thue",
@@ -125,19 +145,9 @@
     "insertText": "t_thue"
   },
   {
-    "label": "t_ck_nt",
+    "label": "t_thue_nt",
     "detail": "field Dir",
-    "insertText": "t_ck_nt"
-  },
-  {
-    "label": "t_ck",
-    "detail": "field Dir",
-    "insertText": "t_ck"
-  },
-  {
-    "label": "t_tt_nt",
-    "detail": "field Dir",
-    "insertText": "t_tt_nt"
+    "insertText": "t_thue_nt"
   },
   {
     "label": "t_tt",
@@ -145,54 +155,9 @@
     "insertText": "t_tt"
   },
   {
-    "label": "ten_khthueex",
+    "label": "t_tt_nt",
     "detail": "field Dir",
-    "insertText": "ten_khthueex"
-  },
-  {
-    "label": "dia_chithueex",
-    "detail": "field Dir",
-    "insertText": "dia_chithueex"
-  },
-  {
-    "label": "ma_so_thueex",
-    "detail": "field Dir",
-    "insertText": "ma_so_thueex"
-  },
-  {
-    "label": "ten_vtthue",
-    "detail": "field Dir",
-    "insertText": "ten_vtthue"
-  },
-  {
-    "label": "ghi_chuthue",
-    "detail": "field Dir",
-    "insertText": "ghi_chuthue"
-  },
-  {
-    "label": "loai_bk",
-    "detail": "field Dir",
-    "insertText": "loai_bk"
-  },
-  {
-    "label": "loai_sl",
-    "detail": "field Dir",
-    "insertText": "loai_sl"
-  },
-  {
-    "label": "ten_bc%lex",
-    "detail": "field Dir",
-    "insertText": "ten_bc%lex"
-  },
-  {
-    "label": "ma_tcat",
-    "detail": "field Dir",
-    "insertText": "ma_tcat"
-  },
-  {
-    "label": "ten_tc%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tc%lex"
+    "insertText": "t_tt_nt"
   },
   {
     "label": "ma_dvcs",
@@ -205,71 +170,6 @@
     "insertText": "cookieex"
   },
   {
-    "label": "stt_rec_hd",
-    "detail": "field Dir",
-    "insertText": "stt_rec_hd"
-  },
-  {
-    "label": "ma_ct_hd",
-    "detail": "field Dir",
-    "insertText": "ma_ct_hd"
-  },
-  {
-    "label": "ma_kh_hdex",
-    "detail": "field Dir",
-    "insertText": "ma_kh_hdex"
-  },
-  {
-    "label": "so_ct_hdex",
-    "detail": "field Dir",
-    "insertText": "so_ct_hdex"
-  },
-  {
-    "label": "so_seri_hdex",
-    "detail": "field Dir",
-    "insertText": "so_seri_hdex"
-  },
-  {
-    "label": "ngay_ct_hdex",
-    "detail": "field Dir",
-    "insertText": "ngay_ct_hdex"
-  },
-  {
-    "label": "tkat",
-    "detail": "field Dir",
-    "insertText": "tkat"
-  },
-  {
-    "label": "ten_tk%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tk%lex"
-  },
-  {
-    "label": "so_ct0",
-    "detail": "field Dir",
-    "insertText": "so_ct0"
-  },
-  {
-    "label": "so_seri0",
-    "detail": "field Dir",
-    "insertText": "so_seri0"
-  },
-  {
-    "label": "ngay_ct0",
-    "detail": "field Dir",
-    "insertText": "ngay_ct0"
-  },
-  {
-    "label": "t_tien_nt",
-    "detail": "field Dir",
-    "insertText": "t_tien_nt"
-  },
-  {
-    "label": "t_tien",
-    "detail": "field Dir",
-    "insertText": "t_tien"
-  },
-  {
     "label": "ten_nccex",
     "detail": "field Dir",
     "insertText": "ten_nccex"
@@ -280,19 +180,54 @@
     "insertText": "dia_chiex"
   },
   {
+    "label": "ma_so_thueex",
+    "detail": "field Dir",
+    "insertText": "ma_so_thueex"
+  },
+  {
     "label": "ticketex",
     "detail": "field Dir",
     "insertText": "ticketex"
   },
   {
-    "label": "ma_dvcsat",
+    "label": "hd_cn_yn",
     "detail": "field Dir",
-    "insertText": "ma_dvcsat"
+    "insertText": "hd_cn_yn"
   },
   {
-    "label": "ten_dvcs%lex",
+    "label": "ma_gdat",
     "detail": "field Dir",
-    "insertText": "ten_dvcs%lex"
+    "insertText": "ma_gdat"
+  },
+  {
+    "label": "ten_gd%lex",
+    "detail": "field Dir",
+    "insertText": "ten_gd%lex"
+  },
+  {
+    "label": "ma_ttat",
+    "detail": "field Dir",
+    "insertText": "ma_ttat"
+  },
+  {
+    "label": "so_seri",
+    "detail": "field Dir",
+    "insertText": "so_seri"
+  },
+  {
+    "label": "ten_tk_thue_no%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_thue_no%lex"
+  },
+  {
+    "label": "t_tien_nt2",
+    "detail": "field Dir",
+    "insertText": "t_tien_nt2"
+  },
+  {
+    "label": "t_tien2",
+    "detail": "field Dir",
+    "insertText": "t_tien2"
   },
   {
     "label": "ma_nvbhat",
@@ -305,39 +240,34 @@
     "insertText": "ten_nvbh%lex"
   },
   {
-    "label": "t_tt_nt0",
+    "label": "ten_khthueex",
     "detail": "field Dir",
-    "insertText": "t_tt_nt0"
+    "insertText": "ten_khthueex"
   },
   {
-    "label": "t_tt_qd0",
+    "label": "dia_chithueex",
     "detail": "field Dir",
-    "insertText": "t_tt_qd0"
+    "insertText": "dia_chithueex"
   },
   {
-    "label": "t_cl_ntex",
+    "label": "ten_vtthue",
     "detail": "field Dir",
-    "insertText": "t_cl_ntex"
+    "insertText": "ten_vtthue"
   },
   {
-    "label": "ma_ttat",
+    "label": "ghi_chuthue",
     "detail": "field Dir",
-    "insertText": "ma_ttat"
+    "insertText": "ghi_chuthue"
   },
   {
-    "label": "tat_toan",
+    "label": "t_ck_nt",
     "detail": "field Dir",
-    "insertText": "tat_toan"
+    "insertText": "t_ck_nt"
   },
   {
-    "label": "ma_gdat",
+    "label": "t_ck",
     "detail": "field Dir",
-    "insertText": "ma_gdat"
-  },
-  {
-    "label": "ten_gd%lex",
-    "detail": "field Dir",
-    "insertText": "ten_gd%lex"
+    "insertText": "t_ck"
   },
   {
     "label": "so_bkex",
@@ -360,344 +290,29 @@
     "insertText": "ten_loai%lex"
   },
   {
-    "label": "loai_thoa_thuan",
+    "label": "ho_yn",
     "detail": "field Dir",
-    "insertText": "loai_thoa_thuan"
+    "insertText": "ho_yn"
   },
   {
-    "label": "gt_toi_da",
+    "label": "t_tien_qt",
     "detail": "field Dir",
-    "insertText": "gt_toi_da"
+    "insertText": "t_tien_qt"
   },
   {
-    "label": "ma_dcat",
+    "label": "t_tien_qt_nt",
     "detail": "field Dir",
-    "insertText": "ma_dcat"
+    "insertText": "t_tien_qt_nt"
   },
   {
-    "label": "ten_dc%lex",
+    "label": "t_tien_cl",
     "detail": "field Dir",
-    "insertText": "ten_dc%lex"
+    "insertText": "t_tien_cl"
   },
   {
-    "label": "ma_vung0",
+    "label": "t_tien_cl_nt",
     "detail": "field Dir",
-    "insertText": "ma_vung0"
-  },
-  {
-    "label": "ten_vungex",
-    "detail": "field Dir",
-    "insertText": "ten_vungex"
-  },
-  {
-    "label": "ma_kho0",
-    "detail": "field Dir",
-    "insertText": "ma_kho0"
-  },
-  {
-    "label": "ten_khoex",
-    "detail": "field Dir",
-    "insertText": "ten_khoex"
-  },
-  {
-    "label": "ma_htvcat",
-    "detail": "field Dir",
-    "insertText": "ma_htvcat"
-  },
-  {
-    "label": "ten_htvc%lex",
-    "detail": "field Dir",
-    "insertText": "ten_htvc%lex"
-  },
-  {
-    "label": "nha_cung_capex",
-    "detail": "field Dir",
-    "insertText": "nha_cung_capex"
-  },
-  {
-    "label": "dien_thoaiex",
-    "detail": "field Dir",
-    "insertText": "dien_thoaiex"
-  },
-  {
-    "label": "ma_bp0at",
-    "detail": "field Dir",
-    "insertText": "ma_bp0at"
-  },
-  {
-    "label": "ten_bp0%lex",
-    "detail": "field Dir",
-    "insertText": "ten_bp0%lex"
-  },
-  {
-    "label": "ma_nh0at",
-    "detail": "field Dir",
-    "insertText": "ma_nh0at"
-  },
-  {
-    "label": "ten_nh0%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh0%lex"
-  },
-  {
-    "label": "ma_nvat",
-    "detail": "field Dir",
-    "insertText": "ma_nvat"
-  },
-  {
-    "label": "ten_nvmh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nvmh%lex"
-  },
-  {
-    "label": "stt_rec_bg",
-    "detail": "field Dir",
-    "insertText": "stt_rec_bg"
-  },
-  {
-    "label": "so_ct_bg",
-    "detail": "field Dir",
-    "insertText": "so_ct_bg"
-  },
-  {
-    "label": "ngay_ct_bg",
-    "detail": "field Dir",
-    "insertText": "ngay_ct_bg"
-  },
-  {
-    "label": "duyet_dh",
-    "detail": "field Dir",
-    "insertText": "duyet_dh"
-  },
-  {
-    "label": "t_thue_nk_nt",
-    "detail": "field Dir",
-    "insertText": "t_thue_nk_nt"
-  },
-  {
-    "label": "t_thue_nk",
-    "detail": "field Dir",
-    "insertText": "t_thue_nk"
-  },
-  {
-    "label": "t_thue_ttdb_nt",
-    "detail": "field Dir",
-    "insertText": "t_thue_ttdb_nt"
-  },
-  {
-    "label": "t_thue_ttdb",
-    "detail": "field Dir",
-    "insertText": "t_thue_ttdb"
-  },
-  {
-    "label": "t_thue_bvmt_nt",
-    "detail": "field Dir",
-    "insertText": "t_thue_bvmt_nt"
-  },
-  {
-    "label": "t_thue_bvmt",
-    "detail": "field Dir",
-    "insertText": "t_thue_bvmt"
-  },
-  {
-    "label": "t_thue_gtgt_nt",
-    "detail": "field Dir",
-    "insertText": "t_thue_gtgt_nt"
-  },
-  {
-    "label": "t_thue_gtgt",
-    "detail": "field Dir",
-    "insertText": "t_thue_gtgt"
-  },
-  {
-    "label": "t_so_luong",
-    "detail": "field Dir",
-    "insertText": "t_so_luong"
-  },
-  {
-    "label": "t_tien_nt0",
-    "detail": "field Dir",
-    "insertText": "t_tien_nt0"
-  },
-  {
-    "label": "t_tien0",
-    "detail": "field Dir",
-    "insertText": "t_tien0"
-  },
-  {
-    "label": "t_cp_nt",
-    "detail": "field Dir",
-    "insertText": "t_cp_nt"
-  },
-  {
-    "label": "t_cp",
-    "detail": "field Dir",
-    "insertText": "t_cp"
-  },
-  {
-    "label": "loai_ct",
-    "detail": "field Dir",
-    "insertText": "loai_ct"
-  },
-  {
-    "label": "ngay_hl_tu",
-    "detail": "field Dir",
-    "insertText": "ngay_hl_tu"
-  },
-  {
-    "label": "ngay_hl_den",
-    "detail": "field Dir",
-    "insertText": "ngay_hl_den"
-  },
-  {
-    "label": "so_hd1ex",
-    "detail": "field Dir",
-    "insertText": "so_hd1ex"
-  },
-  {
-    "label": "ngay_hd1ex",
-    "detail": "field Dir",
-    "insertText": "ngay_hd1ex"
-  },
-  {
-    "label": "ngay_hl1ex",
-    "detail": "field Dir",
-    "insertText": "ngay_hl1ex"
-  },
-  {
-    "label": "ngay_hl2ex",
-    "detail": "field Dir",
-    "insertText": "ngay_hl2ex"
-  },
-  {
-    "label": "status1ex",
-    "detail": "field Dir",
-    "insertText": "status1ex"
-  },
-  {
-    "label": "stt_rec_hdex",
-    "detail": "field Dir",
-    "insertText": "stt_rec_hdex"
-  },
-  {
-    "label": "t_nk_nt",
-    "detail": "field Dir",
-    "insertText": "t_nk_nt"
-  },
-  {
-    "label": "t_nk",
-    "detail": "field Dir",
-    "insertText": "t_nk"
-  },
-  {
-    "label": "t_ttdb_nt",
-    "detail": "field Dir",
-    "insertText": "t_ttdb_nt"
-  },
-  {
-    "label": "t_ttdb",
-    "detail": "field Dir",
-    "insertText": "t_ttdb"
-  },
-  {
-    "label": "t_bvmt_nt",
-    "detail": "field Dir",
-    "insertText": "t_bvmt_nt"
-  },
-  {
-    "label": "t_bvmt",
-    "detail": "field Dir",
-    "insertText": "t_bvmt"
-  },
-  {
-    "label": "t_gtgt_nt",
-    "detail": "field Dir",
-    "insertText": "t_gtgt_nt"
-  },
-  {
-    "label": "t_gtgt",
-    "detail": "field Dir",
-    "insertText": "t_gtgt"
-  },
-  {
-    "label": "ten_vung%lex",
-    "detail": "field Dir",
-    "insertText": "ten_vung%lex"
-  },
-  {
-    "label": "tien_ut",
-    "detail": "field Dir",
-    "insertText": "tien_ut"
-  },
-  {
-    "label": "ngay_ut",
-    "detail": "field Dir",
-    "insertText": "ngay_ut"
-  },
-  {
-    "label": "tien_da_ut",
-    "detail": "field Dir",
-    "insertText": "tien_da_ut"
-  },
-  {
-    "label": "ghi_chu_ut",
-    "detail": "field Dir",
-    "insertText": "ghi_chu_ut"
-  },
-  {
-    "label": "ma_vung_cuat",
-    "detail": "field Dir",
-    "insertText": "ma_vung_cuat"
-  },
-  {
-    "label": "ten_vung_cu%lex",
-    "detail": "field Dir",
-    "insertText": "ten_vung_cu%lex"
-  },
-  {
-    "label": "ngay_ct3",
-    "detail": "field Dir",
-    "insertText": "ngay_ct3"
-  },
-  {
-    "label": "ngay_dn",
-    "detail": "field Dir",
-    "insertText": "ngay_dn"
-  },
-  {
-    "label": "ngay_dn2",
-    "detail": "field Dir",
-    "insertText": "ngay_dn2"
-  },
-  {
-    "label": "so_dn",
-    "detail": "field Dir",
-    "insertText": "so_dn"
-  },
-  {
-    "label": "ma_ptttat",
-    "detail": "field Dir",
-    "insertText": "ma_ptttat"
-  },
-  {
-    "label": "ten_pttt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_pttt%lex"
-  },
-  {
-    "label": "so_lc",
-    "detail": "field Dir",
-    "insertText": "so_lc"
-  },
-  {
-    "label": "ly_do_sua_pttt",
-    "detail": "field Dir",
-    "insertText": "ly_do_sua_pttt"
-  },
-  {
-    "label": "ly_do_sua_ten_sl",
-    "detail": "field Dir",
-    "insertText": "ly_do_sua_ten_sl"
+    "insertText": "t_tien_cl_nt"
   },
   {
     "label": "ma_spat",
@@ -735,154 +350,24 @@
     "insertText": "nhieu_dvtex"
   },
   {
-    "label": "nam",
+    "label": "ma_nhhangat",
     "detail": "field Dir",
-    "insertText": "nam"
+    "insertText": "ma_nhhangat"
   },
   {
-    "label": "ma_vvat",
+    "label": "ma_nh_nhhangat",
     "detail": "field Dir",
-    "insertText": "ma_vvat"
+    "insertText": "ma_nh_nhhangat"
   },
   {
-    "label": "ten_vv%lex",
+    "label": "ten_nh%lex",
     "detail": "field Dir",
-    "insertText": "ten_vv%lex"
+    "insertText": "ten_nh%lex"
   },
   {
-    "label": "ten_ct%lex",
+    "label": "t_so_luong",
     "detail": "field Dir",
-    "insertText": "ten_ct%lex"
-  },
-  {
-    "label": "lan",
-    "detail": "field Dir",
-    "insertText": "lan"
-  },
-  {
-    "label": "tien_nt",
-    "detail": "field Dir",
-    "insertText": "tien_nt"
-  },
-  {
-    "label": "tien_nt01",
-    "detail": "field Dir",
-    "insertText": "tien_nt01"
-  },
-  {
-    "label": "tien_nt02",
-    "detail": "field Dir",
-    "insertText": "tien_nt02"
-  },
-  {
-    "label": "tien02",
-    "detail": "field Dir",
-    "insertText": "tien02"
-  },
-  {
-    "label": "tien_nt03",
-    "detail": "field Dir",
-    "insertText": "tien_nt03"
-  },
-  {
-    "label": "tien03",
-    "detail": "field Dir",
-    "insertText": "tien03"
-  },
-  {
-    "label": "tien_nt04",
-    "detail": "field Dir",
-    "insertText": "tien_nt04"
-  },
-  {
-    "label": "tien04",
-    "detail": "field Dir",
-    "insertText": "tien04"
-  },
-  {
-    "label": "tien_nt05",
-    "detail": "field Dir",
-    "insertText": "tien_nt05"
-  },
-  {
-    "label": "tien05",
-    "detail": "field Dir",
-    "insertText": "tien05"
-  },
-  {
-    "label": "tien_nt06",
-    "detail": "field Dir",
-    "insertText": "tien_nt06"
-  },
-  {
-    "label": "tien06",
-    "detail": "field Dir",
-    "insertText": "tien06"
-  },
-  {
-    "label": "tien_nt07",
-    "detail": "field Dir",
-    "insertText": "tien_nt07"
-  },
-  {
-    "label": "tien07",
-    "detail": "field Dir",
-    "insertText": "tien07"
-  },
-  {
-    "label": "tien_nt08",
-    "detail": "field Dir",
-    "insertText": "tien_nt08"
-  },
-  {
-    "label": "tien08",
-    "detail": "field Dir",
-    "insertText": "tien08"
-  },
-  {
-    "label": "tien_nt09",
-    "detail": "field Dir",
-    "insertText": "tien_nt09"
-  },
-  {
-    "label": "tien09",
-    "detail": "field Dir",
-    "insertText": "tien09"
-  },
-  {
-    "label": "tien_nt10",
-    "detail": "field Dir",
-    "insertText": "tien_nt10"
-  },
-  {
-    "label": "tien10",
-    "detail": "field Dir",
-    "insertText": "tien10"
-  },
-  {
-    "label": "tien_nt11",
-    "detail": "field Dir",
-    "insertText": "tien_nt11"
-  },
-  {
-    "label": "tien11",
-    "detail": "field Dir",
-    "insertText": "tien11"
-  },
-  {
-    "label": "tien_nt12",
-    "detail": "field Dir",
-    "insertText": "tien_nt12"
-  },
-  {
-    "label": "tien12",
-    "detail": "field Dir",
-    "insertText": "tien12"
-  },
-  {
-    "label": "sttex",
-    "detail": "field Dir",
-    "insertText": "sttex"
+    "insertText": "t_so_luong"
   },
   {
     "label": "dia_chi",
@@ -950,84 +435,69 @@
     "insertText": "ten_tt0ex"
   },
   {
-    "label": "ten_tk_co%lex",
+    "label": "hoan_gn",
     "detail": "field Dir",
-    "insertText": "ten_tk_co%lex"
+    "insertText": "hoan_gn"
   },
   {
-    "label": "loai_nh",
+    "label": "stt_rec_hoan",
     "detail": "field Dir",
-    "insertText": "loai_nh"
+    "insertText": "stt_rec_hoan"
   },
   {
-    "label": "ma_nh",
+    "label": "so_ct_hoan",
     "detail": "field Dir",
-    "insertText": "ma_nh"
+    "insertText": "so_ct_hoan"
   },
   {
-    "label": "ten_nh",
+    "label": "khai_thue_tt_yn",
     "detail": "field Dir",
-    "insertText": "ten_nh"
+    "insertText": "khai_thue_tt_yn"
   },
   {
-    "label": "ten_nh2",
+    "label": "ma_hd",
     "detail": "field Dir",
-    "insertText": "ten_nh2"
+    "insertText": "ma_hd"
   },
   {
-    "label": "status",
+    "label": "ten_hd",
     "detail": "field Dir",
-    "insertText": "status"
+    "insertText": "ten_hd"
   },
   {
-    "label": "ky",
+    "label": "ten_hd2",
     "detail": "field Dir",
-    "insertText": "ky"
+    "insertText": "ten_hd2"
   },
   {
-    "label": "loai_ytat",
+    "label": "ngay_hd",
     "detail": "field Dir",
-    "insertText": "loai_ytat"
+    "insertText": "ngay_hd"
   },
   {
-    "label": "ten_loai_yt%lex",
+    "label": "so_hd",
     "detail": "field Dir",
-    "insertText": "ten_loai_yt%lex"
+    "insertText": "so_hd"
   },
   {
-    "label": "ten_sp%lex",
+    "label": "hd_sd_pslk",
     "detail": "field Dir",
-    "insertText": "ten_sp%lex"
+    "insertText": "hd_sd_pslk"
   },
   {
-    "label": "ten_lsx%lex",
+    "label": "ma_vvat",
     "detail": "field Dir",
-    "insertText": "ten_lsx%lex"
+    "insertText": "ma_vvat"
   },
   {
-    "label": "phan_loai",
+    "label": "ten_vv%lex",
     "detail": "field Dir",
-    "insertText": "phan_loai"
+    "insertText": "ten_vv%lex"
   },
   {
-    "label": "sl_dd_ck0",
+    "label": "tien_nt",
     "detail": "field Dir",
-    "insertText": "sl_dd_ck0"
-  },
-  {
-    "label": "tl_ht",
-    "detail": "field Dir",
-    "insertText": "tl_ht"
-  },
-  {
-    "label": "sl_dd_ck",
-    "detail": "field Dir",
-    "insertText": "sl_dd_ck"
-  },
-  {
-    "label": "gia",
-    "detail": "field Dir",
-    "insertText": "gia"
+    "insertText": "tien_nt"
   },
   {
     "label": "tien",
@@ -1035,14 +505,139 @@
     "insertText": "tien"
   },
   {
+    "label": "ngay_hd1",
+    "detail": "field Dir",
+    "insertText": "ngay_hd1"
+  },
+  {
+    "label": "ngay_hd2",
+    "detail": "field Dir",
+    "insertText": "ngay_hd2"
+  },
+  {
+    "label": "ma_hd_orat",
+    "detail": "field Dir",
+    "insertText": "ma_hd_orat"
+  },
+  {
+    "label": "ten_hd_goc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_hd_goc%lex"
+  },
+  {
+    "label": "nh_hd1at",
+    "detail": "field Dir",
+    "insertText": "nh_hd1at"
+  },
+  {
+    "label": "ten_nh1%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh1%lex"
+  },
+  {
+    "label": "nh_hd2at",
+    "detail": "field Dir",
+    "insertText": "nh_hd2at"
+  },
+  {
+    "label": "ten_nh2%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh2%lex"
+  },
+  {
+    "label": "nh_hd3at",
+    "detail": "field Dir",
+    "insertText": "nh_hd3at"
+  },
+  {
+    "label": "ten_nh3%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh3%lex"
+  },
+  {
+    "label": "ghi_chu",
+    "detail": "field Dir",
+    "insertText": "ghi_chu"
+  },
+  {
+    "label": "status",
+    "detail": "field Dir",
+    "insertText": "status"
+  },
+  {
+    "label": "xkey_tkatex",
+    "detail": "field Dir",
+    "insertText": "xkey_tkatex"
+  },
+  {
+    "label": "etk_nhatex",
+    "detail": "field Dir",
+    "insertText": "etk_nhatex"
+  },
+  {
+    "label": "tien_hgn_nt",
+    "detail": "field Dir",
+    "insertText": "tien_hgn_nt"
+  },
+  {
+    "label": "tien_hgn",
+    "detail": "field Dir",
+    "insertText": "tien_hgn"
+  },
+  {
+    "label": "stt",
+    "detail": "field Dir",
+    "insertText": "stt"
+  },
+  {
+    "label": "ten_bt",
+    "detail": "field Dir",
+    "insertText": "ten_bt"
+  },
+  {
+    "label": "ten_tk_pb%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_pb%lex"
+  },
+  {
+    "label": "loai_pb",
+    "detail": "field Dir",
+    "insertText": "loai_pb"
+  },
+  {
+    "label": "ngay_hl_tu",
+    "detail": "field Dir",
+    "insertText": "ngay_hl_tu"
+  },
+  {
+    "label": "ngay_hl_den",
+    "detail": "field Dir",
+    "insertText": "ngay_hl_den"
+  },
+  {
     "label": "ten_kh",
     "detail": "field Dir",
     "insertText": "ten_kh"
   },
   {
+    "label": "ten_khthue",
+    "detail": "field Dir",
+    "insertText": "ten_khthue"
+  },
+  {
     "label": "ten_kh2",
     "detail": "field Dir",
     "insertText": "ten_kh2"
+  },
+  {
+    "label": "loai_ma_kh",
+    "detail": "field Dir",
+    "insertText": "loai_ma_kh"
+  },
+  {
+    "label": "ma_dvcs0at",
+    "detail": "field Dir",
+    "insertText": "ma_dvcs0at"
   },
   {
     "label": "tk_dcat",
@@ -1135,11 +730,6 @@
     "insertText": "tk_nh"
   },
   {
-    "label": "nguoi_thu_huong",
-    "detail": "field Dir",
-    "insertText": "nguoi_thu_huong"
-  },
-  {
     "label": "ngan_hang",
     "detail": "field Dir",
     "insertText": "ngan_hang"
@@ -1155,9 +745,9 @@
     "insertText": "khong_kt_mst"
   },
   {
-    "label": "ngay_hd",
+    "label": "sua_gia_yn",
     "detail": "field Dir",
-    "insertText": "ngay_hd"
+    "insertText": "sua_gia_yn"
   },
   {
     "label": "loai_tt",
@@ -1170,6 +760,51 @@
     "insertText": "dong_tien_yn"
   },
   {
+    "label": "t_tien_bn_nt",
+    "detail": "field Dir",
+    "insertText": "t_tien_bn_nt"
+  },
+  {
+    "label": "t_tien_bn",
+    "detail": "field Dir",
+    "insertText": "t_tien_bn"
+  },
+  {
+    "label": "dept_idat",
+    "detail": "field Dir",
+    "insertText": "dept_idat"
+  },
+  {
+    "label": "dv_nhan_tien",
+    "detail": "field Dir",
+    "insertText": "dv_nhan_tien"
+  },
+  {
+    "label": "xkey_tknhat",
+    "detail": "field Dir",
+    "insertText": "xkey_tknhat"
+  },
+  {
+    "label": "tk_nhat",
+    "detail": "field Dir",
+    "insertText": "tk_nhat"
+  },
+  {
+    "label": "noi_dung",
+    "detail": "field Dir",
+    "insertText": "noi_dung"
+  },
+  {
+    "label": "kieu_ct",
+    "detail": "field Dir",
+    "insertText": "kieu_ct"
+  },
+  {
+    "label": "ke_hoach_chi",
+    "detail": "field Dir",
+    "insertText": "ke_hoach_chi"
+  },
+  {
     "label": "so_the_tsat",
     "detail": "field Dir",
     "insertText": "so_the_tsat"
@@ -1180,54 +815,34 @@
     "insertText": "ten_ts%lex"
   },
   {
-    "label": "tk_khat",
+    "label": "ma_giam_tsat",
     "detail": "field Dir",
-    "insertText": "tk_khat"
+    "insertText": "ma_giam_tsat"
   },
   {
-    "label": "ten_tk_kh%lex",
+    "label": "ten_tg_ts%lex",
     "detail": "field Dir",
-    "insertText": "ten_tk_kh%lex"
+    "insertText": "ten_tg_ts%lex"
   },
   {
-    "label": "tk_cpat",
+    "label": "ngay_giam",
     "detail": "field Dir",
-    "insertText": "tk_cpat"
+    "insertText": "ngay_giam"
   },
   {
-    "label": "ten_tk_cp%lex",
+    "label": "so_ct_giam",
     "detail": "field Dir",
-    "insertText": "ten_tk_cp%lex"
+    "insertText": "so_ct_giam"
   },
   {
-    "label": "ten_bp_ts%lex",
+    "label": "ly_do_giam",
     "detail": "field Dir",
-    "insertText": "ten_bp_ts%lex"
+    "insertText": "ly_do_giam"
   },
   {
-    "label": "ma_hdat",
+    "label": "dv_yn",
     "detail": "field Dir",
-    "insertText": "ma_hdat"
-  },
-  {
-    "label": "ten_hd%lex",
-    "detail": "field Dir",
-    "insertText": "ten_hd%lex"
-  },
-  {
-    "label": "so_lsxat",
-    "detail": "field Dir",
-    "insertText": "so_lsxat"
-  },
-  {
-    "label": "he_so",
-    "detail": "field Dir",
-    "insertText": "he_so"
-  },
-  {
-    "label": "dv_ynex",
-    "detail": "field Dir",
-    "insertText": "dv_ynex"
+    "insertText": "dv_yn"
   },
   {
     "label": "so_the_ts",
@@ -1248,11 +863,6 @@
     "label": "ma_tg_tsat",
     "detail": "field Dir",
     "insertText": "ma_tg_tsat"
-  },
-  {
-    "label": "ten_tg_ts%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tg_ts%lex"
   },
   {
     "label": "ngay_mua",
@@ -1293,6 +903,26 @@
     "label": "ten_tk_ts%lex",
     "detail": "field Dir",
     "insertText": "ten_tk_ts%lex"
+  },
+  {
+    "label": "tk_khat",
+    "detail": "field Dir",
+    "insertText": "tk_khat"
+  },
+  {
+    "label": "ten_tk_kh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_kh%lex"
+  },
+  {
+    "label": "tk_cpat",
+    "detail": "field Dir",
+    "insertText": "tk_cpat"
+  },
+  {
+    "label": "ten_tk_cp%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_cp%lex"
   },
   {
     "label": "ma_phiat",
@@ -1370,11 +1000,6 @@
     "insertText": "ly_do_dc"
   },
   {
-    "label": "ghi_chu",
-    "detail": "field Dir",
-    "insertText": "ghi_chu"
-  },
-  {
     "label": "nh_ts1at",
     "detail": "field Dir",
     "insertText": "nh_ts1at"
@@ -1445,9 +1070,114 @@
     "insertText": "so_ky_kh_cl"
   },
   {
-    "label": "s7",
+    "label": "ma_dvcs_sdat",
     "detail": "field Dir",
-    "insertText": "s7"
+    "insertText": "ma_dvcs_sdat"
+  },
+  {
+    "label": "ten_dvcs_sd%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dvcs_sd%lex"
+  },
+  {
+    "label": "vi_tri",
+    "detail": "field Dir",
+    "insertText": "vi_tri"
+  },
+  {
+    "label": "ma_nccat",
+    "detail": "field Dir",
+    "insertText": "ma_nccat"
+  },
+  {
+    "label": "ten_ncc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ncc%lex"
+  },
+  {
+    "label": "kich_thuoc",
+    "detail": "field Dir",
+    "insertText": "kich_thuoc"
+  },
+  {
+    "label": "quy_cach",
+    "detail": "field Dir",
+    "insertText": "quy_cach"
+  },
+  {
+    "label": "hang_sx",
+    "detail": "field Dir",
+    "insertText": "hang_sx"
+  },
+  {
+    "label": "ngay_hhbh_tu",
+    "detail": "field Dir",
+    "insertText": "ngay_hhbh_tu"
+  },
+  {
+    "label": "ngay_hhbh_den",
+    "detail": "field Dir",
+    "insertText": "ngay_hhbh_den"
+  },
+  {
+    "label": "so_the_tsat_gridView",
+    "detail": "field Dir",
+    "insertText": "so_the_tsat_gridView"
+  },
+  {
+    "label": "ky",
+    "detail": "field Dir",
+    "insertText": "ky"
+  },
+  {
+    "label": "ten_tkts%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tkts%lex"
+  },
+  {
+    "label": "ten_tkkh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tkkh%lex"
+  },
+  {
+    "label": "ten_tkcp%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tkcp%lex"
+  },
+  {
+    "label": "dv_ynex",
+    "detail": "field Dir",
+    "insertText": "dv_ynex"
+  },
+  {
+    "label": "ma_nvat",
+    "detail": "field Dir",
+    "insertText": "ma_nvat"
+  },
+  {
+    "label": "ten_nv%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nv%lex"
+  },
+  {
+    "label": "loai_tg_tsex",
+    "detail": "field Dir",
+    "insertText": "loai_tg_tsex"
+  },
+  {
+    "label": "tang_giam_ntex",
+    "detail": "field Dir",
+    "insertText": "tang_giam_ntex"
+  },
+  {
+    "label": "tang_giamex",
+    "detail": "field Dir",
+    "insertText": "tang_giamex"
+  },
+  {
+    "label": "ds_stt_rec",
+    "detail": "field Dir",
+    "insertText": "ds_stt_rec"
   },
   {
     "label": "t_ps_no_nt",
@@ -1475,954 +1205,134 @@
     "insertText": "t_thue_zex"
   },
   {
-    "label": "ma_mau_ctat",
+    "label": "id_pos",
     "detail": "field Dir",
-    "insertText": "ma_mau_ctat"
+    "insertText": "id_pos"
   },
   {
-    "label": "ten_mau_ct%lex",
+    "label": "tc_ho_yn",
     "detail": "field Dir",
-    "insertText": "ten_mau_ct%lex"
+    "insertText": "tc_ho_yn"
   },
   {
-    "label": "invat_yn",
+    "label": "check_ipex",
     "detail": "field Dir",
-    "insertText": "invat_yn"
+    "insertText": "check_ipex"
   },
   {
-    "label": "mau_bcat",
+    "label": "loai_duyet",
     "detail": "field Dir",
-    "insertText": "mau_bcat"
+    "insertText": "loai_duyet"
   },
   {
-    "label": "stt_rec0",
+    "label": "ma_kieu",
     "detail": "field Dir",
-    "insertText": "stt_rec0"
+    "insertText": "ma_kieu"
   },
   {
-    "label": "line_nbr",
+    "label": "ten_kieu",
     "detail": "field Dir",
-    "insertText": "line_nbr"
+    "insertText": "ten_kieu"
   },
   {
-    "label": "hinh_thucat",
+    "label": "ten_kieu2",
     "detail": "field Dir",
-    "insertText": "hinh_thucat"
+    "insertText": "ten_kieu2"
   },
   {
-    "label": "ten_kt%lex",
+    "label": "dvcs",
     "detail": "field Dir",
-    "insertText": "ten_kt%lex"
+    "insertText": "dvcs"
   },
   {
-    "label": "noi_bo_yn",
+    "label": "ma_bp",
     "detail": "field Dir",
-    "insertText": "noi_bo_yn"
+    "insertText": "ma_bp"
   },
   {
-    "label": "cap_quyet_dinh",
+    "label": "ma_hrbp",
     "detail": "field Dir",
-    "insertText": "cap_quyet_dinh"
+    "insertText": "ma_hrbp"
   },
   {
-    "label": "bac_kt",
+    "label": "nh_kh1",
     "detail": "field Dir",
-    "insertText": "bac_kt"
+    "insertText": "nh_kh1"
   },
   {
-    "label": "so_quyet_dinh",
+    "label": "nh_kh2",
     "detail": "field Dir",
-    "insertText": "so_quyet_dinh"
+    "insertText": "nh_kh2"
   },
   {
-    "label": "ngay_ky",
+    "label": "nh_kh3",
     "detail": "field Dir",
-    "insertText": "ngay_ky"
+    "insertText": "nh_kh3"
   },
   {
-    "label": "nguoi_ky",
+    "label": "tk",
     "detail": "field Dir",
-    "insertText": "nguoi_ky"
+    "insertText": "tk"
   },
   {
-    "label": "ngay_quyet_dinh",
+    "label": "so_luong",
     "detail": "field Dir",
-    "insertText": "ngay_quyet_dinh"
+    "insertText": "so_luong"
   },
   {
-    "label": "ngay_ap_dung",
+    "label": "ma_nt",
     "detail": "field Dir",
-    "insertText": "ngay_ap_dung"
+    "insertText": "ma_nt"
   },
   {
-    "label": "ly_do",
+    "label": "loai_ct",
     "detail": "field Dir",
-    "insertText": "ly_do"
+    "insertText": "loai_ct"
   },
   {
-    "label": "ma_qhat",
+    "label": "ma_kieuat",
     "detail": "field Dir",
-    "insertText": "ma_qhat"
+    "insertText": "ma_kieuat"
   },
   {
-    "label": "ten_qh%lex",
+    "label": "ten_kieu%lex",
     "detail": "field Dir",
-    "insertText": "ten_qh%lex"
+    "insertText": "ten_kieu%lex"
   },
   {
-    "label": "ho_ten",
+    "label": "dvcsat",
     "detail": "field Dir",
-    "insertText": "ho_ten"
+    "insertText": "dvcsat"
   },
   {
-    "label": "stt_rec_nv",
+    "label": "ma_hrbpat",
     "detail": "field Dir",
-    "insertText": "stt_rec_nv"
+    "insertText": "ma_hrbpat"
   },
   {
-    "label": "ma_nvatex",
+    "label": "ten_hrbp%lex",
     "detail": "field Dir",
-    "insertText": "ma_nvatex"
+    "insertText": "ten_hrbp%lex"
   },
   {
-    "label": "ngay_sinh",
+    "label": "sl_tu",
     "detail": "field Dir",
-    "insertText": "ngay_sinh"
+    "insertText": "sl_tu"
   },
   {
-    "label": "da_mat",
+    "label": "sl_den",
     "detail": "field Dir",
-    "insertText": "da_mat"
+    "insertText": "sl_den"
   },
   {
-    "label": "nghe_nghiep",
+    "label": "tien_tu",
     "detail": "field Dir",
-    "insertText": "nghe_nghiep"
+    "insertText": "tien_tu"
   },
   {
-    "label": "dien_thoai_dd",
+    "label": "tien_den",
     "detail": "field Dir",
-    "insertText": "dien_thoai_dd"
-  },
-  {
-    "label": "khan_cap",
-    "detail": "field Dir",
-    "insertText": "khan_cap"
-  },
-  {
-    "label": "ma_nv",
-    "detail": "field Dir",
-    "insertText": "ma_nv"
-  },
-  {
-    "label": "ho_nv",
-    "detail": "field Dir",
-    "insertText": "ho_nv"
-  },
-  {
-    "label": "ten_nv",
-    "detail": "field Dir",
-    "insertText": "ten_nv"
-  },
-  {
-    "label": "ho_tenex",
-    "detail": "field Dir",
-    "insertText": "ho_tenex"
-  },
-  {
-    "label": "bo_phanat",
-    "detail": "field Dir",
-    "insertText": "bo_phanat"
-  },
-  {
-    "label": "gioi_tinh",
-    "detail": "field Dir",
-    "insertText": "gioi_tinh"
-  },
-  {
-    "label": "ten_gtex",
-    "detail": "field Dir",
-    "insertText": "ten_gtex"
-  },
-  {
-    "label": "stt",
-    "detail": "field Dir",
-    "insertText": "stt"
-  },
-  {
-    "label": "noi_sinh",
-    "detail": "field Dir",
-    "insertText": "noi_sinh"
-  },
-  {
-    "label": "ma_loai_gtat",
-    "detail": "field Dir",
-    "insertText": "ma_loai_gtat"
-  },
-  {
-    "label": "ten_loai_gt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_loai_gt%lex"
-  },
-  {
-    "label": "cmnd_so",
-    "detail": "field Dir",
-    "insertText": "cmnd_so"
-  },
-  {
-    "label": "cmnd_ngay_hl",
-    "detail": "field Dir",
-    "insertText": "cmnd_ngay_hl"
-  },
-  {
-    "label": "cmnd_noi_capat",
-    "detail": "field Dir",
-    "insertText": "cmnd_noi_capat"
-  },
-  {
-    "label": "cmnd_nc%lex",
-    "detail": "field Dir",
-    "insertText": "cmnd_nc%lex"
-  },
-  {
-    "label": "cmnd_ngay_hh",
-    "detail": "field Dir",
-    "insertText": "cmnd_ngay_hh"
-  },
-  {
-    "label": "quoc_tichat",
-    "detail": "field Dir",
-    "insertText": "quoc_tichat"
-  },
-  {
-    "label": "ten_qt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_qt%lex"
-  },
-  {
-    "label": "dan_tocat",
-    "detail": "field Dir",
-    "insertText": "dan_tocat"
-  },
-  {
-    "label": "ten_dt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dt%lex"
-  },
-  {
-    "label": "ton_giaoat",
-    "detail": "field Dir",
-    "insertText": "ton_giaoat"
-  },
-  {
-    "label": "ten_tg%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tg%lex"
-  },
-  {
-    "label": "hon_nhanat",
-    "detail": "field Dir",
-    "insertText": "hon_nhanat"
-  },
-  {
-    "label": "ten_tthn%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tthn%lex"
-  },
-  {
-    "label": "dia_chi_ht_so",
-    "detail": "field Dir",
-    "insertText": "dia_chi_ht_so"
-  },
-  {
-    "label": "dia_chi_ht_tinhat",
-    "detail": "field Dir",
-    "insertText": "dia_chi_ht_tinhat"
-  },
-  {
-    "label": "ten_dcht_tinh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dcht_tinh%lex"
-  },
-  {
-    "label": "dia_chi_ht_quanat",
-    "detail": "field Dir",
-    "insertText": "dia_chi_ht_quanat"
-  },
-  {
-    "label": "ten_dcht_quan%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dcht_quan%lex"
-  },
-  {
-    "label": "dia_chi_ht_xaat",
-    "detail": "field Dir",
-    "insertText": "dia_chi_ht_xaat"
-  },
-  {
-    "label": "ten_dcht_xa%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dcht_xa%lex"
-  },
-  {
-    "label": "ngay_vao",
-    "detail": "field Dir",
-    "insertText": "ngay_vao"
-  },
-  {
-    "label": "ngay_chinh_thuc",
-    "detail": "field Dir",
-    "insertText": "ngay_chinh_thuc"
-  },
-  {
-    "label": "vi_triat",
-    "detail": "field Dir",
-    "insertText": "vi_triat"
-  },
-  {
-    "label": "ten_vtr%lex",
-    "detail": "field Dir",
-    "insertText": "ten_vtr%lex"
-  },
-  {
-    "label": "bac_quan_lyat",
-    "detail": "field Dir",
-    "insertText": "bac_quan_lyat"
-  },
-  {
-    "label": "ten_bac%lex",
-    "detail": "field Dir",
-    "insertText": "ten_bac%lex"
-  },
-  {
-    "label": "nv_qlat",
-    "detail": "field Dir",
-    "insertText": "nv_qlat"
-  },
-  {
-    "label": "ten_nqlex",
-    "detail": "field Dir",
-    "insertText": "ten_nqlex"
-  },
-  {
-    "label": "ma_tdhvat",
-    "detail": "field Dir",
-    "insertText": "ma_tdhvat"
-  },
-  {
-    "label": "ten_tdhv%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tdhv%lex"
-  },
-  {
-    "label": "truong_hoc",
-    "detail": "field Dir",
-    "insertText": "truong_hoc"
-  },
-  {
-    "label": "ma_cnat",
-    "detail": "field Dir",
-    "insertText": "ma_cnat"
-  },
-  {
-    "label": "ten_cn%lex",
-    "detail": "field Dir",
-    "insertText": "ten_cn%lex"
-  },
-  {
-    "label": "ngay_hoc_tu",
-    "detail": "field Dir",
-    "insertText": "ngay_hoc_tu"
-  },
-  {
-    "label": "ngay_hoc_den",
-    "detail": "field Dir",
-    "insertText": "ngay_hoc_den"
-  },
-  {
-    "label": "ngay_tot_nghiep",
-    "detail": "field Dir",
-    "insertText": "ngay_tot_nghiep"
-  },
-  {
-    "label": "loai_tot_nghiep",
-    "detail": "field Dir",
-    "insertText": "loai_tot_nghiep"
-  },
-  {
-    "label": "ma_nnat",
-    "detail": "field Dir",
-    "insertText": "ma_nnat"
-  },
-  {
-    "label": "ten_nn%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nn%lex"
-  },
-  {
-    "label": "bang_capat",
-    "detail": "field Dir",
-    "insertText": "bang_capat"
-  },
-  {
-    "label": "diem",
-    "detail": "field Dir",
-    "insertText": "diem"
-  },
-  {
-    "label": "ngay_cap_bang",
-    "detail": "field Dir",
-    "insertText": "ngay_cap_bang"
-  },
-  {
-    "label": "dien_thoai_cty",
-    "detail": "field Dir",
-    "insertText": "dien_thoai_cty"
-  },
-  {
-    "label": "dien_thoai_nha",
-    "detail": "field Dir",
-    "insertText": "dien_thoai_nha"
-  },
-  {
-    "label": "giam_ho",
-    "detail": "field Dir",
-    "insertText": "giam_ho"
-  },
-  {
-    "label": "nguoi_than",
-    "detail": "field Dir",
-    "insertText": "nguoi_than"
-  },
-  {
-    "label": "dia_chi_th_tru",
-    "detail": "field Dir",
-    "insertText": "dia_chi_th_tru"
-  },
-  {
-    "label": "dia_chi_th_tru_so",
-    "detail": "field Dir",
-    "insertText": "dia_chi_th_tru_so"
-  },
-  {
-    "label": "dia_chi_th_tru_tinhat",
-    "detail": "field Dir",
-    "insertText": "dia_chi_th_tru_tinhat"
-  },
-  {
-    "label": "ten_dctt_tinh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dctt_tinh%lex"
-  },
-  {
-    "label": "dia_chi_th_tru_quanat",
-    "detail": "field Dir",
-    "insertText": "dia_chi_th_tru_quanat"
-  },
-  {
-    "label": "ten_dctt_quan%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dctt_quan%lex"
-  },
-  {
-    "label": "dia_chi_th_tru_xaat",
-    "detail": "field Dir",
-    "insertText": "dia_chi_th_tru_xaat"
-  },
-  {
-    "label": "ten_dctt_xa%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dctt_xa%lex"
-  },
-  {
-    "label": "que_quan",
-    "detail": "field Dir",
-    "insertText": "que_quan"
-  },
-  {
-    "label": "que_quan_so",
-    "detail": "field Dir",
-    "insertText": "que_quan_so"
-  },
-  {
-    "label": "que_quan_phuong",
-    "detail": "field Dir",
-    "insertText": "que_quan_phuong"
-  },
-  {
-    "label": "que_quan_tinhat",
-    "detail": "field Dir",
-    "insertText": "que_quan_tinhat"
-  },
-  {
-    "label": "ten_qq_tinh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_qq_tinh%lex"
-  },
-  {
-    "label": "que_quan_quanat",
-    "detail": "field Dir",
-    "insertText": "que_quan_quanat"
-  },
-  {
-    "label": "ten_qq_quan%lex",
-    "detail": "field Dir",
-    "insertText": "ten_qq_quan%lex"
-  },
-  {
-    "label": "que_quan_xaat",
-    "detail": "field Dir",
-    "insertText": "que_quan_xaat"
-  },
-  {
-    "label": "ten_qq_xa%lex",
-    "detail": "field Dir",
-    "insertText": "ten_qq_xa%lex"
-  },
-  {
-    "label": "nh_nv1at",
-    "detail": "field Dir",
-    "insertText": "nh_nv1at"
-  },
-  {
-    "label": "ten_nh_nv1%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_nv1%lex"
-  },
-  {
-    "label": "nh_nv2at",
-    "detail": "field Dir",
-    "insertText": "nh_nv2at"
-  },
-  {
-    "label": "ten_nh_nv2%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_nv2%lex"
-  },
-  {
-    "label": "nh_nv3at",
-    "detail": "field Dir",
-    "insertText": "nh_nv3at"
-  },
-  {
-    "label": "ten_nh_nv3%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_nv3%lex"
-  },
-  {
-    "label": "tinh_trang_nvat",
-    "detail": "field Dir",
-    "insertText": "tinh_trang_nvat"
-  },
-  {
-    "label": "ten_ttnv%lex",
-    "detail": "field Dir",
-    "insertText": "ten_ttnv%lex"
-  },
-  {
-    "label": "rightsex",
-    "detail": "field Dir",
-    "insertText": "rightsex"
-  },
-  {
-    "label": "ticket2ex",
-    "detail": "field Dir",
-    "insertText": "ticket2ex"
-  },
-  {
-    "label": "imageurlex",
-    "detail": "field Dir",
-    "insertText": "imageurlex"
-  },
-  {
-    "label": "rkeyex",
-    "detail": "field Dir",
-    "insertText": "rkeyex"
-  },
-  {
-    "label": "rkey2ex",
-    "detail": "field Dir",
-    "insertText": "rkey2ex"
-  },
-  {
-    "label": "dia_chi_ht2",
-    "detail": "field Dir",
-    "insertText": "dia_chi_ht2"
-  },
-  {
-    "label": "dia_chi_th_tru2",
-    "detail": "field Dir",
-    "insertText": "dia_chi_th_tru2"
-  },
-  {
-    "label": "que_quan2",
-    "detail": "field Dir",
-    "insertText": "que_quan2"
-  },
-  {
-    "label": "nh_nv4at",
-    "detail": "field Dir",
-    "insertText": "nh_nv4at"
-  },
-  {
-    "label": "ten_nh_nv4%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_nv4%lex"
-  },
-  {
-    "label": "nh_nv5at",
-    "detail": "field Dir",
-    "insertText": "nh_nv5at"
-  },
-  {
-    "label": "ten_nh_nv5%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_nv5%lex"
-  },
-  {
-    "label": "nh_nv6at",
-    "detail": "field Dir",
-    "insertText": "nh_nv6at"
-  },
-  {
-    "label": "ten_nh_nv6%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_nv6%lex"
-  },
-  {
-    "label": "ngay_huuex",
-    "detail": "field Dir",
-    "insertText": "ngay_huuex"
-  },
-  {
-    "label": "nam_lvex",
-    "detail": "field Dir",
-    "insertText": "nam_lvex"
-  },
-  {
-    "label": "ma_khoaat",
-    "detail": "field Dir",
-    "insertText": "ma_khoaat"
-  },
-  {
-    "label": "ten_khoa%lex",
-    "detail": "field Dir",
-    "insertText": "ten_khoa%lex"
-  },
-  {
-    "label": "ma_mhex",
-    "detail": "field Dir",
-    "insertText": "ma_mhex"
-  },
-  {
-    "label": "ten_mh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_mh%lex"
-  },
-  {
-    "label": "loai_hinh_dtex",
-    "detail": "field Dir",
-    "insertText": "loai_hinh_dtex"
-  },
-  {
-    "label": "ma_dvdtex",
-    "detail": "field Dir",
-    "insertText": "ma_dvdtex"
-  },
-  {
-    "label": "ten_dvdt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dvdt%lex"
-  },
-  {
-    "label": "ngay_hoc1ex",
-    "detail": "field Dir",
-    "insertText": "ngay_hoc1ex"
-  },
-  {
-    "label": "ngay_hoc2ex",
-    "detail": "field Dir",
-    "insertText": "ngay_hoc2ex"
-  },
-  {
-    "label": "so_gioex",
-    "detail": "field Dir",
-    "insertText": "so_gioex"
-  },
-  {
-    "label": "xep_loaiat",
-    "detail": "field Dir",
-    "insertText": "xep_loaiat"
-  },
-  {
-    "label": "ten_xl%lex",
-    "detail": "field Dir",
-    "insertText": "ten_xl%lex"
-  },
-  {
-    "label": "dat_yn",
-    "detail": "field Dir",
-    "insertText": "dat_yn"
-  },
-  {
-    "label": "dt_liksin_yn",
-    "detail": "field Dir",
-    "insertText": "dt_liksin_yn"
-  },
-  {
-    "label": "cp_dt",
-    "detail": "field Dir",
-    "insertText": "cp_dt"
-  },
-  {
-    "label": "chung_chi",
-    "detail": "field Dir",
-    "insertText": "chung_chi"
-  },
-  {
-    "label": "ngay_cap",
-    "detail": "field Dir",
-    "insertText": "ngay_cap"
-  },
-  {
-    "label": "ngay_hl",
-    "detail": "field Dir",
-    "insertText": "ngay_hl"
-  },
-  {
-    "label": "ngay_hh",
-    "detail": "field Dir",
-    "insertText": "ngay_hh"
-  },
-  {
-    "label": "thanh_phan_gd",
-    "detail": "field Dir",
-    "insertText": "thanh_phan_gd"
-  },
-  {
-    "label": "thanh_phan_bt",
-    "detail": "field Dir",
-    "insertText": "thanh_phan_bt"
-  },
-  {
-    "label": "dang_vien_yn",
-    "detail": "field Dir",
-    "insertText": "dang_vien_yn"
-  },
-  {
-    "label": "ngay_vao_dang",
-    "detail": "field Dir",
-    "insertText": "ngay_vao_dang"
-  },
-  {
-    "label": "ngay_vd_chinh_thuc",
-    "detail": "field Dir",
-    "insertText": "ngay_vd_chinh_thuc"
-  },
-  {
-    "label": "noi_ket_nap",
-    "detail": "field Dir",
-    "insertText": "noi_ket_nap"
-  },
-  {
-    "label": "so_the_dang",
-    "detail": "field Dir",
-    "insertText": "so_the_dang"
-  },
-  {
-    "label": "chuc_vu_dang",
-    "detail": "field Dir",
-    "insertText": "chuc_vu_dang"
-  },
-  {
-    "label": "chuc_vu_dang2",
-    "detail": "field Dir",
-    "insertText": "chuc_vu_dang2"
-  },
-  {
-    "label": "trinh_do_ly_luan",
-    "detail": "field Dir",
-    "insertText": "trinh_do_ly_luan"
-  },
-  {
-    "label": "ngay_ra_dang",
-    "detail": "field Dir",
-    "insertText": "ngay_ra_dang"
-  },
-  {
-    "label": "ghi_chu_dd2",
-    "detail": "field Dir",
-    "insertText": "ghi_chu_dd2"
-  },
-  {
-    "label": "doan_vien_yn",
-    "detail": "field Dir",
-    "insertText": "doan_vien_yn"
-  },
-  {
-    "label": "thuong_binh_ls_yn",
-    "detail": "field Dir",
-    "insertText": "thuong_binh_ls_yn"
-  },
-  {
-    "label": "ngay_vao_doan",
-    "detail": "field Dir",
-    "insertText": "ngay_vao_doan"
-  },
-  {
-    "label": "ngay_cand",
-    "detail": "field Dir",
-    "insertText": "ngay_cand"
-  },
-  {
-    "label": "chuc_vu_doan",
-    "detail": "field Dir",
-    "insertText": "chuc_vu_doan"
-  },
-  {
-    "label": "chuc_vu_doan2",
-    "detail": "field Dir",
-    "insertText": "chuc_vu_doan2"
-  },
-  {
-    "label": "ngay_ra_doan",
-    "detail": "field Dir",
-    "insertText": "ngay_ra_doan"
-  },
-  {
-    "label": "ghi_chu_dd1",
-    "detail": "field Dir",
-    "insertText": "ghi_chu_dd1"
-  },
-  {
-    "label": "nhap_ngu_yn",
-    "detail": "field Dir",
-    "insertText": "nhap_ngu_yn"
-  },
-  {
-    "label": "ngay_nhap_ngu",
-    "detail": "field Dir",
-    "insertText": "ngay_nhap_ngu"
-  },
-  {
-    "label": "quan_ham",
-    "detail": "field Dir",
-    "insertText": "quan_ham"
-  },
-  {
-    "label": "ngay_xuat_ngu",
-    "detail": "field Dir",
-    "insertText": "ngay_xuat_ngu"
-  },
-  {
-    "label": "ghi_chu_dd3",
-    "detail": "field Dir",
-    "insertText": "ghi_chu_dd3"
-  },
-  {
-    "label": "ten_kl%lex",
-    "detail": "field Dir",
-    "insertText": "ten_kl%lex"
-  },
-  {
-    "label": "loai",
-    "detail": "field Dir",
-    "insertText": "loai"
-  },
-  {
-    "label": "tinh_chat",
-    "detail": "field Dir",
-    "insertText": "tinh_chat"
-  },
-  {
-    "label": "nguoi_quan_lyat",
-    "detail": "field Dir",
-    "insertText": "nguoi_quan_lyat"
-  },
-  {
-    "label": "tenex",
-    "detail": "field Dir",
-    "insertText": "tenex"
-  },
-  {
-    "label": "ngay_tu",
-    "detail": "field Dir",
-    "insertText": "ngay_tu"
-  },
-  {
-    "label": "nguoi_quyet_dinh",
-    "detail": "field Dir",
-    "insertText": "nguoi_quyet_dinh"
-  },
-  {
-    "label": "ngay_den",
-    "detail": "field Dir",
-    "insertText": "ngay_den"
-  },
-  {
-    "label": "nguoi_tiep_nhan",
-    "detail": "field Dir",
-    "insertText": "nguoi_tiep_nhan"
-  },
-  {
-    "label": "nguon_tuyen_dung",
-    "detail": "field Dir",
-    "insertText": "nguon_tuyen_dung"
-  },
-  {
-    "label": "nguoi_gioi_thieu",
-    "detail": "field Dir",
-    "insertText": "nguoi_gioi_thieu"
-  },
-  {
-    "label": "ngay_nghi",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi"
-  },
-  {
-    "label": "ly_do_nghiat",
-    "detail": "field Dir",
-    "insertText": "ly_do_nghiat"
-  },
-  {
-    "label": "ten_ldnv%lex",
-    "detail": "field Dir",
-    "insertText": "ten_ldnv%lex"
-  },
-  {
-    "label": "nguoi_ky_nghi",
-    "detail": "field Dir",
-    "insertText": "nguoi_ky_nghi"
-  },
-  {
-    "label": "ghi_chu_tt",
-    "detail": "field Dir",
-    "insertText": "ghi_chu_tt"
-  },
-  {
-    "label": "ma_kho",
-    "detail": "field Dir",
-    "insertText": "ma_kho"
-  },
-  {
-    "label": "ten_kho%lex",
-    "detail": "field Dir",
-    "insertText": "ten_kho%lex"
-  },
-  {
-    "label": "ma_khox",
-    "detail": "field Dir",
-    "insertText": "ma_khox"
-  },
-  {
-    "label": "ten_khox%lex",
-    "detail": "field Dir",
-    "insertText": "ten_khox%lex"
-  },
-  {
-    "label": "vi_tri_ynex",
-    "detail": "field Dir",
-    "insertText": "vi_tri_ynex"
+    "insertText": "tien_den"
   },
   {
     "label": "so_ct_gocex",
@@ -2433,6 +1343,66 @@
     "label": "dien_giai_ct_gocex",
     "detail": "field Dir",
     "insertText": "dien_giai_ct_gocex"
+  },
+  {
+    "label": "ma_so",
+    "detail": "field Dir",
+    "insertText": "ma_so"
+  },
+  {
+    "label": "stt_in",
+    "detail": "field Dir",
+    "insertText": "stt_in"
+  },
+  {
+    "label": "chi_tieu",
+    "detail": "field Dir",
+    "insertText": "chi_tieu"
+  },
+  {
+    "label": "chi_tieu2",
+    "detail": "field Dir",
+    "insertText": "chi_tieu2"
+  },
+  {
+    "label": "thuyet_minh",
+    "detail": "field Dir",
+    "insertText": "thuyet_minh"
+  },
+  {
+    "label": "in_ck",
+    "detail": "field Dir",
+    "insertText": "in_ck"
+  },
+  {
+    "label": "bold",
+    "detail": "field Dir",
+    "insertText": "bold"
+  },
+  {
+    "label": "tk_no",
+    "detail": "field Dir",
+    "insertText": "tk_no"
+  },
+  {
+    "label": "tk_co",
+    "detail": "field Dir",
+    "insertText": "tk_co"
+  },
+  {
+    "label": "giam_tru",
+    "detail": "field Dir",
+    "insertText": "giam_tru"
+  },
+  {
+    "label": "cach_tinh",
+    "detail": "field Dir",
+    "insertText": "cach_tinh"
+  },
+  {
+    "label": "ccdc_yn",
+    "detail": "field Dir",
+    "insertText": "ccdc_yn"
   },
   {
     "label": "ma_vt",
@@ -2450,21 +1420,6 @@
     "insertText": "ten_vt2"
   },
   {
-    "label": "ten_ngan",
-    "detail": "field Dir",
-    "insertText": "ten_ngan"
-  },
-  {
-    "label": "dvt2at",
-    "detail": "field Dir",
-    "insertText": "dvt2at"
-  },
-  {
-    "label": "ten_dvt2%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dvt2%lex"
-  },
-  {
     "label": "nhieu_dvt",
     "detail": "field Dir",
     "insertText": "nhieu_dvt"
@@ -2478,6 +1433,11 @@
     "label": "kk_yn",
     "detail": "field Dir",
     "insertText": "kk_yn"
+  },
+  {
+    "label": "loai_vtat",
+    "detail": "field Dir",
+    "insertText": "loai_vtat"
   },
   {
     "label": "ten_loai_vt%lex",
@@ -2495,6 +1455,11 @@
     "insertText": "ten_nh_vt1%lex"
   },
   {
+    "label": "nh_vt2at",
+    "detail": "field Dir",
+    "insertText": "nh_vt2at"
+  },
+  {
     "label": "ten_nh_vt2%lex",
     "detail": "field Dir",
     "insertText": "ten_nh_vt2%lex"
@@ -2510,6 +1475,26 @@
     "insertText": "ten_nh_vt3%lex"
   },
   {
+    "label": "nh_vt4at",
+    "detail": "field Dir",
+    "insertText": "nh_vt4at"
+  },
+  {
+    "label": "ten_nh_vt4%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_vt4%lex"
+  },
+  {
+    "label": "nh_vt5at",
+    "detail": "field Dir",
+    "insertText": "nh_vt5at"
+  },
+  {
+    "label": "ten_nh_vt5%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_vt5%lex"
+  },
+  {
     "label": "nh_vt9at",
     "detail": "field Dir",
     "insertText": "nh_vt9at"
@@ -2520,6 +1505,11 @@
     "insertText": "ten_nh_vt9%lex"
   },
   {
+    "label": "ten_kho%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kho%lex"
+  },
+  {
     "label": "ma_vi_triat",
     "detail": "field Dir",
     "insertText": "ma_vi_triat"
@@ -2528,6 +1518,16 @@
     "label": "ten_vi_tri%lex",
     "detail": "field Dir",
     "insertText": "ten_vi_tri%lex"
+  },
+  {
+    "label": "ma_thueat",
+    "detail": "field Dir",
+    "insertText": "ma_thueat"
+  },
+  {
+    "label": "ten_thue%lex",
+    "detail": "field Dir",
+    "insertText": "ten_thue%lex"
   },
   {
     "label": "ten_thue_nk%lex",
@@ -2675,124 +1675,49 @@
     "insertText": "tao_lo"
   },
   {
-    "label": "dinh_luong_giay",
+    "label": "combo_buffet_yn",
     "detail": "field Dir",
-    "insertText": "dinh_luong_giay"
+    "insertText": "combo_buffet_yn"
   },
   {
-    "label": "dinh_luong",
+    "label": "tk_gv_tmat",
     "detail": "field Dir",
-    "insertText": "dinh_luong"
+    "insertText": "tk_gv_tmat"
   },
   {
-    "label": "kho_ngang",
+    "label": "ten_tk_gv_tm%lex",
     "detail": "field Dir",
-    "insertText": "kho_ngang"
+    "insertText": "ten_tk_gv_tm%lex"
   },
   {
-    "label": "kho_doc",
+    "label": "tk_dt_tmat",
     "detail": "field Dir",
-    "insertText": "kho_doc"
+    "insertText": "tk_dt_tmat"
   },
   {
-    "label": "ma_kh_vtat",
+    "label": "ten_tk_dt_tm%lex",
     "detail": "field Dir",
-    "insertText": "ma_kh_vtat"
+    "insertText": "ten_tk_dt_tm%lex"
   },
   {
-    "label": "ten_kh_vt%lex",
+    "label": "loai_nh",
     "detail": "field Dir",
-    "insertText": "ten_kh_vt%lex"
+    "insertText": "loai_nh"
   },
   {
-    "label": "ma_vt_kh",
+    "label": "ma_nh",
     "detail": "field Dir",
-    "insertText": "ma_vt_kh"
+    "insertText": "ma_nh"
   },
   {
-    "label": "vat_tu_giay",
+    "label": "ten_nh",
     "detail": "field Dir",
-    "insertText": "vat_tu_giay"
+    "insertText": "ten_nh"
   },
   {
-    "label": "he_so_n",
+    "label": "ten_nh2",
     "detail": "field Dir",
-    "insertText": "he_so_n"
-  },
-  {
-    "label": "zcdmtp_loai_vtex",
-    "detail": "field Dir",
-    "insertText": "zcdmtp_loai_vtex"
-  },
-  {
-    "label": "hs_code",
-    "detail": "field Dir",
-    "insertText": "hs_code"
-  },
-  {
-    "label": "vt_kem",
-    "detail": "field Dir",
-    "insertText": "vt_kem"
-  },
-  {
-    "label": "dvt_thuong_maiat",
-    "detail": "field Dir",
-    "insertText": "dvt_thuong_maiat"
-  },
-  {
-    "label": "ten_dvt_thuong_mai%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dvt_thuong_mai%lex"
-  },
-  {
-    "label": "ty_trong_chuan",
-    "detail": "field Dir",
-    "insertText": "ty_trong_chuan"
-  },
-  {
-    "label": "ham_luong_ran",
-    "detail": "field Dir",
-    "insertText": "ham_luong_ran"
-  },
-  {
-    "label": "do_day_micro",
-    "detail": "field Dir",
-    "insertText": "do_day_micro"
-  },
-  {
-    "label": "he_so_g",
-    "detail": "field Dir",
-    "insertText": "he_so_g"
-  },
-  {
-    "label": "ma_sp_meat",
-    "detail": "field Dir",
-    "insertText": "ma_sp_meat"
-  },
-  {
-    "label": "ten_sp_me%lex",
-    "detail": "field Dir",
-    "insertText": "ten_sp_me%lex"
-  },
-  {
-    "label": "chinh_phu",
-    "detail": "field Dir",
-    "insertText": "chinh_phu"
-  },
-  {
-    "label": "ma_loaiat",
-    "detail": "field Dir",
-    "insertText": "ma_loaiat"
-  },
-  {
-    "label": "ty_trong",
-    "detail": "field Dir",
-    "insertText": "ty_trong"
-  },
-  {
-    "label": "nh_nvl_giay_yn",
-    "detail": "field Dir",
-    "insertText": "nh_nvl_giay_yn"
+    "insertText": "ten_nh2"
   },
   {
     "label": "ma_khoat",
@@ -2815,69 +1740,94 @@
     "insertText": "so_buoc"
   },
   {
+    "label": "vi_tri_ynex",
+    "detail": "field Dir",
+    "insertText": "vi_tri_ynex"
+  },
+  {
     "label": "vi_trin_ynex",
     "detail": "field Dir",
     "insertText": "vi_trin_ynex"
   },
   {
-    "label": "ma_nccat",
+    "label": "ten_vv",
     "detail": "field Dir",
-    "insertText": "ma_nccat"
+    "insertText": "ten_vv"
   },
   {
-    "label": "ten_ncc%lex",
+    "label": "ten_vv2",
     "detail": "field Dir",
-    "insertText": "ten_ncc%lex"
+    "insertText": "ten_vv2"
   },
   {
-    "label": "tong_no_mua",
+    "label": "ngay_vv",
     "detail": "field Dir",
-    "insertText": "tong_no_mua"
+    "insertText": "ngay_vv"
   },
   {
-    "label": "tong_no_ban",
+    "label": "so_vv",
     "detail": "field Dir",
-    "insertText": "tong_no_ban"
+    "insertText": "so_vv"
   },
   {
-    "label": "ds_rec_ban",
+    "label": "vv_sd_pslk",
     "detail": "field Dir",
-    "insertText": "ds_rec_ban"
+    "insertText": "vv_sd_pslk"
   },
   {
-    "label": "ds_rec_mua",
+    "label": "ngay_vv1",
     "detail": "field Dir",
-    "insertText": "ds_rec_mua"
+    "insertText": "ngay_vv1"
   },
   {
-    "label": "ma_cthuc",
+    "label": "ngay_vv2",
     "detail": "field Dir",
-    "insertText": "ma_cthuc"
+    "insertText": "ngay_vv2"
   },
   {
-    "label": "ten_cthuc",
+    "label": "ma_vv_meat",
     "detail": "field Dir",
-    "insertText": "ten_cthuc"
+    "insertText": "ma_vv_meat"
   },
   {
-    "label": "cthuc_ngan",
+    "label": "ten_vv_me%lex",
     "detail": "field Dir",
-    "insertText": "cthuc_ngan"
+    "insertText": "ten_vv_me%lex"
   },
   {
-    "label": "ham_luong_tb",
+    "label": "nh_vv1at",
     "detail": "field Dir",
-    "insertText": "ham_luong_tb"
+    "insertText": "nh_vv1at"
   },
   {
-    "label": "khoi_luong_keo",
+    "label": "ten_nh_vv1%lex",
     "detail": "field Dir",
-    "insertText": "khoi_luong_keo"
+    "insertText": "ten_nh_vv1%lex"
   },
   {
-    "label": "kl_dung_moi",
+    "label": "nh_vv2at",
     "detail": "field Dir",
-    "insertText": "kl_dung_moi"
+    "insertText": "nh_vv2at"
+  },
+  {
+    "label": "ten_nh_vv2%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_vv2%lex"
+  },
+  {
+    "label": "nh_vv3at",
+    "detail": "field Dir",
+    "insertText": "nh_vv3at"
+  },
+  {
+    "label": "ten_nh_vv3%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_vv3%lex"
+  },
+  {
+    "label": "loai_vv",
+    "detail": "field Dir",
+    "insertText": "loai_vv"
   },
   {
     "label": "ma_ku",
@@ -2940,19 +1890,44 @@
     "insertText": "sl_tt"
   },
   {
-    "label": "ngay_tl",
+    "label": "ma_nhat",
     "detail": "field Dir",
-    "insertText": "ngay_tl"
+    "insertText": "ma_nhat"
   },
   {
-    "label": "so_ngay_tl",
+    "label": "ten_nh_ex%lex",
     "detail": "field Dir",
-    "insertText": "so_ngay_tl"
+    "insertText": "ten_nh_ex%lex"
   },
   {
-    "label": "lai_vay",
+    "label": "ma_hdat",
     "detail": "field Dir",
-    "insertText": "lai_vay"
+    "insertText": "ma_hdat"
+  },
+  {
+    "label": "ten_hd%lex",
+    "detail": "field Dir",
+    "insertText": "ten_hd%lex"
+  },
+  {
+    "label": "ky_tinh_thue",
+    "detail": "field Dir",
+    "insertText": "ky_tinh_thue"
+  },
+  {
+    "label": "ky_thue",
+    "detail": "field Dir",
+    "insertText": "ky_thue"
+  },
+  {
+    "label": "ky_nop_thue",
+    "detail": "field Dir",
+    "insertText": "ky_nop_thue"
+  },
+  {
+    "label": "han_nop_thue",
+    "detail": "field Dir",
+    "insertText": "han_nop_thue"
   },
   {
     "label": "tinh_trang",
@@ -2960,109 +1935,49 @@
     "insertText": "tinh_trang"
   },
   {
-    "label": "ma_vi_tri",
+    "label": "nam_gridView",
     "detail": "field Dir",
-    "insertText": "ma_vi_tri"
+    "insertText": "nam_gridView"
   },
   {
-    "label": "ten_vi_tri",
+    "label": "ma_loat",
     "detail": "field Dir",
-    "insertText": "ten_vi_tri"
+    "insertText": "ma_loat"
   },
   {
-    "label": "ten_vi_tri2",
+    "label": "ten_lo%lex",
     "detail": "field Dir",
-    "insertText": "ten_vi_tri2"
+    "insertText": "ten_lo%lex"
   },
   {
-    "label": "ma_vtat",
+    "label": "ton00",
     "detail": "field Dir",
-    "insertText": "ma_vtat"
+    "insertText": "ton00"
   },
   {
-    "label": "ma_lo",
+    "label": "du00",
     "detail": "field Dir",
-    "insertText": "ma_lo"
+    "insertText": "du00"
   },
   {
-    "label": "ngay_nhap",
+    "label": "du_nt00",
     "detail": "field Dir",
-    "insertText": "ngay_nhap"
+    "insertText": "du_nt00"
   },
   {
-    "label": "ten_lo",
+    "label": "gia_tonex",
     "detail": "field Dir",
-    "insertText": "ten_lo"
+    "insertText": "gia_tonex"
   },
   {
-    "label": "ten_lo2",
+    "label": "lo_ynex",
     "detail": "field Dir",
-    "insertText": "ten_lo2"
+    "insertText": "lo_ynex"
   },
   {
-    "label": "ngay_sx",
+    "label": "ten_bp_pb%lex",
     "detail": "field Dir",
-    "insertText": "ngay_sx"
-  },
-  {
-    "label": "ngay_hhsd",
-    "detail": "field Dir",
-    "insertText": "ngay_hhsd"
-  },
-  {
-    "label": "ngay_hhbh",
-    "detail": "field Dir",
-    "insertText": "ngay_hhbh"
-  },
-  {
-    "label": "ma_vt2",
-    "detail": "field Dir",
-    "insertText": "ma_vt2"
-  },
-  {
-    "label": "so_chat_luong",
-    "detail": "field Dir",
-    "insertText": "so_chat_luong"
-  },
-  {
-    "label": "kho_giay",
-    "detail": "field Dir",
-    "insertText": "kho_giay"
-  },
-  {
-    "label": "fsc_yn",
-    "detail": "field Dir",
-    "insertText": "fsc_yn"
-  },
-  {
-    "label": "nguon_nhap",
-    "detail": "field Dir",
-    "insertText": "nguon_nhap"
-  },
-  {
-    "label": "so_dhm",
-    "detail": "field Dir",
-    "insertText": "so_dhm"
-  },
-  {
-    "label": "so_kien",
-    "detail": "field Dir",
-    "insertText": "so_kien"
-  },
-  {
-    "label": "so_luong",
-    "detail": "field Dir",
-    "insertText": "so_luong"
-  },
-  {
-    "label": "so_luong_m",
-    "detail": "field Dir",
-    "insertText": "so_luong_m"
-  },
-  {
-    "label": "so_pd1",
-    "detail": "field Dir",
-    "insertText": "so_pd1"
+    "insertText": "ten_bp_pb%lex"
   },
   {
     "label": "ma_mdat",
@@ -3095,59 +2010,94 @@
     "insertText": "ngay_th2"
   },
   {
-    "label": "product_idat",
+    "label": "ngay_lct2",
     "detail": "field Dir",
-    "insertText": "product_idat"
+    "insertText": "ngay_lct2"
   },
   {
-    "label": "so_yc_cat",
+    "label": "t_tien_tk",
     "detail": "field Dir",
-    "insertText": "so_yc_cat"
+    "insertText": "t_tien_tk"
   },
   {
-    "label": "dung_sai",
+    "label": "ma_loai_orderat",
     "detail": "field Dir",
-    "insertText": "dung_sai"
+    "insertText": "ma_loai_orderat"
   },
   {
-    "label": "sl_sp_thung",
+    "label": "ten_loai_order%lex",
     "detail": "field Dir",
-    "insertText": "sl_sp_thung"
+    "insertText": "ten_loai_order%lex"
   },
   {
-    "label": "so_po",
+    "label": "so_khach",
     "detail": "field Dir",
-    "insertText": "so_po"
+    "insertText": "so_khach"
   },
   {
-    "label": "so_dh",
+    "label": "he_so",
     "detail": "field Dir",
-    "insertText": "so_dh"
+    "insertText": "he_so"
   },
   {
-    "label": "fsc",
+    "label": "so_khach_t",
     "detail": "field Dir",
-    "insertText": "fsc"
+    "insertText": "so_khach_t"
   },
   {
-    "label": "loai_sx",
+    "label": "he_so_t",
     "detail": "field Dir",
-    "insertText": "loai_sx"
+    "insertText": "he_so_t"
   },
   {
-    "label": "muc_dich_sx",
+    "label": "so_khach_m",
     "detail": "field Dir",
-    "insertText": "muc_dich_sx"
+    "insertText": "so_khach_m"
   },
   {
-    "label": "mo_nbrat",
+    "label": "ma_xcbat",
     "detail": "field Dir",
-    "insertText": "mo_nbrat"
+    "insertText": "ma_xcbat"
   },
   {
-    "label": "dept_idat",
+    "label": "ten_xcb%lex",
     "detail": "field Dir",
-    "insertText": "dept_idat"
+    "insertText": "ten_xcb%lex"
+  },
+  {
+    "label": "dept_id_reqat",
+    "detail": "field Dir",
+    "insertText": "dept_id_reqat"
+  },
+  {
+    "label": "ten_bp_yc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_bp_yc%lex"
+  },
+  {
+    "label": "site_id_reqat",
+    "detail": "field Dir",
+    "insertText": "site_id_reqat"
+  },
+  {
+    "label": "ten_kho_yc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kho_yc%lex"
+  },
+  {
+    "label": "statusname%lex",
+    "detail": "field Dir",
+    "insertText": "statusname%lex"
+  },
+  {
+    "label": "gio_tu",
+    "detail": "field Dir",
+    "insertText": "gio_tu"
+  },
+  {
+    "label": "gio_den",
+    "detail": "field Dir",
+    "insertText": "gio_den"
   },
   {
     "label": "xs_nameex",
@@ -3165,19 +2115,89 @@
     "insertText": "xtag"
   },
   {
-    "label": "ma_kh_xat",
+    "label": "fqty1",
     "detail": "field Dir",
-    "insertText": "ma_kh_xat"
+    "insertText": "fqty1"
   },
   {
-    "label": "ten_kh_x%lex",
+    "label": "t_cp_nt",
     "detail": "field Dir",
-    "insertText": "ten_kh_x%lex"
+    "insertText": "t_cp_nt"
   },
   {
-    "label": "ong_ba_x",
+    "label": "t_cp",
     "detail": "field Dir",
-    "insertText": "ong_ba_x"
+    "insertText": "t_cp"
+  },
+  {
+    "label": "so_hd1ex",
+    "detail": "field Dir",
+    "insertText": "so_hd1ex"
+  },
+  {
+    "label": "ngay_ct3",
+    "detail": "field Dir",
+    "insertText": "ngay_ct3"
+  },
+  {
+    "label": "ma_dcat",
+    "detail": "field Dir",
+    "insertText": "ma_dcat"
+  },
+  {
+    "label": "ten_dc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dc%lex"
+  },
+  {
+    "label": "ma_kho0",
+    "detail": "field Dir",
+    "insertText": "ma_kho0"
+  },
+  {
+    "label": "ten_khoex",
+    "detail": "field Dir",
+    "insertText": "ten_khoex"
+  },
+  {
+    "label": "ma_htvcat",
+    "detail": "field Dir",
+    "insertText": "ma_htvcat"
+  },
+  {
+    "label": "ten_htvc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_htvc%lex"
+  },
+  {
+    "label": "nha_cung_capex",
+    "detail": "field Dir",
+    "insertText": "nha_cung_capex"
+  },
+  {
+    "label": "dien_thoaiex",
+    "detail": "field Dir",
+    "insertText": "dien_thoaiex"
+  },
+  {
+    "label": "ngay_hd1ex",
+    "detail": "field Dir",
+    "insertText": "ngay_hd1ex"
+  },
+  {
+    "label": "ngay_hl1ex",
+    "detail": "field Dir",
+    "insertText": "ngay_hl1ex"
+  },
+  {
+    "label": "status1ex",
+    "detail": "field Dir",
+    "insertText": "status1ex"
+  },
+  {
+    "label": "ten_nvmh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nvmh%lex"
   },
   {
     "label": "t_cp_vc_nt",
@@ -3210,9 +2230,49 @@
     "insertText": "t_cp_khac"
   },
   {
-    "label": "ty_gia_hq",
+    "label": "t_nk_nt",
     "detail": "field Dir",
-    "insertText": "ty_gia_hq"
+    "insertText": "t_nk_nt"
+  },
+  {
+    "label": "t_nk",
+    "detail": "field Dir",
+    "insertText": "t_nk"
+  },
+  {
+    "label": "t_ttdb",
+    "detail": "field Dir",
+    "insertText": "t_ttdb"
+  },
+  {
+    "label": "loai_po",
+    "detail": "field Dir",
+    "insertText": "loai_po"
+  },
+  {
+    "label": "ma_loaihangat",
+    "detail": "field Dir",
+    "insertText": "ma_loaihangat"
+  },
+  {
+    "label": "ten_loaihang%lex",
+    "detail": "field Dir",
+    "insertText": "ten_loaihang%lex"
+  },
+  {
+    "label": "ngay_giao",
+    "detail": "field Dir",
+    "insertText": "ngay_giao"
+  },
+  {
+    "label": "t_tien_nt0",
+    "detail": "field Dir",
+    "insertText": "t_tien_nt0"
+  },
+  {
+    "label": "t_tien0",
+    "detail": "field Dir",
+    "insertText": "t_tien0"
   },
   {
     "label": "t_tien_nt3",
@@ -3223,16 +2283,6 @@
     "label": "t_tien3",
     "detail": "field Dir",
     "insertText": "t_tien3"
-  },
-  {
-    "label": "ngay_ct2",
-    "detail": "field Dir",
-    "insertText": "ngay_ct2"
-  },
-  {
-    "label": "ma_nt",
-    "detail": "field Dir",
-    "insertText": "ma_nt"
   },
   {
     "label": "u_status",
@@ -3275,9 +2325,29 @@
     "insertText": "kieu_duyetat"
   },
   {
-    "label": "ten_kieu%lex",
+    "label": "ma_md",
     "detail": "field Dir",
-    "insertText": "ten_kieu%lex"
+    "insertText": "ma_md"
+  },
+  {
+    "label": "mua_hang_duyet",
+    "detail": "field Dir",
+    "insertText": "mua_hang_duyet"
+  },
+  {
+    "label": "loai_dhat",
+    "detail": "field Dir",
+    "insertText": "loai_dhat"
+  },
+  {
+    "label": "ten_loai_dh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_loai_dh%lex"
+  },
+  {
+    "label": "ten_dv_nhan%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dv_nhan%lex"
   },
   {
     "label": "ma_nxat",
@@ -3288,6 +2358,21 @@
     "label": "ten_nx%lex",
     "detail": "field Dir",
     "insertText": "ten_nx%lex"
+  },
+  {
+    "label": "ten_bc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_bc%lex"
+  },
+  {
+    "label": "ma_tcat",
+    "detail": "field Dir",
+    "insertText": "ma_tcat"
+  },
+  {
+    "label": "ten_tc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tc%lex"
   },
   {
     "label": "tk_thueat",
@@ -3305,6 +2390,16 @@
     "insertText": "thue_suat"
   },
   {
+    "label": "ma_kh2at",
+    "detail": "field Dir",
+    "insertText": "ma_kh2at"
+  },
+  {
+    "label": "ten_kh_thue%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kh_thue%lex"
+  },
+  {
     "label": "outvat_yn",
     "detail": "field Dir",
     "insertText": "outvat_yn"
@@ -3315,19 +2410,44 @@
     "insertText": "tk_cnex"
   },
   {
-    "label": "so_ncex",
+    "label": "ma_gd",
     "detail": "field Dir",
-    "insertText": "so_ncex"
+    "insertText": "ma_gd"
   },
   {
-    "label": "ngay_ncex",
+    "label": "so_pnex",
     "detail": "field Dir",
-    "insertText": "ngay_ncex"
+    "insertText": "so_pnex"
   },
   {
-    "label": "t_sl_dh",
+    "label": "ngay_pnex",
     "detail": "field Dir",
-    "insertText": "t_sl_dh"
+    "insertText": "ngay_pnex"
+  },
+  {
+    "label": "nhap_nh_khac",
+    "detail": "field Dir",
+    "insertText": "nhap_nh_khac"
+  },
+  {
+    "label": "loai_gia",
+    "detail": "field Dir",
+    "insertText": "loai_gia"
+  },
+  {
+    "label": "ngay_ban",
+    "detail": "field Dir",
+    "insertText": "ngay_ban"
+  },
+  {
+    "label": "gia_nt2",
+    "detail": "field Dir",
+    "insertText": "gia_nt2"
+  },
+  {
+    "label": "ma_kho",
+    "detail": "field Dir",
+    "insertText": "ma_kho"
   },
   {
     "label": "ten_kho",
@@ -3345,19 +2465,9 @@
     "insertText": "dai_ly_yn"
   },
   {
-    "label": "ma_nhat",
+    "label": "kho_kk_btp",
     "detail": "field Dir",
-    "insertText": "ma_nhat"
-  },
-  {
-    "label": "ten_nh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh%lex"
-  },
-  {
-    "label": "ma_loai_vt_khoat",
-    "detail": "field Dir",
-    "insertText": "ma_loai_vt_khoat"
+    "insertText": "kho_kk_btp"
   },
   {
     "label": "so_lxex",
@@ -3370,49 +2480,29 @@
     "insertText": "ngay_lxex"
   },
   {
-    "label": "ma_dc",
+    "label": "tg_kk",
     "detail": "field Dir",
-    "insertText": "ma_dc"
+    "insertText": "tg_kk"
   },
   {
-    "label": "ten_dc",
+    "label": "tk_thue_coat",
     "detail": "field Dir",
-    "insertText": "ten_dc"
+    "insertText": "tk_thue_coat"
   },
   {
-    "label": "ten_dc2",
+    "label": "ten_tk_thue_co%lex",
     "detail": "field Dir",
-    "insertText": "ten_dc2"
+    "insertText": "ten_tk_thue_co%lex"
   },
   {
-    "label": "ma_trongtaiat",
+    "label": "thue_suatex",
     "detail": "field Dir",
-    "insertText": "ma_trongtaiat"
-  },
-  {
-    "label": "ten_taitrong%lex",
-    "detail": "field Dir",
-    "insertText": "ten_taitrong%lex"
-  },
-  {
-    "label": "gia_nt",
-    "detail": "field Dir",
-    "insertText": "gia_nt"
-  },
-  {
-    "label": "khach_hangex",
-    "detail": "field Dir",
-    "insertText": "khach_hangex"
+    "insertText": "thue_suatex"
   },
   {
     "label": "thue_cnex",
     "detail": "field Dir",
     "insertText": "thue_cnex"
-  },
-  {
-    "label": "tk_thue_noat",
-    "detail": "field Dir",
-    "insertText": "tk_thue_noat"
   },
   {
     "label": "t_tc_tien_nt2",
@@ -3425,36 +2515,6 @@
     "insertText": "t_tc_tien2"
   },
   {
-    "label": "t_tien_km_nt",
-    "detail": "field Dir",
-    "insertText": "t_tien_km_nt"
-  },
-  {
-    "label": "t_tien_km",
-    "detail": "field Dir",
-    "insertText": "t_tien_km"
-  },
-  {
-    "label": "t_tien_km_ct_ntex",
-    "detail": "field Dir",
-    "insertText": "t_tien_km_ct_ntex"
-  },
-  {
-    "label": "t_tien_km_ctex",
-    "detail": "field Dir",
-    "insertText": "t_tien_km_ctex"
-  },
-  {
-    "label": "t_thue_km_nt",
-    "detail": "field Dir",
-    "insertText": "t_thue_km_nt"
-  },
-  {
-    "label": "t_thue_km",
-    "detail": "field Dir",
-    "insertText": "t_thue_km"
-  },
-  {
     "label": "t_km_nt",
     "detail": "field Dir",
     "insertText": "t_km_nt"
@@ -3463,51 +2523,6 @@
     "label": "t_km",
     "detail": "field Dir",
     "insertText": "t_km"
-  },
-  {
-    "label": "internal_yn",
-    "detail": "field Dir",
-    "insertText": "internal_yn"
-  },
-  {
-    "label": "loai_dtat",
-    "detail": "field Dir",
-    "insertText": "loai_dtat"
-  },
-  {
-    "label": "ten_loai_dt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_loai_dt%lex"
-  },
-  {
-    "label": "ma_dvcs_hhat",
-    "detail": "field Dir",
-    "insertText": "ma_dvcs_hhat"
-  },
-  {
-    "label": "ten_dvcs_hh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_dvcs_hh%lex"
-  },
-  {
-    "label": "so_xe",
-    "detail": "field Dir",
-    "insertText": "so_xe"
-  },
-  {
-    "label": "ma_taitrongat",
-    "detail": "field Dir",
-    "insertText": "ma_taitrongat"
-  },
-  {
-    "label": "so_chuyen",
-    "detail": "field Dir",
-    "insertText": "so_chuyen"
-  },
-  {
-    "label": "so_luong_thuc",
-    "detail": "field Dir",
-    "insertText": "so_luong_thuc"
   },
   {
     "label": "t_km_ct_ntex",
@@ -3520,6 +2535,211 @@
     "insertText": "t_km_ctex"
   },
   {
+    "label": "t_thue_km_nt",
+    "detail": "field Dir",
+    "insertText": "t_thue_km_nt"
+  },
+  {
+    "label": "t_thue_km",
+    "detail": "field Dir",
+    "insertText": "t_thue_km"
+  },
+  {
+    "label": "t_tien_km_nt",
+    "detail": "field Dir",
+    "insertText": "t_tien_km_nt"
+  },
+  {
+    "label": "t_tien_km",
+    "detail": "field Dir",
+    "insertText": "t_tien_km"
+  },
+  {
+    "label": "xuat_nh_khac",
+    "detail": "field Dir",
+    "insertText": "xuat_nh_khac"
+  },
+  {
+    "label": "id_no",
+    "detail": "field Dir",
+    "insertText": "id_no"
+  },
+  {
+    "label": "codeat",
+    "detail": "field Dir",
+    "insertText": "codeat"
+  },
+  {
+    "label": "code_name%lex",
+    "detail": "field Dir",
+    "insertText": "code_name%lex"
+  },
+  {
+    "label": "old_value",
+    "detail": "field Dir",
+    "insertText": "old_value"
+  },
+  {
+    "label": "new_value",
+    "detail": "field Dir",
+    "insertText": "new_value"
+  },
+  {
+    "label": "xtype",
+    "detail": "field Dir",
+    "insertText": "xtype"
+  },
+  {
+    "label": "xtype_name%l",
+    "detail": "field Dir",
+    "insertText": "xtype_name%l"
+  },
+  {
+    "label": "ten_trang_thai%l",
+    "detail": "field Dir",
+    "insertText": "ten_trang_thai%l"
+  },
+  {
+    "label": "ma_bp_dcat",
+    "detail": "field Dir",
+    "insertText": "ma_bp_dcat"
+  },
+  {
+    "label": "ten_bp_dc%lex",
+    "detail": "field Dir",
+    "insertText": "ten_bp_dc%lex"
+  },
+  {
+    "label": "tk_pbat",
+    "detail": "field Dir",
+    "insertText": "tk_pbat"
+  },
+  {
+    "label": "ten_sp%lex",
+    "detail": "field Dir",
+    "insertText": "ten_sp%lex"
+  },
+  {
+    "label": "so_lsxat",
+    "detail": "field Dir",
+    "insertText": "so_lsxat"
+  },
+  {
+    "label": "ten_lsx%lex",
+    "detail": "field Dir",
+    "insertText": "ten_lsx%lex"
+  },
+  {
+    "label": "ma_ld_giamat",
+    "detail": "field Dir",
+    "insertText": "ma_ld_giamat"
+  },
+  {
+    "label": "ten_ld%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ld%lex"
+  },
+  {
+    "label": "kieu_pb",
+    "detail": "field Dir",
+    "insertText": "kieu_pb"
+  },
+  {
+    "label": "sua_gt_pb",
+    "detail": "field Dir",
+    "insertText": "sua_gt_pb"
+  },
+  {
+    "label": "nguyen_gia_nt",
+    "detail": "field Dir",
+    "insertText": "nguyen_gia_nt"
+  },
+  {
+    "label": "gt_pb_nt",
+    "detail": "field Dir",
+    "insertText": "gt_pb_nt"
+  },
+  {
+    "label": "nguyen_gia",
+    "detail": "field Dir",
+    "insertText": "nguyen_gia"
+  },
+  {
+    "label": "gt_pb",
+    "detail": "field Dir",
+    "insertText": "gt_pb"
+  },
+  {
+    "label": "nguyen_gia_nt1ex",
+    "detail": "field Dir",
+    "insertText": "nguyen_gia_nt1ex"
+  },
+  {
+    "label": "gt_pb_nt1ex",
+    "detail": "field Dir",
+    "insertText": "gt_pb_nt1ex"
+  },
+  {
+    "label": "nguyen_gia1ex",
+    "detail": "field Dir",
+    "insertText": "nguyen_gia1ex"
+  },
+  {
+    "label": "gt_pb1ex",
+    "detail": "field Dir",
+    "insertText": "gt_pb1ex"
+  },
+  {
+    "label": "nguyen_gia_nt0ex",
+    "detail": "field Dir",
+    "insertText": "nguyen_gia_nt0ex"
+  },
+  {
+    "label": "gt_pb_nt0ex",
+    "detail": "field Dir",
+    "insertText": "gt_pb_nt0ex"
+  },
+  {
+    "label": "nguyen_gia0ex",
+    "detail": "field Dir",
+    "insertText": "nguyen_gia0ex"
+  },
+  {
+    "label": "gt_pb0ex",
+    "detail": "field Dir",
+    "insertText": "gt_pb0ex"
+  },
+  {
+    "label": "t_nguyen_gia_ntex",
+    "detail": "field Dir",
+    "insertText": "t_nguyen_gia_ntex"
+  },
+  {
+    "label": "t_nguyen_giaex",
+    "detail": "field Dir",
+    "insertText": "t_nguyen_giaex"
+  },
+  {
+    "label": "t_gt_cl_ntex",
+    "detail": "field Dir",
+    "insertText": "t_gt_cl_ntex"
+  },
+  {
+    "label": "t_gt_clex",
+    "detail": "field Dir",
+    "insertText": "t_gt_clex"
+  },
+  {
+    "label": "so_luong0ex",
+    "detail": "field Dir",
+    "insertText": "so_luong0ex"
+  },
+  {
+    "label": "ten_dc",
+    "detail": "field Dir",
+    "insertText": "ten_dc"
+  },
+  {
     "label": "loai_dcat",
     "detail": "field Dir",
     "insertText": "loai_dcat"
@@ -3530,11 +2750,6 @@
     "insertText": "ma_ld_tangat"
   },
   {
-    "label": "ten_ld%lex",
-    "detail": "field Dir",
-    "insertText": "ten_ld%lex"
-  },
-  {
     "label": "ngay_tang",
     "detail": "field Dir",
     "insertText": "ngay_tang"
@@ -3543,11 +2758,6 @@
     "label": "ngay_pb0",
     "detail": "field Dir",
     "insertText": "ngay_pb0"
-  },
-  {
-    "label": "kieu_pb",
-    "detail": "field Dir",
-    "insertText": "kieu_pb"
   },
   {
     "label": "so_ky_pb",
@@ -3565,14 +2775,9 @@
     "insertText": "dvt"
   },
   {
-    "label": "tk_pbat",
+    "label": "ten_dc2",
     "detail": "field Dir",
-    "insertText": "tk_pbat"
-  },
-  {
-    "label": "ten_tk_pb%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tk_pb%lex"
+    "insertText": "ten_dc2"
   },
   {
     "label": "nh_dc1at",
@@ -3615,6 +2820,11 @@
     "insertText": "ngay_sd"
   },
   {
+    "label": "ngay_hh_bao_hanh",
+    "detail": "field Dir",
+    "insertText": "ngay_hh_bao_hanh"
+  },
+  {
     "label": "t_gt_da_pb_nt",
     "detail": "field Dir",
     "insertText": "t_gt_da_pb_nt"
@@ -3635,109 +2845,444 @@
     "insertText": "t_gt_pb_ky"
   },
   {
-    "label": "ma_so_thue",
+    "label": "ma_vv_ref",
     "detail": "field Dir",
-    "insertText": "ma_so_thue"
+    "insertText": "ma_vv_ref"
   },
   {
-    "label": "so_dt",
+    "label": "s1",
     "detail": "field Dir",
-    "insertText": "so_dt"
+    "insertText": "s1"
   },
   {
-    "label": "tk_in_hd",
+    "label": "s7",
     "detail": "field Dir",
-    "insertText": "tk_in_hd"
+    "insertText": "s7"
   },
   {
-    "label": "bc_gd2",
+    "label": "stt_rec_px",
     "detail": "field Dir",
-    "insertText": "bc_gd2"
+    "insertText": "stt_rec_px"
   },
   {
-    "label": "ten_gd2",
+    "label": "ma_bp_tuat",
     "detail": "field Dir",
-    "insertText": "ten_gd2"
+    "insertText": "ma_bp_tuat"
   },
   {
-    "label": "bc_ktt2",
+    "label": "ten_bp_tu%lex",
     "detail": "field Dir",
-    "insertText": "bc_ktt2"
+    "insertText": "ten_bp_tu%lex"
   },
   {
-    "label": "ten_ktt2",
+    "label": "ma_bp_denat",
     "detail": "field Dir",
-    "insertText": "ten_ktt2"
+    "insertText": "ma_bp_denat"
   },
   {
-    "label": "bc_tq2",
+    "label": "ten_bp_den%lex",
     "detail": "field Dir",
-    "insertText": "bc_tq2"
+    "insertText": "ten_bp_den%lex"
   },
   {
-    "label": "ten_tq2",
+    "label": "ten_dvcs",
     "detail": "field Dir",
-    "insertText": "ten_tq2"
+    "insertText": "ten_dvcs"
   },
   {
-    "label": "bc_dd2",
+    "label": "ten_dvcs2",
     "detail": "field Dir",
-    "insertText": "bc_dd2"
+    "insertText": "ten_dvcs2"
   },
   {
-    "label": "ma_dv_bhxh",
+    "label": "ma_cn_qlat",
     "detail": "field Dir",
-    "insertText": "ma_dv_bhxh"
+    "insertText": "ma_cn_qlat"
   },
   {
-    "label": "ma_cqtat",
+    "label": "ten_cn_ql%lex",
     "detail": "field Dir",
-    "insertText": "ma_cqtat"
+    "insertText": "ten_cn_ql%lex"
   },
   {
-    "label": "ten_cqt%lex",
+    "label": "nh_nha_hangat",
     "detail": "field Dir",
-    "insertText": "ten_cqt%lex"
+    "insertText": "nh_nha_hangat"
   },
   {
-    "label": "ma_vung_mhat",
+    "label": "ten_nh_nh%lex",
     "detail": "field Dir",
-    "insertText": "ma_vung_mhat"
+    "insertText": "ten_nh_nh%lex"
   },
   {
-    "label": "ten_vung_mh%lex",
+    "label": "ma_phap_nhanat",
     "detail": "field Dir",
-    "insertText": "ten_vung_mh%lex"
+    "insertText": "ma_phap_nhanat"
   },
   {
-    "label": "ma_dvcs_mhat",
+    "label": "ten_phap_nhan%lex",
     "detail": "field Dir",
-    "insertText": "ma_dvcs_mhat"
+    "insertText": "ten_phap_nhan%lex"
   },
   {
-    "label": "ten_dvcs_mh%lex",
+    "label": "ma_nh_pos",
     "detail": "field Dir",
-    "insertText": "ten_dvcs_mh%lex"
+    "insertText": "ma_nh_pos"
   },
   {
-    "label": "ma_nhom_mhat",
+    "label": "ma_kh0at",
     "detail": "field Dir",
-    "insertText": "ma_nhom_mhat"
+    "insertText": "ma_kh0at"
   },
   {
-    "label": "ten_nhom_mh%lex",
+    "label": "ma_kho0at",
     "detail": "field Dir",
-    "insertText": "ten_nhom_mh%lex"
+    "insertText": "ma_kho0at"
   },
   {
-    "label": "thong_tin_fsc",
+    "label": "tk_thu_nbat",
     "detail": "field Dir",
-    "insertText": "thong_tin_fsc"
+    "insertText": "tk_thu_nbat"
   },
   {
-    "label": "tk",
+    "label": "ten_tk_thu%lex",
     "detail": "field Dir",
-    "insertText": "tk"
+    "insertText": "ten_tk_thu%lex"
+  },
+  {
+    "label": "tk_tra_nbat",
+    "detail": "field Dir",
+    "insertText": "tk_tra_nbat"
+  },
+  {
+    "label": "ten_tk_tra%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_tra%lex"
+  },
+  {
+    "label": "ma_kh_pnat",
+    "detail": "field Dir",
+    "insertText": "ma_kh_pnat"
+  },
+  {
+    "label": "ten_kh_pn%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kh_pn%lex"
+  },
+  {
+    "label": "ma_nhan_hangat",
+    "detail": "field Dir",
+    "insertText": "ma_nhan_hangat"
+  },
+  {
+    "label": "ten_nhan_hang%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nhan_hang%lex"
+  },
+  {
+    "label": "dv_kho_tong_yn",
+    "detail": "field Dir",
+    "insertText": "dv_kho_tong_yn"
+  },
+  {
+    "label": "ten_kho1%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kho1%lex"
+  },
+  {
+    "label": "search_seriex",
+    "detail": "field Dir",
+    "insertText": "search_seriex"
+  },
+  {
+    "label": "ma_voucherat",
+    "detail": "field Dir",
+    "insertText": "ma_voucherat"
+  },
+  {
+    "label": "ten_voucher%lex",
+    "detail": "field Dir",
+    "insertText": "ten_voucher%lex"
+  },
+  {
+    "label": "ma_kh_voucherat",
+    "detail": "field Dir",
+    "insertText": "ma_kh_voucherat"
+  },
+  {
+    "label": "ten_kh_voucher%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kh_voucher%lex"
+  },
+  {
+    "label": "ngay_bd",
+    "detail": "field Dir",
+    "insertText": "ngay_bd"
+  },
+  {
+    "label": "ngay_kt",
+    "detail": "field Dir",
+    "insertText": "ngay_kt"
+  },
+  {
+    "label": "gia_voucher_nt",
+    "detail": "field Dir",
+    "insertText": "gia_voucher_nt"
+  },
+  {
+    "label": "gia_voucherex",
+    "detail": "field Dir",
+    "insertText": "gia_voucherex"
+  },
+  {
+    "label": "tl_ck_voucher",
+    "detail": "field Dir",
+    "insertText": "tl_ck_voucher"
+  },
+  {
+    "label": "gia_voucher_nt2",
+    "detail": "field Dir",
+    "insertText": "gia_voucher_nt2"
+  },
+  {
+    "label": "gia_voucher2ex",
+    "detail": "field Dir",
+    "insertText": "gia_voucher2ex"
+  },
+  {
+    "label": "dv_khac_yn",
+    "detail": "field Dir",
+    "insertText": "dv_khac_yn"
+  },
+  {
+    "label": "ma_nk",
+    "detail": "field Dir",
+    "insertText": "ma_nk"
+  },
+  {
+    "label": "ten_nk",
+    "detail": "field Dir",
+    "insertText": "ten_nk"
+  },
+  {
+    "label": "ten_nk2",
+    "detail": "field Dir",
+    "insertText": "ten_nk2"
+  },
+  {
+    "label": "ky_hieuat",
+    "detail": "field Dir",
+    "insertText": "ky_hieuat"
+  },
+  {
+    "label": "ten_mau_ct%lex",
+    "detail": "field Dir",
+    "insertText": "ten_mau_ct%lex"
+  },
+  {
+    "label": "so_ct2",
+    "detail": "field Dir",
+    "insertText": "so_ct2"
+  },
+  {
+    "label": "trung_soex",
+    "detail": "field Dir",
+    "insertText": "trung_soex"
+  },
+  {
+    "label": "cb_ynex",
+    "detail": "field Dir",
+    "insertText": "cb_ynex"
+  },
+  {
+    "label": "ngay_ph",
+    "detail": "field Dir",
+    "insertText": "ngay_ph"
+  },
+  {
+    "label": "ma_ct",
+    "detail": "field Dir",
+    "insertText": "ma_ct"
+  },
+  {
+    "label": "ten_ct",
+    "detail": "field Dir",
+    "insertText": "ten_ct"
+  },
+  {
+    "label": "ten_ct2",
+    "detail": "field Dir",
+    "insertText": "ten_ct2"
+  },
+  {
+    "label": "ten_ct_me%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ct_me%lex"
+  },
+  {
+    "label": "m_ma_gdat",
+    "detail": "field Dir",
+    "insertText": "m_ma_gdat"
+  },
+  {
+    "label": "m_loai_ctat",
+    "detail": "field Dir",
+    "insertText": "m_loai_ctat"
+  },
+  {
+    "label": "m_statusat",
+    "detail": "field Dir",
+    "insertText": "m_statusat"
+  },
+  {
+    "label": "action_name%lex",
+    "detail": "field Dir",
+    "insertText": "action_name%lex"
+  },
+  {
+    "label": "m_ong_ba",
+    "detail": "field Dir",
+    "insertText": "m_ong_ba"
+  },
+  {
+    "label": "m_loc_nsd",
+    "detail": "field Dir",
+    "insertText": "m_loc_nsd"
+  },
+  {
+    "label": "tieu_de_ct",
+    "detail": "field Dir",
+    "insertText": "tieu_de_ct"
+  },
+  {
+    "label": "tieu_de_ct2",
+    "detail": "field Dir",
+    "insertText": "tieu_de_ct2"
+  },
+  {
+    "label": "so_lien",
+    "detail": "field Dir",
+    "insertText": "so_lien"
+  },
+  {
+    "label": "ma_ct_in",
+    "detail": "field Dir",
+    "insertText": "ma_ct_in"
+  },
+  {
+    "label": "stt_ct_nkc",
+    "detail": "field Dir",
+    "insertText": "stt_ct_nkc"
+  },
+  {
+    "label": "max_row",
+    "detail": "field Dir",
+    "insertText": "max_row"
+  },
+  {
+    "label": "post_vv",
+    "detail": "field Dir",
+    "insertText": "post_vv"
+  },
+  {
+    "label": "post_sp",
+    "detail": "field Dir",
+    "insertText": "post_sp"
+  },
+  {
+    "label": "post_bp",
+    "detail": "field Dir",
+    "insertText": "post_bp"
+  },
+  {
+    "label": "post_lsx",
+    "detail": "field Dir",
+    "insertText": "post_lsx"
+  },
+  {
+    "label": "post_hd",
+    "detail": "field Dir",
+    "insertText": "post_hd"
+  },
+  {
+    "label": "post_ku",
+    "detail": "field Dir",
+    "insertText": "post_ku"
+  },
+  {
+    "label": "post_phi",
+    "detail": "field Dir",
+    "insertText": "post_phi"
+  },
+  {
+    "label": "use_ma_vvex",
+    "detail": "field Dir",
+    "insertText": "use_ma_vvex"
+  },
+  {
+    "label": "use_ma_spex",
+    "detail": "field Dir",
+    "insertText": "use_ma_spex"
+  },
+  {
+    "label": "use_ma_bpex",
+    "detail": "field Dir",
+    "insertText": "use_ma_bpex"
+  },
+  {
+    "label": "use_so_lsxex",
+    "detail": "field Dir",
+    "insertText": "use_so_lsxex"
+  },
+  {
+    "label": "use_ma_hdex",
+    "detail": "field Dir",
+    "insertText": "use_ma_hdex"
+  },
+  {
+    "label": "use_ma_kuex",
+    "detail": "field Dir",
+    "insertText": "use_ma_kuex"
+  },
+  {
+    "label": "use_ma_phiex",
+    "detail": "field Dir",
+    "insertText": "use_ma_phiex"
+  },
+  {
+    "label": "gd_ynex",
+    "detail": "field Dir",
+    "insertText": "gd_ynex"
+  },
+  {
+    "label": "ct_ynex",
+    "detail": "field Dir",
+    "insertText": "ct_ynex"
+  },
+  {
+    "label": "xl_ynex",
+    "detail": "field Dir",
+    "insertText": "xl_ynex"
+  },
+  {
+    "label": "voucher_yn",
+    "detail": "field Dir",
+    "insertText": "voucher_yn"
+  },
+  {
+    "label": "xsttex",
+    "detail": "field Dir",
+    "insertText": "xsttex"
+  },
+  {
+    "label": "ma_khox",
+    "detail": "field Dir",
+    "insertText": "ma_khox"
+  },
+  {
+    "label": "ten_khox%lex",
+    "detail": "field Dir",
+    "insertText": "ten_khox%lex"
   },
   {
     "label": "tt_yn",
@@ -3745,94 +3290,284 @@
     "insertText": "tt_yn"
   },
   {
-    "label": "so_met_tu",
+    "label": "idlog",
     "detail": "field Dir",
-    "insertText": "so_met_tu"
+    "insertText": "idlog"
   },
   {
-    "label": "ty_le_hh",
+    "label": "datetime0",
     "detail": "field Dir",
-    "insertText": "ty_le_hh"
+    "insertText": "datetime0"
   },
   {
-    "label": "chuyen_kho_dd",
+    "label": "loai_ip",
     "detail": "field Dir",
-    "insertText": "chuyen_kho_dd"
+    "insertText": "loai_ip"
   },
   {
-    "label": "chuyen_do_day",
+    "label": "stt_rec0",
     "detail": "field Dir",
-    "insertText": "chuyen_do_day"
+    "insertText": "stt_rec0"
   },
   {
-    "label": "chuyen_duc_trong",
+    "label": "loai_ctyat",
     "detail": "field Dir",
-    "insertText": "chuyen_duc_trong"
+    "insertText": "loai_ctyat"
   },
   {
-    "label": "cap_them_dh",
+    "label": "ten_loai_cty%lex",
     "detail": "field Dir",
-    "insertText": "cap_them_dh"
+    "insertText": "ten_loai_cty%lex"
   },
   {
-    "label": "mat_ab",
+    "label": "ma_vtat",
     "detail": "field Dir",
-    "insertText": "mat_ab"
+    "insertText": "ma_vtat"
   },
   {
-    "label": "sl_tu",
+    "label": "loai_orderat",
     "detail": "field Dir",
-    "insertText": "sl_tu"
+    "insertText": "loai_orderat"
   },
   {
-    "label": "sl_den",
+    "label": "order_ncc_yn",
     "detail": "field Dir",
-    "insertText": "sl_den"
+    "insertText": "order_ncc_yn"
   },
   {
-    "label": "so_mau_tu",
+    "label": "hl_tu_ncc",
     "detail": "field Dir",
-    "insertText": "so_mau_tu"
+    "insertText": "hl_tu_ncc"
   },
   {
-    "label": "so_mau_den",
+    "label": "hl_den_ncc",
     "detail": "field Dir",
-    "insertText": "so_mau_den"
+    "insertText": "hl_den_ncc"
   },
   {
-    "label": "sl_theo_mau",
+    "label": "ty_le_dp",
     "detail": "field Dir",
-    "insertText": "sl_theo_mau"
+    "insertText": "ty_le_dp"
   },
   {
-    "label": "ti_le",
+    "label": "priority",
     "detail": "field Dir",
-    "insertText": "ti_le"
+    "insertText": "priority"
   },
   {
-    "label": "bhao_toi_thieu",
+    "label": "line_nbr",
     "detail": "field Dir",
-    "insertText": "bhao_toi_thieu"
+    "insertText": "line_nbr"
   },
   {
-    "label": "ma_cang",
+    "label": "sl_toi_thieu",
     "detail": "field Dir",
-    "insertText": "ma_cang"
+    "insertText": "sl_toi_thieu"
   },
   {
-    "label": "ten_cang",
+    "label": "ma_cn_ql",
     "detail": "field Dir",
-    "insertText": "ten_cang"
+    "insertText": "ma_cn_ql"
   },
   {
-    "label": "ten_cang2",
+    "label": "ten_cn_ql",
     "detail": "field Dir",
-    "insertText": "ten_cang2"
+    "insertText": "ten_cn_ql"
   },
   {
-    "label": "thang",
+    "label": "ten_cn_ql2",
     "detail": "field Dir",
-    "insertText": "thang"
+    "insertText": "ten_cn_ql2"
+  },
+  {
+    "label": "ma_ctr",
+    "detail": "field Dir",
+    "insertText": "ma_ctr"
+  },
+  {
+    "label": "ten_ctr",
+    "detail": "field Dir",
+    "insertText": "ten_ctr"
+  },
+  {
+    "label": "ten_ctr2",
+    "detail": "field Dir",
+    "insertText": "ten_ctr2"
+  },
+  {
+    "label": "ds_ma_vtlk",
+    "detail": "field Dir",
+    "insertText": "ds_ma_vtlk"
+  },
+  {
+    "label": "khai_ht_yn",
+    "detail": "field Dir",
+    "insertText": "khai_ht_yn"
+  },
+  {
+    "label": "ngan_sach",
+    "detail": "field Dir",
+    "insertText": "ngan_sach"
+  },
+  {
+    "label": "t_ngan_sach",
+    "detail": "field Dir",
+    "insertText": "t_ngan_sach"
+  },
+  {
+    "label": "nhom_nhat",
+    "detail": "field Dir",
+    "insertText": "nhom_nhat"
+  },
+  {
+    "label": "ten_nhom_nh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nhom_nh%lex"
+  },
+  {
+    "label": "gia",
+    "detail": "field Dir",
+    "insertText": "gia"
+  },
+  {
+    "label": "ngay_hl",
+    "detail": "field Dir",
+    "insertText": "ngay_hl"
+  },
+  {
+    "label": "huu_co_yn",
+    "detail": "field Dir",
+    "insertText": "huu_co_yn"
+  },
+  {
+    "label": "gia_qd_nt2",
+    "detail": "field Dir",
+    "insertText": "gia_qd_nt2"
+  },
+  {
+    "label": "ma_ctrat",
+    "detail": "field Dir",
+    "insertText": "ma_ctrat"
+  },
+  {
+    "label": "ten_ctr%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ctr%lex"
+  },
+  {
+    "label": "tk_phiat",
+    "detail": "field Dir",
+    "insertText": "tk_phiat"
+  },
+  {
+    "label": "ten_tk_phi%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_phi%lex"
+  },
+  {
+    "label": "ma_httt",
+    "detail": "field Dir",
+    "insertText": "ma_httt"
+  },
+  {
+    "label": "ten_httt",
+    "detail": "field Dir",
+    "insertText": "ten_httt"
+  },
+  {
+    "label": "ten_httt2",
+    "detail": "field Dir",
+    "insertText": "ten_httt2"
+  },
+  {
+    "label": "nhom_httt",
+    "detail": "field Dir",
+    "insertText": "nhom_httt"
+  },
+  {
+    "label": "tk_cn_pth0at",
+    "detail": "field Dir",
+    "insertText": "tk_cn_pth0at"
+  },
+  {
+    "label": "ten_tk_cn_pth0%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_cn_pth0%lex"
+  },
+  {
+    "label": "tk_cn_pth1at",
+    "detail": "field Dir",
+    "insertText": "tk_cn_pth1at"
+  },
+  {
+    "label": "ten_tk_cn_pth1%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_cn_pth1%lex"
+  },
+  {
+    "label": "tk_cn_ptr0at",
+    "detail": "field Dir",
+    "insertText": "tk_cn_ptr0at"
+  },
+  {
+    "label": "ten_tk_cn_ptr0%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_cn_ptr0%lex"
+  },
+  {
+    "label": "tk_cn_ptr1at",
+    "detail": "field Dir",
+    "insertText": "tk_cn_ptr1at"
+  },
+  {
+    "label": "ten_tk_cn_ptr1%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_cn_ptr1%lex"
+  },
+  {
+    "label": "tk_dt_dtat",
+    "detail": "field Dir",
+    "insertText": "tk_dt_dtat"
+  },
+  {
+    "label": "ten_tk_dt_dt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_dt_dt%lex"
+  },
+  {
+    "label": "tk_cp_dtat",
+    "detail": "field Dir",
+    "insertText": "tk_cp_dtat"
+  },
+  {
+    "label": "ten_tk_cp_dt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tk_cp_dt%lex"
+  },
+  {
+    "label": "ma_phi_vc_dtat",
+    "detail": "field Dir",
+    "insertText": "ma_phi_vc_dtat"
+  },
+  {
+    "label": "ten_phi_dt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_phi_dt%lex"
+  },
+  {
+    "label": "user_id",
+    "detail": "field Dir",
+    "insertText": "user_id"
+  },
+  {
+    "label": "user_nameat",
+    "detail": "field Dir",
+    "insertText": "user_nameat"
+  },
+  {
+    "label": "comment%lex",
+    "detail": "field Dir",
+    "insertText": "comment%lex"
   },
   {
     "label": "ma_loai",
@@ -3850,589 +3585,224 @@
     "insertText": "ten_loai2"
   },
   {
-    "label": "tk_cnat",
+    "label": "ma_voucher",
     "detail": "field Dir",
-    "insertText": "tk_cnat"
+    "insertText": "ma_voucher"
   },
   {
-    "label": "ten_tk_cn%lex",
+    "label": "ten_voucher",
     "detail": "field Dir",
-    "insertText": "ten_tk_cn%lex"
+    "insertText": "ten_voucher"
   },
   {
-    "label": "ma_hai_quan",
+    "label": "ten_voucher2",
     "detail": "field Dir",
-    "insertText": "ma_hai_quan"
+    "insertText": "ten_voucher2"
   },
   {
-    "label": "ten_hai_quan",
+    "label": "tl_ck",
     "detail": "field Dir",
-    "insertText": "ten_hai_quan"
+    "insertText": "tl_ck"
   },
   {
-    "label": "ten_hai_quan2",
+    "label": "ds_chi_tieulk",
     "detail": "field Dir",
-    "insertText": "ten_hai_quan2"
+    "insertText": "ds_chi_tieulk"
   },
   {
-    "label": "ma_doi",
+    "label": "ten_ct%lex",
     "detail": "field Dir",
-    "insertText": "ma_doi"
+    "insertText": "ten_ct%lex"
   },
   {
-    "label": "ten_doi",
+    "label": "nd_yn",
     "detail": "field Dir",
-    "insertText": "ten_doi"
+    "insertText": "nd_yn"
   },
   {
-    "label": "ma_kho_bac",
+    "label": "kho_tong_kgat",
     "detail": "field Dir",
-    "insertText": "ma_kho_bac"
+    "insertText": "kho_tong_kgat"
   },
   {
-    "label": "ten_kho_bac",
+    "label": "ten_kho_tong%lex",
     "detail": "field Dir",
-    "insertText": "ten_kho_bac"
+    "insertText": "ten_kho_tong%lex"
   },
   {
-    "label": "ma_co_quan",
+    "label": "ma_nhan_hang",
     "detail": "field Dir",
-    "insertText": "ma_co_quan"
+    "insertText": "ma_nhan_hang"
   },
   {
-    "label": "ma_quan_he_ns",
+    "label": "ten_nhan_hang%l",
     "detail": "field Dir",
-    "insertText": "ma_quan_he_ns"
+    "insertText": "ten_nhan_hang%l"
   },
   {
-    "label": "tk_thuat",
+    "label": "ten_nhan_hang2",
     "detail": "field Dir",
-    "insertText": "tk_thuat"
+    "insertText": "ten_nhan_hang2"
   },
   {
-    "label": "ten_tk_thu%lex",
+    "label": "ma_phap_nhan",
     "detail": "field Dir",
-    "insertText": "ten_tk_thu%lex"
+    "insertText": "ma_phap_nhan"
   },
   {
-    "label": "tk_guiat",
+    "label": "ten_phap_nhan",
     "detail": "field Dir",
-    "insertText": "tk_guiat"
+    "insertText": "ten_phap_nhan"
   },
   {
-    "label": "ten_tk_gui%lex",
+    "label": "ten_phap_nhan2",
     "detail": "field Dir",
-    "insertText": "ten_tk_gui%lex"
+    "insertText": "ten_phap_nhan2"
   },
   {
-    "label": "tk_phiat",
+    "label": "tk_duat",
     "detail": "field Dir",
-    "insertText": "tk_phiat"
+    "insertText": "tk_duat"
   },
   {
-    "label": "ten_tk_phi%lex",
+    "label": "ten_tk_du%lex",
     "detail": "field Dir",
-    "insertText": "ten_tk_phi%lex"
+    "insertText": "ten_tk_du%lex"
   },
   {
-    "label": "tinh_gia_yn",
+    "label": "ngay_nhap",
     "detail": "field Dir",
-    "insertText": "tinh_gia_yn"
+    "insertText": "ngay_nhap"
   },
   {
-    "label": "ma_mam",
+    "label": "ma_dvcs_phat",
     "detail": "field Dir",
-    "insertText": "ma_mam"
+    "insertText": "ma_dvcs_phat"
   },
   {
-    "label": "ten_mam",
+    "label": "ten_dvcs_ph%lex",
     "detail": "field Dir",
-    "insertText": "ten_mam"
+    "insertText": "ten_dvcs_ph%lex"
   },
   {
-    "label": "ten_mam2",
+    "label": "ngay_hhsd",
     "detail": "field Dir",
-    "insertText": "ten_mam2"
+    "insertText": "ngay_hhsd"
   },
   {
-    "label": "ma_mayin",
+    "label": "loai",
     "detail": "field Dir",
-    "insertText": "ma_mayin"
+    "insertText": "loai"
   },
   {
-    "label": "ten_mayin",
+    "label": "ma_td3",
     "detail": "field Dir",
-    "insertText": "ten_mayin"
+    "insertText": "ma_td3"
   },
   {
-    "label": "ten_mayin2",
+    "label": "ten_td",
     "detail": "field Dir",
-    "insertText": "ten_mayin2"
+    "insertText": "ten_td"
   },
   {
-    "label": "so_mau",
+    "label": "ten_td2",
     "detail": "field Dir",
-    "insertText": "so_mau"
+    "insertText": "ten_td2"
   },
   {
-    "label": "gear",
+    "label": "tk_thue_gtgtat",
     "detail": "field Dir",
-    "insertText": "gear"
+    "insertText": "tk_thue_gtgtat"
   },
   {
-    "label": "step",
+    "label": "chi_cuc_thue_qlat",
     "detail": "field Dir",
-    "insertText": "step"
+    "insertText": "chi_cuc_thue_qlat"
   },
   {
-    "label": "distortion",
+    "label": "type_ip",
     "detail": "field Dir",
-    "insertText": "distortion"
+    "insertText": "type_ip"
   },
   {
-    "label": "ma_chuong",
+    "label": "ngay_tt",
     "detail": "field Dir",
-    "insertText": "ma_chuong"
+    "insertText": "ngay_tt"
   },
   {
-    "label": "ten_chuong",
+    "label": "ustatus_name%lex",
     "detail": "field Dir",
-    "insertText": "ten_chuong"
+    "insertText": "ustatus_name%lex"
   },
   {
-    "label": "ten_chuong2",
+    "label": "t_tien_dn",
     "detail": "field Dir",
-    "insertText": "ten_chuong2"
+    "insertText": "t_tien_dn"
   },
   {
-    "label": "ma_pt",
+    "label": "t_tien_dn_nt",
     "detail": "field Dir",
-    "insertText": "ma_pt"
+    "insertText": "t_tien_dn_nt"
   },
   {
-    "label": "ten_pt",
+    "label": "t_tien_chi",
     "detail": "field Dir",
-    "insertText": "ten_pt"
+    "insertText": "t_tien_chi"
   },
   {
-    "label": "ten_pt2",
+    "label": "t_tien_chi_nt",
     "detail": "field Dir",
-    "insertText": "ten_pt2"
+    "insertText": "t_tien_chi_nt"
   },
   {
-    "label": "ma_taitrong",
+    "label": "t_tien_pthu",
     "detail": "field Dir",
-    "insertText": "ma_taitrong"
+    "insertText": "t_tien_pthu"
   },
   {
-    "label": "ten_taitrong",
+    "label": "t_tien_pthu_nt",
     "detail": "field Dir",
-    "insertText": "ten_taitrong"
+    "insertText": "t_tien_pthu_nt"
   },
   {
-    "label": "ten_taitrong2",
+    "label": "t_tien_ptra",
     "detail": "field Dir",
-    "insertText": "ten_taitrong2"
+    "insertText": "t_tien_ptra"
   },
   {
-    "label": "sl_mau_tu",
+    "label": "t_tien_ptra_nt",
     "detail": "field Dir",
-    "insertText": "sl_mau_tu"
+    "insertText": "t_tien_ptra_nt"
   },
   {
-    "label": "sl_mau_den",
+    "label": "loai_ttat",
     "detail": "field Dir",
-    "insertText": "sl_mau_den"
+    "insertText": "loai_ttat"
   },
   {
-    "label": "sl_to_in",
+    "label": "ten_loai_tt%lex",
     "detail": "field Dir",
-    "insertText": "sl_to_in"
+    "insertText": "ten_loai_tt%lex"
   },
   {
-    "label": "sl_cong_them",
+    "label": "thoi_gian",
     "detail": "field Dir",
-    "insertText": "sl_cong_them"
+    "insertText": "thoi_gian"
   },
   {
-    "label": "ma_tieu_muc",
+    "label": "so_ngay",
     "detail": "field Dir",
-    "insertText": "ma_tieu_muc"
+    "insertText": "so_ngay"
   },
   {
-    "label": "ten_tieu_muc",
+    "label": "ngay_can_hang",
     "detail": "field Dir",
-    "insertText": "ten_tieu_muc"
+    "insertText": "ngay_can_hang"
   },
   {
-    "label": "ten_tieu_muc2",
+    "label": "loai_dh",
     "detail": "field Dir",
-    "insertText": "ten_tieu_muc2"
-  },
-  {
-    "label": "name_userat",
-    "detail": "field Dir",
-    "insertText": "name_userat"
-  },
-  {
-    "label": "ten_nsd%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nsd%lex"
-  },
-  {
-    "label": "ma_mayat",
-    "detail": "field Dir",
-    "insertText": "ma_mayat"
-  },
-  {
-    "label": "ten_may%lex",
-    "detail": "field Dir",
-    "insertText": "ten_may%lex"
-  },
-  {
-    "label": "chieu_dai",
-    "detail": "field Dir",
-    "insertText": "chieu_dai"
-  },
-  {
-    "label": "nh_vt2at",
-    "detail": "field Dir",
-    "insertText": "nh_vt2at"
-  },
-  {
-    "label": "dinh_luong_chuan",
-    "detail": "field Dir",
-    "insertText": "dinh_luong_chuan"
-  },
-  {
-    "label": "ty_le_lt",
-    "detail": "field Dir",
-    "insertText": "ty_le_lt"
-  },
-  {
-    "label": "xcode",
-    "detail": "field Dir",
-    "insertText": "xcode"
-  },
-  {
-    "label": "stt_cd",
-    "detail": "field Dir",
-    "insertText": "stt_cd"
-  },
-  {
-    "label": "xcode_meat",
-    "detail": "field Dir",
-    "insertText": "xcode_meat"
-  },
-  {
-    "label": "ten_xcode%lex",
-    "detail": "field Dir",
-    "insertText": "ten_xcode%lex"
-  },
-  {
-    "label": "ten_qt",
-    "detail": "field Dir",
-    "insertText": "ten_qt"
-  },
-  {
-    "label": "ten_qt2",
-    "detail": "field Dir",
-    "insertText": "ten_qt2"
-  },
-  {
-    "label": "kieu",
-    "detail": "field Dir",
-    "insertText": "kieu"
-  },
-  {
-    "label": "xcode_truocat",
-    "detail": "field Dir",
-    "insertText": "xcode_truocat"
-  },
-  {
-    "label": "ten_xcode_a%lex",
-    "detail": "field Dir",
-    "insertText": "ten_xcode_a%lex"
-  },
-  {
-    "label": "ten_viet_tat",
-    "detail": "field Dir",
-    "insertText": "ten_viet_tat"
-  },
-  {
-    "label": "loai_vtat",
-    "detail": "field Dir",
-    "insertText": "loai_vtat"
-  },
-  {
-    "label": "t_so_luong_n",
-    "detail": "field Dir",
-    "insertText": "t_so_luong_n"
-  },
-  {
-    "label": "ds_vt_xex",
-    "detail": "field Dir",
-    "insertText": "ds_vt_xex"
-  },
-  {
-    "label": "t_tien_n_nt",
-    "detail": "field Dir",
-    "insertText": "t_tien_n_nt"
-  },
-  {
-    "label": "t_tien_n",
-    "detail": "field Dir",
-    "insertText": "t_tien_n"
-  },
-  {
-    "label": "ma_kk",
-    "detail": "field Dir",
-    "insertText": "ma_kk"
-  },
-  {
-    "label": "ten_kk",
-    "detail": "field Dir",
-    "insertText": "ten_kk"
-  },
-  {
-    "label": "ten_kk2",
-    "detail": "field Dir",
-    "insertText": "ten_kk2"
-  },
-  {
-    "label": "ngay_kk",
-    "detail": "field Dir",
-    "insertText": "ngay_kk"
-  },
-  {
-    "label": "ma_gd",
-    "detail": "field Dir",
-    "insertText": "ma_gd"
-  },
-  {
-    "label": "phuong_thuc_thanh_toan",
-    "detail": "field Dir",
-    "insertText": "phuong_thuc_thanh_toan"
-  },
-  {
-    "label": "hop_dong",
-    "detail": "field Dir",
-    "insertText": "hop_dong"
-  },
-  {
-    "label": "ngay_hop_dong",
-    "detail": "field Dir",
-    "insertText": "ngay_hop_dong"
-  },
-  {
-    "label": "hd_so",
-    "detail": "field Dir",
-    "insertText": "hd_so"
-  },
-  {
-    "label": "ten_nguoi_vc",
-    "detail": "field Dir",
-    "insertText": "ten_nguoi_vc"
-  },
-  {
-    "label": "phuong_tien_vc",
-    "detail": "field Dir",
-    "insertText": "phuong_tien_vc"
-  },
-  {
-    "label": "ngay_kham",
-    "detail": "field Dir",
-    "insertText": "ngay_kham"
-  },
-  {
-    "label": "chieu_cao",
-    "detail": "field Dir",
-    "insertText": "chieu_cao"
-  },
-  {
-    "label": "can_nang",
-    "detail": "field Dir",
-    "insertText": "can_nang"
-  },
-  {
-    "label": "mat_phai",
-    "detail": "field Dir",
-    "insertText": "mat_phai"
-  },
-  {
-    "label": "mat_trai",
-    "detail": "field Dir",
-    "insertText": "mat_trai"
-  },
-  {
-    "label": "loai_sk",
-    "detail": "field Dir",
-    "insertText": "loai_sk"
-  },
-  {
-    "label": "ghi_chu_sk",
-    "detail": "field Dir",
-    "insertText": "ghi_chu_sk"
-  },
-  {
-    "label": "ngay_nghi_tu",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi_tu"
-  },
-  {
-    "label": "ngay_nghi_den",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi_den"
-  },
-  {
-    "label": "so_lan",
-    "detail": "field Dir",
-    "insertText": "so_lan"
-  },
-  {
-    "label": "ngay_sieu_am",
-    "detail": "field Dir",
-    "insertText": "ngay_sieu_am"
-  },
-  {
-    "label": "tuoi_thai",
-    "detail": "field Dir",
-    "insertText": "tuoi_thai"
-  },
-  {
-    "label": "ngay_thang7",
-    "detail": "field Dir",
-    "insertText": "ngay_thang7"
-  },
-  {
-    "label": "say_thai_yn",
-    "detail": "field Dir",
-    "insertText": "say_thai_yn"
-  },
-  {
-    "label": "ngay_sinh_con",
-    "detail": "field Dir",
-    "insertText": "ngay_sinh_con"
-  },
-  {
-    "label": "ngay_nghi_truoc",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi_truoc"
-  },
-  {
-    "label": "ngay_nghi_dg1",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi_dg1"
-  },
-  {
-    "label": "ngay_nghi_dg2",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi_dg2"
-  },
-  {
-    "label": "ngay_nghi_sau",
-    "detail": "field Dir",
-    "insertText": "ngay_nghi_sau"
-  },
-  {
-    "label": "ngay_lam_lai",
-    "detail": "field Dir",
-    "insertText": "ngay_lam_lai"
-  },
-  {
-    "label": "ngay_het_cd",
-    "detail": "field Dir",
-    "insertText": "ngay_het_cd"
-  },
-  {
-    "label": "ngay_tang_bh",
-    "detail": "field Dir",
-    "insertText": "ngay_tang_bh"
-  },
-  {
-    "label": "ngay_giam_bh",
-    "detail": "field Dir",
-    "insertText": "ngay_giam_bh"
-  },
-  {
-    "label": "ma_caat",
-    "detail": "field Dir",
-    "insertText": "ma_caat"
-  },
-  {
-    "label": "ten_ca%lex",
-    "detail": "field Dir",
-    "insertText": "ten_ca%lex"
-  },
-  {
-    "label": "ma_congat",
-    "detail": "field Dir",
-    "insertText": "ma_congat"
-  },
-  {
-    "label": "ten_cong%lex",
-    "detail": "field Dir",
-    "insertText": "ten_cong%lex"
-  },
-  {
-    "label": "so_phut",
-    "detail": "field Dir",
-    "insertText": "so_phut"
-  },
-  {
-    "label": "tuy_chon",
-    "detail": "field Dir",
-    "insertText": "tuy_chon"
-  },
-  {
-    "label": "tuoi_nam",
-    "detail": "field Dir",
-    "insertText": "tuoi_nam"
-  },
-  {
-    "label": "tuoi_thang",
-    "detail": "field Dir",
-    "insertText": "tuoi_thang"
-  },
-  {
-    "label": "ten_gt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_gt%lex"
-  },
-  {
-    "label": "du_co00",
-    "detail": "field Dir",
-    "insertText": "du_co00"
-  },
-  {
-    "label": "du_no_nt00",
-    "detail": "field Dir",
-    "insertText": "du_no_nt00"
-  },
-  {
-    "label": "du_co_nt00",
-    "detail": "field Dir",
-    "insertText": "du_co_nt00"
-  },
-  {
-    "label": "du_co1",
-    "detail": "field Dir",
-    "insertText": "du_co1"
-  },
-  {
-    "label": "du_no_nt1",
-    "detail": "field Dir",
-    "insertText": "du_no_nt1"
-  },
-  {
-    "label": "du_co_nt1",
-    "detail": "field Dir",
-    "insertText": "du_co_nt1"
-  },
-  {
-    "label": "du_no00",
-    "detail": "field Dir",
-    "insertText": "du_no00"
+    "insertText": "loai_dh"
   },
   {
     "label": "ds_tklk",
@@ -4495,6 +3865,16 @@
     "insertText": "buoc_tinh"
   },
   {
+    "label": "loai_ytat",
+    "detail": "field Dir",
+    "insertText": "loai_ytat"
+  },
+  {
+    "label": "ten_loai_yt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_loai_yt%lex"
+  },
+  {
     "label": "ma_ytlk",
     "detail": "field Dir",
     "insertText": "ma_ytlk"
@@ -4545,14 +3925,39 @@
     "insertText": "buoc_tinh2ex"
   },
   {
-    "label": "ten_bt",
+    "label": "loai_sl",
     "detail": "field Dir",
-    "insertText": "ten_bt"
+    "insertText": "loai_sl"
   },
   {
-    "label": "loai_pb",
+    "label": "stt_rec_hd",
     "detail": "field Dir",
-    "insertText": "loai_pb"
+    "insertText": "stt_rec_hd"
+  },
+  {
+    "label": "ma_ct_hd",
+    "detail": "field Dir",
+    "insertText": "ma_ct_hd"
+  },
+  {
+    "label": "ma_kh_hdex",
+    "detail": "field Dir",
+    "insertText": "ma_kh_hdex"
+  },
+  {
+    "label": "so_ct_hdex",
+    "detail": "field Dir",
+    "insertText": "so_ct_hdex"
+  },
+  {
+    "label": "so_seri_hdex",
+    "detail": "field Dir",
+    "insertText": "so_seri_hdex"
+  },
+  {
+    "label": "ngay_ct_hdex",
+    "detail": "field Dir",
+    "insertText": "ngay_ct_hdex"
   },
   {
     "label": "group_id",
@@ -4563,11 +3968,6 @@
     "label": "nameatex",
     "detail": "field Dir",
     "insertText": "nameatex"
-  },
-  {
-    "label": "comment%lex",
-    "detail": "field Dir",
-    "insertText": "comment%lex"
   },
   {
     "label": "ip_address",
@@ -4685,19 +4085,9 @@
     "insertText": "r20ex"
   },
   {
-    "label": "user_id",
-    "detail": "field Dir",
-    "insertText": "user_id"
-  },
-  {
     "label": "ma_tb",
     "detail": "field Dir",
     "insertText": "ma_tb"
-  },
-  {
-    "label": "user_nameatex",
-    "detail": "field Dir",
-    "insertText": "user_nameatex"
   },
   {
     "label": "tieu_de",
@@ -4705,59 +4095,19 @@
     "insertText": "tieu_de"
   },
   {
-    "label": "noi_dung",
+    "label": "t_tt_nt0",
     "detail": "field Dir",
-    "insertText": "noi_dung"
+    "insertText": "t_tt_nt0"
   },
   {
-    "label": "loai_duyet",
+    "label": "t_cl_ntex",
     "detail": "field Dir",
-    "insertText": "loai_duyet"
+    "insertText": "t_cl_ntex"
   },
   {
-    "label": "ma_kieu",
+    "label": "tat_toan",
     "detail": "field Dir",
-    "insertText": "ma_kieu"
-  },
-  {
-    "label": "ten_kieu",
-    "detail": "field Dir",
-    "insertText": "ten_kieu"
-  },
-  {
-    "label": "ten_kieu2",
-    "detail": "field Dir",
-    "insertText": "ten_kieu2"
-  },
-  {
-    "label": "dvcs",
-    "detail": "field Dir",
-    "insertText": "dvcs"
-  },
-  {
-    "label": "ma_bp",
-    "detail": "field Dir",
-    "insertText": "ma_bp"
-  },
-  {
-    "label": "ma_md",
-    "detail": "field Dir",
-    "insertText": "ma_md"
-  },
-  {
-    "label": "nh_kh1",
-    "detail": "field Dir",
-    "insertText": "nh_kh1"
-  },
-  {
-    "label": "nh_kh2",
-    "detail": "field Dir",
-    "insertText": "nh_kh2"
-  },
-  {
-    "label": "nh_kh3",
-    "detail": "field Dir",
-    "insertText": "nh_kh3"
+    "insertText": "tat_toan"
   },
   {
     "label": "ma_vung",
@@ -4775,44 +4125,34 @@
     "insertText": "ma_nh0"
   },
   {
-    "label": "ma_kieuat",
-    "detail": "field Dir",
-    "insertText": "ma_kieuat"
-  },
-  {
-    "label": "dvcsat",
-    "detail": "field Dir",
-    "insertText": "dvcsat"
-  },
-  {
-    "label": "ten_nh1%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh1%lex"
-  },
-  {
-    "label": "ten_nh2%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh2%lex"
-  },
-  {
-    "label": "ten_nh3%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh3%lex"
-  },
-  {
     "label": "ma_vungat",
     "detail": "field Dir",
     "insertText": "ma_vungat"
   },
   {
-    "label": "tien_tu",
+    "label": "ten_vung%lex",
     "detail": "field Dir",
-    "insertText": "tien_tu"
+    "insertText": "ten_vung%lex"
   },
   {
-    "label": "tien_den",
+    "label": "ma_bp0at",
     "detail": "field Dir",
-    "insertText": "tien_den"
+    "insertText": "ma_bp0at"
+  },
+  {
+    "label": "ten_bp0%lex",
+    "detail": "field Dir",
+    "insertText": "ten_bp0%lex"
+  },
+  {
+    "label": "ma_nh0at",
+    "detail": "field Dir",
+    "insertText": "ma_nh0at"
+  },
+  {
+    "label": "ten_nh0%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh0%lex"
   },
   {
     "label": "u_status_name",
@@ -4890,44 +4230,9 @@
     "insertText": "id_typeex"
   },
   {
-    "label": "ma_so",
-    "detail": "field Dir",
-    "insertText": "ma_so"
-  },
-  {
-    "label": "stt_in",
-    "detail": "field Dir",
-    "insertText": "stt_in"
-  },
-  {
     "label": "ma_so_in",
     "detail": "field Dir",
     "insertText": "ma_so_in"
-  },
-  {
-    "label": "chi_tieu",
-    "detail": "field Dir",
-    "insertText": "chi_tieu"
-  },
-  {
-    "label": "chi_tieu2",
-    "detail": "field Dir",
-    "insertText": "chi_tieu2"
-  },
-  {
-    "label": "thuyet_minh",
-    "detail": "field Dir",
-    "insertText": "thuyet_minh"
-  },
-  {
-    "label": "in_ck",
-    "detail": "field Dir",
-    "insertText": "in_ck"
-  },
-  {
-    "label": "bold",
-    "detail": "field Dir",
-    "insertText": "bold"
   },
   {
     "label": "ts_nv",
@@ -4935,19 +4240,9 @@
     "insertText": "ts_nv"
   },
   {
-    "label": "ngoai_bang",
-    "detail": "field Dir",
-    "insertText": "ngoai_bang"
-  },
-  {
     "label": "ct_tong",
     "detail": "field Dir",
     "insertText": "ct_tong"
-  },
-  {
-    "label": "cach_tinh_ynex",
-    "detail": "field Dir",
-    "insertText": "cach_tinh_ynex"
   },
   {
     "label": "cong_no",
@@ -4960,24 +4255,9 @@
     "insertText": "khong_am"
   },
   {
-    "label": "cach_tinh",
+    "label": "ma_so_thue",
     "detail": "field Dir",
-    "insertText": "cach_tinh"
-  },
-  {
-    "label": "kind",
-    "detail": "field Dir",
-    "insertText": "kind"
-  },
-  {
-    "label": "tk_duat",
-    "detail": "field Dir",
-    "insertText": "tk_duat"
-  },
-  {
-    "label": "ten_tk_du%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tk_du%lex"
+    "insertText": "ma_so_thue"
   },
   {
     "label": "ma_qgat",
@@ -5010,11 +4290,6 @@
     "insertText": "tknh"
   },
   {
-    "label": "ten_nh_ex%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_ex%lex"
-  },
-  {
     "label": "phone",
     "detail": "field Dir",
     "insertText": "phone"
@@ -5038,6 +4313,11 @@
     "label": "ten_cp2",
     "detail": "field Dir",
     "insertText": "ten_cp2"
+  },
+  {
+    "label": "mau_bcat",
+    "detail": "field Dir",
+    "insertText": "mau_bcat"
   },
   {
     "label": "ten_cn",
@@ -5120,24 +4400,14 @@
     "insertText": "d_acc"
   },
   {
-    "label": "tk_no",
-    "detail": "field Dir",
-    "insertText": "tk_no"
-  },
-  {
-    "label": "tk_co",
-    "detail": "field Dir",
-    "insertText": "tk_co"
-  },
-  {
-    "label": "giam_tru",
-    "detail": "field Dir",
-    "insertText": "giam_tru"
-  },
-  {
     "label": "dau",
     "detail": "field Dir",
     "insertText": "dau"
+  },
+  {
+    "label": "kind",
+    "detail": "field Dir",
+    "insertText": "kind"
   },
   {
     "label": "ma_nguonat",
@@ -5148,6 +4418,11 @@
     "label": "ten_nguon%lex",
     "detail": "field Dir",
     "insertText": "ten_nguon%lex"
+  },
+  {
+    "label": "ten_nsd%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nsd%lex"
   },
   {
     "label": "ten_nsd2%lex",
@@ -5215,6 +4490,11 @@
     "insertText": "ma_qg"
   },
   {
+    "label": "ten_qt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_qt%lex"
+  },
+  {
     "label": "ten_qg",
     "detail": "field Dir",
     "insertText": "ten_qg"
@@ -5263,6 +4543,11 @@
     "label": "ten_loi2",
     "detail": "field Dir",
     "insertText": "ten_loi2"
+  },
+  {
+    "label": "ma_loaiat",
+    "detail": "field Dir",
+    "insertText": "ma_loaiat"
   },
   {
     "label": "ma_ph_loaiat",
@@ -5325,11 +4610,6 @@
     "insertText": "ma_vtatex"
   },
   {
-    "label": "so_luong0ex",
-    "detail": "field Dir",
-    "insertText": "so_luong0ex"
-  },
-  {
     "label": "ngay_bat_dau",
     "detail": "field Dir",
     "insertText": "ngay_bat_dau"
@@ -5343,11 +4623,6 @@
     "label": "ma_loatex",
     "detail": "field Dir",
     "insertText": "ma_loatex"
-  },
-  {
-    "label": "ten_lo%lex",
-    "detail": "field Dir",
-    "insertText": "ten_lo%lex"
   },
   {
     "label": "ma_diemat",
@@ -5520,9 +4795,9 @@
     "insertText": "stt_sx"
   },
   {
-    "label": "nd_yn",
+    "label": "ten_ngan",
     "detail": "field Dir",
-    "insertText": "nd_yn"
+    "insertText": "ten_ngan"
   },
   {
     "label": "ten_ngan2",
@@ -5533,6 +4808,16 @@
     "label": "thu_tu",
     "detail": "field Dir",
     "insertText": "thu_tu"
+  },
+  {
+    "label": "gia_nt",
+    "detail": "field Dir",
+    "insertText": "gia_nt"
+  },
+  {
+    "label": "ghi_chu_gridView",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_gridView"
   },
   {
     "label": "diem_chuan",
@@ -5605,6 +4890,81 @@
     "insertText": "kd_bat_buoc"
   },
   {
+    "label": "gt_toi_da",
+    "detail": "field Dir",
+    "insertText": "gt_toi_da"
+  },
+  {
+    "label": "ma_vung0",
+    "detail": "field Dir",
+    "insertText": "ma_vung0"
+  },
+  {
+    "label": "ten_vungex",
+    "detail": "field Dir",
+    "insertText": "ten_vungex"
+  },
+  {
+    "label": "stt_rec_bg",
+    "detail": "field Dir",
+    "insertText": "stt_rec_bg"
+  },
+  {
+    "label": "so_ct_bg",
+    "detail": "field Dir",
+    "insertText": "so_ct_bg"
+  },
+  {
+    "label": "ngay_ct_bg",
+    "detail": "field Dir",
+    "insertText": "ngay_ct_bg"
+  },
+  {
+    "label": "duyet_dh",
+    "detail": "field Dir",
+    "insertText": "duyet_dh"
+  },
+  {
+    "label": "t_thue_nk_nt",
+    "detail": "field Dir",
+    "insertText": "t_thue_nk_nt"
+  },
+  {
+    "label": "t_thue_nk",
+    "detail": "field Dir",
+    "insertText": "t_thue_nk"
+  },
+  {
+    "label": "t_thue_ttdb_nt",
+    "detail": "field Dir",
+    "insertText": "t_thue_ttdb_nt"
+  },
+  {
+    "label": "t_thue_ttdb",
+    "detail": "field Dir",
+    "insertText": "t_thue_ttdb"
+  },
+  {
+    "label": "t_thue_bvmt_nt",
+    "detail": "field Dir",
+    "insertText": "t_thue_bvmt_nt"
+  },
+  {
+    "label": "t_thue_bvmt",
+    "detail": "field Dir",
+    "insertText": "t_thue_bvmt"
+  },
+  {
+    "label": "t_thue_gtgt_nt",
+    "detail": "field Dir",
+    "insertText": "t_thue_gtgt_nt"
+  },
+  {
+    "label": "t_thue_gtgt",
+    "detail": "field Dir",
+    "insertText": "t_thue_gtgt"
+  },
+  {
     "label": "name",
     "detail": "field Dir",
     "insertText": "name"
@@ -5625,24 +4985,9 @@
     "insertText": "descript%l"
   },
   {
-    "label": "lookup_valat",
-    "detail": "field Dir",
-    "insertText": "lookup_valat"
-  },
-  {
     "label": "lookup_name%lex",
     "detail": "field Dir",
     "insertText": "lookup_name%lex"
-  },
-  {
-    "label": "nor_valex",
-    "detail": "field Dir",
-    "insertText": "nor_valex"
-  },
-  {
-    "label": "num_valex",
-    "detail": "field Dir",
-    "insertText": "num_valex"
   },
   {
     "label": "typeex",
@@ -5665,6 +5010,61 @@
     "insertText": "ngay_ct1"
   },
   {
+    "label": "ngay_ct2",
+    "detail": "field Dir",
+    "insertText": "ngay_ct2"
+  },
+  {
+    "label": "ngay_hl2ex",
+    "detail": "field Dir",
+    "insertText": "ngay_hl2ex"
+  },
+  {
+    "label": "stt_rec_hdex",
+    "detail": "field Dir",
+    "insertText": "stt_rec_hdex"
+  },
+  {
+    "label": "t_ttdb_nt",
+    "detail": "field Dir",
+    "insertText": "t_ttdb_nt"
+  },
+  {
+    "label": "t_bvmt_nt",
+    "detail": "field Dir",
+    "insertText": "t_bvmt_nt"
+  },
+  {
+    "label": "t_bvmt",
+    "detail": "field Dir",
+    "insertText": "t_bvmt"
+  },
+  {
+    "label": "t_gtgt_nt",
+    "detail": "field Dir",
+    "insertText": "t_gtgt_nt"
+  },
+  {
+    "label": "t_gtgt",
+    "detail": "field Dir",
+    "insertText": "t_gtgt"
+  },
+  {
+    "label": "ngay_ut",
+    "detail": "field Dir",
+    "insertText": "ngay_ut"
+  },
+  {
+    "label": "tien_da_ut",
+    "detail": "field Dir",
+    "insertText": "tien_da_ut"
+  },
+  {
+    "label": "ghi_chu_ut",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_ut"
+  },
+  {
     "label": "ten_vung",
     "detail": "field Dir",
     "insertText": "ten_vung"
@@ -5673,6 +5073,31 @@
     "label": "ten_vung2",
     "detail": "field Dir",
     "insertText": "ten_vung2"
+  },
+  {
+    "label": "ma_vung_cuat",
+    "detail": "field Dir",
+    "insertText": "ma_vung_cuat"
+  },
+  {
+    "label": "ten_vung_cu%lex",
+    "detail": "field Dir",
+    "insertText": "ten_vung_cu%lex"
+  },
+  {
+    "label": "ngay_dn",
+    "detail": "field Dir",
+    "insertText": "ngay_dn"
+  },
+  {
+    "label": "ngay_dn2",
+    "detail": "field Dir",
+    "insertText": "ngay_dn2"
+  },
+  {
+    "label": "so_dn",
+    "detail": "field Dir",
+    "insertText": "so_dn"
   },
   {
     "label": "gia_chuan_nt",
@@ -5855,21 +5280,6 @@
     "insertText": "loai_kyat"
   },
   {
-    "label": "ma_ct",
-    "detail": "field Dir",
-    "insertText": "ma_ct"
-  },
-  {
-    "label": "ten_ct",
-    "detail": "field Dir",
-    "insertText": "ten_ct"
-  },
-  {
-    "label": "ten_ct2",
-    "detail": "field Dir",
-    "insertText": "ten_ct2"
-  },
-  {
     "label": "ma_ppat",
     "detail": "field Dir",
     "insertText": "ma_ppat"
@@ -5970,6 +5380,131 @@
     "insertText": "ten_tk_k_gt%lex"
   },
   {
+    "label": "tien_nt01",
+    "detail": "field Dir",
+    "insertText": "tien_nt01"
+  },
+  {
+    "label": "tien_nt02",
+    "detail": "field Dir",
+    "insertText": "tien_nt02"
+  },
+  {
+    "label": "tien02",
+    "detail": "field Dir",
+    "insertText": "tien02"
+  },
+  {
+    "label": "tien_nt03",
+    "detail": "field Dir",
+    "insertText": "tien_nt03"
+  },
+  {
+    "label": "tien03",
+    "detail": "field Dir",
+    "insertText": "tien03"
+  },
+  {
+    "label": "tien_nt04",
+    "detail": "field Dir",
+    "insertText": "tien_nt04"
+  },
+  {
+    "label": "tien04",
+    "detail": "field Dir",
+    "insertText": "tien04"
+  },
+  {
+    "label": "tien_nt05",
+    "detail": "field Dir",
+    "insertText": "tien_nt05"
+  },
+  {
+    "label": "tien05",
+    "detail": "field Dir",
+    "insertText": "tien05"
+  },
+  {
+    "label": "tien_nt06",
+    "detail": "field Dir",
+    "insertText": "tien_nt06"
+  },
+  {
+    "label": "tien06",
+    "detail": "field Dir",
+    "insertText": "tien06"
+  },
+  {
+    "label": "tien_nt07",
+    "detail": "field Dir",
+    "insertText": "tien_nt07"
+  },
+  {
+    "label": "tien07",
+    "detail": "field Dir",
+    "insertText": "tien07"
+  },
+  {
+    "label": "tien_nt08",
+    "detail": "field Dir",
+    "insertText": "tien_nt08"
+  },
+  {
+    "label": "tien08",
+    "detail": "field Dir",
+    "insertText": "tien08"
+  },
+  {
+    "label": "tien_nt09",
+    "detail": "field Dir",
+    "insertText": "tien_nt09"
+  },
+  {
+    "label": "tien09",
+    "detail": "field Dir",
+    "insertText": "tien09"
+  },
+  {
+    "label": "tien_nt10",
+    "detail": "field Dir",
+    "insertText": "tien_nt10"
+  },
+  {
+    "label": "tien10",
+    "detail": "field Dir",
+    "insertText": "tien10"
+  },
+  {
+    "label": "tien_nt11",
+    "detail": "field Dir",
+    "insertText": "tien_nt11"
+  },
+  {
+    "label": "tien11",
+    "detail": "field Dir",
+    "insertText": "tien11"
+  },
+  {
+    "label": "tien_nt12",
+    "detail": "field Dir",
+    "insertText": "tien_nt12"
+  },
+  {
+    "label": "tien12",
+    "detail": "field Dir",
+    "insertText": "tien12"
+  },
+  {
+    "label": "lan",
+    "detail": "field Dir",
+    "insertText": "lan"
+  },
+  {
+    "label": "sttex",
+    "detail": "field Dir",
+    "insertText": "sttex"
+  },
+  {
     "label": "tieu_chuanat",
     "detail": "field Dir",
     "insertText": "tieu_chuanat"
@@ -5980,11 +5515,6 @@
     "insertText": "ten_tieu_chuan%lex"
   },
   {
-    "label": "cpassex",
-    "detail": "field Dir",
-    "insertText": "cpassex"
-  },
-  {
     "label": "chkpassex",
     "detail": "field Dir",
     "insertText": "chkpassex"
@@ -5993,6 +5523,11 @@
     "label": "ma_so2",
     "detail": "field Dir",
     "insertText": "ma_so2"
+  },
+  {
+    "label": "tinh_chat",
+    "detail": "field Dir",
+    "insertText": "tinh_chat"
   },
   {
     "label": "tk_du",
@@ -6018,6 +5553,16 @@
     "label": "ds_ma_khlk",
     "detail": "field Dir",
     "insertText": "ds_ma_khlk"
+  },
+  {
+    "label": "ma_nv",
+    "detail": "field Dir",
+    "insertText": "ma_nv"
+  },
+  {
+    "label": "ten_nv",
+    "detail": "field Dir",
+    "insertText": "ten_nv"
   },
   {
     "label": "ten_nv2",
@@ -6110,14 +5655,9 @@
     "insertText": "loai_cpat"
   },
   {
-    "label": "tinh_thue_nk",
+    "label": "ten_tk_co%lex",
     "detail": "field Dir",
-    "insertText": "tinh_thue_nk"
-  },
-  {
-    "label": "deny_post_gl",
-    "detail": "field Dir",
-    "insertText": "deny_post_gl"
+    "insertText": "ten_tk_co%lex"
   },
   {
     "label": "ma_ytat",
@@ -6155,64 +5695,14 @@
     "insertText": "tk_coat"
   },
   {
-    "label": "kc_sd_yn",
-    "detail": "field Dir",
-    "insertText": "kc_sd_yn"
-  },
-  {
-    "label": "kc_kh_yn",
-    "detail": "field Dir",
-    "insertText": "kc_kh_yn"
-  },
-  {
-    "label": "kc_sp_yn",
-    "detail": "field Dir",
-    "insertText": "kc_sp_yn"
-  },
-  {
-    "label": "kc_bp_yn",
-    "detail": "field Dir",
-    "insertText": "kc_bp_yn"
-  },
-  {
-    "label": "kc_lsx_yn",
-    "detail": "field Dir",
-    "insertText": "kc_lsx_yn"
-  },
-  {
-    "label": "kc_hd_yn",
-    "detail": "field Dir",
-    "insertText": "kc_hd_yn"
-  },
-  {
-    "label": "kc_ku_yn",
-    "detail": "field Dir",
-    "insertText": "kc_ku_yn"
-  },
-  {
-    "label": "kc_phi_yn",
-    "detail": "field Dir",
-    "insertText": "kc_phi_yn"
-  },
-  {
     "label": "sl_tp",
     "detail": "field Dir",
     "insertText": "sl_tp"
   },
   {
-    "label": "gia_dc_nt",
-    "detail": "field Dir",
-    "insertText": "gia_dc_nt"
-  },
-  {
     "label": "tien_dc_nt",
     "detail": "field Dir",
     "insertText": "tien_dc_nt"
-  },
-  {
-    "label": "gia_dc",
-    "detail": "field Dir",
-    "insertText": "gia_dc"
   },
   {
     "label": "tien_dc",
@@ -6233,11 +5723,6 @@
     "label": "sl_dk",
     "detail": "field Dir",
     "insertText": "sl_dk"
-  },
-  {
-    "label": "sl_dd_dk0",
-    "detail": "field Dir",
-    "insertText": "sl_dd_dk0"
   },
   {
     "label": "sl_dd_dk",
@@ -6268,6 +5753,11 @@
     "label": "xlat",
     "detail": "field Dir",
     "insertText": "xlat"
+  },
+  {
+    "label": "ten_xl%lex",
+    "detail": "field Dir",
+    "insertText": "ten_xl%lex"
   },
   {
     "label": "tbat",
@@ -6335,56 +5825,6 @@
     "insertText": "ten_khac%lex"
   },
   {
-    "label": "ma_hd",
-    "detail": "field Dir",
-    "insertText": "ma_hd"
-  },
-  {
-    "label": "ten_hd",
-    "detail": "field Dir",
-    "insertText": "ten_hd"
-  },
-  {
-    "label": "ten_hd2",
-    "detail": "field Dir",
-    "insertText": "ten_hd2"
-  },
-  {
-    "label": "so_hd",
-    "detail": "field Dir",
-    "insertText": "so_hd"
-  },
-  {
-    "label": "hd_sd_pslk",
-    "detail": "field Dir",
-    "insertText": "hd_sd_pslk"
-  },
-  {
-    "label": "ngay_hd1",
-    "detail": "field Dir",
-    "insertText": "ngay_hd1"
-  },
-  {
-    "label": "ngay_hd2",
-    "detail": "field Dir",
-    "insertText": "ngay_hd2"
-  },
-  {
-    "label": "nh_hd1at",
-    "detail": "field Dir",
-    "insertText": "nh_hd1at"
-  },
-  {
-    "label": "nh_hd2at",
-    "detail": "field Dir",
-    "insertText": "nh_hd2at"
-  },
-  {
-    "label": "nh_hd3at",
-    "detail": "field Dir",
-    "insertText": "nh_hd3at"
-  },
-  {
     "label": "ma_dot",
     "detail": "field Dir",
     "insertText": "ma_dot"
@@ -6410,14 +5850,9 @@
     "insertText": "dd_ck"
   },
   {
-    "label": "pl_td",
+    "label": "sl_dd_ck",
     "detail": "field Dir",
-    "insertText": "pl_td"
-  },
-  {
-    "label": "pl_yn",
-    "detail": "field Dir",
-    "insertText": "pl_yn"
+    "insertText": "sl_dd_ck"
   },
   {
     "label": "tk_gt",
@@ -6473,6 +5908,11 @@
     "label": "ten_nl%lex",
     "detail": "field Dir",
     "insertText": "ten_nl%lex"
+  },
+  {
+    "label": "ngay_hl_gridView",
+    "detail": "field Dir",
+    "insertText": "ngay_hl_gridView"
   },
   {
     "label": "ma_lo_trinh",
@@ -6650,9 +6090,14 @@
     "insertText": "ra_52"
   },
   {
-    "label": "controllerat",
+    "label": "ma_dvcsat_gridView",
     "detail": "field Dir",
-    "insertText": "controllerat"
+    "insertText": "ma_dvcsat_gridView"
+  },
+  {
+    "label": "tkat_gridView",
+    "detail": "field Dir",
+    "insertText": "tkat_gridView"
   },
   {
     "label": "ma_dashboard",
@@ -6715,11 +6160,6 @@
     "insertText": "ngam_dinh"
   },
   {
-    "label": "v_passwordex",
-    "detail": "field Dir",
-    "insertText": "v_passwordex"
-  },
-  {
     "label": "v_password2ex",
     "detail": "field Dir",
     "insertText": "v_password2ex"
@@ -6758,11 +6198,6 @@
     "label": "ngay_sua2",
     "detail": "field Dir",
     "insertText": "ngay_sua2"
-  },
-  {
-    "label": "delete_yn",
-    "detail": "field Dir",
-    "insertText": "delete_yn"
   },
   {
     "label": "ngay_xoa0",
@@ -6838,26 +6273,6 @@
     "label": "ma_bt",
     "detail": "field Dir",
     "insertText": "ma_bt"
-  },
-  {
-    "label": "ngay_bd",
-    "detail": "field Dir",
-    "insertText": "ngay_bd"
-  },
-  {
-    "label": "ngay_kt",
-    "detail": "field Dir",
-    "insertText": "ngay_kt"
-  },
-  {
-    "label": "tien_pb",
-    "detail": "field Dir",
-    "insertText": "tien_pb"
-  },
-  {
-    "label": "tien_pb_nt",
-    "detail": "field Dir",
-    "insertText": "tien_pb_nt"
   },
   {
     "label": "tien_pb_ky",
@@ -6985,11 +6400,6 @@
     "insertText": "ten_tb"
   },
   {
-    "label": "hang_sx",
-    "detail": "field Dir",
-    "insertText": "hang_sx"
-  },
-  {
     "label": "he_dh",
     "detail": "field Dir",
     "insertText": "he_dh"
@@ -7025,11 +6435,6 @@
     "insertText": "ten_ck2"
   },
   {
-    "label": "loai_ckat",
-    "detail": "field Dir",
-    "insertText": "loai_ckat"
-  },
-  {
     "label": "muc_do",
     "detail": "field Dir",
     "insertText": "muc_do"
@@ -7043,11 +6448,6 @@
     "label": "tien_hang_yn",
     "detail": "field Dir",
     "insertText": "tien_hang_yn"
-  },
-  {
-    "label": "cong_yn",
-    "detail": "field Dir",
-    "insertText": "cong_yn"
   },
   {
     "label": "con_lai_yn",
@@ -7075,11 +6475,6 @@
     "insertText": "ten_tk_hddt"
   },
   {
-    "label": "view_mk_tk_hddtex",
-    "detail": "field Dir",
-    "insertText": "view_mk_tk_hddtex"
-  },
-  {
     "label": "aes_mk_tk_hddtex",
     "detail": "field Dir",
     "insertText": "aes_mk_tk_hddtex"
@@ -7088,11 +6483,6 @@
     "label": "user_hddt",
     "detail": "field Dir",
     "insertText": "user_hddt"
-  },
-  {
-    "label": "view_pass_hddtex",
-    "detail": "field Dir",
-    "insertText": "view_pass_hddtex"
   },
   {
     "label": "aes_pass_hddtex",
@@ -7115,6 +6505,11 @@
     "insertText": "keys"
   },
   {
+    "label": "view_pass_hddtex",
+    "detail": "field Dir",
+    "insertText": "view_pass_hddtex"
+  },
+  {
     "label": "kieu_ky_so",
     "detail": "field Dir",
     "insertText": "kieu_ky_so"
@@ -7123,11 +6518,6 @@
     "label": "ten_khex",
     "detail": "field Dir",
     "insertText": "ten_khex"
-  },
-  {
-    "label": "loai_kh",
-    "detail": "field Dir",
-    "insertText": "loai_kh"
   },
   {
     "label": "ngan_hangex",
@@ -7153,21 +6543,6 @@
     "label": "kieu_ph",
     "detail": "field Dir",
     "insertText": "kieu_ph"
-  },
-  {
-    "label": "ma_nk",
-    "detail": "field Dir",
-    "insertText": "ma_nk"
-  },
-  {
-    "label": "ten_nk",
-    "detail": "field Dir",
-    "insertText": "ten_nk"
-  },
-  {
-    "label": "ten_nk2",
-    "detail": "field Dir",
-    "insertText": "ten_nk2"
   },
   {
     "label": "mau_so",
@@ -7200,11 +6575,6 @@
     "insertText": "user_name"
   },
   {
-    "label": "datetime0",
-    "detail": "field Dir",
-    "insertText": "datetime0"
-  },
-  {
     "label": "message",
     "detail": "field Dir",
     "insertText": "message"
@@ -7213,11 +6583,6 @@
     "label": "error",
     "detail": "field Dir",
     "insertText": "error"
-  },
-  {
-    "label": "event_yn",
-    "detail": "field Dir",
-    "insertText": "event_yn"
   },
   {
     "label": "text",
@@ -7255,19 +6620,9 @@
     "insertText": "end_timeex"
   },
   {
-    "label": "full_day",
-    "detail": "field Dir",
-    "insertText": "full_day"
-  },
-  {
     "label": "details",
     "detail": "field Dir",
     "insertText": "details"
-  },
-  {
-    "label": "private",
-    "detail": "field Dir",
-    "insertText": "private"
   },
   {
     "label": "share_group",
@@ -7330,6 +6685,11 @@
     "insertText": "ten_tg_ts2"
   },
   {
+    "label": "ten_bp_ts%lex",
+    "detail": "field Dir",
+    "insertText": "ten_bp_ts%lex"
+  },
+  {
     "label": "ma_yt",
     "detail": "field Dir",
     "insertText": "ma_yt"
@@ -7370,11 +6730,6 @@
     "insertText": "ten_tk_dd%lex"
   },
   {
-    "label": "th_bp0",
-    "detail": "field Dir",
-    "insertText": "th_bp0"
-  },
-  {
     "label": "th_sp",
     "detail": "field Dir",
     "insertText": "th_sp"
@@ -7383,11 +6738,6 @@
     "label": "th_lsx",
     "detail": "field Dir",
     "insertText": "th_lsx"
-  },
-  {
-    "label": "th_bp",
-    "detail": "field Dir",
-    "insertText": "th_bp"
   },
   {
     "label": "th_nvl",
@@ -7410,21 +6760,6 @@
     "insertText": "pb_yn"
   },
   {
-    "label": "sua_kh",
-    "detail": "field Dir",
-    "insertText": "sua_kh"
-  },
-  {
-    "label": "ten_nv%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nv%lex"
-  },
-  {
-    "label": "nguyen_gia_nt",
-    "detail": "field Dir",
-    "insertText": "nguyen_gia_nt"
-  },
-  {
     "label": "gt_da_kh_nt",
     "detail": "field Dir",
     "insertText": "gt_da_kh_nt"
@@ -7433,16 +6768,6 @@
     "label": "gt_cl_nt",
     "detail": "field Dir",
     "insertText": "gt_cl_nt"
-  },
-  {
-    "label": "gt_kh_ky_nt",
-    "detail": "field Dir",
-    "insertText": "gt_kh_ky_nt"
-  },
-  {
-    "label": "nguyen_gia",
-    "detail": "field Dir",
-    "insertText": "nguyen_gia"
   },
   {
     "label": "gt_da_kh",
@@ -7455,64 +6780,14 @@
     "insertText": "gt_cl"
   },
   {
-    "label": "gt_kh_ky",
-    "detail": "field Dir",
-    "insertText": "gt_kh_ky"
-  },
-  {
-    "label": "ma_giam_tsat",
-    "detail": "field Dir",
-    "insertText": "ma_giam_tsat"
-  },
-  {
-    "label": "ngay_giam",
-    "detail": "field Dir",
-    "insertText": "ngay_giam"
-  },
-  {
-    "label": "so_ct_giam",
-    "detail": "field Dir",
-    "insertText": "so_ct_giam"
-  },
-  {
-    "label": "ly_do_giam",
-    "detail": "field Dir",
-    "insertText": "ly_do_giam"
-  },
-  {
     "label": "sl_kh",
     "detail": "field Dir",
     "insertText": "sl_kh"
   },
   {
-    "label": "ten_tkts%lex",
+    "label": "ma_loai_gridView",
     "detail": "field Dir",
-    "insertText": "ten_tkts%lex"
-  },
-  {
-    "label": "ten_tkkh%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tkkh%lex"
-  },
-  {
-    "label": "ten_tkcp%lex",
-    "detail": "field Dir",
-    "insertText": "ten_tkcp%lex"
-  },
-  {
-    "label": "loai_tg_tsex",
-    "detail": "field Dir",
-    "insertText": "loai_tg_tsex"
-  },
-  {
-    "label": "tang_giam_ntex",
-    "detail": "field Dir",
-    "insertText": "tang_giam_ntex"
-  },
-  {
-    "label": "tang_giamex",
-    "detail": "field Dir",
-    "insertText": "tang_giamex"
+    "insertText": "ma_loai_gridView"
   },
   {
     "label": "header",
@@ -7523,11 +6798,6 @@
     "label": "header2",
     "detail": "field Dir",
     "insertText": "header2"
-  },
-  {
-    "label": "import_controllerex",
-    "detail": "field Dir",
-    "insertText": "import_controllerex"
   },
   {
     "label": "style_name%lex",
@@ -7560,14 +6830,9 @@
     "insertText": "client_default"
   },
   {
-    "label": "status_import",
+    "label": "merge_yn",
     "detail": "field Dir",
-    "insertText": "status_import"
-  },
-  {
-    "label": "order_field_name_import%lex",
-    "detail": "field Dir",
-    "insertText": "order_field_name_import%lex"
+    "insertText": "merge_yn"
   },
   {
     "label": "format_type_name%lex",
@@ -7575,24 +6840,9 @@
     "insertText": "format_type_name%lex"
   },
   {
-    "label": "order_type_name_import%lex",
-    "detail": "field Dir",
-    "insertText": "order_type_name_import%lex"
-  },
-  {
     "label": "filter_typeex",
     "detail": "field Dir",
     "insertText": "filter_typeex"
-  },
-  {
-    "label": "import_ynex",
-    "detail": "field Dir",
-    "insertText": "import_ynex"
-  },
-  {
-    "label": "field_import_ynex",
-    "detail": "field Dir",
-    "insertText": "field_import_ynex"
   },
   {
     "label": "iex",
@@ -7605,14 +6855,14 @@
     "insertText": "stt_rec_nt"
   },
   {
-    "label": "ma_loat",
+    "label": "ngay_ct_gridView",
     "detail": "field Dir",
-    "insertText": "ma_loat"
+    "insertText": "ngay_ct_gridView"
   },
   {
-    "label": "lo_ynex",
+    "label": "so_ct_gridView",
     "detail": "field Dir",
-    "insertText": "lo_ynex"
+    "insertText": "so_ct_gridView"
   },
   {
     "label": "stt_ntxt",
@@ -7645,9 +6895,9 @@
     "insertText": "cach_tinh2"
   },
   {
-    "label": "sd_1ve",
+    "label": "ma_lo",
     "detail": "field Dir",
-    "insertText": "sd_1ve"
+    "insertText": "ma_lo"
   },
   {
     "label": "ma_kh_thieuat",
@@ -7720,21 +6970,6 @@
     "insertText": "ten_nx_thua%lex"
   },
   {
-    "label": "ma_hrbp",
-    "detail": "field Dir",
-    "insertText": "ma_hrbp"
-  },
-  {
-    "label": "ma_hrbpat",
-    "detail": "field Dir",
-    "insertText": "ma_hrbpat"
-  },
-  {
-    "label": "ten_hrbp%lex",
-    "detail": "field Dir",
-    "insertText": "ten_hrbp%lex"
-  },
-  {
     "label": "user_id4",
     "detail": "field Dir",
     "insertText": "user_id4"
@@ -7765,6 +7000,16 @@
     "insertText": "user_lstlk"
   },
   {
+    "label": "ma_mau_ctat",
+    "detail": "field Dir",
+    "insertText": "ma_mau_ctat"
+  },
+  {
+    "label": "invat_yn",
+    "detail": "field Dir",
+    "insertText": "invat_yn"
+  },
+  {
     "label": "doi_tuong",
     "detail": "field Dir",
     "insertText": "doi_tuong"
@@ -7785,19 +7030,14 @@
     "insertText": "gio"
   },
   {
+    "label": "ly_do",
+    "detail": "field Dir",
+    "insertText": "ly_do"
+  },
+  {
     "label": "noi_lap",
     "detail": "field Dir",
     "insertText": "noi_lap"
-  },
-  {
-    "label": "ngay_ph",
-    "detail": "field Dir",
-    "insertText": "ngay_ph"
-  },
-  {
-    "label": "xtype",
-    "detail": "field Dir",
-    "insertText": "xtype"
   },
   {
     "label": "ma_tdhv",
@@ -7835,6 +7075,11 @@
     "insertText": "ten_tn2"
   },
   {
+    "label": "ho_tenex",
+    "detail": "field Dir",
+    "insertText": "ho_tenex"
+  },
+  {
     "label": "ma_pc",
     "detail": "field Dir",
     "insertText": "ma_pc"
@@ -7870,6 +7115,11 @@
     "insertText": "ty_le"
   },
   {
+    "label": "ma_nvatex",
+    "detail": "field Dir",
+    "insertText": "ma_nvatex"
+  },
+  {
     "label": "ma_pcat",
     "detail": "field Dir",
     "insertText": "ma_pcat"
@@ -7885,9 +7135,19 @@
     "insertText": "name2ex"
   },
   {
+    "label": "stt_rec_nv",
+    "detail": "field Dir",
+    "insertText": "stt_rec_nv"
+  },
+  {
     "label": "ten_nvex",
     "detail": "field Dir",
     "insertText": "ten_nvex"
+  },
+  {
+    "label": "ten_vtr%lex",
+    "detail": "field Dir",
+    "insertText": "ten_vtr%lex"
   },
   {
     "label": "ngay_dg",
@@ -7910,6 +7170,11 @@
     "insertText": "ma_nv_dgatex"
   },
   {
+    "label": "tenex",
+    "detail": "field Dir",
+    "insertText": "tenex"
+  },
+  {
     "label": "ma_ky",
     "detail": "field Dir",
     "insertText": "ma_ky"
@@ -7918,6 +7183,11 @@
     "label": "ngay_vao_ctyex",
     "detail": "field Dir",
     "insertText": "ngay_vao_ctyex"
+  },
+  {
+    "label": "nam_lvex",
+    "detail": "field Dir",
+    "insertText": "nam_lvex"
   },
   {
     "label": "nam_cvex",
@@ -8040,6 +7310,16 @@
     "insertText": "ten_ky2"
   },
   {
+    "label": "ngay_tu",
+    "detail": "field Dir",
+    "insertText": "ngay_tu"
+  },
+  {
+    "label": "ngay_den",
+    "detail": "field Dir",
+    "insertText": "ngay_den"
+  },
+  {
     "label": "so_phep",
     "detail": "field Dir",
     "insertText": "so_phep"
@@ -8120,9 +7400,29 @@
     "insertText": "noi_sinhex"
   },
   {
+    "label": "dia_chi_th_tru",
+    "detail": "field Dir",
+    "insertText": "dia_chi_th_tru"
+  },
+  {
+    "label": "cmnd_so",
+    "detail": "field Dir",
+    "insertText": "cmnd_so"
+  },
+  {
+    "label": "cmnd_ngay_hl",
+    "detail": "field Dir",
+    "insertText": "cmnd_ngay_hl"
+  },
+  {
     "label": "cmnd_noi_cap",
     "detail": "field Dir",
     "insertText": "cmnd_noi_cap"
+  },
+  {
+    "label": "nghe_nghiep",
+    "detail": "field Dir",
+    "insertText": "nghe_nghiep"
   },
   {
     "label": "nghe_nghiep2",
@@ -8145,9 +7445,9 @@
     "insertText": "id_ngay_hl"
   },
   {
-    "label": "so_ngay",
+    "label": "thang",
     "detail": "field Dir",
-    "insertText": "so_ngay"
+    "insertText": "thang"
   },
   {
     "label": "nam_hl",
@@ -8238,11 +7538,6 @@
     "label": "luong_tt",
     "detail": "field Dir",
     "insertText": "luong_tt"
-  },
-  {
-    "label": "bp_meat",
-    "detail": "field Dir",
-    "insertText": "bp_meat"
   },
   {
     "label": "ten_bp_me%lex",
@@ -8385,6 +7680,11 @@
     "insertText": "ten_caex"
   },
   {
+    "label": "so_phut",
+    "detail": "field Dir",
+    "insertText": "so_phut"
+  },
+  {
     "label": "nv_ql_cuat",
     "detail": "field Dir",
     "insertText": "nv_ql_cuat"
@@ -8445,14 +7745,14 @@
     "insertText": "ten_quan2"
   },
   {
+    "label": "ho_nv",
+    "detail": "field Dir",
+    "insertText": "ho_nv"
+  },
+  {
     "label": "bo_phan",
     "detail": "field Dir",
     "insertText": "bo_phan"
-  },
-  {
-    "label": "vi_tri",
-    "detail": "field Dir",
-    "insertText": "vi_tri"
   },
   {
     "label": "bac_quan_ly",
@@ -8463,6 +7763,51 @@
     "label": "ten_bac_ql%lex",
     "detail": "field Dir",
     "insertText": "ten_bac_ql%lex"
+  },
+  {
+    "label": "ten_gtex",
+    "detail": "field Dir",
+    "insertText": "ten_gtex"
+  },
+  {
+    "label": "ngay_sinh",
+    "detail": "field Dir",
+    "insertText": "ngay_sinh"
+  },
+  {
+    "label": "ten_ttnv%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ttnv%lex"
+  },
+  {
+    "label": "ngay_vao",
+    "detail": "field Dir",
+    "insertText": "ngay_vao"
+  },
+  {
+    "label": "ngay_nghi",
+    "detail": "field Dir",
+    "insertText": "ngay_nghi"
+  },
+  {
+    "label": "bo_phanat",
+    "detail": "field Dir",
+    "insertText": "bo_phanat"
+  },
+  {
+    "label": "vi_triat",
+    "detail": "field Dir",
+    "insertText": "vi_triat"
+  },
+  {
+    "label": "bac_quan_lyat",
+    "detail": "field Dir",
+    "insertText": "bac_quan_lyat"
+  },
+  {
+    "label": "quoc_tichat",
+    "detail": "field Dir",
+    "insertText": "quoc_tichat"
   },
   {
     "label": "ma_so_bhxhex",
@@ -8515,6 +7860,26 @@
     "insertText": "loai_nghiat"
   },
   {
+    "label": "ma_caat",
+    "detail": "field Dir",
+    "insertText": "ma_caat"
+  },
+  {
+    "label": "ten_ca%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ca%lex"
+  },
+  {
+    "label": "ma_congat",
+    "detail": "field Dir",
+    "insertText": "ma_congat"
+  },
+  {
+    "label": "ten_cong%lex",
+    "detail": "field Dir",
+    "insertText": "ten_cong%lex"
+  },
+  {
     "label": "ma_bpex",
     "detail": "field Dir",
     "insertText": "ma_bpex"
@@ -8560,6 +7925,11 @@
     "insertText": "ngay_lam_viec"
   },
   {
+    "label": "hd_so",
+    "detail": "field Dir",
+    "insertText": "hd_so"
+  },
+  {
     "label": "ngay_tn_tu",
     "detail": "field Dir",
     "insertText": "ngay_tn_tu"
@@ -8570,39 +7940,14 @@
     "insertText": "ngay_tn_den"
   },
   {
-    "label": "tien_tn2",
-    "detail": "field Dir",
-    "insertText": "tien_tn2"
-  },
-  {
     "label": "khau_tru",
     "detail": "field Dir",
     "insertText": "khau_tru"
   },
   {
-    "label": "thue_tncn",
-    "detail": "field Dir",
-    "insertText": "thue_tncn"
-  },
-  {
-    "label": "tien_bhxh",
-    "detail": "field Dir",
-    "insertText": "tien_bhxh"
-  },
-  {
-    "label": "khau_tru_khac",
-    "detail": "field Dir",
-    "insertText": "khau_tru_khac"
-  },
-  {
     "label": "thue_nha",
     "detail": "field Dir",
     "insertText": "thue_nha"
-  },
-  {
-    "label": "doi_tuongex",
-    "detail": "field Dir",
-    "insertText": "doi_tuongex"
   },
   {
     "label": "tinh_thue_ynex",
@@ -8613,16 +7958,6 @@
     "label": "tinh_gt_ynex",
     "detail": "field Dir",
     "insertText": "tinh_gt_ynex"
-  },
-  {
-    "label": "hop_dong_ynex",
-    "detail": "field Dir",
-    "insertText": "hop_dong_ynex"
-  },
-  {
-    "label": "uy_quyen_ynex",
-    "detail": "field Dir",
-    "insertText": "uy_quyen_ynex"
   },
   {
     "label": "cn_nn_duoi12ex",
@@ -8688,6 +8023,11 @@
     "label": "ma_bacatex",
     "detail": "field Dir",
     "insertText": "ma_bacatex"
+  },
+  {
+    "label": "ten_bac%lex",
+    "detail": "field Dir",
+    "insertText": "ten_bac%lex"
   },
   {
     "label": "he_so_dcex",
@@ -9130,11 +8470,6 @@
     "insertText": "n40ex"
   },
   {
-    "label": "ngay_thay_doi",
-    "detail": "field Dir",
-    "insertText": "ngay_thay_doi"
-  },
-  {
     "label": "ngay_thay_doi2",
     "detail": "field Dir",
     "insertText": "ngay_thay_doi2"
@@ -9160,54 +8495,9 @@
     "insertText": "don_vi"
   },
   {
-    "label": "hs_luong",
+    "label": "tien_bhxh",
     "detail": "field Dir",
-    "insertText": "hs_luong"
-  },
-  {
-    "label": "hs_pc_chuc_vu",
-    "detail": "field Dir",
-    "insertText": "hs_pc_chuc_vu"
-  },
-  {
-    "label": "hs_pc_vuot_khung",
-    "detail": "field Dir",
-    "insertText": "hs_pc_vuot_khung"
-  },
-  {
-    "label": "hs_pc_tham_nien",
-    "detail": "field Dir",
-    "insertText": "hs_pc_tham_nien"
-  },
-  {
-    "label": "hs_pc_khu_vuc",
-    "detail": "field Dir",
-    "insertText": "hs_pc_khu_vuc"
-  },
-  {
-    "label": "t_he_so",
-    "detail": "field Dir",
-    "insertText": "t_he_so"
-  },
-  {
-    "label": "luong_toi_thieu",
-    "detail": "field Dir",
-    "insertText": "luong_toi_thieu"
-  },
-  {
-    "label": "luong_co_ban",
-    "detail": "field Dir",
-    "insertText": "luong_co_ban"
-  },
-  {
-    "label": "ty_le_bhxh",
-    "detail": "field Dir",
-    "insertText": "ty_le_bhxh"
-  },
-  {
-    "label": "ty_le_bhyt",
-    "detail": "field Dir",
-    "insertText": "ty_le_bhyt"
+    "insertText": "tien_bhxh"
   },
   {
     "label": "tien_bhyt",
@@ -9215,19 +8505,9 @@
     "insertText": "tien_bhyt"
   },
   {
-    "label": "ty_le_bhtn",
-    "detail": "field Dir",
-    "insertText": "ty_le_bhtn"
-  },
-  {
     "label": "tien_bhtn",
     "detail": "field Dir",
     "insertText": "tien_bhtn"
-  },
-  {
-    "label": "ty_le_kpcd",
-    "detail": "field Dir",
-    "insertText": "ty_le_kpcd"
   },
   {
     "label": "tien_kpcd",
@@ -9280,19 +8560,9 @@
     "insertText": "ma_ca_ct"
   },
   {
-    "label": "gio_tu",
-    "detail": "field Dir",
-    "insertText": "gio_tu"
-  },
-  {
     "label": "hs_tu",
     "detail": "field Dir",
     "insertText": "hs_tu"
-  },
-  {
-    "label": "gio_den",
-    "detail": "field Dir",
-    "insertText": "gio_den"
   },
   {
     "label": "hs_den",
@@ -9323,11 +8593,6 @@
     "label": "ten_dt2",
     "detail": "field Dir",
     "insertText": "ten_dt2"
-  },
-  {
-    "label": "ma_tnat",
-    "detail": "field Dir",
-    "insertText": "ma_tnat"
   },
   {
     "label": "ten_tn%lex",
@@ -9725,6 +8990,11 @@
     "insertText": "so_ngay_00"
   },
   {
+    "label": "loai_dtat",
+    "detail": "field Dir",
+    "insertText": "loai_dtat"
+  },
+  {
     "label": "tl_bhxh0",
     "detail": "field Dir",
     "insertText": "tl_bhxh0"
@@ -9783,6 +9053,11 @@
     "label": "tra_bhyt",
     "detail": "field Dir",
     "insertText": "tra_bhyt"
+  },
+  {
+    "label": "ngay_thay_doi",
+    "detail": "field Dir",
+    "insertText": "ngay_thay_doi"
   },
   {
     "label": "ngay_bd_dong",
@@ -10028,11 +9303,6 @@
     "label": "cong_viec2",
     "detail": "field Dir",
     "insertText": "cong_viec2"
-  },
-  {
-    "label": "thoi_gian",
-    "detail": "field Dir",
-    "insertText": "thoi_gian"
   },
   {
     "label": "thoi_gian2",
@@ -10435,6 +9705,11 @@
     "insertText": "ten_loai_lg2"
   },
   {
+    "label": "kieu",
+    "detail": "field Dir",
+    "insertText": "kieu"
+  },
+  {
     "label": "cong_thuc",
     "detail": "field Dir",
     "insertText": "cong_thuc"
@@ -10455,49 +9730,529 @@
     "insertText": "lam_tron_gt"
   },
   {
-    "label": "hs_phu_cap1",
-    "detail": "field Dir",
-    "insertText": "hs_phu_cap1"
-  },
-  {
-    "label": "tien_phu_cap1",
-    "detail": "field Dir",
-    "insertText": "tien_phu_cap1"
-  },
-  {
-    "label": "hs_phu_cap2",
-    "detail": "field Dir",
-    "insertText": "hs_phu_cap2"
-  },
-  {
-    "label": "tien_phu_cap2",
-    "detail": "field Dir",
-    "insertText": "tien_phu_cap2"
-  },
-  {
-    "label": "hs_phu_cap3",
-    "detail": "field Dir",
-    "insertText": "hs_phu_cap3"
-  },
-  {
-    "label": "tien_phu_cap3",
-    "detail": "field Dir",
-    "insertText": "tien_phu_cap3"
-  },
-  {
-    "label": "t_tien_phu_cap",
-    "detail": "field Dir",
-    "insertText": "t_tien_phu_cap"
-  },
-  {
     "label": "t_thu_nhap",
     "detail": "field Dir",
     "insertText": "t_thu_nhap"
   },
   {
+    "label": "hinh_thucat",
+    "detail": "field Dir",
+    "insertText": "hinh_thucat"
+  },
+  {
+    "label": "ten_kt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kt%lex"
+  },
+  {
+    "label": "noi_bo_yn",
+    "detail": "field Dir",
+    "insertText": "noi_bo_yn"
+  },
+  {
+    "label": "cap_quyet_dinh",
+    "detail": "field Dir",
+    "insertText": "cap_quyet_dinh"
+  },
+  {
+    "label": "bac_kt",
+    "detail": "field Dir",
+    "insertText": "bac_kt"
+  },
+  {
+    "label": "so_quyet_dinh",
+    "detail": "field Dir",
+    "insertText": "so_quyet_dinh"
+  },
+  {
+    "label": "ngay_ky",
+    "detail": "field Dir",
+    "insertText": "ngay_ky"
+  },
+  {
+    "label": "nguoi_ky",
+    "detail": "field Dir",
+    "insertText": "nguoi_ky"
+  },
+  {
+    "label": "hs_luong",
+    "detail": "field Dir",
+    "insertText": "hs_luong"
+  },
+  {
+    "label": "hs_pc_chuc_vu",
+    "detail": "field Dir",
+    "insertText": "hs_pc_chuc_vu"
+  },
+  {
+    "label": "hs_pc_vuot_khung",
+    "detail": "field Dir",
+    "insertText": "hs_pc_vuot_khung"
+  },
+  {
+    "label": "hs_pc_tham_nien",
+    "detail": "field Dir",
+    "insertText": "hs_pc_tham_nien"
+  },
+  {
+    "label": "hs_pc_khu_vuc",
+    "detail": "field Dir",
+    "insertText": "hs_pc_khu_vuc"
+  },
+  {
+    "label": "t_he_so",
+    "detail": "field Dir",
+    "insertText": "t_he_so"
+  },
+  {
+    "label": "luong_toi_thieu",
+    "detail": "field Dir",
+    "insertText": "luong_toi_thieu"
+  },
+  {
+    "label": "luong_co_ban",
+    "detail": "field Dir",
+    "insertText": "luong_co_ban"
+  },
+  {
+    "label": "ty_le_bhxh",
+    "detail": "field Dir",
+    "insertText": "ty_le_bhxh"
+  },
+  {
+    "label": "ty_le_bhyt",
+    "detail": "field Dir",
+    "insertText": "ty_le_bhyt"
+  },
+  {
+    "label": "ty_le_bhtn",
+    "detail": "field Dir",
+    "insertText": "ty_le_bhtn"
+  },
+  {
+    "label": "ty_le_kpcd",
+    "detail": "field Dir",
+    "insertText": "ty_le_kpcd"
+  },
+  {
+    "label": "ma_qhat",
+    "detail": "field Dir",
+    "insertText": "ma_qhat"
+  },
+  {
+    "label": "ten_qh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_qh%lex"
+  },
+  {
+    "label": "ho_ten",
+    "detail": "field Dir",
+    "insertText": "ho_ten"
+  },
+  {
+    "label": "da_mat",
+    "detail": "field Dir",
+    "insertText": "da_mat"
+  },
+  {
+    "label": "dien_thoai_dd",
+    "detail": "field Dir",
+    "insertText": "dien_thoai_dd"
+  },
+  {
+    "label": "khan_cap",
+    "detail": "field Dir",
+    "insertText": "khan_cap"
+  },
+  {
+    "label": "ma_nnat",
+    "detail": "field Dir",
+    "insertText": "ma_nnat"
+  },
+  {
+    "label": "ten_nn%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nn%lex"
+  },
+  {
     "label": "mac_dinh_yn",
     "detail": "field Dir",
     "insertText": "mac_dinh_yn"
+  },
+  {
+    "label": "bang_capat",
+    "detail": "field Dir",
+    "insertText": "bang_capat"
+  },
+  {
+    "label": "diem",
+    "detail": "field Dir",
+    "insertText": "diem"
+  },
+  {
+    "label": "ngay_cap",
+    "detail": "field Dir",
+    "insertText": "ngay_cap"
+  },
+  {
+    "label": "gioi_tinh",
+    "detail": "field Dir",
+    "insertText": "gioi_tinh"
+  },
+  {
+    "label": "noi_sinh",
+    "detail": "field Dir",
+    "insertText": "noi_sinh"
+  },
+  {
+    "label": "ma_loai_gtat",
+    "detail": "field Dir",
+    "insertText": "ma_loai_gtat"
+  },
+  {
+    "label": "ten_loai_gt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_loai_gt%lex"
+  },
+  {
+    "label": "cmnd_noi_capat",
+    "detail": "field Dir",
+    "insertText": "cmnd_noi_capat"
+  },
+  {
+    "label": "cmnd_nc%lex",
+    "detail": "field Dir",
+    "insertText": "cmnd_nc%lex"
+  },
+  {
+    "label": "cmnd_ngay_hh",
+    "detail": "field Dir",
+    "insertText": "cmnd_ngay_hh"
+  },
+  {
+    "label": "dan_tocat",
+    "detail": "field Dir",
+    "insertText": "dan_tocat"
+  },
+  {
+    "label": "ten_dt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dt%lex"
+  },
+  {
+    "label": "ton_giaoat",
+    "detail": "field Dir",
+    "insertText": "ton_giaoat"
+  },
+  {
+    "label": "ten_tg%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tg%lex"
+  },
+  {
+    "label": "hon_nhanat",
+    "detail": "field Dir",
+    "insertText": "hon_nhanat"
+  },
+  {
+    "label": "ten_tthn%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tthn%lex"
+  },
+  {
+    "label": "dia_chi_ht_so",
+    "detail": "field Dir",
+    "insertText": "dia_chi_ht_so"
+  },
+  {
+    "label": "dia_chi_ht_tinhat",
+    "detail": "field Dir",
+    "insertText": "dia_chi_ht_tinhat"
+  },
+  {
+    "label": "ten_dcht_tinh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dcht_tinh%lex"
+  },
+  {
+    "label": "dia_chi_ht_quanat",
+    "detail": "field Dir",
+    "insertText": "dia_chi_ht_quanat"
+  },
+  {
+    "label": "ten_dcht_quan%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dcht_quan%lex"
+  },
+  {
+    "label": "dia_chi_ht_xaat",
+    "detail": "field Dir",
+    "insertText": "dia_chi_ht_xaat"
+  },
+  {
+    "label": "ten_dcht_xa%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dcht_xa%lex"
+  },
+  {
+    "label": "ngay_chinh_thuc",
+    "detail": "field Dir",
+    "insertText": "ngay_chinh_thuc"
+  },
+  {
+    "label": "nv_qlat",
+    "detail": "field Dir",
+    "insertText": "nv_qlat"
+  },
+  {
+    "label": "ten_nqlex",
+    "detail": "field Dir",
+    "insertText": "ten_nqlex"
+  },
+  {
+    "label": "ma_tdhvat",
+    "detail": "field Dir",
+    "insertText": "ma_tdhvat"
+  },
+  {
+    "label": "ten_tdhv%lex",
+    "detail": "field Dir",
+    "insertText": "ten_tdhv%lex"
+  },
+  {
+    "label": "truong_hoc",
+    "detail": "field Dir",
+    "insertText": "truong_hoc"
+  },
+  {
+    "label": "ma_cnat",
+    "detail": "field Dir",
+    "insertText": "ma_cnat"
+  },
+  {
+    "label": "ten_cn%lex",
+    "detail": "field Dir",
+    "insertText": "ten_cn%lex"
+  },
+  {
+    "label": "ngay_hoc_tu",
+    "detail": "field Dir",
+    "insertText": "ngay_hoc_tu"
+  },
+  {
+    "label": "ngay_hoc_den",
+    "detail": "field Dir",
+    "insertText": "ngay_hoc_den"
+  },
+  {
+    "label": "ngay_tot_nghiep",
+    "detail": "field Dir",
+    "insertText": "ngay_tot_nghiep"
+  },
+  {
+    "label": "loai_tot_nghiep",
+    "detail": "field Dir",
+    "insertText": "loai_tot_nghiep"
+  },
+  {
+    "label": "ngay_cap_bang",
+    "detail": "field Dir",
+    "insertText": "ngay_cap_bang"
+  },
+  {
+    "label": "dien_thoai_cty",
+    "detail": "field Dir",
+    "insertText": "dien_thoai_cty"
+  },
+  {
+    "label": "dien_thoai_nha",
+    "detail": "field Dir",
+    "insertText": "dien_thoai_nha"
+  },
+  {
+    "label": "giam_ho",
+    "detail": "field Dir",
+    "insertText": "giam_ho"
+  },
+  {
+    "label": "nguoi_than",
+    "detail": "field Dir",
+    "insertText": "nguoi_than"
+  },
+  {
+    "label": "dia_chi_th_tru_so",
+    "detail": "field Dir",
+    "insertText": "dia_chi_th_tru_so"
+  },
+  {
+    "label": "dia_chi_th_tru_tinhat",
+    "detail": "field Dir",
+    "insertText": "dia_chi_th_tru_tinhat"
+  },
+  {
+    "label": "ten_dctt_tinh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dctt_tinh%lex"
+  },
+  {
+    "label": "dia_chi_th_tru_quanat",
+    "detail": "field Dir",
+    "insertText": "dia_chi_th_tru_quanat"
+  },
+  {
+    "label": "ten_dctt_quan%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dctt_quan%lex"
+  },
+  {
+    "label": "dia_chi_th_tru_xaat",
+    "detail": "field Dir",
+    "insertText": "dia_chi_th_tru_xaat"
+  },
+  {
+    "label": "ten_dctt_xa%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dctt_xa%lex"
+  },
+  {
+    "label": "que_quan",
+    "detail": "field Dir",
+    "insertText": "que_quan"
+  },
+  {
+    "label": "que_quan_so",
+    "detail": "field Dir",
+    "insertText": "que_quan_so"
+  },
+  {
+    "label": "que_quan_phuong",
+    "detail": "field Dir",
+    "insertText": "que_quan_phuong"
+  },
+  {
+    "label": "que_quan_tinhat",
+    "detail": "field Dir",
+    "insertText": "que_quan_tinhat"
+  },
+  {
+    "label": "ten_qq_tinh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_qq_tinh%lex"
+  },
+  {
+    "label": "que_quan_quanat",
+    "detail": "field Dir",
+    "insertText": "que_quan_quanat"
+  },
+  {
+    "label": "ten_qq_quan%lex",
+    "detail": "field Dir",
+    "insertText": "ten_qq_quan%lex"
+  },
+  {
+    "label": "que_quan_xaat",
+    "detail": "field Dir",
+    "insertText": "que_quan_xaat"
+  },
+  {
+    "label": "ten_qq_xa%lex",
+    "detail": "field Dir",
+    "insertText": "ten_qq_xa%lex"
+  },
+  {
+    "label": "nh_nv1at",
+    "detail": "field Dir",
+    "insertText": "nh_nv1at"
+  },
+  {
+    "label": "ten_nh_nv1%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_nv1%lex"
+  },
+  {
+    "label": "nh_nv2at",
+    "detail": "field Dir",
+    "insertText": "nh_nv2at"
+  },
+  {
+    "label": "ten_nh_nv2%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_nv2%lex"
+  },
+  {
+    "label": "nh_nv3at",
+    "detail": "field Dir",
+    "insertText": "nh_nv3at"
+  },
+  {
+    "label": "ten_nh_nv3%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nh_nv3%lex"
+  },
+  {
+    "label": "tinh_trang_nvat",
+    "detail": "field Dir",
+    "insertText": "tinh_trang_nvat"
+  },
+  {
+    "label": "rightsex",
+    "detail": "field Dir",
+    "insertText": "rightsex"
+  },
+  {
+    "label": "ticket2ex",
+    "detail": "field Dir",
+    "insertText": "ticket2ex"
+  },
+  {
+    "label": "imageurlex",
+    "detail": "field Dir",
+    "insertText": "imageurlex"
+  },
+  {
+    "label": "rkeyex",
+    "detail": "field Dir",
+    "insertText": "rkeyex"
+  },
+  {
+    "label": "rkey2ex",
+    "detail": "field Dir",
+    "insertText": "rkey2ex"
+  },
+  {
+    "label": "ngay_kham",
+    "detail": "field Dir",
+    "insertText": "ngay_kham"
+  },
+  {
+    "label": "chieu_cao",
+    "detail": "field Dir",
+    "insertText": "chieu_cao"
+  },
+  {
+    "label": "can_nang",
+    "detail": "field Dir",
+    "insertText": "can_nang"
+  },
+  {
+    "label": "mat_phai",
+    "detail": "field Dir",
+    "insertText": "mat_phai"
+  },
+  {
+    "label": "mat_trai",
+    "detail": "field Dir",
+    "insertText": "mat_trai"
+  },
+  {
+    "label": "loai_sk",
+    "detail": "field Dir",
+    "insertText": "loai_sk"
+  },
+  {
+    "label": "ghi_chu_sk",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_sk"
   },
   {
     "label": "ma_pvat",
@@ -10600,6 +10355,206 @@
     "insertText": "ngay_ktr"
   },
   {
+    "label": "ten_khoa%lex",
+    "detail": "field Dir",
+    "insertText": "ten_khoa%lex"
+  },
+  {
+    "label": "ma_mhex",
+    "detail": "field Dir",
+    "insertText": "ma_mhex"
+  },
+  {
+    "label": "ten_mh%lex",
+    "detail": "field Dir",
+    "insertText": "ten_mh%lex"
+  },
+  {
+    "label": "loai_hinh_dtex",
+    "detail": "field Dir",
+    "insertText": "loai_hinh_dtex"
+  },
+  {
+    "label": "ma_dvdtex",
+    "detail": "field Dir",
+    "insertText": "ma_dvdtex"
+  },
+  {
+    "label": "ten_dvdt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_dvdt%lex"
+  },
+  {
+    "label": "ngay_hoc1ex",
+    "detail": "field Dir",
+    "insertText": "ngay_hoc1ex"
+  },
+  {
+    "label": "ngay_hoc2ex",
+    "detail": "field Dir",
+    "insertText": "ngay_hoc2ex"
+  },
+  {
+    "label": "so_gioex",
+    "detail": "field Dir",
+    "insertText": "so_gioex"
+  },
+  {
+    "label": "xep_loaiat",
+    "detail": "field Dir",
+    "insertText": "xep_loaiat"
+  },
+  {
+    "label": "dat_yn",
+    "detail": "field Dir",
+    "insertText": "dat_yn"
+  },
+  {
+    "label": "chung_chi",
+    "detail": "field Dir",
+    "insertText": "chung_chi"
+  },
+  {
+    "label": "ngay_hh",
+    "detail": "field Dir",
+    "insertText": "ngay_hh"
+  },
+  {
+    "label": "thanh_phan_gd",
+    "detail": "field Dir",
+    "insertText": "thanh_phan_gd"
+  },
+  {
+    "label": "thanh_phan_bt",
+    "detail": "field Dir",
+    "insertText": "thanh_phan_bt"
+  },
+  {
+    "label": "dang_vien_yn",
+    "detail": "field Dir",
+    "insertText": "dang_vien_yn"
+  },
+  {
+    "label": "ngay_vao_dang",
+    "detail": "field Dir",
+    "insertText": "ngay_vao_dang"
+  },
+  {
+    "label": "ngay_vd_chinh_thuc",
+    "detail": "field Dir",
+    "insertText": "ngay_vd_chinh_thuc"
+  },
+  {
+    "label": "noi_ket_nap",
+    "detail": "field Dir",
+    "insertText": "noi_ket_nap"
+  },
+  {
+    "label": "so_the_dang",
+    "detail": "field Dir",
+    "insertText": "so_the_dang"
+  },
+  {
+    "label": "chuc_vu_dang",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_dang"
+  },
+  {
+    "label": "chuc_vu_dang2",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_dang2"
+  },
+  {
+    "label": "trinh_do_ly_luan",
+    "detail": "field Dir",
+    "insertText": "trinh_do_ly_luan"
+  },
+  {
+    "label": "ngay_ra_dang",
+    "detail": "field Dir",
+    "insertText": "ngay_ra_dang"
+  },
+  {
+    "label": "ghi_chu_dd2",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_dd2"
+  },
+  {
+    "label": "doan_vien_yn",
+    "detail": "field Dir",
+    "insertText": "doan_vien_yn"
+  },
+  {
+    "label": "ngay_vao_doan",
+    "detail": "field Dir",
+    "insertText": "ngay_vao_doan"
+  },
+  {
+    "label": "chuc_vu_doan",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_doan"
+  },
+  {
+    "label": "chuc_vu_doan2",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_doan2"
+  },
+  {
+    "label": "ngay_ra_doan",
+    "detail": "field Dir",
+    "insertText": "ngay_ra_doan"
+  },
+  {
+    "label": "ghi_chu_dd1",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_dd1"
+  },
+  {
+    "label": "nhap_ngu_yn",
+    "detail": "field Dir",
+    "insertText": "nhap_ngu_yn"
+  },
+  {
+    "label": "ngay_nhap_ngu",
+    "detail": "field Dir",
+    "insertText": "ngay_nhap_ngu"
+  },
+  {
+    "label": "quan_ham",
+    "detail": "field Dir",
+    "insertText": "quan_ham"
+  },
+  {
+    "label": "ngay_xuat_ngu",
+    "detail": "field Dir",
+    "insertText": "ngay_xuat_ngu"
+  },
+  {
+    "label": "ghi_chu_dd3",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_dd3"
+  },
+  {
+    "label": "ten_kl%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kl%lex"
+  },
+  {
+    "label": "nguoi_quan_lyat",
+    "detail": "field Dir",
+    "insertText": "nguoi_quan_lyat"
+  },
+  {
+    "label": "ngay_quyet_dinh",
+    "detail": "field Dir",
+    "insertText": "ngay_quyet_dinh"
+  },
+  {
+    "label": "nguoi_quyet_dinh",
+    "detail": "field Dir",
+    "insertText": "nguoi_quyet_dinh"
+  },
+  {
     "label": "cong_ty",
     "detail": "field Dir",
     "insertText": "cong_ty"
@@ -10633,6 +10588,36 @@
     "label": "so_ngay_nghi",
     "detail": "field Dir",
     "insertText": "so_ngay_nghi"
+  },
+  {
+    "label": "nguoi_tiep_nhan",
+    "detail": "field Dir",
+    "insertText": "nguoi_tiep_nhan"
+  },
+  {
+    "label": "nguon_tuyen_dung",
+    "detail": "field Dir",
+    "insertText": "nguon_tuyen_dung"
+  },
+  {
+    "label": "nguoi_gioi_thieu",
+    "detail": "field Dir",
+    "insertText": "nguoi_gioi_thieu"
+  },
+  {
+    "label": "ly_do_nghiat",
+    "detail": "field Dir",
+    "insertText": "ly_do_nghiat"
+  },
+  {
+    "label": "ten_ldnv%lex",
+    "detail": "field Dir",
+    "insertText": "ten_ldnv%lex"
+  },
+  {
+    "label": "ghi_chu_tt",
+    "detail": "field Dir",
+    "insertText": "ghi_chu_tt"
   },
   {
     "label": "ma_vtr",
@@ -11090,6 +11075,11 @@
     "insertText": "ngay_denex"
   },
   {
+    "label": "ngay_pv_gridView",
+    "detail": "field Dir",
+    "insertText": "ngay_pv_gridView"
+  },
+  {
     "label": "ngay_ktr_oldex",
     "detail": "field Dir",
     "insertText": "ngay_ktr_oldex"
@@ -11128,11 +11118,6 @@
     "label": "ten_in2",
     "detail": "field Dir",
     "insertText": "ten_in2"
-  },
-  {
-    "label": "loai_tcbhat",
-    "detail": "field Dir",
-    "insertText": "loai_tcbhat"
   },
   {
     "label": "sinh_con_yn",
@@ -11188,31 +11173,6 @@
     "label": "ket_thuc_yn",
     "detail": "field Dir",
     "insertText": "ket_thuc_yn"
-  },
-  {
-    "label": "dot_xd",
-    "detail": "field Dir",
-    "insertText": "dot_xd"
-  },
-  {
-    "label": "thang_xd",
-    "detail": "field Dir",
-    "insertText": "thang_xd"
-  },
-  {
-    "label": "nam_xd",
-    "detail": "field Dir",
-    "insertText": "nam_xd"
-  },
-  {
-    "label": "so_tien1",
-    "detail": "field Dir",
-    "insertText": "so_tien1"
-  },
-  {
-    "label": "so_tien2",
-    "detail": "field Dir",
-    "insertText": "so_tien2"
   },
   {
     "label": "so_tien3",
@@ -11275,16 +11235,6 @@
     "insertText": "tg_bhxh"
   },
   {
-    "label": "nam_bhxhex",
-    "detail": "field Dir",
-    "insertText": "nam_bhxhex"
-  },
-  {
-    "label": "thang_bhxhex",
-    "detail": "field Dir",
-    "insertText": "thang_bhxhex"
-  },
-  {
     "label": "tt_bhxh",
     "detail": "field Dir",
     "insertText": "tt_bhxh"
@@ -11298,11 +11248,6 @@
     "label": "dk_muc_huong",
     "detail": "field Dir",
     "insertText": "dk_muc_huong"
-  },
-  {
-    "label": "tt_thang",
-    "detail": "field Dir",
-    "insertText": "tt_thang"
   },
   {
     "label": "lk_dau_nam",
@@ -11425,51 +11370,6 @@
     "insertText": "ghi_chuhoadon"
   },
   {
-    "label": "t_giam_tru_nt",
-    "detail": "field Dir",
-    "insertText": "t_giam_tru_nt"
-  },
-  {
-    "label": "t_giam_tru",
-    "detail": "field Dir",
-    "insertText": "t_giam_tru"
-  },
-  {
-    "label": "t_bh_bb_nt",
-    "detail": "field Dir",
-    "insertText": "t_bh_bb_nt"
-  },
-  {
-    "label": "t_bh_bb",
-    "detail": "field Dir",
-    "insertText": "t_bh_bb"
-  },
-  {
-    "label": "t_tnc_thue_nt",
-    "detail": "field Dir",
-    "insertText": "t_tnc_thue_nt"
-  },
-  {
-    "label": "t_tnc_thue",
-    "detail": "field Dir",
-    "insertText": "t_tnc_thue"
-  },
-  {
-    "label": "t_tnt_thue_nt",
-    "detail": "field Dir",
-    "insertText": "t_tnt_thue_nt"
-  },
-  {
-    "label": "t_tnt_thue",
-    "detail": "field Dir",
-    "insertText": "t_tnt_thue"
-  },
-  {
-    "label": "t_thanh_toan_nt",
-    "detail": "field Dir",
-    "insertText": "t_thanh_toan_nt"
-  },
-  {
     "label": "t_thanh_toan",
     "detail": "field Dir",
     "insertText": "t_thanh_toan"
@@ -11585,16 +11485,6 @@
     "insertText": "giang_vien"
   },
   {
-    "label": "ngay_du_kien1",
-    "detail": "field Dir",
-    "insertText": "ngay_du_kien1"
-  },
-  {
-    "label": "ngay_du_kien2",
-    "detail": "field Dir",
-    "insertText": "ngay_du_kien2"
-  },
-  {
     "label": "ngay_dang_ky1",
     "detail": "field Dir",
     "insertText": "ngay_dang_ky1"
@@ -11613,26 +11503,6 @@
     "label": "ngay_hoc2",
     "detail": "field Dir",
     "insertText": "ngay_hoc2"
-  },
-  {
-    "label": "sl_hv_dk",
-    "detail": "field Dir",
-    "insertText": "sl_hv_dk"
-  },
-  {
-    "label": "sl_hv_tt",
-    "detail": "field Dir",
-    "insertText": "sl_hv_tt"
-  },
-  {
-    "label": "cp_dk",
-    "detail": "field Dir",
-    "insertText": "cp_dk"
-  },
-  {
-    "label": "cp_tt",
-    "detail": "field Dir",
-    "insertText": "cp_tt"
   },
   {
     "label": "t_cp_dk",
@@ -11830,6 +11700,11 @@
     "insertText": "email"
   },
   {
+    "label": "v_passwordex",
+    "detail": "field Dir",
+    "insertText": "v_passwordex"
+  },
+  {
     "label": "type_security",
     "detail": "field Dir",
     "insertText": "type_security"
@@ -11853,11 +11728,6 @@
     "label": "nguong_thue_nt",
     "detail": "field Dir",
     "insertText": "nguong_thue_nt"
-  },
-  {
-    "label": "ma_thue_tpat",
-    "detail": "field Dir",
-    "insertText": "ma_thue_tpat"
   },
   {
     "label": "ten",
@@ -11888,6 +11758,11 @@
     "label": "nh3",
     "detail": "field Dir",
     "insertText": "nh3"
+  },
+  {
+    "label": "cach_tinh_ynex",
+    "detail": "field Dir",
+    "insertText": "cach_tinh_ynex"
   },
   {
     "label": "ten_loai_hd",
@@ -12080,26 +11955,6 @@
     "insertText": "cex"
   },
   {
-    "label": "u0ex",
-    "detail": "field Dir",
-    "insertText": "u0ex"
-  },
-  {
-    "label": "u1ex",
-    "detail": "field Dir",
-    "insertText": "u1ex"
-  },
-  {
-    "label": "u2ex",
-    "detail": "field Dir",
-    "insertText": "u2ex"
-  },
-  {
-    "label": "urls",
-    "detail": "field Dir",
-    "insertText": "urls"
-  },
-  {
     "label": "ten_ct_tc%lex",
     "detail": "field Dir",
     "insertText": "ten_ct_tc%lex"
@@ -12110,39 +11965,44 @@
     "insertText": "gia_tri"
   },
   {
-    "label": "lk_co",
+    "label": "lk_co_gridView",
     "detail": "field Dir",
-    "insertText": "lk_co"
+    "insertText": "lk_co_gridView"
   },
   {
-    "label": "lk_no_nt",
+    "label": "lk_no_nt_gridView",
     "detail": "field Dir",
-    "insertText": "lk_no_nt"
+    "insertText": "lk_no_nt_gridView"
   },
   {
-    "label": "lk_co_nt",
+    "label": "lk_co_nt_gridView",
     "detail": "field Dir",
-    "insertText": "lk_co_nt"
+    "insertText": "lk_co_nt_gridView"
   },
   {
-    "label": "lk_co_dk",
+    "label": "lk_co_dk_gridView",
     "detail": "field Dir",
-    "insertText": "lk_co_dk"
+    "insertText": "lk_co_dk_gridView"
   },
   {
-    "label": "lk_no_dk_nt",
+    "label": "lk_no_dk_nt_gridView",
     "detail": "field Dir",
-    "insertText": "lk_no_dk_nt"
+    "insertText": "lk_no_dk_nt_gridView"
   },
   {
-    "label": "lk_co_dk_nt",
+    "label": "lk_co_dk_nt_gridView",
     "detail": "field Dir",
-    "insertText": "lk_co_dk_nt"
+    "insertText": "lk_co_dk_nt_gridView"
   },
   {
     "label": "ten_kh_v%lex",
     "detail": "field Dir",
     "insertText": "ten_kh_v%lex"
+  },
+  {
+    "label": "tk_thue_noat",
+    "detail": "field Dir",
+    "insertText": "tk_thue_noat"
   },
   {
     "label": "ten_tk_thue_du%lex",
@@ -12153,11 +12013,6 @@
     "label": "ten_kh2%lex",
     "detail": "field Dir",
     "insertText": "ten_kh2%lex"
-  },
-  {
-    "label": "so_nb",
-    "detail": "field Dir",
-    "insertText": "so_nb"
   },
   {
     "label": "isnl",
@@ -12280,94 +12135,9 @@
     "insertText": "ten_loai_vt2"
   },
   {
-    "label": "ten_vv",
-    "detail": "field Dir",
-    "insertText": "ten_vv"
-  },
-  {
-    "label": "ten_vv2",
-    "detail": "field Dir",
-    "insertText": "ten_vv2"
-  },
-  {
-    "label": "ngay_vv",
-    "detail": "field Dir",
-    "insertText": "ngay_vv"
-  },
-  {
-    "label": "so_vv",
-    "detail": "field Dir",
-    "insertText": "so_vv"
-  },
-  {
-    "label": "vv_sd_pslk",
-    "detail": "field Dir",
-    "insertText": "vv_sd_pslk"
-  },
-  {
-    "label": "ngay_vv1",
-    "detail": "field Dir",
-    "insertText": "ngay_vv1"
-  },
-  {
-    "label": "ngay_vv2",
-    "detail": "field Dir",
-    "insertText": "ngay_vv2"
-  },
-  {
-    "label": "ma_vv_meat",
-    "detail": "field Dir",
-    "insertText": "ma_vv_meat"
-  },
-  {
-    "label": "ten_vv_me%lex",
-    "detail": "field Dir",
-    "insertText": "ten_vv_me%lex"
-  },
-  {
-    "label": "nh_vv1at",
-    "detail": "field Dir",
-    "insertText": "nh_vv1at"
-  },
-  {
-    "label": "ten_nh_vv1%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_vv1%lex"
-  },
-  {
-    "label": "nh_vv2at",
-    "detail": "field Dir",
-    "insertText": "nh_vv2at"
-  },
-  {
-    "label": "ten_nh_vv2%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_vv2%lex"
-  },
-  {
-    "label": "nh_vv3at",
-    "detail": "field Dir",
-    "insertText": "nh_vv3at"
-  },
-  {
-    "label": "ten_nh_vv3%lex",
-    "detail": "field Dir",
-    "insertText": "ten_nh_vv3%lex"
-  },
-  {
     "label": "ct_khex",
     "detail": "field Dir",
     "insertText": "ct_khex"
-  },
-  {
-    "label": "td_yn",
-    "detail": "field Dir",
-    "insertText": "td_yn"
-  },
-  {
-    "label": "so_ctgs0",
-    "detail": "field Dir",
-    "insertText": "so_ctgs0"
   },
   {
     "label": "so_ctgs",
@@ -12415,24 +12185,69 @@
     "insertText": "description%lex"
   },
   {
-    "label": "ton00",
+    "label": "ma_kuat_gridView",
     "detail": "field Dir",
-    "insertText": "ton00"
+    "insertText": "ma_kuat_gridView"
   },
   {
-    "label": "du00",
+    "label": "du_no00_gridView",
     "detail": "field Dir",
-    "insertText": "du00"
+    "insertText": "du_no00_gridView"
   },
   {
-    "label": "du_nt00",
+    "label": "du_co00_gridView",
     "detail": "field Dir",
-    "insertText": "du_nt00"
+    "insertText": "du_co00_gridView"
   },
   {
-    "label": "gia_tonex",
+    "label": "du_no_nt00_gridView",
     "detail": "field Dir",
-    "insertText": "gia_tonex"
+    "insertText": "du_no_nt00_gridView"
+  },
+  {
+    "label": "du_co_nt00_gridView",
+    "detail": "field Dir",
+    "insertText": "du_co_nt00_gridView"
+  },
+  {
+    "label": "ma_vi_tri",
+    "detail": "field Dir",
+    "insertText": "ma_vi_tri"
+  },
+  {
+    "label": "ten_vi_tri",
+    "detail": "field Dir",
+    "insertText": "ten_vi_tri"
+  },
+  {
+    "label": "ten_vi_tri2",
+    "detail": "field Dir",
+    "insertText": "ten_vi_tri2"
+  },
+  {
+    "label": "ten_lo",
+    "detail": "field Dir",
+    "insertText": "ten_lo"
+  },
+  {
+    "label": "ten_lo2",
+    "detail": "field Dir",
+    "insertText": "ten_lo2"
+  },
+  {
+    "label": "ngay_sx",
+    "detail": "field Dir",
+    "insertText": "ngay_sx"
+  },
+  {
+    "label": "ngay_hhbh",
+    "detail": "field Dir",
+    "insertText": "ngay_hhbh"
+  },
+  {
+    "label": "ma_vt2",
+    "detail": "field Dir",
+    "insertText": "ma_vt2"
   },
   {
     "label": "alias_name",
@@ -12448,6 +12263,16 @@
     "label": "ssl",
     "detail": "field Dir",
     "insertText": "ssl"
+  },
+  {
+    "label": "ma_dtqt",
+    "detail": "field Dir",
+    "insertText": "ma_dtqt"
+  },
+  {
+    "label": "ten_dtqt",
+    "detail": "field Dir",
+    "insertText": "ten_dtqt"
   },
   {
     "label": "ten_dtqt2",
@@ -12473,6 +12298,11 @@
     "label": "nh_dtqt3at",
     "detail": "field Dir",
     "insertText": "nh_dtqt3at"
+  },
+  {
+    "label": "ma_dtqtat",
+    "detail": "field Dir",
+    "insertText": "ma_dtqtat"
   },
   {
     "label": "ten_dtqt%lex",
@@ -12540,9 +12370,9 @@
     "insertText": "tg_th"
   },
   {
-    "label": "so_ngayex",
+    "label": "so_dh",
     "detail": "field Dir",
-    "insertText": "so_ngayex"
+    "insertText": "so_dh"
   },
   {
     "label": "so_lsx",
@@ -12553,6 +12383,16 @@
     "label": "ma_qt",
     "detail": "field Dir",
     "insertText": "ma_qt"
+  },
+  {
+    "label": "ten_qt",
+    "detail": "field Dir",
+    "insertText": "ten_qt"
+  },
+  {
+    "label": "ten_qt2",
+    "detail": "field Dir",
+    "insertText": "ten_qt2"
   },
   {
     "label": "ds_tblk",
@@ -12620,39 +12460,39 @@
     "insertText": "date"
   },
   {
-    "label": "t_tien_pb_nt",
+    "label": "lk_co",
     "detail": "field Dir",
-    "insertText": "t_tien_pb_nt"
+    "insertText": "lk_co"
   },
   {
-    "label": "t_tien_cl_nt",
+    "label": "lk_no_nt",
     "detail": "field Dir",
-    "insertText": "t_tien_cl_nt"
+    "insertText": "lk_no_nt"
   },
   {
-    "label": "t_tien_pb",
+    "label": "lk_co_nt",
     "detail": "field Dir",
-    "insertText": "t_tien_pb"
+    "insertText": "lk_co_nt"
   },
   {
-    "label": "t_tien_cl",
+    "label": "lk_co_dk",
     "detail": "field Dir",
-    "insertText": "t_tien_cl"
+    "insertText": "lk_co_dk"
   },
   {
-    "label": "sdt_valex",
+    "label": "lk_no_dk_nt",
     "detail": "field Dir",
-    "insertText": "sdt_valex"
+    "insertText": "lk_no_dk_nt"
+  },
+  {
+    "label": "lk_co_dk_nt",
+    "detail": "field Dir",
+    "insertText": "lk_co_dk_nt"
   },
   {
     "label": "stt_phan_heex",
     "detail": "field Dir",
     "insertText": "stt_phan_heex"
-  },
-  {
-    "label": "number_formatex",
-    "detail": "field Dir",
-    "insertText": "number_formatex"
   },
   {
     "label": "in_nl_yn",
@@ -12745,6 +12585,16 @@
     "insertText": "ten_btex"
   },
   {
+    "label": "ma_kh_xat",
+    "detail": "field Dir",
+    "insertText": "ma_kh_xat"
+  },
+  {
+    "label": "ten_kh_x%lex",
+    "detail": "field Dir",
+    "insertText": "ten_kh_x%lex"
+  },
+  {
     "label": "ma_kh3at",
     "detail": "field Dir",
     "insertText": "ma_kh3at"
@@ -12795,16 +12645,6 @@
     "insertText": "tien2"
   },
   {
-    "label": "so_pnex",
-    "detail": "field Dir",
-    "insertText": "so_pnex"
-  },
-  {
-    "label": "ngay_pnex",
-    "detail": "field Dir",
-    "insertText": "ngay_pnex"
-  },
-  {
     "label": "ma_nvmh",
     "detail": "field Dir",
     "insertText": "ma_nvmh"
@@ -12850,11 +12690,6 @@
     "insertText": "ten_qh2"
   },
   {
-    "label": "ma_kh0at",
-    "detail": "field Dir",
-    "insertText": "ma_kh0at"
-  },
-  {
     "label": "ten_kh0%lex",
     "detail": "field Dir",
     "insertText": "ten_kh0%lex"
@@ -12873,11 +12708,6 @@
     "label": "ten_kh1%lex",
     "detail": "field Dir",
     "insertText": "ten_kh1%lex"
-  },
-  {
-    "label": "ly_do_tt",
-    "detail": "field Dir",
-    "insertText": "ly_do_tt"
   },
   {
     "label": "t_tt_nt1",
@@ -12995,36 +12825,6 @@
     "insertText": "title132"
   },
   {
-    "label": "tkn_01ex",
-    "detail": "field Dir",
-    "insertText": "tkn_01ex"
-  },
-  {
-    "label": "tkc_01ex",
-    "detail": "field Dir",
-    "insertText": "tkc_01ex"
-  },
-  {
-    "label": "tkn_02ex",
-    "detail": "field Dir",
-    "insertText": "tkn_02ex"
-  },
-  {
-    "label": "tkc_02ex",
-    "detail": "field Dir",
-    "insertText": "tkc_02ex"
-  },
-  {
-    "label": "tkn_03ex",
-    "detail": "field Dir",
-    "insertText": "tkn_03ex"
-  },
-  {
-    "label": "tkc_03ex",
-    "detail": "field Dir",
-    "insertText": "tkc_03ex"
-  },
-  {
     "label": "logo_id",
     "detail": "field Dir",
     "insertText": "logo_id"
@@ -13065,11 +12865,6 @@
     "insertText": "tinh_tp"
   },
   {
-    "label": "ten_khthue",
-    "detail": "field Dir",
-    "insertText": "ten_khthue"
-  },
-  {
     "label": "dia_chithue",
     "detail": "field Dir",
     "insertText": "dia_chithue"
@@ -13100,11 +12895,6 @@
     "insertText": "thu_chi"
   },
   {
-    "label": "ds_chi_tieulk",
-    "detail": "field Dir",
-    "insertText": "ds_chi_tieulk"
-  },
-  {
     "label": "style",
     "detail": "field Dir",
     "insertText": "style"
@@ -13115,29 +12905,9 @@
     "insertText": "italics"
   },
   {
-    "label": "loai_ma_so",
-    "detail": "field Dir",
-    "insertText": "loai_ma_so"
-  },
-  {
     "label": "ky1_0",
     "detail": "field Dir",
     "insertText": "ky1_0"
-  },
-  {
-    "label": "cong_no_ct",
-    "detail": "field Dir",
-    "insertText": "cong_no_ct"
-  },
-  {
-    "label": "vv_ct",
-    "detail": "field Dir",
-    "insertText": "vv_ct"
-  },
-  {
-    "label": "phi_ct",
-    "detail": "field Dir",
-    "insertText": "phi_ct"
   },
   {
     "label": "tl_gh",
@@ -13165,29 +12935,9 @@
     "insertText": "ty_le_tncn"
   },
   {
-    "label": "loai_thue",
-    "detail": "field Dir",
-    "insertText": "loai_thue"
-  },
-  {
-    "label": "ma_hhat",
-    "detail": "field Dir",
-    "insertText": "ma_hhat"
-  },
-  {
     "label": "ten_hh%lex",
     "detail": "field Dir",
     "insertText": "ten_hh%lex"
-  },
-  {
-    "label": "muc_thue",
-    "detail": "field Dir",
-    "insertText": "muc_thue"
-  },
-  {
-    "label": "dt_tinh_thue",
-    "detail": "field Dir",
-    "insertText": "dt_tinh_thue"
   },
   {
     "label": "thue",
@@ -13205,24 +12955,9 @@
     "insertText": "ten_nc%lex"
   },
   {
-    "label": "ma_pxat",
-    "detail": "field Dir",
-    "insertText": "ma_pxat"
-  },
-  {
     "label": "ten_px%lex",
     "detail": "field Dir",
     "insertText": "ten_px%lex"
-  },
-  {
-    "label": "ma_lsxat",
-    "detail": "field Dir",
-    "insertText": "ma_lsxat"
-  },
-  {
-    "label": "ma_cdat",
-    "detail": "field Dir",
-    "insertText": "ma_cdat"
   },
   {
     "label": "ten_cd%lex",
@@ -13285,11 +13020,6 @@
     "insertText": "ref_lsxex"
   },
   {
-    "label": "ma_lo_trinhat",
-    "detail": "field Dir",
-    "insertText": "ma_lo_trinhat"
-  },
-  {
     "label": "ten_lo_trinh%lex",
     "detail": "field Dir",
     "insertText": "ten_lo_trinh%lex"
@@ -13298,6 +13028,16 @@
     "label": "sl_yc",
     "detail": "field Dir",
     "insertText": "sl_yc"
+  },
+  {
+    "label": "ma_pxat",
+    "detail": "field Dir",
+    "insertText": "ma_pxat"
+  },
+  {
+    "label": "ma_cdat",
+    "detail": "field Dir",
+    "insertText": "ma_cdat"
   },
   {
     "label": "ma_nvbh",
@@ -13315,6 +13055,11 @@
     "insertText": "ten_nvbh2"
   },
   {
+    "label": "du_no00",
+    "detail": "field Dir",
+    "insertText": "du_no00"
+  },
+  {
     "label": "ma_so_me",
     "detail": "field Dir",
     "insertText": "ma_so_me"
@@ -13325,24 +13070,24 @@
     "insertText": "ma_phi"
   },
   {
-    "label": "loai_gia",
-    "detail": "field Dir",
-    "insertText": "loai_gia"
-  },
-  {
-    "label": "ngay_ban",
-    "detail": "field Dir",
-    "insertText": "ngay_ban"
-  },
-  {
-    "label": "gia_nt2",
-    "detail": "field Dir",
-    "insertText": "gia_nt2"
-  },
-  {
     "label": "loai_giaat",
     "detail": "field Dir",
     "insertText": "loai_giaat"
+  },
+  {
+    "label": "so_ncex",
+    "detail": "field Dir",
+    "insertText": "so_ncex"
+  },
+  {
+    "label": "ngay_ncex",
+    "detail": "field Dir",
+    "insertText": "ngay_ncex"
+  },
+  {
+    "label": "t_sl_dh",
+    "detail": "field Dir",
+    "insertText": "t_sl_dh"
   },
   {
     "label": "truc_tiep",
@@ -13500,11 +13245,6 @@
     "insertText": "nang_suat"
   },
   {
-    "label": "ma_cd_tuat",
-    "detail": "field Dir",
-    "insertText": "ma_cd_tuat"
-  },
-  {
     "label": "ten_cd_tu%lex",
     "detail": "field Dir",
     "insertText": "ten_cd_tu%lex"
@@ -13518,11 +13258,6 @@
     "label": "ten_pxn%lex",
     "detail": "field Dir",
     "insertText": "ten_pxn%lex"
-  },
-  {
-    "label": "ma_lsxnat",
-    "detail": "field Dir",
-    "insertText": "ma_lsxnat"
   },
   {
     "label": "ten_lsxn%lex",
@@ -13555,11 +13290,6 @@
     "insertText": "ten_ld2"
   },
   {
-    "label": "cp_gt",
-    "detail": "field Dir",
-    "insertText": "cp_gt"
-  },
-  {
     "label": "ma_px",
     "detail": "field Dir",
     "insertText": "ma_px"
@@ -13590,14 +13320,14 @@
     "insertText": "ten_htvc2"
   },
   {
+    "label": "ma_dc",
+    "detail": "field Dir",
+    "insertText": "ma_dc"
+  },
+  {
     "label": "ngay_xuat",
     "detail": "field Dir",
     "insertText": "ngay_xuat"
-  },
-  {
-    "label": "tl_ck",
-    "detail": "field Dir",
-    "insertText": "tl_ck"
   },
   {
     "label": "tien_ck",
@@ -13605,14 +13335,24 @@
     "insertText": "tien_ck"
   },
   {
+    "label": "khach_hangex",
+    "detail": "field Dir",
+    "insertText": "khach_hangex"
+  },
+  {
+    "label": "t_tien_km_ct_ntex",
+    "detail": "field Dir",
+    "insertText": "t_tien_km_ct_ntex"
+  },
+  {
+    "label": "t_tien_km_ctex",
+    "detail": "field Dir",
+    "insertText": "t_tien_km_ctex"
+  },
+  {
     "label": "so_luong3",
     "detail": "field Dir",
     "insertText": "so_luong3"
-  },
-  {
-    "label": "tg_kk",
-    "detail": "field Dir",
-    "insertText": "tg_kk"
   },
   {
     "label": "tieu_de2",
@@ -13623,6 +13363,16 @@
     "label": "noi_dung2",
     "detail": "field Dir",
     "insertText": "noi_dung2"
+  },
+  {
+    "label": "ma_tnat",
+    "detail": "field Dir",
+    "insertText": "ma_tnat"
+  },
+  {
+    "label": "muc_thue",
+    "detail": "field Dir",
+    "insertText": "muc_thue"
   },
   {
     "label": "ma_plat",
@@ -13670,11 +13420,6 @@
     "insertText": "kieu_thue"
   },
   {
-    "label": "ten_loai_tt%lex",
-    "detail": "field Dir",
-    "insertText": "ten_loai_tt%lex"
-  },
-  {
     "label": "ma_ns",
     "detail": "field Dir",
     "insertText": "ma_ns"
@@ -13713,16 +13458,6 @@
     "label": "tinh_gt_yn",
     "detail": "field Dir",
     "insertText": "tinh_gt_yn"
-  },
-  {
-    "label": "hop_dong_yn",
-    "detail": "field Dir",
-    "insertText": "hop_dong_yn"
-  },
-  {
-    "label": "uy_quyen_yn",
-    "detail": "field Dir",
-    "insertText": "uy_quyen_yn"
   },
   {
     "label": "cn_nn_duoi12",
@@ -13768,6 +13503,11 @@
     "label": "ten_gd",
     "detail": "field Dir",
     "insertText": "ten_gd"
+  },
+  {
+    "label": "ten_gd2",
+    "detail": "field Dir",
+    "insertText": "ten_gd2"
   },
   {
     "label": "ma_vc",
@@ -13860,24 +13600,9 @@
     "insertText": "dvt_do"
   },
   {
-    "label": "ma_bp_dcat",
-    "detail": "field Dir",
-    "insertText": "ma_bp_dcat"
-  },
-  {
-    "label": "sua_pb",
-    "detail": "field Dir",
-    "insertText": "sua_pb"
-  },
-  {
     "label": "gt_da_pb_nt",
     "detail": "field Dir",
     "insertText": "gt_da_pb_nt"
-  },
-  {
-    "label": "gt_pb_ky_nt",
-    "detail": "field Dir",
-    "insertText": "gt_pb_ky_nt"
   },
   {
     "label": "gt_da_pb",
@@ -13885,114 +13610,9 @@
     "insertText": "gt_da_pb"
   },
   {
-    "label": "gt_pb_ky",
+    "label": "loai_tg_ts_gridView",
     "detail": "field Dir",
-    "insertText": "gt_pb_ky"
-  },
-  {
-    "label": "ten_bp_dc%lex",
-    "detail": "field Dir",
-    "insertText": "ten_bp_dc%lex"
-  },
-  {
-    "label": "ma_ld_giamat",
-    "detail": "field Dir",
-    "insertText": "ma_ld_giamat"
-  },
-  {
-    "label": "sua_gt_pb",
-    "detail": "field Dir",
-    "insertText": "sua_gt_pb"
-  },
-  {
-    "label": "gt_pb_nt",
-    "detail": "field Dir",
-    "insertText": "gt_pb_nt"
-  },
-  {
-    "label": "gt_pb",
-    "detail": "field Dir",
-    "insertText": "gt_pb"
-  },
-  {
-    "label": "nguyen_gia_nt1ex",
-    "detail": "field Dir",
-    "insertText": "nguyen_gia_nt1ex"
-  },
-  {
-    "label": "gt_pb_nt1ex",
-    "detail": "field Dir",
-    "insertText": "gt_pb_nt1ex"
-  },
-  {
-    "label": "nguyen_gia1ex",
-    "detail": "field Dir",
-    "insertText": "nguyen_gia1ex"
-  },
-  {
-    "label": "gt_pb1ex",
-    "detail": "field Dir",
-    "insertText": "gt_pb1ex"
-  },
-  {
-    "label": "nguyen_gia_nt0ex",
-    "detail": "field Dir",
-    "insertText": "nguyen_gia_nt0ex"
-  },
-  {
-    "label": "gt_pb_nt0ex",
-    "detail": "field Dir",
-    "insertText": "gt_pb_nt0ex"
-  },
-  {
-    "label": "nguyen_gia0ex",
-    "detail": "field Dir",
-    "insertText": "nguyen_gia0ex"
-  },
-  {
-    "label": "gt_pb0ex",
-    "detail": "field Dir",
-    "insertText": "gt_pb0ex"
-  },
-  {
-    "label": "t_nguyen_gia_ntex",
-    "detail": "field Dir",
-    "insertText": "t_nguyen_gia_ntex"
-  },
-  {
-    "label": "t_nguyen_giaex",
-    "detail": "field Dir",
-    "insertText": "t_nguyen_giaex"
-  },
-  {
-    "label": "t_gt_cl_ntex",
-    "detail": "field Dir",
-    "insertText": "t_gt_cl_ntex"
-  },
-  {
-    "label": "t_gt_clex",
-    "detail": "field Dir",
-    "insertText": "t_gt_clex"
-  },
-  {
-    "label": "ma_bp_tuat",
-    "detail": "field Dir",
-    "insertText": "ma_bp_tuat"
-  },
-  {
-    "label": "ten_bp_tu%lex",
-    "detail": "field Dir",
-    "insertText": "ten_bp_tu%lex"
-  },
-  {
-    "label": "ma_bp_denat",
-    "detail": "field Dir",
-    "insertText": "ma_bp_denat"
-  },
-  {
-    "label": "ten_bp_den%lex",
-    "detail": "field Dir",
-    "insertText": "ten_bp_den%lex"
+    "insertText": "loai_tg_ts_gridView"
   },
   {
     "label": "ten_bp_cc%lex",
@@ -14005,14 +13625,9 @@
     "insertText": "ma_ttck"
   },
   {
-    "label": "ten_dvcs",
+    "label": "dvtat_gridView",
     "detail": "field Dir",
-    "insertText": "ten_dvcs"
-  },
-  {
-    "label": "ten_dvcs2",
-    "detail": "field Dir",
-    "insertText": "ten_dvcs2"
+    "insertText": "dvtat_gridView"
   },
   {
     "label": "ten_hsex",
@@ -14025,9 +13640,44 @@
     "insertText": "dvt1ex"
   },
   {
-    "label": "ds_dvcslk",
+    "label": "so_dt",
     "detail": "field Dir",
-    "insertText": "ds_dvcslk"
+    "insertText": "so_dt"
+  },
+  {
+    "label": "ten_ktt",
+    "detail": "field Dir",
+    "insertText": "ten_ktt"
+  },
+  {
+    "label": "ten_ktt2",
+    "detail": "field Dir",
+    "insertText": "ten_ktt2"
+  },
+  {
+    "label": "ten_tq",
+    "detail": "field Dir",
+    "insertText": "ten_tq"
+  },
+  {
+    "label": "ten_tq2",
+    "detail": "field Dir",
+    "insertText": "ten_tq2"
+  },
+  {
+    "label": "ma_dv_bhxh",
+    "detail": "field Dir",
+    "insertText": "ma_dv_bhxh"
+  },
+  {
+    "label": "ma_cqtat",
+    "detail": "field Dir",
+    "insertText": "ma_cqtat"
+  },
+  {
+    "label": "ten_cqt%lex",
+    "detail": "field Dir",
+    "insertText": "ten_cqt%lex"
   },
   {
     "label": "name2atex",
@@ -14038,6 +13688,11 @@
     "label": "comment",
     "detail": "field Dir",
     "insertText": "comment"
+  },
+  {
+    "label": "cpassex",
+    "detail": "field Dir",
+    "insertText": "cpassex"
   },
   {
     "label": "view_passex",
@@ -14110,16 +13765,6 @@
     "insertText": "old_user_lstex"
   },
   {
-    "label": "user_lst",
-    "detail": "field Dir",
-    "insertText": "user_lst"
-  },
-  {
-    "label": "kb_ynex",
-    "detail": "field Dir",
-    "insertText": "kb_ynex"
-  },
-  {
     "label": "ten_tk_no3%lex",
     "detail": "field Dir",
     "insertText": "ten_tk_no3%lex"
@@ -14165,34 +13810,9 @@
     "insertText": "lay_tuex"
   },
   {
-    "label": "ma_so03",
-    "detail": "field Dir",
-    "insertText": "ma_so03"
-  },
-  {
     "label": "id_nsd",
     "detail": "field Dir",
     "insertText": "id_nsd"
-  },
-  {
-    "label": "ky_hieuat",
-    "detail": "field Dir",
-    "insertText": "ky_hieuat"
-  },
-  {
-    "label": "so_ct2",
-    "detail": "field Dir",
-    "insertText": "so_ct2"
-  },
-  {
-    "label": "trung_soex",
-    "detail": "field Dir",
-    "insertText": "trung_soex"
-  },
-  {
-    "label": "cb_ynex",
-    "detail": "field Dir",
-    "insertText": "cb_ynex"
   },
   {
     "label": "ten_nkt",
@@ -14220,174 +13840,9 @@
     "insertText": "lo_yn"
   },
   {
-    "label": "ten_ct_me%lex",
-    "detail": "field Dir",
-    "insertText": "ten_ct_me%lex"
-  },
-  {
-    "label": "m_ma_gdat",
-    "detail": "field Dir",
-    "insertText": "m_ma_gdat"
-  },
-  {
-    "label": "m_loai_ctat",
-    "detail": "field Dir",
-    "insertText": "m_loai_ctat"
-  },
-  {
-    "label": "m_statusat",
-    "detail": "field Dir",
-    "insertText": "m_statusat"
-  },
-  {
-    "label": "action_name%lex",
-    "detail": "field Dir",
-    "insertText": "action_name%lex"
-  },
-  {
-    "label": "m_ong_ba",
-    "detail": "field Dir",
-    "insertText": "m_ong_ba"
-  },
-  {
-    "label": "m_loc_nsd",
-    "detail": "field Dir",
-    "insertText": "m_loc_nsd"
-  },
-  {
-    "label": "tieu_de_ct",
-    "detail": "field Dir",
-    "insertText": "tieu_de_ct"
-  },
-  {
-    "label": "tieu_de_ct2",
-    "detail": "field Dir",
-    "insertText": "tieu_de_ct2"
-  },
-  {
-    "label": "so_lien",
-    "detail": "field Dir",
-    "insertText": "so_lien"
-  },
-  {
-    "label": "ma_ct_in",
-    "detail": "field Dir",
-    "insertText": "ma_ct_in"
-  },
-  {
-    "label": "stt_ct_nkc",
-    "detail": "field Dir",
-    "insertText": "stt_ct_nkc"
-  },
-  {
-    "label": "max_row",
-    "detail": "field Dir",
-    "insertText": "max_row"
-  },
-  {
-    "label": "post_vv",
-    "detail": "field Dir",
-    "insertText": "post_vv"
-  },
-  {
-    "label": "post_sp",
-    "detail": "field Dir",
-    "insertText": "post_sp"
-  },
-  {
-    "label": "post_bp",
-    "detail": "field Dir",
-    "insertText": "post_bp"
-  },
-  {
-    "label": "post_lsx",
-    "detail": "field Dir",
-    "insertText": "post_lsx"
-  },
-  {
-    "label": "post_hd",
-    "detail": "field Dir",
-    "insertText": "post_hd"
-  },
-  {
-    "label": "post_ku",
-    "detail": "field Dir",
-    "insertText": "post_ku"
-  },
-  {
-    "label": "post_phi",
-    "detail": "field Dir",
-    "insertText": "post_phi"
-  },
-  {
-    "label": "use_ma_vvex",
-    "detail": "field Dir",
-    "insertText": "use_ma_vvex"
-  },
-  {
-    "label": "use_ma_spex",
-    "detail": "field Dir",
-    "insertText": "use_ma_spex"
-  },
-  {
-    "label": "use_ma_bpex",
-    "detail": "field Dir",
-    "insertText": "use_ma_bpex"
-  },
-  {
-    "label": "use_so_lsxex",
-    "detail": "field Dir",
-    "insertText": "use_so_lsxex"
-  },
-  {
-    "label": "use_ma_hdex",
-    "detail": "field Dir",
-    "insertText": "use_ma_hdex"
-  },
-  {
-    "label": "use_ma_kuex",
-    "detail": "field Dir",
-    "insertText": "use_ma_kuex"
-  },
-  {
-    "label": "use_ma_phiex",
-    "detail": "field Dir",
-    "insertText": "use_ma_phiex"
-  },
-  {
-    "label": "gd_ynex",
-    "detail": "field Dir",
-    "insertText": "gd_ynex"
-  },
-  {
-    "label": "ct_ynex",
-    "detail": "field Dir",
-    "insertText": "ct_ynex"
-  },
-  {
-    "label": "xl_ynex",
-    "detail": "field Dir",
-    "insertText": "xl_ynex"
-  },
-  {
-    "label": "voucher_yn",
-    "detail": "field Dir",
-    "insertText": "voucher_yn"
-  },
-  {
-    "label": "xsttex",
-    "detail": "field Dir",
-    "insertText": "xsttex"
-  },
-  {
     "label": "status_idat",
     "detail": "field Dir",
     "insertText": "status_idat"
-  },
-  {
-    "label": "statusname%lex",
-    "detail": "field Dir",
-    "insertText": "statusname%lex"
   },
   {
     "label": "r_edit",

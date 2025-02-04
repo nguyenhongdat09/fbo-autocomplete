@@ -1,23 +1,13 @@
 [
   {
-    "label": "gc_td2",
+    "label": "tk_vtat",
     "detail": "field GridInput",
-    "insertText": "gc_td2"
+    "insertText": "tk_vtat"
   },
   {
-    "label": "gc_td3",
+    "label": "ten_tk_vt%lex",
     "detail": "field GridInput",
-    "insertText": "gc_td3"
-  },
-  {
-    "label": "stt_rec",
-    "detail": "field GridInput",
-    "insertText": "stt_rec"
-  },
-  {
-    "label": "dien_giai",
-    "detail": "field GridInput",
-    "insertText": "dien_giai"
+    "insertText": "ten_tk_vt%lex"
   },
   {
     "label": "dvt",
@@ -25,24 +15,39 @@
     "insertText": "dvt"
   },
   {
-    "label": "dvt_gocex",
-    "detail": "field GridInput",
-    "insertText": "dvt_gocex"
-  },
-  {
     "label": "so_luong",
     "detail": "field GridInput",
     "insertText": "so_luong"
   },
   {
-    "label": "gia_nt0ex",
+    "label": "gia_nt",
     "detail": "field GridInput",
-    "insertText": "gia_nt0ex"
+    "insertText": "gia_nt"
   },
   {
-    "label": "tien_nt0ex",
+    "label": "tien_nt",
     "detail": "field GridInput",
-    "insertText": "tien_nt0ex"
+    "insertText": "tien_nt"
+  },
+  {
+    "label": "dien_giai",
+    "detail": "field GridInput",
+    "insertText": "dien_giai"
+  },
+  {
+    "label": "gia",
+    "detail": "field GridInput",
+    "insertText": "gia"
+  },
+  {
+    "label": "tien",
+    "detail": "field GridInput",
+    "insertText": "tien"
+  },
+  {
+    "label": "stt_rec",
+    "detail": "field GridInput",
+    "insertText": "stt_rec"
   },
   {
     "label": "stt_rec0",
@@ -50,64 +55,179 @@
     "insertText": "stt_rec0"
   },
   {
-    "label": "so_ct",
-    "detail": "field GridInput",
-    "insertText": "so_ct"
-  },
-  {
     "label": "line_nbr",
     "detail": "field GridInput",
     "insertText": "line_nbr"
   },
   {
-    "label": "thue_nt",
+    "label": "s4",
     "detail": "field GridInput",
-    "insertText": "thue_nt"
+    "insertText": "s4"
   },
   {
-    "label": "thue_suatex",
+    "label": "ma_td1at",
     "detail": "field GridInput",
-    "insertText": "thue_suatex"
+    "insertText": "ma_td1at"
   },
   {
-    "label": "tinh_chatex",
+    "label": "ten_td1%lex",
     "detail": "field GridInput",
-    "insertText": "tinh_chatex"
+    "insertText": "ten_td1%lex"
   },
   {
-    "label": "loai_tsex",
+    "label": "mau_bcat",
     "detail": "field GridInput",
-    "insertText": "loai_tsex"
+    "insertText": "mau_bcat"
   },
   {
-    "label": "ckex",
+    "label": "ten_bc%lex",
     "detail": "field GridInput",
-    "insertText": "ckex"
+    "insertText": "ten_bc%lex"
   },
   {
-    "label": "ma_vtat",
+    "label": "ma_tcat",
     "detail": "field GridInput",
-    "insertText": "ma_vtat"
+    "insertText": "ma_tcat"
   },
   {
-    "label": "ten_vt%lex",
+    "label": "ten_tc%lex",
     "detail": "field GridInput",
-    "insertText": "ten_vt%lex"
+    "insertText": "ten_tc%lex"
   },
   {
-    "label": "dvtat",
+    "label": "ma_mau_ctat",
     "detail": "field GridInput",
-    "insertText": "dvtat"
+    "insertText": "ma_mau_ctat"
   },
   {
-    "label": "ten_dvt%lex",
+    "label": "ten_mau_ct%lex",
     "detail": "field GridInput",
-    "insertText": "ten_dvt%lex"
+    "insertText": "ten_mau_ct%lex"
   },
   {
-    "label": "tien_nt2",
+    "label": "so_ct0",
     "detail": "field GridInput",
-    "insertText": "tien_nt2"
+    "insertText": "so_ct0"
+  },
+  {
+    "label": "so_seri0",
+    "detail": "field GridInput",
+    "insertText": "so_seri0"
+  },
+  {
+    "label": "ngay_ct0",
+    "detail": "field GridInput",
+    "insertText": "ngay_ct0"
+  },
+  {
+    "label": "ma_khat",
+    "detail": "field GridInput",
+    "insertText": "ma_khat"
+  },
+  {
+    "label": "ten_kh",
+    "detail": "field GridInput",
+    "insertText": "ten_kh"
+  },
+  {
+    "label": "dia_chi",
+    "detail": "field GridInput",
+    "insertText": "dia_chi"
+  },
+  {
+    "label": "ma_so_thue",
+    "detail": "field GridInput",
+    "insertText": "ma_so_thue"
+  },
+  {
+    "label": "ten_vt",
+    "detail": "field GridInput",
+    "insertText": "ten_vt"
+  },
+  {
+    "label": "ma_khoat",
+    "detail": "field GridInput",
+    "insertText": "ma_khoat"
+  },
+  {
+    "label": "ten_kho%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_kho%lex"
+  },
+  {
+    "label": "t_tien_nt",
+    "detail": "field GridInput",
+    "insertText": "t_tien_nt"
+  },
+  {
+    "label": "t_tien",
+    "detail": "field GridInput",
+    "insertText": "t_tien"
+  },
+  {
+    "label": "ma_thueat",
+    "detail": "field GridInput",
+    "insertText": "ma_thueat"
+  },
+  {
+    "label": "ten_thue%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_thue%lex"
+  },
+  {
+    "label": "thue_suat",
+    "detail": "field GridInput",
+    "insertText": "thue_suat"
+  },
+  {
+    "label": "tk_thue_noat",
+    "detail": "field GridInput",
+    "insertText": "tk_thue_noat"
+  },
+  {
+    "label": "ten_tk_thue_no%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_tk_thue_no%lex"
+  },
+  {
+    "label": "t_thue_nt",
+    "detail": "field GridInput",
+    "insertText": "t_thue_nt"
+  },
+  {
+    "label": "t_thue",
+    "detail": "field GridInput",
+    "insertText": "t_thue"
+  },
+  {
+    "label": "ma_kh2at",
+    "detail": "field GridInput",
+    "insertText": "ma_kh2at"
+  },
+  {
+    "label": "ten_kh2%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_kh2%lex"
+  },
+  {
+    "label": "ma_ttat",
+    "detail": "field GridInput",
+    "insertText": "ma_ttat"
+  },
+  {
+    "label": "ten_tt%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_tt%lex"
+  },
+  {
+    "label": "ghi_chu",
+    "detail": "field GridInput",
+    "insertText": "ghi_chu"
+  },
+  {
+    "label": "tk_cnex",
+    "detail": "field GridInput",
+    "insertText": "tk_cnex"
   },
   {
     "label": "tk_dtat",
@@ -120,6 +240,11 @@
     "insertText": "ten_tk%lex"
   },
   {
+    "label": "tien_nt2",
+    "detail": "field GridInput",
+    "insertText": "tien_nt2"
+  },
+  {
     "label": "tk_ckat",
     "detail": "field GridInput",
     "insertText": "tk_ckat"
@@ -130,24 +255,9 @@
     "insertText": "ten_tk_ck%lex"
   },
   {
-    "label": "ten_thue%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_thue%lex"
-  },
-  {
     "label": "ten_tk_thue%lex",
     "detail": "field GridInput",
     "insertText": "ten_tk_thue%lex"
-  },
-  {
-    "label": "ma_kh2at",
-    "detail": "field GridInput",
-    "insertText": "ma_kh2at"
-  },
-  {
-    "label": "tk_cnex",
-    "detail": "field GridInput",
-    "insertText": "tk_cnex"
   },
   {
     "label": "ten_kh%lex",
@@ -160,14 +270,134 @@
     "insertText": "tien2"
   },
   {
-    "label": "nhieu_dvtex",
+    "label": "ma_dvcs_nhan",
     "detail": "field GridInput",
-    "insertText": "nhieu_dvtex"
+    "insertText": "ma_dvcs_nhan"
   },
   {
-    "label": "ngay_ct",
+    "label": "tk_nhanat",
     "detail": "field GridInput",
-    "insertText": "ngay_ct"
+    "insertText": "tk_nhanat"
+  },
+  {
+    "label": "ten_tk_nhan%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_tk_nhan%lex"
+  },
+  {
+    "label": "ma_phi_nhanat",
+    "detail": "field GridInput",
+    "insertText": "ma_phi_nhanat"
+  },
+  {
+    "label": "ten_phi%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_phi%lex"
+  },
+  {
+    "label": "ma_dvcs_lq",
+    "detail": "field GridInput",
+    "insertText": "ma_dvcs_lq"
+  },
+  {
+    "label": "ten_dvcs_lq%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_dvcs_lq%lex"
+  },
+  {
+    "label": "ten_tk_tc%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_tk_tc%lex"
+  },
+  {
+    "label": "ma_kh_i",
+    "detail": "field GridInput",
+    "insertText": "ma_kh_i"
+  },
+  {
+    "label": "ma_kh_tcat",
+    "detail": "field GridInput",
+    "insertText": "ma_kh_tcat"
+  },
+  {
+    "label": "ten_kh_tc%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_kh_tc%lex"
+  },
+  {
+    "label": "ma_kh_lqat",
+    "detail": "field GridInput",
+    "insertText": "ma_kh_lqat"
+  },
+  {
+    "label": "ten_kh_lq%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_kh_lq%lex"
+  },
+  {
+    "label": "ma_hdat",
+    "detail": "field GridInput",
+    "insertText": "ma_hdat"
+  },
+  {
+    "label": "ten_hd%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_hd%lex"
+  },
+  {
+    "label": "ma_phiat",
+    "detail": "field GridInput",
+    "insertText": "ma_phiat"
+  },
+  {
+    "label": "ma_bpat",
+    "detail": "field GridInput",
+    "insertText": "ma_bpat"
+  },
+  {
+    "label": "ten_bp%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_bp%lex"
+  },
+  {
+    "label": "s1at",
+    "detail": "field GridInput",
+    "insertText": "s1at"
+  },
+  {
+    "label": "ten_dot_s1%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_dot_s1%lex"
+  },
+  {
+    "label": "stt_rec_tt",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_tt"
+  },
+  {
+    "label": "ma_phi_ynex",
+    "detail": "field GridInput",
+    "insertText": "ma_phi_ynex"
+  },
+  {
+    "label": "stt_rec_pkt",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_pkt"
+  },
+  {
+    "label": "line_nbr_g",
+    "detail": "field GridInput",
+    "insertText": "line_nbr_g"
+  },
+  {
+    "label": "ds_stt_rec_tt",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec_tt"
+  },
+  {
+    "label": "ds_tien_nt",
+    "detail": "field GridInput",
+    "insertText": "ds_tien_nt"
   },
   {
     "label": "tk_noat",
@@ -190,24 +420,149 @@
     "insertText": "ten_kh_i%lex"
   },
   {
-    "label": "tien_nt",
+    "label": "stt_rec_tu1",
     "detail": "field GridInput",
-    "insertText": "tien_nt"
+    "insertText": "stt_rec_tu1"
   },
   {
-    "label": "tien",
+    "label": "stt_rec0tu1",
     "detail": "field GridInput",
-    "insertText": "tien"
+    "insertText": "stt_rec0tu1"
   },
   {
-    "label": "dvtex",
+    "label": "ds_stt_rec0tu1",
     "detail": "field GridInput",
-    "insertText": "dvtex"
+    "insertText": "ds_stt_rec0tu1"
   },
   {
-    "label": "so_luongex",
+    "label": "tu1_so",
     "detail": "field GridInput",
-    "insertText": "so_luongex"
+    "insertText": "tu1_so"
+  },
+  {
+    "label": "tu1_ln",
+    "detail": "field GridInput",
+    "insertText": "tu1_ln"
+  },
+  {
+    "label": "tk_lqex",
+    "detail": "field GridInput",
+    "insertText": "tk_lqex"
+  },
+  {
+    "label": "ten_tk_lq%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_tk_lq%lex"
+  },
+  {
+    "label": "dvcs_1",
+    "detail": "field GridInput",
+    "insertText": "dvcs_1"
+  },
+  {
+    "label": "ten_dvcs_1ex",
+    "detail": "field GridInput",
+    "insertText": "ten_dvcs_1ex"
+  },
+  {
+    "label": "tk_tc",
+    "detail": "field GridInput",
+    "insertText": "tk_tc"
+  },
+  {
+    "label": "ten_tk_tcex",
+    "detail": "field GridInput",
+    "insertText": "ten_tk_tcex"
+  },
+  {
+    "label": "ma_kh_hd",
+    "detail": "field GridInput",
+    "insertText": "ma_kh_hd"
+  },
+  {
+    "label": "ten_kh_hdex",
+    "detail": "field GridInput",
+    "insertText": "ten_kh_hdex"
+  },
+  {
+    "label": "tk_no",
+    "detail": "field GridInput",
+    "insertText": "tk_no"
+  },
+  {
+    "label": "tt_nt0ex",
+    "detail": "field GridInput",
+    "insertText": "tt_nt0ex"
+  },
+  {
+    "label": "tt_nt",
+    "detail": "field GridInput",
+    "insertText": "tt_nt"
+  },
+  {
+    "label": "tien_tt_tu",
+    "detail": "field GridInput",
+    "insertText": "tien_tt_tu"
+  },
+  {
+    "label": "so_ct",
+    "detail": "field GridInput",
+    "insertText": "so_ct"
+  },
+  {
+    "label": "ma_thue",
+    "detail": "field GridInput",
+    "insertText": "ma_thue"
+  },
+  {
+    "label": "tk_thue",
+    "detail": "field GridInput",
+    "insertText": "tk_thue"
+  },
+  {
+    "label": "tk_cn_tax",
+    "detail": "field GridInput",
+    "insertText": "tk_cn_tax"
+  },
+  {
+    "label": "ma_kh",
+    "detail": "field GridInput",
+    "insertText": "ma_kh"
+  },
+  {
+    "label": "loai_hdex",
+    "detail": "field GridInput",
+    "insertText": "loai_hdex"
+  },
+  {
+    "label": "ngay_ct",
+    "detail": "field GridInput",
+    "insertText": "ngay_ct"
+  },
+  {
+    "label": "ma_nt",
+    "detail": "field GridInput",
+    "insertText": "ma_nt"
+  },
+  {
+    "label": "status",
+    "detail": "field GridInput",
+    "insertText": "status"
+  },
+  {
+    "label": "statusname%l",
+    "detail": "field GridInput",
+    "insertText": "statusname%l"
+  },
+  {
+    "label": "ma_kh_detail",
+    "detail": "field GridInput",
+    "insertText": "ma_kh_detail"
+  },
+  {
+    "label": "ten_kh_detail%l",
+    "detail": "field GridInput",
+    "insertText": "ten_kh_detail%l"
   },
   {
     "label": "ma_ct",
@@ -215,19 +570,14 @@
     "insertText": "ma_ct"
   },
   {
-    "label": "ma_vt",
+    "label": "lo_yn",
     "detail": "field GridInput",
-    "insertText": "ma_vt"
+    "insertText": "lo_yn"
   },
   {
-    "label": "ma_kho",
+    "label": "vi_tri_yn",
     "detail": "field GridInput",
-    "insertText": "ma_kho"
-  },
-  {
-    "label": "ten_kho%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_kho%lex"
+    "insertText": "vi_tri_yn"
   },
   {
     "label": "ma_vi_tri",
@@ -235,344 +585,54 @@
     "insertText": "ma_vi_tri"
   },
   {
-    "label": "ten_vi_tri%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_vi_tri%lex"
-  },
-  {
     "label": "ma_lo",
     "detail": "field GridInput",
     "insertText": "ma_lo"
   },
   {
-    "label": "ten_lo%lex",
+    "label": "gia_ton",
     "detail": "field GridInput",
-    "insertText": "ten_lo%lex"
+    "insertText": "gia_ton"
   },
   {
-    "label": "cp_nt",
+    "label": "ten_vi_tri",
     "detail": "field GridInput",
-    "insertText": "cp_nt"
+    "insertText": "ten_vi_tri"
   },
   {
-    "label": "tk_vt",
+    "label": "ten_lo",
     "detail": "field GridInput",
-    "insertText": "tk_vt"
+    "insertText": "ten_lo"
   },
   {
-    "label": "ten_tk_vt%lex",
+    "label": "ten_kho",
     "detail": "field GridInput",
-    "insertText": "ten_tk_vt%lex"
+    "insertText": "ten_kho"
   },
   {
-    "label": "tien3",
+    "label": "pn_gia_tb",
     "detail": "field GridInput",
-    "insertText": "tien3"
+    "insertText": "pn_gia_tb"
   },
   {
-    "label": "cp",
+    "label": "px_gia_dd",
     "detail": "field GridInput",
-    "insertText": "cp"
+    "insertText": "px_gia_dd"
   },
   {
-    "label": "hd_so",
+    "label": "ma_vt",
     "detail": "field GridInput",
-    "insertText": "hd_so"
+    "insertText": "ma_vt"
   },
   {
-    "label": "volume",
+    "label": "ten_vt%lex",
     "detail": "field GridInput",
-    "insertText": "volume"
+    "insertText": "ten_vt%lex"
   },
   {
-    "label": "weight",
+    "label": "so_luong0ex",
     "detail": "field GridInput",
-    "insertText": "weight"
-  },
-  {
-    "label": "loai_hangat",
-    "detail": "field GridInput",
-    "insertText": "loai_hangat"
-  },
-  {
-    "label": "ten_loai_hang%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_loai_hang%lex"
-  },
-  {
-    "label": "ma_vungat",
-    "detail": "field GridInput",
-    "insertText": "ma_vungat"
-  },
-  {
-    "label": "ten_vung%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_vung%lex"
-  },
-  {
-    "label": "ma_khoat",
-    "detail": "field GridInput",
-    "insertText": "ma_khoat"
-  },
-  {
-    "label": "ma_thue_nkat",
-    "detail": "field GridInput",
-    "insertText": "ma_thue_nkat"
-  },
-  {
-    "label": "ten_thue_nk%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_thue_nk%lex"
-  },
-  {
-    "label": "thue_suat_nk",
-    "detail": "field GridInput",
-    "insertText": "thue_suat_nk"
-  },
-  {
-    "label": "thue_nk_nt",
-    "detail": "field GridInput",
-    "insertText": "thue_nk_nt"
-  },
-  {
-    "label": "ma_thue_ttdbat",
-    "detail": "field GridInput",
-    "insertText": "ma_thue_ttdbat"
-  },
-  {
-    "label": "ten_thue_ttdb%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_thue_ttdb%lex"
-  },
-  {
-    "label": "thue_suat_ttdb",
-    "detail": "field GridInput",
-    "insertText": "thue_suat_ttdb"
-  },
-  {
-    "label": "thue_ttdb_nt",
-    "detail": "field GridInput",
-    "insertText": "thue_ttdb_nt"
-  },
-  {
-    "label": "thue_bvmt_nt",
-    "detail": "field GridInput",
-    "insertText": "thue_bvmt_nt"
-  },
-  {
-    "label": "ma_thueat",
-    "detail": "field GridInput",
-    "insertText": "ma_thueat"
-  },
-  {
-    "label": "so_ngay_giao",
-    "detail": "field GridInput",
-    "insertText": "so_ngay_giao"
-  },
-  {
-    "label": "thue_nk",
-    "detail": "field GridInput",
-    "insertText": "thue_nk"
-  },
-  {
-    "label": "thue_ttdb",
-    "detail": "field GridInput",
-    "insertText": "thue_ttdb"
-  },
-  {
-    "label": "thue_bvmt",
-    "detail": "field GridInput",
-    "insertText": "thue_bvmt"
-  },
-  {
-    "label": "thue",
-    "detail": "field GridInput",
-    "insertText": "thue"
-  },
-  {
-    "label": "so_theo_doi",
-    "detail": "field GridInput",
-    "insertText": "so_theo_doi"
-  },
-  {
-    "label": "ma_vt_ncc",
-    "detail": "field GridInput",
-    "insertText": "ma_vt_ncc"
-  },
-  {
-    "label": "ma_rbat",
-    "detail": "field GridInput",
-    "insertText": "ma_rbat"
-  },
-  {
-    "label": "ten_rb%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_rb%lex"
-  },
-  {
-    "label": "sl_dat_tt",
-    "detail": "field GridInput",
-    "insertText": "sl_dat_tt"
-  },
-  {
-    "label": "sl_dat_td",
-    "detail": "field GridInput",
-    "insertText": "sl_dat_td"
-  },
-  {
-    "label": "sl_dat",
-    "detail": "field GridInput",
-    "insertText": "sl_dat"
-  },
-  {
-    "label": "tien_dat",
-    "detail": "field GridInput",
-    "insertText": "tien_dat"
-  },
-  {
-    "label": "sl_nhap",
-    "detail": "field GridInput",
-    "insertText": "sl_nhap"
-  },
-  {
-    "label": "sl_hd",
-    "detail": "field GridInput",
-    "insertText": "sl_hd"
-  },
-  {
-    "label": "so_tham_chieu",
-    "detail": "field GridInput",
-    "insertText": "so_tham_chieu"
-  },
-  {
-    "label": "cn_tt_gia",
-    "detail": "field GridInput",
-    "insertText": "cn_tt_gia"
-  },
-  {
-    "label": "tl_chiu_thue",
-    "detail": "field GridInput",
-    "insertText": "tl_chiu_thue"
-  },
-  {
-    "label": "he_so_mt",
-    "detail": "field GridInput",
-    "insertText": "he_so_mt"
-  },
-  {
-    "label": "gia_chuanex",
-    "detail": "field GridInput",
-    "insertText": "gia_chuanex"
-  },
-  {
-    "label": "tien_dat0ex",
-    "detail": "field GridInput",
-    "insertText": "tien_dat0ex"
-  },
-  {
-    "label": "cp_vc_nt",
-    "detail": "field GridInput",
-    "insertText": "cp_vc_nt"
-  },
-  {
-    "label": "cp_bh_nt",
-    "detail": "field GridInput",
-    "insertText": "cp_bh_nt"
-  },
-  {
-    "label": "cp_khac_nt",
-    "detail": "field GridInput",
-    "insertText": "cp_khac_nt"
-  },
-  {
-    "label": "cp_vc",
-    "detail": "field GridInput",
-    "insertText": "cp_vc"
-  },
-  {
-    "label": "cp_bh",
-    "detail": "field GridInput",
-    "insertText": "cp_bh"
-  },
-  {
-    "label": "cp_khac",
-    "detail": "field GridInput",
-    "insertText": "cp_khac"
-  },
-  {
-    "label": "cp_vc_nk_ntex",
-    "detail": "field GridInput",
-    "insertText": "cp_vc_nk_ntex"
-  },
-  {
-    "label": "cp_bh_nk_ntex",
-    "detail": "field GridInput",
-    "insertText": "cp_bh_nk_ntex"
-  },
-  {
-    "label": "cp_khac_nk_ntex",
-    "detail": "field GridInput",
-    "insertText": "cp_khac_nk_ntex"
-  },
-  {
-    "label": "cp_nk_ntex",
-    "detail": "field GridInput",
-    "insertText": "cp_nk_ntex"
-  },
-  {
-    "label": "cp_vc_nkex",
-    "detail": "field GridInput",
-    "insertText": "cp_vc_nkex"
-  },
-  {
-    "label": "cp_bh_nkex",
-    "detail": "field GridInput",
-    "insertText": "cp_bh_nkex"
-  },
-  {
-    "label": "cp_khac_nkex",
-    "detail": "field GridInput",
-    "insertText": "cp_khac_nkex"
-  },
-  {
-    "label": "cp_nkex",
-    "detail": "field GridInput",
-    "insertText": "cp_nkex"
-  },
-  {
-    "label": "stt_rec_nc",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_nc"
-  },
-  {
-    "label": "stt_rec0nc",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0nc"
-  },
-  {
-    "label": "stt_rec_bg",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_bg"
-  },
-  {
-    "label": "stt_rec0bg",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0bg"
-  },
-  {
-    "label": "stt_rec_kh",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_kh"
-  },
-  {
-    "label": "stt_rec0kh",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0kh"
-  },
-  {
-    "label": "loai_dtat",
-    "detail": "field GridInput",
-    "insertText": "loai_dtat"
+    "insertText": "so_luong0ex"
   },
   {
     "label": "ten_loai%lex",
@@ -580,39 +640,69 @@
     "insertText": "ten_loai%lex"
   },
   {
-    "label": "nk_nt",
+    "label": "ma_kho",
     "detail": "field GridInput",
-    "insertText": "nk_nt"
+    "insertText": "ma_kho"
   },
   {
-    "label": "ttdb_nt",
+    "label": "tk_vt",
     "detail": "field GridInput",
-    "insertText": "ttdb_nt"
+    "insertText": "tk_vt"
   },
   {
-    "label": "bvmt_nt",
+    "label": "nhieu_dvtex",
     "detail": "field GridInput",
-    "insertText": "bvmt_nt"
+    "insertText": "nhieu_dvtex"
   },
   {
-    "label": "nk",
+    "label": "lo_ynex",
     "detail": "field GridInput",
-    "insertText": "nk"
+    "insertText": "lo_ynex"
   },
   {
-    "label": "ttdb",
+    "label": "vi_tri_ynex",
     "detail": "field GridInput",
-    "insertText": "ttdb"
+    "insertText": "vi_tri_ynex"
   },
   {
-    "label": "bvmt",
+    "label": "gia_tonex",
     "detail": "field GridInput",
-    "insertText": "bvmt"
+    "insertText": "gia_tonex"
   },
   {
-    "label": "sl_nhan",
+    "label": "ma_bp0",
     "detail": "field GridInput",
-    "insertText": "sl_nhan"
+    "insertText": "ma_bp0"
+  },
+  {
+    "label": "ma_nh0",
+    "detail": "field GridInput",
+    "insertText": "ma_nh0"
+  },
+  {
+    "label": "ma_vung",
+    "detail": "field GridInput",
+    "insertText": "ma_vung"
+  },
+  {
+    "label": "stt_rec_dh",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_dh"
+  },
+  {
+    "label": "stt_rec0dh",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0dh"
+  },
+  {
+    "label": "stt_rec_sa",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_sa"
+  },
+  {
+    "label": "stt_rec0sa",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0sa"
   },
   {
     "label": "stt_rec_ttmh",
@@ -625,59 +715,24 @@
     "insertText": "stt_rec0ttmh"
   },
   {
-    "label": "stt_rec_tc",
+    "label": "ma_vtat",
     "detail": "field GridInput",
-    "insertText": "stt_rec_tc"
+    "insertText": "ma_vtat"
   },
   {
-    "label": "stt_rec0tc",
+    "label": "dvtat",
     "detail": "field GridInput",
-    "insertText": "stt_rec0tc"
+    "insertText": "dvtat"
   },
   {
-    "label": "stt_rec_hd",
+    "label": "ten_dvt%lex",
     "detail": "field GridInput",
-    "insertText": "stt_rec_hd"
+    "insertText": "ten_dvt%lex"
   },
   {
-    "label": "stt_rec0hd",
+    "label": "ngay_ct1",
     "detail": "field GridInput",
-    "insertText": "stt_rec0hd"
-  },
-  {
-    "label": "kieu_pbex",
-    "detail": "field GridInput",
-    "insertText": "kieu_pbex"
-  },
-  {
-    "label": "tap_theo_doi",
-    "detail": "field GridInput",
-    "insertText": "tap_theo_doi"
-  },
-  {
-    "label": "ncc_tx",
-    "detail": "field GridInput",
-    "insertText": "ncc_tx"
-  },
-  {
-    "label": "tu_choi_yn",
-    "detail": "field GridInput",
-    "insertText": "tu_choi_yn"
-  },
-  {
-    "label": "stt_rec_dn",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_dn"
-  },
-  {
-    "label": "stt_rec0dn",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0dn"
-  },
-  {
-    "label": "ten_vt_e",
-    "detail": "field GridInput",
-    "insertText": "ten_vt_e"
+    "insertText": "ngay_ct1"
   },
   {
     "label": "ngay_ct2",
@@ -695,19 +750,14 @@
     "insertText": "tg_th"
   },
   {
-    "label": "nam",
+    "label": "tl_pb",
     "detail": "field GridInput",
-    "insertText": "nam"
+    "insertText": "tl_pb"
   },
   {
-    "label": "stt",
+    "label": "tien_hgn",
     "detail": "field GridInput",
-    "insertText": "stt"
-  },
-  {
-    "label": "ky",
-    "detail": "field GridInput",
-    "insertText": "ky"
+    "insertText": "tien_hgn"
   },
   {
     "label": "tk_coat",
@@ -745,39 +795,409 @@
     "insertText": "ty_gia_ht2"
   },
   {
-    "label": "stt_rec_tt",
+    "label": "ma_dvcs_lqex",
     "detail": "field GridInput",
-    "insertText": "stt_rec_tt"
+    "insertText": "ma_dvcs_lqex"
   },
   {
-    "label": "ma_dvcsat",
+    "label": "tk_lq",
     "detail": "field GridInput",
-    "insertText": "ma_dvcsat"
+    "insertText": "tk_lq"
   },
   {
-    "label": "ten_dvcs%lex",
+    "label": "tk_cn_nbex",
     "detail": "field GridInput",
-    "insertText": "ten_dvcs%lex"
+    "insertText": "tk_cn_nbex"
   },
   {
-    "label": "ma_nvbhat",
+    "label": "ten_dvcs_1",
     "detail": "field GridInput",
-    "insertText": "ma_nvbhat"
+    "insertText": "ten_dvcs_1"
   },
   {
-    "label": "ten_nvbh%lex",
+    "label": "stt_rec0pkt",
     "detail": "field GridInput",
-    "insertText": "ten_nvbh%lex"
+    "insertText": "stt_rec0pkt"
   },
   {
-    "label": "ma_ttat",
+    "label": "pkt_so",
     "detail": "field GridInput",
-    "insertText": "ma_ttat"
+    "insertText": "pkt_so"
   },
   {
-    "label": "ten_tt%lex",
+    "label": "pkt_ln",
     "detail": "field GridInput",
-    "insertText": "ten_tt%lex"
+    "insertText": "pkt_ln"
+  },
+  {
+    "label": "stt_rec_zdu",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_zdu"
+  },
+  {
+    "label": "stt_rec0zdu",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0zdu"
+  },
+  {
+    "label": "so_zdu",
+    "detail": "field GridInput",
+    "insertText": "so_zdu"
+  },
+  {
+    "label": "ln_zdu",
+    "detail": "field GridInput",
+    "insertText": "ln_zdu"
+  },
+  {
+    "label": "ma_vvat",
+    "detail": "field GridInput",
+    "insertText": "ma_vvat"
+  },
+  {
+    "label": "ten_vv%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_vv%lex"
+  },
+  {
+    "label": "so_lsxat",
+    "detail": "field GridInput",
+    "insertText": "so_lsxat"
+  },
+  {
+    "label": "ten_lsx%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_lsx%lex"
+  },
+  {
+    "label": "ma_spat",
+    "detail": "field GridInput",
+    "insertText": "ma_spat"
+  },
+  {
+    "label": "ten_sp%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_sp%lex"
+  },
+  {
+    "label": "ma_kuat",
+    "detail": "field GridInput",
+    "insertText": "ma_kuat"
+  },
+  {
+    "label": "ten_ku%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_ku%lex"
+  },
+  {
+    "label": "ten_tk_lqex",
+    "detail": "field GridInput",
+    "insertText": "ten_tk_lqex"
+  },
+  {
+    "label": "dvcs_1ex",
+    "detail": "field GridInput",
+    "insertText": "dvcs_1ex"
+  },
+  {
+    "label": "ky_nop_thue",
+    "detail": "field GridInput",
+    "insertText": "ky_nop_thue"
+  },
+  {
+    "label": "ma_dvcs_deat",
+    "detail": "field GridInput",
+    "insertText": "ma_dvcs_deat"
+  },
+  {
+    "label": "ten_dvcs_de%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_dvcs_de%lex"
+  },
+  {
+    "label": "ds_stt_rec_dn",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec_dn"
+  },
+  {
+    "label": "ma_kh_tc",
+    "detail": "field GridInput",
+    "insertText": "ma_kh_tc"
+  },
+  {
+    "label": "ds_stt_rec0dn",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec0dn"
+  },
+  {
+    "label": "ds_stt_rec_khc",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec_khc"
+  },
+  {
+    "label": "ds_stt_rec0khc",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec0khc"
+  },
+  {
+    "label": "ds_so_khc",
+    "detail": "field GridInput",
+    "insertText": "ds_so_khc"
+  },
+  {
+    "label": "ds_khc_ln",
+    "detail": "field GridInput",
+    "insertText": "ds_khc_ln"
+  },
+  {
+    "label": "so_bk",
+    "detail": "field GridInput",
+    "insertText": "so_bk"
+  },
+  {
+    "label": "dvtex",
+    "detail": "field GridInput",
+    "insertText": "dvtex"
+  },
+  {
+    "label": "dvt_gocex",
+    "detail": "field GridInput",
+    "insertText": "dvt_gocex"
+  },
+  {
+    "label": "so_luongex",
+    "detail": "field GridInput",
+    "insertText": "so_luongex"
+  },
+  {
+    "label": "gia_nt0ex",
+    "detail": "field GridInput",
+    "insertText": "gia_nt0ex"
+  },
+  {
+    "label": "tien_nt0ex",
+    "detail": "field GridInput",
+    "insertText": "tien_nt0ex"
+  },
+  {
+    "label": "thue_nt",
+    "detail": "field GridInput",
+    "insertText": "thue_nt"
+  },
+  {
+    "label": "thue_suatex",
+    "detail": "field GridInput",
+    "insertText": "thue_suatex"
+  },
+  {
+    "label": "ngay_tt",
+    "detail": "field GridInput",
+    "insertText": "ngay_tt"
+  },
+  {
+    "label": "ma_dotat",
+    "detail": "field GridInput",
+    "insertText": "ma_dotat"
+  },
+  {
+    "label": "ten_dot%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_dot%lex"
+  },
+  {
+    "label": "ty_le",
+    "detail": "field GridInput",
+    "insertText": "ty_le"
+  },
+  {
+    "label": "han_tt",
+    "detail": "field GridInput",
+    "insertText": "han_tt"
+  },
+  {
+    "label": "stt_rec_bk",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_bk"
+  },
+  {
+    "label": "tkat",
+    "detail": "field GridInput",
+    "insertText": "tkat"
+  },
+  {
+    "label": "s6",
+    "detail": "field GridInput",
+    "insertText": "s6"
+  },
+  {
+    "label": "tk_he_so",
+    "detail": "field GridInput",
+    "insertText": "tk_he_so"
+  },
+  {
+    "label": "tk_du",
+    "detail": "field GridInput",
+    "insertText": "tk_du"
+  },
+  {
+    "label": "ten_nh%l",
+    "detail": "field GridInput",
+    "insertText": "ten_nh%l"
+  },
+  {
+    "label": "ma_dvcs",
+    "detail": "field GridInput",
+    "insertText": "ma_dvcs"
+  },
+  {
+    "label": "ten_bp",
+    "detail": "field GridInput",
+    "insertText": "ten_bp"
+  },
+  {
+    "label": "ten_vt%l",
+    "detail": "field GridInput",
+    "insertText": "ten_vt%l"
+  },
+  {
+    "label": "ten_kh%l",
+    "detail": "field GridInput",
+    "insertText": "ten_kh%l"
+  },
+  {
+    "label": "ten_ncc%l",
+    "detail": "field GridInput",
+    "insertText": "ten_ncc%l"
+  },
+  {
+    "label": "gm_gn_nt",
+    "detail": "field GridInput",
+    "insertText": "gm_gn_nt"
+  },
+  {
+    "label": "ma_md",
+    "detail": "field GridInput",
+    "insertText": "ma_md"
+  },
+  {
+    "label": "nvl_cb",
+    "detail": "field GridInput",
+    "insertText": "nvl_cb"
+  },
+  {
+    "label": "huu_co_yn",
+    "detail": "field GridInput",
+    "insertText": "huu_co_yn"
+  },
+  {
+    "label": "ton13",
+    "detail": "field GridInput",
+    "insertText": "ton13"
+  },
+  {
+    "label": "ma_sp",
+    "detail": "field GridInput",
+    "insertText": "ma_sp"
+  },
+  {
+    "label": "ma_bp",
+    "detail": "field GridInput",
+    "insertText": "ma_bp"
+  },
+  {
+    "label": "so_lsx",
+    "detail": "field GridInput",
+    "insertText": "so_lsx"
+  },
+  {
+    "label": "ma_vv",
+    "detail": "field GridInput",
+    "insertText": "ma_vv"
+  },
+  {
+    "label": "ma_xcb",
+    "detail": "field GridInput",
+    "insertText": "ma_xcb"
+  },
+  {
+    "label": "ngay_yc",
+    "detail": "field GridInput",
+    "insertText": "ngay_yc"
+  },
+  {
+    "label": "sl_order0",
+    "detail": "field GridInput",
+    "insertText": "sl_order0"
+  },
+  {
+    "label": "tien_nt0",
+    "detail": "field GridInput",
+    "insertText": "tien_nt0"
+  },
+  {
+    "label": "thue_nt0",
+    "detail": "field GridInput",
+    "insertText": "thue_nt0"
+  },
+  {
+    "label": "gia_yn",
+    "detail": "field GridInput",
+    "insertText": "gia_yn"
+  },
+  {
+    "label": "id_check",
+    "detail": "field GridInput",
+    "insertText": "id_check"
+  },
+  {
+    "label": "ngay_po",
+    "detail": "field GridInput",
+    "insertText": "ngay_po"
+  },
+  {
+    "label": "xKey",
+    "detail": "field GridInput",
+    "insertText": "xKey"
+  },
+  {
+    "label": "ma_thue_nk",
+    "detail": "field GridInput",
+    "insertText": "ma_thue_nk"
+  },
+  {
+    "label": "thue_suat_nk",
+    "detail": "field GridInput",
+    "insertText": "thue_suat_nk"
+  },
+  {
+    "label": "nk_nt",
+    "detail": "field GridInput",
+    "insertText": "nk_nt"
+  },
+  {
+    "label": "sua_gia_yn",
+    "detail": "field GridInput",
+    "insertText": "sua_gia_yn"
+  },
+  {
+    "label": "nhom_nh",
+    "detail": "field GridInput",
+    "insertText": "nhom_nh"
+  },
+  {
+    "label": "ten_bp%l",
+    "detail": "field GridInput",
+    "insertText": "ten_bp%l"
+  },
+  {
+    "label": "ma_mdex",
+    "detail": "field GridInput",
+    "insertText": "ma_mdex"
+  },
+  {
+    "label": "ly_doex",
+    "detail": "field GridInput",
+    "insertText": "ly_doex"
   },
   {
     "label": "da_tt_ntex",
@@ -795,19 +1215,64 @@
     "insertText": "tk_thueat"
   },
   {
-    "label": "ten_tk_thue_no%lex",
+    "label": "thue",
     "detail": "field GridInput",
-    "insertText": "ten_tk_thue_no%lex"
+    "insertText": "thue"
   },
   {
-    "label": "tt_nt",
+    "label": "tt",
     "detail": "field GridInput",
-    "insertText": "tt_nt"
+    "insertText": "tt"
   },
   {
-    "label": "ten_kh2%lex",
+    "label": "ngay_dk_tt",
     "detail": "field GridInput",
-    "insertText": "ten_kh2%lex"
+    "insertText": "ngay_dk_tt"
+  },
+  {
+    "label": "ngay_dk_tt_bd",
+    "detail": "field GridInput",
+    "insertText": "ngay_dk_tt_bd"
+  },
+  {
+    "label": "ngay_tchiex",
+    "detail": "field GridInput",
+    "insertText": "ngay_tchiex"
+  },
+  {
+    "label": "ma_dvcs_nhat",
+    "detail": "field GridInput",
+    "insertText": "ma_dvcs_nhat"
+  },
+  {
+    "label": "ten_dvcs_nh%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_dvcs_nh%lex"
+  },
+  {
+    "label": "tien_bn",
+    "detail": "field GridInput",
+    "insertText": "tien_bn"
+  },
+  {
+    "label": "tien_zdu",
+    "detail": "field GridInput",
+    "insertText": "tien_zdu"
+  },
+  {
+    "label": "stt_rec0ex",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0ex"
+  },
+  {
+    "label": "line_nbrex",
+    "detail": "field GridInput",
+    "insertText": "line_nbrex"
+  },
+  {
+    "label": "stt_rec_dd",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_dd"
   },
   {
     "label": "tag",
@@ -830,14 +1295,14 @@
     "insertText": "tk"
   },
   {
+    "label": "tien_cl_nt",
+    "detail": "field GridInput",
+    "insertText": "tien_cl_nt"
+  },
+  {
     "label": "ngay_hd",
     "detail": "field GridInput",
     "insertText": "ngay_hd"
-  },
-  {
-    "label": "tk_du",
-    "detail": "field GridInput",
-    "insertText": "tk_du"
   },
   {
     "label": "ma_nt_hd",
@@ -860,29 +1325,139 @@
     "insertText": "stt_rec_phieu"
   },
   {
+    "label": "stt_rec_hd",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_hd"
+  },
+  {
     "label": "ma_kh_phieu",
     "detail": "field GridInput",
     "insertText": "ma_kh_phieu"
   },
   {
-    "label": "ma_kh_hd",
+    "label": "tien0ex",
     "detail": "field GridInput",
-    "insertText": "ma_kh_hd"
+    "insertText": "tien0ex"
   },
   {
-    "label": "rp_file_id",
+    "label": "tien_ntex",
     "detail": "field GridInput",
-    "insertText": "rp_file_id"
+    "insertText": "tien_ntex"
   },
   {
-    "label": "excel_yn",
+    "label": "tienex",
     "detail": "field GridInput",
-    "insertText": "excel_yn"
+    "insertText": "tienex"
   },
   {
-    "label": "pdf_yn",
+    "label": "ma_nvex",
     "detail": "field GridInput",
-    "insertText": "pdf_yn"
+    "insertText": "ma_nvex"
+  },
+  {
+    "label": "ten_nvex",
+    "detail": "field GridInput",
+    "insertText": "ten_nvex"
+  },
+  {
+    "label": "t_nguyen_giaex",
+    "detail": "field GridInput",
+    "insertText": "t_nguyen_giaex"
+  },
+  {
+    "label": "line_dlex",
+    "detail": "field GridInput",
+    "insertText": "line_dlex"
+  },
+  {
+    "label": "da_layex",
+    "detail": "field GridInput",
+    "insertText": "da_layex"
+  },
+  {
+    "label": "con_laiex",
+    "detail": "field GridInput",
+    "insertText": "con_laiex"
+  },
+  {
+    "label": "ma_bpex",
+    "detail": "field GridInput",
+    "insertText": "ma_bpex"
+  },
+  {
+    "label": "ten_bpex",
+    "detail": "field GridInput",
+    "insertText": "ten_bpex"
+  },
+  {
+    "label": "t_khau_haoex",
+    "detail": "field GridInput",
+    "insertText": "t_khau_haoex"
+  },
+  {
+    "label": "kh_ynex",
+    "detail": "field GridInput",
+    "insertText": "kh_ynex"
+  },
+  {
+    "label": "ps_no_nt",
+    "detail": "field GridInput",
+    "insertText": "ps_no_nt"
+  },
+  {
+    "label": "ps_co_nt",
+    "detail": "field GridInput",
+    "insertText": "ps_co_nt"
+  },
+  {
+    "label": "ps_no",
+    "detail": "field GridInput",
+    "insertText": "ps_no"
+  },
+  {
+    "label": "ps_co",
+    "detail": "field GridInput",
+    "insertText": "ps_co"
+  },
+  {
+    "label": "nh_dk",
+    "detail": "field GridInput",
+    "insertText": "nh_dk"
+  },
+  {
+    "label": "ma_htttat",
+    "detail": "field GridInput",
+    "insertText": "ma_htttat"
+  },
+  {
+    "label": "ten_httt%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_httt%lex"
+  },
+  {
+    "label": "no_ynex",
+    "detail": "field GridInput",
+    "insertText": "no_ynex"
+  },
+  {
+    "label": "ct_goc_th",
+    "detail": "field GridInput",
+    "insertText": "ct_goc_th"
+  },
+  {
+    "label": "stt_rec_gl",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_gl"
+  },
+  {
+    "label": "line_nbr_gl",
+    "detail": "field GridInput",
+    "insertText": "line_nbr_gl"
+  },
+  {
+    "label": "no_yn",
+    "detail": "field GridInput",
+    "insertText": "no_yn"
   },
   {
     "label": "tk_duat",
@@ -895,54 +1470,39 @@
     "insertText": "ten_tk_du%lex"
   },
   {
-    "label": "ma_ngachat",
+    "label": "loai_duyet",
     "detail": "field GridInput",
-    "insertText": "ma_ngachat"
+    "insertText": "loai_duyet"
   },
   {
-    "label": "ten_ngach%lex",
+    "label": "ma_kieu",
     "detail": "field GridInput",
-    "insertText": "ten_ngach%lex"
+    "insertText": "ma_kieu"
   },
   {
-    "label": "ma_bacat",
+    "label": "ma_dvcsat",
     "detail": "field GridInput",
-    "insertText": "ma_bacat"
+    "insertText": "ma_dvcsat"
   },
   {
-    "label": "ten_bac%lex",
+    "label": "ten_dvcs%lex",
     "detail": "field GridInput",
-    "insertText": "ten_bac%lex"
+    "insertText": "ten_dvcs%lex"
   },
   {
-    "label": "he_so",
+    "label": "loai_tsat",
     "detail": "field GridInput",
-    "insertText": "he_so"
+    "insertText": "loai_tsat"
   },
   {
-    "label": "luong",
+    "label": "loai_dcat",
     "detail": "field GridInput",
-    "insertText": "luong"
+    "insertText": "loai_dcat"
   },
   {
-    "label": "pc_doc_hai",
+    "label": "ma_bp_dcat",
     "detail": "field GridInput",
-    "insertText": "pc_doc_hai"
-  },
-  {
-    "label": "id_ngay_hl",
-    "detail": "field GridInput",
-    "insertText": "id_ngay_hl"
-  },
-  {
-    "label": "ho_ten",
-    "detail": "field GridInput",
-    "insertText": "ho_ten"
-  },
-  {
-    "label": "ngay_sinh",
-    "detail": "field GridInput",
-    "insertText": "ngay_sinh"
+    "insertText": "ma_bp_dcat"
   },
   {
     "label": "ma_vi_triat",
@@ -950,19 +1510,19 @@
     "insertText": "ma_vi_triat"
   },
   {
-    "label": "pn_gia_tb",
+    "label": "ten_vi_tri%lex",
     "detail": "field GridInput",
-    "insertText": "pn_gia_tb"
+    "insertText": "ten_vi_tri%lex"
   },
   {
-    "label": "gia_nt",
+    "label": "ma_loat",
     "detail": "field GridInput",
-    "insertText": "gia_nt"
+    "insertText": "ma_loat"
   },
   {
-    "label": "tk_vtat",
+    "label": "ten_lo%lex",
     "detail": "field GridInput",
-    "insertText": "tk_vtat"
+    "insertText": "ten_lo%lex"
   },
   {
     "label": "ma_nxat",
@@ -975,174 +1535,14 @@
     "insertText": "ten_nx%lex"
   },
   {
-    "label": "gia",
-    "detail": "field GridInput",
-    "insertText": "gia"
-  },
-  {
     "label": "sua_tk_vtex",
     "detail": "field GridInput",
     "insertText": "sua_tk_vtex"
   },
   {
-    "label": "so_luong0",
-    "detail": "field GridInput",
-    "insertText": "so_luong0"
-  },
-  {
-    "label": "ma_loat",
-    "detail": "field GridInput",
-    "insertText": "ma_loat"
-  },
-  {
-    "label": "so_luong_yc_to",
-    "detail": "field GridInput",
-    "insertText": "so_luong_yc_to"
-  },
-  {
-    "label": "so_luong_yc_kg",
-    "detail": "field GridInput",
-    "insertText": "so_luong_yc_kg"
-  },
-  {
-    "label": "so_luong_nhap_to",
-    "detail": "field GridInput",
-    "insertText": "so_luong_nhap_to"
-  },
-  {
-    "label": "so_luong_nhap_kg",
-    "detail": "field GridInput",
-    "insertText": "so_luong_nhap_kg"
-  },
-  {
-    "label": "kho_giay_k1",
-    "detail": "field GridInput",
-    "insertText": "kho_giay_k1"
-  },
-  {
-    "label": "kho_giay_k2",
-    "detail": "field GridInput",
-    "insertText": "kho_giay_k2"
-  },
-  {
-    "label": "kho_cat_k1",
-    "detail": "field GridInput",
-    "insertText": "kho_cat_k1"
-  },
-  {
-    "label": "kho_cat_k2",
-    "detail": "field GridInput",
-    "insertText": "kho_cat_k2"
-  },
-  {
-    "label": "gia_tonex",
-    "detail": "field GridInput",
-    "insertText": "gia_tonex"
-  },
-  {
-    "label": "lo_ynex",
-    "detail": "field GridInput",
-    "insertText": "lo_ynex"
-  },
-  {
-    "label": "vi_tri_ynex",
-    "detail": "field GridInput",
-    "insertText": "vi_tri_ynex"
-  },
-  {
     "label": "tao_loex",
     "detail": "field GridInput",
     "insertText": "tao_loex"
-  },
-  {
-    "label": "so_ct_sx1",
-    "detail": "field GridInput",
-    "insertText": "so_ct_sx1"
-  },
-  {
-    "label": "ln_sx1",
-    "detail": "field GridInput",
-    "insertText": "ln_sx1"
-  },
-  {
-    "label": "stt_rec_sx1",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_sx1"
-  },
-  {
-    "label": "stt_rec0sx1",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0sx1"
-  },
-  {
-    "label": "sl_pnd",
-    "detail": "field GridInput",
-    "insertText": "sl_pnd"
-  },
-  {
-    "label": "sl_ss",
-    "detail": "field GridInput",
-    "insertText": "sl_ss"
-  },
-  {
-    "label": "ten_vt_in",
-    "detail": "field GridInput",
-    "insertText": "ten_vt_in"
-  },
-  {
-    "label": "so_met_to",
-    "detail": "field GridInput",
-    "insertText": "so_met_to"
-  },
-  {
-    "label": "he_so_n",
-    "detail": "field GridInput",
-    "insertText": "he_so_n"
-  },
-  {
-    "label": "tl_hao_hut",
-    "detail": "field GridInput",
-    "insertText": "tl_hao_hut"
-  },
-  {
-    "label": "so_luong_yc_m",
-    "detail": "field GridInput",
-    "insertText": "so_luong_yc_m"
-  },
-  {
-    "label": "so_luong_px0",
-    "detail": "field GridInput",
-    "insertText": "so_luong_px0"
-  },
-  {
-    "label": "so_luong_nhap_lai",
-    "detail": "field GridInput",
-    "insertText": "so_luong_nhap_lai"
-  },
-  {
-    "label": "so_luong_kg",
-    "detail": "field GridInput",
-    "insertText": "so_luong_kg"
-  },
-  {
-    "label": "so_luong_m",
-    "detail": "field GridInput",
-    "insertText": "so_luong_m"
-  },
-  {
-    "label": "so_to",
-    "detail": "field GridInput",
-    "insertText": "so_to"
-  },
-  {
-    "label": "noi_xuat",
-    "detail": "field GridInput",
-    "insertText": "noi_xuat"
-  },
-  {
-    "label": "px_gia_dd",
-    "detail": "field GridInput",
-    "insertText": "px_gia_dd"
   },
   {
     "label": "stt_rec_pn",
@@ -1165,59 +1565,144 @@
     "insertText": "stt_rec0yc"
   },
   {
-    "label": "ma_pxat",
+    "label": "ma_dc",
     "detail": "field GridInput",
-    "insertText": "ma_pxat"
+    "insertText": "ma_dc"
   },
   {
-    "label": "ten_px%lex",
+    "label": "ten_dc%l",
     "detail": "field GridInput",
-    "insertText": "ten_px%lex"
+    "insertText": "ten_dc%l"
   },
   {
-    "label": "ma_mayat",
+    "label": "nguyen_gia_nt",
     "detail": "field GridInput",
-    "insertText": "ma_mayat"
+    "insertText": "nguyen_gia_nt"
   },
   {
-    "label": "ten_may%lex",
+    "label": "tk_cpat",
     "detail": "field GridInput",
-    "insertText": "ten_may%lex"
+    "insertText": "tk_cpat"
   },
   {
-    "label": "vt_thay_the_yn",
+    "label": "ten_tk_cp%lex",
     "detail": "field GridInput",
-    "insertText": "vt_thay_the_yn"
+    "insertText": "ten_tk_cp%lex"
   },
   {
-    "label": "he_so_met_tx",
+    "label": "ma_phi_dcat",
     "detail": "field GridInput",
-    "insertText": "he_so_met_tx"
+    "insertText": "ma_phi_dcat"
   },
   {
-    "label": "sl_met_tx",
+    "label": "tk_pbat",
     "detail": "field GridInput",
-    "insertText": "sl_met_tx"
+    "insertText": "tk_pbat"
   },
   {
-    "label": "dvt_xhdat",
+    "label": "ma_ld_tangat",
     "detail": "field GridInput",
-    "insertText": "dvt_xhdat"
+    "insertText": "ma_ld_tangat"
   },
   {
-    "label": "ten_dvt_xhd%lex",
+    "label": "ngay_tang",
     "detail": "field GridInput",
-    "insertText": "ten_dvt_xhd%lex"
+    "insertText": "ngay_tang"
   },
   {
-    "label": "so_luong0ex",
+    "label": "ngay_pb0",
     "detail": "field GridInput",
-    "insertText": "so_luong0ex"
+    "insertText": "ngay_pb0"
   },
   {
-    "label": "ngay_yc",
+    "label": "kieu_pb",
     "detail": "field GridInput",
-    "insertText": "ngay_yc"
+    "insertText": "kieu_pb"
+  },
+  {
+    "label": "so_ky_pb",
+    "detail": "field GridInput",
+    "insertText": "so_ky_pb"
+  },
+  {
+    "label": "ngay_pb_kt",
+    "detail": "field GridInput",
+    "insertText": "ngay_pb_kt"
+  },
+  {
+    "label": "tk_dcat",
+    "detail": "field GridInput",
+    "insertText": "tk_dcat"
+  },
+  {
+    "label": "ten_bp_dc%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_bp_dc%lex"
+  },
+  {
+    "label": "nguon_von",
+    "detail": "field GridInput",
+    "insertText": "nguon_von"
+  },
+  {
+    "label": "so_hieu_dc",
+    "detail": "field GridInput",
+    "insertText": "so_hieu_dc"
+  },
+  {
+    "label": "gt_da_pb_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_da_pb_nt"
+  },
+  {
+    "label": "gt_cl_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_cl_nt"
+  },
+  {
+    "label": "gt_pb_ky_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_pb_ky_nt"
+  },
+  {
+    "label": "nguyen_gia",
+    "detail": "field GridInput",
+    "insertText": "nguyen_gia"
+  },
+  {
+    "label": "gt_da_pb",
+    "detail": "field GridInput",
+    "insertText": "gt_da_pb"
+  },
+  {
+    "label": "gt_cl",
+    "detail": "field GridInput",
+    "insertText": "gt_cl"
+  },
+  {
+    "label": "gt_pb_ky",
+    "detail": "field GridInput",
+    "insertText": "gt_pb_ky"
+  },
+  {
+    "label": "ma_so_vt",
+    "detail": "field GridInput",
+    "insertText": "ma_so_vt"
+  },
+  {
+    "label": "form",
+    "detail": "field GridInput",
+    "insertText": "form"
+  },
+  {
+    "label": "ma_vi_trinat",
+    "detail": "field GridInput",
+    "insertText": "ma_vi_trinat"
+  },
+  {
+    "label": "ten_vi_trin%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_vi_trin%lex"
   },
   {
     "label": "sl_xuat",
@@ -1235,114 +1720,134 @@
     "insertText": "sl_ss0ex"
   },
   {
-    "label": "sl_met_dm",
+    "label": "sl_ss",
     "detail": "field GridInput",
-    "insertText": "sl_met_dm"
+    "insertText": "sl_ss"
   },
   {
-    "label": "sl_dinh_muc",
+    "label": "ma_vi_trin",
     "detail": "field GridInput",
-    "insertText": "sl_dinh_muc"
+    "insertText": "ma_vi_trin"
   },
   {
-    "label": "ma_vi_trinat",
+    "label": "ma_nx",
     "detail": "field GridInput",
-    "insertText": "ma_vi_trinat"
+    "insertText": "ma_nx"
   },
   {
-    "label": "ten_vi_trin%lex",
+    "label": "ngay_dkex",
     "detail": "field GridInput",
-    "insertText": "ten_vi_trin%lex"
+    "insertText": "ngay_dkex"
   },
   {
-    "label": "gia_ton",
+    "label": "tien_dn_nt",
     "detail": "field GridInput",
-    "insertText": "gia_ton"
+    "insertText": "tien_dn_nt"
   },
   {
-    "label": "tkat",
+    "label": "tien_da_kh_nt",
     "detail": "field GridInput",
-    "insertText": "tkat"
+    "insertText": "tien_da_kh_nt"
   },
   {
-    "label": "ma_khat",
+    "label": "ma_dvcs_dn",
     "detail": "field GridInput",
-    "insertText": "ma_khat"
+    "insertText": "ma_dvcs_dn"
   },
   {
-    "label": "ngay_ct0",
+    "label": "ngay_ct_dn",
     "detail": "field GridInput",
-    "insertText": "ngay_ct0"
+    "insertText": "ngay_ct_dn"
   },
   {
-    "label": "nh_dk",
+    "label": "so_ct_dn",
     "detail": "field GridInput",
-    "insertText": "nh_dk"
+    "insertText": "so_ct_dn"
   },
   {
-    "label": "ma_ct_hd",
+    "label": "ma_kh_dn",
     "detail": "field GridInput",
-    "insertText": "ma_ct_hd"
+    "insertText": "ma_kh_dn"
   },
   {
-    "label": "ngay_ct_hd",
+    "label": "loai_ct_dn",
     "detail": "field GridInput",
-    "insertText": "ngay_ct_hd"
+    "insertText": "loai_ct_dn"
   },
   {
-    "label": "so_ct_hd",
+    "label": "so_hd",
     "detail": "field GridInput",
-    "insertText": "so_ct_hd"
+    "insertText": "so_hd"
   },
   {
-    "label": "t_tt_nt0",
+    "label": "tien_da_kh_ntex",
     "detail": "field GridInput",
-    "insertText": "t_tt_nt0"
+    "insertText": "tien_da_kh_ntex"
   },
   {
-    "label": "t_tt_qd",
+    "label": "tien_cl_ntex",
     "detail": "field GridInput",
-    "insertText": "t_tt_qd"
+    "insertText": "tien_cl_ntex"
   },
   {
-    "label": "con_lai",
+    "label": "ngay_pb_dn",
     "detail": "field GridInput",
-    "insertText": "con_lai"
+    "insertText": "ngay_pb_dn"
   },
   {
-    "label": "tien_pb",
+    "label": "ngay_han_tt",
     "detail": "field GridInput",
-    "insertText": "tien_pb"
+    "insertText": "ngay_han_tt"
   },
   {
-    "label": "nh_vt2at",
+    "label": "ngay_dk",
     "detail": "field GridInput",
-    "insertText": "nh_vt2at"
+    "insertText": "ngay_dk"
   },
   {
-    "label": "ten_nh_vt2%lex",
+    "label": "tien_dn",
     "detail": "field GridInput",
-    "insertText": "ten_nh_vt2%lex"
+    "insertText": "tien_dn"
   },
   {
-    "label": "kl_keo",
+    "label": "tien_da_khex",
     "detail": "field GridInput",
-    "insertText": "kl_keo"
+    "insertText": "tien_da_khex"
   },
   {
-    "label": "kl_dung_moi",
+    "label": "tien_clex",
     "detail": "field GridInput",
-    "insertText": "kl_dung_moi"
+    "insertText": "tien_clex"
   },
   {
-    "label": "ngay_ku",
+    "label": "tien_bn1",
     "detail": "field GridInput",
-    "insertText": "ngay_ku"
+    "insertText": "tien_bn1"
   },
   {
-    "label": "ngay_tl",
+    "label": "tien_bn1_nt",
     "detail": "field GridInput",
-    "insertText": "ngay_tl"
+    "insertText": "tien_bn1_nt"
+  },
+  {
+    "label": "stt_rec_dn",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_dn"
+  },
+  {
+    "label": "stt_rec0dn",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0dn"
+  },
+  {
+    "label": "dn_ln",
+    "detail": "field GridInput",
+    "insertText": "dn_ln"
+  },
+  {
+    "label": "da_gom_yn",
+    "detail": "field GridInput",
+    "insertText": "da_gom_yn"
   },
   {
     "label": "ls",
@@ -1355,14 +1860,24 @@
     "insertText": "ngay_hl"
   },
   {
-    "label": "ngay_tt",
+    "label": "ds_dk",
     "detail": "field GridInput",
-    "insertText": "ngay_tt"
+    "insertText": "ds_dk"
   },
   {
-    "label": "ztg_so",
+    "label": "ds_tk_noex",
     "detail": "field GridInput",
-    "insertText": "ztg_so"
+    "insertText": "ds_tk_noex"
+  },
+  {
+    "label": "ds_tk_coex",
+    "detail": "field GridInput",
+    "insertText": "ds_tk_coex"
+  },
+  {
+    "label": "cong_tru",
+    "detail": "field GridInput",
+    "insertText": "cong_tru"
   },
   {
     "label": "dh_so",
@@ -1375,19 +1890,9 @@
     "insertText": "dh_ln"
   },
   {
-    "label": "stt_rec_dh",
+    "label": "ngay_giao",
     "detail": "field GridInput",
-    "insertText": "stt_rec_dh"
-  },
-  {
-    "label": "stt_rec0dh",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0dh"
-  },
-  {
-    "label": "stt_rec_ztg",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_ztg"
+    "insertText": "ngay_giao"
   },
   {
     "label": "stt_rec_px",
@@ -1400,9 +1905,129 @@
     "insertText": "stt_rec0px"
   },
   {
-    "label": "so_ks",
+    "label": "ma_td3at",
     "detail": "field GridInput",
-    "insertText": "so_ks"
+    "insertText": "ma_td3at"
+  },
+  {
+    "label": "ten_td%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_td%lex"
+  },
+  {
+    "label": "dien_giai_ct",
+    "detail": "field GridInput",
+    "insertText": "dien_giai_ct"
+  },
+  {
+    "label": "sl_order",
+    "detail": "field GridInput",
+    "insertText": "sl_order"
+  },
+  {
+    "label": "ma_ncc",
+    "detail": "field GridInput",
+    "insertText": "ma_ncc"
+  },
+  {
+    "label": "ten_ncc%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_ncc%lex"
+  },
+  {
+    "label": "bp_pt",
+    "detail": "field GridInput",
+    "insertText": "bp_pt"
+  },
+  {
+    "label": "u_status",
+    "detail": "field GridInput",
+    "insertText": "u_status"
+  },
+  {
+    "label": "ma_td3",
+    "detail": "field GridInput",
+    "insertText": "ma_td3"
+  },
+  {
+    "label": "hs_quy_cachex",
+    "detail": "field GridInput",
+    "insertText": "hs_quy_cachex"
+  },
+  {
+    "label": "gia_tk",
+    "detail": "field GridInput",
+    "insertText": "gia_tk"
+  },
+  {
+    "label": "tien_tk",
+    "detail": "field GridInput",
+    "insertText": "tien_tk"
+  },
+  {
+    "label": "sl_toi_thieu",
+    "detail": "field GridInput",
+    "insertText": "sl_toi_thieu"
+  },
+  {
+    "label": "stt_rec_mn",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_mn"
+  },
+  {
+    "label": "dong_yn",
+    "detail": "field GridInput",
+    "insertText": "dong_yn"
+  },
+  {
+    "label": "ghi_chu_dong",
+    "detail": "field GridInput",
+    "insertText": "ghi_chu_dong"
+  },
+  {
+    "label": "kho_tong_kg_yn",
+    "detail": "field GridInput",
+    "insertText": "kho_tong_kg_yn"
+  },
+  {
+    "label": "dvt_goc",
+    "detail": "field GridInput",
+    "insertText": "dvt_goc"
+  },
+  {
+    "label": "ma_kho_ischeckex",
+    "detail": "field GridInput",
+    "insertText": "ma_kho_ischeckex"
+  },
+  {
+    "label": "he_so",
+    "detail": "field GridInput",
+    "insertText": "he_so"
+  },
+  {
+    "label": "hd_so",
+    "detail": "field GridInput",
+    "insertText": "hd_so"
+  },
+  {
+    "label": "hd_ln",
+    "detail": "field GridInput",
+    "insertText": "hd_ln"
+  },
+  {
+    "label": "stt_rec0hd",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0hd"
+  },
+  {
+    "label": "km_yn",
+    "detail": "field GridInput",
+    "insertText": "km_yn"
+  },
+  {
+    "label": "sl_hd",
+    "detail": "field GridInput",
+    "insertText": "sl_hd"
   },
   {
     "label": "sl_kt",
@@ -1425,19 +2050,229 @@
     "insertText": "xaction"
   },
   {
-    "label": "so_kien",
+    "label": "stt_rec_pxb",
     "detail": "field GridInput",
-    "insertText": "so_kien"
+    "insertText": "stt_rec_pxb"
   },
   {
-    "label": "hd_ln",
+    "label": "stt_rec0pxb",
     "detail": "field GridInput",
-    "insertText": "hd_ln"
+    "insertText": "stt_rec0pxb"
+  },
+  {
+    "label": "sl_nhan",
+    "detail": "field GridInput",
+    "insertText": "sl_nhan"
+  },
+  {
+    "label": "xaction_exex",
+    "detail": "field GridInput",
+    "insertText": "xaction_exex"
+  },
+  {
+    "label": "ma_cpat",
+    "detail": "field GridInput",
+    "insertText": "ma_cpat"
+  },
+  {
+    "label": "ten_cp%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_cp%lex"
+  },
+  {
+    "label": "tien_cp_nt",
+    "detail": "field GridInput",
+    "insertText": "tien_cp_nt"
+  },
+  {
+    "label": "tien_cp",
+    "detail": "field GridInput",
+    "insertText": "tien_cp"
+  },
+  {
+    "label": "loai_pb",
+    "detail": "field GridInput",
+    "insertText": "loai_pb"
+  },
+  {
+    "label": "loai_cp",
+    "detail": "field GridInput",
+    "insertText": "loai_cp"
+  },
+  {
+    "label": "cp_vc_nt",
+    "detail": "field GridInput",
+    "insertText": "cp_vc_nt"
+  },
+  {
+    "label": "cp_bh_nt",
+    "detail": "field GridInput",
+    "insertText": "cp_bh_nt"
+  },
+  {
+    "label": "cp_khac_nt",
+    "detail": "field GridInput",
+    "insertText": "cp_khac_nt"
+  },
+  {
+    "label": "cp_nt",
+    "detail": "field GridInput",
+    "insertText": "cp_nt"
+  },
+  {
+    "label": "tien0",
+    "detail": "field GridInput",
+    "insertText": "tien0"
+  },
+  {
+    "label": "tien3",
+    "detail": "field GridInput",
+    "insertText": "tien3"
+  },
+  {
+    "label": "cp_vc",
+    "detail": "field GridInput",
+    "insertText": "cp_vc"
+  },
+  {
+    "label": "cp_bh",
+    "detail": "field GridInput",
+    "insertText": "cp_bh"
+  },
+  {
+    "label": "cp_khac",
+    "detail": "field GridInput",
+    "insertText": "cp_khac"
+  },
+  {
+    "label": "cp",
+    "detail": "field GridInput",
+    "insertText": "cp"
+  },
+  {
+    "label": "volume",
+    "detail": "field GridInput",
+    "insertText": "volume"
+  },
+  {
+    "label": "weight",
+    "detail": "field GridInput",
+    "insertText": "weight"
+  },
+  {
+    "label": "ma_thue_nkat",
+    "detail": "field GridInput",
+    "insertText": "ma_thue_nkat"
+  },
+  {
+    "label": "ten_thue_nk%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_thue_nk%lex"
+  },
+  {
+    "label": "ma_thue_ttdbat",
+    "detail": "field GridInput",
+    "insertText": "ma_thue_ttdbat"
+  },
+  {
+    "label": "ten_thue_ttdb%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_thue_ttdb%lex"
+  },
+  {
+    "label": "thue_suat_ttdb",
+    "detail": "field GridInput",
+    "insertText": "thue_suat_ttdb"
+  },
+  {
+    "label": "ttdb_nt",
+    "detail": "field GridInput",
+    "insertText": "ttdb_nt"
+  },
+  {
+    "label": "nk",
+    "detail": "field GridInput",
+    "insertText": "nk"
+  },
+  {
+    "label": "ttdb",
+    "detail": "field GridInput",
+    "insertText": "ttdb"
+  },
+  {
+    "label": "ma_vt0",
+    "detail": "field GridInput",
+    "insertText": "ma_vt0"
+  },
+  {
+    "label": "stt_rec_nc",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_nc"
+  },
+  {
+    "label": "stt_rec0nc",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0nc"
+  },
+  {
+    "label": "stt_rec_kh",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_kh"
+  },
+  {
+    "label": "stt_rec0kh",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0kh"
+  },
+  {
+    "label": "sl_xb",
+    "detail": "field GridInput",
+    "insertText": "sl_xb"
+  },
+  {
+    "label": "sl_pr1",
+    "detail": "field GridInput",
+    "insertText": "sl_pr1"
+  },
+  {
+    "label": "yc_ln",
+    "detail": "field GridInput",
+    "insertText": "yc_ln"
+  },
+  {
+    "label": "yc_so",
+    "detail": "field GridInput",
+    "insertText": "yc_so"
+  },
+  {
+    "label": "sl_pr",
+    "detail": "field GridInput",
+    "insertText": "sl_pr"
   },
   {
     "label": "gia_nt0",
     "detail": "field GridInput",
     "insertText": "gia_nt0"
+  },
+  {
+    "label": "tk_thue_nk",
+    "detail": "field GridInput",
+    "insertText": "tk_thue_nk"
+  },
+  {
+    "label": "ma_thue_ttdb",
+    "detail": "field GridInput",
+    "insertText": "ma_thue_ttdb"
+  },
+  {
+    "label": "tk_thue_ttdb",
+    "detail": "field GridInput",
+    "insertText": "tk_thue_ttdb"
+  },
+  {
+    "label": "thue_cnex",
+    "detail": "field GridInput",
+    "insertText": "thue_cnex"
   },
   {
     "label": "gia0",
@@ -1510,11 +2345,6 @@
     "insertText": "tk_ln"
   },
   {
-    "label": "thue_cnex",
-    "detail": "field GridInput",
-    "insertText": "thue_cnex"
-  },
-  {
     "label": "stt_rec_tk",
     "detail": "field GridInput",
     "insertText": "stt_rec_tk"
@@ -1523,6 +2353,76 @@
     "label": "stt_rec0tk",
     "detail": "field GridInput",
     "insertText": "stt_rec0tk"
+  },
+  {
+    "label": "stt_rec_nm",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_nm"
+  },
+  {
+    "label": "stt_rec0nm",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0nm"
+  },
+  {
+    "label": "nm_so",
+    "detail": "field GridInput",
+    "insertText": "nm_so"
+  },
+  {
+    "label": "nm_ln",
+    "detail": "field GridInput",
+    "insertText": "nm_ln"
+  },
+  {
+    "label": "chuoi_ngay",
+    "detail": "field GridInput",
+    "insertText": "chuoi_ngay"
+  },
+  {
+    "label": "duyet_hetex",
+    "detail": "field GridInput",
+    "insertText": "duyet_hetex"
+  },
+  {
+    "label": "duyet",
+    "detail": "field GridInput",
+    "insertText": "duyet"
+  },
+  {
+    "label": "huyex",
+    "detail": "field GridInput",
+    "insertText": "huyex"
+  },
+  {
+    "label": "xtag",
+    "detail": "field GridInput",
+    "insertText": "xtag"
+  },
+  {
+    "label": "xtag2",
+    "detail": "field GridInput",
+    "insertText": "xtag2"
+  },
+  {
+    "label": "t_duyet",
+    "detail": "field GridInput",
+    "insertText": "t_duyet"
+  },
+  {
+    "label": "t_huy",
+    "detail": "field GridInput",
+    "insertText": "t_huy"
+  },
+  {
+    "label": "t_dong",
+    "detail": "field GridInput",
+    "insertText": "t_dong"
+  },
+  {
+    "label": "sl_dat",
+    "detail": "field GridInput",
+    "insertText": "sl_dat"
   },
   {
     "label": "ma_dcat",
@@ -1545,44 +2445,194 @@
     "insertText": "sl_dh"
   },
   {
-    "label": "ten_vt_gocex",
+    "label": "sl_sdbq",
     "detail": "field GridInput",
-    "insertText": "ten_vt_gocex"
+    "insertText": "sl_sdbq"
   },
   {
-    "label": "nhieu_dvt0ex",
+    "label": "gia_tkex",
     "detail": "field GridInput",
-    "insertText": "nhieu_dvt0ex"
+    "insertText": "gia_tkex"
   },
   {
-    "label": "ten_dvcs",
+    "label": "ten_ct_ns%lex",
     "detail": "field GridInput",
-    "insertText": "ten_dvcs"
+    "insertText": "ten_ct_ns%lex"
   },
   {
-    "label": "gr_id",
+    "label": "nvl_yn",
     "detail": "field GridInput",
-    "insertText": "gr_id"
+    "insertText": "nvl_yn"
   },
   {
-    "label": "stt_sx",
+    "label": "ma_tsat",
     "detail": "field GridInput",
-    "insertText": "stt_sx"
+    "insertText": "ma_tsat"
   },
   {
-    "label": "group1By",
+    "label": "ten_ts%lex",
     "detail": "field GridInput",
-    "insertText": "group1By"
+    "insertText": "ten_ts%lex"
   },
   {
-    "label": "group2By",
+    "label": "ma_ccat",
     "detail": "field GridInput",
-    "insertText": "group2By"
+    "insertText": "ma_ccat"
+  },
+  {
+    "label": "ten_cc%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_cc%lex"
+  },
+  {
+    "label": "stt_rec_po1",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_po1"
+  },
+  {
+    "label": "stt_rec0po1",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0po1"
+  },
+  {
+    "label": "ln_po1",
+    "detail": "field GridInput",
+    "insertText": "ln_po1"
+  },
+  {
+    "label": "so_po1",
+    "detail": "field GridInput",
+    "insertText": "so_po1"
+  },
+  {
+    "label": "ds_stt_rec_dh",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec_dh"
+  },
+  {
+    "label": "ds_sl_dh",
+    "detail": "field GridInput",
+    "insertText": "ds_sl_dh"
+  },
+  {
+    "label": "ds_stt_rec0dh",
+    "detail": "field GridInput",
+    "insertText": "ds_stt_rec0dh"
+  },
+  {
+    "label": "d91c_ln",
+    "detail": "field GridInput",
+    "insertText": "d91c_ln"
+  },
+  {
+    "label": "kt_so",
+    "detail": "field GridInput",
+    "insertText": "kt_so"
+  },
+  {
+    "label": "kt_ln",
+    "detail": "field GridInput",
+    "insertText": "kt_ln"
+  },
+  {
+    "label": "stt_rec_kt",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_kt"
+  },
+  {
+    "label": "stt_rec0kt",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0kt"
+  },
+  {
+    "label": "stt_rec_ct",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_ct"
+  },
+  {
+    "label": "stt_rec0ct",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0ct"
+  },
+  {
+    "label": "ma_ktat",
+    "detail": "field GridInput",
+    "insertText": "ma_ktat"
+  },
+  {
+    "label": "ten_kt%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_kt%lex"
+  },
+  {
+    "label": "so_dongex",
+    "detail": "field GridInput",
+    "insertText": "so_dongex"
+  },
+  {
+    "label": "sl_kdex",
+    "detail": "field GridInput",
+    "insertText": "sl_kdex"
+  },
+  {
+    "label": "ma_ktatex",
+    "detail": "field GridInput",
+    "insertText": "ma_ktatex"
+  },
+  {
+    "label": "stt_rec_pd1",
+    "detail": "field GridInput",
+    "insertText": "stt_rec_pd1"
+  },
+  {
+    "label": "stt_rec0pd1",
+    "detail": "field GridInput",
+    "insertText": "stt_rec0pd1"
+  },
+  {
+    "label": "stt_ct_nkc",
+    "detail": "field GridInput",
+    "insertText": "stt_ct_nkc"
   },
   {
     "label": "systotal",
     "detail": "field GridInput",
     "insertText": "systotal"
+  },
+  {
+    "label": "ma_hd",
+    "detail": "field GridInput",
+    "insertText": "ma_hd"
+  },
+  {
+    "label": "sysprint",
+    "detail": "field GridInput",
+    "insertText": "sysprint"
+  },
+  {
+    "label": "kk_lai",
+    "detail": "field GridInput",
+    "insertText": "kk_lai"
+  },
+  {
+    "label": "isEnable",
+    "detail": "field GridInput",
+    "insertText": "isEnable"
+  },
+  {
+    "label": "loai_gia",
+    "detail": "field GridInput",
+    "insertText": "loai_gia"
+  },
+  {
+    "label": "po1_so",
+    "detail": "field GridInput",
+    "insertText": "po1_so"
+  },
+  {
+    "label": "po1_ln",
+    "detail": "field GridInput",
+    "insertText": "po1_ln"
   },
   {
     "label": "gia_ban_nt",
@@ -1630,19 +2680,29 @@
     "insertText": "stt_rec0lx"
   },
   {
-    "label": "so_dhkh",
+    "label": "stt_rec_bg",
     "detail": "field GridInput",
-    "insertText": "so_dhkh"
+    "insertText": "stt_rec_bg"
   },
   {
-    "label": "ma_mdex",
+    "label": "stt_rec0bg",
     "detail": "field GridInput",
-    "insertText": "ma_mdex"
+    "insertText": "stt_rec0bg"
   },
   {
-    "label": "ly_doex",
+    "label": "ton_yn",
     "detail": "field GridInput",
-    "insertText": "ly_doex"
+    "insertText": "ton_yn"
+  },
+  {
+    "label": "loai_vtat",
+    "detail": "field GridInput",
+    "insertText": "loai_vtat"
+  },
+  {
+    "label": "ten_loai_vt%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_loai_vt%lex"
   },
   {
     "label": "nh_vt1at",
@@ -1653,6 +2713,26 @@
     "label": "ten_nh_vt1%lex",
     "detail": "field GridInput",
     "insertText": "ten_nh_vt1%lex"
+  },
+  {
+    "label": "nh_vt2at",
+    "detail": "field GridInput",
+    "insertText": "nh_vt2at"
+  },
+  {
+    "label": "ten_nh_vt2%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_nh_vt2%lex"
+  },
+  {
+    "label": "nh_vt3at",
+    "detail": "field GridInput",
+    "insertText": "nh_vt3at"
+  },
+  {
+    "label": "ten_nh_vt3%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_nh_vt3%lex"
   },
   {
     "label": "ten_tk_dt%lex",
@@ -1690,39 +2770,44 @@
     "insertText": "px_ln"
   },
   {
-    "label": "km_yn",
+    "label": "stt_rec_px_td",
     "detail": "field GridInput",
-    "insertText": "km_yn"
+    "insertText": "stt_rec_px_td"
   },
   {
-    "label": "sl_tlex",
+    "label": "stt_rec0px_td",
     "detail": "field GridInput",
-    "insertText": "sl_tlex"
+    "insertText": "stt_rec0px_td"
   },
   {
-    "label": "tk_gv",
+    "label": "ma_khuyen_maiat",
     "detail": "field GridInput",
-    "insertText": "tk_gv"
+    "insertText": "ma_khuyen_maiat"
   },
   {
-    "label": "tk_cpbh",
+    "label": "ten_ctr%lex",
     "detail": "field GridInput",
-    "insertText": "tk_cpbh"
+    "insertText": "ten_ctr%lex"
   },
   {
-    "label": "kieu_tlex",
+    "label": "tk_dtex",
     "detail": "field GridInput",
-    "insertText": "kieu_tlex"
+    "insertText": "tk_dtex"
   },
   {
-    "label": "tl_ck",
+    "label": "kieu_dtex",
     "detail": "field GridInput",
-    "insertText": "tl_ck"
+    "insertText": "kieu_dtex"
   },
   {
     "label": "tk_ck",
     "detail": "field GridInput",
     "insertText": "tk_ck"
+  },
+  {
+    "label": "kieu_ckex",
+    "detail": "field GridInput",
+    "insertText": "kieu_ckex"
   },
   {
     "label": "tk_gvex",
@@ -1735,144 +2820,19 @@
     "insertText": "kieu_gvex"
   },
   {
-    "label": "tk_tlex",
+    "label": "id_no",
     "detail": "field GridInput",
-    "insertText": "tk_tlex"
+    "insertText": "id_no"
   },
   {
-    "label": "tk_dt",
+    "label": "code",
     "detail": "field GridInput",
-    "insertText": "tk_dt"
+    "insertText": "code"
   },
   {
-    "label": "kieu_dtex",
+    "label": "xtype",
     "detail": "field GridInput",
-    "insertText": "kieu_dtex"
-  },
-  {
-    "label": "tk_cpbhex",
-    "detail": "field GridInput",
-    "insertText": "tk_cpbhex"
-  },
-  {
-    "label": "kieu_cpbhex",
-    "detail": "field GridInput",
-    "insertText": "kieu_cpbhex"
-  },
-  {
-    "label": "loai_vcat",
-    "detail": "field GridInput",
-    "insertText": "loai_vcat"
-  },
-  {
-    "label": "ma_vcat",
-    "detail": "field GridInput",
-    "insertText": "ma_vcat"
-  },
-  {
-    "label": "ten_vc%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_vc%lex"
-  },
-  {
-    "label": "giao_yn",
-    "detail": "field GridInput",
-    "insertText": "giao_yn"
-  },
-  {
-    "label": "tien_ket_hop_nt",
-    "detail": "field GridInput",
-    "insertText": "tien_ket_hop_nt"
-  },
-  {
-    "label": "tien_phai_tra_nt",
-    "detail": "field GridInput",
-    "insertText": "tien_phai_tra_nt"
-  },
-  {
-    "label": "so_chuyenex",
-    "detail": "field GridInput",
-    "insertText": "so_chuyenex"
-  },
-  {
-    "label": "loai_vcatex",
-    "detail": "field GridInput",
-    "insertText": "loai_vcatex"
-  },
-  {
-    "label": "gia_dx_nt",
-    "detail": "field GridInput",
-    "insertText": "gia_dx_nt"
-  },
-  {
-    "label": "gia_dx",
-    "detail": "field GridInput",
-    "insertText": "gia_dx"
-  },
-  {
-    "label": "zdn_so",
-    "detail": "field GridInput",
-    "insertText": "zdn_so"
-  },
-  {
-    "label": "zdn_ln",
-    "detail": "field GridInput",
-    "insertText": "zdn_ln"
-  },
-  {
-    "label": "is_so",
-    "detail": "field GridInput",
-    "insertText": "is_so"
-  },
-  {
-    "label": "is_ln",
-    "detail": "field GridInput",
-    "insertText": "is_ln"
-  },
-  {
-    "label": "stt_rec_zdn",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_zdn"
-  },
-  {
-    "label": "stt_rec0zdn",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0zdn"
-  },
-  {
-    "label": "stt_rec_is",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_is"
-  },
-  {
-    "label": "stt_rec0is",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0is"
-  },
-  {
-    "label": "tk_dtex",
-    "detail": "field GridInput",
-    "insertText": "tk_dtex"
-  },
-  {
-    "label": "kieu_ckex",
-    "detail": "field GridInput",
-    "insertText": "kieu_ckex"
-  },
-  {
-    "label": "sl_hda",
-    "detail": "field GridInput",
-    "insertText": "sl_hda"
-  },
-  {
-    "label": "ma_bp_dcat",
-    "detail": "field GridInput",
-    "insertText": "ma_bp_dcat"
-  },
-  {
-    "label": "ten_bp%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_bp%lex"
+    "insertText": "xtype"
   },
   {
     "label": "ten_pt",
@@ -1890,34 +2850,34 @@
     "insertText": "gia_tri"
   },
   {
-    "label": "tk_cpat",
+    "label": "voucher_no",
     "detail": "field GridInput",
-    "insertText": "tk_cpat"
+    "insertText": "voucher_no"
   },
   {
-    "label": "ten_tk_cp%lex",
+    "label": "ngay_bd",
     "detail": "field GridInput",
-    "insertText": "ten_tk_cp%lex"
+    "insertText": "ngay_bd"
   },
   {
-    "label": "gt_cl_nt",
+    "label": "ngay_kt",
     "detail": "field GridInput",
-    "insertText": "gt_cl_nt"
+    "insertText": "ngay_kt"
   },
   {
-    "label": "gt_cl",
+    "label": "loai_ct",
     "detail": "field GridInput",
-    "insertText": "gt_cl"
+    "insertText": "loai_ct"
   },
   {
-    "label": "ten_gd%l",
+    "label": "sl_tt0",
     "detail": "field GridInput",
-    "insertText": "ten_gd%l"
+    "insertText": "sl_tt0"
   },
   {
-    "label": "ma_loai_vt_khoex",
+    "label": "sl_pb",
     "detail": "field GridInput",
-    "insertText": "ma_loai_vt_khoex"
+    "insertText": "sl_pb"
   },
   {
     "label": "ngay_nhap",
@@ -1925,74 +2885,89 @@
     "insertText": "ngay_nhap"
   },
   {
-    "label": "ten_lo",
-    "detail": "field GridInput",
-    "insertText": "ten_lo"
-  },
-  {
-    "label": "ten_lo2",
-    "detail": "field GridInput",
-    "insertText": "ten_lo2"
-  },
-  {
-    "label": "ngay_sx",
-    "detail": "field GridInput",
-    "insertText": "ngay_sx"
-  },
-  {
     "label": "ngay_hhsd",
     "detail": "field GridInput",
     "insertText": "ngay_hhsd"
   },
   {
-    "label": "ngay_hhbh",
+    "label": "nhieu_dvt",
     "detail": "field GridInput",
-    "insertText": "ngay_hhbh"
+    "insertText": "nhieu_dvt"
   },
   {
-    "label": "so_ngay_sp",
+    "label": "so_luong0",
     "detail": "field GridInput",
-    "insertText": "so_ngay_sp"
+    "insertText": "so_luong0"
   },
   {
-    "label": "so_ngay_bh",
+    "label": "tl_so",
     "detail": "field GridInput",
-    "insertText": "so_ngay_bh"
+    "insertText": "tl_so"
   },
   {
-    "label": "kieu_lo",
+    "label": "tl_ln",
     "detail": "field GridInput",
-    "insertText": "kieu_lo"
+    "insertText": "tl_ln"
   },
   {
-    "label": "so_met_tu",
+    "label": "stt_rec_tl",
     "detail": "field GridInput",
-    "insertText": "so_met_tu"
+    "insertText": "stt_rec_tl"
   },
   {
-    "label": "ty_le_hh",
+    "label": "stt_rec0tl",
     "detail": "field GridInput",
-    "insertText": "ty_le_hh"
+    "insertText": "stt_rec0tl"
   },
   {
-    "label": "chuyen_kho_dd",
+    "label": "ma_kho_xuatex",
     "detail": "field GridInput",
-    "insertText": "chuyen_kho_dd"
+    "insertText": "ma_kho_xuatex"
   },
   {
-    "label": "chuyen_do_day",
+    "label": "stt_rec2",
     "detail": "field GridInput",
-    "insertText": "chuyen_do_day"
+    "insertText": "stt_rec2"
   },
   {
-    "label": "chuyen_duc_trong",
+    "label": "ma_ct_dh",
     "detail": "field GridInput",
-    "insertText": "chuyen_duc_trong"
+    "insertText": "ma_ct_dh"
   },
   {
-    "label": "cap_them_dh",
+    "label": "phieu_thu",
     "detail": "field GridInput",
-    "insertText": "cap_them_dh"
+    "insertText": "phieu_thu"
+  },
+  {
+    "label": "da_gom",
+    "detail": "field GridInput",
+    "insertText": "da_gom"
+  },
+  {
+    "label": "lst_ngay_ct",
+    "detail": "field GridInput",
+    "insertText": "lst_ngay_ct"
+  },
+  {
+    "label": "tk_nh",
+    "detail": "field GridInput",
+    "insertText": "tk_nh"
+  },
+  {
+    "label": "ngan_hang",
+    "detail": "field GridInput",
+    "insertText": "ngan_hang"
+  },
+  {
+    "label": "ma_ct_hd",
+    "detail": "field GridInput",
+    "insertText": "ma_ct_hd"
+  },
+  {
+    "label": "xkey",
+    "detail": "field GridInput",
+    "insertText": "xkey"
   },
   {
     "label": "sysorder",
@@ -2000,84 +2975,199 @@
     "insertText": "sysorder"
   },
   {
-    "label": "ten_sp%lex",
+    "label": "sl_in",
     "detail": "field GridInput",
-    "insertText": "ten_sp%lex"
+    "insertText": "sl_in"
   },
   {
-    "label": "thang",
+    "label": "xkeys",
     "detail": "field GridInput",
-    "insertText": "thang"
+    "insertText": "xkeys"
   },
   {
-    "label": "ma_phiat",
+    "label": "so_seri",
     "detail": "field GridInput",
-    "insertText": "ma_phiat"
+    "insertText": "so_seri"
   },
   {
-    "label": "ten_phi%lex",
+    "label": "idlog",
     "detail": "field GridInput",
-    "insertText": "ten_phi%lex"
+    "insertText": "idlog"
   },
   {
-    "label": "dien_thoai",
+    "label": "ten_khoex",
     "detail": "field GridInput",
-    "insertText": "dien_thoai"
+    "insertText": "ten_khoex"
   },
   {
-    "label": "ma_mam",
+    "label": "t_tt_nt",
     "detail": "field GridInput",
-    "insertText": "ma_mam"
+    "insertText": "t_tt_nt"
   },
   {
-    "label": "ten_mam%l",
+    "label": "zkey",
     "detail": "field GridInput",
-    "insertText": "ten_mam%l"
+    "insertText": "zkey"
   },
   {
-    "label": "ma_bpat",
+    "label": "session_id",
     "detail": "field GridInput",
-    "insertText": "ma_bpat"
+    "insertText": "session_id"
   },
   {
-    "label": "them_lan_dau",
+    "label": "order_ncc_yn",
     "detail": "field GridInput",
-    "insertText": "them_lan_dau"
+    "insertText": "order_ncc_yn"
   },
   {
-    "label": "sl_them",
+    "label": "priority",
     "detail": "field GridInput",
-    "insertText": "sl_them"
+    "insertText": "priority"
   },
   {
-    "label": "ma_pt",
+    "label": "new_status",
     "detail": "field GridInput",
-    "insertText": "ma_pt"
+    "insertText": "new_status"
   },
   {
-    "label": "ma_gd",
+    "label": "ngay_hl_tu",
     "detail": "field GridInput",
-    "insertText": "ma_gd"
+    "insertText": "ngay_hl_tu"
   },
   {
-    "label": "chieu_dai",
+    "label": "ngay_hl_den",
     "detail": "field GridInput",
-    "insertText": "chieu_dai"
+    "insertText": "ngay_hl_den"
   },
   {
-    "label": "dinh_luong_chuan",
+    "label": "ma_nha_hangat",
     "detail": "field GridInput",
-    "insertText": "dinh_luong_chuan"
+    "insertText": "ma_nha_hangat"
   },
   {
-    "label": "ty_le_lt",
+    "label": "ten_nha_hang%lex",
     "detail": "field GridInput",
-    "insertText": "ty_le_lt"
+    "insertText": "ten_nha_hang%lex"
   },
   {
-    "label": "nh_bo",
+    "label": "tl_ngan_sach",
     "detail": "field GridInput",
-    "insertText": "nh_bo"
+    "insertText": "tl_ngan_sach"
+  },
+  {
+    "label": "tien_ngan_sach",
+    "detail": "field GridInput",
+    "insertText": "tien_ngan_sach"
+  },
+  {
+    "label": "ma_ctr",
+    "detail": "field GridInput",
+    "insertText": "ma_ctr"
+  },
+  {
+    "label": "loai",
+    "detail": "field GridInput",
+    "insertText": "loai"
+  },
+  {
+    "label": "dv_nhan",
+    "detail": "field GridInput",
+    "insertText": "dv_nhan"
+  },
+  {
+    "label": "ma_nhat",
+    "detail": "field GridInput",
+    "insertText": "ma_nhat"
+  },
+  {
+    "label": "ten_nh",
+    "detail": "field GridInput",
+    "insertText": "ten_nh"
+  },
+  {
+    "label": "tknh",
+    "detail": "field GridInput",
+    "insertText": "tknh"
+  },
+  {
+    "label": "tinh_thanh_nh",
+    "detail": "field GridInput",
+    "insertText": "tinh_thanh_nh"
+  },
+  {
+    "label": "mac_dinh",
+    "detail": "field GridInput",
+    "insertText": "mac_dinh"
+  },
+  {
+    "label": "ten_hd",
+    "detail": "field GridInput",
+    "insertText": "ten_hd"
+  },
+  {
+    "label": "khoa_yn",
+    "detail": "field GridInput",
+    "insertText": "khoa_yn"
+  },
+  {
+    "label": "statusname",
+    "detail": "field GridInput",
+    "insertText": "statusname"
+  },
+  {
+    "label": "keys",
+    "detail": "field GridInput",
+    "insertText": "keys"
+  },
+  {
+    "label": "sl_dong",
+    "detail": "field GridInput",
+    "insertText": "sl_dong"
+  },
+  {
+    "label": "dvt1",
+    "detail": "field GridInput",
+    "insertText": "dvt1"
+  },
+  {
+    "label": "ma_khonat",
+    "detail": "field GridInput",
+    "insertText": "ma_khonat"
+  },
+  {
+    "label": "sl_ycex",
+    "detail": "field GridInput",
+    "insertText": "sl_ycex"
+  },
+  {
+    "label": "sl_td1",
+    "detail": "field GridInput",
+    "insertText": "sl_td1"
+  },
+  {
+    "label": "tien_nt_x",
+    "detail": "field GridInput",
+    "insertText": "tien_nt_x"
+  },
+  {
+    "label": "tien_xuat",
+    "detail": "field GridInput",
+    "insertText": "tien_xuat"
+  },
+  {
+    "label": "gia_banex",
+    "detail": "field GridInput",
+    "insertText": "gia_banex"
+  },
+  {
+    "label": "tien_banex",
+    "detail": "field GridInput",
+    "insertText": "tien_banex"
+  },
+  {
+    "label": "nxtat",
+    "detail": "field GridInput",
+    "insertText": "nxtat"
   },
   {
     "label": "gc_td1",
@@ -2085,289 +3175,259 @@
     "insertText": "gc_td1"
   },
   {
-    "label": "cat_toi",
+    "label": "sl_nhap1",
     "detail": "field GridInput",
-    "insertText": "cat_toi"
+    "insertText": "sl_nhap1"
   },
   {
-    "label": "ma_vt_xat",
+    "label": "tien_nt_n",
     "detail": "field GridInput",
-    "insertText": "ma_vt_xat"
+    "insertText": "tien_nt_n"
   },
   {
-    "label": "ten_vt_x%lex",
+    "label": "gia1",
     "detail": "field GridInput",
-    "insertText": "ten_vt_x%lex"
+    "insertText": "gia1"
   },
   {
-    "label": "ma_kk",
+    "label": "tien_nhap",
     "detail": "field GridInput",
-    "insertText": "ma_kk"
+    "insertText": "tien_nhap"
   },
   {
-    "label": "so_the_tsat",
+    "label": "gia_muaex",
     "detail": "field GridInput",
-    "insertText": "so_the_tsat"
+    "insertText": "gia_muaex"
   },
   {
-    "label": "ten_ts%lex",
+    "label": "tien_muaex",
     "detail": "field GridInput",
-    "insertText": "ten_ts%lex"
+    "insertText": "tien_muaex"
   },
   {
-    "label": "tien_ss_nt",
+    "label": "so_the_ts_gocat",
     "detail": "field GridInput",
-    "insertText": "tien_ss_nt"
+    "insertText": "so_the_ts_gocat"
   },
   {
-    "label": "so_luong_kk",
+    "label": "ma_dvcs_gocat",
     "detail": "field GridInput",
-    "insertText": "so_luong_kk"
+    "insertText": "ma_dvcs_gocat"
   },
   {
-    "label": "tien_kk_nt",
+    "label": "nguyen_gia_goc_nt",
     "detail": "field GridInput",
-    "insertText": "tien_kk_nt"
+    "insertText": "nguyen_gia_goc_nt"
   },
   {
-    "label": "chenh_lech_thua_sl",
+    "label": "nguyen_gia_goc",
     "detail": "field GridInput",
-    "insertText": "chenh_lech_thua_sl"
+    "insertText": "nguyen_gia_goc"
   },
   {
-    "label": "chenh_lech_thua_tt",
+    "label": "stt_rec_goc",
     "detail": "field GridInput",
-    "insertText": "chenh_lech_thua_tt"
+    "insertText": "stt_rec_goc"
   },
   {
-    "label": "chenh_lech_thieu_sl",
+    "label": "so_ct_goc",
     "detail": "field GridInput",
-    "insertText": "chenh_lech_thieu_sl"
+    "insertText": "so_ct_goc"
   },
   {
-    "label": "chenh_lech_thieu_tt",
+    "label": "ngay_ct_goc",
     "detail": "field GridInput",
-    "insertText": "chenh_lech_thieu_tt"
+    "insertText": "ngay_ct_goc"
   },
   {
-    "label": "pham_chat_tot_sl",
+    "label": "ma_nv",
     "detail": "field GridInput",
-    "insertText": "pham_chat_tot_sl"
+    "insertText": "ma_nv"
   },
   {
-    "label": "pham_chat_tot_tt",
+    "label": "ten_nv%l",
     "detail": "field GridInput",
-    "insertText": "pham_chat_tot_tt"
+    "insertText": "ten_nv%l"
   },
   {
-    "label": "pham_chat_kem_sl",
+    "label": "string_key",
     "detail": "field GridInput",
-    "insertText": "pham_chat_kem_sl"
+    "insertText": "string_key"
   },
   {
-    "label": "pham_chat_kem_tt",
+    "label": "lst_so_ct",
     "detail": "field GridInput",
-    "insertText": "pham_chat_kem_tt"
+    "insertText": "lst_so_ct"
   },
   {
-    "label": "chuc_vu",
+    "label": "da_mail",
     "detail": "field GridInput",
-    "insertText": "chuc_vu"
+    "insertText": "da_mail"
   },
   {
-    "label": "dai_dien",
+    "label": "so_ct_00",
     "detail": "field GridInput",
-    "insertText": "dai_dien"
+    "insertText": "so_ct_00"
   },
   {
-    "label": "nhiem_vu",
+    "label": "ma_ct_00",
     "detail": "field GridInput",
-    "insertText": "nhiem_vu"
+    "insertText": "ma_ct_00"
   },
   {
-    "label": "ton13",
+    "label": "ngay_ct_00",
     "detail": "field GridInput",
-    "insertText": "ton13"
+    "insertText": "ngay_ct_00"
   },
   {
-    "label": "po_so",
+    "label": "stt_rec_dl",
     "detail": "field GridInput",
-    "insertText": "po_so"
+    "insertText": "stt_rec_dl"
   },
   {
-    "label": "hs_code",
+    "label": "line_dl",
     "detail": "field GridInput",
-    "insertText": "hs_code"
+    "insertText": "line_dl"
   },
   {
-    "label": "dxa_so",
+    "label": "t_nguyen_gia_ntex",
     "detail": "field GridInput",
-    "insertText": "dxa_so"
+    "insertText": "t_nguyen_gia_ntex"
   },
   {
-    "label": "dxa_ln",
+    "label": "t_khau_hao_ntex",
     "detail": "field GridInput",
-    "insertText": "dxa_ln"
+    "insertText": "t_khau_hao_ntex"
   },
   {
-    "label": "stt_rec_dxa",
+    "label": "tao_moi",
     "detail": "field GridInput",
-    "insertText": "stt_rec_dxa"
+    "insertText": "tao_moi"
   },
   {
-    "label": "stt_rec0dxa",
+    "label": "ma_vt_ttat",
     "detail": "field GridInput",
-    "insertText": "stt_rec0dxa"
+    "insertText": "ma_vt_ttat"
   },
   {
-    "label": "sl_zdn",
+    "label": "stt_rec_00",
     "detail": "field GridInput",
-    "insertText": "sl_zdn"
+    "insertText": "stt_rec_00"
   },
   {
-    "label": "ngay_kham",
+    "label": "stt_rec_bpc",
     "detail": "field GridInput",
-    "insertText": "ngay_kham"
+    "insertText": "stt_rec_bpc"
   },
   {
-    "label": "chieu_cao",
+    "label": "stt_rec0bpc",
     "detail": "field GridInput",
-    "insertText": "chieu_cao"
+    "insertText": "stt_rec0bpc"
   },
   {
-    "label": "can_nang",
+    "label": "bpc_so",
     "detail": "field GridInput",
-    "insertText": "can_nang"
+    "insertText": "bpc_so"
   },
   {
-    "label": "mat_phai",
+    "label": "bpc_ln",
     "detail": "field GridInput",
-    "insertText": "mat_phai"
+    "insertText": "bpc_ln"
   },
   {
-    "label": "mat_trai",
+    "label": "sl_zhd",
     "detail": "field GridInput",
-    "insertText": "mat_trai"
+    "insertText": "sl_zhd"
   },
   {
-    "label": "nhom_mau",
+    "label": "unit",
     "detail": "field GridInput",
-    "insertText": "nhom_mau"
+    "insertText": "unit"
   },
   {
-    "label": "loai_sk",
+    "label": "user_id0",
     "detail": "field GridInput",
-    "insertText": "loai_sk"
+    "insertText": "user_id0"
   },
   {
-    "label": "ghi_chu_sk",
+    "label": "hl_tu",
     "detail": "field GridInput",
-    "insertText": "ghi_chu_sk"
+    "insertText": "hl_tu"
   },
   {
-    "label": "ngay_nghi_tu",
+    "label": "hl_den",
     "detail": "field GridInput",
-    "insertText": "ngay_nghi_tu"
+    "insertText": "hl_den"
   },
   {
-    "label": "ngay_nghi_den",
+    "label": "tg_thuc_hien",
     "detail": "field GridInput",
-    "insertText": "ngay_nghi_den"
+    "insertText": "tg_thuc_hien"
   },
   {
-    "label": "so_lan",
+    "label": "tl_phan_bo",
     "detail": "field GridInput",
-    "insertText": "so_lan"
+    "insertText": "tl_phan_bo"
   },
   {
-    "label": "ngay_sieu_am",
+    "label": "so_ngay",
     "detail": "field GridInput",
-    "insertText": "ngay_sieu_am"
+    "insertText": "so_ngay"
   },
   {
-    "label": "ngay_thang7",
+    "label": "nh_nha_hang",
     "detail": "field GridInput",
-    "insertText": "ngay_thang7"
+    "insertText": "nh_nha_hang"
   },
   {
-    "label": "tuoi_thai",
+    "label": "ten_nh_nh%lex",
     "detail": "field GridInput",
-    "insertText": "tuoi_thai"
+    "insertText": "ten_nh_nh%lex"
   },
   {
-    "label": "say_thai_yn",
+    "label": "ma_nh",
     "detail": "field GridInput",
-    "insertText": "say_thai_yn"
+    "insertText": "ma_nh"
   },
   {
-    "label": "ngay_sinh_con",
+    "label": "ten_nh%lex",
     "detail": "field GridInput",
-    "insertText": "ngay_sinh_con"
+    "insertText": "ten_nh%lex"
   },
   {
-    "label": "ngay_nghi_truoc",
+    "label": "loai_order",
     "detail": "field GridInput",
-    "insertText": "ngay_nghi_truoc"
+    "insertText": "loai_order"
   },
   {
-    "label": "ngay_nghi_dg1",
+    "label": "ten_loai_order%lex",
     "detail": "field GridInput",
-    "insertText": "ngay_nghi_dg1"
+    "insertText": "ten_loai_order%lex"
   },
   {
-    "label": "ngay_nghi_dg2",
+    "label": "loai_dh",
     "detail": "field GridInput",
-    "insertText": "ngay_nghi_dg2"
+    "insertText": "loai_dh"
   },
   {
-    "label": "ngay_nghi_sau",
+    "label": "ten_xcb%lex",
     "detail": "field GridInput",
-    "insertText": "ngay_nghi_sau"
+    "insertText": "ten_xcb%lex"
   },
   {
-    "label": "ngay_lam_lai",
+    "label": "ngay_can_hang",
     "detail": "field GridInput",
-    "insertText": "ngay_lam_lai"
+    "insertText": "ngay_can_hang"
   },
   {
-    "label": "ngay_het_cd",
+    "label": "thoi_gian",
     "detail": "field GridInput",
-    "insertText": "ngay_het_cd"
+    "insertText": "thoi_gian"
   },
   {
-    "label": "ngay_tang_bh",
+    "label": "nam",
     "detail": "field GridInput",
-    "insertText": "ngay_tang_bh"
-  },
-  {
-    "label": "ngay_giam_bh",
-    "detail": "field GridInput",
-    "insertText": "ngay_giam_bh"
-  },
-  {
-    "label": "so_phut",
-    "detail": "field GridInput",
-    "insertText": "so_phut"
-  },
-  {
-    "label": "tuy_chon",
-    "detail": "field GridInput",
-    "insertText": "tuy_chon"
-  },
-  {
-    "label": "tk_me",
-    "detail": "field GridInput",
-    "insertText": "tk_me"
-  },
-  {
-    "label": "loai_tn",
-    "detail": "field GridInput",
-    "insertText": "loai_tn"
-  },
-  {
-    "label": "ma_ns",
-    "detail": "field GridInput",
-    "insertText": "ma_ns"
+    "insertText": "nam"
   },
   {
     "label": "nguoi_tinh",
@@ -2375,74 +3435,9 @@
     "insertText": "nguoi_tinh"
   },
   {
-    "label": "loaiat",
+    "label": "ngay",
     "detail": "field GridInput",
-    "insertText": "loaiat"
-  },
-  {
-    "label": "stt0",
-    "detail": "field GridInput",
-    "insertText": "stt0"
-  },
-  {
-    "label": "xu_ly",
-    "detail": "field GridInput",
-    "insertText": "xu_ly"
-  },
-  {
-    "label": "tinh_chat",
-    "detail": "field GridInput",
-    "insertText": "tinh_chat"
-  },
-  {
-    "label": "tk_he_so",
-    "detail": "field GridInput",
-    "insertText": "tk_he_so"
-  },
-  {
-    "label": "ma_vvat",
-    "detail": "field GridInput",
-    "insertText": "ma_vvat"
-  },
-  {
-    "label": "ten_vv%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_vv%lex"
-  },
-  {
-    "label": "ma_hdat",
-    "detail": "field GridInput",
-    "insertText": "ma_hdat"
-  },
-  {
-    "label": "ten_hd%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_hd%lex"
-  },
-  {
-    "label": "ds_dk",
-    "detail": "field GridInput",
-    "insertText": "ds_dk"
-  },
-  {
-    "label": "ds_tk_noex",
-    "detail": "field GridInput",
-    "insertText": "ds_tk_noex"
-  },
-  {
-    "label": "ds_tk_coex",
-    "detail": "field GridInput",
-    "insertText": "ds_tk_coex"
-  },
-  {
-    "label": "cong_tru",
-    "detail": "field GridInput",
-    "insertText": "cong_tru"
-  },
-  {
-    "label": "loai_pb",
-    "detail": "field GridInput",
-    "insertText": "loai_pb"
+    "insertText": "ngay"
   },
   {
     "label": "group_id",
@@ -2450,9 +3445,9 @@
     "insertText": "group_id"
   },
   {
-    "label": "id",
+    "label": "user_id",
     "detail": "field GridInput",
-    "insertText": "id"
+    "insertText": "user_id"
   },
   {
     "label": "ma_tb",
@@ -2463,21 +3458,6 @@
     "label": "stt_rec_v",
     "detail": "field GridInput",
     "insertText": "stt_rec_v"
-  },
-  {
-    "label": "loai_duyet",
-    "detail": "field GridInput",
-    "insertText": "loai_duyet"
-  },
-  {
-    "label": "ma_kieu",
-    "detail": "field GridInput",
-    "insertText": "ma_kieu"
-  },
-  {
-    "label": "ma_nh0",
-    "detail": "field GridInput",
-    "insertText": "ma_nh0"
   },
   {
     "label": "statusat",
@@ -2515,6 +3495,11 @@
     "insertText": "status0_name%lex"
   },
   {
+    "label": "ma_quyen",
+    "detail": "field GridInput",
+    "insertText": "ma_quyen"
+  },
+  {
     "label": "deny_mail_yn",
     "detail": "field GridInput",
     "insertText": "deny_mail_yn"
@@ -2533,6 +3518,11 @@
     "label": "parallel_yn",
     "detail": "field GridInput",
     "insertText": "parallel_yn"
+  },
+  {
+    "label": "id",
+    "detail": "field GridInput",
+    "insertText": "id"
   },
   {
     "label": "controller",
@@ -2555,54 +3545,74 @@
     "insertText": "field"
   },
   {
-    "label": "form",
+    "label": "ten_lo2",
     "detail": "field GridInput",
-    "insertText": "form"
+    "insertText": "ten_lo2"
   },
   {
-    "label": "chuoi_ngay",
+    "label": "ngay_sx",
     "detail": "field GridInput",
-    "insertText": "chuoi_ngay"
+    "insertText": "ngay_sx"
   },
   {
-    "label": "form_id",
+    "label": "ngay_hhbh",
     "detail": "field GridInput",
-    "insertText": "form_id"
+    "insertText": "ngay_hhbh"
+  },
+  {
+    "label": "ma_vt2",
+    "detail": "field GridInput",
+    "insertText": "ma_vt2"
+  },
+  {
+    "label": "so_ngay_sp",
+    "detail": "field GridInput",
+    "insertText": "so_ngay_sp"
+  },
+  {
+    "label": "so_ngay_bh",
+    "detail": "field GridInput",
+    "insertText": "so_ngay_bh"
+  },
+  {
+    "label": "kieu_lo",
+    "detail": "field GridInput",
+    "insertText": "kieu_lo"
+  },
+  {
+    "label": "stt",
+    "detail": "field GridInput",
+    "insertText": "stt"
+  },
+  {
+    "label": "ma_so",
+    "detail": "field GridInput",
+    "insertText": "ma_so"
+  },
+  {
+    "label": "chi_tieu%l",
+    "detail": "field GridInput",
+    "insertText": "chi_tieu%l"
+  },
+  {
+    "label": "cach_tinh",
+    "detail": "field GridInput",
+    "insertText": "cach_tinh"
+  },
+  {
+    "label": "tk_co",
+    "detail": "field GridInput",
+    "insertText": "tk_co"
+  },
+  {
+    "label": "ma_nguon",
+    "detail": "field GridInput",
+    "insertText": "ma_nguon"
   },
   {
     "label": "user_yn",
     "detail": "field GridInput",
     "insertText": "user_yn"
-  },
-  {
-    "label": "so_lsxat",
-    "detail": "field GridInput",
-    "insertText": "so_lsxat"
-  },
-  {
-    "label": "ten_lsx%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_lsx%lex"
-  },
-  {
-    "label": "ma_spat",
-    "detail": "field GridInput",
-    "insertText": "ma_spat"
-  },
-  {
-    "label": "ma_kuat",
-    "detail": "field GridInput",
-    "insertText": "ma_kuat"
-  },
-  {
-    "label": "ten_ku%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_ku%lex"
-  },
-  {
-    "label": "danh_giaat",
-    "detail": "field GridInput",
-    "insertText": "danh_giaat"
   },
   {
     "label": "sl_kd_nh2",
@@ -2635,6 +3645,21 @@
     "insertText": "gt_muc_tieu"
   },
   {
+    "label": "tinh_chatex",
+    "detail": "field GridInput",
+    "insertText": "tinh_chatex"
+  },
+  {
+    "label": "sl_loi",
+    "detail": "field GridInput",
+    "insertText": "sl_loi"
+  },
+  {
+    "label": "ma_loai",
+    "detail": "field GridInput",
+    "insertText": "ma_loai"
+  },
+  {
     "label": "ma_ph_loai",
     "detail": "field GridInput",
     "insertText": "ma_ph_loai"
@@ -2643,6 +3668,11 @@
     "label": "ma_loaiat",
     "detail": "field GridInput",
     "insertText": "ma_loaiat"
+  },
+  {
+    "label": "ma_cn",
+    "detail": "field GridInput",
+    "insertText": "ma_cn"
   },
   {
     "label": "ma_loai_kdat",
@@ -2655,6 +3685,11 @@
     "insertText": "stt_rec_kd"
   },
   {
+    "label": "ma_cd",
+    "detail": "field GridInput",
+    "insertText": "ma_cd"
+  },
+  {
     "label": "ten_cd",
     "detail": "field GridInput",
     "insertText": "ten_cd"
@@ -2663,11 +3698,6 @@
     "label": "ten_cd2",
     "detail": "field GridInput",
     "insertText": "ten_cd2"
-  },
-  {
-    "label": "ma_dac_tinhat",
-    "detail": "field GridInput",
-    "insertText": "ma_dac_tinhat"
   },
   {
     "label": "ten_dac_tinh%lex",
@@ -2690,9 +3720,9 @@
     "insertText": "pp_kd"
   },
   {
-    "label": "tinh_diem_cl",
+    "label": "trong_so",
     "detail": "field GridInput",
-    "insertText": "tinh_diem_cl"
+    "insertText": "trong_so"
   },
   {
     "label": "so_luong_mau",
@@ -2715,9 +3745,14 @@
     "insertText": "ten_diem%lex"
   },
   {
-    "label": "ma_diem",
+    "label": "ma_vungat",
     "detail": "field GridInput",
-    "insertText": "ma_diem"
+    "insertText": "ma_vungat"
+  },
+  {
+    "label": "ten_vung%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_vung%lex"
   },
   {
     "label": "ct_ts",
@@ -2735,9 +3770,9 @@
     "insertText": "ma_bp0at"
   },
   {
-    "label": "ma_mau",
+    "label": "stt_sx",
     "detail": "field GridInput",
-    "insertText": "ma_mau"
+    "insertText": "stt_sx"
   },
   {
     "label": "ten_chi_tieuex",
@@ -2815,6 +3850,11 @@
     "insertText": "ten_pp%lex"
   },
   {
+    "label": "loaiat",
+    "detail": "field GridInput",
+    "insertText": "loaiat"
+  },
+  {
     "label": "chenh_lech_tl",
     "detail": "field GridInput",
     "insertText": "chenh_lech_tl"
@@ -2830,9 +3870,9 @@
     "insertText": "chenh_lech_sl"
   },
   {
-    "label": "ma_dac_tinh",
+    "label": "diem_so",
     "detail": "field GridInput",
-    "insertText": "ma_dac_tinh"
+    "insertText": "diem_so"
   },
   {
     "label": "ma_thueex",
@@ -2860,34 +3900,169 @@
     "insertText": "ct_gia_dk"
   },
   {
-    "label": "ma_cpat",
+    "label": "so_tham_chieu",
     "detail": "field GridInput",
-    "insertText": "ma_cpat"
+    "insertText": "so_tham_chieu"
   },
   {
-    "label": "ten_cp%lex",
+    "label": "so_theo_doi",
     "detail": "field GridInput",
-    "insertText": "ten_cp%lex"
-  },
-  {
-    "label": "tien_cp_nt",
-    "detail": "field GridInput",
-    "insertText": "tien_cp_nt"
-  },
-  {
-    "label": "tien_cp",
-    "detail": "field GridInput",
-    "insertText": "tien_cp"
-  },
-  {
-    "label": "loai_cp",
-    "detail": "field GridInput",
-    "insertText": "loai_cp"
+    "insertText": "so_theo_doi"
   },
   {
     "label": "tinh_thue_nk",
     "detail": "field GridInput",
     "insertText": "tinh_thue_nk"
+  },
+  {
+    "label": "loai_hangat",
+    "detail": "field GridInput",
+    "insertText": "loai_hangat"
+  },
+  {
+    "label": "ten_loai_hang%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_loai_hang%lex"
+  },
+  {
+    "label": "thue_nk_nt",
+    "detail": "field GridInput",
+    "insertText": "thue_nk_nt"
+  },
+  {
+    "label": "thue_ttdb_nt",
+    "detail": "field GridInput",
+    "insertText": "thue_ttdb_nt"
+  },
+  {
+    "label": "thue_bvmt_nt",
+    "detail": "field GridInput",
+    "insertText": "thue_bvmt_nt"
+  },
+  {
+    "label": "so_ngay_giao",
+    "detail": "field GridInput",
+    "insertText": "so_ngay_giao"
+  },
+  {
+    "label": "thue_nk",
+    "detail": "field GridInput",
+    "insertText": "thue_nk"
+  },
+  {
+    "label": "thue_ttdb",
+    "detail": "field GridInput",
+    "insertText": "thue_ttdb"
+  },
+  {
+    "label": "thue_bvmt",
+    "detail": "field GridInput",
+    "insertText": "thue_bvmt"
+  },
+  {
+    "label": "ma_vt_ncc",
+    "detail": "field GridInput",
+    "insertText": "ma_vt_ncc"
+  },
+  {
+    "label": "ma_rbat",
+    "detail": "field GridInput",
+    "insertText": "ma_rbat"
+  },
+  {
+    "label": "ten_rb%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_rb%lex"
+  },
+  {
+    "label": "sl_dat_tt",
+    "detail": "field GridInput",
+    "insertText": "sl_dat_tt"
+  },
+  {
+    "label": "sl_dat_td",
+    "detail": "field GridInput",
+    "insertText": "sl_dat_td"
+  },
+  {
+    "label": "tien_dat",
+    "detail": "field GridInput",
+    "insertText": "tien_dat"
+  },
+  {
+    "label": "sl_nhap",
+    "detail": "field GridInput",
+    "insertText": "sl_nhap"
+  },
+  {
+    "label": "cn_tt_gia",
+    "detail": "field GridInput",
+    "insertText": "cn_tt_gia"
+  },
+  {
+    "label": "muc_thue",
+    "detail": "field GridInput",
+    "insertText": "muc_thue"
+  },
+  {
+    "label": "tl_chiu_thue",
+    "detail": "field GridInput",
+    "insertText": "tl_chiu_thue"
+  },
+  {
+    "label": "he_so_mt",
+    "detail": "field GridInput",
+    "insertText": "he_so_mt"
+  },
+  {
+    "label": "gia_chuanex",
+    "detail": "field GridInput",
+    "insertText": "gia_chuanex"
+  },
+  {
+    "label": "tien_dat0ex",
+    "detail": "field GridInput",
+    "insertText": "tien_dat0ex"
+  },
+  {
+    "label": "cp_vc_nk_ntex",
+    "detail": "field GridInput",
+    "insertText": "cp_vc_nk_ntex"
+  },
+  {
+    "label": "cp_bh_nk_ntex",
+    "detail": "field GridInput",
+    "insertText": "cp_bh_nk_ntex"
+  },
+  {
+    "label": "cp_khac_nk_ntex",
+    "detail": "field GridInput",
+    "insertText": "cp_khac_nk_ntex"
+  },
+  {
+    "label": "cp_nk_ntex",
+    "detail": "field GridInput",
+    "insertText": "cp_nk_ntex"
+  },
+  {
+    "label": "cp_vc_nkex",
+    "detail": "field GridInput",
+    "insertText": "cp_vc_nkex"
+  },
+  {
+    "label": "cp_bh_nkex",
+    "detail": "field GridInput",
+    "insertText": "cp_bh_nkex"
+  },
+  {
+    "label": "cp_khac_nkex",
+    "detail": "field GridInput",
+    "insertText": "cp_khac_nkex"
+  },
+  {
+    "label": "cp_nkex",
+    "detail": "field GridInput",
+    "insertText": "cp_nkex"
   },
   {
     "label": "stt_rec1",
@@ -2945,14 +4120,34 @@
     "insertText": "ma_ncc_cd"
   },
   {
-    "label": "ma_thue_nk",
+    "label": "name",
     "detail": "field GridInput",
-    "insertText": "ma_thue_nk"
+    "insertText": "name"
   },
   {
-    "label": "ma_thue_ttdb",
+    "label": "bvmt_nt",
     "detail": "field GridInput",
-    "insertText": "ma_thue_ttdb"
+    "insertText": "bvmt_nt"
+  },
+  {
+    "label": "bvmt",
+    "detail": "field GridInput",
+    "insertText": "bvmt"
+  },
+  {
+    "label": "sai_can_duoi",
+    "detail": "field GridInput",
+    "insertText": "sai_can_duoi"
+  },
+  {
+    "label": "sai_can_tren",
+    "detail": "field GridInput",
+    "insertText": "sai_can_tren"
+  },
+  {
+    "label": "loai_dt",
+    "detail": "field GridInput",
+    "insertText": "loai_dt"
   },
   {
     "label": "ct_dt_pb",
@@ -2960,29 +4155,59 @@
     "insertText": "ct_dt_pb"
   },
   {
-    "label": "kieu_pb",
+    "label": "ten_loai%l",
     "detail": "field GridInput",
-    "insertText": "kieu_pb"
+    "insertText": "ten_loai%l"
   },
   {
-    "label": "tk_thue_nk",
+    "label": "loai_dtat",
     "detail": "field GridInput",
-    "insertText": "tk_thue_nk"
+    "insertText": "loai_dtat"
   },
   {
-    "label": "tk_thue_ttdb",
+    "label": "stt_rec_tc",
     "detail": "field GridInput",
-    "insertText": "tk_thue_ttdb"
+    "insertText": "stt_rec_tc"
   },
   {
-    "label": "tk_thue",
+    "label": "stt_rec0tc",
     "detail": "field GridInput",
-    "insertText": "tk_thue"
+    "insertText": "stt_rec0tc"
+  },
+  {
+    "label": "kieu_pbex",
+    "detail": "field GridInput",
+    "insertText": "kieu_pbex"
+  },
+  {
+    "label": "ma_tt",
+    "detail": "field GridInput",
+    "insertText": "ma_tt"
+  },
+  {
+    "label": "datetime2",
+    "detail": "field GridInput",
+    "insertText": "datetime2"
   },
   {
     "label": "ma_vung_cd",
     "detail": "field GridInput",
     "insertText": "ma_vung_cd"
+  },
+  {
+    "label": "tap_theo_doi",
+    "detail": "field GridInput",
+    "insertText": "tap_theo_doi"
+  },
+  {
+    "label": "ncc_tx",
+    "detail": "field GridInput",
+    "insertText": "ncc_tx"
+  },
+  {
+    "label": "tu_choi_yn",
+    "detail": "field GridInput",
+    "insertText": "tu_choi_yn"
   },
   {
     "label": "ten_loaiex",
@@ -3060,14 +4285,9 @@
     "insertText": "ct_gia_kqex"
   },
   {
-    "label": "stt_rec_sa",
+    "label": "ty_trong",
     "detail": "field GridInput",
-    "insertText": "stt_rec_sa"
-  },
-  {
-    "label": "stt_rec0sa",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0sa"
+    "insertText": "ty_trong"
   },
   {
     "label": "sl_th",
@@ -3083,6 +4303,11 @@
     "label": "ht_yn",
     "detail": "field GridInput",
     "insertText": "ht_yn"
+  },
+  {
+    "label": "ma_dac_tinh",
+    "detail": "field GridInput",
+    "insertText": "ma_dac_tinh"
   },
   {
     "label": "kieu_ghi_nhanex",
@@ -3120,6 +4345,11 @@
     "insertText": "trong_soex"
   },
   {
+    "label": "diem",
+    "detail": "field GridInput",
+    "insertText": "diem"
+  },
+  {
     "label": "kieu_nhap_ynex",
     "detail": "field GridInput",
     "insertText": "kieu_nhap_ynex"
@@ -3145,6 +4375,11 @@
     "insertText": "cd_ncc"
   },
   {
+    "label": "so_tc",
+    "detail": "field GridInput",
+    "insertText": "so_tc"
+  },
+  {
     "label": "ngay_tc",
     "detail": "field GridInput",
     "insertText": "ngay_tc"
@@ -3160,19 +4395,29 @@
     "insertText": "ten_nguon%lex"
   },
   {
-    "label": "ma_kqat",
+    "label": "ma_diem",
     "detail": "field GridInput",
-    "insertText": "ma_kqat"
+    "insertText": "ma_diem"
+  },
+  {
+    "label": "ket_qua",
+    "detail": "field GridInput",
+    "insertText": "ket_qua"
+  },
+  {
+    "label": "danh_gia",
+    "detail": "field GridInput",
+    "insertText": "danh_gia"
+  },
+  {
+    "label": "ma_loi",
+    "detail": "field GridInput",
+    "insertText": "ma_loi"
   },
   {
     "label": "ten_kq%lex",
     "detail": "field GridInput",
     "insertText": "ten_kq%lex"
-  },
-  {
-    "label": "ma_ly_doat",
-    "detail": "field GridInput",
-    "insertText": "ma_ly_doat"
   },
   {
     "label": "ten_ly_do%lex",
@@ -3200,14 +4445,29 @@
     "insertText": "ma_chi_tieu"
   },
   {
+    "label": "ma_phi",
+    "detail": "field GridInput",
+    "insertText": "ma_phi"
+  },
+  {
     "label": "lan",
     "detail": "field GridInput",
     "insertText": "lan"
   },
   {
-    "label": "t_thue",
+    "label": "ky",
     "detail": "field GridInput",
-    "insertText": "t_thue"
+    "insertText": "ky"
+  },
+  {
+    "label": "form_id",
+    "detail": "field GridInput",
+    "insertText": "form_id"
+  },
+  {
+    "label": "header%l",
+    "detail": "field GridInput",
+    "insertText": "header%l"
   },
   {
     "label": "print_type",
@@ -3230,26 +4490,6 @@
     "insertText": "ticket"
   },
   {
-    "label": "ma_dotat",
-    "detail": "field GridInput",
-    "insertText": "ma_dotat"
-  },
-  {
-    "label": "ten_dot%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_dot%lex"
-  },
-  {
-    "label": "ma_dot",
-    "detail": "field GridInput",
-    "insertText": "ma_dot"
-  },
-  {
-    "label": "ma_nlat",
-    "detail": "field GridInput",
-    "insertText": "ma_nlat"
-  },
-  {
     "label": "ten_nl%lex",
     "detail": "field GridInput",
     "insertText": "ten_nl%lex"
@@ -3265,6 +4505,11 @@
     "insertText": "ten_cach_tinh%lex"
   },
   {
+    "label": "cong_suat",
+    "detail": "field GridInput",
+    "insertText": "cong_suat"
+  },
+  {
     "label": "tg_cai_dat",
     "detail": "field GridInput",
     "insertText": "tg_cai_dat"
@@ -3275,24 +4520,9 @@
     "insertText": "tg_bo_sung"
   },
   {
-    "label": "ngay_bd",
+    "label": "ma_nl",
     "detail": "field GridInput",
-    "insertText": "ngay_bd"
-  },
-  {
-    "label": "ngay_kt",
-    "detail": "field GridInput",
-    "insertText": "ngay_kt"
-  },
-  {
-    "label": "s6",
-    "detail": "field GridInput",
-    "insertText": "s6"
-  },
-  {
-    "label": "kieu_cdat",
-    "detail": "field GridInput",
-    "insertText": "kieu_cdat"
+    "insertText": "ma_nl"
   },
   {
     "label": "ten_kieu_cd%lex",
@@ -3300,14 +4530,19 @@
     "insertText": "ten_kieu_cd%lex"
   },
   {
+    "label": "cd_truoc",
+    "detail": "field GridInput",
+    "insertText": "cd_truoc"
+  },
+  {
+    "label": "cd_sau",
+    "detail": "field GridInput",
+    "insertText": "cd_sau"
+  },
+  {
     "label": "ma_vt2lk",
     "detail": "field GridInput",
     "insertText": "ma_vt2lk"
-  },
-  {
-    "label": "loai_cdat",
-    "detail": "field GridInput",
-    "insertText": "loai_cdat"
   },
   {
     "label": "ten_loai_cd%lex",
@@ -3345,6 +4580,21 @@
     "insertText": "sl_bd_cds"
   },
   {
+    "label": "tg_cho",
+    "detail": "field GridInput",
+    "insertText": "tg_cho"
+  },
+  {
+    "label": "sl_may",
+    "detail": "field GridInput",
+    "insertText": "sl_may"
+  },
+  {
+    "label": "nang_suat",
+    "detail": "field GridInput",
+    "insertText": "nang_suat"
+  },
+  {
     "label": "tg_vs",
     "detail": "field GridInput",
     "insertText": "tg_vs"
@@ -3353,6 +4603,16 @@
     "label": "tg_chuyen",
     "detail": "field GridInput",
     "insertText": "tg_chuyen"
+  },
+  {
+    "label": "nc_cai_dat",
+    "detail": "field GridInput",
+    "insertText": "nc_cai_dat"
+  },
+  {
+    "label": "nc_th",
+    "detail": "field GridInput",
+    "insertText": "nc_th"
   },
   {
     "label": "cc_sd",
@@ -3385,16 +4645,6 @@
     "insertText": "tru_dm"
   },
   {
-    "label": "td_chuyen",
-    "detail": "field GridInput",
-    "insertText": "td_chuyen"
-  },
-  {
-    "label": "dung_kt",
-    "detail": "field GridInput",
-    "insertText": "dung_kt"
-  },
-  {
     "label": "td_phi",
     "detail": "field GridInput",
     "insertText": "td_phi"
@@ -3403,11 +4653,6 @@
     "label": "nhap_sl",
     "detail": "field GridInput",
     "insertText": "nhap_sl"
-  },
-  {
-    "label": "nk_yn",
-    "detail": "field GridInput",
-    "insertText": "nk_yn"
   },
   {
     "label": "xk_yn",
@@ -3455,6 +4700,11 @@
     "insertText": "nguoi_lh"
   },
   {
+    "label": "bo_phan",
+    "detail": "field GridInput",
+    "insertText": "bo_phan"
+  },
+  {
     "label": "dien_thoai_lh",
     "detail": "field GridInput",
     "insertText": "dien_thoai_lh"
@@ -3470,24 +4720,14 @@
     "insertText": "ten_bp0%lex"
   },
   {
-    "label": "dien_giai%l",
-    "detail": "field GridInput",
-    "insertText": "dien_giai%l"
-  },
-  {
-    "label": "loai",
-    "detail": "field GridInput",
-    "insertText": "loai"
-  },
-  {
     "label": "ma_ttck",
     "detail": "field GridInput",
     "insertText": "ma_ttck"
   },
   {
-    "label": "loai_ct",
+    "label": "xu_ly",
     "detail": "field GridInput",
-    "insertText": "loai_ct"
+    "insertText": "xu_ly"
   },
   {
     "label": "hs_hh",
@@ -3505,119 +4745,9 @@
     "insertText": "style"
   },
   {
-    "label": "ma_ck",
+    "label": "ma_ld",
     "detail": "field GridInput",
-    "insertText": "ma_ck"
-  },
-  {
-    "label": "client_code",
-    "detail": "field GridInput",
-    "insertText": "client_code"
-  },
-  {
-    "label": "hash",
-    "detail": "field GridInput",
-    "insertText": "hash"
-  },
-  {
-    "label": "ma_tra_cuu",
-    "detail": "field GridInput",
-    "insertText": "ma_tra_cuu"
-  },
-  {
-    "label": "tao_ct_yn",
-    "detail": "field GridInput",
-    "insertText": "tao_ct_yn"
-  },
-  {
-    "label": "thue_suat_in",
-    "detail": "field GridInput",
-    "insertText": "thue_suat_in"
-  },
-  {
-    "label": "s1",
-    "detail": "field GridInput",
-    "insertText": "s1"
-  },
-  {
-    "label": "s2",
-    "detail": "field GridInput",
-    "insertText": "s2"
-  },
-  {
-    "label": "s3",
-    "detail": "field GridInput",
-    "insertText": "s3"
-  },
-  {
-    "label": "n1",
-    "detail": "field GridInput",
-    "insertText": "n1"
-  },
-  {
-    "label": "n2",
-    "detail": "field GridInput",
-    "insertText": "n2"
-  },
-  {
-    "label": "n3",
-    "detail": "field GridInput",
-    "insertText": "n3"
-  },
-  {
-    "label": "ten_kh_tc%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_kh_tc%lex"
-  },
-  {
-    "label": "ma_kh9",
-    "detail": "field GridInput",
-    "insertText": "ma_kh9"
-  },
-  {
-    "label": "ten_vt_tc%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_vt_tc%lex"
-  },
-  {
-    "label": "ma_vt9",
-    "detail": "field GridInput",
-    "insertText": "ma_vt9"
-  },
-  {
-    "label": "ma_vt_tcat",
-    "detail": "field GridInput",
-    "insertText": "ma_vt_tcat"
-  },
-  {
-    "label": "ten_dvt_tc%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_dvt_tc%lex"
-  },
-  {
-    "label": "ma_lo_tcat",
-    "detail": "field GridInput",
-    "insertText": "ma_lo_tcat"
-  },
-  {
-    "label": "ma_thue_tcat",
-    "detail": "field GridInput",
-    "insertText": "ma_thue_tcat"
-  },
-  {
-    "label": "tk_thue_tcat",
-    "detail": "field GridInput",
-    "insertText": "tk_thue_tcat"
-  },
-  {
-    "label": "ma_kh2_tcat",
-    "detail": "field GridInput",
-    "insertText": "ma_kh2_tcat"
-  },
-  {
-    "label": "kieu_ph",
-    "detail": "field GridInput",
-    "insertText": "kieu_ph"
+    "insertText": "ma_ld"
   },
   {
     "label": "ma_ct1",
@@ -3625,34 +4755,9 @@
     "insertText": "ma_ct1"
   },
   {
-    "label": "packet_status",
+    "label": "hash",
     "detail": "field GridInput",
-    "insertText": "packet_status"
-  },
-  {
-    "label": "packet_status_name",
-    "detail": "field GridInput",
-    "insertText": "packet_status_name"
-  },
-  {
-    "label": "packet_bd",
-    "detail": "field GridInput",
-    "insertText": "packet_bd"
-  },
-  {
-    "label": "packet_kt",
-    "detail": "field GridInput",
-    "insertText": "packet_kt"
-  },
-  {
-    "label": "stt_rec_key",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_key"
-  },
-  {
-    "label": "ph_yn",
-    "detail": "field GridInput",
-    "insertText": "ph_yn"
+    "insertText": "hash"
   },
   {
     "label": "ten_ptkt",
@@ -3720,21 +4825,6 @@
     "insertText": "type"
   },
   {
-    "label": "field_import_yn",
-    "detail": "field GridInput",
-    "insertText": "field_import_yn"
-  },
-  {
-    "label": "order_type_import",
-    "detail": "field GridInput",
-    "insertText": "order_type_import"
-  },
-  {
-    "label": "order_id_import",
-    "detail": "field GridInput",
-    "insertText": "order_id_import"
-  },
-  {
     "label": "stt_rec_nt",
     "detail": "field GridInput",
     "insertText": "stt_rec_nt"
@@ -3755,21 +4845,6 @@
     "insertText": "ct_ln"
   },
   {
-    "label": "stt_rec_ct",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_ct"
-  },
-  {
-    "label": "stt_rec0ct",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0ct"
-  },
-  {
-    "label": "xKey",
-    "detail": "field GridInput",
-    "insertText": "xKey"
-  },
-  {
     "label": "thue_ntex",
     "detail": "field GridInput",
     "insertText": "thue_ntex"
@@ -3780,14 +4855,24 @@
     "insertText": "user_id4"
   },
   {
-    "label": "user_lst",
+    "label": "tk_tlex",
     "detail": "field GridInput",
-    "insertText": "user_lst"
+    "insertText": "tk_tlex"
   },
   {
-    "label": "ma_nkat",
+    "label": "kieu_tlex",
     "detail": "field GridInput",
-    "insertText": "ma_nkat"
+    "insertText": "kieu_tlex"
+  },
+  {
+    "label": "tk_cpbhex",
+    "detail": "field GridInput",
+    "insertText": "tk_cpbhex"
+  },
+  {
+    "label": "kieu_cpbhex",
+    "detail": "field GridInput",
+    "insertText": "kieu_cpbhex"
   },
   {
     "label": "ten_nk%lex",
@@ -3798,6 +4883,11 @@
     "label": "ky_hieuex",
     "detail": "field GridInput",
     "insertText": "ky_hieuex"
+  },
+  {
+    "label": "loai_hd",
+    "detail": "field GridInput",
+    "insertText": "loai_hd"
   },
   {
     "label": "ten_loai_hd%lex",
@@ -3835,29 +4925,14 @@
     "insertText": "lien_hd"
   },
   {
-    "label": "xtype",
+    "label": "sttex",
     "detail": "field GridInput",
-    "insertText": "xtype"
+    "insertText": "sttex"
   },
   {
-    "label": "ma_truongat",
+    "label": "ma_pc",
     "detail": "field GridInput",
-    "insertText": "ma_truongat"
-  },
-  {
-    "label": "ten_truong%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_truong%lex"
-  },
-  {
-    "label": "an_ynex",
-    "detail": "field GridInput",
-    "insertText": "an_ynex"
-  },
-  {
-    "label": "ten_tdhv%l",
-    "detail": "field GridInput",
-    "insertText": "ten_tdhv%l"
+    "insertText": "ma_pc"
   },
   {
     "label": "stt_refex",
@@ -3880,9 +4955,19 @@
     "insertText": "stt_nvex"
   },
   {
+    "label": "chi_tieu",
+    "detail": "field GridInput",
+    "insertText": "chi_tieu"
+  },
+  {
     "label": "muc_tieu",
     "detail": "field GridInput",
     "insertText": "muc_tieu"
+  },
+  {
+    "label": "stt0",
+    "detail": "field GridInput",
+    "insertText": "stt0"
   },
   {
     "label": "bac",
@@ -3910,14 +4995,44 @@
     "insertText": "readonly_yn"
   },
   {
+    "label": "ho_ten",
+    "detail": "field GridInput",
+    "insertText": "ho_ten"
+  },
+  {
+    "label": "ma_ngachat",
+    "detail": "field GridInput",
+    "insertText": "ma_ngachat"
+  },
+  {
+    "label": "ten_ngach%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_ngach%lex"
+  },
+  {
+    "label": "ma_bacat",
+    "detail": "field GridInput",
+    "insertText": "ma_bacat"
+  },
+  {
+    "label": "ten_bac%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_bac%lex"
+  },
+  {
+    "label": "id_ngay_hl",
+    "detail": "field GridInput",
+    "insertText": "id_ngay_hl"
+  },
+  {
     "label": "stt_ref",
     "detail": "field GridInput",
     "insertText": "stt_ref"
   },
   {
-    "label": "ma_cc",
+    "label": "thang",
     "detail": "field GridInput",
-    "insertText": "ma_cc"
+    "insertText": "thang"
   },
   {
     "label": "thu",
@@ -3935,9 +5050,29 @@
     "insertText": "ma_pn"
   },
   {
+    "label": "ma_ca",
+    "detail": "field GridInput",
+    "insertText": "ma_ca"
+  },
+  {
+    "label": "ma_ca_ct",
+    "detail": "field GridInput",
+    "insertText": "ma_ca_ct"
+  },
+  {
+    "label": "gio_tu",
+    "detail": "field GridInput",
+    "insertText": "gio_tu"
+  },
+  {
     "label": "hs_tu",
     "detail": "field GridInput",
     "insertText": "hs_tu"
+  },
+  {
+    "label": "gio_den",
+    "detail": "field GridInput",
+    "insertText": "gio_den"
   },
   {
     "label": "hs_den",
@@ -3990,9 +5125,9 @@
     "insertText": "ten_cong%lex"
   },
   {
-    "label": "ten_kl%l",
+    "label": "ngay_sinh",
     "detail": "field GridInput",
-    "insertText": "ten_kl%l"
+    "insertText": "ngay_sinh"
   },
   {
     "label": "so_the",
@@ -4015,14 +5150,24 @@
     "insertText": "congat"
   },
   {
+    "label": "ngay_tu",
+    "detail": "field GridInput",
+    "insertText": "ngay_tu"
+  },
+  {
+    "label": "ngay_den",
+    "detail": "field GridInput",
+    "insertText": "ngay_den"
+  },
+  {
+    "label": "ma_so_bhxh",
+    "detail": "field GridInput",
+    "insertText": "ma_so_bhxh"
+  },
+  {
     "label": "si_so",
     "detail": "field GridInput",
     "insertText": "si_so"
-  },
-  {
-    "label": "ma_tinhat",
-    "detail": "field GridInput",
-    "insertText": "ma_tinhat"
   },
   {
     "label": "ten_tinh_thanh%lex",
@@ -4030,14 +5175,24 @@
     "insertText": "ten_tinh_thanh%lex"
   },
   {
-    "label": "ma_quanat",
+    "label": "ten_quan%lex",
     "detail": "field GridInput",
-    "insertText": "ma_quanat"
+    "insertText": "ten_quan%lex"
   },
   {
     "label": "ma_phuongat",
     "detail": "field GridInput",
     "insertText": "ma_phuongat"
+  },
+  {
+    "label": "ten_phuong%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_phuong%lex"
+  },
+  {
+    "label": "gioi_tinh",
+    "detail": "field GridInput",
+    "insertText": "gioi_tinh"
   },
   {
     "label": "ma_qhat",
@@ -4050,9 +5205,9 @@
     "insertText": "ten_qh%lex"
   },
   {
-    "label": "chu_ho",
+    "label": "cmnd_so",
     "detail": "field GridInput",
-    "insertText": "chu_ho"
+    "insertText": "cmnd_so"
   },
   {
     "label": "loai_so",
@@ -4065,19 +5220,9 @@
     "insertText": "ho_khau_so"
   },
   {
-    "label": "ho_khau_tinhat",
-    "detail": "field GridInput",
-    "insertText": "ho_khau_tinhat"
-  },
-  {
     "label": "ho_khau_ten_tinh_thanh%lex",
     "detail": "field GridInput",
     "insertText": "ho_khau_ten_tinh_thanh%lex"
-  },
-  {
-    "label": "ho_khau_quanat",
-    "detail": "field GridInput",
-    "insertText": "ho_khau_quanat"
   },
   {
     "label": "ho_khau_ten_quan%lex",
@@ -4093,6 +5238,11 @@
     "label": "ho_khau_ten_phuong%lex",
     "detail": "field GridInput",
     "insertText": "ho_khau_ten_phuong%lex"
+  },
+  {
+    "label": "dien_thoai",
+    "detail": "field GridInput",
+    "insertText": "dien_thoai"
   },
   {
     "label": "quoc_tichat",
@@ -4130,24 +5280,19 @@
     "insertText": "bp_ref"
   },
   {
+    "label": "ma_pt",
+    "detail": "field GridInput",
+    "insertText": "ma_pt"
+  },
+  {
     "label": "ten_pt2",
     "detail": "field GridInput",
     "insertText": "ten_pt2"
   },
   {
-    "label": "ma_loai_gtat",
-    "detail": "field GridInput",
-    "insertText": "ma_loai_gtat"
-  },
-  {
     "label": "ten_loai_gt%lex",
     "detail": "field GridInput",
     "insertText": "ten_loai_gt%lex"
-  },
-  {
-    "label": "cmnd",
-    "detail": "field GridInput",
-    "insertText": "cmnd"
   },
   {
     "label": "ten_qt%lex",
@@ -4205,6 +5350,11 @@
     "insertText": "kem_theo"
   },
   {
+    "label": "so_lan",
+    "detail": "field GridInput",
+    "insertText": "so_lan"
+  },
+  {
     "label": "doi_tuong",
     "detail": "field GridInput",
     "insertText": "doi_tuong"
@@ -4240,11 +5390,6 @@
     "insertText": "v_uy_quyenex"
   },
   {
-    "label": "ten_nvex",
-    "detail": "field GridInput",
-    "insertText": "ten_nvex"
-  },
-  {
     "label": "ma_pcat",
     "detail": "field GridInput",
     "insertText": "ma_pcat"
@@ -4275,34 +5420,29 @@
     "insertText": "tien_bh"
   },
   {
+    "label": "tien_cl",
+    "detail": "field GridInput",
+    "insertText": "tien_cl"
+  },
+  {
+    "label": "loai_tn",
+    "detail": "field GridInput",
+    "insertText": "loai_tn"
+  },
+  {
     "label": "ho_tro_bh",
     "detail": "field GridInput",
     "insertText": "ho_tro_bh"
   },
   {
-    "label": "ngay_thay_doi2",
+    "label": "gio0",
     "detail": "field GridInput",
-    "insertText": "ngay_thay_doi2"
-  },
-  {
-    "label": "thoi_gian",
-    "detail": "field GridInput",
-    "insertText": "thoi_gian"
+    "insertText": "gio0"
   },
   {
     "label": "c$",
     "detail": "field GridInput",
     "insertText": "c$"
-  },
-  {
-    "label": "ma_dt",
-    "detail": "field GridInput",
-    "insertText": "ma_dt"
-  },
-  {
-    "label": "ma_nvatex",
-    "detail": "field GridInput",
-    "insertText": "ma_nvatex"
   },
   {
     "label": "tn_ct_nt",
@@ -4345,6 +5485,11 @@
     "insertText": "thue_giam"
   },
   {
+    "label": "ma_ck",
+    "detail": "field GridInput",
+    "insertText": "ma_ck"
+  },
+  {
     "label": "ma_tsmbc",
     "detail": "field GridInput",
     "insertText": "ma_tsmbc"
@@ -4355,14 +5500,24 @@
     "insertText": "quoc_tich"
   },
   {
-    "label": "ten_nn%l",
+    "label": "name%l",
     "detail": "field GridInput",
-    "insertText": "ten_nn%l"
+    "insertText": "name%l"
   },
   {
     "label": "ma_bc",
     "detail": "field GridInput",
     "insertText": "ma_bc"
+  },
+  {
+    "label": "ten_nt%l",
+    "detail": "field GridInput",
+    "insertText": "ten_nt%l"
+  },
+  {
+    "label": "ten_tc%l",
+    "detail": "field GridInput",
+    "insertText": "ten_tc%l"
   },
   {
     "label": "luong_co_ban",
@@ -4378,6 +5533,11 @@
     "label": "t_thu_nhap",
     "detail": "field GridInput",
     "insertText": "t_thu_nhap"
+  },
+  {
+    "label": "ten_kt%l",
+    "detail": "field GridInput",
+    "insertText": "ten_kt%l"
   },
   {
     "label": "cap_quyet_dinh",
@@ -4400,6 +5560,16 @@
     "insertText": "ngay_ky"
   },
   {
+    "label": "ngay_thay_doi",
+    "detail": "field GridInput",
+    "insertText": "ngay_thay_doi"
+  },
+  {
+    "label": "ngay_thay_doi2",
+    "detail": "field GridInput",
+    "insertText": "ngay_thay_doi2"
+  },
+  {
     "label": "tien_bhxh",
     "detail": "field GridInput",
     "insertText": "tien_bhxh"
@@ -4420,9 +5590,29 @@
     "insertText": "tien_kpcd"
   },
   {
+    "label": "ten_qh%l",
+    "detail": "field GridInput",
+    "insertText": "ten_qh%l"
+  },
+  {
+    "label": "ten_nn%l",
+    "detail": "field GridInput",
+    "insertText": "ten_nn%l"
+  },
+  {
+    "label": "ten_cc%l",
+    "detail": "field GridInput",
+    "insertText": "ten_cc%l"
+  },
+  {
     "label": "ngay_cap",
     "detail": "field GridInput",
     "insertText": "ngay_cap"
+  },
+  {
+    "label": "ten_pv%l",
+    "detail": "field GridInput",
+    "insertText": "ten_pv%l"
   },
   {
     "label": "ngay_pv",
@@ -4430,9 +5620,29 @@
     "insertText": "ngay_pv"
   },
   {
+    "label": "ten_kq%l",
+    "detail": "field GridInput",
+    "insertText": "ten_kq%l"
+  },
+  {
+    "label": "ten_tdhv%l",
+    "detail": "field GridInput",
+    "insertText": "ten_tdhv%l"
+  },
+  {
     "label": "truong_hoc",
     "detail": "field GridInput",
     "insertText": "truong_hoc"
+  },
+  {
+    "label": "ten_cn%l",
+    "detail": "field GridInput",
+    "insertText": "ten_cn%l"
+  },
+  {
+    "label": "ngay_tot_nghiep",
+    "detail": "field GridInput",
+    "insertText": "ngay_tot_nghiep"
   },
   {
     "label": "loai_tot_nghiep",
@@ -4440,9 +5650,39 @@
     "insertText": "loai_tot_nghiep"
   },
   {
+    "label": "ten_cm%l",
+    "detail": "field GridInput",
+    "insertText": "ten_cm%l"
+  },
+  {
+    "label": "ten_bac%l",
+    "detail": "field GridInput",
+    "insertText": "ten_bac%l"
+  },
+  {
+    "label": "ten_ktr%l",
+    "detail": "field GridInput",
+    "insertText": "ten_ktr%l"
+  },
+  {
+    "label": "ngay_ktr",
+    "detail": "field GridInput",
+    "insertText": "ngay_ktr"
+  },
+  {
     "label": "ten_khoa%l",
     "detail": "field GridInput",
     "insertText": "ten_khoa%l"
+  },
+  {
+    "label": "ten_mh%l",
+    "detail": "field GridInput",
+    "insertText": "ten_mh%l"
+  },
+  {
+    "label": "ten_dvdt%l",
+    "detail": "field GridInput",
+    "insertText": "ten_dvdt%l"
   },
   {
     "label": "ngay_hoc1",
@@ -4465,14 +5705,39 @@
     "insertText": "dat_yn"
   },
   {
+    "label": "ten_kl%l",
+    "detail": "field GridInput",
+    "insertText": "ten_kl%l"
+  },
+  {
+    "label": "ten_vtr%l",
+    "detail": "field GridInput",
+    "insertText": "ten_vtr%l"
+  },
+  {
     "label": "cong_ty",
     "detail": "field GridInput",
     "insertText": "cong_ty"
   },
   {
+    "label": "vi_tri",
+    "detail": "field GridInput",
+    "insertText": "vi_tri"
+  },
+  {
+    "label": "ten_tn%l",
+    "detail": "field GridInput",
+    "insertText": "ten_tn%l"
+  },
+  {
     "label": "tn_ld_yn",
     "detail": "field GridInput",
     "insertText": "tn_ld_yn"
+  },
+  {
+    "label": "ngay_tn",
+    "detail": "field GridInput",
+    "insertText": "ngay_tn"
   },
   {
     "label": "so_ngay_nghi",
@@ -4485,54 +5750,29 @@
     "insertText": "ma_cv"
   },
   {
+    "label": "ten_cv",
+    "detail": "field GridInput",
+    "insertText": "ten_cv"
+  },
+  {
     "label": "ten_cv2",
     "detail": "field GridInput",
     "insertText": "ten_cv2"
   },
   {
-    "label": "noi_dung",
+    "label": "dvt_nt",
     "detail": "field GridInput",
-    "insertText": "noi_dung"
-  },
-  {
-    "label": "ngay_hh",
-    "detail": "field GridInput",
-    "insertText": "ngay_hh"
-  },
-  {
-    "label": "ky_nang_yc",
-    "detail": "field GridInput",
-    "insertText": "ky_nang_yc"
-  },
-  {
-    "label": "ma_hs",
-    "detail": "field GridInput",
-    "insertText": "ma_hs"
-  },
-  {
-    "label": "nguoi_pv",
-    "detail": "field GridInput",
-    "insertText": "nguoi_pv"
-  },
-  {
-    "label": "thoi_gian_pv",
-    "detail": "field GridInput",
-    "insertText": "thoi_gian_pv"
-  },
-  {
-    "label": "dia_diem_pv",
-    "detail": "field GridInput",
-    "insertText": "dia_diem_pv"
-  },
-  {
-    "label": "noi_dung_pv",
-    "detail": "field GridInput",
-    "insertText": "noi_dung_pv"
+    "insertText": "dvt_nt"
   },
   {
     "label": "tinh_trang_hddt",
     "detail": "field GridInput",
     "insertText": "tinh_trang_hddt"
+  },
+  {
+    "label": "ngay_ph",
+    "detail": "field GridInput",
+    "insertText": "ngay_ph"
   },
   {
     "label": "so_bi_mat",
@@ -4550,24 +5790,29 @@
     "insertText": "in_yn"
   },
   {
+    "label": "kieu_ph",
+    "detail": "field GridInput",
+    "insertText": "kieu_ph"
+  },
+  {
     "label": "dich_vu_hddt",
     "detail": "field GridInput",
     "insertText": "dich_vu_hddt"
   },
   {
-    "label": "tu_ngay",
+    "label": "ma_hs",
     "detail": "field GridInput",
-    "insertText": "tu_ngay"
-  },
-  {
-    "label": "den_ngay",
-    "detail": "field GridInput",
-    "insertText": "den_ngay"
+    "insertText": "ma_hs"
   },
   {
     "label": "chung_chi",
     "detail": "field GridInput",
     "insertText": "chung_chi"
+  },
+  {
+    "label": "luong",
+    "detail": "field GridInput",
+    "insertText": "luong"
   },
   {
     "label": "thoi_gian_lv",
@@ -4585,6 +5830,16 @@
     "insertText": "ly_do_di"
   },
   {
+    "label": "ma_dot",
+    "detail": "field GridInput",
+    "insertText": "ma_dot"
+  },
+  {
+    "label": "ma_vtr",
+    "detail": "field GridInput",
+    "insertText": "ma_vtr"
+  },
+  {
     "label": "ngay_lv_dk",
     "detail": "field GridInput",
     "insertText": "ngay_lv_dk"
@@ -4595,11 +5850,6 @@
     "insertText": "stt_vtr"
   },
   {
-    "label": "ma_ht",
-    "detail": "field GridInput",
-    "insertText": "ma_ht"
-  },
-  {
     "label": "ma_vongat",
     "detail": "field GridInput",
     "insertText": "ma_vongat"
@@ -4608,6 +5858,11 @@
     "label": "ten_vong%lex",
     "detail": "field GridInput",
     "insertText": "ten_vong%lex"
+  },
+  {
+    "label": "noi_dung",
+    "detail": "field GridInput",
+    "insertText": "noi_dung"
   },
   {
     "label": "tt_datat",
@@ -4630,6 +5885,11 @@
     "insertText": "ten_tt_k_dat%lex"
   },
   {
+    "label": "ma_ht",
+    "detail": "field GridInput",
+    "insertText": "ma_ht"
+  },
+  {
     "label": "stt_vong",
     "detail": "field GridInput",
     "insertText": "stt_vong"
@@ -4645,9 +5905,9 @@
     "insertText": "ten_pv%lex"
   },
   {
-    "label": "ma_vtrat",
+    "label": "ma_kqat",
     "detail": "field GridInput",
-    "insertText": "ma_vtrat"
+    "insertText": "ma_kqat"
   },
   {
     "label": "ten_vtr%lex",
@@ -4670,9 +5930,19 @@
     "insertText": "so_yc"
   },
   {
+    "label": "ma_vtrat",
+    "detail": "field GridInput",
+    "insertText": "ma_vtrat"
+  },
+  {
     "label": "sl_dot",
     "detail": "field GridInput",
     "insertText": "sl_dot"
+  },
+  {
+    "label": "ky_nang_yc",
+    "detail": "field GridInput",
+    "insertText": "ky_nang_yc"
   },
   {
     "label": "ma_hsat",
@@ -4690,6 +5960,26 @@
     "insertText": "stt_rec0lich"
   },
   {
+    "label": "nguoi_pv",
+    "detail": "field GridInput",
+    "insertText": "nguoi_pv"
+  },
+  {
+    "label": "thoi_gian_pv",
+    "detail": "field GridInput",
+    "insertText": "thoi_gian_pv"
+  },
+  {
+    "label": "dia_diem_pv",
+    "detail": "field GridInput",
+    "insertText": "dia_diem_pv"
+  },
+  {
+    "label": "noi_dung_pv",
+    "detail": "field GridInput",
+    "insertText": "noi_dung_pv"
+  },
+  {
     "label": "ma_ktrat",
     "detail": "field GridInput",
     "insertText": "ma_ktrat"
@@ -4698,6 +5988,11 @@
     "label": "ten_ktr%lex",
     "detail": "field GridInput",
     "insertText": "ten_ktr%lex"
+  },
+  {
+    "label": "ma_tc",
+    "detail": "field GridInput",
+    "insertText": "ma_tc"
   },
   {
     "label": "f_loaiat",
@@ -4758,6 +6053,11 @@
     "label": "giam_tru_nt",
     "detail": "field GridInput",
     "insertText": "giam_tru_nt"
+  },
+  {
+    "label": "giam_tru",
+    "detail": "field GridInput",
+    "insertText": "giam_tru"
   },
   {
     "label": "tnt_thue_nt",
@@ -4855,9 +6155,19 @@
     "insertText": "hs_ra_old"
   },
   {
+    "label": "ma_nlat",
+    "detail": "field GridInput",
+    "insertText": "ma_nlat"
+  },
+  {
     "label": "xep_loaiat",
     "detail": "field GridInput",
     "insertText": "xep_loaiat"
+  },
+  {
+    "label": "ngay_hh",
+    "detail": "field GridInput",
+    "insertText": "ngay_hh"
   },
   {
     "label": "ma_mhat",
@@ -4885,24 +6195,14 @@
     "insertText": "stt_mh"
   },
   {
-    "label": "yc_so",
-    "detail": "field GridInput",
-    "insertText": "yc_so"
-  },
-  {
-    "label": "yc_ln",
-    "detail": "field GridInput",
-    "insertText": "yc_ln"
-  },
-  {
     "label": "ngay_hh0",
     "detail": "field GridInput",
     "insertText": "ngay_hh0"
   },
   {
-    "label": "ma_nvex",
+    "label": "ma_cc",
     "detail": "field GridInput",
-    "insertText": "ma_nvex"
+    "insertText": "ma_cc"
   },
   {
     "label": "sl_yc",
@@ -4925,9 +6225,19 @@
     "insertText": "can_cu"
   },
   {
+    "label": "kind",
+    "detail": "field GridInput",
+    "insertText": "kind"
+  },
+  {
     "label": "type_security",
     "detail": "field GridInput",
     "insertText": "type_security"
+  },
+  {
+    "label": "pdf_yn",
+    "detail": "field GridInput",
+    "insertText": "pdf_yn"
   },
   {
     "label": "tc_hd",
@@ -4940,34 +6250,24 @@
     "insertText": "tt_gs"
   },
   {
-    "label": "i_error",
-    "detail": "field GridInput",
-    "insertText": "i_error"
-  },
-  {
-    "label": "u3ex",
-    "detail": "field GridInput",
-    "insertText": "u3ex"
-  },
-  {
-    "label": "urls",
-    "detail": "field GridInput",
-    "insertText": "urls"
-  },
-  {
     "label": "stt_rec_gs",
     "detail": "field GridInput",
     "insertText": "stt_rec_gs"
   },
   {
-    "label": "user_id0",
+    "label": "tinh_chat",
     "detail": "field GridInput",
-    "insertText": "user_id0"
+    "insertText": "tinh_chat"
   },
   {
-    "label": "user_id2",
+    "label": "tl_ck",
     "detail": "field GridInput",
-    "insertText": "user_id2"
+    "insertText": "tl_ck"
+  },
+  {
+    "label": "ten_vt_gocex",
+    "detail": "field GridInput",
+    "insertText": "ten_vt_gocex"
   },
   {
     "label": "dien_giaiex",
@@ -4990,6 +6290,11 @@
     "insertText": "ma_loex"
   },
   {
+    "label": "nhieu_dvt0ex",
+    "detail": "field GridInput",
+    "insertText": "nhieu_dvt0ex"
+  },
+  {
     "label": "he_soex",
     "detail": "field GridInput",
     "insertText": "he_soex"
@@ -5000,24 +6305,19 @@
     "insertText": "so_ctex"
   },
   {
-    "label": "ton13ex",
-    "detail": "field GridInput",
-    "insertText": "ton13ex"
-  },
-  {
     "label": "xtypeex",
     "detail": "field GridInput",
     "insertText": "xtypeex"
   },
   {
+    "label": "ma_dt",
+    "detail": "field GridInput",
+    "insertText": "ma_dt"
+  },
+  {
     "label": "sl_nm0ex",
     "detail": "field GridInput",
     "insertText": "sl_nm0ex"
-  },
-  {
-    "label": "ma_vi_trin",
-    "detail": "field GridInput",
-    "insertText": "ma_vi_trin"
   },
   {
     "label": "header%lex",
@@ -5160,9 +6460,24 @@
     "insertText": "so_dh"
   },
   {
+    "label": "ten_dh",
+    "detail": "field GridInput",
+    "insertText": "ten_dh"
+  },
+  {
     "label": "sl_da_yc",
     "detail": "field GridInput",
     "insertText": "sl_da_yc"
+  },
+  {
+    "label": "ngay_dat",
+    "detail": "field GridInput",
+    "insertText": "ngay_dat"
+  },
+  {
+    "label": "ten_cb",
+    "detail": "field GridInput",
+    "insertText": "ten_cb"
   },
   {
     "label": "ten_nguon",
@@ -5180,9 +6495,9 @@
     "insertText": "nguon"
   },
   {
-    "label": "code",
+    "label": "ma_ky",
     "detail": "field GridInput",
-    "insertText": "code"
+    "insertText": "ma_ky"
   },
   {
     "label": "rkey",
@@ -5193,6 +6508,11 @@
     "label": "ma_xu_ly",
     "detail": "field GridInput",
     "insertText": "ma_xu_ly"
+  },
+  {
+    "label": "dien_giai%l",
+    "detail": "field GridInput",
+    "insertText": "dien_giai%l"
   },
   {
     "label": "gia_tri2",
@@ -5220,11 +6540,6 @@
     "insertText": "stt_phan_he"
   },
   {
-    "label": "number_format",
-    "detail": "field GridInput",
-    "insertText": "number_format"
-  },
-  {
     "label": "mau_in_yn",
     "detail": "field GridInput",
     "insertText": "mau_in_yn"
@@ -5238,11 +6553,6 @@
     "label": "mau_nl",
     "detail": "field GridInput",
     "insertText": "mau_nl"
-  },
-  {
-    "label": "xaction_exex",
-    "detail": "field GridInput",
-    "insertText": "xaction_exex"
   },
   {
     "label": "ma_loai_tb",
@@ -5260,39 +6570,9 @@
     "insertText": "ten_tk_cpxt%lex"
   },
   {
-    "label": "deny_post_gl",
-    "detail": "field GridInput",
-    "insertText": "deny_post_gl"
-  },
-  {
-    "label": "stt_rec_nm",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_nm"
-  },
-  {
-    "label": "stt_rec0nm",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0nm"
-  },
-  {
-    "label": "nm_so",
-    "detail": "field GridInput",
-    "insertText": "nm_so"
-  },
-  {
-    "label": "nm_ln",
-    "detail": "field GridInput",
-    "insertText": "nm_ln"
-  },
-  {
     "label": "ma_tdat",
     "detail": "field GridInput",
     "insertText": "ma_tdat"
-  },
-  {
-    "label": "ten_td%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_td%lex"
   },
   {
     "label": "u_statusat",
@@ -5305,56 +6585,6 @@
     "insertText": "u_status_name%lex"
   },
   {
-    "label": "duyet_hetex",
-    "detail": "field GridInput",
-    "insertText": "duyet_hetex"
-  },
-  {
-    "label": "duyet",
-    "detail": "field GridInput",
-    "insertText": "duyet"
-  },
-  {
-    "label": "huyex",
-    "detail": "field GridInput",
-    "insertText": "huyex"
-  },
-  {
-    "label": "xtag",
-    "detail": "field GridInput",
-    "insertText": "xtag"
-  },
-  {
-    "label": "xtag2",
-    "detail": "field GridInput",
-    "insertText": "xtag2"
-  },
-  {
-    "label": "t_duyet",
-    "detail": "field GridInput",
-    "insertText": "t_duyet"
-  },
-  {
-    "label": "t_huy",
-    "detail": "field GridInput",
-    "insertText": "t_huy"
-  },
-  {
-    "label": "t_dong",
-    "detail": "field GridInput",
-    "insertText": "t_dong"
-  },
-  {
-    "label": "tag1ex",
-    "detail": "field GridInput",
-    "insertText": "tag1ex"
-  },
-  {
-    "label": "tag2ex",
-    "detail": "field GridInput",
-    "insertText": "tag2ex"
-  },
-  {
     "label": "sl_dh0",
     "detail": "field GridInput",
     "insertText": "sl_dh0"
@@ -5365,49 +6595,9 @@
     "insertText": "xac_nhanex"
   },
   {
-    "label": "kt_so",
+    "label": "sl_tlex",
     "detail": "field GridInput",
-    "insertText": "kt_so"
-  },
-  {
-    "label": "kt_ln",
-    "detail": "field GridInput",
-    "insertText": "kt_ln"
-  },
-  {
-    "label": "stt_rec_kt",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_kt"
-  },
-  {
-    "label": "stt_rec0kt",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0kt"
-  },
-  {
-    "label": "ten_kt%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_kt%lex"
-  },
-  {
-    "label": "ma_ktat",
-    "detail": "field GridInput",
-    "insertText": "ma_ktat"
-  },
-  {
-    "label": "so_dongex",
-    "detail": "field GridInput",
-    "insertText": "so_dongex"
-  },
-  {
-    "label": "sl_kdex",
-    "detail": "field GridInput",
-    "insertText": "sl_kdex"
-  },
-  {
-    "label": "ma_ktatex",
-    "detail": "field GridInput",
-    "insertText": "ma_ktatex"
+    "insertText": "sl_tlex"
   },
   {
     "label": "gia_ton_ynex",
@@ -5425,11 +6615,6 @@
     "insertText": "ten_tk_co%lex"
   },
   {
-    "label": "stt_ct_nkc",
-    "detail": "field GridInput",
-    "insertText": "stt_ct_nkc"
-  },
-  {
     "label": "line_nbr0",
     "detail": "field GridInput",
     "insertText": "line_nbr0"
@@ -5445,14 +6630,19 @@
     "insertText": "ma_snk"
   },
   {
+    "label": "ma_truongat",
+    "detail": "field GridInput",
+    "insertText": "ma_truongat"
+  },
+  {
+    "label": "ten_truong%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_truong%lex"
+  },
+  {
     "label": "ds_tklk",
     "detail": "field GridInput",
     "insertText": "ds_tklk"
-  },
-  {
-    "label": "sysprint",
-    "detail": "field GridInput",
-    "insertText": "sysprint"
   },
   {
     "label": "flag",
@@ -5490,6 +6680,16 @@
     "insertText": "k"
   },
   {
+    "label": "gr_id",
+    "detail": "field GridInput",
+    "insertText": "gr_id"
+  },
+  {
+    "label": "ten_dvcs",
+    "detail": "field GridInput",
+    "insertText": "ten_dvcs"
+  },
+  {
     "label": "ngay_ht",
     "detail": "field GridInput",
     "insertText": "ngay_ht"
@@ -5500,19 +6700,34 @@
     "insertText": "t_cong_suat"
   },
   {
+    "label": "ma_ct0",
+    "detail": "field GridInput",
+    "insertText": "ma_ct0"
+  },
+  {
     "label": "trang_thai_tt",
     "detail": "field GridInput",
     "insertText": "trang_thai_tt"
   },
   {
-    "label": "content",
+    "label": "group1By",
     "detail": "field GridInput",
-    "insertText": "content"
+    "insertText": "group1By"
+  },
+  {
+    "label": "group2By",
+    "detail": "field GridInput",
+    "insertText": "group2By"
   },
   {
     "label": "form_name",
     "detail": "field GridInput",
     "insertText": "form_name"
+  },
+  {
+    "label": "xRow",
+    "detail": "field GridInput",
+    "insertText": "xRow"
   },
   {
     "label": "ma_so_ct",
@@ -5525,24 +6740,24 @@
     "insertText": "sttkey"
   },
   {
-    "label": "view_detail",
+    "label": "content",
     "detail": "field GridInput",
-    "insertText": "view_detail"
+    "insertText": "content"
+  },
+  {
+    "label": "tu_ngay",
+    "detail": "field GridInput",
+    "insertText": "tu_ngay"
+  },
+  {
+    "label": "den_ngay",
+    "detail": "field GridInput",
+    "insertText": "den_ngay"
   },
   {
     "label": "groupby",
     "detail": "field GridInput",
     "insertText": "groupby"
-  },
-  {
-    "label": "gio_bd",
-    "detail": "field GridInput",
-    "insertText": "gio_bd"
-  },
-  {
-    "label": "gio_kt",
-    "detail": "field GridInput",
-    "insertText": "gio_kt"
   },
   {
     "label": "x_paint_day",
@@ -5570,39 +6785,39 @@
     "insertText": "view_xuat_yn"
   },
   {
-    "label": "kk_lai",
-    "detail": "field GridInput",
-    "insertText": "kk_lai"
-  },
-  {
-    "label": "isEnable",
-    "detail": "field GridInput",
-    "insertText": "isEnable"
-  },
-  {
-    "label": "loai_kkat",
-    "detail": "field GridInput",
-    "insertText": "loai_kkat"
-  },
-  {
-    "label": "t_tien_nt2",
-    "detail": "field GridInput",
-    "insertText": "t_tien_nt2"
-  },
-  {
-    "label": "t_tien2",
-    "detail": "field GridInput",
-    "insertText": "t_tien2"
-  },
-  {
-    "label": "pex",
-    "detail": "field GridInput",
-    "insertText": "pex"
-  },
-  {
     "label": "ma_cd_tex",
     "detail": "field GridInput",
     "insertText": "ma_cd_tex"
+  },
+  {
+    "label": "ma_mayat",
+    "detail": "field GridInput",
+    "insertText": "ma_mayat"
+  },
+  {
+    "label": "ten_may%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_may%lex"
+  },
+  {
+    "label": "ma_px",
+    "detail": "field GridInput",
+    "insertText": "ma_px"
+  },
+  {
+    "label": "ma_lsx",
+    "detail": "field GridInput",
+    "insertText": "ma_lsx"
+  },
+  {
+    "label": "ma_pxat",
+    "detail": "field GridInput",
+    "insertText": "ma_pxat"
+  },
+  {
+    "label": "ten_px%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_px%lex"
   },
   {
     "label": "ma_lsxat",
@@ -5695,6 +6910,16 @@
     "insertText": "ma_loai3"
   },
   {
+    "label": "gio_bd",
+    "detail": "field GridInput",
+    "insertText": "gio_bd"
+  },
+  {
+    "label": "gio_kt",
+    "detail": "field GridInput",
+    "insertText": "gio_kt"
+  },
+  {
     "label": "sl_hong",
     "detail": "field GridInput",
     "insertText": "sl_hong"
@@ -5715,6 +6940,11 @@
     "insertText": "stt_rec0gd"
   },
   {
+    "label": "ma_nc",
+    "detail": "field GridInput",
+    "insertText": "ma_nc"
+  },
+  {
     "label": "ma_ldat",
     "detail": "field GridInput",
     "insertText": "ma_ldat"
@@ -5723,11 +6953,6 @@
     "label": "ten_ld%lex",
     "detail": "field GridInput",
     "insertText": "ten_ld%lex"
-  },
-  {
-    "label": "ma_px_natex",
-    "detail": "field GridInput",
-    "insertText": "ma_px_natex"
   },
   {
     "label": "ten_px_n%lex",
@@ -5740,19 +6965,14 @@
     "insertText": "xtypeat"
   },
   {
-    "label": "ma_caat",
-    "detail": "field GridInput",
-    "insertText": "ma_caat"
-  },
-  {
-    "label": "sl_pb",
-    "detail": "field GridInput",
-    "insertText": "sl_pb"
-  },
-  {
     "label": "so_luong1",
     "detail": "field GridInput",
     "insertText": "so_luong1"
+  },
+  {
+    "label": "tk_gv",
+    "detail": "field GridInput",
+    "insertText": "tk_gv"
   },
   {
     "label": "tk_gghbex",
@@ -5765,29 +6985,59 @@
     "insertText": "kieu_ggex"
   },
   {
-    "label": "ton_yn",
+    "label": "tk_cpbh",
     "detail": "field GridInput",
-    "insertText": "ton_yn"
+    "insertText": "tk_cpbh"
   },
   {
-    "label": "loai_vtat",
+    "label": "tk_dt",
     "detail": "field GridInput",
-    "insertText": "loai_vtat"
+    "insertText": "tk_dt"
   },
   {
-    "label": "ten_loai_vt%lex",
+    "label": "so_pg",
     "detail": "field GridInput",
-    "insertText": "ten_loai_vt%lex"
+    "insertText": "so_pg"
   },
   {
-    "label": "nh_vt3at",
+    "label": "ma_vcat",
     "detail": "field GridInput",
-    "insertText": "nh_vt3at"
+    "insertText": "ma_vcat"
   },
   {
-    "label": "ten_nh_vt3%lex",
+    "label": "ten_vc%lex",
     "detail": "field GridInput",
-    "insertText": "ten_nh_vt3%lex"
+    "insertText": "ten_vc%lex"
+  },
+  {
+    "label": "giao_yn",
+    "detail": "field GridInput",
+    "insertText": "giao_yn"
+  },
+  {
+    "label": "so_chuyenex",
+    "detail": "field GridInput",
+    "insertText": "so_chuyenex"
+  },
+  {
+    "label": "loai_vcatex",
+    "detail": "field GridInput",
+    "insertText": "loai_vcatex"
+  },
+  {
+    "label": "chuc_vu",
+    "detail": "field GridInput",
+    "insertText": "chuc_vu"
+  },
+  {
+    "label": "dai_dien",
+    "detail": "field GridInput",
+    "insertText": "dai_dien"
+  },
+  {
+    "label": "nhiem_vu",
+    "detail": "field GridInput",
+    "insertText": "nhiem_vu"
   },
   {
     "label": "ma_nsat",
@@ -5798,6 +7048,11 @@
     "label": "ten_ns%lex",
     "detail": "field GridInput",
     "insertText": "ten_ns%lex"
+  },
+  {
+    "label": "ma_ns",
+    "detail": "field GridInput",
+    "insertText": "ma_ns"
   },
   {
     "label": "ma_qtat",
@@ -5835,14 +7090,24 @@
     "insertText": "ccode"
   },
   {
+    "label": "ma_gd",
+    "detail": "field GridInput",
+    "insertText": "ma_gd"
+  },
+  {
+    "label": "ten_gd%l",
+    "detail": "field GridInput",
+    "insertText": "ten_gd%l"
+  },
+  {
+    "label": "ten_ct%l",
+    "detail": "field GridInput",
+    "insertText": "ten_ct%l"
+  },
+  {
     "label": "ct_nxt",
     "detail": "field GridInput",
     "insertText": "ct_nxt"
-  },
-  {
-    "label": "list_id",
-    "detail": "field GridInput",
-    "insertText": "list_id"
   },
   {
     "label": "id_nsd",
@@ -5850,9 +7115,9 @@
     "insertText": "id_nsd"
   },
   {
-    "label": "ma_ctat",
+    "label": "ma_mau",
     "detail": "field GridInput",
-    "insertText": "ma_ctat"
+    "insertText": "ma_mau"
   },
   {
     "label": "ma_nkt",
@@ -5870,21 +7135,6 @@
     "insertText": "xsttex"
   },
   {
-    "label": "sl_tt0",
-    "detail": "field GridInput",
-    "insertText": "sl_tt0"
-  },
-  {
-    "label": "nhieu_dvt",
-    "detail": "field GridInput",
-    "insertText": "nhieu_dvt"
-  },
-  {
-    "label": "t_tt_nt",
-    "detail": "field GridInput",
-    "insertText": "t_tt_nt"
-  },
-  {
     "label": "da_tt_nt",
     "detail": "field GridInput",
     "insertText": "da_tt_nt"
@@ -5900,33 +7150,13 @@
     "insertText": "t_tt_ntex"
   },
   {
+    "label": "t_tt_qd",
+    "detail": "field GridInput",
+    "insertText": "t_tt_qd"
+  },
+  {
     "label": "ma_ntex",
     "detail": "field GridInput",
     "insertText": "ma_ntex"
-  },
-  {
-    "label": "tl_so",
-    "detail": "field GridInput",
-    "insertText": "tl_so"
-  },
-  {
-    "label": "tl_ln",
-    "detail": "field GridInput",
-    "insertText": "tl_ln"
-  },
-  {
-    "label": "stt_rec_tl",
-    "detail": "field GridInput",
-    "insertText": "stt_rec_tl"
-  },
-  {
-    "label": "stt_rec0tl",
-    "detail": "field GridInput",
-    "insertText": "stt_rec0tl"
-  },
-  {
-    "label": "ma_kho_xuatex",
-    "detail": "field GridInput",
-    "insertText": "ma_kho_xuatex"
   }
 ]

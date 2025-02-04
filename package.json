@@ -48,38 +48,26 @@
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
         "title": "Apply Translate FBO (v -> e)"
-      },
-      {
-        "command": "fbo-autocomplete.helloWorld",
-        "title": "Hello World"
-      },
+      }, 
       {
         "command": "fbo-autocomplete.applyCompletionItem",
         "title": "zlkqlksk"
       },
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
-        "title": "Render XML To Database"
-      },
-      {
-        "command": "fbo-autocomplete.helloWorld",
-        "title": "Hello World"
-      },
-      {
-        "command": "fbo-autocomplete.applyCompletionItem",
-        "title": "zlkqlksk"
-      },
-      {
-        "command": "fbo-autocomplete.renderXmlTodDB",
-        "title": "Render XML To Database"
-      },
+        "title": "FBO: Render XML To Database"
+      }, 
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
-        "title": "Show/Hide Entity CodeLens"
+        "title": "FBO: Show/Hide Entity CodeLens"
       },
       {
         "command": "fbo-autocomplete.getDataAutocomplete",
-        "title": "Get Data Autocomplete"
+        "title": "FBO: Get Data Autocomplete"
+      },
+      {
+        "command": "fbo-autocomplete.ConvertToExcel",
+        "title": "FBO: Convert To Excel"
       }
     ],
     "languages": [

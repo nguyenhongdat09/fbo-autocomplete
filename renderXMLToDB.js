@@ -130,15 +130,19 @@ class RenderXMLToDB {
         const externalRegex = /external="([^"]+)"/;
         
         const external = value.match(externalRegex);
+
+
+       
         if (external) {
             if(external[1].toLowerCase() === 'true'){
                 key = key + 'ex'
             }
         }
-        
+        if (value.includes('allowFilter') || value.includes('allowSort') || value.includes('aggregate')) {
+            key = key + '_gridView'
+        } 
         return {key, value};
     }
- 
     static async saveToRocksDB(nameDb, keyValuePairs) {
         var db_path_name =  '/Database/';
         let dbPath = path.join(__dirname, db_path_name, nameDb);
@@ -153,12 +157,13 @@ class RenderXMLToDB {
             for (const key in keyValuePairs) {
                 const value = keyValuePairs[key];
                 if (nameDb === 'Grid') {   
-                    if (value.includes('allowFilter') || value.includes('allowSort') || value.includes('aggregate')) {
-                        await dbView.put(key, value);
+                    if (key.includes('_gridView')  ) {
+                        var key_gridView = key.replace('_gridView', '')
+                        await dbView.put(key_gridView, value);
                         array2.push( {
-                                "label": key,
+                                "label": key_gridView,
                                 "detail": "field GridView",
-                                "insertText": key
+                                "insertText": key_gridView
                         })
                     } else { 
                         await db.put(key, value);  

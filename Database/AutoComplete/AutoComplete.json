@@ -1,62 +1,242 @@
 [
   {
-    "label": "setItemValue",
-    "detail": "f.setItemValue('key', 'value')",
-    "insertText": "setItemValue(${1:''}, ${2:value})"
+    "label": "setItemValue('key', 'value')",
+    "detail": "(FORM) Set Value For Field",
+    "insertText": "setItemValue('${1:}', '${2:}')"
   },
   {
-    "label": "setReferenceKeyFilter",
-    "detail": "f.setReferenceKeyFilter('key')",
-    "insertText": "setReferenceKeyFilter(${1:''})"
+    "label": "setReferenceKeyFilter('field')",
+    "detail": "(FORM) Reload Lookup Of Field",
+    "insertText": "setReferenceKeyFilter('${1:}')"
   },
   {
-    "label": "_getColumnOrder",
-    "detail": "g._getColumnOrder('field')",
-    "insertText": "_getColumnOrder(${1:''})"
+    "label": "_getColumnOrder('field')",
+    "detail": "(GRID) Get Position Of Column",
+    "insertText": "_getColumnOrder('${1:}')"
   },
   {
-    "label": "_getItemValue",
-    "detail": "g._getItemValue(row (int), column (int))",
-    "insertText": "_getItemValue(row, column)"
+    "label": "_getItemValue(row (int), column (int))",
+    "detail": "(GRID) Get Value Of Cell",
+    "insertText": "_getItemValue(${1:0}, ${2:})"
   },
   {
-    "label": "_setColumnVisible",
-    "detail": "g._setColumnVisible(colunm (int), bool)",
-    "insertText": "_setColumnVisible(0, true)"
+    "label": "_setColumnVisible(colunm (int), bool)",
+    "detail": "(GRID) Hidden/Visible Colum",
+    "insertText": "_setColumnVisible(${1:0}, ${2:true})"
   },
   {
-    "label": "setItemControlBehavior",
-    "detail": "f.setItemControlBehavior(field, value, valueOfRefference)",
-    "insertText": "setItemControlBehavior('', '', '')"
+    "label": "setItemControlBehavior(field, value, ref value)",
+    "detail": "(FORM) Set Item Value And Refference Of Them",
+    "insertText": "setItemControlBehavior('${1:}', '${2:}', '${3:}')"
   },
   {
-    "label": "setItemValues",
-    "detail": "f.setItemValues('List of Field', [Array Of Value] )",
-    "insertText": "setItemValues('', [])"
+    "label": "setItemValues('list of field', [list of value])",
+    "detail": "(FORM) Set Value For Multi Fields",
+    "insertText": "setItemValues('${1:}', [${2:}])"
   },
   {
     "label": "_findButton",
-    "detail": "f._findButton('ID Of Tag HTML')",
-    "insertText": "_findButton('')"
+    "detail": "(FORM) Find Button",
+    "insertText": "_findButton('${1:}')"
   },
   {
-    "label": "setReadOnlyFields",
-    "detail": "f.setReadOnlyFields('List Field')",
-    "insertText": "setReadOnlyFields('');"
+    "label": "setReadOnlyFields('list of field');",
+    "detail": "(FORM) Set ReadOnly For Field",
+    "insertText": "setReadOnlyFields('${1:}');"
   },
   {
     "label": "getItem('field').value",
-    "detail": "f.getItem('field').value",
-    "insertText": "getItem(${1:''}).value"
+    "detail": "(FORM) Get/Set Value",
+    "insertText": "getItem('${1:}').value"
   },
   {
-    "label": "request(o, 'ResID','ResID', ['field'], null, true);",
-    "detail": "Grid: request(o, 'ResID','ResID', ['detail field'], ['master field'], bool (Not Replace when null));",
-    "insertText": "request(o, ${1:''},${2:''}, [${3:''}], [${4:''}], ${5:true})"
+    "label": "request(o, 'ResID','ResID, ['detail field'], ['master field'], true)",
+    "detail": "(GRID)  Request On Grid\no.grid.request(o, 'ResID','ResID', ['detail field'], ['master field'], bool (Not Replace when null));",
+    "insertText": "request(o, '${1:}','${2:}', ['${3:}'], ['${4:}'], ${5:true})"
   },
   {
     "label": "_rowCount",
-    "detail": "Return Int",
+    "detail": "(GRID)  Return Int (Return total of row)",
     "insertText": "_rowCount"
+  },
+  {
+    "label": "parentForm",
+    "detail": "",
+    "insertText": "parentForm"
+  },
+  {
+    "label": "getItemValue('field')",
+    "detail": "(GRID)  Get Item Value",
+    "insertText": "getItemValue('${1:}')"
+  },
+  {
+    "label": "focus()",
+    "detail": "focus on field or cell \nex: a.getItem('b').focus()",
+    "insertText": "focus()"
+  },
+  {
+    "label": "_getRow(i)",
+    "detail": "(GRID) _getRow(i (int) ) get row at Number",
+    "insertText": "_getRow(${1:0})"
+  },
+  {
+    "label": "g._setRow(i, a)",
+    "detail": "(GRID)  g._setRow(i, a) set row at row Number",
+    "insertText": "_setRow(${1:}, ${1:value})"
+  },
+  {
+    "label": "_fields",
+    "detail": "Get All Fields",
+    "insertText": "_fields"
+  },
+  {
+    "label": "_rows",
+    "detail": "(GRID) get Data Of All Row",
+    "insertText": "_rows"
+  },
+  {
+    "label": "_currentRow",
+    "detail": "(GRID) Get Current Row",
+    "insertText": "_currentRow"
+  },
+  {
+    "label": "_activeRow",
+    "detail": "(GRID) Get Number Of The Focus Row",
+    "insertText": "_activeRow"
+  },
+  {
+    "label": "_activeCell",
+    "detail": "(GRID) Get Number Of The Focus Cell",
+    "insertText": "_activeCell"
+  },
+  {
+    "label": "_language",
+    "detail": "Get Language",
+    "insertText": "_language"
+  },
+  {
+    "label": "_readOnly",
+    "detail": "(GRID) Set Read Only For Cell",
+    "insertText": "_readOnly"
+  },
+  {
+    "label": "_allowNew",
+    "detail": "(GRID) Allow Insert Row On Grid",
+    "insertText": "_allowNew"
+  },
+  {
+    "label": "_activeColumn",
+    "detail": "(GRID) Position Column Of Focus Cell",
+    "insertText": "_activeColumn"
+  },
+  {
+    "label": "setReadOnlyFields('list of field');",
+    "detail": "(FORM) Set ReadOnly For Field",
+    "insertText": "f.setReadOnlyFields('${1:}');"
+  },
+  {
+    "label": "_action",
+    "detail": "(FORM) Return (New, Edit, View)",
+    "insertText": "_action"
+  },
+  {
+    "label": "executeExpression([list of field])",
+    "detail": "(FORM) Calculate Field On Form\nf.executeExpression([g.$a.t_tt_nt,\ng.$a.t_tt]);",
+    "insertText": "executeExpression([${1:}])"
+  },
+  {
+    "label": "get_element().parentForm",
+    "detail": "(GRID) Get Form",
+    "insertText": "get_element().parentForm"
+  },
+  {
+    "label": "request('ResID', 'ResID', ['field master'], o)",
+    "detail": "(FORM) Request Form\nf.request('ResID', 'ResID', ['field master'], o)\nOr \nrequest('ResID', 'ResID', ['field master'])",
+    "insertText": "request('${1:}', '${2:}', ['${3:}'], o)"
+  },
+  {
+    "label": "getItem('name of grid')._controlBehavior",
+    "detail": "(FORM) Get Grid From Form",
+    "insertText": "getItem('${1:}')._controlBehavior"
+  },
+  {
+    "label": "_moveRow(i (int), j (int))",
+    "detail": "(GRID) Swap two Rows",
+    "insertText": "_moveRow(${1:0}, ${2:0})"
+  },
+  {
+    "label": "validExpression(o,[detail],[master field by column detail],[master field by master field])",
+    "detail": "(GRID) Calculate Multi Field On Grid And Form \ng.validExpression(o, [g.$a.tien], [g.$a.t_tien_nt,\ng.$a.t_tien], [g.$a.t_tt_nt, g.$a.t_tt]);\n",
+    "insertText": "validExpression(o,[${1:}],[${2:}],[${3:}])"
+  },
+  {
+    "label": "executeAggregate([master field by column detail])",
+    "detail": "(GRID) Caculate master field by column detail\ng.executeAggregate([g.$a.t_tien_nt, g.$a.t_tien]);",
+    "insertText": "executeAggregate([${1:}])"
+  },
+  {
+    "label": "validRowExpression('column name', 'epression')",
+    "detail": "(GRID) Valid Row Before Save\ng.validRowExpression('so_luong', '([gia_ton] != 3) || ([gia_ton] == 3 && [so_luong] != 0)')",
+    "insertText": "validRowExpression('${1:}','${2:}')"
+  },
+  {
+    "label": "_insertRow",
+    "detail": "(GRID) Insert Row",
+    "insertText": "_insertRow"
+  },
+  {
+    "label": "_removeRow",
+    "detail": "(GRID) Remove Row",
+    "insertText": "_removeRow"
+  },
+  {
+    "label": "_deleteRow",
+    "detail": "(GRID) Remove Row Even ReadOnly",
+    "insertText": "_deleteRow"
+  },
+  {
+    "label": "_removeRowNumber(i (int))",
+    "detail": "(GRID) Remove row at number",
+    "insertText": "_removeRowNumber(${1:})"
+  },
+  {
+    "label": "_confirmDelete",
+    "detail": "(GRID) Confirm Delete",
+    "insertText": "_confirmDelete"
+  },
+  {
+    "label": "_allowEdit",
+    "detail": "(GRID) Allow Edit",
+    "insertText": "_allowEdit"
+  },
+  {
+    "label": "_allowDelete",
+    "detail": "(GRID) Allow Delete",
+    "insertText": "_allowDelete"
+  },
+  {
+    "label": "_setItemValue(colum(int), row (int), value)",
+    "detail": "(GRID) Set Value For Cell",
+    "insertText": "_setItemValue(${1:0}, ${2:0}, ${3:value})"
+  },
+  {
+    "label": "_setColumnReadOnly('field', bool)",
+    "detail": "(GRID) Set Read Only For Column",
+    "insertText": "_setColumnReadOnly('${1:}', ${2:true})"
+  },
+  {
+    "label": "goToPage(-1)",
+    "detail": "(GRID) Reload page",
+    "insertText": "goToPage(-1)"
+  },
+  {
+    "label": "add_onResponseComplete",
+    "detail": "",
+    "insertText": "add_onResponseComplete((${1:})"
+  },
+  {
+    "label": "add_commandEvent",
+    "detail": "",
+    "insertText": "add_commandEvent((${2:})"
   }
 ]

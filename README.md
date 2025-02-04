@@ -23,6 +23,8 @@
 ![My Image](/images/ShowCodeLens.PNG)
 ## Autocomplete code dạng hàm, biến 
 - Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
+## Translate 
+- Copy text và bấm **Ctrl + Shift + V** để dịch đoạn vừa copy thành tiếng việt
 
 
  
