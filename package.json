@@ -32,11 +32,40 @@
         }
       ]
     },
+    "configuration": {
+      "type": "object",
+      "title": "Time Delay Translate",
+      "properties": {
+        "fbo-autocomplete.delay": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 1000,
+          "maximum": 15000,
+          "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động."
+        },
+        "fbo-autocomplete.translateMode": {
+          "type": "string",
+          "enum": [
+            "autocomplete",
+            "keyboard",
+            "none"
+          ],
+          "default": "autocomplete",
+          "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
+        }
+      }
+    },
     "keybindings": [
       {
         "command": "fbo-autocomplete.translatePaste",
         "key": "ctrl+shift+v",
         "mac": "cmd+shift+v",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "fbo-autocomplete.translateAuto",
+        "key": "alt+shift+q",
+        "mac": "alt+shift+q",
         "when": "editorTextFocus"
       }
     ],
@@ -48,7 +77,7 @@
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
         "title": "Apply Translate FBO (v -> e)"
-      }, 
+      },
       {
         "command": "fbo-autocomplete.applyCompletionItem",
         "title": "zlkqlksk"
@@ -56,7 +85,7 @@
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "FBO: Render XML To Database"
-      }, 
+      },
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
         "title": "FBO: Show/Hide Entity CodeLens"

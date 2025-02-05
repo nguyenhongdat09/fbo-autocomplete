@@ -12,6 +12,7 @@ const EntityCodeLensProvider = require("./EntityCodeLensProvider");
 const CompleteCodeByHandle = require("./CompleteCodeByHandle");
 const Trans = require("./Translate/Translate")
 const cnv = require("./ConvertToExcel/ConvertGridToHeader")
+const TranslateAuto = require("./Translate/TranslateAuto")
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -173,79 +174,7 @@ async function activate(context) {
 
         }
     });
-    let timeout = null;
-    let isEditing = false; // Chặn vòng lặp vô tận
-    let arr_line = []
-    let overwriteE = vscode.workspace.onDidChangeTextDocument(async (event) => {
-        if (isEditing) return; // Đang chỉnh sửa → bỏ qua
-        if(event.reason === vscode.TextDocumentChangeReason.Undo || event.reason === vscode.TextDocumentChangeReason.Redo ||  event.contentChanges.length === 0)
-            return// Ctrl +z hoặc shift + z không chạy
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) return;
-
-        const document = event.document;
-        const position = editor.selection.active;
-        const lineText = document.lineAt(position.line).text;
-        
-        // Regex tìm `v="..."` trên dòng hiện tại
-        const regex = /v="([^"]*)"/g;
-        let match;
-        let insideV = false;
-        
-        while ((match = regex.exec(lineText)) !== null) {
-            let start = match.index + 3; // Vị trí sau `v="`
-            let end = start + match[1].length; // Kết thúc trước dấu `"`
-    
-            if (position.character >= start && position.character <= end) {
-                insideV = true;
-                break;
-            }
-        }
-        if (!insideV) return; // Con trỏ không nằm trong `v=""`, bỏ qua
-
-        if (!arr_line.includes(position.line)) {
-            arr_line.push(position.line);
-        }
-        clearTimeout(timeout); 
-        timeout = setTimeout(async () => {
-            while (arr_line.length > 0) {
-                const position_line = arr_line.shift();
-                const line = document.lineAt(position_line);
-                const regex = /(<\w+\s+v="([^"]*)"\s+e=")([^"]*)(")/;
-                const match = regex.exec(line.text);
-                if (match) {
-                    let vietnameseText = match[2]; 
-                    if (arr_line.includes(position_line))
-                        return
-                    // 🔹 Chỉ dịch khi `v=""` thay đổi
-                    if ( vietnameseText.trim() !== "") {
-                        vscode.window.withProgress({
-                            location: vscode.ProgressLocation.Notification,
-                            title: `Translating`,
-                            cancellable: false
-                        }, async (progress, token) => {
-                            let translatedText = await trans.trans_to_en(vietnameseText);
-                            if (translatedText) {
-                                // 🔹 Thay đúng phần `e="..."`, không thay cả dòng
-                                let newLine = line.text.replace(/e="([^"]*)"/, `e="${translatedText}"`);
-                                if (newLine !== line.text) { // Kiểm tra tránh thay thế dư thừa
-                                    isEditing = true;
-                                    editor.edit(editBuilder => {
-                                        let startPos = new vscode.Position(position_line, 0);
-                                        let endPos = document.lineAt(position_line).range.end; // Lấy vị trí cuối dòng
-                                        editBuilder.replace(new vscode.Range(startPos, endPos), newLine);
-                                    }).then(() => {
-                                        isEditing = false;
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        }, 1000); // Đợi 1 giây sau khi người dùng ngừng nhập
-    });
-
+   
 
     const cvtToEx = new cnv()
     let convertToExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', function () {
@@ -270,7 +199,25 @@ async function activate(context) {
         }
     });
 
-    context.subscriptions.push(overwriteE);
+    const translateAuto = new TranslateAuto(trans);
+    let transautoComplete = translateAuto.activate();
+
+    let transautoWithKey = vscode.commands.registerCommand('fbo-autocomplete.translateAuto', async function () {
+        // Đọc nội dung bạn vừa copy vào clipboard
+        const text = await vscode.env.clipboard.readText();
+        const editor = vscode.window.activeTextEditor;
+        // Kiểm tra xem có editor đang mở không
+        if (!editor) {
+            vscode.window.showInformationMessage('Không có editor đang mở!');
+            return;
+        }
+        if (text) {
+            translateAuto.transWithKeyBoards()
+        }
+    });
+    
+    context.subscriptions.push(transautoWithKey);
+    context.subscriptions.push(transautoComplete);
     context.subscriptions.push(convertToExcel);
     context.subscriptions.push(translatePaste);
     context.subscriptions.push(provideroptionsHandle);
