@@ -17,18 +17,20 @@ class ConvertGridToHeader {
             // Sử dụng regex để trích xuất các thuộc tính name, v và e từ thẻ <field>
             const field = match[0];
             const nameRegex = /name="([^"]*)"/;  // Trích xuất thuộc tính name
+            const hiddenRegex = /hidden="([^"]*)"/;  // Trích xuất thuộc tính name
             const vRegex = /<header[^>]*v="([^"]*)"/;  // Trích xuất giá trị v trong thẻ <header>
             const eRegex = /<header[^>]*e="([^"]*)"/;  // Trích xuất giá trị e trong thẻ <header>
-
+            const hiddenMatch = field.match(hiddenRegex);  
+            if(hiddenMatch && hiddenMatch[1] == 'true')   return
             const nameMatch = field.match(nameRegex);
             const vMatch = field.match(vRegex);
             const eMatch = field.match(eRegex);
-
+            
+            
             if (nameMatch && vMatch && eMatch) {
                 const name = nameMatch[1];  // Lấy giá trị của name
                 const v = vMatch[1];        // Lấy giá trị của v
                 const e = eMatch[1];        // Lấy giá trị của e
-
                 // Đưa vào headersMap
                 headersMap[name] = { v, e };
             }

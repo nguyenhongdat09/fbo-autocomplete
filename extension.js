@@ -3,13 +3,13 @@
 const vscode = require('vscode');
 const pathModule = require('path');
 const fs = require('fs');
-const CompletionProvider = require('./CompleteProvider');
-const renderXMLToDB = require('./renderXMLToDB');
-const OpenWithVS2008 = require('./openWithVS2008');
-const ReadXMLVS2008 = require('./ReadXMLVS2008');
-const EntityHoverProvider = require("./EntityHoverProvider");
-const EntityCodeLensProvider = require("./EntityCodeLensProvider");
-const CompleteCodeByHandle = require("./CompleteCodeByHandle");
+const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
+const renderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
+const OpenWithVS2008 = require('./VS2008/openWithVS2008');
+const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
+const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
+const EntityCodeLensProvider = require("./VS2008/EntityCodeLensProvider");
+const CompleteCodeByHandle = require("./CompleteCodeWithDB/CompleteCodeByHandle");
 const Trans = require("./Translate/Translate")
 const cnv = require("./ConvertToExcel/ConvertGridToHeader")
 const TranslateAuto = require("./Translate/TranslateAuto")
@@ -61,7 +61,7 @@ async function activate(context) {
     const entityHoverProvider = new EntityHoverProvider(__dirname);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
-            return entityHoverProvider.provideHover(document, position);
+            return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
     })
 
@@ -87,7 +87,9 @@ async function activate(context) {
     });
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
-        var content = entityHoverProvider.findContent(entity, document.uri.fsPath);
+        var content = entityHoverProvider.findContent.bind(entityHoverProvider)(entity, document.uri.fsPath);
+        content = entityHoverProvider.formatXml(content)
+        content = content.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
         vscode.env.clipboard.writeText(content).then(() => {
             vscode.window.showInformationMessage(`Copied: ${content}`);
         });

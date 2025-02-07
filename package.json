@@ -36,13 +36,6 @@
       "type": "object",
       "title": "Time Delay Translate",
       "properties": {
-        "fbo-autocomplete.delay": {
-          "type": "number",
-          "default": 1000,
-          "minimum": 1000,
-          "maximum": 15000,
-          "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động."
-        },
         "fbo-autocomplete.translateMode": {
           "type": "string",
           "enum": [
@@ -51,8 +44,15 @@
             "none"
           ],
           "default": "autocomplete",
-          "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
-        }
+          "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)." 
+        },
+        "fbo-autocomplete.delay": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 1000,
+          "maximum": 15000,
+          "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động." 
+        } 
       }
     },
     "keybindings": [
