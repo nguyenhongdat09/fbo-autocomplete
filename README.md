@@ -25,6 +25,9 @@
 - Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
 ## Translate 
 - Copy text và bấm **Ctrl + Shift + V** để dịch đoạn vừa copy thành tiếng việt
+## Convert To Excel 
+- Ở tại file Grid Bấm **Ctrl + Shift + V** nhập **Add Field To Report File** để gen các trường trong grid thành các field bên file Report cùng tên 
+    + Ví dụ: ở file Grid zcaa.xml bấm như trên sẽ tìm file Report zcaa.xml tương ứng để gen ra các trường h_a, h_b .....
 
 
  

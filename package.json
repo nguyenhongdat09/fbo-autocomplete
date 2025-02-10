@@ -44,15 +44,15 @@
             "none"
           ],
           "default": "autocomplete",
-          "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)." 
+          "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
         },
         "fbo-autocomplete.delay": {
           "type": "number",
           "default": 1000,
           "minimum": 1000,
           "maximum": 15000,
-          "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động." 
-        } 
+          "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động."
+        }
       }
     },
     "keybindings": [
@@ -95,6 +95,10 @@
         "title": "FBO: Get Data Autocomplete"
       },
       {
+        "command": "fbo-autocomplete.AddFieldToReport",
+        "title": "FBO: Add Field To Report File"
+      },
+      {
         "command": "fbo-autocomplete.ConvertToExcel",
         "title": "FBO: Convert To Excel"
       }
@@ -133,6 +137,7 @@
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1"
+    "rocksdb": "^5.2.1",
+    "xlsx": "^0.18.5"
   }
 }

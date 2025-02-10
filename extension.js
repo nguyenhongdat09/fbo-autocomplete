@@ -179,8 +179,9 @@ async function activate(context) {
    
 
     const cvtToEx = new cnv()
-    let convertToExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', function () {
+    let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
+        
         const folderPath = pathModule.dirname(path);
         const folderName = pathModule.basename(folderPath);
         if (folderName != 'Grid') {
@@ -188,10 +189,12 @@ async function activate(context) {
             return
         }
         const reportPath = path.replace('\\Grid\\', '\\Report\\')
-
+       
         if (fs.existsSync(reportPath)) {
             const xmlReport = cvtToEx.CvtToFieldReport.bind(cvtToEx)(path)
-            const ReportXml = cvtToEx.addFieldToReport(xmlReport, reportPath)
+           
+            const ReportXml = cvtToEx.addFieldToReport(xmlReport[0], reportPath)
+            
             if (ReportXml != '') {
                 fs.writeFileSync(reportPath, ReportXml, 'utf8');
                 vscode.window.showInformationMessage('Report updated successfully!');
@@ -201,6 +204,17 @@ async function activate(context) {
         }
     });
 
+    let cvtExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', function () {
+        var path = vscode.window.activeTextEditor.document.uri.fsPath;
+        const folderPath = pathModule.dirname(path);
+        const folderName = pathModule.basename(folderPath);
+        if (folderName != 'Grid') {
+            vscode.window.showErrorMessage(`Only Work On Grid File`);
+            return
+        }
+        cvtToEx.exportToExcel.bind(cvtToEx)(path)
+    });
+    
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();
 
@@ -218,9 +232,10 @@ async function activate(context) {
         }
     });
     
+    context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
     context.subscriptions.push(transautoComplete);
-    context.subscriptions.push(convertToExcel);
+    context.subscriptions.push(AddFieldToReport);
     context.subscriptions.push(translatePaste);
     context.subscriptions.push(provideroptionsHandle);
     context.subscriptions.push(transAll);
