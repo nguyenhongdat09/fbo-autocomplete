@@ -42,7 +42,6 @@ class RenderXMLToDB {
                         const baseName = path.basename(xmlFile, '.xml');
                         fFiles = fFiles.filter(fFile => path.basename(fFile, '.f') !== baseName);
                     }
-
                     return { prefix: prefix, filePath: xmlFiles.concat(fFiles) };
                 })
             );
@@ -172,10 +171,11 @@ class RenderXMLToDB {
                     }
                 } else {
                     await db.put(key, value);
+                    var key_gridView = key.replace('_gridView', '')
                     array1.push({
-                        "label": key,
+                        "label": key_gridView,
                         "detail": `field ${nameDb === 'Grid' ? 'GridInput' : nameDb}`,
-                        "insertText": key
+                        "insertText": key_gridView
                     })
                 }
             }

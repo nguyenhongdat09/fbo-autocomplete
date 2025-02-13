@@ -159,10 +159,9 @@ async function activate(context) {
                 const translatedText = await trans.trans_to_en.bind(trans)(text)
                 // Ghi lại văn bản đã dịch vào clipboard
                 await vscode.env.clipboard.writeText(translatedText);
-
+                
                 // Đảm bảo gọi lệnh paste khi có editor mở và sẵn sàng
                 editor.edit(editBuilder => {
-
                     if (!selection.isEmpty) {
                         // Nếu có vùng chọn, thay thế nội dung vùng chọn
                         editBuilder.replace(selection, translatedText);
@@ -204,16 +203,33 @@ async function activate(context) {
         }
     });
 
-    let cvtExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', function () {
+    let cvtExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', async function () {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
         const folderPath = pathModule.dirname(path);
         const folderName = pathModule.basename(folderPath);
-        if (folderName != 'Grid') {
+    
+        if (folderName !== 'Grid') {
             vscode.window.showErrorMessage(`Only Work On Grid File`);
-            return
+            return;
         }
-        cvtToEx.exportToExcel.bind(cvtToEx)(path)
+    
+        // Hiển thị hộp thoại chọn đường dẫn lưu file
+        const options = {
+            title: "Chọn vị trí lưu Excel",
+            filters: { 'Excel Files': ['xlsx'] },
+            defaultUri:  vscode.Uri.file('output.xlsx')
+        };
+    
+        const fileUri = await vscode.window.showSaveDialog(options);
+    
+        if (!fileUri) {
+            vscode.window.showWarningMessage("Hủy xuất file Excel.");
+            return;
+        }
+        // Gọi hàm export với đường dẫn đã chọn
+        cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
     });
+    
     
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();

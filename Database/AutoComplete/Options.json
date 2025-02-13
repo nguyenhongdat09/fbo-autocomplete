@@ -163,5 +163,10 @@
         "label": "@language",
         "detail": "",
         "insertText": "@language"
+    },
+    {
+        "label": "@sysDatabaseName",
+        "detail": "",
+        "insertText": "@sysDatabaseName"
     }
 ]
