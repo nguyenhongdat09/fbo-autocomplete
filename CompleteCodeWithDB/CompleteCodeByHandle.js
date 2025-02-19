@@ -3,7 +3,7 @@ const { google } = require('googleapis');
 const fs = require('fs');
 const path = require('path');
 // Đường dẫn tới file JSON chứa thông tin tài khoản dịch vụ
-const credentialsPath = path.join(__dirname, 'autocompletesheet-447706-3cfebe8ddb5a.json');
+const credentialsPath = path.join(__dirname, '..', '/Database/autocompletesheet-447706-3cfebe8ddb5a.json');
 const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
 // Tạo client từ tài khoản dịch vụ
 const auth = new google.auth.GoogleAuth({

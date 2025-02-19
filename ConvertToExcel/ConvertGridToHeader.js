@@ -96,14 +96,14 @@ class ConvertGridToHeader {
     exportToExcel(inputPath, outputPath) {
         var cvt = this.CvtToFieldReport(inputPath);
         var headers = cvt[1];
-
+        console.log(1)
         if (!Array.isArray(headers) || !Array.isArray(headers[0])) {
             console.error('Lỗi: headers phải là một mảng hai chiều');
             return;
         }
 
         // Đọc file template Excel
-        const templatePath = pathModule.join(__dirname, 'mau_chuan.xlsx');
+        const templatePath = pathModule.join(__dirname, '..', 'Database/mau_chuan.xlsx');
 
         if (!fs.existsSync(templatePath)) {
             console.error('Lỗi: Không tìm thấy file mau_chuan.xlsx');
