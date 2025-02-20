@@ -1200,6 +1200,71 @@
     "insertText": "t_gt_cl_nt"
   },
   {
+    "label": "ma_nvat",
+    "detail": "field GridInput",
+    "insertText": "ma_nvat"
+  },
+  {
+    "label": "ten_nv%lex",
+    "detail": "field GridInput",
+    "insertText": "ten_nv%lex"
+  },
+  {
+    "label": "nguyen_gia_nt",
+    "detail": "field GridInput",
+    "insertText": "nguyen_gia_nt"
+  },
+  {
+    "label": "gt_da_kh_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_da_kh_nt"
+  },
+  {
+    "label": "gt_cl_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_cl_nt"
+  },
+  {
+    "label": "gt_kh_ky_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_kh_ky_nt"
+  },
+  {
+    "label": "gt_da_kh00_nt",
+    "detail": "field GridInput",
+    "insertText": "gt_da_kh00_nt"
+  },
+  {
+    "label": "nguyen_gia",
+    "detail": "field GridInput",
+    "insertText": "nguyen_gia"
+  },
+  {
+    "label": "gt_da_kh",
+    "detail": "field GridInput",
+    "insertText": "gt_da_kh"
+  },
+  {
+    "label": "gt_cl",
+    "detail": "field GridInput",
+    "insertText": "gt_cl"
+  },
+  {
+    "label": "gt_kh_ky",
+    "detail": "field GridInput",
+    "insertText": "gt_kh_ky"
+  },
+  {
+    "label": "gt_da_kh00",
+    "detail": "field GridInput",
+    "insertText": "gt_da_kh00"
+  },
+  {
+    "label": "tab_ynex",
+    "detail": "field GridInput",
+    "insertText": "tab_ynex"
+  },
+  {
     "label": "nghiep_vu",
     "detail": "field GridInput",
     "insertText": "nghiep_vu"
@@ -2638,16 +2703,6 @@
     "label": "gt_th",
     "detail": "field GridInput",
     "insertText": "gt_th"
-  },
-  {
-    "label": "gt_cl_nt",
-    "detail": "field GridInput",
-    "insertText": "gt_cl_nt"
-  },
-  {
-    "label": "gt_cl",
-    "detail": "field GridInput",
-    "insertText": "gt_cl"
   },
   {
     "label": "loai_dc",
@@ -4640,6 +4695,76 @@
     "insertText": "thanh_tien"
   },
   {
+    "label": "ma_qg",
+    "detail": "field GridInput",
+    "insertText": "ma_qg"
+  },
+  {
+    "label": "ten_qgex",
+    "detail": "field GridInput",
+    "insertText": "ten_qgex"
+  },
+  {
+    "label": "ten_bpex",
+    "detail": "field GridInput",
+    "insertText": "ten_bpex"
+  },
+  {
+    "label": "job_id",
+    "detail": "field GridInput",
+    "insertText": "job_id"
+  },
+  {
+    "label": "ten_vvex",
+    "detail": "field GridInput",
+    "insertText": "ten_vvex"
+  },
+  {
+    "label": "name_ct",
+    "detail": "field GridInput",
+    "insertText": "name_ct"
+  },
+  {
+    "label": "ten_ncc",
+    "detail": "field GridInput",
+    "insertText": "ten_ncc"
+  },
+  {
+    "label": "vnd",
+    "detail": "field GridInput",
+    "insertText": "vnd"
+  },
+  {
+    "label": "eur",
+    "detail": "field GridInput",
+    "insertText": "eur"
+  },
+  {
+    "label": "usd",
+    "detail": "field GridInput",
+    "insertText": "usd"
+  },
+  {
+    "label": "total_usd",
+    "detail": "field GridInput",
+    "insertText": "total_usd"
+  },
+  {
+    "label": "thuoc_ns_yn",
+    "detail": "field GridInput",
+    "insertText": "thuoc_ns_yn"
+  },
+  {
+    "label": "ten_nvex",
+    "detail": "field GridInput",
+    "insertText": "ten_nvex"
+  },
+  {
+    "label": "ten_nvbhex",
+    "detail": "field GridInput",
+    "insertText": "ten_nvbhex"
+  },
+  {
     "label": "nh_kh3at",
     "detail": "field GridInput",
     "insertText": "nh_kh3at"
@@ -4915,11 +5040,6 @@
     "insertText": "nghiep_vuat"
   },
   {
-    "label": "ten_nv%lex",
-    "detail": "field GridInput",
-    "insertText": "ten_nv%lex"
-  },
-  {
     "label": "stt_rec_zsh",
     "detail": "field GridInput",
     "insertText": "stt_rec_zsh"
@@ -5080,6 +5200,36 @@
     "insertText": "han_kd"
   },
   {
+    "label": "t_so_luong_kt",
+    "detail": "field GridInput",
+    "insertText": "t_so_luong_kt"
+  },
+  {
+    "label": "t_so_luong_kk",
+    "detail": "field GridInput",
+    "insertText": "t_so_luong_kk"
+  },
+  {
+    "label": "so_the_tsat",
+    "detail": "field GridInput",
+    "insertText": "so_the_tsat"
+  },
+  {
+    "label": "ten_tsex",
+    "detail": "field GridInput",
+    "insertText": "ten_tsex"
+  },
+  {
+    "label": "so_luong_kt",
+    "detail": "field GridInput",
+    "insertText": "so_luong_kt"
+  },
+  {
+    "label": "so_luong_kk",
+    "detail": "field GridInput",
+    "insertText": "so_luong_kk"
+  },
+  {
     "label": "ma_san_phamex",
     "detail": "field GridInput",
     "insertText": "ma_san_phamex"
@@ -5113,6 +5263,11 @@
     "label": "nap_theo_donex",
     "detail": "field GridInput",
     "insertText": "nap_theo_donex"
+  },
+  {
+    "label": "kiem_tra",
+    "detail": "field GridInput",
+    "insertText": "kiem_tra"
   },
   {
     "label": "ma_nv_nap",
@@ -5598,56 +5753,6 @@
     "label": "sua_kh",
     "detail": "field GridInput",
     "insertText": "sua_kh"
-  },
-  {
-    "label": "nguyen_gia",
-    "detail": "field GridInput",
-    "insertText": "nguyen_gia"
-  },
-  {
-    "label": "gt_da_kh",
-    "detail": "field GridInput",
-    "insertText": "gt_da_kh"
-  },
-  {
-    "label": "gt_kh_ky",
-    "detail": "field GridInput",
-    "insertText": "gt_kh_ky"
-  },
-  {
-    "label": "ma_nvat",
-    "detail": "field GridInput",
-    "insertText": "ma_nvat"
-  },
-  {
-    "label": "nguyen_gia_nt",
-    "detail": "field GridInput",
-    "insertText": "nguyen_gia_nt"
-  },
-  {
-    "label": "gt_da_kh_nt",
-    "detail": "field GridInput",
-    "insertText": "gt_da_kh_nt"
-  },
-  {
-    "label": "gt_kh_ky_nt",
-    "detail": "field GridInput",
-    "insertText": "gt_kh_ky_nt"
-  },
-  {
-    "label": "gt_da_kh00_nt",
-    "detail": "field GridInput",
-    "insertText": "gt_da_kh00_nt"
-  },
-  {
-    "label": "gt_da_kh00",
-    "detail": "field GridInput",
-    "insertText": "gt_da_kh00"
-  },
-  {
-    "label": "tab_ynex",
-    "detail": "field GridInput",
-    "insertText": "tab_ynex"
   },
   {
     "label": "ngay_giam",
@@ -6393,11 +6498,6 @@
     "label": "ma_nvatex",
     "detail": "field GridInput",
     "insertText": "ma_nvatex"
-  },
-  {
-    "label": "ten_nvex",
-    "detail": "field GridInput",
-    "insertText": "ten_nvex"
   },
   {
     "label": "dot",

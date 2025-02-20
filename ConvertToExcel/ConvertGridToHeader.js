@@ -7,7 +7,6 @@ class ConvertGridToHeader {
     }
 
     CvtToFieldReport(path) {
-
         let xmlContent = fs.readFileSync(path, 'utf8');
         // Regex để tìm các field trong <fields> với tên, v và e trong thẻ <header>
         let headersMap = {};

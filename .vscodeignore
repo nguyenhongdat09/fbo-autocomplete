@@ -24,7 +24,7 @@ ConvertToExcel/**
 CompleteCodeWithDB/**
 Translate/**
 VS2008/**
-
+node_modules_bk/**
 # Loại bỏ node_modules, nhưng giữ lại các module native cần thiết
 # Giữ lại node_modules để extension chạy ngay
  

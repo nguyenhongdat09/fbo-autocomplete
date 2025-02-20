@@ -530,6 +530,36 @@
     "insertText": "ky_hieuex"
   },
   {
+    "label": "so_the_tsat",
+    "detail": "field Filter",
+    "insertText": "so_the_tsat"
+  },
+  {
+    "label": "ten_ts%lex",
+    "detail": "field Filter",
+    "insertText": "ten_ts%lex"
+  },
+  {
+    "label": "loai_tsat",
+    "detail": "field Filter",
+    "insertText": "loai_tsat"
+  },
+  {
+    "label": "ten_loai%lex",
+    "detail": "field Filter",
+    "insertText": "ten_loai%lex"
+  },
+  {
+    "label": "ten_nv%lex",
+    "detail": "field Filter",
+    "insertText": "ten_nv%lex"
+  },
+  {
+    "label": "ky",
+    "detail": "field Filter",
+    "insertText": "ky"
+  },
+  {
     "label": "tu_gio",
     "detail": "field Filter",
     "insertText": "tu_gio"
@@ -673,6 +703,11 @@
     "label": "khac_ten_kh",
     "detail": "field Filter",
     "insertText": "khac_ten_kh"
+  },
+  {
+    "label": "vuot_zcr",
+    "detail": "field Filter",
+    "insertText": "vuot_zcr"
   },
   {
     "label": "so_hd1",
@@ -1310,11 +1345,6 @@
     "insertText": "ma_loaiat"
   },
   {
-    "label": "ten_loai%lex",
-    "detail": "field Filter",
-    "insertText": "ten_loai%lex"
-  },
-  {
     "label": "nhom_1at",
     "detail": "field Filter",
     "insertText": "nhom_1at"
@@ -1703,11 +1733,6 @@
     "label": "ma_nv_ycat",
     "detail": "field Filter",
     "insertText": "ma_nv_ycat"
-  },
-  {
-    "label": "ten_nv%lex",
-    "detail": "field Filter",
-    "insertText": "ten_nv%lex"
   },
   {
     "label": "statuslk",
@@ -2178,11 +2203,6 @@
     "label": "statusnameex",
     "detail": "field Filter",
     "insertText": "statusnameex"
-  },
-  {
-    "label": "ky",
-    "detail": "field Filter",
-    "insertText": "ky"
   },
   {
     "label": "ma_bp_dcat",
@@ -2850,6 +2870,21 @@
     "insertText": "ten_nap_khi%lex"
   },
   {
+    "label": "ma_qgat",
+    "detail": "field Filter",
+    "insertText": "ma_qgat"
+  },
+  {
+    "label": "ten_qg%lex",
+    "detail": "field Filter",
+    "insertText": "ten_qg%lex"
+  },
+  {
+    "label": "job_idat",
+    "detail": "field Filter",
+    "insertText": "job_idat"
+  },
+  {
     "label": "ky0",
     "detail": "field Filter",
     "insertText": "ky0"
@@ -2898,6 +2933,36 @@
     "label": "ma_nv_nhanat",
     "detail": "field Filter",
     "insertText": "ma_nv_nhanat"
+  },
+  {
+    "label": "ma_nv_1at",
+    "detail": "field Filter",
+    "insertText": "ma_nv_1at"
+  },
+  {
+    "label": "ten_nv_1%lex",
+    "detail": "field Filter",
+    "insertText": "ten_nv_1%lex"
+  },
+  {
+    "label": "ma_nv_2at",
+    "detail": "field Filter",
+    "insertText": "ma_nv_2at"
+  },
+  {
+    "label": "ten_nv_2%lex",
+    "detail": "field Filter",
+    "insertText": "ten_nv_2%lex"
+  },
+  {
+    "label": "ma_nv_3at",
+    "detail": "field Filter",
+    "insertText": "ma_nv_3at"
+  },
+  {
+    "label": "ten_nv_3%lex",
+    "detail": "field Filter",
+    "insertText": "ten_nv_3%lex"
   },
   {
     "label": "ma_nv_napat",
@@ -3278,21 +3343,6 @@
     "label": "content",
     "detail": "field Filter",
     "insertText": "content"
-  },
-  {
-    "label": "so_the_tsat",
-    "detail": "field Filter",
-    "insertText": "so_the_tsat"
-  },
-  {
-    "label": "ten_ts%lex",
-    "detail": "field Filter",
-    "insertText": "ten_ts%lex"
-  },
-  {
-    "label": "loai_tsat",
-    "detail": "field Filter",
-    "insertText": "loai_tsat"
   },
   {
     "label": "ten_loai_ts%lex",

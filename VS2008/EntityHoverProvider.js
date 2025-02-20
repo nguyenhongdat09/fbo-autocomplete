@@ -4,7 +4,7 @@ const path = require("path");
   
 class EntityHoverProvider {
     constructor(extensionDirectory) {
-        this.jsonEntityFolder = path.join(extensionDirectory, "ReadXML" , "JsonEntity");
+        this.jsonEntityFolder = path.join(extensionDirectory, '..', "ReadXML" , "JsonEntity");
     }  
      formatXml(xml) {
         const PADDING = ' '.repeat(2); // Đặt indent size
@@ -13,7 +13,6 @@ class EntityHoverProvider {
     
         // Thêm xuống dòng giữa các thẻ XML
         xml = xml.replace(reg, '$1\r\n$2$3');
-    
         // Xử lý riêng các thẻ <title> và <header> để giữ format mong muốn
         xml = xml.replace(/<title([^>]*)>[\s\S]*?<\/title>/g, (match, attrs) => {
             return `<title${attrs}>\r\n</title>`;

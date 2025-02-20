@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.1",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -17,7 +17,7 @@
   "activationEvents": [
     "onLanguage:xml"
   ],
-  "main": "./dist/extension.js",
+  "main": "./src/extension.js",
   "publisher": "Nguyen-Hong-Dat",
   "contributes": {
     "menus": {
@@ -101,6 +101,10 @@
       {
         "command": "fbo-autocomplete.ConvertToExcel",
         "title": "FBO: Convert To Excel"
+      },
+      {
+        "command": "fbo-autocomplete.CheckLegacyDirFilter",
+        "title": "FBO: Check Legacy Dir/Filter"
       }
     ],
     "languages": [
@@ -137,13 +141,16 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "axios": "^1.7.9",
+    "exceljs": "^4.4.0",
+    "googleapis": "^144.0.0",
+    "googletrans": "^1.0.21",
     "level-rocksdb": "^5.0.0",
     "rocksdb": "^5.2.1"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",
     "exceljs": "^4.4.0",
-    "fast-xml-parser": "^4.5.1",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21"
   }

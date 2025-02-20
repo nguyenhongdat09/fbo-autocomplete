@@ -1610,6 +1610,16 @@
     "insertText": "e_mail_nn"
   },
   {
+    "label": "ma_graceat",
+    "detail": "field Dir",
+    "insertText": "ma_graceat"
+  },
+  {
+    "label": "ten_grace%lex",
+    "detail": "field Dir",
+    "insertText": "ten_grace%lex"
+  },
+  {
     "label": "loai_nh",
     "detail": "field Dir",
     "insertText": "loai_nh"
@@ -2540,6 +2550,11 @@
     "insertText": "khac_ten_kh"
   },
   {
+    "label": "vuot_zcr",
+    "detail": "field Dir",
+    "insertText": "vuot_zcr"
+  },
+  {
     "label": "ma_hrbpat",
     "detail": "field Dir",
     "insertText": "ma_hrbpat"
@@ -2558,6 +2573,16 @@
     "label": "sl_den",
     "detail": "field Dir",
     "insertText": "sl_den"
+  },
+  {
+    "label": "vuot_zcr",
+    "detail": "field Dir",
+    "insertText": "vuot_zcr"
+  },
+  {
+    "label": "loai_duyetex",
+    "detail": "field Dir",
+    "insertText": "loai_duyetex"
   },
   {
     "label": "ma_nv",
@@ -6500,16 +6525,6 @@
     "insertText": "trong_vong"
   },
   {
-    "label": "ma_graceat",
-    "detail": "field Dir",
-    "insertText": "ma_graceat"
-  },
-  {
-    "label": "ten_grace%lex",
-    "detail": "field Dir",
-    "insertText": "ten_grace%lex"
-  },
-  {
     "label": "so_chai_xl45",
     "detail": "field Dir",
     "insertText": "so_chai_xl45"
@@ -6563,6 +6578,116 @@
     "label": "ten_lan2",
     "detail": "field Dir",
     "insertText": "ten_lan2"
+  },
+  {
+    "label": "job_idat",
+    "detail": "field Dir",
+    "insertText": "job_idat"
+  },
+  {
+    "label": "thuoc_ns_yn",
+    "detail": "field Dir",
+    "insertText": "thuoc_ns_yn"
+  },
+  {
+    "label": "source_of_fin",
+    "detail": "field Dir",
+    "insertText": "source_of_fin"
+  },
+  {
+    "label": "payback_time",
+    "detail": "field Dir",
+    "insertText": "payback_time"
+  },
+  {
+    "label": "estimated_irr_3",
+    "detail": "field Dir",
+    "insertText": "estimated_irr_3"
+  },
+  {
+    "label": "npv_3",
+    "detail": "field Dir",
+    "insertText": "npv_3"
+  },
+  {
+    "label": "estimated_irr_5",
+    "detail": "field Dir",
+    "insertText": "estimated_irr_5"
+  },
+  {
+    "label": "npv_5",
+    "detail": "field Dir",
+    "insertText": "npv_5"
+  },
+  {
+    "label": "rev_gen_yn",
+    "detail": "field Dir",
+    "insertText": "rev_gen_yn"
+  },
+  {
+    "label": "cos_red_yn",
+    "detail": "field Dir",
+    "insertText": "cos_red_yn"
+  },
+  {
+    "label": "bus_main_yn",
+    "detail": "field Dir",
+    "insertText": "bus_main_yn"
+  },
+  {
+    "label": "she_yn",
+    "detail": "field Dir",
+    "insertText": "she_yn"
+  },
+  {
+    "label": "legal_comp_yn",
+    "detail": "field Dir",
+    "insertText": "legal_comp_yn"
+  },
+  {
+    "label": "rev_gen",
+    "detail": "field Dir",
+    "insertText": "rev_gen"
+  },
+  {
+    "label": "cos_red",
+    "detail": "field Dir",
+    "insertText": "cos_red"
+  },
+  {
+    "label": "bus_main",
+    "detail": "field Dir",
+    "insertText": "bus_main"
+  },
+  {
+    "label": "she",
+    "detail": "field Dir",
+    "insertText": "she"
+  },
+  {
+    "label": "legal_comp",
+    "detail": "field Dir",
+    "insertText": "legal_comp"
+  },
+  {
+    "label": "t_vnd",
+    "detail": "field Dir",
+    "insertText": "t_vnd"
+  },
+  {
+    "label": "t_eur",
+    "detail": "field Dir",
+    "insertText": "t_eur"
+  },
+  {
+    "label": "t_usd",
+    "detail": "field Dir",
+    "insertText": "t_usd"
+  },
+  {
+    "label": "t_total_usd",
+    "detail": "field Dir",
+    "insertText": "t_total_usd"
   },
   {
     "label": "vuot_yn",
@@ -7068,6 +7193,61 @@
     "label": "ten_cq%lex",
     "detail": "field Dir",
     "insertText": "ten_cq%lex"
+  },
+  {
+    "label": "ma_nv_1at",
+    "detail": "field Dir",
+    "insertText": "ma_nv_1at"
+  },
+  {
+    "label": "ten_nv_1%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nv_1%lex"
+  },
+  {
+    "label": "ma_nv_2at",
+    "detail": "field Dir",
+    "insertText": "ma_nv_2at"
+  },
+  {
+    "label": "ten_nv_2%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nv_2%lex"
+  },
+  {
+    "label": "ma_nv_3at",
+    "detail": "field Dir",
+    "insertText": "ma_nv_3at"
+  },
+  {
+    "label": "ten_nv_3%lex",
+    "detail": "field Dir",
+    "insertText": "ten_nv_3%lex"
+  },
+  {
+    "label": "chuc_vu_nv_1",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_nv_1"
+  },
+  {
+    "label": "chuc_vu_nv_2",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_nv_2"
+  },
+  {
+    "label": "chuc_vu_nv_3",
+    "detail": "field Dir",
+    "insertText": "chuc_vu_nv_3"
+  },
+  {
+    "label": "t_so_luong_kt",
+    "detail": "field Dir",
+    "insertText": "t_so_luong_kt"
+  },
+  {
+    "label": "t_so_luong_kk",
+    "detail": "field Dir",
+    "insertText": "t_so_luong_kk"
   },
   {
     "label": "ma_nv_napat",

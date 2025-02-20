@@ -28,6 +28,9 @@
 ## Convert To Excel 
 - Ở tại file Grid Bấm **Ctrl + Shift + V** nhập **Add Field To Report File** để gen các trường trong grid thành các field bên file Report cùng tên 
     + Ví dụ: ở file Grid zcaa.xml bấm như trên sẽ tìm file Report zcaa.xml tương ứng để gen ra các trường h_a, h_b .....
-
+## Check Legacy Dir/Filter
+- Kiểm tra field thiếu so với item và ngược lại 
+- Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa
+ 
 
  

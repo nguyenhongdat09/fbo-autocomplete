@@ -13,6 +13,7 @@ const CompleteCodeByHandle = require("../CompleteCodeWithDB/CompleteCodeByHandle
 const Trans = require("../Translate/Translate")
 const cnv = require("../ConvertToExcel/ConvertGridToHeader")
 const TranslateAuto = require("../Translate/TranslateAuto")
+const CheckLegacyCode = require("../CheckLegacy/CheckLegacyCode")
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -136,9 +137,7 @@ async function activate(context) {
             provideCompletionItems: completeCodeByHandle.provideOptionsCompletionItems.bind(completeCodeByHandle),
         },
         '@' // Ký tự kích hoạt autocomplete
-    );
-
-
+    ); 
     let translatePaste = vscode.commands.registerCommand('fbo-autocomplete.translatePaste', async function () {
         // Đọc nội dung bạn vừa copy vào clipboard
         const text = await vscode.env.clipboard.readText();
@@ -172,11 +171,8 @@ async function activate(context) {
                 });
             });
             // Dịch nội dung qua Google Translate API 
-
         }
-    });
-   
-
+    }); 
     const cvtToEx = new cnv()
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
@@ -207,12 +203,10 @@ async function activate(context) {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
         const folderPath = pathModule.dirname(path);
         const folderName = pathModule.basename(folderPath);
-    
         if (folderName !== 'Grid') {
-            vscode.window.showErrorMessage(`Only Work On Grid File`);
+            vscode.window.showErrorMessage(`This Feature is only Work On Grid File`);
             return;
         }
-    
         // Hiển thị hộp thoại chọn đường dẫn lưu file
         const options = {
             title: "Chọn vị trí lưu Excel",
@@ -230,7 +224,6 @@ async function activate(context) {
         cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
     });
     
-    
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();
 
@@ -247,7 +240,12 @@ async function activate(context) {
             translateAuto.transWithKeyBoards()
         }
     });
-    
+    const chk = new CheckLegacyCode(__dirname);
+    let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
+        
+        chk.run.bind(chk)()
+    });
+    context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
     context.subscriptions.push(transautoComplete);

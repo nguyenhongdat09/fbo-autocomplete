@@ -885,6 +885,11 @@
     "insertText": "khac_ten_kh"
   },
   {
+    "label": "vuot_zcr",
+    "detail": "field GridView",
+    "insertText": "vuot_zcr"
+  },
+  {
     "label": "ten_hrbp%l",
     "detail": "field GridView",
     "insertText": "ten_hrbp%l"
@@ -4800,6 +4805,31 @@
     "insertText": "sl_can_nap"
   },
   {
+    "label": "ten_loai_yc",
+    "detail": "field GridView",
+    "insertText": "ten_loai_yc"
+  },
+  {
+    "label": "ngay_lap",
+    "detail": "field GridView",
+    "insertText": "ngay_lap"
+  },
+  {
+    "label": "ten_user_id0",
+    "detail": "field GridView",
+    "insertText": "ten_user_id0"
+  },
+  {
+    "label": "ten_user_id4",
+    "detail": "field GridView",
+    "insertText": "ten_user_id4"
+  },
+  {
+    "label": "trang_thai_duyet",
+    "detail": "field GridView",
+    "insertText": "trang_thai_duyet"
+  },
+  {
     "label": "tg_vao",
     "detail": "field GridView",
     "insertText": "tg_vao"
@@ -5830,6 +5860,16 @@
     "insertText": "hao_hut_pt"
   },
   {
+    "label": "sl_dat",
+    "detail": "field GridView",
+    "insertText": "sl_dat"
+  },
+  {
+    "label": "ngay_den",
+    "detail": "field GridView",
+    "insertText": "ngay_den"
+  },
+  {
     "label": "ma_loai_pn",
     "detail": "field GridView",
     "insertText": "ma_loai_pn"
@@ -6125,11 +6165,6 @@
     "insertText": "duyet_in"
   },
   {
-    "label": "sl_dat",
-    "detail": "field GridView",
-    "insertText": "sl_dat"
-  },
-  {
     "label": "so_bg",
     "detail": "field GridView",
     "insertText": "so_bg"
@@ -6163,11 +6198,6 @@
     "label": "ca_lv",
     "detail": "field GridView",
     "insertText": "ca_lv"
-  },
-  {
-    "label": "ten_loai_yc",
-    "detail": "field GridView",
-    "insertText": "ten_loai_yc"
   },
   {
     "label": "gia_gannhat",
@@ -8900,11 +8930,6 @@
     "insertText": "ngay_tu"
   },
   {
-    "label": "ngay_den",
-    "detail": "field GridView",
-    "insertText": "ngay_den"
-  },
-  {
     "label": "phep_dn",
     "detail": "field GridView",
     "insertText": "phep_dn"
@@ -10408,11 +10433,6 @@
     "label": "ten_tu_trang_thai",
     "detail": "field GridView",
     "insertText": "ten_tu_trang_thai"
-  },
-  {
-    "label": "trang_thai_duyet",
-    "detail": "field GridView",
-    "insertText": "trang_thai_duyet"
   },
   {
     "label": "ten_trang_thai_duyet",

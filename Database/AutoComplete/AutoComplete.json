@@ -238,5 +238,15 @@
     "label": "add_commandEvent",
     "detail": "",
     "insertText": "add_commandEvent((${2:})"
+  },
+  {
+    "label": "log",
+    "detail": "",
+    "insertText": "log(${1:})"
+  },
+  {
+    "label": "_getItem(row (int), column(int))",
+    "detail": "(GRID) GetItem",
+    "insertText": "_getItem('${1:}', g.getColumOrder('${2:}'))"
   }
 ]
