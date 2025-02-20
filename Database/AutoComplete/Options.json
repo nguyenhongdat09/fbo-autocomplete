@@ -1,0 +1,172 @@
+[
+    {
+        "label": "upperCaseFormat",
+        "detail": "",
+        "insertText": "upperCaseFormat"
+    },
+    {
+        "label": "lowercaseFormat",
+        "detail": "",
+        "insertText": "lowercaseFormat"
+    },
+    {
+        "label": "datetimeFormat",
+        "detail": "",
+        "insertText": "datetimeFormat"
+    },
+    {
+        "label": "exchangeRateInputFormat",
+        "detail": "",
+        "insertText": "exchangeRateInputFormat"
+    },
+    {
+        "label": "exchangeRateViewFormat",
+        "detail": "",
+        "insertText": "exchangeRateViewFormat"
+    },
+    {
+        "label": "quantityInputFormat",
+        "detail": "",
+        "insertText": "quantityInputFormat"
+    },
+    {
+        "label": "quantityViewFormat",
+        "detail": "",
+        "insertText": "quantityViewFormat"
+    },
+    {
+        "label": "baseCurrencyAmountInputFormat",
+        "detail": "",
+        "insertText": "baseCurrencyAmountInputFormat"
+    },
+    {
+        "label": "baseCurrencyAmountViewFormat",
+        "detail": "",
+        "insertText": "baseCurrencyAmountViewFormat"
+    },
+    {
+        "label": "baseCurrencyPriceInputFormat",
+        "detail": "",
+        "insertText": "baseCurrencyPriceInputFormat"
+    },
+    {
+        "label": "baseCurrencyPriceViewFormat",
+        "detail": "",
+        "insertText": "baseCurrencyPriceViewFormat"
+    },
+    {
+        "label": "foreignCurrencyAmountInputFormat",
+        "detail": "",
+        "insertText": "foreignCurrencyAmountInputFormat"
+    },
+    {
+        "label": "foreignCurrencyAmountViewFormat",
+        "detail": "",
+        "insertText": "foreignCurrencyAmountViewFormat"
+    },
+    {
+        "label": "foreignCurrencyPriceInputFormat",
+        "detail": "",
+        "insertText": "foreignCurrencyPriceInputFormat"
+    },
+    {
+        "label": "foreignCurrencyPriceViewFormat",
+        "detail": "",
+        "insertText": "foreignCurrencyPriceViewFormat"
+    },
+    {
+        "label": "generalCurrencyAmountInputFormat",
+        "detail": "",
+        "insertText": "generalCurrencyAmountInputFormat"
+    },
+    {
+        "label": "generalCurrencyAmountViewFormat",
+        "detail": "",
+        "insertText": "generalCurrencyAmountViewFormat"
+    },
+    {
+        "label": "generalCurrencyPriceInputFormat",
+        "detail": "",
+        "insertText": "generalCurrencyPriceInputFormat"
+    },
+    {
+        "label": "generalCurrencyPriceViewFormat",
+        "detail": "",
+        "insertText": "generalCurrencyPriceViewFormat"
+    },
+    {
+        "label": "markInputFormat",
+        "detail": "",
+        "insertText": "markInputFormat"
+    },
+    {
+        "label": "markViewFormat",
+        "detail": "",
+        "insertText": "markViewFormat"
+    },
+    {
+        "label": "analysisInputFormat",
+        "detail": "",
+        "insertText": "analysisInputFormat"
+    },
+    {
+        "label": "analysisViewFormat",
+        "detail": "",
+        "insertText": "analysisViewFormat"
+    },
+    {
+        "label": "coefficientInputFormat",
+        "detail": "",
+        "insertText": "coefficientInputFormat"
+    },
+    {
+        "label": "coefficientViewFormat",
+        "detail": "",
+        "insertText": "coefficientViewFormat"
+    },
+    {
+        "label": "CapacityNumberInputFormat",
+        "detail": "",
+        "insertText": "CapacityNumberInputFormat"
+    },
+    {
+        "label": "CapacityNumberViewFormat",
+        "detail": "",
+        "insertText": "CapacityNumberViewFormat"
+    },
+    {
+        "label": "HourInputFormat",
+        "detail": "",
+        "insertText": "HourInputFormat"
+    },
+    {
+        "label": "HourViewFormat",
+        "detail": "",
+        "insertText": "HourViewFormat"
+    },
+    {
+        "detail": "",
+        "label": "@userID",
+        "insertText": "@userID"
+    },
+    {
+        "label": "@admin",
+        "detail": "",
+        "insertText": "@admin"
+    },
+    {
+        "label": "@unit",
+        "detail": "",
+        "insertText": "@unit"
+    },
+    {
+        "label": "@language",
+        "detail": "",
+        "insertText": "@language"
+    },
+    {
+        "label": "@sysDatabaseName",
+        "detail": "",
+        "insertText": "@sysDatabaseName"
+    }
+]

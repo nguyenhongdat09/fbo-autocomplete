@@ -1,9 +1,7 @@
-# Change Log
-
-All notable changes to the "fbo-autocomplete" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+# Version 0.0.1 
+ New Relase Extension 
+ # Version 0.0.5
+ - Insert Check Legacy Dir/Filter Command
+  # Version 0.0.7
+ - Fix Check Legacy Dir/Filter Command , Read Loop On Entity
+ 
