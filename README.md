@@ -1,69 +1,36 @@
-# fbo-autocomplete
-FBO Autocomplete Code XML 
-=======
-# fbo-autocomplete README
+# **<font color="green">FBO Autocomplete Code</font>** 
+## Tính năng
+- Tự động complete code trên các file ở Folder: Grid, Dir, Filter.
+- Tự động gen thẻ `<view>` dựa trên các field trong file Grid
+- ##### Chi tiết cú pháp
+    - ##### Phần autocomplete
+        -  `$f.field;` dùng cho file Dir và Filter ví dụ: `$f.ma_kh;`
+        -  `$gi.field;` dùng cho file Grid các trường dạng **Input**: `$gi.ma_kh;`
+        -  `$gv.field;` dùng cho file Grid các trường dạng **View**: `$gv.ma_kh;`
+    - ##### Phần gen thẻ `<view>`
+        - `$gff;`
 
-This is the README for your extension "fbo-autocomplete". After writing up a brief description, we recommend including the following sections.
+## Cách cài đặt 
+- Sau khi install .vsix mở file bất kỳ ở một trong 3 Folder Grid, Dir, Filter bấm **Ctrl + Shift + P** Nhập **Render XML To Database** => Enter. 
+## Giải thích tổng quát cách thức hoạt động
+- Khi **Render XML To Database** Gói sẽ tìm các file trong cả 3 folder là Grid, Dir, Filter phân tích các trường `<field>` lấy name ra và lưu vào database. Lúc này mới bắt đầu nhập `$f, $gi, $gv` thì mới ra dữ liệu
+    - #### Quy tắc nhập
+        - Nếu là trường bình thường thì nhập `$f.field;`
+        - Nếu là lookup thì nhập `$f.fieldlk;`
+        - Nếu là AutoComplete thì nhập `$f.fieldat;`
+## Hiện Code Lens 
+- Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
+![My Image](/images/ShowCodeLens.PNG)
+## Autocomplete code dạng hàm, biến 
+- Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
+## Translate 
+- Copy text và bấm **Ctrl + Shift + V** để dịch đoạn vừa copy thành tiếng việt
+## Convert To Excel 
+- Ở tại file Grid Bấm **Ctrl + Shift + V** nhập **Add Field To Report File** để gen các trường trong grid thành các field bên file Report cùng tên 
+    + Ví dụ: ở file Grid zcaa.xml bấm như trên sẽ tìm file Report zcaa.xml tương ứng để gen ra các trường h_a, h_b .....
+## Check Legacy Dir/Filter
+- Kiểm tra field thiếu so với item và ngược lại 
+- Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa
+ 
 
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
  

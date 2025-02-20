@@ -2,32 +2,156 @@
   "name": "fbo-autocomplete",
   "displayName": "fbo-autocomplete",
   "description": "Complete the code xml base on my own experience",
-  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
+  },
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.96.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Snippets"
   ],
-  "activationEvents": [],
-  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:xml"
+  ],
+  "main": "./src/extension.js",
+  "publisher": "Nguyen-Hong-Dat",
   "contributes": {
-    "commands": [{
-      "command": "fbo-autocomplete.helloWorld",
-      "title": "Hello World"
-    }]
+    "menus": {
+      "editor/context": [
+        {
+          "command": "my-fbo-toolkit.openWithVS2008",
+          "group": "fbo"
+        },
+        {
+          "command": "fbo-autocomplete.ApplyTranslateFBO",
+          "group": "fbo"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Time Delay Translate",
+      "properties": {
+        "fbo-autocomplete.translateMode": {
+          "type": "string",
+          "enum": [
+            "autocomplete",
+            "keyboard",
+            "none"
+          ],
+          "default": "autocomplete",
+          "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
+        },
+        "fbo-autocomplete.delay": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 1000,
+          "maximum": 15000,
+          "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "fbo-autocomplete.translatePaste",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "fbo-autocomplete.translateAuto",
+        "key": "alt+shift+q",
+        "mac": "alt+shift+q",
+        "when": "editorTextFocus"
+      }
+    ],
+    "commands": [
+      {
+        "command": "my-fbo-toolkit.openWithVS2008",
+        "title": "Open With VS 2008"
+      },
+      {
+        "command": "fbo-autocomplete.ApplyTranslateFBO",
+        "title": "Apply Translate FBO (v -> e)"
+      },
+      {
+        "command": "fbo-autocomplete.applyCompletionItem",
+        "title": "zlkqlksk"
+      },
+      {
+        "command": "fbo-autocomplete.renderXmlTodDB",
+        "title": "FBO: Render XML To Database"
+      },
+      {
+        "command": "fbo-autocomplete.showEntityCodeLens",
+        "title": "FBO: Show/Hide Entity CodeLens"
+      },
+      {
+        "command": "fbo-autocomplete.getDataAutocomplete",
+        "title": "FBO: Get Data Autocomplete"
+      },
+      {
+        "command": "fbo-autocomplete.AddFieldToReport",
+        "title": "FBO: Add Field To Report File"
+      },
+      {
+        "command": "fbo-autocomplete.ConvertToExcel",
+        "title": "FBO: Convert To Excel"
+      },
+      {
+        "command": "fbo-autocomplete.CheckLegacyDirFilter",
+        "title": "FBO: Check Legacy Dir/Filter"
+      }
+    ],
+    "languages": [
+      {
+        "id": "xml",
+        "aliases": [
+          "XML",
+          "xml"
+        ],
+        "extensions": [
+          ".xml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ]
   },
+  "updateUrl": "https://github.com/nguyenhongdat09/fbo-autocomplete/blob/company/update.json",
   "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "devDependencies": {
-    "@types/vscode": "^1.96.0",
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "eslint": "^9.16.0",
+    "@types/vscode": "^1.96.0",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "babel-loader": "^9.2.1",
+    "eslint": "^9.16.0",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "exceljs": "^4.4.0",
+    "googleapis": "^144.0.0",
+    "googletrans": "^1.0.21",
+    "level-rocksdb": "^5.0.0",
+    "rocksdb": "^5.2.1"
+  },
+  "_commented_dependencies": {
+    "axios": "^1.7.9",
+    "exceljs": "^4.4.0",
+    "googleapis": "^144.0.0",
+    "googletrans": "^1.0.21"
   }
 }

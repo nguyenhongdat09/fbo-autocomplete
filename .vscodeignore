@@ -1,10 +1,32 @@
+# Loại bỏ thư mục không cần thiết
 .vscode/**
 .vscode-test/**
 test/**
+
+# Loại bỏ file cấu hình và metadata
+.git/**
 .gitignore
 .yarnrc
+package-lock.json
+webpack.config.js
+tsconfig.json
+eslint.config.mjs
+.vscode-test.*
 vsc-extension-quickstart.md
-**/jsconfig.json
+
+# Loại bỏ source file gốc (nếu đã bundle vào dist/)
+src/**
+
+# Loại bỏ file map (nếu có)
 **/*.map
-**/eslint.config.mjs
-**/.vscode-test.*
+CompleteCodeWithDB/**
+ConvertToExcel/**
+CompleteCodeWithDB/**
+Translate/**
+VS2008/**
+node_modules_bk/**
+# Loại bỏ node_modules, nhưng giữ lại các module native cần thiết
+# Giữ lại node_modules để extension chạy ngay
+ 
+# Loại bỏ các file JSON config không cần thiết
+**/jsconfig.json
