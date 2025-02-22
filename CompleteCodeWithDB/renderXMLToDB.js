@@ -113,7 +113,7 @@ class RenderXMLToDB {
         //Xóa luôn theo cặp <clientScript>...</clientScript>
         value = value.replace(/<clientScript>.*?<\/clientScript>\s*/g, '');
         value = value.replace(/<query>.*?<\/query>\s*/g, '');
-        value = value.replace(/\s+(filterSource|categoryIndex|operation)="[^"]*"/g, '');
+        value = value.replace(/\s+(filterSource|categoryIndex|operation|clientDefault)="[^"]*"/g, '');
 
         //nếu lookup thì tách riêng với autocomplete
         const regex = /style\s*=\s*"([^"]*)"/;
