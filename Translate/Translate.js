@@ -10,12 +10,19 @@ class TranslatedText {
 
     async trans_to_en(text_to_trans) {
         const { text } = await tr(text_to_trans, { from: "vi", to: "en" })
-        return text
+        return this.capitalizeWords(text);
     }
     async trans_to_vi_batch(texts) {
         const {textArray} = await tr(texts, { from: "vi", to: "en" });
         return textArray
     }
+
+    capitalizeWords(str) {
+        return str.split(' ') // Tách chuỗi thành mảng các từ
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Viết hoa chữ cái đầu
+                  .join(' '); // Nối lại thành chuỗi
+    }
+
     async  translateXmlFile() {
         const editor = vscode.window.activeTextEditor;
     
@@ -50,12 +57,11 @@ class TranslatedText {
             try {
                 // Dịch toàn bộ mảng từ tiếng Việt sang tiếng Anh
                 const translatedTexts = await this.trans_to_vi_batch(vietnameseTexts);
-        
                 // Áp dụng thay thế cho từng kết quả đã dịch
                 const edit = new vscode.WorkspaceEdit();
                 matches.forEach((item, index) => {
                     const { match, vietnameseText, start, end } = item;
-                    const translatedText = translatedTexts[index];
+                    const translatedText = this.capitalizeWords(translatedTexts[index]);
                     const updatedSegment = `v="${vietnameseText}" e="${translatedText}"`;
                     edit.replace(document.uri, new vscode.Range(start, end), updatedSegment);
                 });
