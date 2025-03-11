@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.7",
+  "version": "0.0.12",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -52,6 +52,11 @@
           "minimum": 1000,
           "maximum": 15000,
           "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động."
+        },
+        "fbo-autocomplete.checkLegacyWhenSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         }
       }
     },
@@ -153,5 +158,9 @@
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21"
-  }
+  },
+  "extensionDependencies": [
+    "redhat.vscode-xml",
+    "mikeburgh.xml-format"
+  ]
 }

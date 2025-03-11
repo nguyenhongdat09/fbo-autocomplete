@@ -14,6 +14,8 @@ const Trans = require("../Translate/Translate")
 const cnv = require("../ConvertToExcel/ConvertGridToHeader")
 const TranslateAuto = require("../Translate/TranslateAuto")
 const CheckLegacyCode = require("../CheckLegacy/CheckLegacyCode")
+const updateSettings = require("./updateSettings")
+
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -25,7 +27,10 @@ async function activate(context) {
     const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
         provider.applyCompletionItem(line, position);
     });
-
+    const upsettings = new updateSettings();
+    upsettings.updateSettingsJson.bind(upsettings)(context);
+    const config = vscode.workspace.getConfiguration('fbo-autocomplete');
+    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
     const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
         renderXMLToDB.render();
     });
@@ -242,9 +247,13 @@ async function activate(context) {
     });
     const chk = new CheckLegacyCode(__dirname);
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
-        
         chk.run.bind(chk)()
     });
+    if (checkLegacyWhenSave) {
+        vscode.workspace.onDidSaveTextDocument((document) => {
+            chk.run.bind(chk)()
+        });
+    }
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);

@@ -1,15 +1,14 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path')
+const ReadXMLVS2008 = require('../VS2008/ReadXMLVS2008');
 class CheckLegacyCode {
     constructor(extensionDirectory) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
         this.jsonEntityFolder = path.join(extensionDirectory, '..', "ReadXML", "JsonEntity");
-        this.entitiesContent = this.getFilePathEntity()
     }
 
     getFilePathEntity() {
-
         // Kiểm tra thư mục JsonEntity
         var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
         var fileContent;
@@ -26,7 +25,6 @@ class CheckLegacyCode {
             }
             if (fileContent) break;
         }
-
     }
     escapeRegExp(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape các ký tự đặc biệt
@@ -35,15 +33,15 @@ class CheckLegacyCode {
         var editor = vscode.window.activeTextEditor;
         if (!editor) return;
         var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
+
         if (!(filePath.includes('Dir') || filePath.includes('Filter'))) {
-            vscode.window.showErrorMessage('This feature work on Dir/Fitler Folder')
+            // vscode.window.showErrorMessage('This feature work on Dir/Fitler Folder')
             return
         }
         var content = vscode.window.activeTextEditor.document.getText()
-        
         var ent_content = this.replaceEntity(content)
         try {
-            for (var ent of ent_content) { 
+            for (var ent of ent_content) {
                 if (ent.content != '') {
                     content = content.replace(ent.entity, ent.content);
                 }
@@ -52,8 +50,10 @@ class CheckLegacyCode {
         catch (er) {
             console.error(er)
         }
+        
         var fields_declare = this.getFieldOnFields(content);
         var field_item = this.getFieldOnView(content);
+
         this.checkLegacyItem(editor, field_item, fields_declare)
     }
 
@@ -63,12 +63,12 @@ class CheckLegacyCode {
         entities = entities.map((entity) => {
             return { entity, entity_variable: entity.replace(/&|;/g, '') }
         })
+
         entities = entities.filter((item) =>
             !['&gt', '&lt'].includes(item.entity)
         )
-
         var entityMapping = this.readEntity(entities.map((item) => item.entity_variable));
-
+        if (entityMapping.length == 0) return []
         var entities_content = entities.map((item) => {
             var entity = item.entity;
             var content = entityMapping.find((ent) =>
@@ -195,7 +195,17 @@ class CheckLegacyCode {
     }
 
     readEntity(entities) {
-        return this.entitiesContent.filter((item) => entities.includes(item.Name));
+        try {
+            this.entitiesContent = this.getFilePathEntity()
+            if (this.entitiesContent)
+                return this.entitiesContent.filter((item) => entities.includes(item.Name));
+            else
+                return [];
+
+        } catch (err) {
+            console.log(err)
+            return [];
+        }
     }
 
 }

@@ -3,7 +3,7 @@ const ExcelJS = require('exceljs');
 const pathModule = require('path');
 class ConvertGridToHeader {
     constructor() {
-
+        
     }
 
     CvtToFieldReport(path) {
@@ -45,7 +45,7 @@ class ConvertGridToHeader {
                         }
                         else if (datatype.includes('quantity')) {
                             format = '_(* #,##0.000_);_(* (#,##0.000);_(* ""_);_(@_)';
-                        }else if (datatype.includes('foreign')) {
+                        } else if (datatype.includes('foreign')) {
                             format = '_(* #,##0.00_);_(* (#,##0.00);_(* ""_);_(@_)';
                         }
                     }
@@ -108,10 +108,10 @@ class ConvertGridToHeader {
             console.error('Lỗi: Không tìm thấy file mau_chuan.xlsx');
             return;
         }
-       
+
         // Dùng exceljs để đọc file template
         const workbook = new ExcelJS.Workbook();
-        
+
         workbook.xlsx.readFile(templatePath).then(() => {
             const worksheet = workbook.worksheets[0]; // Lấy sheet đầu tiên
 
@@ -127,15 +127,15 @@ class ConvertGridToHeader {
                 var col = this.getExcelColumnName(i); // Chuyển đổi số cột sang tên cột trong Excel
                 // Ô header (dòng 9)
                 let headerCell = worksheet.getCell(`${col}9`);
-             
+
                 headerCell.value = '?' + header;
-              
+
                 headerCell.fill = {
                     type: 'pattern',
                     pattern: 'solid',
                     fgColor: { argb: 'ffedf5ff' } // RGB(237, 245, 255)
                 };
-                
+
                 headerCell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
                 headerCell.font = { name: 'Times New Roman', size: 11, bold: true }; // Làm đậm chữ
                 // Ô value (dòng 10)
@@ -143,8 +143,8 @@ class ConvertGridToHeader {
                 valueCell.value = value + '{b:systotal=0}';
                 valueCell.style = JSON.parse(JSON.stringify(valueCell.style));
                 valueCell.numFmt = format ? `${format}` : 'General';
-                valueCell.alignment = { vertical: 'middle', horizontal: format == '@' ? 'left' : format == 'dd/mm/yyyy' ? 'center' : 'right' , wrapText: true};
-                valueCell.font = { name: 'Times New Roman', size: 11}; // Làm đậm chữ
+                valueCell.alignment = { vertical: 'middle', horizontal: format == '@' ? 'left' : format == 'dd/mm/yyyy' ? 'center' : 'right', wrapText: true };
+                valueCell.font = { name: 'Times New Roman', size: 11 }; // Làm đậm chữ
                 // Tô viền cho cả dòng 9 và 10
                 [headerCell, valueCell].forEach(cell => {
                     cell.border = {
@@ -153,19 +153,22 @@ class ConvertGridToHeader {
                         bottom: { style: 'thin', color: { argb: '000000' } }, // Viền dưới
                         right: { style: 'thin', color: { argb: '000000' } }  // Viền phải
                     };
-                }); 
-            }
-            worksheet.mergeCells('A6', this.getExcelColumnName(headers.length - 1) + '6' );  
-            worksheet.mergeCells('A7', this.getExcelColumnName(headers.length - 1) + '7' );  
-            worksheet.getCell('A6').alignment = {horizontal: 'center' }
-            worksheet.getCell('A7').alignment = {horizontal: 'center' }
-            
+                });
+            } 
+            // Merge các ô từ A6 đến cột cuối cùng của headers
+            worksheet.mergeCells('A6', this.getExcelColumnName(headers.length - 1) + '6');
+            worksheet.mergeCells('A7', this.getExcelColumnName(headers.length - 1) + '7');
 
+            // Đặt alignment cho các ô merge
+            worksheet.getCell('A6').alignment = { horizontal: 'center' };
+            worksheet.getCell('A7').alignment = { horizontal: 'center' };
+ 
             worksheet.columns.forEach(column => {
                 if (column.eachCell) {
                     column.width = 16;
                 }
             });
+
             // Lưu file mới mà vẫn giữ nguyên format
             return workbook.xlsx.writeFile(outputPath);
         }).then(() => {
@@ -182,7 +185,7 @@ class ConvertGridToHeader {
         }
         return columnName;
     }
-    
+
 
     addFieldToReport(xml, path) {
         let xmlContent = fs.readFileSync(path, 'utf8');
