@@ -38,21 +38,30 @@ class CheckLegacyCode {
             // vscode.window.showErrorMessage('This feature work on Dir/Fitler Folder')
             return
         }
-        var content = vscode.window.activeTextEditor.document.getText()
-        var ent_content = this.replaceEntity(content)
+        var content = vscode.window.activeTextEditor.document.getText();
+
+        // Tách phần DOCTYPE (nếu có)
+       
+        let doctypeMatch = content.match(/<!DOCTYPE[\s\S]*?\]>/);
+        let doctypeSection = doctypeMatch ? doctypeMatch[0] : "";
+        let contentWithoutDoctype = doctypeMatch ? content.replace(doctypeSection, "") : content;
+        // Thay thế entity chỉ trong phần ngoài DOCTYPE
+        var ent_content = this.replaceEntity(contentWithoutDoctype);
         try {
             for (var ent of ent_content) {
-                if (ent.content != '') {
-                    content = content.replace(ent.entity, ent.content);
+                if (ent.content !== '') {
+                    contentWithoutDoctype = contentWithoutDoctype.replace(ent.entity, ent.content);
                 }
             }
-        }
-        catch (er) {
-            console.error(er)
+        } catch (er) {
+            console.error(er);
         }
         
-        var fields_declare = this.getFieldOnFields(content);
+        // Ghép lại DOCTYPE với nội dung đã thay thế
+        content = doctypeSection + contentWithoutDoctype;
+        
         var field_item = this.getFieldOnView(content);
+        var fields_declare = this.getFieldOnFields(content); 
 
         this.checkLegacyItem(editor, field_item, fields_declare)
     }
@@ -63,7 +72,6 @@ class CheckLegacyCode {
         entities = entities.map((entity) => {
             return { entity, entity_variable: entity.replace(/&|;/g, '') }
         })
-
         entities = entities.filter((item) =>
             !['&gt', '&lt'].includes(item.entity)
         )
@@ -85,6 +93,7 @@ class CheckLegacyCode {
 
     checkLegacyItem(editor, field_item, fields_declare) {
         const error_item = field_item.filter((item) => item.key.length !== item.fields.length);
+        
         const diagnostics = [];
         const document = editor.document;
         let diagnostic;
@@ -147,8 +156,7 @@ class CheckLegacyCode {
             }
             var xmlFields = fieldsMatches[0];
             const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
-            const result = [];
-
+            const result = []; 
             // Tách content thành từng dòng để xác định số dòng
             const lines = content.split('\n');
 
@@ -156,7 +164,8 @@ class CheckLegacyCode {
             while ((match = fieldRegex.exec(xmlFields)) !== null) {
                 var key_t = match[1];
                 var value_t = match[0];
-
+                 // **Bỏ qua field có filterSource="Vacant"**
+                if (/filterSource="Vacant"/.test(value_t)) continue;
                 // **Tìm dòng đầu tiên có chứa key**
                 let lineNumber = lines.findIndex(line => line.includes(`name="${key_t}"`)) + 1;
 
@@ -176,18 +185,17 @@ class CheckLegacyCode {
             let match;
             const results = [];
             // Tách content thành từng dòng
-            const lines = content.split('\n');
+            const lines = content.split('\n');  
             while ((match = regex.exec(content)) !== null) {
                 var key = match[1].trim().replace(/[0-]/g, '');
                 // Tìm các field nằm trong ngoặc vuông []
                 const fieldMatches = match[2].match(/\[([^\]]+)\]/g) || [];
                 var fields = fieldMatches.map(field => field.replace(/\[|\]/g, "").trim());
                 // Tìm số dòng chứa match
-                let lineNumber = lines.findIndex(line => line.includes(match[0])) + 1;
+                let lineNumber = lines.findIndex(line => line.includes(match[0])) + 1; 
                 results.push({ key, fields, line: lineNumber });
             }
             return results;
-
         } catch (error) {
             vscode.window.showErrorMessage(`Error parsing XML`);
             return [];

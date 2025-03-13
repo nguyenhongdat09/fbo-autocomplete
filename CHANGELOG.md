@@ -18,3 +18,7 @@
  - Turn off some notify
   # Version 0.0.12
  - Fix check legacy 
+  # Version 0.0.13
+ - Fix check legacy remove filterSouce= "Vacant"
+  # Version 0.0.14
+ - Fix check legacy jump line
