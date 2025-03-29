@@ -3,19 +3,22 @@
 const vscode = require('vscode');
 const pathModule = require('path');
 const fs = require('fs');
-const CompletionProvider = require('../CompleteCodeWithDB/CompleteProvider');
-const renderXMLToDB = require('../CompleteCodeWithDB/renderXMLToDB');
-const OpenWithVS2008 = require('../VS2008/openWithVS2008');
-const ReadXMLVS2008 = require('../VS2008/ReadXMLVS2008');
-const EntityHoverProvider = require("../VS2008/EntityHoverProvider");
-const EntityCodeLensProvider = require("../VS2008/EntityCodeLensProvider");
-const CompleteCodeByHandle = require("../CompleteCodeWithDB/CompleteCodeByHandle");
-const Trans = require("../Translate/Translate")
-const cnv = require("../ConvertToExcel/ConvertGridToHeader")
-const TranslateAuto = require("../Translate/TranslateAuto")
-const CheckLegacyCode = require("../CheckLegacy/CheckLegacyCode")
+const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
+const renderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
+const OpenWithVS2008 = require('./VS2008/openWithVS2008');
+const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
+const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
+const EntityCodeLensProvider = require("./VS2008/EntityCodeLensProvider");
+const CompleteCodeByHandle = require("./CompleteCodeWithDB/CompleteCodeByHandle");
+const Trans = require("./Translate/Translate")
+const cnv = require("./ConvertToExcel/ConvertGridToHeader")
+const TranslateAuto = require("./Translate/TranslateAuto")
+const CheckLegacyCode = require("./CheckLegacy/CheckLegacyCode")
 const updateSettings = require("./updateSettings")
-
+const DBStatusBarManagerCls = require("./DBQuery/dbBar");
+const QueryDatabase = require("./DBQuery/QueryDatabase");
+const TreeFileProvider = require("./TreeFile/TreeFileProvider");
+const ContextMenuHandler = require("./TreeFile/ContextMenu");
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -142,7 +145,7 @@ async function activate(context) {
             provideCompletionItems: completeCodeByHandle.provideOptionsCompletionItems.bind(completeCodeByHandle),
         },
         '@' // Ký tự kích hoạt autocomplete
-    ); 
+    );
     let translatePaste = vscode.commands.registerCommand('fbo-autocomplete.translatePaste', async function () {
         // Đọc nội dung bạn vừa copy vào clipboard
         const text = await vscode.env.clipboard.readText();
@@ -163,7 +166,7 @@ async function activate(context) {
                 const translatedText = await trans.trans_to_en.bind(trans)(text)
                 // Ghi lại văn bản đã dịch vào clipboard
                 await vscode.env.clipboard.writeText(translatedText);
-                
+
                 // Đảm bảo gọi lệnh paste khi có editor mở và sẵn sàng
                 editor.edit(editBuilder => {
                     if (!selection.isEmpty) {
@@ -177,11 +180,11 @@ async function activate(context) {
             });
             // Dịch nội dung qua Google Translate API 
         }
-    }); 
+    });
     const cvtToEx = new cnv()
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
-        
+
         const folderPath = pathModule.dirname(path);
         const folderName = pathModule.basename(folderPath);
         if (folderName != 'Grid') {
@@ -189,12 +192,12 @@ async function activate(context) {
             return
         }
         const reportPath = path.replace('\\Grid\\', '\\Report\\')
-       
+
         if (fs.existsSync(reportPath)) {
             const xmlReport = cvtToEx.CvtToFieldReport.bind(cvtToEx)(path)
-           
+
             const ReportXml = cvtToEx.addFieldToReport(xmlReport[0], reportPath)
-            
+
             if (ReportXml != '') {
                 fs.writeFileSync(reportPath, ReportXml, 'utf8');
                 vscode.window.showInformationMessage('Report updated successfully!');
@@ -216,11 +219,11 @@ async function activate(context) {
         const options = {
             title: "Chọn vị trí lưu Excel",
             filters: { 'Excel Files': ['xlsx'] },
-            defaultUri:  vscode.Uri.file('output.xlsx')
+            defaultUri: vscode.Uri.file('output.xlsx')
         };
-    
+
         const fileUri = await vscode.window.showSaveDialog(options);
-    
+
         if (!fileUri) {
             vscode.window.showWarningMessage("Hủy xuất file Excel.");
             return;
@@ -228,7 +231,7 @@ async function activate(context) {
         // Gọi hàm export với đường dẫn đã chọn
         cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
     });
-    
+
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();
 
@@ -254,6 +257,18 @@ async function activate(context) {
             chk.run.bind(chk)()
         });
     }
+
+    //Database dbBar
+    const dbstatus = new DBStatusBarManagerCls(context);
+    dbstatus.show()
+    const queryDb = new QueryDatabase(context, dbstatus);
+    //
+    /*Tree view*/
+    const contextMenu = new ContextMenuHandler(context)
+    const treeDataProvider = new TreeFileProvider();
+    treeDataProvider.run(context);
+
+
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
@@ -279,7 +294,8 @@ async function activate(context) {
 }
 
 // This method is called when your extension is deactivated
-function deactivate() { }
+function deactivate() {
+}
 
 module.exports = {
     activate,

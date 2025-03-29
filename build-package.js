@@ -40,8 +40,9 @@ packageJson.dependencies = {
   "exceljs": "^4.4.0",
   "googleapis": "^144.0.0",
   "googletrans": "^1.0.21",
+  "mssql": "^11.0.1",
   "level-rocksdb": "^5.0.0",
-  "rocksdb": "^5.2.1"
+  "rocksdb": "^5.2.1",
 };
 packageJson.main =  "./src/extension.js", 
 fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));

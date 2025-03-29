@@ -25,10 +25,32 @@
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "fbo"
-        },
+        }
+      ],
+      "view/item/context": [
         {
-          "command": "fbo-autocomplete.ApplyTranslateFBO",
-          "group": "fbo"
+          "command": "fboFile.openRevealFolder",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "Fbo_File_Tab",
+          "title": "FBO File",
+          "icon": "images/doc_bar.svg"
+        }
+      ]
+    },
+    "views": {
+      "Fbo_File_Tab": [
+        {
+          "id": "fbo_file",
+          "name": "Group of File By Project FBO",
+          "dragAndDrop": true, 
+          "canSelectMany": true
         }
       ]
     },
@@ -72,6 +94,12 @@
         "key": "alt+shift+q",
         "mac": "alt+shift+q",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "fbo-autocomplete.runQuery",
+        "key": "f4",
+        "mac": "f4",
+        "when": "editorTextFocus"
       }
     ],
     "commands": [
@@ -110,7 +138,19 @@
       {
         "command": "fbo-autocomplete.CheckLegacyDirFilter",
         "title": "FBO: Check Legacy Dir/Filter"
-      }
+      },
+      {
+        "command": "fbo-autocomplete.autoConnectSQL",
+        "title": "FBO: Connect Sql Server"
+      },
+      {
+        "command": "fbo-autocomplete.TreeTabReload",
+        "title": "FBO: Reload Tab FBO Folder"
+      },
+      {
+        "command": "fboFile.openRevealFolder",
+        "title": "Open Contaniner Folder"
+      } 
     ],
     "languages": [
       {
@@ -121,11 +161,11 @@
         ],
         "extensions": [
           ".xml"
-        ],
-        "configuration": "./language-configuration.json"
+        ]
       }
     ]
   },
+  "icon": "icon.png",
   "updateUrl": "https://github.com/nguyenhongdat09/fbo-autocomplete/blob/company/update.json",
   "scripts": {
     "test": "vscode-test",
@@ -147,17 +187,22 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "cli-table3": "^0.6.5",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1"
+    "mssql": "^11.0.1",
+    "rocksdb": "^5.2.1",
+    "strip-ansi": "^7.1.0"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
-    "googletrans": "^1.0.21"
+    "googletrans": "^1.0.21",
+    "cli-table3": "^0.6.5",
+    "mssql": "^11.0.1"
   },
   "extensionDependencies": [
     "redhat.vscode-xml",

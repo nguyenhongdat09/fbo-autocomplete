@@ -5,7 +5,8 @@
 		"checkJs": true,  /* Typecheck .js files. */
 		"lib": [
 			"ES2022"
-		]
+		],
+		"jsx": "react-jsx"
 	},
 	"exclude": [
 		"node_modules"
