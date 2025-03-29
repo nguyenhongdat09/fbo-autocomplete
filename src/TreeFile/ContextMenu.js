@@ -9,6 +9,10 @@ class ContextMenuHandler {
         this.context.subscriptions.push(
             vscode.commands.registerCommand("fboFile.openRevealFolder", this.openRevealFolder)
         );
+        // Đăng ký command cho context menu
+        this.context.subscriptions.push(
+            vscode.commands.registerCommand("fboFile.CopyPath", this.CopyPath)
+        );
     }
 
     openRevealFolder(uri) {
@@ -16,12 +20,20 @@ class ContextMenuHandler {
             vscode.window.showErrorMessage("Không tìm thấy đường dẫn file.");
             return;
         }
-        const filePath = uri.resourceUri.fsPath;  
-           const openCommand = process.platform === "win32" 
-           ? `explorer /select,"${filePath}"`  // Windows
-           : `open -R "${filePath}"`;          // macOS
+        const filePath = uri.resourceUri.fsPath;
+        const openCommand = process.platform === "win32"
+            ? `explorer /select,"${filePath}"`  // Windows
+            : `open -R "${filePath}"`;          // macOS
 
-       require("child_process").exec(openCommand);
+        require("child_process").exec(openCommand);
     }
+    CopyPath(uri) {
+        if (!uri || !uri.resourceUri.fsPath) {
+            vscode.window.showErrorMessage("Không có đường dẫn hợp lệ để sao chép.");
+            return;
+        }
+        vscode.env.clipboard.writeText(uri.resourceUri.fsPath)
+    }
+
 }
 module.exports = ContextMenuHandler;

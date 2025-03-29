@@ -32,6 +32,10 @@
           "command": "fboFile.openRevealFolder",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
+        },{
+          "command": "fboFile.CopyPath",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
         }
       ],
       "view/title": [
@@ -157,6 +161,10 @@
         "command": "fboFile.openRevealFolder",
         "title": "Open Contaniner Folder"
       },
+      {
+        "command": "fboFile.CopyPath",
+        "title": "Copy Path"
+      } ,
       {
         "command": "fbo-autocomplete.reloadTree",
         "title": "Reload Tree",
