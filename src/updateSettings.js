@@ -44,7 +44,7 @@ class updateSettingsJson {
                     { "pattern": "**/Grid/*.f", "systemId": path.join(extensionPath, "Grid.xsd") },
                     { "pattern": "**/FastAPI/*.xml", "systemId": path.join(extensionPath, "FastAPI.xsd") }
                 ];
-    
+               
                 // 📝 Ghi lại file settings.json với danh sách mới
                 fs.writeFile(settingsPath, JSON.stringify(settings, null, 4), 'utf8', (err) => {
                     if (err) {

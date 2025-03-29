@@ -33,6 +33,14 @@
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
         }
+      ],
+      "view/title": [
+        {
+          "command": "fbo-autocomplete.reloadTree",
+          "when": "view == fbo_file",
+          "group": "navigation",
+          "tooltip": "Reload Tree"
+        }
       ]
     },
     "viewsContainers": {
@@ -48,10 +56,8 @@
       "Fbo_File_Tab": [
         {
           "id": "fbo_file",
-          "name": "Group of File By Project FBO",
-          "dragAndDrop": true, 
-          "canSelectMany": true
-        }
+          "name": "Group of File By Project FBO"
+        } 
       ]
     },
     "configuration": {
@@ -150,7 +156,13 @@
       {
         "command": "fboFile.openRevealFolder",
         "title": "Open Contaniner Folder"
-      } 
+      },
+      {
+        "command": "fbo-autocomplete.reloadTree",
+        "title": "Reload Tree",
+        "category": "FBO",
+        "icon": "images/ic_reload.svg"
+      }
     ],
     "languages": [
       {
