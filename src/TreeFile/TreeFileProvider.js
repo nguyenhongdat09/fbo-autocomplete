@@ -26,6 +26,10 @@ class TreeFileProvider {
             await this.refresh();
             await this.revealActiveFile(e);
         });
+        vscode.window.onDidChangeVisibleTextEditors(async (e) => {
+            await this.refresh();
+            await this.revealActiveFile(e);
+        });
  
         vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async() => {
             if (this.treeView.visible) {
@@ -33,6 +37,7 @@ class TreeFileProvider {
                 await this.revealActiveFile({ visible: true });
             }
         });
+        
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
             this.refresh();
@@ -118,6 +123,7 @@ class TreeFileProvider {
     }
 
     async handleDrop(target, sources) {
+        return
         var last_file = ''
         for (const source of sources) {
             var data = source[1].value;
