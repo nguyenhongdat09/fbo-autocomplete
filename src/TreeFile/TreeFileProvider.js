@@ -15,29 +15,30 @@ class TreeFileProvider {
         this.treeView = null;
         this.load_tree = true;
     }
-    run(context) {
+    async run(context) {
         // Khởi tạo tree view
         this.treeView = vscode.window.createTreeView("fbo_file", {
             treeDataProvider: this,
             dragAndDropController: this
         });
-        // Lắng nghe sự kiện khi TreeView được hiển thị hoặc ẩn đi
-        this.treeView.onDidChangeVisibility(async (e) => {
+        
+        vscode.window.onDidChangeVisibleTextEditors(async () => {
             await this.refresh();
-            await this.revealActiveFile(e);
         });
-        vscode.window.onDidChangeVisibleTextEditors(async (e) => {
-            await this.refresh();
-            await this.revealActiveFile(e);
-        });
- 
-        vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async() => {
+
+        vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async () => {
             if (this.treeView.visible) {
                 await this.refresh();
-                await this.revealActiveFile({ visible: true });
             }
         });
-        
+        vscode.commands.registerCommand("fbo-autocomplete.closeFile", async (element) => {
+            await this.closeFile(element);
+        });
+        vscode.window.onDidChangeTextEditorSelection((event) => {
+            if (event.kind === vscode.TextEditorSelectionChangeKind.Keyboard && event.textEditor.document) {
+                vscode.commands.executeCommand("workbench.action.closeActiveEditor");
+            }
+        });
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
             this.refresh();
@@ -47,6 +48,24 @@ class TreeFileProvider {
         // Thêm vào subscriptions để tự động clean up khi extension bị tắt
         context.subscriptions.push(this.treeView, disposable);
     }
+    async closeFile(element) {
+        if (!element || !element.resourceUri) return;
+        const fileUri = element.resourceUri.toString();
+        // 📌 Lấy tất cả các tab đang mở trong VSCode
+        const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+        // 🔍 Kiểm tra từng tab xem có phải file cần đóng không
+        const targetTab = tabs.find(tab => {
+            const input = tab.input;
+            return input && typeof input === "object" && "uri" in input && input.uri.toString() === fileUri;
+        });
+        if (targetTab) {
+            // 🔥 **Đóng tab mà không cần mở**
+            await vscode.window.tabGroups.close([targetTab]);
+        } else {
+            console.warn(`⚠️ File không có trong Open Editors: ${fileUri}`);
+        }
+        await this.refresh()
+    } 
 
     async revealActiveFile(e) {
         if (!e.visible) return;
@@ -67,24 +86,22 @@ class TreeFileProvider {
                     // Sau khi mở parentGroup, mới reveal file
                     await this.treeView.reveal(treeItem, { select: true, expand: false });
                 } catch (error) {
-                    console.error("❌ Lỗi khi reveal tree item:", error);
+                 //   console.error("❌ Lỗi khi reveal tree item:", error);
                 }
             }
-        }, 200);
+        }, 20);
     }
 
     getTreeItem(element) {
-        return element;
+        return element; // Nếu là group cha thì giữ nguyên
     }
-
-
     async getChildren(element) {
         if (!element) {
             return this.buildTree();
         }
+        await this.revealActiveFile({ visible: true });
         return this.treeData.get(element.label) || [];
     }
-
     async buildTree() {
         this.treeData.clear();
         const openFiles = await this.getOpenEditors();
@@ -93,11 +110,9 @@ class TreeFileProvider {
             new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
         );
     }
-
-
     addFileToTree(filePath) {
         const groupName = this.getGroupName(filePath);
-        if (!groupName) return; 
+        if (!groupName) return;
         const folderName = path.basename(path.dirname(filePath));
         const item = new vscode.TreeItem(vscode.Uri.file(filePath), vscode.TreeItemCollapsibleState.None);
         item.resourceUri = vscode.Uri.file(filePath);

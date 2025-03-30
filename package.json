@@ -32,10 +32,16 @@
           "command": "fboFile.openRevealFolder",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
-        },{
+        },
+        {
           "command": "fboFile.CopyPath",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
+        },
+        {
+          "command": "fbo-autocomplete.closeFile",
+          "when": "viewItem == file",
+          "group": "inline"
         }
       ],
       "view/title": [
@@ -57,11 +63,11 @@
       ]
     },
     "views": {
-      "Fbo_File_Tab": [
+      "explorer": [
         {
           "id": "fbo_file",
           "name": "Group of File By Project FBO"
-        } 
+        }
       ]
     },
     "configuration": {
@@ -164,12 +170,17 @@
       {
         "command": "fboFile.CopyPath",
         "title": "Copy Path"
-      } ,
+      },
       {
         "command": "fbo-autocomplete.reloadTree",
         "title": "Reload Tree",
         "category": "FBO",
         "icon": "images/ic_reload.svg"
+      },
+      {
+        "command": "fbo-autocomplete.closeFile",
+        "title": "Close File",
+        "icon": "$(close)"
       }
     ],
     "languages": [
