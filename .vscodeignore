@@ -13,18 +13,17 @@ tsconfig.json
 eslint.config.mjs
 .vscode-test.*
 vsc-extension-quickstart.md
-
-# Loại bỏ source file gốc (nếu đã bundle vào dist/)
-src/**
+ 
 
 # Loại bỏ file map (nếu có)
 **/*.map
-CheckLegacy/**
-ConvertToExcel/**
-CompleteCodeWithDB/**
-Translate/**
-VS2008/**
-node_modules_bk/**
+
+src/**
+!src/Database/**
+!src/dist/**
+!src/ReadXML/**
+
+
 # Loại bỏ node_modules, nhưng giữ lại các module native cần thiết
 # Giữ lại node_modules để extension chạy ngay
  

@@ -257,11 +257,12 @@ async function activate(context) {
             chk.run.bind(chk)()
         });
     }
-
+/*
     //Database dbBar
     const dbstatus = new DBStatusBarManagerCls(context);
     dbstatus.show()
     const queryDb = new QueryDatabase(context, dbstatus);
+    */
     //
     /*Tree view*/
     const contextMenu = new ContextMenuHandler(context)

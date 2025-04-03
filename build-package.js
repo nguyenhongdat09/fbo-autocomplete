@@ -21,9 +21,9 @@ const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
 packageJson.dependencies = {
   "level-rocksdb": "^5.0.0",
   "rocksdb": "^5.2.1"
-}; 
-packageJson.main =  "./dist/extension.js", 
-fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
+};
+packageJson.main = "./src/dist/extension.js",
+  fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
 
 // 5. Chạy npm install --production lần nữa để loại bỏ dependencies không cần thiết
 console.log("📦 Dọn dẹp dependencies...");
@@ -41,11 +41,13 @@ packageJson.dependencies = {
   "googleapis": "^144.0.0",
   "googletrans": "^1.0.21",
   "mssql": "^11.0.1",
+  "strip-ansi": "^7.1.0",
+  "cli-table3": "^0.6.5",
   "level-rocksdb": "^5.0.0",
-  "rocksdb": "^5.2.1",
+  "rocksdb": "^5.2.1" 
 };
-packageJson.main =  "./src/extension.js", 
-fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
+packageJson.main = "./src/extension.js",
+  fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
 
 // 8. Chạy npm install --production để tiếp tục code
 console.log("📦 Khôi phục môi trường code...");

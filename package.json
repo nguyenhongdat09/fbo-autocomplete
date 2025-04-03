@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.14",
+  "version": "0.0.17",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -121,11 +121,11 @@
     "commands": [
       {
         "command": "my-fbo-toolkit.openWithVS2008",
-        "title": "Open With VS 2008"
+        "title": "FBO: Open With VS 2008"
       },
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
-        "title": "Apply Translate FBO (v -> e)"
+        "title": "FBO: Apply Translate FBO (v -> e)"
       },
       {
         "command": "fbo-autocomplete.applyCompletionItem",
@@ -218,22 +218,23 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
-    "cli-table3": "^0.6.5",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "level-rocksdb": "^5.0.0",
     "mssql": "^11.0.1",
-    "rocksdb": "^5.2.1",
-    "strip-ansi": "^7.1.0"
+    "strip-ansi": "^7.1.0",
+    "cli-table3": "^0.6.5",
+    "level-rocksdb": "^5.0.0",
+    "rocksdb": "^5.2.1"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "cli-table3": "^0.6.5",
-    "mssql": "^11.0.1"
+    "mssql": "^11.0.1",
+    "strip-ansi": "^7.1.0",
+    "cli-table3": "^0.6.5"
   },
   "extensionDependencies": [
     "redhat.vscode-xml",

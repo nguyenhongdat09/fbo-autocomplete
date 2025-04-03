@@ -1,5 +1,6 @@
 const vscode = require("vscode");
 const path = require("path");
+const fs = require("fs");
 
 class TreeFileProvider {
     constructor() {
@@ -21,7 +22,7 @@ class TreeFileProvider {
             treeDataProvider: this,
             dragAndDropController: this
         });
-        
+
         vscode.window.onDidChangeVisibleTextEditors(async () => {
             await this.refresh();
         });
@@ -33,12 +34,9 @@ class TreeFileProvider {
         });
         vscode.commands.registerCommand("fbo-autocomplete.closeFile", async (element) => {
             await this.closeFile(element);
-        });
-        vscode.window.onDidChangeTextEditorSelection((event) => {
-            if (event.kind === vscode.TextEditorSelectionChangeKind.Keyboard && event.textEditor.document) {
-                vscode.commands.executeCommand("workbench.action.closeActiveEditor");
-            }
-        });
+        }); 
+       
+        
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
             this.refresh();
@@ -47,7 +45,7 @@ class TreeFileProvider {
 
         // Thêm vào subscriptions để tự động clean up khi extension bị tắt
         context.subscriptions.push(this.treeView, disposable);
-    }
+    } 
     async closeFile(element) {
         if (!element || !element.resourceUri) return;
         const fileUri = element.resourceUri.toString();
@@ -65,7 +63,7 @@ class TreeFileProvider {
             console.warn(`⚠️ File không có trong Open Editors: ${fileUri}`);
         }
         await this.refresh()
-    } 
+    }
 
     async revealActiveFile(e) {
         if (!e.visible) return;
@@ -86,7 +84,7 @@ class TreeFileProvider {
                     // Sau khi mở parentGroup, mới reveal file
                     await this.treeView.reveal(treeItem, { select: true, expand: false });
                 } catch (error) {
-                 //   console.error("❌ Lỗi khi reveal tree item:", error);
+                    //   console.error("❌ Lỗi khi reveal tree item:", error);
                 }
             }
         }, 20);
@@ -105,11 +103,27 @@ class TreeFileProvider {
     async buildTree() {
         this.treeData.clear();
         const openFiles = await this.getOpenEditors();
+    
+        // 🆕 Sắp xếp file theo groupName trước khi add vào cây
+        openFiles.sort((a, b) => {
+            const groupA = this.getGroupName(a);
+            const groupB = this.getGroupName(b);
+            return groupA.localeCompare(groupB); // So sánh chuỗi để sort
+        });
+        openFiles.sort((a, b) => {
+            const extA = path.extname(a).toLowerCase(); // Lấy phần mở rộng file
+            const extB = path.extname(b).toLowerCase();
+            if (extA !== extB) {
+                return extA.localeCompare(extB); // Ưu tiên sắp xếp theo loại file trước
+            }
+            return path.basename(a).localeCompare(path.basename(b)); // Sau đó mới so sánh theo tên file
+        });
         openFiles.forEach(filePath => this.addFileToTree(filePath));
         return [...this.treeData.keys()].map(groupName =>
             new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
         );
     }
+    
     addFileToTree(filePath) {
         const groupName = this.getGroupName(filePath);
         if (!groupName) return;
@@ -127,7 +141,7 @@ class TreeFileProvider {
         if (!this.treeData.has(groupName)) {
             this.treeData.set(groupName, []);
         }
-        this.treeData.get(groupName).push(item);
+        this.treeData.get(groupName).push(item); 
     }
 
     async getOpenEditors() {
@@ -202,13 +216,32 @@ class TreeFileProvider {
         // Nếu là group, không có parent
         return null;
     }
+  getGroupName(filePath) {
+    const parts = filePath.split(path.sep);
+    const index = parts.findIndex(part => part === "App_Data");
 
+    if (index > 1) {
+        // ✅ Nếu file nằm trong App_Data -> Trả về theo chuẩn cũ
+        return `${parts[index - 1]} - ${parts[index - 2]}`;
+    } else {
+        // ✅ Kiểm tra nếu file nằm trong folder cùng cấp với App_Data
+        const parentFolder = parts[parts.length - 2]; // Lấy tên thư mục cha của file
+        const rootPath = parts.slice(0, -2).join(path.sep); // Lấy phần path trước folder cha
 
-    getGroupName(filePath) {
-        const parts = filePath.split(path.sep);
-        const index = parts.findIndex(part => part === "App_Data");
-        return index > 1 ? `${parts[index - 1]} - ${parts[index - 2]}` : 'Other';
+        if (fs.existsSync(path.join(rootPath, "App_Data"))) {
+            // ✅ Nếu file nằm trong một folder cùng cấp với App_Data
+            return `${parts[parts.length - 3]} - ${path.basename(parts.slice(0, -3).join(path.sep))}`;
+        }
+
+        // ✅ Nếu file nằm trực tiếp cùng cấp với App_Data (không nằm trong folder nào)
+        if (fs.existsSync(path.join(path.dirname(filePath), "App_Data"))) {
+            return `${parts[parts.length - 2]} - ${path.basename(parts.slice(0, -2).join(path.sep))}`;
+        }
     }
+
+    return "Other"; // Trường hợp không khớp với điều kiện nào
+}
+    
     async refresh() {
         await this.buildTree(); // Cập nhật dữ liệu
         await this.refreshEvent.fire();

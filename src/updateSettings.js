@@ -32,7 +32,7 @@ class updateSettingsJson {
             try {
                 let settings = JSON.parse(data);
                 // Lấy đường dẫn thư mục XSD trong extension
-                const extensionPath = path.join(context.extensionPath, 'Database', 'XSD');
+                const extensionPath = path.join(context.extensionPath, 'src', 'Database', 'XSD');
                 // 🛑 Xóa toàn bộ "xml.fileAssociations"
                 settings["xml.fileAssociations"] = [
                     { "pattern": "**/Dir/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },
