@@ -20,7 +20,7 @@
         - Nếu là AutoComplete thì nhập `$f.fieldat;`
 ## Hiện Code Lens 
 - Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
-![My Image](/images/ShowCodeLens.PNG)
+![My Image](/media/ShowCodeLens.PNG)
 ## Autocomplete code dạng hàm, biến 
 - Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
 ## Translate 
@@ -30,7 +30,7 @@
     + Ví dụ: ở file Grid zcaa.xml bấm như trên sẽ tìm file Report zcaa.xml tương ứng để gen ra các trường h_a, h_b .....
 ## Check Legacy Dir/Filter
 - Kiểm tra field thiếu so với item và ngược lại 
-- Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa
+- Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa  
  
 
  
