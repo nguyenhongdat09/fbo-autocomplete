@@ -42,6 +42,11 @@
           "command": "fbo-autocomplete.closeFile",
           "when": "viewItem == file",
           "group": "inline"
+        },
+        {
+          "command": "fbo-autocomplete.closeGroupFiles",
+          "when": "viewItem == group",
+          "group": "inline"
         }
       ],
       "view/title": [
@@ -180,6 +185,11 @@
       {
         "command": "fbo-autocomplete.closeFile",
         "title": "Close File",
+        "icon": "$(close)"
+      },
+      {
+        "command": "fbo-autocomplete.closeGroupFiles",
+        "title": "Close Group",
         "icon": "$(close)"
       }
     ],

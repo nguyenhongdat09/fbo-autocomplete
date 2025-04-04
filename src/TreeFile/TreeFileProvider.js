@@ -34,9 +34,14 @@ class TreeFileProvider {
         });
         vscode.commands.registerCommand("fbo-autocomplete.closeFile", async (element) => {
             await this.closeFile(element);
-        }); 
-       
+        });
+        vscode.commands.registerCommand('fbo-autocomplete.closeGroupFiles', async (element) => {
+            if (element && element.label) {
+                await this.closeGroupFiles(element.label);
+            }
+        });
         
+
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
             this.refresh();
@@ -45,7 +50,7 @@ class TreeFileProvider {
 
         // Thêm vào subscriptions để tự động clean up khi extension bị tắt
         context.subscriptions.push(this.treeView, disposable);
-    } 
+    }
     async closeFile(element) {
         if (!element || !element.resourceUri) return;
         const fileUri = element.resourceUri.toString();
@@ -64,6 +69,28 @@ class TreeFileProvider {
         }
         await this.refresh()
     }
+    async closeGroupFiles(groupName) {
+        if (!this.treeData.has(groupName)) return;
+    
+        const files = this.treeData.get(groupName).map(item => item.resourceUri.toString());
+        // 📌 Lấy tất cả các tab đang mở trong VSCode
+        const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+    
+        // 🔍 Lọc các tab thuộc nhóm cần đóng
+        const targetTabs = tabs.filter(tab => {
+            const input = tab.input;
+            return input && typeof input === "object" && "uri" in input && files.includes(input.uri.toString());
+        }); 
+        if (targetTabs.length > 0) {
+            // 🔥 Đóng tất cả các tab thuộc nhóm
+            await vscode.window.tabGroups.close(targetTabs);
+        } else {
+            console.warn(`⚠️ Không tìm thấy file nào trong Open Editors cho nhóm: ${groupName}`);
+        }
+    
+        await this.refresh(); // Làm mới cây
+    }
+    
 
     async revealActiveFile(e) {
         if (!e.visible) return;
@@ -103,7 +130,7 @@ class TreeFileProvider {
     async buildTree() {
         this.treeData.clear();
         const openFiles = await this.getOpenEditors();
-    
+
         // 🆕 Sắp xếp file theo groupName trước khi add vào cây
         openFiles.sort((a, b) => {
             const groupA = this.getGroupName(a);
@@ -119,11 +146,15 @@ class TreeFileProvider {
             return path.basename(a).localeCompare(path.basename(b)); // Sau đó mới so sánh theo tên file
         });
         openFiles.forEach(filePath => this.addFileToTree(filePath));
-        return [...this.treeData.keys()].map(groupName =>
-            new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
+        return [...this.treeData.keys()].map((groupName) => {
+           // new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
+            const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
+            groupItem.contextValue = "group"; // Đặt context cho group
+            return groupItem;
+        }
         );
     }
-    
+
     addFileToTree(filePath) {
         const groupName = this.getGroupName(filePath);
         if (!groupName) return;
@@ -139,9 +170,11 @@ class TreeFileProvider {
         };
 
         if (!this.treeData.has(groupName)) {
+            const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
+            groupItem.contextValue = "group"; // Đặt context cho group
             this.treeData.set(groupName, []);
         }
-        this.treeData.get(groupName).push(item); 
+        this.treeData.get(groupName).push(item);
     }
 
     async getOpenEditors() {
@@ -216,32 +249,32 @@ class TreeFileProvider {
         // Nếu là group, không có parent
         return null;
     }
-  getGroupName(filePath) {
-    const parts = filePath.split(path.sep);
-    const index = parts.findIndex(part => part === "App_Data");
+    getGroupName(filePath) {
+        const parts = filePath.split(path.sep);
+        const index = parts.findIndex(part => part === "App_Data");
 
-    if (index > 1) {
-        // ✅ Nếu file nằm trong App_Data -> Trả về theo chuẩn cũ
-        return `${parts[index - 1]} - ${parts[index - 2]}`;
-    } else {
-        // ✅ Kiểm tra nếu file nằm trong folder cùng cấp với App_Data
-        const parentFolder = parts[parts.length - 2]; // Lấy tên thư mục cha của file
-        const rootPath = parts.slice(0, -2).join(path.sep); // Lấy phần path trước folder cha
+        if (index > 1) {
+            // ✅ Nếu file nằm trong App_Data -> Trả về theo chuẩn cũ
+            return `${parts[index - 1]} - ${parts[index - 2]}`;
+        } else {
+            // ✅ Kiểm tra nếu file nằm trong folder cùng cấp với App_Data
+            const parentFolder = parts[parts.length - 2]; // Lấy tên thư mục cha của file
+            const rootPath = parts.slice(0, -2).join(path.sep); // Lấy phần path trước folder cha
 
-        if (fs.existsSync(path.join(rootPath, "App_Data"))) {
-            // ✅ Nếu file nằm trong một folder cùng cấp với App_Data
-            return `${parts[parts.length - 3]} - ${path.basename(parts.slice(0, -3).join(path.sep))}`;
+            if (fs.existsSync(path.join(rootPath, "App_Data"))) {
+                // ✅ Nếu file nằm trong một folder cùng cấp với App_Data
+                return `${parts[parts.length - 3]} - ${path.basename(parts.slice(0, -3).join(path.sep))}`;
+            }
+
+            // ✅ Nếu file nằm trực tiếp cùng cấp với App_Data (không nằm trong folder nào)
+            if (fs.existsSync(path.join(path.dirname(filePath), "App_Data"))) {
+                return `${parts[parts.length - 2]} - ${path.basename(parts.slice(0, -2).join(path.sep))}`;
+            }
         }
 
-        // ✅ Nếu file nằm trực tiếp cùng cấp với App_Data (không nằm trong folder nào)
-        if (fs.existsSync(path.join(path.dirname(filePath), "App_Data"))) {
-            return `${parts[parts.length - 2]} - ${path.basename(parts.slice(0, -2).join(path.sep))}`;
-        }
+        return "Other"; // Trường hợp không khớp với điều kiện nào
     }
 
-    return "Other"; // Trường hợp không khớp với điều kiện nào
-}
-    
     async refresh() {
         await this.buildTree(); // Cập nhật dữ liệu
         await this.refreshEvent.fire();
