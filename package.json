@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.17",
+  "version": "0.0.18",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -98,7 +98,7 @@
         },
         "fbo-autocomplete.checkLegacyWhenSave": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         }
       }
@@ -159,6 +159,10 @@
       {
         "command": "fbo-autocomplete.CheckLegacyDirFilter",
         "title": "FBO: Check Legacy Dir/Filter"
+      },
+      {
+        "command": "fbo-autocomplete.CheckLegacyMessage",
+        "title": "FBO: Check Legacy Message"
       },
       {
         "command": "fbo-autocomplete.autoConnectSQL",

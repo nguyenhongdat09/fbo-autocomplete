@@ -19,6 +19,7 @@ const DBStatusBarManagerCls = require("./DBQuery/dbBar");
 const QueryDatabase = require("./DBQuery/QueryDatabase");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
+const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -252,6 +253,10 @@ async function activate(context) {
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
         chk.run.bind(chk)()
     });
+    
+    const chkMessage = new CheckLegacyMessage();
+    chkMessage.run(context);
+
     if (checkLegacyWhenSave) {
         vscode.workspace.onDidSaveTextDocument((document) => {
             chk.run.bind(chk)()

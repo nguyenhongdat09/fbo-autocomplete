@@ -14,7 +14,6 @@ class TreeFileProvider {
         this.expandedGroups = new Set();
         // 🌟 Lưu treeView để gọi `reveal()`
         this.treeView = null;
-        this.load_tree = true;
     }
     async run(context) {
         // Khởi tạo tree view
@@ -255,7 +254,7 @@ class TreeFileProvider {
 
         if (index > 1) {
             // ✅ Nếu file nằm trong App_Data -> Trả về theo chuẩn cũ
-            return `${parts[index - 1]} - ${parts[index - 2]}`;
+            return `${parts[index - 1]} - ${parts[index - 2]}`.toUpperCase();
         } else {
             // ✅ Kiểm tra nếu file nằm trong folder cùng cấp với App_Data
             const parentFolder = parts[parts.length - 2]; // Lấy tên thư mục cha của file
@@ -263,12 +262,12 @@ class TreeFileProvider {
 
             if (fs.existsSync(path.join(rootPath, "App_Data"))) {
                 // ✅ Nếu file nằm trong một folder cùng cấp với App_Data
-                return `${parts[parts.length - 3]} - ${path.basename(parts.slice(0, -3).join(path.sep))}`;
+                return `${parts[parts.length - 3]} - ${path.basename(parts.slice(0, -3).join(path.sep))}`.toUpperCase();
             }
 
             // ✅ Nếu file nằm trực tiếp cùng cấp với App_Data (không nằm trong folder nào)
             if (fs.existsSync(path.join(path.dirname(filePath), "App_Data"))) {
-                return `${parts[parts.length - 2]} - ${path.basename(parts.slice(0, -2).join(path.sep))}`;
+                return `${parts[parts.length - 2]} - ${path.basename(parts.slice(0, -2).join(path.sep))}`.toUpperCase();
             }
         }
 

@@ -28,3 +28,5 @@
  - Fixing Sort Grouping Tab
 # Version 0.0.17
  - Fixing Sort Grouping Tab , Settings Json
+# Version 0.0.18
+ - Adding Close Group Button

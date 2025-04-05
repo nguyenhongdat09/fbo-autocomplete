@@ -1,7 +1,6 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path')
-const ReadXMLVS2008 = require('../VS2008/ReadXMLVS2008');
 class CheckLegacyCode {
     constructor(extensionDirectory) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
