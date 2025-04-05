@@ -30,3 +30,5 @@
  - Fixing Sort Grouping Tab , Settings Json
 # Version 0.0.18
  - Adding Close Group Button
+# Version 0.0.19
+ - Check Lagacy Message

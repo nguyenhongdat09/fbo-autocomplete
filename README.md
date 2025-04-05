@@ -31,6 +31,8 @@
 ## Check Legacy Dir/Filter
 - Kiểm tra field thiếu so với item và ngược lại 
 - Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa  
- 
+ ## Check File Options/Message.xml
+- Kiểm tra duplicate field trong Fields  
+
 
  
