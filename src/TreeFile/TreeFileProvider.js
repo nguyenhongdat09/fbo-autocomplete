@@ -14,6 +14,7 @@ class TreeFileProvider {
         this.expandedGroups = new Set();
         // 🌟 Lưu treeView để gọi `reveal()`
         this.treeView = null;
+        this.groupItems = new Map(); // 🔥 Lưu groupItem có chứa resourceUri
     }
     async run(context) {
         // Khởi tạo tree view
@@ -24,14 +25,14 @@ class TreeFileProvider {
             canSelectMany: true // 🔥 Cho phép chọn nhiều file
         });
         // 🔄 Lắng nghe khi document bị sửa (dirty)
-            vscode.workspace.onDidChangeTextDocument(() => {
-                this.refreshEvent.fire();
-            });
+        vscode.workspace.onDidChangeTextDocument(() => {
+            this.refreshEvent.fire();
+        });
 
-            // 💾 Lắng nghe khi document được lưu lại
-            vscode.workspace.onDidSaveTextDocument(() => {
-                this.refreshEvent.fire();
-            });
+        // 💾 Lắng nghe khi document được lưu lại
+        vscode.workspace.onDidSaveTextDocument(() => {
+            this.refreshEvent.fire();
+        });
         vscode.window.onDidChangeVisibleTextEditors(async () => {
             await this.refresh();
         });
@@ -60,6 +61,9 @@ class TreeFileProvider {
         // Thêm vào subscriptions để tự động clean up khi extension bị tắt
         context.subscriptions.push(this.treeView, disposable);
     }
+
+
+
     async closeFile(element) {
         if (!element || !element.resourceUri) return;
         const fileUri = element.resourceUri.toString();
@@ -127,8 +131,8 @@ class TreeFileProvider {
     }
 
     getTreeItem(element) {
-      
-        return element; 
+
+        return element;
     }
     async getChildren(element) {
         if (!element) {
@@ -157,12 +161,9 @@ class TreeFileProvider {
         });
         openFiles.forEach(filePath => this.addFileToTree(filePath));
         return [...this.treeData.keys()].map((groupName) => {
-            // new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
-            const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
-            groupItem.contextValue = "group"; // Đặt context cho group
-            return groupItem;
-        }
-        );
+            return this.groupItems.get(groupName); // 🔥 Dùng lại groupItem đã tạo
+        });
+        
     }
 
     addFileToTree(filePath) {
@@ -173,7 +174,7 @@ class TreeFileProvider {
         item.resourceUri = vscode.Uri.file(filePath);
         item.contextValue = "file"; // Chỉ file mới có context menu
         item.description = `(${folderName})`;
-        
+
         if (item.contextValue === 'file') {
             const openDoc = vscode.workspace.textDocuments.find(doc =>
                 doc.uri.toString() === item.resourceUri.toString() && doc.isDirty
@@ -182,7 +183,7 @@ class TreeFileProvider {
                 item.label = `● ${path.basename(filePath)}`;
             }
         }
-    
+
         item.command = {
             command: "vscode.open",
             arguments: [vscode.Uri.file(filePath)],
@@ -191,10 +192,27 @@ class TreeFileProvider {
 
         if (!this.treeData.has(groupName)) {
             const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
-            groupItem.contextValue = "group"; // Đặt context cho group
+            groupItem.contextValue = "group";
+        
+            const groupPath = this.getGroupRootPath(filePath);
+            if (groupPath) {
+                groupItem.resourceUri = vscode.Uri.file(groupPath);
+            }
+        
+            groupItem.contextValue = "group";
             this.treeData.set(groupName, []);
+            this.groupItems.set(groupName, groupItem); // 🔥 Lưu lại groupItem
         }
+        
         this.treeData.get(groupName).push(item);
+    }
+    getGroupRootPath(filePath) {
+        const parts = filePath.split(/[/\\]/);
+        const appDataIndex = parts.findIndex(p => p.toLowerCase() === "app_data");
+        if (appDataIndex > 0) {
+            return parts.slice(0, appDataIndex).join(path.sep);
+        }
+        return null;
     }
 
     async getOpenEditors() {

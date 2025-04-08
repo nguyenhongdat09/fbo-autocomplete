@@ -270,9 +270,9 @@ async function activate(context) {
     */
     //
     /*Tree view*/
-    const contextMenu = new ContextMenuHandler(context)
     const treeDataProvider = new TreeFileProvider();
     treeDataProvider.run(context);
+    const contextMenu = new ContextMenuHandler(context, treeDataProvider.treeView)
 
 
     context.subscriptions.push(CheckLegacy);

@@ -139,6 +139,14 @@
       {
         "key": "ctrl+shift+d",
         "command": "fboFile.RenameFile"
+      },
+      {
+        "key": "ctrl+c",
+        "command": "fboFile.CopyPath" 
+      },
+      {
+        "key": "ctrl+shift+v",
+        "command": "fboFile.PasteFilesToGroup" 
       }
     ],
     "commands": [
@@ -193,6 +201,10 @@
       {
         "command": "fboFile.openRevealFolder",
         "title": "Open Contaniner Folder"
+      },
+      {
+        "command": "fboFile.PasteFilesToGroup",
+        "title": "Paste Files To Group"
       },
       {
         "command": "fboFile.CopyPath",
