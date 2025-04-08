@@ -108,7 +108,6 @@ class ContextMenuHandler {
     async renameFileCommand(treeItem) {
         let oldUri;
     
-        // Nếu treeItem có, lấy từ đó. Nếu không thì lấy từ file đang mở
         if (treeItem && treeItem.resourceUri) {
             oldUri = treeItem.resourceUri;
         } else if (vscode.window.activeTextEditor?.document?.uri) {
@@ -121,7 +120,8 @@ class ContextMenuHandler {
         const oldPath = oldUri.fsPath;
         const dir = path.dirname(oldPath);
         const oldName = path.basename(oldPath);
-    
+        // 👉 Trước khi rename, đảm bảo tab đó đang được active (để tránh edge case khi rename từ phím F2)
+        await vscode.window.showTextDocument(oldUri, { preview: false });
         const newName = await vscode.window.showInputBox({
             prompt: 'Nhập tên mới cho file',
             value: oldName,
@@ -137,26 +137,23 @@ class ContextMenuHandler {
         const newPath = path.join(dir, newName);
         const newUri = vscode.Uri.file(newPath);
     
-        try {
-            // Đóng tab hiện tại nếu là tab đang mở
-            const openTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-            const oldTab = openTabs.find(tab =>
-                tab.input && typeof tab.input === 'object' &&
-                'uri' in tab.input && tab.input.uri.toString() === oldUri.toString()
-            );
-            if (oldTab) {
-                await vscode.window.tabGroups.close([oldTab]);
+        try { 
+            // 👉 Đóng đúng tab đang active (vì ta đã ép nó active ở trên)
+            if (vscode.window.activeTextEditor?.document?.uri.toString() === oldUri.toString()) {
+                await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
             }
     
-            // Rename file
+            // 🔁 Rename file
             fs.renameSync(oldPath, newPath);
     
-            // Mở lại file mới
-            await vscode.window.showTextDocument(newUri);
+            // 🔼 Mở lại file đã rename
+            await vscode.window.showTextDocument(newUri, { preview: false });
+    
         } catch (err) {
             vscode.window.showErrorMessage(`Không thể đổi tên file: ${err.message}`);
         }
     }
+    
     
     
 

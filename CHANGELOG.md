@@ -32,3 +32,5 @@
  - Adding Close Group Button
 # Version 0.0.19
  - Check Lagacy Message
+# Version 0.0.20
+ - Adding Copy, Rename On Tree Fbo

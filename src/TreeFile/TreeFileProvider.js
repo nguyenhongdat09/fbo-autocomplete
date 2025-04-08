@@ -23,7 +23,15 @@ class TreeFileProvider {
             showCollapseAll: true,
             canSelectMany: true // 🔥 Cho phép chọn nhiều file
         });
+        // 🔄 Lắng nghe khi document bị sửa (dirty)
+            vscode.workspace.onDidChangeTextDocument(() => {
+                this.refreshEvent.fire();
+            });
 
+            // 💾 Lắng nghe khi document được lưu lại
+            vscode.workspace.onDidSaveTextDocument(() => {
+                this.refreshEvent.fire();
+            });
         vscode.window.onDidChangeVisibleTextEditors(async () => {
             await this.refresh();
         });
@@ -41,7 +49,7 @@ class TreeFileProvider {
                 await this.closeGroupFiles(element.label);
             }
         });
-        
+
 
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
@@ -72,26 +80,26 @@ class TreeFileProvider {
     }
     async closeGroupFiles(groupName) {
         if (!this.treeData.has(groupName)) return;
-    
+
         const files = this.treeData.get(groupName).map(item => item.resourceUri.toString());
         // 📌 Lấy tất cả các tab đang mở trong VSCode
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-        
+
         // 🔍 Lọc các tab thuộc nhóm cần đóng
         const targetTabs = tabs.filter(tab => {
             const input = tab.input;
             return input && typeof input === "object" && "uri" in input && files.includes(input.uri.toString());
-        }); 
+        });
         if (targetTabs.length > 0) {
             // 🔥 Đóng tất cả các tab thuộc nhóm
             await vscode.window.tabGroups.close(targetTabs);
         } else {
             console.warn(`⚠️ Không tìm thấy file nào trong Open Editors cho nhóm: ${groupName}`);
         }
-    
+
         await this.refresh(); // Làm mới cây
     }
-    
+
 
     async revealActiveFile(e) {
         if (!e.visible) return;
@@ -119,7 +127,8 @@ class TreeFileProvider {
     }
 
     getTreeItem(element) {
-        return element; // Nếu là group cha thì giữ nguyên
+      
+        return element; 
     }
     async getChildren(element) {
         if (!element) {
@@ -148,7 +157,7 @@ class TreeFileProvider {
         });
         openFiles.forEach(filePath => this.addFileToTree(filePath));
         return [...this.treeData.keys()].map((groupName) => {
-           // new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
+            // new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed)
             const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
             groupItem.contextValue = "group"; // Đặt context cho group
             return groupItem;
@@ -164,6 +173,16 @@ class TreeFileProvider {
         item.resourceUri = vscode.Uri.file(filePath);
         item.contextValue = "file"; // Chỉ file mới có context menu
         item.description = `(${folderName})`;
+        
+        if (item.contextValue === 'file') {
+            const openDoc = vscode.workspace.textDocuments.find(doc =>
+                doc.uri.toString() === item.resourceUri.toString() && doc.isDirty
+            );
+            if (openDoc) {
+                item.label = `● ${path.basename(filePath)}`;
+            }
+        }
+    
         item.command = {
             command: "vscode.open",
             arguments: [vscode.Uri.file(filePath)],
@@ -194,8 +213,8 @@ class TreeFileProvider {
             })
             .filter(filePath => filePath !== null);
     }
-     
-     
+
+
     getParentGroup(treeItem) {
         for (const [group, items] of this.treeData) {
             if (items.includes(treeItem)) return new vscode.TreeItem(group, vscode.TreeItemCollapsibleState.Expanded);
