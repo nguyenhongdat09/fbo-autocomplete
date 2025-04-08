@@ -19,7 +19,9 @@ class TreeFileProvider {
         // Khởi tạo tree view
         this.treeView = vscode.window.createTreeView("fbo_file", {
             treeDataProvider: this,
-            dragAndDropController: this
+            dragAndDropController: this,
+            showCollapseAll: true,
+            canSelectMany: true // 🔥 Cho phép chọn nhiều file
         });
 
         vscode.window.onDidChangeVisibleTextEditors(async () => {
@@ -74,7 +76,7 @@ class TreeFileProvider {
         const files = this.treeData.get(groupName).map(item => item.resourceUri.toString());
         // 📌 Lấy tất cả các tab đang mở trong VSCode
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-    
+        
         // 🔍 Lọc các tab thuộc nhóm cần đóng
         const targetTabs = tabs.filter(tab => {
             const input = tab.input;
@@ -179,51 +181,21 @@ class TreeFileProvider {
     async getOpenEditors() {
         const openTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
         return openTabs
-            .map(tab => (tab.input instanceof vscode.TabInputText ? tab.input.uri?.fsPath : null))
+            .map(tab => {
+                if (tab.input instanceof vscode.TabInputText) {
+                    const uri = tab.input.uri;
+                    // ❌ Loại nếu là Untitled hoặc không có fsPath
+                    if (uri.scheme === 'untitled' || !uri.fsPath || uri.fsPath.includes('Untitled')) {
+                        return null;
+                    }
+                    return uri.fsPath;
+                }
+                return null;
+            })
             .filter(filePath => filePath !== null);
     }
-
-    async handleDrop(target, sources) {
-        return
-        var last_file = ''
-        for (const source of sources) {
-            var data = source[1].value;
-            // Dữ liệu file được kéo vào (có thể chứa nhiều dòng)
-            const filePaths = data.split("\n").map(line => line.trim()).filter(line => line);
-            for (const filePath of filePaths) {
-                try {
-                    const uri = vscode.Uri.parse(filePath);
-                    last_file = uri.fsPath
-                    await vscode.window.showTextDocument(uri, { preview: false });
-                    // 🌟 Trỏ vào file trong TreeView 
-                } catch (error) {
-                    console.error("Lỗi parse URI:", error);
-                }
-            }
-        }
-        // Chỉ thêm file vào Open Editors, không mở
-        await this.refresh()
-        setTimeout(async () => {
-            const treeItem = this.getTreeItemByPath(last_file);
-            const parentGroup = this.getParentGroup(treeItem);
-            if (parentGroup) {
-                try {
-                    // Bước 1: Mở `parentGroup` nếu nó đang bị collapsed
-                    if (parentGroup.collapsibleState === vscode.TreeItemCollapsibleState.Collapsed) {
-                        await this.treeView.reveal(parentGroup, { select: false, expand: true });
-                    }
-                    if (!this.expandedGroups.has(parentGroup.label)) {
-                        await this.treeView.reveal(parentGroup, { select: false, expand: true });
-                        this.expandedGroups.add(parentGroup.label); // Đánh dấu group đã mở
-                    }
-                    // Bước 2: Sau khi mở parentGroup, mới reveal file
-                    await this.treeView.reveal(treeItem, { select: true, expand: true });
-                } catch (error) {
-                    console.error("1 ❌ Lỗi khi reveal tree item:", error);
-                }
-            }
-        }, 100);
-    }
+     
+     
     getParentGroup(treeItem) {
         for (const [group, items] of this.treeData) {
             if (items.includes(treeItem)) return new vscode.TreeItem(group, vscode.TreeItemCollapsibleState.Expanded);

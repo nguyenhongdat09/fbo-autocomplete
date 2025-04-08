@@ -39,6 +39,16 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.GenerateCopyFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.RenameFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
           "command": "fbo-autocomplete.closeFile",
           "when": "viewItem == file",
           "group": "inline"
@@ -121,6 +131,14 @@
         "key": "f4",
         "mac": "f4",
         "when": "editorTextFocus"
+      },
+      {
+        "key": "ctrl+shift+x",
+        "command": "fboFile.GenerateCopyFile"  
+      },
+      {
+        "key": "ctrl+shift+d",
+        "command": "fboFile.RenameFile"  
       }
     ],
     "commands": [
@@ -179,6 +197,14 @@
       {
         "command": "fboFile.CopyPath",
         "title": "Copy Path"
+      },
+      {
+        "command": "fboFile.GenerateCopyFile",
+        "title": "Generate Copy File"
+      },
+      {
+        "command": "fboFile.RenameFile",
+        "title": "Rename File"
       },
       {
         "command": "fbo-autocomplete.reloadTree",
