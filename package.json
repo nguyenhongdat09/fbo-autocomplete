@@ -141,12 +141,12 @@
         "command": "fboFile.RenameFile"
       },
       {
-        "key": "ctrl+c",
-        "command": "fboFile.CopyPath" 
+        "key": "ctrl+shift+c",
+        "command": "fboFile.CopyPaths"
       },
       {
         "key": "ctrl+shift+v",
-        "command": "fboFile.PasteFilesToGroup" 
+        "command": "fboFile.PasteFilesToGroup"
       }
     ],
     "commands": [
@@ -211,6 +211,10 @@
         "title": "Copy Path"
       },
       {
+        "command": "fboFile.CopyPaths",
+        "title": "Copy Multi Path"
+      },
+      {
         "command": "fboFile.GenerateCopyFile",
         "title": "Generate Copy File"
       },
@@ -265,7 +269,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.99.1",
+    "webpack": "^5.99.5",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {

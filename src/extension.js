@@ -58,23 +58,23 @@ async function activate(context) {
     // Thêm sự kiện mở file XML
     const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'xml' && document.uri.scheme === 'file') {
-            ReadXMLVS2008.readXml(document.uri.fsPath);
+            ReadXMLVS2008.readXml(document.uri.fsPath, context);
         }
     });
     // Thêm sự kiện lưu file XML
     const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
         if (document.languageId === 'xml' && document.uri.scheme === 'file') {
-            ReadXMLVS2008.readXml(document.uri.fsPath);
+            ReadXMLVS2008.readXml(document.uri.fsPath, context);
         }
     });
 
-    const entityHoverProvider = new EntityHoverProvider(__dirname);
+    const entityHoverProvider = new EntityHoverProvider(__dirname, context);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
     })
-
+    
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
             // Nếu đang bật, hủy CodeLensProvider

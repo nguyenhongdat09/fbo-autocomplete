@@ -3,8 +3,8 @@ const fs = require("fs");
 const path = require("path");
   
 class EntityHoverProvider {
-    constructor(extensionDirectory) {
-        this.jsonEntityFolder = path.join(extensionDirectory, '..', "ReadXML" , "JsonEntity");
+    constructor(extensionDirectory, context) {
+        this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML" , "JsonEntity");
     }  
      formatXml(xml) {
         const PADDING = ' '.repeat(2); // Đặt indent size
@@ -50,6 +50,7 @@ class EntityHoverProvider {
         const filePath = document.uri.fsPath
         // Kiểm tra thư mục JsonEntity
         if (!fs.existsSync(this.jsonEntityFolder)) {
+            console.log(this.jsonEntityFolder)
             return new vscode.Hover("Error: JsonEntity folder not found.");
         } 
         const files = fs.readdirSync(this.jsonEntityFolder);

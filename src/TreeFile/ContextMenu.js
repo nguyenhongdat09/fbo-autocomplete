@@ -9,10 +9,12 @@ class ContextMenuHandler {
         // Đăng ký command cho context menu
         this.context.subscriptions.push(
             vscode.commands.registerCommand("fboFile.openRevealFolder", this.openRevealFolder)
-        );
-        // Đăng ký command cho context menu 
+        ); 
         this.context.subscriptions.push(
             vscode.commands.registerCommand("fboFile.CopyPath", () => this.CopyPath())
+        ); 
+        this.context.subscriptions.push(
+            vscode.commands.registerCommand("fboFile.CopyPaths", () => this.CopyPaths())
         );
 
         vscode.commands.registerCommand("fboFile.GenerateCopyFile", async () => {
@@ -139,7 +141,7 @@ class ContextMenuHandler {
 
         require("child_process").exec(openCommand);
     }
-    async CopyPath() {
+    async CopyPaths() {
         // Nếu dùng trong TreeView thì lấy từ selection của tree
         const selected = this.treeView?.selection ?? [];
 
@@ -157,7 +159,24 @@ class ContextMenuHandler {
         await vscode.env.clipboard.writeText(JSON.stringify(selected.map(f => f.resourceUri.fsPath)));
 
     }
+    async CopyPath() {
+        // Nếu dùng trong TreeView thì lấy từ selection của tree
+        const selected = this.treeView?.selection ?? [];
 
+        if (!selected || selected.length === 0) {
+            vscode.window.showErrorMessage("Không có file nào được chọn.");
+            return;
+        }
+
+        const paths = selected.map(item => item.resourceUri?.fsPath).filter(Boolean);
+        if (paths.length === 0) {
+            vscode.window.showErrorMessage("Không tìm thấy đường dẫn nào hợp lệ.");
+            return;
+        }
+
+        await vscode.env.clipboard.writeText(paths.join('\n'));
+
+    }
 
     async generateCopyForFiles(files) {
         const createdFiles = [];

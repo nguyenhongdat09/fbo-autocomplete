@@ -4,9 +4,8 @@ const exec = require("child_process").exec;
 const vscode = require("vscode");
  
 class ReadXMLVS2008 {
-    static async readXml(filePath) {
-        const exePath = path.join(__dirname, "..", "ReadXML", "ReadXML.exe");
-        
+    static async readXml(filePath, context) {
+        const exePath = path.join(context.extensionPath, 'src', "ReadXML", "ReadXML.exe"); 
         // Gọi file .exe với đường dẫn file XML
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
