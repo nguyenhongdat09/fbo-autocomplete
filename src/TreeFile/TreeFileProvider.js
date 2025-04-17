@@ -1,12 +1,14 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
+const app_dataChecker = require("./AppDataPathHelper");
 
 class TreeFileProvider {
     constructor() {
         this.refreshEvent = new vscode.EventEmitter();
         this.onDidChangeTreeData = this.refreshEvent.event;
         this.treeData = new Map();
+        this.app_dataChecker = new app_dataChecker();
         // ⚡ Bổ sung để hỗ trợ Drag & Drop
         this.dropMimeTypes = ["text/uri-list"];
         this.dragMimeTypes = ["text/uri-list"];
@@ -34,12 +36,12 @@ class TreeFileProvider {
             this.refreshEvent.fire();
         });
         vscode.window.onDidChangeVisibleTextEditors(async () => {
-            await this.refresh();
+            this.refreshEvent.fire();
         });
 
         vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async () => {
             if (this.treeView.visible) {
-                await this.refresh();
+                this.refreshEvent.fire();
             }
         });
         vscode.commands.registerCommand("fbo-autocomplete.closeFile", async (element) => {
@@ -51,18 +53,16 @@ class TreeFileProvider {
             }
         });
 
-
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
-            this.refresh();
+            this.refreshEvent.fire();
             vscode.window.showInformationMessage("FBO File Tree đã được reload!");
         });
 
         // Thêm vào subscriptions để tự động clean up khi extension bị tắt
         context.subscriptions.push(this.treeView, disposable);
     }
-
-
+ 
 
     async closeFile(element) {
         if (!element || !element.resourceUri) return;
@@ -72,8 +72,18 @@ class TreeFileProvider {
         // 🔍 Kiểm tra từng tab xem có phải file cần đóng không
         const targetTab = tabs.find(tab => {
             const input = tab.input;
-            return input && typeof input === "object" && "uri" in input && input.uri.toString() === fileUri;
+            if (!input || typeof input !== "object") return false;
+        
+            // Một số loại tab đặc biệt (như settings.json) có uri nằm trong input.uri hoặc input.resource
+            if ("uri" in input && input.uri.toString() === fileUri) {
+                return true;
+            }
+            if ("resource" in input && input.resource.toString() === fileUri) {
+                return true;
+            }
+            return false;
         });
+      
         if (targetTab) {
             // 🔥 **Đóng tab mà không cần mở**
             await vscode.window.tabGroups.close([targetTab]);
@@ -103,8 +113,6 @@ class TreeFileProvider {
 
         await this.refresh(); // Làm mới cây
     }
-
-
     async revealActiveFile(e) {
         if (!e.visible) return;
         const activeEditor = vscode.window.activeTextEditor;
@@ -129,12 +137,10 @@ class TreeFileProvider {
             }
         }, 20);
     }
-
-    getTreeItem(element) {
-
+    getTreeItem(element) { 
         return element;
     }
-    async getChildren(element) {
+    async getChildren(element) { 
         if (!element) {
             return this.buildTree();
         }
@@ -149,24 +155,29 @@ class TreeFileProvider {
         openFiles.sort((a, b) => {
             const groupA = this.getGroupName(a);
             const groupB = this.getGroupName(b);
-            return groupA.localeCompare(groupB); // So sánh chuỗi để sort
-        });
-        openFiles.sort((a, b) => {
-            const extA = path.extname(a).toLowerCase(); // Lấy phần mở rộng file
+            if (groupA !== groupB) {
+                return groupA.localeCompare(groupB); // Ưu tiên groupName
+            }
+        
+            const extA = path.extname(a).toLowerCase();
             const extB = path.extname(b).toLowerCase();
             if (extA !== extB) {
-                return extA.localeCompare(extB); // Ưu tiên sắp xếp theo loại file trước
+                return extA.localeCompare(extB); // Ưu tiên theo extension
             }
-            return path.basename(a).localeCompare(path.basename(b)); // Sau đó mới so sánh theo tên file
+        
+            return path.basename(a).localeCompare(path.basename(b)); // Cuối cùng so sánh tên file
         });
+        
         openFiles.forEach(filePath => this.addFileToTree(filePath));
+        
         return [...this.treeData.keys()].map((groupName) => {
             return this.groupItems.get(groupName); // 🔥 Dùng lại groupItem đã tạo
         });
-        
     }
-
     addFileToTree(filePath) {
+        const uri = vscode.Uri.file(filePath);
+        // ❌ Không xử lý nếu không phải là file scheme 
+        if (uri.scheme !== 'file') return;
         const groupName = this.getGroupName(filePath);
         if (!groupName) return;
         const folderName = path.basename(path.dirname(filePath));
@@ -174,45 +185,36 @@ class TreeFileProvider {
         item.resourceUri = vscode.Uri.file(filePath);
         item.contextValue = "file"; // Chỉ file mới có context menu
         item.description = `(${folderName})`;
-
         if (item.contextValue === 'file') {
             const openDoc = vscode.workspace.textDocuments.find(doc =>
                 doc.uri.toString() === item.resourceUri.toString() && doc.isDirty
             );
             if (openDoc) {
-                item.label = `● ${path.basename(filePath)}`;
+                item.description =`(${folderName}) ●`; 
             }
         }
-
         item.command = {
             command: "vscode.open",
             arguments: [vscode.Uri.file(filePath)],
             title: "Mở file"
         };
-
         if (!this.treeData.has(groupName)) {
             const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
             groupItem.contextValue = "group";
-        
             const groupPath = this.getGroupRootPath(filePath);
+            
             if (groupPath) {
                 groupItem.resourceUri = vscode.Uri.file(groupPath);
-            }
-        
+            } 
             groupItem.contextValue = "group";
             this.treeData.set(groupName, []);
             this.groupItems.set(groupName, groupItem); // 🔥 Lưu lại groupItem
         }
-        
         this.treeData.get(groupName).push(item);
     }
     getGroupRootPath(filePath) {
-        const parts = filePath.split(/[/\\]/);
-        const appDataIndex = parts.findIndex(p => p.toLowerCase() === "app_data");
-        if (appDataIndex > 0) {
-            return parts.slice(0, appDataIndex).join(path.sep);
-        }
-        return null;
+        this.app_dataChecker.filePath = filePath;
+        return this.app_dataChecker.getProjectPath();
     }
 
     async getOpenEditors() {
@@ -258,33 +260,12 @@ class TreeFileProvider {
         return null;
     }
     getGroupName(filePath) {
-        const parts = filePath.split(path.sep);
-        const index = parts.findIndex(part => part === "App_Data");
-
-        if (index > 1) {
-            // ✅ Nếu file nằm trong App_Data -> Trả về theo chuẩn cũ
-            return `${parts[index - 1]} - ${parts[index - 2]}`.toUpperCase();
-        } else {
-            // ✅ Kiểm tra nếu file nằm trong folder cùng cấp với App_Data
-            const parentFolder = parts[parts.length - 2]; // Lấy tên thư mục cha của file
-            const rootPath = parts.slice(0, -2).join(path.sep); // Lấy phần path trước folder cha
-
-            if (fs.existsSync(path.join(rootPath, "App_Data"))) {
-                // ✅ Nếu file nằm trong một folder cùng cấp với App_Data
-                return `${parts[parts.length - 3]} - ${path.basename(parts.slice(0, -3).join(path.sep))}`.toUpperCase();
-            }
-
-            // ✅ Nếu file nằm trực tiếp cùng cấp với App_Data (không nằm trong folder nào)
-            if (fs.existsSync(path.join(path.dirname(filePath), "App_Data"))) {
-                return `${parts[parts.length - 2]} - ${path.basename(parts.slice(0, -2).join(path.sep))}`.toUpperCase();
-            }
-        }
-
-        return "Other"; // Trường hợp không khớp với điều kiện nào
+        this.app_dataChecker.filePath = filePath;
+        return this.app_dataChecker.getGroupName();
     }
 
     async refresh() {
-        await this.buildTree(); // Cập nhật dữ liệu
+       // await this.buildTree(); // Cập nhật dữ liệu
         await this.refreshEvent.fire();
     }
 }

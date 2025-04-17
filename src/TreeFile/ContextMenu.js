@@ -1,23 +1,29 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
-
+const app_dataChecker = require("./AppDataPathHelper");
+const { exec } = require('child_process');
+const os = require("os");
 class ContextMenuHandler {
     constructor(context, treeView) {
         this.context = context;
         this.treeView = treeView;
+        this.app_dataChecker = new app_dataChecker();
         // Đăng ký command cho context menu
         this.context.subscriptions.push(
             vscode.commands.registerCommand("fboFile.openRevealFolder", this.openRevealFolder)
-        ); 
+        );
         this.context.subscriptions.push(
             vscode.commands.registerCommand("fboFile.CopyPath", () => this.CopyPath())
-        ); 
+        );
         this.context.subscriptions.push(
             vscode.commands.registerCommand("fboFile.CopyPaths", () => this.CopyPaths())
         );
+        this.context.subscriptions.push(
+            vscode.commands.registerCommand('fboFile.CopyFile', () => this.copyFile())
+        );
 
-        vscode.commands.registerCommand("fboFile.GenerateCopyFile", async () => {
+        vscode.commands.registerCommand("fboFile.GenerateCopyFile", async (treeItem) => {
             let targets = [];
 
             // Ưu tiên từ treeView
@@ -35,9 +41,12 @@ class ContextMenuHandler {
                 return;
             }
 
-            await this.generateCopyForFiles(targets);
+            await this.generateCopyForFiles(targets, treeItem);
         });
-
+        this.treeView.onDidChangeSelection((e) => {
+            const isFileSelected = e.selection.length > 0 && e.selection.every(item => item.contextValue === 'file');
+            vscode.commands.executeCommand('setContext', 'fboViewFileSelected', isFileSelected);
+        });
         vscode.commands.registerCommand("fboFile.PasteFilesToGroup", async () => {
             let groupItem = null;
             // Ưu tiên lấy từ treeView selection
@@ -82,24 +91,21 @@ class ContextMenuHandler {
         const targetGroupPath = groupItem.resourceUri.fsPath;
         let count = 0;
         const openedUris = [];
-    
         for (const originalPath of filePaths) {
-            const relative = this.getAppDataRelativePath(originalPath);
-            if (!relative) continue;
-    
-            const destinationPath = path.join(targetGroupPath, relative);
-    
+            this.app_dataChecker.filePath = originalPath;
+            if (this.app_dataChecker.getGroupName() == 'Other') continue;
+            if (this.app_dataChecker.getPathAfterProject().length == 1) continue;
+            const destinationPath = path.join(targetGroupPath, this.app_dataChecker.getPathAfterProject()[1]);
             // Nếu file đã tồn tại thì xác nhận từng cái
-            if (fs.existsSync(destinationPath)) { 
+            if (fs.existsSync(destinationPath)) {
                 const result = await vscode.window.showWarningMessage(
                     `"${destinationPath}" đã tồn tại. Bạn có muốn ghi đè không?`,
                     { modal: true },
                     "Ghi đè", "Bỏ qua"
                 );
-    
+
                 if (result !== "Ghi đè") continue; // bỏ qua nếu không chọn ghi đè
             }
-    
             try {
                 fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
                 fs.copyFileSync(originalPath, destinationPath);
@@ -109,7 +115,7 @@ class ContextMenuHandler {
                 vscode.window.showErrorMessage(`❌ Lỗi khi copy file: ${originalPath} -> ${err.message}`);
             }
         }
-    
+
         // ✅ Mở tất cả các file đã paste
         for (const uri of openedUris) {
             try {
@@ -120,14 +126,6 @@ class ContextMenuHandler {
         }
         //vscode.window.showInformationMessage(`✅ Đã dán ${count} file vào ${groupItem.label}`);
     }
-    
-
-    //Hàm lấy đường dẫn từ App_Data trở đi 
-    getAppDataRelativePath(fullPath) {
-        const index = fullPath.toLowerCase().indexOf("app_data");
-        return index !== -1 ? fullPath.substring(index) : null;
-    }
-
 
     openRevealFolder(uri) {
         if (!uri) {
@@ -142,45 +140,15 @@ class ContextMenuHandler {
         require("child_process").exec(openCommand);
     }
     async CopyPaths() {
-        // Nếu dùng trong TreeView thì lấy từ selection của tree
         const selected = this.treeView?.selection ?? [];
-
-        if (!selected || selected.length === 0) {
-            vscode.window.showErrorMessage("Không có file nào được chọn.");
-            return;
-        }
-
-        const paths = selected.map(item => item.resourceUri?.fsPath).filter(Boolean);
-        if (paths.length === 0) {
-            vscode.window.showErrorMessage("Không tìm thấy đường dẫn nào hợp lệ.");
-            return;
-        }
-
         await vscode.env.clipboard.writeText(JSON.stringify(selected.map(f => f.resourceUri.fsPath)));
-
     }
     async CopyPath() {
-        // Nếu dùng trong TreeView thì lấy từ selection của tree
-        const selected = this.treeView?.selection ?? [];
-
-        if (!selected || selected.length === 0) {
-            vscode.window.showErrorMessage("Không có file nào được chọn.");
-            return;
-        }
-
-        const paths = selected.map(item => item.resourceUri?.fsPath).filter(Boolean);
-        if (paths.length === 0) {
-            vscode.window.showErrorMessage("Không tìm thấy đường dẫn nào hợp lệ.");
-            return;
-        }
-
+        const paths = this.getPathsSelect();
         await vscode.env.clipboard.writeText(paths.join('\n'));
-
     }
-
-    async generateCopyForFiles(files) {
+    async generateCopyForFiles(files, treeItem) {
         const createdFiles = [];
-
         for (const item of files) {
             const filePath = item?.resourceUri?.fsPath;
             if (!filePath || !fs.existsSync(filePath)) continue;
@@ -282,8 +250,48 @@ class ContextMenuHandler {
         }
     }
 
+    copyFilesToClipboard(filePaths) {
+        if (!filePaths || filePaths.length === 0) return;
+        const psScript = `
+            Add-Type -AssemblyName System.Windows.Forms
+            $data = New-Object System.Collections.Specialized.StringCollection
+            ${filePaths.map(p => `$data.Add("${p.replace(/"/g, '`"')}")`).join("\n")}
+            [System.Windows.Forms.Clipboard]::SetFileDropList($data)
+        `;
+        const tempDir = os.tmpdir();
+        const psFilePath = path.join(tempDir, "fbo_copy.ps1");
+        fs.writeFileSync(psFilePath, psScript);
+        // ⚡ Thực thi file PowerShell ngầm
+        const command = `powershell -WindowStyle Hidden -ExecutionPolicy Bypass -File "${psFilePath}"`;
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                vscode.window.showErrorMessage("⚠️ Copy file(s) failed: " + error.message);
+                console.error("❌ Error:", error);
+                return;
+            }
+            if (stderr) {
+                console.warn("⚠️ PowerShell stderr:", stderr);
+            }
+        });
+    }
 
-
+    copyFile() {
+        this.copyFilesToClipboard(this.getPathsSelect());
+    }
+    getPathsSelect() {
+        // Nếu dùng trong TreeView thì lấy từ selection của tree
+        const selected = this.treeView?.selection ?? [];
+        if (!selected || selected.length === 0) {
+            vscode.window.showErrorMessage("Không có file nào được chọn.");
+            return;
+        }
+        const paths = selected.map(item => item.resourceUri?.fsPath).filter(Boolean);
+        if (paths.length === 0) {
+            vscode.window.showErrorMessage("Không tìm thấy đường dẫn nào hợp lệ.");
+            return [];
+        }
+        return paths
+    }
 
 }
 module.exports = ContextMenuHandler;

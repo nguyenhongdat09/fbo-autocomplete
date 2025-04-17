@@ -4,22 +4,49 @@ const path = require('path');
 const ana = require('./AnalystXMLFile');
 
 class CompletionProvider {
-     async provideCompletionItems(document, position) {
-        
+    constructor() {
+
+    }
+    run(context) {
+        const providerAutoComplete = vscode.languages.registerInlineCompletionItemProvider(
+            { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
+            {
+                provideInlineCompletionItems: this.provideCompletionItems.bind(this),
+            }
+        );
+        const genViewFromFields = vscode.languages.registerInlineCompletionItemProvider(
+            { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
+            {
+                provideInlineCompletionItems: this.genViewFromFields.bind(this),
+            }
+        );
+        const genViewFromMissingFields = vscode.languages.registerInlineCompletionItemProvider(
+            { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
+            {
+                provideInlineCompletionItems: this.genViewFromMissingFields.bind(this),
+            }
+        );
+        const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
+            this.applyCompletionItem(line, position);
+        });
+        context.subscriptions.push(autoCompleteFields, providerAutoComplete, genViewFromFields, genViewFromMissingFields);
+    }
+
+    async provideCompletionItems(document, position) {
         const line = document.lineAt(position);
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
-        const completionItems = []; 
-        const folderName = this.getFolderName(textBeforeCursor, document); 
+        const completionItems = [];
+        const folderName = this.getFolderName(textBeforeCursor, document);
         if (folderName == '') {
             return completionItems;
-        } 
-        try { 
+        }
+        try {
             const text = await this.getTextComplete(line.b, folderName);
             const completionItem = this.createCompleteItem(text, line, position);
             completionItems.push(completionItem);
         } catch (error) {
             vscode.window.showErrorMessage(error);
-        }  
+        }
         return completionItems;
     }
 
@@ -43,39 +70,39 @@ class CompletionProvider {
         }
         const db = level(dbPath, { createIfMissing: false }, function (err) {
             if (err instanceof level.errors.OpenError) {
-              vscode.window.showErrorMessage(`failed to open database: ${err}`);
+                vscode.window.showErrorMessage(`failed to open database: ${err}`);
             }
-         });
+        });
         var text = '';
-        try {  
+        try {
             const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
-            
+
             var text = await db.get(key); // Sử dụng Promise API của level
             const match = text.match(/reference="([^"]+)"/);
             if (match) {
                 const reference = match[1] + 'ex' // Tách lấy reference từ text
-                var ref_text = await db.get(reference) 
-                if(ref_text)
+                var ref_text = await db.get(reference)
+                if (ref_text)
                     text += '\n' + ref_text;
-            } 
+            }
             return text; // Trả về kết quả nếu tìm thấy
         } catch (err) {
             if (err.notFound) {
                 vscode.window.showErrorMessage(err);
-                return text ? text : '';  
-            } 
+                return text ? text : '';
+            }
             vscode.window.showErrorMessage(err);
             return text ? text : '';
         } finally {
             db.close(); // Đảm bảo đóng database
         }
     }
-    
-    
+
+
     getFolderName(inputText, document) {
         let prefixFolder = '';
         const path = document.uri.path;
-        
+
         if (inputText.startsWith('$f')) {
             if (path.includes('Dir')) {
                 prefixFolder = 'Dir';
@@ -90,8 +117,8 @@ class CompletionProvider {
             }
         }
         return prefixFolder;
-    } 
-    applyCompletionItem(line, position){
+    }
+    applyCompletionItem(line, position) {
         const activeTextEditor = vscode.window.activeTextEditor;
         const document = activeTextEditor.document;
         const edit = new vscode.WorkspaceEdit();
@@ -103,16 +130,16 @@ class CompletionProvider {
         var index = lineText.indexOf(textToReplace.trim());
         // Thay thế nội dung trong dòng bằng chuỗi rỗng new(startLine:Int, startCharacter:Int, endLine:Int, endCharacter:Int)
         edit.replace(document.uri, new vscode.Range(lineNumber, index, lineNumber, document.lineAt(lineNumber).text.length), text);
-        vscode.workspace.applyEdit(edit); 
+        vscode.workspace.applyEdit(edit);
     }
-    async genViewFromFields(document, position){
+    async genViewFromFields(document, position) {
         const line = document.lineAt(position);
         const completionItems = [];
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
         if (textBeforeCursor != '$gff;') {
             return completionItems;
         }
-        if(!document.uri.path.includes('Grid')){
+        if (!document.uri.path.includes('Grid')) {
             return completionItems;
         }
         var name_and_field = await ana.getListField('', document.getText());
@@ -122,6 +149,30 @@ class CompletionProvider {
             if (key != '')
                 textComplete += textComplete == '' ? `<field name="${key}"/>` : `\n<field name="${key}"/>`;
         });
+        const completionItem = this.createCompleteItem(textComplete, line, position);
+        completionItems.push(completionItem);
+        return completionItems;
+    }
+
+    async genViewFromMissingFields(document, position) {
+        const line = document.lineAt(position);
+        const completionItems = [];
+        const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
+        if (textBeforeCursor != '$gfm;') {
+            return completionItems;
+        }
+        if (!document.uri.path.includes('Grid')) {
+            return completionItems;
+        }
+        var name_and_field = await ana.getListField('', document.getText());
+        var name_and_viewItem = await ana.getListViewOnGrid('', document.getText());
+
+        const existingKeysInView = new Set(name_and_viewItem.map(item => item.key));
+        // Lọc ra các field bị thiếu trong <view>
+        const missingFields = name_and_field.filter(item => !existingKeysInView.has(item.key));
+        // Chuyển thành chuỗi XML
+        let textComplete = missingFields.map(item => `<field name="${item.key}"/>`).join('\n');
+        // Tạo CompletionItem như cũ
         const completionItem = this.createCompleteItem(textComplete, line, position);
         completionItems.push(completionItem);
         return completionItems;

@@ -19,7 +19,7 @@ const DBStatusBarManagerCls = require("./DBQuery/dbBar");
 const QueryDatabase = require("./DBQuery/QueryDatabase");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
-const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
+const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage"); 
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -28,29 +28,15 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 async function activate(context) {
     console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
     const provider = new CompletionProvider();
-    const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
-        provider.applyCompletionItem(line, position);
-    });
+    provider.run(context)
+ 
     const upsettings = new updateSettings();
     upsettings.updateSettingsJson.bind(upsettings)(context);
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
     const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
         renderXMLToDB.render();
-    });
-
-    const providerAutoComplete = vscode.languages.registerInlineCompletionItemProvider(
-        { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
-        {
-            provideInlineCompletionItems: provider.provideCompletionItems.bind(provider),
-        }
-    );
-    const genViewFromFields = vscode.languages.registerInlineCompletionItemProvider(
-        { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
-        {
-            provideInlineCompletionItems: provider.genViewFromFields.bind(provider),
-        }
-    );
+    }); 
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
@@ -249,7 +235,7 @@ async function activate(context) {
             translateAuto.transWithKeyBoards()
         }
     });
-    const chk = new CheckLegacyCode(__dirname);
+    const chk = new CheckLegacyCode(context);
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
         chk.run.bind(chk)()
     });
@@ -273,8 +259,7 @@ async function activate(context) {
     const treeDataProvider = new TreeFileProvider();
     treeDataProvider.run(context);
     const contextMenu = new ContextMenuHandler(context, treeDataProvider.treeView)
-
-
+ 
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
@@ -290,10 +275,7 @@ async function activate(context) {
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
-    context.subscriptions.push(render);
-    context.subscriptions.push(providerAutoComplete);
-    context.subscriptions.push(autoCompleteFields);
-    context.subscriptions.push(genViewFromFields);
+    context.subscriptions.push(render); 
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);

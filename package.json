@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.20",
+  "version": "0.0.24",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -35,6 +35,11 @@
         },
         {
           "command": "fboFile.CopyPath",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.CopyFile",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
         },
@@ -81,7 +86,7 @@
       "explorer": [
         {
           "id": "fbo_file",
-          "name": "Group of File By Project FBO"
+          "name": "FBO Project"
         }
       ]
     },
@@ -145,7 +150,7 @@
         "command": "fboFile.CopyPaths"
       },
       {
-        "key": "ctrl+shift+v",
+        "key": "ctrl+shift+l",
         "command": "fboFile.PasteFilesToGroup"
       }
     ],
@@ -213,6 +218,10 @@
       {
         "command": "fboFile.CopyPaths",
         "title": "Copy Multi Path"
+      },
+      {
+        "command": "fboFile.CopyFile",
+        "title": "Copy File"
       },
       {
         "command": "fboFile.GenerateCopyFile",

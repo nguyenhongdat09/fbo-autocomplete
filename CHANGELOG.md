@@ -34,3 +34,12 @@
  - Check Lagacy Message
 # Version 0.0.20
  - Adding Copy, Rename On Tree Fbo
+# Version 0.0.21
+ - Change Ctrl + Shift + V (Paste File to Group) To Ctrl + Shift + L
+# Version 0.0.22
+- Fixing Ctrl + Shift + L
+# Version 0.0.23
+- Fixing Checklagacy
+# Version 0.0.24
+- Fixing tree Copy folder same level of app_data
+- Copy file

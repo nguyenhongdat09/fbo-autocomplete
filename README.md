@@ -34,6 +34,6 @@
  ## Check File Options/Message.xml
 - Kiểm tra duplicate field trong Fields  
 ## Paste file dự án này qua dự án khác 
-- Chọn các file ở group bấm **CTRL+ SHIFT+ C** để copy => Chọn cái header của group muốn paste bấm **CTRL+ SHIFT+ V** để dán vào
+- Chọn các file ở group bấm **CTRL+ SHIFT+ C** để copy => Chọn cái header của group muốn paste bấm **CTRL+ SHIFT+ L** để dán vào
 
  

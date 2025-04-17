@@ -2,9 +2,9 @@ const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path')
 class CheckLegacyCode {
-    constructor(extensionDirectory) {
+    constructor(context) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
-        this.jsonEntityFolder = path.join(extensionDirectory, '..', "ReadXML", "JsonEntity");
+        this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML" , "JsonEntity");
     }
 
     getFilePathEntity() {
@@ -29,13 +29,14 @@ class CheckLegacyCode {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape các ký tự đặc biệt
     }
     run() {
-        var editor = vscode.window.activeTextEditor;
+        const editor = vscode.window.activeTextEditor;
         if (!editor) return;
-        var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
-
-        if (!(filePath.includes('Dir') || filePath.includes('Filter'))) {
-            // vscode.window.showErrorMessage('This feature work on Dir/Fitler Folder')
-            return
+        
+        const filePath = editor.document.uri.fsPath;
+        const dirPath = path.dirname(filePath); // 👈 chỉ lấy thư mục chứa file
+        
+        if (!(dirPath.includes('Dir') || dirPath.includes('Filter'))) {
+            return;
         }
         var content = vscode.window.activeTextEditor.document.getText();
 
