@@ -8,7 +8,7 @@
         -  `$gi.field;` dùng cho file Grid các trường dạng **Input**: `$gi.ma_kh;`
         -  `$gv.field;` dùng cho file Grid các trường dạng **View**: `$gv.ma_kh;`
     - ##### Phần gen thẻ `<view>`
-        - `$gff;`
+        - `$gff;` 
 
 ## Cách cài đặt 
 - Sau khi install .vsix mở file bất kỳ ở một trong 3 Folder Grid, Dir, Filter bấm **Ctrl + Shift + P** Nhập **Render XML To Database** => Enter. 

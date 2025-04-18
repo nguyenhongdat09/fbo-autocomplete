@@ -20,16 +20,10 @@ class CompletionProvider {
                 provideInlineCompletionItems: this.genViewFromFields.bind(this),
             }
         );
-        const genViewFromMissingFields = vscode.languages.registerInlineCompletionItemProvider(
-            { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
-            {
-                provideInlineCompletionItems: this.genViewFromMissingFields.bind(this),
-            }
-        );
         const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
             this.applyCompletionItem(line, position);
         });
-        context.subscriptions.push(autoCompleteFields, providerAutoComplete, genViewFromFields, genViewFromMissingFields);
+        context.subscriptions.push(autoCompleteFields, providerAutoComplete, genViewFromFields);
     }
 
     async provideCompletionItems(document, position) {
@@ -143,28 +137,6 @@ class CompletionProvider {
             return completionItems;
         }
         var name_and_field = await ana.getListField('', document.getText());
-        var textComplete = '';
-        name_and_field.forEach(item => {
-            var key = item.key;
-            if (key != '')
-                textComplete += textComplete == '' ? `<field name="${key}"/>` : `\n<field name="${key}"/>`;
-        });
-        const completionItem = this.createCompleteItem(textComplete, line, position);
-        completionItems.push(completionItem);
-        return completionItems;
-    }
-
-    async genViewFromMissingFields(document, position) {
-        const line = document.lineAt(position);
-        const completionItems = [];
-        const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
-        if (textBeforeCursor != '$gfm;') {
-            return completionItems;
-        }
-        if (!document.uri.path.includes('Grid')) {
-            return completionItems;
-        }
-        var name_and_field = await ana.getListField('', document.getText());
         var name_and_viewItem = await ana.getListViewOnGrid('', document.getText());
 
         const existingKeysInView = new Set(name_and_viewItem.map(item => item.key));
@@ -177,6 +149,7 @@ class CompletionProvider {
         completionItems.push(completionItem);
         return completionItems;
     }
+ 
 }
 
 module.exports = CompletionProvider;

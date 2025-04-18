@@ -43,3 +43,7 @@
 # Version 0.0.24
 - Fixing tree Copy folder same level of app_data
 - Copy file
+- Fixing gff; take field only missing
+# Version 0.0.25
+- Refactor Tree
+- Add drag file to group

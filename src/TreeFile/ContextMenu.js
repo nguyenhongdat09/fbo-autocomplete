@@ -24,8 +24,7 @@ class ContextMenuHandler {
         );
 
         vscode.commands.registerCommand("fboFile.GenerateCopyFile", async (treeItem) => {
-            let targets = [];
-
+            let targets = []; 
             // Ưu tiên từ treeView
             if (this.treeView?.selection?.length > 0) {
                 targets = this.treeView.selection.filter(item => item?.resourceUri);
@@ -41,7 +40,7 @@ class ContextMenuHandler {
                 return;
             }
 
-            await this.generateCopyForFiles(targets, treeItem);
+            await this.generateCopyForFiles(targets);
         });
         this.treeView.onDidChangeSelection((e) => {
             const isFileSelected = e.selection.length > 0 && e.selection.every(item => item.contextValue === 'file');
@@ -62,11 +61,9 @@ class ContextMenuHandler {
             }
             const filePaths = await this.getCopiedFilePathsFromClipboard();
             if (!filePaths) return;
-            await this.pasteFilesToGroup(groupItem, filePaths);
-
+            await this.app_dataChecker.pasteFilesToGroup(groupItem.resourceUri.fsPath, filePaths);
         });
-
-
+ 
         this.context.subscriptions.push(
             vscode.commands.registerCommand('fboFile.RenameFile', this.renameFileCommand)
         );
@@ -86,46 +83,7 @@ class ContextMenuHandler {
             return null;
         }
     }
-    //Hàm dán file vào group đích
-    async pasteFilesToGroup(groupItem, filePaths) {
-        const targetGroupPath = groupItem.resourceUri.fsPath;
-        let count = 0;
-        const openedUris = [];
-        for (const originalPath of filePaths) {
-            this.app_dataChecker.filePath = originalPath;
-            if (this.app_dataChecker.getGroupName() == 'Other') continue;
-            if (this.app_dataChecker.getPathAfterProject().length == 1) continue;
-            const destinationPath = path.join(targetGroupPath, this.app_dataChecker.getPathAfterProject()[1]);
-            // Nếu file đã tồn tại thì xác nhận từng cái
-            if (fs.existsSync(destinationPath)) {
-                const result = await vscode.window.showWarningMessage(
-                    `"${destinationPath}" đã tồn tại. Bạn có muốn ghi đè không?`,
-                    { modal: true },
-                    "Ghi đè", "Bỏ qua"
-                );
-
-                if (result !== "Ghi đè") continue; // bỏ qua nếu không chọn ghi đè
-            }
-            try {
-                fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
-                fs.copyFileSync(originalPath, destinationPath);
-                openedUris.push(vscode.Uri.file(destinationPath));
-                count++;
-            } catch (err) {
-                vscode.window.showErrorMessage(`❌ Lỗi khi copy file: ${originalPath} -> ${err.message}`);
-            }
-        }
-
-        // ✅ Mở tất cả các file đã paste
-        for (const uri of openedUris) {
-            try {
-                await vscode.window.showTextDocument(uri, { preview: false, viewColumn: vscode.ViewColumn.Active });
-            } catch (err) {
-                vscode.window.showWarningMessage(`Không thể mở file: ${uri.fsPath}`);
-            }
-        }
-        //vscode.window.showInformationMessage(`✅ Đã dán ${count} file vào ${groupItem.label}`);
-    }
+     
 
     openRevealFolder(uri) {
         if (!uri) {
@@ -147,7 +105,7 @@ class ContextMenuHandler {
         const paths = this.getPathsSelect();
         await vscode.env.clipboard.writeText(paths.join('\n'));
     }
-    async generateCopyForFiles(files, treeItem) {
+    async generateCopyForFiles(files) {
         const createdFiles = [];
         for (const item of files) {
             const filePath = item?.resourceUri?.fsPath;
@@ -181,13 +139,7 @@ class ContextMenuHandler {
                 preview: false,
                 viewColumn: vscode.ViewColumn.Active,
             });
-        }
-
-        if (createdFiles.length > 0) {
-            vscode.window.showInformationMessage(`✅ Đã tạo bản sao cho ${createdFiles.length} file.`);
-        } else {
-            vscode.window.showWarningMessage(`⚠️ Không có file nào được copy.`);
-        }
+        } 
     }
 
 
@@ -269,9 +221,9 @@ class ContextMenuHandler {
                 console.error("❌ Error:", error);
                 return;
             }
-            if (stderr) {
+            if (stderr) { 
                 console.warn("⚠️ PowerShell stderr:", stderr);
-            }
+            } 
         });
     }
 

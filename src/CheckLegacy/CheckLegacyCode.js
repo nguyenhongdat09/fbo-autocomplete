@@ -41,7 +41,6 @@ class CheckLegacyCode {
         var content = vscode.window.activeTextEditor.document.getText();
 
         // Tách phần DOCTYPE (nếu có)
-       
         let doctypeMatch = content.match(/<!DOCTYPE[\s\S]*?\]>/);
         let doctypeSection = doctypeMatch ? doctypeMatch[0] : "";
         let contentWithoutDoctype = doctypeMatch ? content.replace(doctypeSection, "") : content;
@@ -51,7 +50,7 @@ class CheckLegacyCode {
             for (var ent of ent_content) {
                 if (ent.content !== '') {
                     contentWithoutDoctype = contentWithoutDoctype.replace(ent.entity, ent.content);
-                }
+                } 
             }
         } catch (er) {
             console.error(er);
