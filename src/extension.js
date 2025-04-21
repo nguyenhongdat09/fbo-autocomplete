@@ -19,24 +19,41 @@ const DBStatusBarManagerCls = require("./DBQuery/dbBar");
 const QueryDatabase = require("./DBQuery/QueryDatabase");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
-const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage"); 
+const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
+var fetch = require('node-fetch');
+
+async function checkLicense() {
+    try {
+        var res = await fetch('https://raw.githubusercontent.com/nguyenhongdat09/fbo_license/main/license.json');
+        var data = await res.json();
+        if (!data.active) {
+            vscode.window.showErrorMessage('Extension has been disabled. Contact support.');
+            return false;
+        }
+        return true;
+    } catch (e) { 
+        return false;
+    }
+}
+
 /**
  * @param {vscode.ExtensionContext} context
  */
 async function activate(context) {
     console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
-    const provider = new CompletionProvider();
+    var license = await checkLicense();
+    if(!license) return
+    const provider = new CompletionProvider(); 
     provider.run(context)
- 
     const upsettings = new updateSettings();
     upsettings.updateSettingsJson.bind(upsettings)(context);
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
     const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
         renderXMLToDB.render();
-    }); 
+    });
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
@@ -60,7 +77,7 @@ async function activate(context) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
     })
-    
+
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
             // Nếu đang bật, hủy CodeLensProvider
@@ -239,7 +256,7 @@ async function activate(context) {
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
         chk.run.bind(chk)()
     });
-    
+
     const chkMessage = new CheckLegacyMessage();
     chkMessage.run(context);
 
@@ -248,18 +265,18 @@ async function activate(context) {
             chk.run.bind(chk)()
         });
     }
-/*
-    //Database dbBar
-    const dbstatus = new DBStatusBarManagerCls(context);
-    dbstatus.show()
-    const queryDb = new QueryDatabase(context, dbstatus);
-    */
+    /*
+        //Database dbBar
+        const dbstatus = new DBStatusBarManagerCls(context);
+        dbstatus.show()
+        const queryDb = new QueryDatabase(context, dbstatus);
+        */
     //
     /*Tree view*/
     const treeDataProvider = new TreeFileProvider();
     treeDataProvider.run(context);
     const contextMenu = new ContextMenuHandler(context, treeDataProvider)
-    
+
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
@@ -275,7 +292,7 @@ async function activate(context) {
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
-    context.subscriptions.push(render); 
+    context.subscriptions.push(render);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
