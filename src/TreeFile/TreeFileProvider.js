@@ -9,16 +9,18 @@ class TreeFileProvider {
         this.onDidChangeTreeData = this.refreshEvent.event;
         this.treeData = new Map();
         this.app_dataChecker = new app_dataChecker();
-         this.typeDr = "text/uri-list"
+        this.typeDr = "text/uri-list"
         // ⚡ Bổ sung để hỗ trợ Drag & Drop
         this.dropMimeTypes = [this.typeDr];
-        this.dragMimeTypes = [this.typeDr]; 
+        this.dragMimeTypes = [this.typeDr];
         // 🌟 Lưu treeView để gọi `reveal()`
         this.treeView = null;
         this.groupItems = new Map(); // 🔥 Lưu groupItem có chứa resourceUri
         this.tree_helper = new TreeHelper(this)
+        this.context = null;
     }
     async run(context) {
+        this.context = context;
         // Khởi tạo tree view
         this.treeView = vscode.window.createTreeView("fbo_file", {
             treeDataProvider: this,
@@ -27,7 +29,7 @@ class TreeFileProvider {
             canSelectMany: true // 🔥 Cho phép chọn nhiều file
         });
         // 🔄 Lắng nghe khi document bị sửa (dirty)
-        vscode.workspace.onDidChangeTextDocument( async () => {
+        vscode.workspace.onDidChangeTextDocument(async () => {
             var cur_Item = this.tree_helper.getCurrentPathActive();
             this.refreshEvent.fire();
             await this.treeView.reveal(cur_Item.parentGroup, { select: false, expand: true });
@@ -45,6 +47,9 @@ class TreeFileProvider {
         vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async () => {
             if (this.treeView.visible) {
                 this.refresh();
+                var cur_Item = this.tree_helper.getCurrentPathActive();
+                await this.treeView.reveal(cur_Item.parentGroup, { select: false, expand: true });
+                await this.tree_helper.revealActiveFile(cur_Item.parentGroup.label);
             }
         });
         vscode.commands.registerCommand("fbo-autocomplete.closeFile", async (element) => {
@@ -55,18 +60,18 @@ class TreeFileProvider {
                 await this.tree_helper.closeGroupFiles(element.label);
             }
         });
-        vscode.window.onDidChangeActiveTextEditor( async (editor) => {
-            if(!editor) return
-            setTimeout(async () =>{
+        vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+            if (!editor) return
+            setTimeout(async () => {
                 const filePath = editor.document.uri.fsPath;
                 const treeItem = this.tree_helper.getTreeItemByPath(filePath);
                 if (!treeItem) return; // Tránh lỗi nếu file không có trong cây
                 const parentGroup = this.tree_helper.getParentGroup(treeItem);
                 await this.treeView.reveal(parentGroup, { select: false, expand: true });
-                await this.tree_helper.revealActiveFile(parentGroup.label); 
+                await this.tree_helper.revealActiveFile(parentGroup.label);
             }, 100)
         });
-        
+
         // Đăng ký lệnh reload tree
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", () => {
             this.refresh();
@@ -80,11 +85,10 @@ class TreeFileProvider {
                 await this.tree_helper.revealActiveFile(element.label);
             }
         });
-         
         // Thêm vào subscriptions để tự động clean up khi extension bị tắt
         context.subscriptions.push(this.treeView, disposable);
     }
-    
+
     getTreeItem(element) {
         return element;
     }
@@ -93,7 +97,7 @@ class TreeFileProvider {
             return this.tree_helper.buildTree();
         }
         return this.treeData.get(element.label) || [];
-    } 
+    }
     getParent(element) {
         if (!element) return null;
         // Nếu phần tử là file, trả về group chứa nó
@@ -129,37 +133,34 @@ class TreeFileProvider {
         // 🧩 Tên group được thả vào
         const targetGroup = target?.label || 'Unknown';
         if (targetGroup != 'Unknown') {
-            // console.log("📥 File(s) được thả vào:", targetGroup, target.resourceUri.fsPath);
-            // droppedFiles.forEach((item, index) => {
-            //     console.log(`  🔹 File ${index + 1}: ${item.resourceUri}`);
-            // }); 
             var filePaths = droppedFiles.map(item => item.resourceUri.fsPath)
-            try{
-                this.app_dataChecker.pasteFilesToGroup(target.resourceUri.fsPath, filePaths);
+            try {
+                this.app_dataChecker.pasteFilesToGroup(target.resourceUri.fsPath, filePaths, 0);
             }
-            catch(ex){
+            catch (ex) {
                 console.log(ex)
             }
-        } 
-    
+        }
+
     }
-    
+
 }
 
-class TreeHelper{
-    constructor(parent){
+class TreeHelper {
+    constructor(parent) {
         this.parent = parent;
         this.app_dataChecker = new app_dataChecker()
+        this.config = vscode.workspace.getConfiguration('fbo-autocomplete');
     }
-   
-    set parentSet(parent){
+
+    set parentSet(parent) {
         this.parent = parent;
     }
     getGroupName(filePath) {
         this.app_dataChecker.filePath = filePath;
         return this.app_dataChecker.getGroupName();
     }
-    
+
     getParentGroup(treeItem) {
         for (const [group, items] of this.parent.treeData) {
             if (items.includes(treeItem)) return new vscode.TreeItem(group, vscode.TreeItemCollapsibleState.Expanded);
@@ -176,7 +177,7 @@ class TreeHelper{
     }
     async getOpenEditors() {
         const openTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-        return openTabs
+        const filePaths = openTabs
             .map(tab => {
                 if (tab.input instanceof vscode.TabInputText) {
                     const uri = tab.input.uri;
@@ -189,20 +190,29 @@ class TreeHelper{
                 return null;
             })
             .filter(filePath => filePath !== null);
+        return [...new Set(filePaths)];
     }
     getGroupRootPath(filePath) {
         this.app_dataChecker.filePath = filePath;
         return this.app_dataChecker.getProjectPath();
     }
-    
+
     async buildTree() {
         this.parent.treeData.clear();
+        this.parent.groupItems.clear();
         const openFiles = await this.getOpenEditors();
 
         // 🆕 Sắp xếp file theo groupName trước khi add vào cây
         openFiles.sort((a, b) => {
+            const folderNameA = path.basename(path.dirname(a));
+            const folderNameB = path.basename(path.dirname(b));
+            const fileNameA = path.basename(a);
+            const fileNameB = path.basename(b);
             const groupA = this.getGroupName(a);
             const groupB = this.getGroupName(b);
+            const sortType = this.config.get('sortTree', 'FileName');
+
+
             if (groupA !== groupB) {
                 return groupA.localeCompare(groupB); // Ưu tiên groupName
             }
@@ -213,7 +223,14 @@ class TreeHelper{
                 return extA.localeCompare(extB); // Ưu tiên theo extension
             }
 
-            return path.basename(a).localeCompare(path.basename(b)); // Cuối cùng so sánh tên file
+            if (String(sortType) === 'folderName') {
+                const folderCompare = folderNameA.localeCompare(folderNameB);
+                if (folderCompare !== 0) return folderCompare;
+                return fileNameA.localeCompare(fileNameB); // cùng folder thì sort theo file
+            } else {
+                return fileNameA.localeCompare(fileNameB);
+            }
+
         });
 
         openFiles.forEach(filePath => this.addFileToTree(filePath));
@@ -241,11 +258,21 @@ class TreeHelper{
                 item.description = `(${folderName}) ●`;
             }
         }
+
         item.command = {
             command: "vscode.open",
             arguments: [vscode.Uri.file(filePath)],
             title: "Mở file"
         };
+        if (['grid', 'dir', 'filter', 'report', 'lookup', 'upload'].includes(folderName.toLowerCase())) {
+            var iconName = `${folderName.toLowerCase()}_icon.svg`;
+            item.iconPath = {
+                light: vscode.Uri.file(path.join(__dirname, '..', '..', 'images', 'light', iconName)),
+                dark: vscode.Uri.file(path.join(__dirname, '..', '..', 'images', 'dark', iconName)),
+            };
+        }
+
+
         if (!this.parent.treeData.has(groupName)) {
             const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
             groupItem.contextValue = "group";
@@ -258,6 +285,7 @@ class TreeHelper{
             this.parent.treeData.set(groupName, []);
             this.parent.groupItems.set(groupName, groupItem); // 🔥 Lưu lại groupItem
         }
+
         this.parent.treeData.get(groupName).push(item);
     }
     async closeFile(element) {
@@ -309,26 +337,26 @@ class TreeHelper{
 
         await this.parent.refresh(); // Làm mới cây
     }
-    getCurrentPathActive(){
+    getCurrentPathActive() {
         const activeEditor = vscode.window.activeTextEditor;
         if (!activeEditor || !activeEditor.document) return;
         const filePath = activeEditor.document.uri.fsPath;
         const treeItem = this.getTreeItemByPath(filePath);
         if (!treeItem) return; // Tránh lỗi nếu file không có trong cây
         const parentGroup = this.getParentGroup(treeItem);
-        return {filePath: filePath, treeItem: treeItem, parentGroup: parentGroup}
+        return { filePath: filePath, treeItem: treeItem, parentGroup: parentGroup }
     }
     async revealActiveFile(group_label) {
         var cur_Item = this.getCurrentPathActive();
         if (cur_Item.parentGroup) {
             if (group_label != cur_Item.parentGroup.label) return
-            try { 
+            try {
                 await this.parent.treeView.reveal(cur_Item.treeItem, { select: true, expand: false });
             } catch (error) {
                 //console.error("❌ Lỗi khi reveal tree item:", error);
-            } 
-        }  
-    } 
+            }
+        }
+    }
 }
 
 module.exports = TreeFileProvider;

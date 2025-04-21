@@ -47,3 +47,9 @@
 # Version 0.0.25
 - Refactor Tree
 - Add drag file to group
+# Version 0.0.26
+- Add delete file 
+- Add genarate file by group
+# Version 0.0.27
+- Add Icon dir grid
+- Add Options sort

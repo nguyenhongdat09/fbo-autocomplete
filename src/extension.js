@@ -258,8 +258,8 @@ async function activate(context) {
     /*Tree view*/
     const treeDataProvider = new TreeFileProvider();
     treeDataProvider.run(context);
-    const contextMenu = new ContextMenuHandler(context, treeDataProvider.treeView)
- 
+    const contextMenu = new ContextMenuHandler(context, treeDataProvider)
+    
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);

@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.25",
+  "version": "0.0.27",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -50,6 +50,11 @@
         },
         {
           "command": "fboFile.RenameFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.DeleteFile",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
         },
@@ -104,6 +109,15 @@
           "default": "autocomplete",
           "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
         },
+        "fbo-autocomplete.sortTree": {
+          "type": "string",
+          "enum": [
+            "folderName",
+            "FileName"
+          ],
+          "default": "folderName",
+          "description": "Sort theo tên file hoặc folder chứa file"
+        },
         "fbo-autocomplete.delay": {
           "type": "number",
           "default": 1000,
@@ -136,10 +150,6 @@
         "key": "f4",
         "mac": "f4",
         "when": "editorTextFocus"
-      },
-      {
-        "key": "ctrl+shift+x",
-        "command": "fboFile.GenerateCopyFile"
       },
       {
         "key": "ctrl+shift+d",
@@ -232,6 +242,10 @@
         "title": "Rename File"
       },
       {
+        "command": "fboFile.DeleteFile",
+        "title": "Delete File"
+      },
+      {
         "command": "fbo-autocomplete.reloadTree",
         "title": "Reload Tree",
         "category": "FBO",
@@ -278,7 +292,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.99.5",
+    "webpack": "^5.99.6",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
