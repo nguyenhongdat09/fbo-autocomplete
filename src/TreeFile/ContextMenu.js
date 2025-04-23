@@ -4,6 +4,8 @@ const fs = require("fs");
 const app_dataChecker = require("./AppDataPathHelper");
 const { exec } = require('child_process');
 const os = require("os");
+const cp = require('child_process');
+
 class ContextMenuHandler {
     constructor(context, treeDataProvider) {
         this.context = context;
@@ -54,6 +56,7 @@ class ContextMenuHandler {
         });
         vscode.commands.registerCommand("fboFile.PasteFilesToGroup", async () => {
             let groupItem = null;
+
             // Ưu tiên lấy từ treeView selection
             if (this.treeView?.selection?.length === 1) {
                 const selected = this.treeView.selection[0];
@@ -61,12 +64,28 @@ class ContextMenuHandler {
                     groupItem = selected;
                 }
             }
+        
             if (!groupItem) {
                 vscode.window.showWarningMessage("Vui lòng chọn một group để paste.");
                 return;
             }
-            const filePaths = await this.getCopiedFilePathsFromClipboard();
-            if (!filePaths) return;
+            let filePaths = [];
+            // 🧠 Bước 1: Kiểm tra clipboard là dạng file (file://)
+            var copyFilePath = await this.getFilePathsFromWindowsClipboard();
+            if (copyFilePath.length > 0) {
+                // Có thể là 1 hoặc nhiều file, tách theo \r\n hoặc \n
+                filePaths =  copyFilePath
+            } else {
+                // 🧪 Fallback: lấy theo dạng mảng chuẩn từ hàm có sẵn
+                filePaths = await this.getCopiedFilePathsFromClipboard();
+            }
+            
+            if (!filePaths || filePaths.length === 0) {
+                vscode.window.showWarningMessage("Không tìm thấy file nào trong clipboard.");
+                return;
+            }
+           
+            
             await this.app_dataChecker.pasteFilesToGroup(groupItem.resourceUri.fsPath, filePaths, 0);
         });
 
@@ -74,6 +93,46 @@ class ContextMenuHandler {
             vscode.commands.registerCommand('fboFile.RenameFile', this.renameFileCommand)
         );
     }
+    async getFilePathsFromWindowsClipboard() {
+        return new Promise((resolve, reject) => {
+            const ps = cp.spawn('powershell.exe', [
+                '-NoProfile',
+                '-Command',
+                'Get-Clipboard -Format FileDropList | ForEach-Object { $_.FullName }'
+            ]);
+    
+            var output = '';
+            var error = '';
+    
+            ps.stdout.on('data', (data) => {
+                output += data.toString();
+            });
+    
+            ps.stderr.on('data', (data) => {
+                error += data.toString();
+            });
+    
+            ps.on('close', (code) => {
+                if (code !== 0 || error) {
+                    console.error('❌ Clipboard read error:', error.trim());
+                    return resolve([]);
+                }
+    
+                const files = output
+                    .split(/\r?\n/)
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0);
+    
+                resolve(files);
+            });
+    
+            ps.on('error', (err) => {
+                console.error('❌ Spawn error:', err);
+                resolve([]);
+            });
+        });
+    }
+    
     // Hàm đọc từ clipboard
     async getCopiedFilePathsFromClipboard() {
         try {
@@ -137,7 +196,6 @@ class ContextMenuHandler {
             return [sourcePath, newFileName]
         }) 
         var targetPath = targetGroup.resourceUri.fsPath;
-        console.log(targetPath, changedPaths)
         this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1); 
     }
 

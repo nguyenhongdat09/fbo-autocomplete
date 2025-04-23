@@ -52,4 +52,7 @@
 - Add genarate file by group
 # Version 0.0.27
 - Add Icon dir grid
-- Add Options sort
+- Add Options sort 
+- Add Fix Webcofig
+# Version 0.0.28
+- Pasted File From Folder to group
