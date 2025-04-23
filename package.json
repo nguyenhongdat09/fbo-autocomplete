@@ -59,6 +59,11 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.FixWebConfig",
+          "when": "view == fbo_file && viewItem == group",
+          "group": "navigation"
+        },
+        {
           "command": "fbo-autocomplete.closeFile",
           "when": "viewItem == file",
           "group": "inline"
@@ -244,6 +249,10 @@
       {
         "command": "fboFile.DeleteFile",
         "title": "Delete File"
+      },
+      {
+        "command": "fboFile.FixWebConfig",
+        "title": "Fix Web.config"
       },
       {
         "command": "fbo-autocomplete.reloadTree",

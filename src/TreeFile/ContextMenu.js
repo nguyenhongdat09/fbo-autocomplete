@@ -27,7 +27,9 @@ class ContextMenuHandler {
         this.context.subscriptions.push(
             vscode.commands.registerCommand('fboFile.DeleteFile', async () => await this.deleteFile())
         );
-
+        this.context.subscriptions.push(
+            vscode.commands.registerCommand('fboFile.FixWebConfig', async () => await this.fixWebConfig())
+        );
         vscode.commands.registerCommand("fboFile.GenerateCopyFile", async (treeItem) => {
             let targets = [];
             // Ưu tiên từ treeView
@@ -227,11 +229,32 @@ class ContextMenuHandler {
     copyFile() {
         this.copyFilesToClipboard(this.getPathsSelect());
     }
-
+    async fixWebConfig() {
+        const paths = this.getPathsSelect();
+        if (!paths || paths.length === 0) return;
+        for (const filePath of paths) {
+            try {
+                const file = path.join(filePath, 'Web.config');
+                if (!fs.existsSync(file)) continue;
+                // 🧠 Đọc nội dung gốc
+                const originalContent = fs.readFileSync(file, 'utf8');
+                // ✅ Thêm 1 dấu cách cuối file
+                const modifiedContent = originalContent + ' ';
+                // 💾 Ghi lại để IIS nhận thay đổi
+                fs.writeFileSync(file, modifiedContent, 'utf8');
+                // ⏳ Chờ 100ms rồi trả lại như cũ
+                await new Promise(resolve => setTimeout(resolve, 100));
+                fs.writeFileSync(file, originalContent, 'utf8');
+                vscode.window.showInformationMessage(`✅ Đã "fix" ${file}`);
+            } catch (err) {
+                vscode.window.showErrorMessage(`❌ Không thể fix ${filePath}: ${err.message}`);
+            }
+        }
+    }
     async deleteFile() {
         const paths = this.getPathsSelect();
         if (!paths || paths.length === 0) return;
-
+        
         const confirm = await vscode.window.showWarningMessage(
             `🗑️ Bạn có chắc muốn xoá ${paths.length} file không?`,
             { modal: true },
