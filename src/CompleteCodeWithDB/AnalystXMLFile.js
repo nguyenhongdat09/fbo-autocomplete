@@ -2,11 +2,11 @@ const vscode = require('vscode');
 const fs = require('fs');
 
 class AnalystXMLFile {
-    static async getListField(filePath = '', content = '') {
+    async getListField(filePath = '', content = '') {
         try {
             if (content === '') 
                 content = await fs.promises.readFile(filePath, 'utf8');
-
+    
             const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
             const fieldsMatches = content.match(fieldsRegex);
             if (!fieldsMatches) {
@@ -18,20 +18,31 @@ class AnalystXMLFile {
             const result = [];
             let match;
             while ((match = fieldRegex.exec(xmlFields)) !== null) {
-                var key_t = match[1]
+                var key_t = match[1];
                 var value_t = match[0];
-                result.push({key: key_t, value: value_t});
+                // 🧹 Xóa thẻ <clientScript>...</clientScript>
+                value_t = value_t.replace(/<clientScript>[\s\S]*?<\/clientScript>/g, '');
+                result.push({ key: key_t, value: value_t });
             }
             return result;
             
-        }
-        catch (error) {
+        } catch (error) {
             vscode.window.showErrorMessage(`Error parsing XML: ${error} at ${filePath}`);
             return [];
         } 
     }
     
-    static async getListViewOnGrid(filePath = '', content = '') {
+    createCompleteItem(text, line, position) {
+        const completionItem = new vscode.InlineCompletionItem(text.trim());
+        completionItem.command = {
+            command: 'fbo-autocomplete.applyCompletionItem',
+            title: 'zlkqlksk',
+            arguments: [line, position]
+        };
+        completionItem.range = new vscode.Range(position, position); // Đảm bảo chỉ thay đổi từ vị trí hiện tại
+        return completionItem;
+    }
+    async getListViewOnGrid(filePath = '', content = '') {
         try {
             if (content === '') 
                 content = await fs.promises.readFile(filePath, 'utf8');

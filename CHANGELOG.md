@@ -56,3 +56,5 @@
 - Add Fix Webcofig
 # Version 0.0.28
 - Pasted File From Folder to group
+# Version 0.0.29
+- add $mgp, $mgr ở Mobile

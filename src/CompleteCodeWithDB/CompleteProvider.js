@@ -3,9 +3,9 @@ const level = require('level-rocksdb');
 const path = require('path');
 const ana = require('./AnalystXMLFile');
 
-class CompletionProvider {
+class CompletionProvider extends ana {
     constructor() {
-
+        super()
     }
     run(context) {
         const providerAutoComplete = vscode.languages.registerInlineCompletionItemProvider(
@@ -70,7 +70,6 @@ class CompletionProvider {
         var text = '';
         try {
             const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
-
             var text = await db.get(key); // Sử dụng Promise API của level
             const match = text.match(/reference="([^"]+)"/);
             if (match) {
@@ -136,8 +135,8 @@ class CompletionProvider {
         if (!document.uri.path.includes('Grid')) {
             return completionItems;
         }
-        var name_and_field = await ana.getListField('', document.getText());
-        var name_and_viewItem = await ana.getListViewOnGrid('', document.getText());
+        var name_and_field = await this.getListField('', document.getText());
+        var name_and_viewItem = await this.getListViewOnGrid('', document.getText());
 
         const existingKeysInView = new Set(name_and_viewItem.map(item => item.key));
         // Lọc ra các field bị thiếu trong <view>

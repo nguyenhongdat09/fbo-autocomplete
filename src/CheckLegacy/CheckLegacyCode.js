@@ -4,9 +4,41 @@ const path = require('path')
 class CheckLegacyCode {
     constructor(context) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
-        this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML" , "JsonEntity");
+        this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML", "JsonEntity");
     }
+    run() {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) return;
 
+        const dirPath = path.dirname(editor.document.uri.fsPath); // 👈 chỉ lấy thư mục chứa file
+        if (!(dirPath.includes('Controllers\\Dir') || dirPath.includes('Controllers\\Filter'))) {
+            return;
+        }
+        var content = vscode.window.activeTextEditor.document.getText();
+
+        // Tách phần DOCTYPE (nếu có)
+        let doctypeMatch = content.match(/<!DOCTYPE[\s\S]*?\]>/);
+        let doctypeSection = doctypeMatch ? doctypeMatch[0] : "";
+        let contentWithoutDoctype = doctypeMatch ? content.replace(doctypeSection, "") : content;
+        // Thay thế entity chỉ trong phần ngoài DOCTYPE
+        var ent_content = this.replaceEntity(contentWithoutDoctype);
+        try {
+            for (var ent of ent_content) {
+                if (ent.content !== '') {
+                    contentWithoutDoctype = contentWithoutDoctype.replace(ent.entity, ent.content);
+                }
+            }
+        } catch (er) {
+            console.error(er);
+        }
+
+        // Ghép lại DOCTYPE với nội dung đã thay thế
+        content = doctypeSection + contentWithoutDoctype;
+        var field_item = this.getFieldOnView(content);
+        var fields_declare = this.getFieldOnFields(content);
+
+        this.checkLegacyItem(editor, field_item, fields_declare)
+    }
     getFilePathEntity() {
         // Kiểm tra thư mục JsonEntity
         var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
@@ -28,42 +60,7 @@ class CheckLegacyCode {
     escapeRegExp(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape các ký tự đặc biệt
     }
-    run() {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) return;
-        
-        const filePath = editor.document.uri.fsPath;
-        const dirPath = path.dirname(filePath); // 👈 chỉ lấy thư mục chứa file
-        
-        if (!(dirPath.includes('Dir') || dirPath.includes('Filter'))) {
-            return;
-        }
-        var content = vscode.window.activeTextEditor.document.getText();
 
-        // Tách phần DOCTYPE (nếu có)
-        let doctypeMatch = content.match(/<!DOCTYPE[\s\S]*?\]>/);
-        let doctypeSection = doctypeMatch ? doctypeMatch[0] : "";
-        let contentWithoutDoctype = doctypeMatch ? content.replace(doctypeSection, "") : content;
-        // Thay thế entity chỉ trong phần ngoài DOCTYPE
-        var ent_content = this.replaceEntity(contentWithoutDoctype);
-        try {
-            for (var ent of ent_content) {
-                if (ent.content !== '') {
-                    contentWithoutDoctype = contentWithoutDoctype.replace(ent.entity, ent.content);
-                } 
-            }
-        } catch (er) {
-            console.error(er);
-        }
-        
-        // Ghép lại DOCTYPE với nội dung đã thay thế
-        content = doctypeSection + contentWithoutDoctype;
-        
-        var field_item = this.getFieldOnView(content);
-        var fields_declare = this.getFieldOnFields(content); 
-
-        this.checkLegacyItem(editor, field_item, fields_declare)
-    }
 
     replaceEntity(content) {
         const regex = /&[^;\s]+;/g; //Lay ra entity 
@@ -91,54 +88,65 @@ class CheckLegacyCode {
     }
 
     checkLegacyItem(editor, field_item, fields_declare) {
+        const self = this; // Giữ lại `this`
         const error_item = field_item.filter((item) => item.key.length !== item.fields.length);
-        
         const diagnostics = [];
         const document = editor.document;
         let diagnostic;
-        error_item.forEach((item) => {
-            let line = item.line || 0; // Lấy số dòng, mặc định là 0 nếu không tìm thấy
-            if (item.key.length > item.fields.length) {
-                diagnostic = this.setDiag(line, `Lỗi "thừa" phần tử 1: \n - Số phần tử 1 là "${item.key.length}" \n - Số field là "${item.fields.length}" `, document)
-            } else {
-                diagnostic = this.setDiag(line, `Lỗi "thiếu" phần tử 1: \n - Số phần tử 1 là "${item.key.length}" \n - Số field là "${item.fields.length}"`, document)
-            }
-            diagnostics.push(diagnostic);
-        });
-        var field_distinct = field_item.map(item => ({
-            fields: [...new Set(item.fields)], // Loại bỏ phần tử trùng trong fields
-            line: item.line // Giữ nguyên số dòng
-        }))
-        var field_dlr = fields_declare.map((item) => {
-            return item.key;
-        })
-
-        field_distinct.forEach((item_distinct) => {
-            var fields = item_distinct.fields, line = item_distinct.line || 0;
-            fields.map((field) => {
-                if (!field_dlr.includes(field)) {
-                    diagnostic = this.setDiag(line, `Field: ${field} chưa khai báo ở Fields.`, document)
+        function thua_thieu(diagnostics) {
+            error_item.forEach((item) => {
+                let line = item.line || 0;
+                if (item.key.length > item.fields.length) {
+                    diagnostic = self.setDiag(line, `Lỗi "thừa" phần tử 1: \n - Số phần tử 1 là "${item.key.length}" \n - Số field là "${item.fields.length}" `, document);
+                } else {
+                    diagnostic = self.setDiag(line, `Lỗi "thiếu" phần tử 1: \n - Số phần tử 1 là "${item.key.length}" \n - Số field là "${item.fields.length}"`, document);
+                }
+                diagnostics.push(diagnostic);
+            });
+        }
+    
+        const field_distinct = field_item.map(item => ({
+            fields: [...new Set(item.fields)],
+            line: item.line
+        }));
+    
+        function chua_khai_bao_Field(diagnostics) {
+            const field_dlr = fields_declare.map(item => item.key);
+            field_distinct.forEach(item_distinct => {
+                const fields = item_distinct.fields, line = item_distinct.line || 0;
+                fields.forEach(field => {
+                    if (!field_dlr.includes(field)) {
+                        diagnostic = self.setDiag(line, `Field: ${field} chưa khai báo ở Fields.`, document);
+                        diagnostics.push(diagnostic);
+                    }
+                });
+            });
+        }
+    
+        function chua_khai_bao_Field_xuong_view(diagnostics) {
+            fields_declare.forEach(item_field => {
+                const field = item_field.key, line = item_field.line || 0;
+                let check = true;
+                for (const item_distinct of field_distinct) {
+                    if (item_distinct.fields.includes(field)) {
+                        check = false;
+                        break;
+                    }
+                }
+                if (check) {
+                    diagnostic = self.setDiag(line, `Chưa khai báo Field: ${field} xuống thẻ view`, document);
                     diagnostics.push(diagnostic);
                 }
-            })
-        })
-
-        fields_declare.forEach((item_field) => {
-            var field = item_field.key, line = item_field.line || 0, check = true;
-            for (const item_distinct of field_distinct) {
-                var fields = item_distinct.fields;
-                if (fields.includes(field) && check) {
-                    check = false;
-                    break;
-                }
-            }
-            if (check) {
-                diagnostic = this.setDiag(line, `Chưa khai báo Field: ${field} xuống thẻ view`, document)
-                diagnostics.push(diagnostic);
-            }
-        })
-        this.diagnosticCollection.set(editor.document.uri, diagnostics);
+            });
+        }
+    
+        // Gọi các hàm xử lý
+        thua_thieu(diagnostics);
+        chua_khai_bao_Field(diagnostics);
+        chua_khai_bao_Field_xuong_view(diagnostics);
+        self.diagnosticCollection.set(editor.document.uri, diagnostics);
     }
+    
 
     setDiag(line, message, document) {
         let _line = line - 1
@@ -155,7 +163,7 @@ class CheckLegacyCode {
             }
             var xmlFields = fieldsMatches[0];
             const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
-            const result = []; 
+            const result = [];
             // Tách content thành từng dòng để xác định số dòng
             const lines = content.split('\n');
 
@@ -163,7 +171,7 @@ class CheckLegacyCode {
             while ((match = fieldRegex.exec(xmlFields)) !== null) {
                 var key_t = match[1];
                 var value_t = match[0];
-                 // **Bỏ qua field có filterSource="Vacant"**
+                // **Bỏ qua field có filterSource="Vacant"**
                 if (/filterSource="Vacant"/.test(value_t)) continue;
                 // **Tìm dòng đầu tiên có chứa key**
                 let lineNumber = lines.findIndex(line => line.includes(`name="${key_t}"`)) + 1;
@@ -184,14 +192,14 @@ class CheckLegacyCode {
             let match;
             const results = [];
             // Tách content thành từng dòng
-            const lines = content.split('\n');  
+            const lines = content.split('\n');
             while ((match = regex.exec(content)) !== null) {
                 var key = match[1].trim().replace(/[0-]/g, '');
                 // Tìm các field nằm trong ngoặc vuông []
                 const fieldMatches = match[2].match(/\[([^\]]+)\]/g) || [];
                 var fields = fieldMatches.map(field => field.replace(/\[|\]/g, "").trim());
                 // Tìm số dòng chứa match
-                let lineNumber = lines.findIndex(line => line.includes(match[0])) + 1; 
+                let lineNumber = lines.findIndex(line => line.includes(match[0])) + 1;
                 results.push({ key, fields, line: lineNumber });
             }
             return results;

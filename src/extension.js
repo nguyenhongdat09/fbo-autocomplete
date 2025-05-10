@@ -4,7 +4,7 @@ const vscode = require('vscode');
 const pathModule = require('path');
 const fs = require('fs');
 const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
-const renderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
+const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB_new'); 
 const OpenWithVS2008 = require('./VS2008/openWithVS2008');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
@@ -17,9 +17,12 @@ const CheckLegacyCode = require("./CheckLegacy/CheckLegacyCode")
 const updateSettings = require("./updateSettings")
 const DBStatusBarManagerCls = require("./DBQuery/dbBar");
 const QueryDatabase = require("./DBQuery/QueryDatabase");
+const ViewPanelResult = require("./DBQuery/queryResultPanel");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
 const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
+const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
+
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 const https = require('https');
@@ -68,9 +71,10 @@ async function activate(context) {
     upsettings.updateSettingsJson.bind(upsettings)(context);
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
-    const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
-        renderXMLToDB.render();
-    });
+  
+    var renderdbSqlLite = new RenderXMLToDB()
+    renderdbSqlLite.run(context);
+
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
@@ -294,6 +298,9 @@ async function activate(context) {
     treeDataProvider.run(context);
     const contextMenu = new ContextMenuHandler(context, treeDataProvider)
 
+    const cmpl_mobile = new CompleteCodeMobile();
+    cmpl_mobile.run(context)
+
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
@@ -309,10 +316,17 @@ async function activate(context) {
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
-    context.subscriptions.push(render);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
+   /*
+    var viewpanelsql = new ViewPanelResult(context)
+    var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
+        viewpanelsql.show();
+      });
+    
+      context.subscriptions.push(disposable);
+*/
 }
 
 // This method is called when your extension is deactivated

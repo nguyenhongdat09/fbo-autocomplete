@@ -33,16 +33,21 @@ class updateSettingsJson {
                 let settings = JSON.parse(data);
                 // Lấy đường dẫn thư mục XSD trong extension
                 const extensionPath = path.join(context.extensionPath, 'src', 'Database', 'XSD');
+                const extensionPathMobile = path.join(context.extensionPath, 'src', 'Database', 'XSD', 'Mobile');
                 // 🛑 Xóa toàn bộ "xml.fileAssociations"
                 settings["xml.fileAssociations"] = [
-                    { "pattern": "**/Dir/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },
-                    { "pattern": "**/Filter/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },
-                    { "pattern": "**/Grid/*.xml", "systemId": path.join(extensionPath, "Grid.xsd") },
-                    { "pattern": "**/Report/*.xml", "systemId": path.join(extensionPath, "Report.xsd") },
+                    { "pattern": "**/Controllers/Dir/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },
+                    { "pattern": "**/Controllers/Filter/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },
+                    { "pattern": "**/Controllers/Grid/*.xml", "systemId": path.join(extensionPath, "Grid.xsd") },
+                    { "pattern": "**/Controllers/Report/*.xml", "systemId": path.join(extensionPath, "Report.xsd") },
                     { "pattern": "**/Upload/*.xml", "systemId": path.join(extensionPath, "Import.xsd") },
-                    { "pattern": "**/Dir/*.f", "systemId": path.join(extensionPath, "Dir.xsd") },
-                    { "pattern": "**/Grid/*.f", "systemId": path.join(extensionPath, "Grid.xsd") },
-                    { "pattern": "**/FastAPI/*.xml", "systemId": path.join(extensionPath, "FastAPI.xsd") }
+                    { "pattern": "**/Controllers/Dir/*.f", "systemId": path.join(extensionPath, "Dir.xsd") },
+                    { "pattern": "**/Controllers/Grid/*.f", "systemId": path.join(extensionPath, "Grid.xsd") },
+                    { "pattern": "**/Controllers/Filter/*.f", "systemId": path.join(extensionPath, "Dir.xsd") },
+                    { "pattern": "**/FastAPI/*.xml", "systemId": path.join(extensionPath, "FastAPI.xsd") },
+                    { "pattern": "**/Mobile/Filter/*.xml", "systemId": path.join(extensionPathMobile, "Filter.xsd") },
+                    { "pattern": "**/Mobile/Dir/*.xml", "systemId": path.join(extensionPathMobile, "Dir.xsd") },
+                    { "pattern": "**/Mobile/Grid/*.xml", "systemId": path.join(extensionPathMobile, "Grid.xsd") }
                 ];
                
                 // 📝 Ghi lại file settings.json với danh sách mới

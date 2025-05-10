@@ -4,8 +4,18 @@ const path = require('path');
 const fs = require('fs');
 const level = require('level-rocksdb');
 const ana = require('./AnalystXMLFile');
-class RenderXMLToDB {
-    static async render() {
+class RenderXMLToDB extends ana {
+    constructor() {
+        super()
+    }
+ 
+    run(context) { 
+        const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
+            this.render();
+        });
+        context.subscriptions.push(render);
+    }
+    async render() {
         const activeEditor = vscode.window.activeTextEditor;
 
         if (!activeEditor) {
@@ -83,9 +93,9 @@ class RenderXMLToDB {
             console.log(e);
         }
     }
-    static async parseXMLFile(filePath) {
+    async parseXMLFile(filePath) {
         try {
-            const name_and_field = await ana.getListField(filePath);
+            const name_and_field = await this.getListField(filePath);
             const keyValuePairs = {};
             name_and_field.forEach(item => {
                 var key_t = item.key;
@@ -102,7 +112,7 @@ class RenderXMLToDB {
         }
     }
 
-    static KeyValueCleaner(key, value, filePath) {
+    KeyValueCleaner(key, value, filePath) {
         if (/ForeignKey|&/.test(value))
             return { key: '', value: '' };
         var replaceNone = ['isPrimaryKey="true"', 'allowNulls="false"', 'clientDefault="Default"'];
@@ -113,7 +123,7 @@ class RenderXMLToDB {
         //Xóa luôn theo cặp <clientScript>...</clientScript>
         value = value.replace(/<clientScript>.*?<\/clientScript>\s*/g, '');
         value = value.replace(/<query>.*?<\/query>\s*/g, '');
-        value = value.replace(/\s+(filterSource|categoryIndex|operation|clientDefault)="[^"]*"/g, '');
+        value = value.replace(/\s+(filterSource|categoryIndex|operation)="[^"]*"/g, '');
 
         //nếu lookup thì tách riêng với autocomplete
         const regex = /style\s*=\s*"([^"]*)"/;
@@ -139,7 +149,7 @@ class RenderXMLToDB {
         }
         return { key, value };
     }
-    static async saveToRocksDB(nameDb, keyValuePairs) {
+    async saveToRocksDB(nameDb, keyValuePairs) {
         var db_path_name = '/Database/';
         let dbPath = path.join(__dirname, '..', db_path_name, nameDb);
         let dbView;

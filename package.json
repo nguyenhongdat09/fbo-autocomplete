@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.27",
+  "version": "0.0.28",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -128,6 +128,15 @@
           "default": "folderName",
           "description": "Sort theo tên file hoặc folder chứa file"
         },
+        "fbo-autocomplete.iconRule": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No"
+          ],
+          "default": "No",
+          "description": "Theo đuôi file hoặc không"
+        },
         "fbo-autocomplete.delay": {
           "type": "number",
           "default": 1000,
@@ -164,14 +173,6 @@
       {
         "key": "ctrl+shift+d",
         "command": "fboFile.RenameFile"
-      },
-      {
-        "key": "ctrl+shift+c",
-        "command": "fboFile.CopyPaths"
-      },
-      {
-        "key": "ctrl+shift+l",
-        "command": "fboFile.PasteFilesToGroup"
       }
     ],
     "commands": [
@@ -191,6 +192,7 @@
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "FBO: Render XML To Database"
       },
+      
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
         "title": "FBO: Show/Hide Entity CodeLens"
@@ -236,10 +238,6 @@
         "title": "Copy Path"
       },
       {
-        "command": "fboFile.CopyPaths",
-        "title": "Copy Multi Path"
-      },
-      {
         "command": "fboFile.CopyFile",
         "title": "Copy File"
       },
@@ -274,6 +272,10 @@
         "command": "fbo-autocomplete.closeGroupFiles",
         "title": "Close Group",
         "icon": "$(close)"
+      },
+      {
+        "command": "fbo-autocomplete.showQueryResult",
+        "title": "Show Query Result"
       }
     ],
     "languages": [
@@ -306,19 +308,19 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.99.6",
+    "webpack": "^5.99.8",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "cli-table3": "^0.6.5",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "mssql": "^11.0.1",
-    "strip-ansi": "^7.1.0",
-    "cli-table3": "^0.6.5",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1"
+    "mssql": "^11.0.1",
+    "rocksdb": "^5.2.1",
+    "strip-ansi": "^7.1.0"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",

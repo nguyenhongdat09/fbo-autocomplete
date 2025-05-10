@@ -103,7 +103,7 @@ class CompleteCodeByHandle {
                 .filter(func => func.label.toLowerCase().includes(partialFunction.toLowerCase())) // So khớp bất kể chữ hoa/thường
                 .map(func => this.createCompletionItem(func));
         }
-    
+        
         // Nếu không có objectPrefix, trả về undefined (không gợi ý gì)
         return undefined;
     }
@@ -184,20 +184,21 @@ class CompleteCodeByHandle {
     getFolderName(inputText, document) {
         let prefixFolder = '';
         const path = document.uri.path;
-        
+        var controller = 'Controllers'
         if (inputText.trim().startsWith('$f')) {
-            if (path.includes('Dir')) {
+            if (path.includes(`${controller}/Dir`)) {
                 prefixFolder = 'Dir';
-            } else if (path.includes('Filter')) {
+            } else if (path.includes(`${controller}/Filter`)) {
                 prefixFolder = 'Filter';
             }
-        } else if (path.includes('Grid')) {
+        } else if (path.includes(`${controller}/Grid`)) {
             if (inputText.trim().startsWith('$gv')) {
                 prefixFolder = 'GridView';
             } else if (inputText.trim().startsWith('$gi')) {
                 prefixFolder = 'GridInput';
             }
         }
+        
         return prefixFolder;
     } 
 

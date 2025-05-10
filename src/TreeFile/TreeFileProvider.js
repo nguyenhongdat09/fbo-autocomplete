@@ -67,12 +67,9 @@ class TreeHelper {
             const groupA = this.getGroupName(a);
             const groupB = this.getGroupName(b);
             const sortType = this.config.get('sortTree', 'FileName');
-
-
             if (groupA !== groupB) {
                 return groupA.localeCompare(groupB); // Ưu tiên groupName
             }
-
             const extA = path.extname(a).toLowerCase();
             const extB = path.extname(b).toLowerCase();
             if (extA !== extB) {
@@ -127,7 +124,14 @@ class TreeHelper {
                 dark: vscode.Uri.file(path.join(__dirname, '..', '..', 'images', 'dark', iconName)),
             };
         }
-
+        const iconRule = this.config.get('sortTree', 'iconRule');
+        if (String(iconRule) === 'Yes') {
+            var iconName = `${path.extname(filePath).toLowerCase()}_icon.svg`;
+            item.iconPath = {
+                light: vscode.Uri.file(path.join(__dirname, '..', '..', 'images', 'light', iconName)),
+                dark: vscode.Uri.file(path.join(__dirname, '..', '..', 'images', 'dark', iconName)),
+            };
+        }
 
         if (!this.parent.treeData.has(groupName)) {
             const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
@@ -214,9 +218,9 @@ class TreeHelper {
         }
     }
 }
-class TreeFileProvider  extends TreeHelper  {
+class TreeFileProvider extends TreeHelper {
     constructor() {
-        super(); 
+        super();
         this.parentSet = this
         this.refreshEvent = new vscode.EventEmitter();
         this.onDidChangeTreeData = this.refreshEvent.event;

@@ -9,6 +9,9 @@
         -  `$gv.field;` dùng cho file Grid các trường dạng **View**: `$gv.ma_kh;`
     - ##### Phần gen thẻ `<view>`
         - `$gff;` 
+    - ##### Phần gen code tự động ở mobile (đặc trưng là có tiền tố $m)
+        - `$mgp` dùng gen ra Processing file Filter/Dir
+        - `$mgr` dùng gen ra phần thẻ <row> file Filter/Grid
 
 ## Cách cài đặt 
 - Sau khi install .vsix mở file bất kỳ ở một trong 3 Folder Grid, Dir, Filter bấm **Ctrl + Shift + P** Nhập **Render XML To Database** => Enter. 
@@ -34,7 +37,5 @@
  ## Check File Options/Message.xml
 - Kiểm tra duplicate field trong Fields  
 ## Paste file dự án này qua dự án khác 
-- Chọn các file ở group bấm **CTRL+ SHIFT+ C** để copy => Chọn cái header của group muốn paste bấm **CTRL+ SHIFT+ L** để dán vào
 - Chọn nhiều file và thả vào header dự án khác
-
  
