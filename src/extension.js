@@ -4,7 +4,7 @@ const vscode = require('vscode');
 const pathModule = require('path');
 const fs = require('fs');
 const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
-const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB_new'); 
+const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB'); 
 const OpenWithVS2008 = require('./VS2008/openWithVS2008');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
@@ -22,6 +22,7 @@ const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
 const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
+const CustomDefinition = require("./Definition/CustomDefinition");
 
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
@@ -132,45 +133,14 @@ async function activate(context) {
     //const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
     const sheetId = '1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA'; // ID Google Sheet
     const completeCodeByHandle = new CompleteCodeByHandle(sheetId);
-
-    const getDataGGS = vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {
-        await completeCodeByHandle.loadFunctions();
-    })
-    completeCodeByHandle.loadFromJson(); // Load từ JSON khi extension khởi động
-    const providerHandle = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideCompletionItems.bind(completeCodeByHandle),
-        },
-        '.' // Các ký tự kích hoạt autocomplete
-    );
-    const providerTwpDotHandle = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideCompletionTwoDotItems.bind(completeCodeByHandle),
-        },
-        '.' // Các ký tự kích hoạt autocomplete
-    );
-    //Complete cho $f, $gi, $gv
-    const providerHandleField = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideCompletionFieldItems.bind(completeCodeByHandle),
-        },
-        '.' // Các ký tự kích hoạt autocomplete
-    );
+    completeCodeByHandle.run(context);
+    
     //Translate
     const trans = new Trans()
     let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {
         await trans.translateXmlFile.bind(trans)()
     });
-    const provideroptionsHandle = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideOptionsCompletionItems.bind(completeCodeByHandle),
-        },
-        '@' // Ký tự kích hoạt autocomplete
-    );
+    
     let translatePaste = vscode.commands.registerCommand('fbo-autocomplete.translatePaste', async function () {
         // Đọc nội dung bạn vừa copy vào clipboard
         const text = await vscode.env.clipboard.readText();
@@ -301,24 +271,27 @@ async function activate(context) {
     const cmpl_mobile = new CompleteCodeMobile();
     cmpl_mobile.run(context)
 
+    const defi = new CustomDefinition()
+    defi.run(context);
+
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
     context.subscriptions.push(transautoComplete);
     context.subscriptions.push(AddFieldToReport);
-    context.subscriptions.push(translatePaste);
-    context.subscriptions.push(provideroptionsHandle);
+    context.subscriptions.push(translatePaste); 
     context.subscriptions.push(transAll);
-    context.subscriptions.push(getDataGGS);
-    context.subscriptions.push(providerTwpDotHandle);
-    context.subscriptions.push(providerHandle);
-    context.subscriptions.push(providerHandleField);
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
+
+  
+  
+
+
    /*
     var viewpanelsql = new ViewPanelResult(context)
     var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
@@ -337,3 +310,4 @@ module.exports = {
     activate,
     deactivate
 }
+

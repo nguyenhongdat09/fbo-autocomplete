@@ -20,8 +20,7 @@ class AnalystXMLFile {
             while ((match = fieldRegex.exec(xmlFields)) !== null) {
                 var key_t = match[1];
                 var value_t = match[0];
-                // 🧹 Xóa thẻ <clientScript>...</clientScript>
-                value_t = value_t.replace(/<clientScript>[\s\S]*?<\/clientScript>/g, '');
+              
                 result.push({ key: key_t, value: value_t });
             }
             return result;

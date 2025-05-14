@@ -12,7 +12,8 @@
     - ##### Phần gen code tự động ở mobile (đặc trưng là có tiền tố $m)
         - `$mgp` dùng gen ra Processing file Filter/Dir
         - `$mgr` dùng gen ra phần thẻ <row> file Filter/Grid
-
+     - ##### Phần gen processing FBO  
+        - `$gpf;` 
 ## Cách cài đặt 
 - Sau khi install .vsix mở file bất kỳ ở một trong 3 Folder Grid, Dir, Filter bấm **Ctrl + Shift + P** Nhập **Render XML To Database** => Enter. 
 ## Giải thích tổng quát cách thức hoạt động

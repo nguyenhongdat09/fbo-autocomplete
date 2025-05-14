@@ -1,0 +1,37 @@
+[
+    {
+        "label": "gff",
+        "detail": "(FBO) Gen missing view from field",
+        "insertText": "gff;"
+    },
+    {
+        "label": "gpf",
+        "detail": "(FBO) Gen processing from field",
+        "insertText": "gpf;"
+    },
+    {
+        "label": "f",
+        "detail": "Get Field From Filter/Dir",
+        "insertText": "f."
+    },
+    {
+        "label": "gi",
+        "detail": "Get Field From Grid Input",
+        "insertText": "gi."
+    },
+    {
+        "label": "gv",
+        "detail": "Get Field From Grid View",
+        "insertText": "gv."
+    },
+    {
+        "label": "mgp",
+        "detail": "(Mobile) Gen processing from field",
+        "insertText": "mgp"
+    },
+    {
+        "label": "mgr",
+        "detail": "(Mobile) Gen row from field",
+        "insertText": "mgr"
+    }
+]

@@ -192,7 +192,6 @@
         "command": "fbo-autocomplete.renderXmlTodDB",
         "title": "FBO: Render XML To Database"
       },
-      
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
         "title": "FBO: Show/Hide Entity CodeLens"
@@ -313,14 +312,14 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
-    "cli-table3": "^0.6.5",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "level-rocksdb": "^5.0.0",
     "mssql": "^11.0.1",
-    "rocksdb": "^5.2.1",
-    "strip-ansi": "^7.1.0"
+    "strip-ansi": "^7.1.0",
+    "cli-table3": "^0.6.5",
+    "level-rocksdb": "^5.0.0",
+    "rocksdb": "^5.2.1"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",

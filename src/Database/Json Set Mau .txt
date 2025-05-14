@@ -1,0 +1,46 @@
+"editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "constant.character.entity.xml",
+                "settings": {
+                    "foreground": "#9ab66c",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "variable.language.entity.xml",
+                "settings": {
+                    "foreground": "#9ab66c",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "string.unquoted.cdata.xml",
+                "settings": {
+                    "foreground": "#b18c48",
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": "punctuation.definition.string.cdata.xml",
+                "settings": {
+                    "foreground": "#81b38d",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "punctuation.definition.string.begin.xml",
+                "settings": {
+                    "foreground": "#81b38d",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "punctuation.definition.string.end.xml",
+                "settings": {
+                    "foreground": "#81b38d",
+                    "fontStyle": "bold"
+                }
+            }
+        ]
+    }
