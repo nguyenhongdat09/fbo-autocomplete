@@ -39,4 +39,7 @@
 - Kiểm tra duplicate field trong Fields  
 ## Paste file dự án này qua dự án khác 
 - Chọn nhiều file và thả vào header dự án khác
+## Tìm Definition của Lookup hoặc file trong Keyword "showForm()"
+- Ctrl + Click chuột vào controller thì sẽ thấy được definition ví dụ controller="Item" hoặc g.showForm('zzzFilter)
+- Ctrl + Click chuột vào action id, case , button 
  
