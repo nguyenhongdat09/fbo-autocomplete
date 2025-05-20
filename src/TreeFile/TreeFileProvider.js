@@ -234,6 +234,7 @@ class TreeFileProvider extends TreeHelper {
         this.treeView = null;
         this.groupItems = new Map(); // 🔥 Lưu groupItem có chứa resourceUri 
         this.context = null;
+        this.debouncedRefresh = this.debounce(() => this.refresh(), 300);
     }
     async run(context) {
         this.context = context;
@@ -247,7 +248,7 @@ class TreeFileProvider extends TreeHelper {
         // 🔄 Lắng nghe khi document bị sửa (dirty)
         vscode.workspace.onDidChangeTextDocument(async () => {
             var cur_Item = this.getCurrentPathActive();
-            this.refreshEvent.fire();
+            this.debouncedRefresh();
             await this.treeView.reveal(cur_Item.parentGroup, { select: false, expand: true });
             await this.revealActiveFile(cur_Item.parentGroup.label);
         });
@@ -256,10 +257,10 @@ class TreeFileProvider extends TreeHelper {
         vscode.workspace.onDidSaveTextDocument(() => {
             this.refresh();
         });
-        vscode.window.onDidChangeVisibleTextEditors(async () => {
+        vscode.window.onDidChangeVisibleTextEditors(() => {
             this.refresh();
-        });
 
+        });
         vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async () => {
             if (this.treeView.visible) {
                 this.refresh();
@@ -322,6 +323,13 @@ class TreeFileProvider extends TreeHelper {
         }
         // Nếu là group, không có parent
         return null;
+    }
+    debounce(func, delay) {
+        let timer;
+        return function (...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => func.apply(this, args), delay);
+        };
     }
     async refresh() {
         // await this.buildTree(); // Cập nhật dữ liệu
