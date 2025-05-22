@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 class CustomDefinition {
     constructor() {
-        this.relativeFilter = [['Filter', 'MultiForm'], ['Filter', 'Form'], ['Grid', 'MultiGrid'], ['Grid', 'Grid'], ['Lookup', 'Lookup']]
+        this.relativeFilter = [['Filter', 'MultiForm'], ['Filter', 'Form'], ['Filter', 'Filter'], ['Grid', 'MultiGrid'], ['Grid', 'Grid'], ['Lookup', 'Lookup']]
     }
 
     run(context) {
@@ -97,7 +97,7 @@ class CustomDefinition {
     findShowFormRelative(word) {
         var isFilter = /Filter$/.test(word), file_rela = ['Filter', word]
         if (!isFilter)
-            return []
+            return [['Filter', word]]
         this.relativeFilter.forEach(([folder, name_rela]) => {
             file_rela.push([folder, word.slice(0, -6) + name_rela])
         })
@@ -167,8 +167,15 @@ class CustomDefinition {
             if (targetCase) {
                 return new vscode.Location(document.uri, targetCase.position);
             }
+             // ✅ Nếu không có case, trỏ đến dòng có ExecuteCommand(sender, e)
+            for (let i = 0; i < document.lineCount; i++) {
+                const lineText = document.lineAt(i).text;
+                if (/ResponseComplete\s*\(\s*sender\s*,\s*e\s*\)/.test(lineText)) {
+                    return new vscode.Location(document.uri, new vscode.Position(i, 0));
+                }
+            }
         }
-
+ 
         return null;
     }
 

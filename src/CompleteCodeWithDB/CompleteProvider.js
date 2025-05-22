@@ -30,16 +30,16 @@ class CompletionProvider extends ana {
         context.subscriptions.push(autoCompleteFields, providerAutoComplete, genViewFromFields);
     }
 
-    
+
 
     async provideCompletionItems(document, position) {
         const line = document.lineAt(position);
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
         const completionItems = [];
         const folderName = this.getFolderName(textBeforeCursor, document);
-        if (folderName == '') 
+        if (folderName == '')
             return completionItems;
-        
+
         try {
             const text = await this.getTextComplete(line.b, folderName);
             const completionItem = this.createCompleteItem(text, line, position);
@@ -61,19 +61,18 @@ class CompletionProvider extends ana {
         return completionItem;
     }
 
-   
 
-    getDatabase(folderName){
+
+    getDatabase(folderName) {
         const dbPath = path.join(__dirname, '..', 'Database', folderName);
         return level(dbPath, { createIfMissing: false }, function (err) {
             if (err instanceof level.errors.OpenError) {
                 vscode.window.showErrorMessage(`failed to open database: ${err}`);
             }
-        }); 
+        });
     }
-    async getValueFromDatabase(db, key_split){
+    async getValueFromDatabase(db, key_split) {
         const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
-        console.log(key)
         var text = await db.get(key); // Sử dụng Promise API của level
         const match = text.match(/reference="([^"]+)"/);
         if (match) {
@@ -89,8 +88,8 @@ class CompletionProvider extends ana {
         const path = document.uri.path;
         if (inputText.startsWith('$f')) {
             return path.includes('Dir') ? 'Dir'
-                 : path.includes('Filter') ? 'Filter'
-                 : '';
+                : path.includes('Filter') ? 'Filter'
+                    : '';
         }
         if (path.includes('Grid')) {
             if (inputText.startsWith('$gv')) return 'GridView';
@@ -106,7 +105,7 @@ class CompletionProvider extends ana {
         }
         const db = this.getDatabase(folderName);
         try {
-          return await this.getValueFromDatabase(db, key_split);
+            return await this.getValueFromDatabase(db, key_split);
         } catch (err) {
             vscode.window.showErrorMessage(err);
             return text || '';
@@ -114,7 +113,7 @@ class CompletionProvider extends ana {
             db.close(); // Đảm bảo đóng database
         }
     }
-    
+
     applyCompletionItem(line, position) {
         const activeTextEditor = vscode.window.activeTextEditor, document = activeTextEditor.document, edit = new vscode.WorkspaceEdit();
         var lineNumber = line.a, textToReplace = line.b, text = document.lineAt(lineNumber).text.replace(textToReplace, '');
@@ -152,11 +151,15 @@ class CompletionProvider extends ana {
         if (!document.uri.path.includes('Filter')) {
             return completionItems;
         }
-        var name_and_field = await this.getListField('', document.getText()); 
-        select_str = 'select ' +  name_and_field.map(obj=> {
+        var name_and_field = await this.getListField('', document.getText());
+        name_and_field = name_and_field.filter(ele =>
+            !/external\s*=\s*["']true["']/.test(ele.value)
+        );
+
+        select_str = 'select ' + name_and_field.map(obj => {
             return `@${obj.key} as ${obj.key}`;
         }).join(', ')
-        declare_suggest = '-- ' +  name_and_field.map(obj=> {
+        declare_suggest = '-- ' + name_and_field.map(obj => {
             return `@${obj.key}`;
         }).join(', ')
         var textComplete = select_str + '\n' + declare_suggest;
@@ -165,13 +168,13 @@ class CompletionProvider extends ana {
         return completionItems;
     }
 
-    async shortCutGen(document, position){
+    async shortCutGen(document, position) {
         if (!this.checkFBOPathValid())
             return [];
         const line = document.lineAt(position);
         const textBeforeCursor = line.text.substring(0, position.character).trim(); // Văn bản trước con trỏ
 
-        if(!this.command.hasOwnProperty(textBeforeCursor))
+        if (!this.command.hasOwnProperty(textBeforeCursor))
             return []
         var func = this.command[textBeforeCursor];
         return func(document, position)

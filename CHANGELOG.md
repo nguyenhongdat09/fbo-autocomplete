@@ -59,3 +59,5 @@
 # Version 0.0.29
 - add $mgp, $mgr ở Mobile
 - add definition controller 
+# Version 0.0.29
+- Fixing
