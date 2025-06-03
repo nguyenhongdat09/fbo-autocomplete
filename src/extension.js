@@ -23,6 +23,7 @@ const ContextMenuHandler = require("./TreeFile/ContextMenu");
 const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
 const CustomDefinition = require("./Definition/CustomDefinition");
+var Constant = require('./constant')
 
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
@@ -64,6 +65,7 @@ function checkLicense() {
  */
 async function activate(context) {
     console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
+    var constant = new Constant(context);
     var license = await checkLicense();
     if(!license) return
     const provider = new CompletionProvider(); 
@@ -72,9 +74,12 @@ async function activate(context) {
     upsettings.updateSettingsJson.bind(upsettings)(context);
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
-  
-    var renderdbSqlLite = new RenderXMLToDB()
-    renderdbSqlLite.run(context);
+   
+    const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
+    completeCodeByHandle.run(context);
+   
+    var renderdb = new RenderXMLToDB()
+    renderdb.run(context, completeCodeByHandle);
 
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
@@ -129,12 +134,7 @@ async function activate(context) {
             vscode.window.showInformationMessage(`Copied: ${content}`);
         });
     });
-
-    //const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
-    const sheetId = '1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA'; // ID Google Sheet
-    const completeCodeByHandle = new CompleteCodeByHandle(sheetId);
-    completeCodeByHandle.run(context);
-    
+   
     //Translate
     const trans = new Trans()
     let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {

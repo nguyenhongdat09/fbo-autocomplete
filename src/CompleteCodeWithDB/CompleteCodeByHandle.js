@@ -23,30 +23,34 @@ class CompleteCodeByHandle {
         this.filterField = [];
         this.optionField = [];
         this.shortCutField = [];
+        this.providerHandles = [];
     }
     run(context) {
         this.loadFromJson(); // Load từ JSON khi extension khởi động
-
         const getDataGGS = vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {
             await this.loadFunctions();
         });
-        
+        context.subscriptions.push(getDataGGS);
+        this.registerComplete(context);
+    }
+    registerComplete(context) { 
         const providers = [
             [this.provideCompletionItems.bind(this), '.'],
             [this.provideCompletionTwoDotItems.bind(this), '.'],
             [this.provideCompletionFieldItems.bind(this), '.'],
             [this.provideOptionsCompletionItems.bind(this), '@'],
             [this.provideShortCutCompletionItems.bind(this), '$']
-        ]; 
-        const providerHandles = providers.map(([providerFn, triggerChar]) =>
+        ];
+        this.providerHandles = providers.map(([providerFn, triggerChar]) =>
             vscode.languages.registerCompletionItemProvider(
                 { language: 'xml' },
                 { provideCompletionItems: providerFn },
                 triggerChar
             )
         );
-        context.subscriptions.push(getDataGGS, ...providerHandles);
-    }
+        context.subscriptions.push(...this.providerHandles);
+    } 
+
     // Gọi API và lưu dữ liệu vào file JSON
     async loadFunctions() {
         vscode.window.withProgress({

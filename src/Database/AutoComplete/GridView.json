@@ -1,10 +1,5 @@
 [
   {
-    "label": "Ngay_sx",
-    "detail": "GridView",
-    "insertText": "Ngay_sx;"
-  },
-  {
     "label": "STT",
     "detail": "GridView",
     "insertText": "STT;"
@@ -30,29 +25,14 @@
     "insertText": "allownulls_yn;"
   },
   {
-    "label": "an_cx",
-    "detail": "GridView",
-    "insertText": "an_cx;"
-  },
-  {
-    "label": "an_dk",
-    "detail": "GridView",
-    "insertText": "an_dk;"
-  },
-  {
     "label": "bac_tk",
     "detail": "GridView",
     "insertText": "bac_tk;"
   },
   {
-    "label": "bang_cap",
+    "label": "barcode",
     "detail": "GridView",
-    "insertText": "bang_cap;"
-  },
-  {
-    "label": "bhao_toi_thieu",
-    "detail": "GridView",
-    "insertText": "bhao_toi_thieu;"
+    "insertText": "barcode;"
   },
   {
     "label": "bien_so",
@@ -65,11 +45,6 @@
     "insertText": "bo_phan;"
   },
   {
-    "label": "bold",
-    "detail": "GridView",
-    "insertText": "bold;"
-  },
-  {
     "label": "br_cn_nn_duoi12",
     "detail": "GridView",
     "insertText": "br_cn_nn_duoi12;"
@@ -80,19 +55,9 @@
     "insertText": "c1;"
   },
   {
-    "label": "c1log",
-    "detail": "GridView",
-    "insertText": "c1log;"
-  },
-  {
     "label": "c2",
     "detail": "GridView",
     "insertText": "c2;"
-  },
-  {
-    "label": "c2log",
-    "detail": "GridView",
-    "insertText": "c2log;"
   },
   {
     "label": "c3",
@@ -100,29 +65,14 @@
     "insertText": "c3;"
   },
   {
-    "label": "c3log",
-    "detail": "GridView",
-    "insertText": "c3log;"
-  },
-  {
     "label": "c4",
     "detail": "GridView",
     "insertText": "c4;"
   },
   {
-    "label": "c4log",
-    "detail": "GridView",
-    "insertText": "c4log;"
-  },
-  {
     "label": "c5",
     "detail": "GridView",
     "insertText": "c5;"
-  },
-  {
-    "label": "c5log",
-    "detail": "GridView",
-    "insertText": "c5log;"
   },
   {
     "label": "c_acc",
@@ -135,11 +85,6 @@
     "insertText": "cach_tinh;"
   },
   {
-    "label": "cang_den",
-    "detail": "GridView",
-    "insertText": "cang_den;"
-  },
-  {
     "label": "cc",
     "detail": "GridView",
     "insertText": "cc;"
@@ -148,6 +93,11 @@
     "label": "cc_nt",
     "detail": "GridView",
     "insertText": "cc_nt;"
+  },
+  {
+    "label": "cc_yn",
+    "detail": "GridView",
+    "insertText": "cc_yn;"
   },
   {
     "label": "cd_sau",
@@ -160,24 +110,24 @@
     "insertText": "cd_truoc;"
   },
   {
+    "label": "check1",
+    "detail": "GridView",
+    "insertText": "check1;"
+  },
+  {
+    "label": "check2",
+    "detail": "GridView",
+    "insertText": "check2;"
+  },
+  {
+    "label": "check3",
+    "detail": "GridView",
+    "insertText": "check3;"
+  },
+  {
     "label": "chenh_lech",
     "detail": "GridView",
     "insertText": "chenh_lech;"
-  },
-  {
-    "label": "chi_nhanh",
-    "detail": "GridView",
-    "insertText": "chi_nhanh;"
-  },
-  {
-    "label": "chi_phi_tt",
-    "detail": "GridView",
-    "insertText": "chi_phi_tt;"
-  },
-  {
-    "label": "chi_so_tb",
-    "detail": "GridView",
-    "insertText": "chi_so_tb;"
   },
   {
     "label": "chi_tieu",
@@ -195,39 +145,24 @@
     "insertText": "chi_tieu2;"
   },
   {
-    "label": "chu_tk",
-    "detail": "GridView",
-    "insertText": "chu_tk;"
-  },
-  {
     "label": "chuc_nang",
     "detail": "GridView",
     "insertText": "chuc_nang;"
   },
   {
-    "label": "cif_code",
+    "label": "chuc_vu",
     "detail": "GridView",
-    "insertText": "cif_code;"
+    "insertText": "chuc_vu;"
+  },
+  {
+    "label": "chuc_vu_uq",
+    "detail": "GridView",
+    "insertText": "chuc_vu_uq;"
   },
   {
     "label": "ck",
     "detail": "GridView",
     "insertText": "ck;"
-  },
-  {
-    "label": "ck_co",
-    "detail": "GridView",
-    "insertText": "ck_co;"
-  },
-  {
-    "label": "ck_co_nt",
-    "detail": "GridView",
-    "insertText": "ck_co_nt;"
-  },
-  {
-    "label": "ck_dv_nt",
-    "detail": "GridView",
-    "insertText": "ck_dv_nt;"
   },
   {
     "label": "ck_kn",
@@ -243,16 +178,6 @@
     "label": "ck_lk",
     "detail": "GridView",
     "insertText": "ck_lk;"
-  },
-  {
-    "label": "ck_no",
-    "detail": "GridView",
-    "insertText": "ck_no;"
-  },
-  {
-    "label": "ck_no_nt",
-    "detail": "GridView",
-    "insertText": "ck_no_nt;"
   },
   {
     "label": "ck_nt",
@@ -335,9 +260,29 @@
     "insertText": "cl_tang_nt;"
   },
   {
+    "label": "clan",
+    "detail": "GridView",
+    "insertText": "clan;"
+  },
+  {
+    "label": "client_code",
+    "detail": "GridView",
+    "insertText": "client_code;"
+  },
+  {
     "label": "client_default",
     "detail": "GridView",
     "insertText": "client_default;"
+  },
+  {
+    "label": "client_name",
+    "detail": "GridView",
+    "insertText": "client_name;"
+  },
+  {
+    "label": "client_nameex",
+    "detail": "GridView",
+    "insertText": "client_nameex;"
   },
   {
     "label": "cmnd",
@@ -358,6 +303,11 @@
     "label": "cn_tk_nt",
     "detail": "GridView",
     "insertText": "cn_tk_nt;"
+  },
+  {
+    "label": "cngay_ct",
+    "detail": "GridView",
+    "insertText": "cngay_ct;"
   },
   {
     "label": "co_ck",
@@ -425,6 +375,16 @@
     "insertText": "comment2;"
   },
   {
+    "label": "commentex",
+    "detail": "GridView",
+    "insertText": "commentex;"
+  },
+  {
+    "label": "con_han",
+    "detail": "GridView",
+    "insertText": "con_han;"
+  },
+  {
     "label": "con_lai",
     "detail": "GridView",
     "insertText": "con_lai;"
@@ -450,9 +410,9 @@
     "insertText": "cong_suat;"
   },
   {
-    "label": "content",
+    "label": "cong_thuc",
     "detail": "GridView",
-    "insertText": "content;"
+    "insertText": "cong_thuc;"
   },
   {
     "label": "content%l",
@@ -470,51 +430,6 @@
     "insertText": "cp;"
   },
   {
-    "label": "cp_621",
-    "detail": "GridView",
-    "insertText": "cp_621;"
-  },
-  {
-    "label": "cp_622",
-    "detail": "GridView",
-    "insertText": "cp_622;"
-  },
-  {
-    "label": "cp_627",
-    "detail": "GridView",
-    "insertText": "cp_627;"
-  },
-  {
-    "label": "cp_635",
-    "detail": "GridView",
-    "insertText": "cp_635;"
-  },
-  {
-    "label": "cp_635_nt",
-    "detail": "GridView",
-    "insertText": "cp_635_nt;"
-  },
-  {
-    "label": "cp_641",
-    "detail": "GridView",
-    "insertText": "cp_641;"
-  },
-  {
-    "label": "cp_641_nt",
-    "detail": "GridView",
-    "insertText": "cp_641_nt;"
-  },
-  {
-    "label": "cp_642",
-    "detail": "GridView",
-    "insertText": "cp_642;"
-  },
-  {
-    "label": "cp_642_nt",
-    "detail": "GridView",
-    "insertText": "cp_642_nt;"
-  },
-  {
     "label": "cp_bh",
     "detail": "GridView",
     "insertText": "cp_bh;"
@@ -523,16 +438,6 @@
     "label": "cp_bh_nt",
     "detail": "GridView",
     "insertText": "cp_bh_nt;"
-  },
-  {
-    "label": "cp_bh_ql",
-    "detail": "GridView",
-    "insertText": "cp_bh_ql;"
-  },
-  {
-    "label": "cp_bh_ql_nt",
-    "detail": "GridView",
-    "insertText": "cp_bh_ql_nt;"
   },
   {
     "label": "cp_bt",
@@ -548,11 +453,6 @@
     "label": "cp_dv",
     "detail": "GridView",
     "insertText": "cp_dv;"
-  },
-  {
-    "label": "cp_dv_nt",
-    "detail": "GridView",
-    "insertText": "cp_dv_nt;"
   },
   {
     "label": "cp_gt",
@@ -610,11 +510,6 @@
     "insertText": "cp_vc_nt;"
   },
   {
-    "label": "cs_bq",
-    "detail": "GridView",
-    "insertText": "cs_bq;"
-  },
-  {
     "label": "cs_du",
     "detail": "GridView",
     "insertText": "cs_du;"
@@ -625,14 +520,14 @@
     "insertText": "cs_gh;"
   },
   {
-    "label": "cs_max",
-    "detail": "GridView",
-    "insertText": "cs_max;"
-  },
-  {
     "label": "cs_sd",
     "detail": "GridView",
     "insertText": "cs_sd;"
+  },
+  {
+    "label": "ct_tong_yn",
+    "detail": "GridView",
+    "insertText": "ct_tong_yn;"
   },
   {
     "label": "cu_tru_yn",
@@ -735,19 +630,14 @@
     "insertText": "da_thu;"
   },
   {
+    "label": "da_thu_nt",
+    "detail": "GridView",
+    "insertText": "da_thu_nt;"
+  },
+  {
     "label": "da_tra",
     "detail": "GridView",
     "insertText": "da_tra;"
-  },
-  {
-    "label": "da_tra_lk",
-    "detail": "GridView",
-    "insertText": "da_tra_lk;"
-  },
-  {
-    "label": "da_tra_lk_nt",
-    "detail": "GridView",
-    "insertText": "da_tra_lk_nt;"
   },
   {
     "label": "da_tra_nt",
@@ -785,14 +675,9 @@
     "insertText": "datetime2;"
   },
   {
-    "label": "datetime3",
+    "label": "datetime2_text",
     "detail": "GridView",
-    "insertText": "datetime3;"
-  },
-  {
-    "label": "datetime_log",
-    "detail": "GridView",
-    "insertText": "datetime_log;"
+    "insertText": "datetime2_text;"
   },
   {
     "label": "dd_ck",
@@ -815,6 +700,11 @@
     "insertText": "dd_dk_nt;"
   },
   {
+    "label": "de_xuat",
+    "detail": "GridView",
+    "insertText": "de_xuat;"
+  },
+  {
     "label": "den_thang",
     "detail": "GridView",
     "insertText": "den_thang;"
@@ -823,11 +713,6 @@
     "label": "dept_id",
     "detail": "GridView",
     "insertText": "dept_id;"
-  },
-  {
-    "label": "descript%l",
-    "detail": "GridView",
-    "insertText": "descript%l;"
   },
   {
     "label": "descript%lex",
@@ -845,11 +730,6 @@
     "insertText": "description2;"
   },
   {
-    "label": "dh_so",
-    "detail": "GridView",
-    "insertText": "dh_so;"
-  },
-  {
     "label": "dia_chi",
     "detail": "GridView",
     "insertText": "dia_chi;"
@@ -860,64 +740,9 @@
     "insertText": "dia_chi%l;"
   },
   {
-    "label": "dia_chi_kh",
+    "label": "dia_chi_gh",
     "detail": "GridView",
-    "insertText": "dia_chi_kh;"
-  },
-  {
-    "label": "dia_chi_tru_so",
-    "detail": "GridView",
-    "insertText": "dia_chi_tru_so;"
-  },
-  {
-    "label": "diem",
-    "detail": "GridView",
-    "insertText": "diem;"
-  },
-  {
-    "label": "diem1",
-    "detail": "GridView",
-    "insertText": "diem1;"
-  },
-  {
-    "label": "diem2",
-    "detail": "GridView",
-    "insertText": "diem2;"
-  },
-  {
-    "label": "diem3",
-    "detail": "GridView",
-    "insertText": "diem3;"
-  },
-  {
-    "label": "diem4",
-    "detail": "GridView",
-    "insertText": "diem4;"
-  },
-  {
-    "label": "diem5",
-    "detail": "GridView",
-    "insertText": "diem5;"
-  },
-  {
-    "label": "diem_kn",
-    "detail": "GridView",
-    "insertText": "diem_kn;"
-  },
-  {
-    "label": "diem_kt",
-    "detail": "GridView",
-    "insertText": "diem_kt;"
-  },
-  {
-    "label": "diem_tb",
-    "detail": "GridView",
-    "insertText": "diem_tb;"
-  },
-  {
-    "label": "diem_tong",
-    "detail": "GridView",
-    "insertText": "diem_tong;"
+    "insertText": "dia_chi_gh;"
   },
   {
     "label": "dien_giai",
@@ -940,6 +765,11 @@
     "insertText": "dien_giai_ct;"
   },
   {
+    "label": "dien_giai_nc",
+    "detail": "GridView",
+    "insertText": "dien_giai_nc;"
+  },
+  {
     "label": "dien_giai_thieu",
     "detail": "GridView",
     "insertText": "dien_giai_thieu;"
@@ -950,14 +780,14 @@
     "insertText": "dien_giai_thua;"
   },
   {
+    "label": "dien_giai_yc",
+    "detail": "GridView",
+    "insertText": "dien_giai_yc;"
+  },
+  {
     "label": "dien_giaiex",
     "detail": "GridView",
     "insertText": "dien_giaiex;"
-  },
-  {
-    "label": "dien_nang",
-    "detail": "GridView",
-    "insertText": "dien_nang;"
   },
   {
     "label": "dien_thoai",
@@ -965,54 +795,9 @@
     "insertText": "dien_thoai;"
   },
   {
-    "label": "dien_thoai_fax",
+    "label": "dk_cohiba",
     "detail": "GridView",
-    "insertText": "dien_thoai_fax;"
-  },
-  {
-    "label": "dinh_muc",
-    "detail": "GridView",
-    "insertText": "dinh_muc;"
-  },
-  {
-    "label": "distortion",
-    "detail": "GridView",
-    "insertText": "distortion;"
-  },
-  {
-    "label": "dk_co",
-    "detail": "GridView",
-    "insertText": "dk_co;"
-  },
-  {
-    "label": "dk_co_nt",
-    "detail": "GridView",
-    "insertText": "dk_co_nt;"
-  },
-  {
-    "label": "dk_no",
-    "detail": "GridView",
-    "insertText": "dk_no;"
-  },
-  {
-    "label": "dk_no_nt",
-    "detail": "GridView",
-    "insertText": "dk_no_nt;"
-  },
-  {
-    "label": "dk_tt",
-    "detail": "GridView",
-    "insertText": "dk_tt;"
-  },
-  {
-    "label": "doanh_thu",
-    "detail": "GridView",
-    "insertText": "doanh_thu;"
-  },
-  {
-    "label": "doanh_thu_nt",
-    "detail": "GridView",
-    "insertText": "doanh_thu_nt;"
+    "insertText": "dk_cohiba;"
   },
   {
     "label": "doanh_thu_thuan",
@@ -1035,6 +820,11 @@
     "insertText": "doanh_thu_tl_nt;"
   },
   {
+    "label": "dong_bo_yn",
+    "detail": "GridView",
+    "insertText": "dong_bo_yn;"
+  },
+  {
     "label": "dot_tt",
     "detail": "GridView",
     "insertText": "dot_tt;"
@@ -1055,9 +845,9 @@
     "insertText": "ds_ct;"
   },
   {
-    "label": "ds_don_vi",
+    "label": "ds_dv",
     "detail": "GridView",
-    "insertText": "ds_don_vi;"
+    "insertText": "ds_dv;"
   },
   {
     "label": "ds_ma_dvcs",
@@ -1068,6 +858,81 @@
     "label": "ds_ma_kh",
     "detail": "GridView",
     "insertText": "ds_ma_kh;"
+  },
+  {
+    "label": "ds_ma_vt",
+    "detail": "GridView",
+    "insertText": "ds_ma_vt;"
+  },
+  {
+    "label": "ds_nh_kh1",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh1;"
+  },
+  {
+    "label": "ds_nh_kh2",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh2;"
+  },
+  {
+    "label": "ds_nh_kh3",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh3;"
+  },
+  {
+    "label": "ds_nh_kh4",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh4;"
+  },
+  {
+    "label": "ds_nh_kh5",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh5;"
+  },
+  {
+    "label": "ds_nh_kh6",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh6;"
+  },
+  {
+    "label": "ds_nh_kh9",
+    "detail": "GridView",
+    "insertText": "ds_nh_kh9;"
+  },
+  {
+    "label": "ds_nh_vt1",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt1;"
+  },
+  {
+    "label": "ds_nh_vt2",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt2;"
+  },
+  {
+    "label": "ds_nh_vt3",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt3;"
+  },
+  {
+    "label": "ds_nh_vt4",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt4;"
+  },
+  {
+    "label": "ds_nh_vt5",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt5;"
+  },
+  {
+    "label": "ds_nh_vt6",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt6;"
+  },
+  {
+    "label": "ds_nh_vt9",
+    "detail": "GridView",
+    "insertText": "ds_nh_vt9;"
   },
   {
     "label": "ds_nt",
@@ -1090,19 +955,19 @@
     "insertText": "dt;"
   },
   {
+    "label": "dt_kh",
+    "detail": "GridView",
+    "insertText": "dt_kh;"
+  },
+  {
+    "label": "dt_kh_val",
+    "detail": "GridView",
+    "insertText": "dt_kh_val;"
+  },
+  {
     "label": "dt_nt",
     "detail": "GridView",
     "insertText": "dt_nt;"
-  },
-  {
-    "label": "dt_thuan",
-    "detail": "GridView",
-    "insertText": "dt_thuan;"
-  },
-  {
-    "label": "dt_thuan_nt",
-    "detail": "GridView",
-    "insertText": "dt_thuan_nt;"
   },
   {
     "label": "dt_thue_gtgt",
@@ -1120,14 +985,14 @@
     "insertText": "dt_tinh_thue;"
   },
   {
-    "label": "dt_tl",
+    "label": "dt_vt",
     "detail": "GridView",
-    "insertText": "dt_tl;"
+    "insertText": "dt_vt;"
   },
   {
-    "label": "dt_tl_nt",
+    "label": "dt_vt_val",
     "detail": "GridView",
-    "insertText": "dt_tl_nt;"
+    "insertText": "dt_vt_val;"
   },
   {
     "label": "du",
@@ -1220,16 +1085,6 @@
     "insertText": "du_no_nt00;"
   },
   {
-    "label": "du_no_qh",
-    "detail": "GridView",
-    "insertText": "du_no_qh;"
-  },
-  {
-    "label": "du_no_qh_nt",
-    "detail": "GridView",
-    "insertText": "du_no_qh_nt;"
-  },
-  {
     "label": "du_nt",
     "detail": "GridView",
     "insertText": "du_nt;"
@@ -1238,11 +1093,6 @@
     "label": "du_nt00",
     "detail": "GridView",
     "insertText": "du_nt00;"
-  },
-  {
-    "label": "du_tinh_thang_tt",
-    "detail": "GridView",
-    "insertText": "du_tinh_thang_tt;"
   },
   {
     "label": "du_toan",
@@ -1265,6 +1115,11 @@
     "insertText": "du_tt_nt;"
   },
   {
+    "label": "duong_dan",
+    "detail": "GridView",
+    "insertText": "duong_dan;"
+  },
+  {
     "label": "dvcs",
     "detail": "GridView",
     "insertText": "dvcs;"
@@ -1285,11 +1140,6 @@
     "insertText": "dvt1;"
   },
   {
-    "label": "dvt2",
-    "detail": "GridView",
-    "insertText": "dvt2;"
-  },
-  {
     "label": "dvt_kk",
     "detail": "GridView",
     "insertText": "dvt_kk;"
@@ -1300,24 +1150,49 @@
     "insertText": "dvt_nt;"
   },
   {
-    "label": "dvt_pa2",
+    "label": "e1",
     "detail": "GridView",
-    "insertText": "dvt_pa2;"
+    "insertText": "e1;"
   },
   {
-    "label": "dvt_pd3",
+    "label": "e2",
     "detail": "GridView",
-    "insertText": "dvt_pd3;"
+    "insertText": "e2;"
   },
   {
-    "label": "dvt_po2",
+    "label": "e3",
     "detail": "GridView",
-    "insertText": "dvt_po2;"
+    "insertText": "e3;"
   },
   {
-    "label": "dvtex",
+    "label": "e4",
     "detail": "GridView",
-    "insertText": "dvtex;"
+    "insertText": "e4;"
+  },
+  {
+    "label": "e5",
+    "detail": "GridView",
+    "insertText": "e5;"
+  },
+  {
+    "label": "e6",
+    "detail": "GridView",
+    "insertText": "e6;"
+  },
+  {
+    "label": "e7",
+    "detail": "GridView",
+    "insertText": "e7;"
+  },
+  {
+    "label": "e8",
+    "detail": "GridView",
+    "insertText": "e8;"
+  },
+  {
+    "label": "e9",
+    "detail": "GridView",
+    "insertText": "e9;"
   },
   {
     "label": "e_mail",
@@ -1325,9 +1200,24 @@
     "insertText": "e_mail;"
   },
   {
+    "label": "e_mail_ec",
+    "detail": "GridView",
+    "insertText": "e_mail_ec;"
+  },
+  {
+    "label": "ec_e_mail",
+    "detail": "GridView",
+    "insertText": "ec_e_mail;"
+  },
+  {
     "label": "email",
     "detail": "GridView",
     "insertText": "email;"
+  },
+  {
+    "label": "email_ll",
+    "detail": "GridView",
+    "insertText": "email_ll;"
   },
   {
     "label": "f1",
@@ -1375,11 +1265,6 @@
     "insertText": "f5;"
   },
   {
-    "label": "field",
-    "detail": "GridView",
-    "insertText": "field;"
-  },
-  {
     "label": "field_key",
     "detail": "GridView",
     "insertText": "field_key;"
@@ -1405,6 +1290,41 @@
     "insertText": "field_type_log;"
   },
   {
+    "label": "file_ecode",
+    "detail": "GridView",
+    "insertText": "file_ecode;"
+  },
+  {
+    "label": "file_edescription_inbound",
+    "detail": "GridView",
+    "insertText": "file_edescription_inbound;"
+  },
+  {
+    "label": "file_edescription_outbound",
+    "detail": "GridView",
+    "insertText": "file_edescription_outbound;"
+  },
+  {
+    "label": "file_name_inbound",
+    "detail": "GridView",
+    "insertText": "file_name_inbound;"
+  },
+  {
+    "label": "file_name_outbound",
+    "detail": "GridView",
+    "insertText": "file_name_outbound;"
+  },
+  {
+    "label": "file_status_inbound",
+    "detail": "GridView",
+    "insertText": "file_status_inbound;"
+  },
+  {
+    "label": "file_status_outbound",
+    "detail": "GridView",
+    "insertText": "file_status_outbound;"
+  },
+  {
     "label": "form",
     "detail": "GridView",
     "insertText": "form;"
@@ -1425,24 +1345,24 @@
     "insertText": "format_type_name%l;"
   },
   {
-    "label": "gc_td2",
+    "label": "gh_ll",
     "detail": "GridView",
-    "insertText": "gc_td2;"
-  },
-  {
-    "label": "gc_td3",
-    "detail": "GridView",
-    "insertText": "gc_td3;"
-  },
-  {
-    "label": "gear",
-    "detail": "GridView",
-    "insertText": "gear;"
+    "insertText": "gh_ll;"
   },
   {
     "label": "ghi_chu",
     "detail": "GridView",
     "insertText": "ghi_chu;"
+  },
+  {
+    "label": "ghi_chu_d",
+    "detail": "GridView",
+    "insertText": "ghi_chu_d;"
+  },
+  {
+    "label": "ghi_chu_kqex",
+    "detail": "GridView",
+    "insertText": "ghi_chu_kqex;"
   },
   {
     "label": "gia",
@@ -1475,31 +1395,6 @@
     "insertText": "gia2_lk;"
   },
   {
-    "label": "gia_ban",
-    "detail": "GridView",
-    "insertText": "gia_ban;"
-  },
-  {
-    "label": "gia_ban_dx",
-    "detail": "GridView",
-    "insertText": "gia_ban_dx;"
-  },
-  {
-    "label": "gia_ban_dx_nt",
-    "detail": "GridView",
-    "insertText": "gia_ban_dx_nt;"
-  },
-  {
-    "label": "gia_ban_nt",
-    "detail": "GridView",
-    "insertText": "gia_ban_nt;"
-  },
-  {
-    "label": "gia_chuan_nt",
-    "detail": "GridView",
-    "insertText": "gia_chuan_nt;"
-  },
-  {
     "label": "gia_cl",
     "detail": "GridView",
     "insertText": "gia_cl;"
@@ -1520,11 +1415,6 @@
     "insertText": "gia_dc_nt;"
   },
   {
-    "label": "gia_dx",
-    "detail": "GridView",
-    "insertText": "gia_dx;"
-  },
-  {
     "label": "gia_hd",
     "detail": "GridView",
     "insertText": "gia_hd;"
@@ -1533,16 +1423,6 @@
     "label": "gia_hd_nt",
     "detail": "GridView",
     "insertText": "gia_hd_nt;"
-  },
-  {
-    "label": "gia_hh",
-    "detail": "GridView",
-    "insertText": "gia_hh;"
-  },
-  {
-    "label": "gia_hh_nt",
-    "detail": "GridView",
-    "insertText": "gia_hh_nt;"
   },
   {
     "label": "gia_kn",
@@ -1560,16 +1440,6 @@
     "insertText": "gia_lk;"
   },
   {
-    "label": "gia_moi",
-    "detail": "GridView",
-    "insertText": "gia_moi;"
-  },
-  {
-    "label": "gia_moi2",
-    "detail": "GridView",
-    "insertText": "gia_moi2;"
-  },
-  {
     "label": "gia_nt",
     "detail": "GridView",
     "insertText": "gia_nt;"
@@ -1578,16 +1448,6 @@
     "label": "gia_nt0",
     "detail": "GridView",
     "insertText": "gia_nt0;"
-  },
-  {
-    "label": "gia_nt0_pa2",
-    "detail": "GridView",
-    "insertText": "gia_nt0_pa2;"
-  },
-  {
-    "label": "gia_nt0_pd3",
-    "detail": "GridView",
-    "insertText": "gia_nt0_pd3;"
   },
   {
     "label": "gia_nt2",
@@ -1625,11 +1485,6 @@
     "insertText": "gia_nt_lk;"
   },
   {
-    "label": "gia_nt_po2",
-    "detail": "GridView",
-    "insertText": "gia_nt_po2;"
-  },
-  {
     "label": "gia_ton",
     "detail": "GridView",
     "insertText": "gia_ton;"
@@ -1643,26 +1498,6 @@
     "label": "gia_tri_nt",
     "detail": "GridView",
     "insertText": "gia_tri_nt;"
-  },
-  {
-    "label": "gia_von",
-    "detail": "GridView",
-    "insertText": "gia_von;"
-  },
-  {
-    "label": "gia_von_hb",
-    "detail": "GridView",
-    "insertText": "gia_von_hb;"
-  },
-  {
-    "label": "gia_von_hb_nt",
-    "detail": "GridView",
-    "insertText": "gia_von_hb_nt;"
-  },
-  {
-    "label": "gia_von_nt",
-    "detail": "GridView",
-    "insertText": "gia_von_nt;"
   },
   {
     "label": "giam",
@@ -1690,11 +1525,6 @@
     "insertText": "giam_tru;"
   },
   {
-    "label": "giay_phep",
-    "detail": "GridView",
-    "insertText": "giay_phep;"
-  },
-  {
     "label": "gio_bd",
     "detail": "GridView",
     "insertText": "gio_bd;"
@@ -1720,14 +1550,14 @@
     "insertText": "gio_th;"
   },
   {
-    "label": "gioi_tinh",
-    "detail": "GridView",
-    "insertText": "gioi_tinh;"
-  },
-  {
     "label": "gr_name",
     "detail": "GridView",
     "insertText": "gr_name;"
+  },
+  {
+    "label": "groupBy",
+    "detail": "GridView",
+    "insertText": "groupBy;"
   },
   {
     "label": "group_code",
@@ -1775,11 +1605,6 @@
     "insertText": "gt_cl_nt;"
   },
   {
-    "label": "gt_cx",
-    "detail": "GridView",
-    "insertText": "gt_cx;"
-  },
-  {
     "label": "gt_da_kh",
     "detail": "GridView",
     "insertText": "gt_da_kh;"
@@ -1798,11 +1623,6 @@
     "label": "gt_da_pb_nt",
     "detail": "GridView",
     "insertText": "gt_da_pb_nt;"
-  },
-  {
-    "label": "gt_dv",
-    "detail": "GridView",
-    "insertText": "gt_dv;"
   },
   {
     "label": "gt_kh_bq",
@@ -1855,16 +1675,6 @@
     "insertText": "gt_kh_qd_nt;"
   },
   {
-    "label": "gt_kh_thang",
-    "detail": "GridView",
-    "insertText": "gt_kh_thang;"
-  },
-  {
-    "label": "gt_kh_thang_nt",
-    "detail": "GridView",
-    "insertText": "gt_kh_thang_nt;"
-  },
-  {
     "label": "gt_khac",
     "detail": "GridView",
     "insertText": "gt_khac;"
@@ -1873,16 +1683,6 @@
     "label": "gt_khac_nt",
     "detail": "GridView",
     "insertText": "gt_khac_nt;"
-  },
-  {
-    "label": "gt_lk_nam",
-    "detail": "GridView",
-    "insertText": "gt_lk_nam;"
-  },
-  {
-    "label": "gt_lk_nam_nt",
-    "detail": "GridView",
-    "insertText": "gt_lk_nam_nt;"
   },
   {
     "label": "gt_nt",
@@ -1945,6 +1745,21 @@
     "insertText": "gt_tt_nt;"
   },
   {
+    "label": "gtri_min",
+    "detail": "GridView",
+    "insertText": "gtri_min;"
+  },
+  {
+    "label": "gtri_min_dau",
+    "detail": "GridView",
+    "insertText": "gtri_min_dau;"
+  },
+  {
+    "label": "gtri_min_dau_nt",
+    "detail": "GridView",
+    "insertText": "gtri_min_dau_nt;"
+  },
+  {
     "label": "han_sd",
     "detail": "GridView",
     "insertText": "han_sd;"
@@ -1955,19 +1770,24 @@
     "insertText": "han_tt;"
   },
   {
-    "label": "hang",
+    "label": "hang_muc",
     "detail": "GridView",
-    "insertText": "hang;"
+    "insertText": "hang_muc;"
   },
   {
-    "label": "hang_tau",
+    "label": "hang_sx",
     "detail": "GridView",
-    "insertText": "hang_tau;"
+    "insertText": "hang_sx;"
   },
   {
     "label": "hd_yn",
     "detail": "GridView",
     "insertText": "hd_yn;"
+  },
+  {
+    "label": "he_dh",
+    "detail": "GridView",
+    "insertText": "he_dh;"
   },
   {
     "label": "he_so",
@@ -2000,24 +1820,9 @@
     "insertText": "hieu_suat;"
   },
   {
-    "label": "ho_ten",
-    "detail": "GridView",
-    "insertText": "ho_ten;"
-  },
-  {
     "label": "ho_ten_nv",
     "detail": "GridView",
     "insertText": "ho_ten_nv;"
-  },
-  {
-    "label": "hoa_hong",
-    "detail": "GridView",
-    "insertText": "hoa_hong;"
-  },
-  {
-    "label": "hoa_hong_nt",
-    "detail": "GridView",
-    "insertText": "hoa_hong_nt;"
   },
   {
     "label": "host",
@@ -2040,6 +1845,11 @@
     "insertText": "hs_yt;"
   },
   {
+    "label": "httt",
+    "detail": "GridView",
+    "insertText": "httt;"
+  },
+  {
     "label": "huu_tri",
     "detail": "GridView",
     "insertText": "huu_tri;"
@@ -2053,6 +1863,26 @@
     "label": "idLog",
     "detail": "GridView",
     "insertText": "idLog;"
+  },
+  {
+    "label": "id_branch_f2",
+    "detail": "GridView",
+    "insertText": "id_branch_f2;"
+  },
+  {
+    "label": "id_f2",
+    "detail": "GridView",
+    "insertText": "id_f2;"
+  },
+  {
+    "label": "id_mau_in",
+    "detail": "GridView",
+    "insertText": "id_mau_in;"
+  },
+  {
+    "label": "id_rms",
+    "detail": "GridView",
+    "insertText": "id_rms;"
   },
   {
     "label": "in_ck",
@@ -2080,9 +1910,14 @@
     "insertText": "ip_address;"
   },
   {
-    "label": "kb_yn",
+    "label": "json_gui",
     "detail": "GridView",
-    "insertText": "kb_yn;"
+    "insertText": "json_gui;"
+  },
+  {
+    "label": "json_nhan",
+    "detail": "GridView",
+    "insertText": "json_nhan;"
   },
   {
     "label": "kc_cong",
@@ -2155,9 +1990,14 @@
     "insertText": "kc_xl_nt;"
   },
   {
-    "label": "keys",
+    "label": "ke_toan_ll",
     "detail": "GridView",
-    "insertText": "keys;"
+    "insertText": "ke_toan_ll;"
+  },
+  {
+    "label": "key_x",
+    "detail": "GridView",
+    "insertText": "key_x;"
   },
   {
     "label": "kh_ck",
@@ -2180,11 +2020,6 @@
     "insertText": "kh_dk_nt;"
   },
   {
-    "label": "kh_dt",
-    "detail": "GridView",
-    "insertText": "kh_dt;"
-  },
-  {
     "label": "kh_lk",
     "detail": "GridView",
     "insertText": "kh_lk;"
@@ -2205,6 +2040,11 @@
     "insertText": "kh_nam_nt;"
   },
   {
+    "label": "kh_yn",
+    "detail": "GridView",
+    "insertText": "kh_yn;"
+  },
+  {
     "label": "khac",
     "detail": "GridView",
     "insertText": "khac;"
@@ -2215,24 +2055,29 @@
     "insertText": "khac_nt;"
   },
   {
-    "label": "khoi_dong_cm",
+    "label": "kich_thuoc",
     "detail": "GridView",
-    "insertText": "khoi_dong_cm;"
+    "insertText": "kich_thuoc;"
   },
   {
-    "label": "khuon_kho",
+    "label": "kiem_dinh_yn",
     "detail": "GridView",
-    "insertText": "khuon_kho;"
-  },
-  {
-    "label": "kieu",
-    "detail": "GridView",
-    "insertText": "kieu;"
+    "insertText": "kiem_dinh_yn;"
   },
   {
     "label": "kieu_cd",
     "detail": "GridView",
     "insertText": "kieu_cd;"
+  },
+  {
+    "label": "kieu_chi_tieu",
+    "detail": "GridView",
+    "insertText": "kieu_chi_tieu;"
+  },
+  {
+    "label": "kieu_ck",
+    "detail": "GridView",
+    "insertText": "kieu_ck;"
   },
   {
     "label": "kieu_duyet",
@@ -2295,11 +2140,6 @@
     "insertText": "ky_bc;"
   },
   {
-    "label": "ky_cuoi",
-    "detail": "GridView",
-    "insertText": "ky_cuoi;"
-  },
-  {
     "label": "ky_hieu",
     "detail": "GridView",
     "insertText": "ky_hieu;"
@@ -2318,11 +2158,6 @@
     "label": "ky_naynt",
     "detail": "GridView",
     "insertText": "ky_naynt;"
-  },
-  {
-    "label": "ky_tinh",
-    "detail": "GridView",
-    "insertText": "ky_tinh;"
   },
   {
     "label": "ky_truoc",
@@ -2345,11 +2180,6 @@
     "insertText": "lai;"
   },
   {
-    "label": "lai_den",
-    "detail": "GridView",
-    "insertText": "lai_den;"
-  },
-  {
     "label": "lai_kn",
     "detail": "GridView",
     "insertText": "lai_kn;"
@@ -2363,16 +2193,6 @@
     "label": "lai_lk",
     "detail": "GridView",
     "insertText": "lai_lk;"
-  },
-  {
-    "label": "lai_lo",
-    "detail": "GridView",
-    "insertText": "lai_lo;"
-  },
-  {
-    "label": "lai_lo_nt",
-    "detail": "GridView",
-    "insertText": "lai_lo_nt;"
   },
   {
     "label": "lai_nt",
@@ -2395,61 +2215,6 @@
     "insertText": "lai_nt_lk;"
   },
   {
-    "label": "lai_suat",
-    "detail": "GridView",
-    "insertText": "lai_suat;"
-  },
-  {
-    "label": "lai_suat_text",
-    "detail": "GridView",
-    "insertText": "lai_suat_text;"
-  },
-  {
-    "label": "lai_tu",
-    "detail": "GridView",
-    "insertText": "lai_tu;"
-  },
-  {
-    "label": "lai_vay",
-    "detail": "GridView",
-    "insertText": "lai_vay;"
-  },
-  {
-    "label": "lai_vay_ck",
-    "detail": "GridView",
-    "insertText": "lai_vay_ck;"
-  },
-  {
-    "label": "lai_vay_ck_nt",
-    "detail": "GridView",
-    "insertText": "lai_vay_ck_nt;"
-  },
-  {
-    "label": "lai_vay_da_tra_ht",
-    "detail": "GridView",
-    "insertText": "lai_vay_da_tra_ht;"
-  },
-  {
-    "label": "lai_vay_da_tra_ht_nt",
-    "detail": "GridView",
-    "insertText": "lai_vay_da_tra_ht_nt;"
-  },
-  {
-    "label": "lai_vay_da_tra_lk",
-    "detail": "GridView",
-    "insertText": "lai_vay_da_tra_lk;"
-  },
-  {
-    "label": "lai_vay_da_tra_lk_nt",
-    "detail": "GridView",
-    "insertText": "lai_vay_da_tra_lk_nt;"
-  },
-  {
-    "label": "lai_vay_ht",
-    "detail": "GridView",
-    "insertText": "lai_vay_ht;"
-  },
-  {
     "label": "lan",
     "detail": "GridView",
     "insertText": "lan;"
@@ -2465,29 +2230,9 @@
     "insertText": "lastchange;"
   },
   {
-    "label": "lau_khuon",
-    "detail": "GridView",
-    "insertText": "lau_khuon;"
-  },
-  {
-    "label": "lay_tu",
-    "detail": "GridView",
-    "insertText": "lay_tu;"
-  },
-  {
-    "label": "lcl_fcl",
-    "detail": "GridView",
-    "insertText": "lcl_fcl;"
-  },
-  {
     "label": "line_nbr",
     "detail": "GridView",
     "insertText": "line_nbr;"
-  },
-  {
-    "label": "link_server",
-    "detail": "GridView",
-    "insertText": "link_server;"
   },
   {
     "label": "lk",
@@ -2690,16 +2435,6 @@
     "insertText": "lk_xl_nt;"
   },
   {
-    "label": "ln_bh",
-    "detail": "GridView",
-    "insertText": "ln_bh;"
-  },
-  {
-    "label": "ln_bh_nt",
-    "detail": "GridView",
-    "insertText": "ln_bh_nt;"
-  },
-  {
     "label": "lo_yn",
     "detail": "GridView",
     "insertText": "lo_yn;"
@@ -2710,24 +2445,19 @@
     "insertText": "loai;"
   },
   {
-    "label": "loai_cont",
+    "label": "loai_bp",
     "detail": "GridView",
-    "insertText": "loai_cont;"
+    "insertText": "loai_bp;"
+  },
+  {
+    "label": "loai_chi_tieu",
+    "detail": "GridView",
+    "insertText": "loai_chi_tieu;"
   },
   {
     "label": "loai_ct",
     "detail": "GridView",
     "insertText": "loai_ct;"
-  },
-  {
-    "label": "loai_dt",
-    "detail": "GridView",
-    "insertText": "loai_dt;"
-  },
-  {
-    "label": "loai_gh",
-    "detail": "GridView",
-    "insertText": "loai_gh;"
   },
   {
     "label": "loai_gia",
@@ -2745,9 +2475,9 @@
     "insertText": "loai_kc;"
   },
   {
-    "label": "loai_loi",
+    "label": "loai_kh",
     "detail": "GridView",
-    "insertText": "loai_loi;"
+    "insertText": "loai_kh;"
   },
   {
     "label": "loai_nh",
@@ -2763,6 +2493,21 @@
     "label": "loai_qh",
     "detail": "GridView",
     "insertText": "loai_qh;"
+  },
+  {
+    "label": "loai_qt",
+    "detail": "GridView",
+    "insertText": "loai_qt;"
+  },
+  {
+    "label": "loai_quyen",
+    "detail": "GridView",
+    "insertText": "loai_quyen;"
+  },
+  {
+    "label": "loai_tb",
+    "detail": "GridView",
+    "insertText": "loai_tb;"
   },
   {
     "label": "loai_tg_ts",
@@ -2785,11 +2530,6 @@
     "insertText": "loai_tn;"
   },
   {
-    "label": "loai_ts",
-    "detail": "GridView",
-    "insertText": "loai_ts;"
-  },
-  {
     "label": "loai_yt",
     "detail": "GridView",
     "insertText": "loai_yt;"
@@ -2803,16 +2543,6 @@
     "label": "logo_name%l",
     "detail": "GridView",
     "insertText": "logo_name%l;"
-  },
-  {
-    "label": "loi_nhuan",
-    "detail": "GridView",
-    "insertText": "loi_nhuan;"
-  },
-  {
-    "label": "ls",
-    "detail": "GridView",
-    "insertText": "ls;"
   },
   {
     "label": "ls_qh",
@@ -2855,11 +2585,6 @@
     "insertText": "ly_do_giam;"
   },
   {
-    "label": "m3_khoi",
-    "detail": "GridView",
-    "insertText": "m3_khoi;"
-  },
-  {
     "label": "ma",
     "detail": "GridView",
     "insertText": "ma;"
@@ -2873,6 +2598,11 @@
     "label": "ma_bc",
     "detail": "GridView",
     "insertText": "ma_bc;"
+  },
+  {
+    "label": "ma_bo",
+    "detail": "GridView",
+    "insertText": "ma_bo;"
   },
   {
     "label": "ma_bp",
@@ -2910,9 +2640,29 @@
     "insertText": "ma_bp_den;"
   },
   {
-    "label": "ma_bp_in",
+    "label": "ma_bp_goc",
     "detail": "GridView",
-    "insertText": "ma_bp_in;"
+    "insertText": "ma_bp_goc;"
+  },
+  {
+    "label": "ma_bp_ns",
+    "detail": "GridView",
+    "insertText": "ma_bp_ns;"
+  },
+  {
+    "label": "ma_bp_phi",
+    "detail": "GridView",
+    "insertText": "ma_bp_phi;"
+  },
+  {
+    "label": "ma_bp_sd",
+    "detail": "GridView",
+    "insertText": "ma_bp_sd;"
+  },
+  {
+    "label": "ma_bp_tn",
+    "detail": "GridView",
+    "insertText": "ma_bp_tn;"
   },
   {
     "label": "ma_bp_ts",
@@ -2935,11 +2685,6 @@
     "insertText": "ma_ca;"
   },
   {
-    "label": "ma_cang",
-    "detail": "GridView",
-    "insertText": "ma_cang;"
-  },
-  {
     "label": "ma_ccv",
     "detail": "GridView",
     "insertText": "ma_ccv;"
@@ -2950,14 +2695,9 @@
     "insertText": "ma_cd;"
   },
   {
-    "label": "ma_chuong",
+    "label": "ma_chi_tieu",
     "detail": "GridView",
-    "insertText": "ma_chuong;"
-  },
-  {
-    "label": "ma_citad",
-    "detail": "GridView",
-    "insertText": "ma_citad;"
+    "insertText": "ma_chi_tieu;"
   },
   {
     "label": "ma_ck",
@@ -2965,29 +2705,34 @@
     "insertText": "ma_ck;"
   },
   {
+    "label": "ma_ck_tl",
+    "detail": "GridView",
+    "insertText": "ma_ck_tl;"
+  },
+  {
+    "label": "ma_cky",
+    "detail": "GridView",
+    "insertText": "ma_cky;"
+  },
+  {
+    "label": "ma_cky_bd",
+    "detail": "GridView",
+    "insertText": "ma_cky_bd;"
+  },
+  {
     "label": "ma_cm",
     "detail": "GridView",
     "insertText": "ma_cm;"
   },
   {
-    "label": "ma_co_quan",
+    "label": "ma_combo",
     "detail": "GridView",
-    "insertText": "ma_co_quan;"
-  },
-  {
-    "label": "ma_cong",
-    "detail": "GridView",
-    "insertText": "ma_cong;"
+    "insertText": "ma_combo;"
   },
   {
     "label": "ma_cp",
     "detail": "GridView",
     "insertText": "ma_cp;"
-  },
-  {
-    "label": "ma_cqt",
-    "detail": "GridView",
-    "insertText": "ma_cqt;"
   },
   {
     "label": "ma_ct",
@@ -3000,11 +2745,6 @@
     "insertText": "ma_ct0;"
   },
   {
-    "label": "ma_ct_dh",
-    "detail": "GridView",
-    "insertText": "ma_ct_dh;"
-  },
-  {
     "label": "ma_ct_in",
     "detail": "GridView",
     "insertText": "ma_ct_in;"
@@ -3015,9 +2755,19 @@
     "insertText": "ma_ct_me;"
   },
   {
-    "label": "ma_ctcl",
+    "label": "ma_ct_ns",
     "detail": "GridView",
-    "insertText": "ma_ctcl;"
+    "insertText": "ma_ct_ns;"
+  },
+  {
+    "label": "ma_ct_ns0",
+    "detail": "GridView",
+    "insertText": "ma_ct_ns0;"
+  },
+  {
+    "label": "ma_ct_ref",
+    "detail": "GridView",
+    "insertText": "ma_ct_ref;"
   },
   {
     "label": "ma_ctcp",
@@ -3025,14 +2775,14 @@
     "insertText": "ma_ctcp;"
   },
   {
-    "label": "ma_cty",
+    "label": "ma_cv",
     "detail": "GridView",
-    "insertText": "ma_cty;"
+    "insertText": "ma_cv;"
   },
   {
-    "label": "ma_dac_tinh",
+    "label": "ma_cv_bd",
     "detail": "GridView",
-    "insertText": "ma_dac_tinh;"
+    "insertText": "ma_cv_bd;"
   },
   {
     "label": "ma_dashboard",
@@ -3045,16 +2795,6 @@
     "insertText": "ma_dc;"
   },
   {
-    "label": "ma_diem",
-    "detail": "GridView",
-    "insertText": "ma_diem;"
-  },
-  {
-    "label": "ma_doi",
-    "detail": "GridView",
-    "insertText": "ma_doi;"
-  },
-  {
     "label": "ma_dot",
     "detail": "GridView",
     "insertText": "ma_dot;"
@@ -3063,11 +2803,6 @@
     "label": "ma_dtqt",
     "detail": "GridView",
     "insertText": "ma_dtqt;"
-  },
-  {
-    "label": "ma_dtqt1",
-    "detail": "GridView",
-    "insertText": "ma_dtqt1;"
   },
   {
     "label": "ma_dtqt2",
@@ -3080,19 +2815,24 @@
     "insertText": "ma_dtqt3;"
   },
   {
+    "label": "ma_dtqt_v",
+    "detail": "GridView",
+    "insertText": "ma_dtqt_v;"
+  },
+  {
     "label": "ma_dvcs",
     "detail": "GridView",
     "insertText": "ma_dvcs;"
   },
   {
+    "label": "ma_dvcsat",
+    "detail": "GridView",
+    "insertText": "ma_dvcsat;"
+  },
+  {
     "label": "ma_gd",
     "detail": "GridView",
     "insertText": "ma_gd;"
-  },
-  {
-    "label": "ma_gd2",
-    "detail": "GridView",
-    "insertText": "ma_gd2;"
   },
   {
     "label": "ma_gia_tri",
@@ -3103,11 +2843,6 @@
     "label": "ma_giam_ts",
     "detail": "GridView",
     "insertText": "ma_giam_ts;"
-  },
-  {
-    "label": "ma_hai_quan",
-    "detail": "GridView",
-    "insertText": "ma_hai_quan;"
   },
   {
     "label": "ma_hd",
@@ -3130,6 +2865,16 @@
     "insertText": "ma_htvc;"
   },
   {
+    "label": "ma_kb",
+    "detail": "GridView",
+    "insertText": "ma_kb;"
+  },
+  {
+    "label": "ma_kenh",
+    "detail": "GridView",
+    "insertText": "ma_kenh;"
+  },
+  {
     "label": "ma_kh",
     "detail": "GridView",
     "insertText": "ma_kh;"
@@ -3140,19 +2885,9 @@
     "insertText": "ma_kh1;"
   },
   {
-    "label": "ma_kh3",
+    "label": "ma_kh_dtqt1",
     "detail": "GridView",
-    "insertText": "ma_kh3;"
-  },
-  {
-    "label": "ma_kh_tc",
-    "detail": "GridView",
-    "insertText": "ma_kh_tc;"
-  },
-  {
-    "label": "ma_kh_tcat",
-    "detail": "GridView",
-    "insertText": "ma_kh_tcat;"
+    "insertText": "ma_kh_dtqt1;"
   },
   {
     "label": "ma_kh_thieu",
@@ -3165,14 +2900,19 @@
     "insertText": "ma_kh_thua;"
   },
   {
+    "label": "ma_kh_view",
+    "detail": "GridView",
+    "insertText": "ma_kh_view;"
+  },
+  {
+    "label": "ma_khdd",
+    "detail": "GridView",
+    "insertText": "ma_khdd;"
+  },
+  {
     "label": "ma_kho",
     "detail": "GridView",
     "insertText": "ma_kho;"
-  },
-  {
-    "label": "ma_kho_bac",
-    "detail": "GridView",
-    "insertText": "ma_kho_bac;"
   },
   {
     "label": "ma_kho_n",
@@ -3190,19 +2930,9 @@
     "insertText": "ma_khon;"
   },
   {
-    "label": "ma_khuon",
-    "detail": "GridView",
-    "insertText": "ma_khuon;"
-  },
-  {
     "label": "ma_kieu",
     "detail": "GridView",
     "insertText": "ma_kieu;"
-  },
-  {
-    "label": "ma_kk",
-    "detail": "GridView",
-    "insertText": "ma_kk;"
   },
   {
     "label": "ma_kn",
@@ -3210,9 +2940,9 @@
     "insertText": "ma_kn;"
   },
   {
-    "label": "ma_kq",
+    "label": "ma_ktv",
     "detail": "GridView",
-    "insertText": "ma_kq;"
+    "insertText": "ma_ktv;"
   },
   {
     "label": "ma_ku",
@@ -3260,9 +2990,14 @@
     "insertText": "ma_loai;"
   },
   {
-    "label": "ma_loai_qd",
+    "label": "ma_loai_hd",
     "detail": "GridView",
-    "insertText": "ma_loai_qd;"
+    "insertText": "ma_loai_hd;"
+  },
+  {
+    "label": "ma_loai_tb",
+    "detail": "GridView",
+    "insertText": "ma_loai_tb;"
   },
   {
     "label": "ma_loai_vt",
@@ -3295,11 +3030,6 @@
     "insertText": "ma_may;"
   },
   {
-    "label": "ma_mayin",
-    "detail": "GridView",
-    "insertText": "ma_mayin;"
-  },
-  {
     "label": "ma_md",
     "detail": "GridView",
     "insertText": "ma_md;"
@@ -3315,29 +3045,19 @@
     "insertText": "ma_ncc;"
   },
   {
-    "label": "ma_nguon",
-    "detail": "GridView",
-    "insertText": "ma_nguon;"
-  },
-  {
     "label": "ma_nh",
     "detail": "GridView",
     "insertText": "ma_nh;"
   },
   {
-    "label": "ma_nh0",
-    "detail": "GridView",
-    "insertText": "ma_nh0;"
-  },
-  {
-    "label": "ma_nh_dt",
-    "detail": "GridView",
-    "insertText": "ma_nh_dt;"
-  },
-  {
     "label": "ma_nhom",
     "detail": "GridView",
     "insertText": "ma_nhom;"
+  },
+  {
+    "label": "ma_nhom_bp",
+    "detail": "GridView",
+    "insertText": "ma_nhom_bp;"
   },
   {
     "label": "ma_nk",
@@ -3353,11 +3073,6 @@
     "label": "ma_nl",
     "detail": "GridView",
     "insertText": "ma_nl;"
-  },
-  {
-    "label": "ma_nn",
-    "detail": "GridView",
-    "insertText": "ma_nn;"
   },
   {
     "label": "ma_ns",
@@ -3380,14 +3095,14 @@
     "insertText": "ma_nt1;"
   },
   {
-    "label": "ma_nt_po2",
-    "detail": "GridView",
-    "insertText": "ma_nt_po2;"
-  },
-  {
     "label": "ma_nv",
     "detail": "GridView",
     "insertText": "ma_nv;"
+  },
+  {
+    "label": "ma_nv_ql",
+    "detail": "GridView",
+    "insertText": "ma_nv_ql;"
   },
   {
     "label": "ma_nvbh",
@@ -3398,11 +3113,6 @@
     "label": "ma_nvmh",
     "detail": "GridView",
     "insertText": "ma_nvmh;"
-  },
-  {
-    "label": "ma_nvu",
-    "detail": "GridView",
-    "insertText": "ma_nvu;"
   },
   {
     "label": "ma_nx",
@@ -3420,11 +3130,6 @@
     "insertText": "ma_nx_thua;"
   },
   {
-    "label": "ma_ph_loai",
-    "detail": "GridView",
-    "insertText": "ma_ph_loai;"
-  },
-  {
     "label": "ma_phan_he",
     "detail": "GridView",
     "insertText": "ma_phan_he;"
@@ -3433,11 +3138,6 @@
     "label": "ma_phi",
     "detail": "GridView",
     "insertText": "ma_phi;"
-  },
-  {
-    "label": "ma_po",
-    "detail": "GridView",
-    "insertText": "ma_po;"
   },
   {
     "label": "ma_pt",
@@ -3450,29 +3150,19 @@
     "insertText": "ma_px;"
   },
   {
-    "label": "ma_qg",
-    "detail": "GridView",
-    "insertText": "ma_qg;"
-  },
-  {
     "label": "ma_qt",
     "detail": "GridView",
     "insertText": "ma_qt;"
   },
   {
-    "label": "ma_quan_he_ns",
+    "label": "ma_qt_bd",
     "detail": "GridView",
-    "insertText": "ma_quan_he_ns;"
+    "insertText": "ma_qt_bd;"
   },
   {
     "label": "ma_quyen",
     "detail": "GridView",
     "insertText": "ma_quyen;"
-  },
-  {
-    "label": "ma_rb",
-    "detail": "GridView",
-    "insertText": "ma_rb;"
   },
   {
     "label": "ma_so",
@@ -3500,24 +3190,19 @@
     "insertText": "ma_so_thue_pt;"
   },
   {
-    "label": "ma_soat",
-    "detail": "GridView",
-    "insertText": "ma_soat;"
-  },
-  {
     "label": "ma_sp",
     "detail": "GridView",
     "insertText": "ma_sp;"
   },
   {
-    "label": "ma_taitrong",
-    "detail": "GridView",
-    "insertText": "ma_taitrong;"
-  },
-  {
     "label": "ma_tb",
     "detail": "GridView",
     "insertText": "ma_tb;"
+  },
+  {
+    "label": "ma_tbkd",
+    "detail": "GridView",
+    "insertText": "ma_tbkd;"
   },
   {
     "label": "ma_tc",
@@ -3528,6 +3213,16 @@
     "label": "ma_td1",
     "detail": "GridView",
     "insertText": "ma_td1;"
+  },
+  {
+    "label": "ma_td2",
+    "detail": "GridView",
+    "insertText": "ma_td2;"
+  },
+  {
+    "label": "ma_td3",
+    "detail": "GridView",
+    "insertText": "ma_td3;"
   },
   {
     "label": "ma_tg_ts",
@@ -3545,19 +3240,14 @@
     "insertText": "ma_thue_tp;"
   },
   {
-    "label": "ma_tieu_muc",
+    "label": "ma_tinh_trang",
     "detail": "GridView",
-    "insertText": "ma_tieu_muc;"
+    "insertText": "ma_tinh_trang;"
   },
   {
     "label": "ma_tn",
     "detail": "GridView",
     "insertText": "ma_tn;"
-  },
-  {
-    "label": "ma_trongtai",
-    "detail": "GridView",
-    "insertText": "ma_trongtai;"
   },
   {
     "label": "ma_tt",
@@ -3595,29 +3285,24 @@
     "insertText": "ma_vt2;"
   },
   {
-    "label": "ma_vt_tc",
-    "detail": "GridView",
-    "insertText": "ma_vt_tc;"
-  },
-  {
-    "label": "ma_vt_tcat",
-    "detail": "GridView",
-    "insertText": "ma_vt_tcat;"
-  },
-  {
     "label": "ma_vtat",
     "detail": "GridView",
     "insertText": "ma_vtat;"
   },
   {
-    "label": "ma_vung",
+    "label": "ma_vtdd",
     "detail": "GridView",
-    "insertText": "ma_vung;"
+    "insertText": "ma_vtdd;"
   },
   {
     "label": "ma_vv",
     "detail": "GridView",
     "insertText": "ma_vv;"
+  },
+  {
+    "label": "ma_vv_d",
+    "detail": "GridView",
+    "insertText": "ma_vv_d;"
   },
   {
     "label": "ma_vvct",
@@ -3635,11 +3320,6 @@
     "insertText": "mail_from;"
   },
   {
-    "label": "mat_ab",
-    "detail": "GridView",
-    "insertText": "mat_ab;"
-  },
-  {
     "label": "mau_hddt",
     "detail": "GridView",
     "insertText": "mau_hddt;"
@@ -3650,24 +3330,9 @@
     "insertText": "mau_hddt0;"
   },
   {
-    "label": "mau_so",
+    "label": "mau_sac",
     "detail": "GridView",
-    "insertText": "mau_so;"
-  },
-  {
-    "label": "mc_yn",
-    "detail": "GridView",
-    "insertText": "mc_yn;"
-  },
-  {
-    "label": "md_aql",
-    "detail": "GridView",
-    "insertText": "md_aql;"
-  },
-  {
-    "label": "md_kt",
-    "detail": "GridView",
-    "insertText": "md_kt;"
+    "insertText": "mau_sac;"
   },
   {
     "label": "message",
@@ -3675,9 +3340,19 @@
     "insertText": "message;"
   },
   {
-    "label": "met_phut",
+    "label": "mh_ll",
     "detail": "GridView",
-    "insertText": "met_phut;"
+    "insertText": "mh_ll;"
+  },
+  {
+    "label": "mo_ta",
+    "detail": "GridView",
+    "insertText": "mo_ta;"
+  },
+  {
+    "label": "model",
+    "detail": "GridView",
+    "insertText": "model;"
   },
   {
     "label": "mst",
@@ -3685,19 +3360,14 @@
     "insertText": "mst;"
   },
   {
-    "label": "mst_kh",
-    "detail": "GridView",
-    "insertText": "mst_kh;"
-  },
-  {
-    "label": "muc_dich_vay",
-    "detail": "GridView",
-    "insertText": "muc_dich_vay;"
-  },
-  {
     "label": "muc_do",
     "detail": "GridView",
     "insertText": "muc_do;"
+  },
+  {
+    "label": "muc_doanh_thu",
+    "detail": "GridView",
+    "insertText": "muc_doanh_thu;"
   },
   {
     "label": "muc_kh",
@@ -3730,6 +3400,11 @@
     "insertText": "nam;"
   },
   {
+    "label": "nam_sx",
+    "detail": "GridView",
+    "insertText": "nam_sx;"
+  },
+  {
     "label": "name",
     "detail": "GridView",
     "insertText": "name;"
@@ -3740,24 +3415,9 @@
     "insertText": "name%l;"
   },
   {
-    "label": "name0ex",
-    "detail": "GridView",
-    "insertText": "name0ex;"
-  },
-  {
     "label": "name2",
     "detail": "GridView",
     "insertText": "name2;"
-  },
-  {
-    "label": "name2ex",
-    "detail": "GridView",
-    "insertText": "name2ex;"
-  },
-  {
-    "label": "name_user",
-    "detail": "GridView",
-    "insertText": "name_user;"
   },
   {
     "label": "nang_suat",
@@ -3810,11 +3470,6 @@
     "insertText": "nc_th;"
   },
   {
-    "label": "nd_yn",
-    "detail": "GridView",
-    "insertText": "nd_yn;"
-  },
-  {
     "label": "new_value",
     "detail": "GridView",
     "insertText": "new_value;"
@@ -3850,6 +3505,11 @@
     "insertText": "ng_giam_nt;"
   },
   {
+    "label": "ng_sd",
+    "detail": "GridView",
+    "insertText": "ng_sd;"
+  },
+  {
     "label": "ng_tang",
     "detail": "GridView",
     "insertText": "ng_tang;"
@@ -3875,14 +3535,14 @@
     "insertText": "ngay;"
   },
   {
+    "label": "ngay2",
+    "detail": "GridView",
+    "insertText": "ngay2;"
+  },
+  {
     "label": "ngay_ban",
     "detail": "GridView",
     "insertText": "ngay_ban;"
-  },
-  {
-    "label": "ngay_bat_dau",
-    "detail": "GridView",
-    "insertText": "ngay_bat_dau;"
   },
   {
     "label": "ngay_bd",
@@ -3890,14 +3550,24 @@
     "insertText": "ngay_bd;"
   },
   {
+    "label": "ngay_bd_ck",
+    "detail": "GridView",
+    "insertText": "ngay_bd_ck;"
+  },
+  {
+    "label": "ngay_bd_cky",
+    "detail": "GridView",
+    "insertText": "ngay_bd_cky;"
+  },
+  {
     "label": "ngay_bd_th",
     "detail": "GridView",
     "insertText": "ngay_bd_th;"
   },
   {
-    "label": "ngay_cap",
+    "label": "ngay_bh",
     "detail": "GridView",
-    "insertText": "ngay_cap;"
+    "insertText": "ngay_bh;"
   },
   {
     "label": "ngay_ct",
@@ -3920,29 +3590,19 @@
     "insertText": "ngay_ct2;"
   },
   {
+    "label": "ngay_ct_gn",
+    "detail": "GridView",
+    "insertText": "ngay_ct_gn;"
+  },
+  {
     "label": "ngay_ct_log",
     "detail": "GridView",
     "insertText": "ngay_ct_log;"
   },
   {
-    "label": "ngay_ct_pa2",
+    "label": "ngay_ct_nc",
     "detail": "GridView",
-    "insertText": "ngay_ct_pa2;"
-  },
-  {
-    "label": "ngay_ct_pd3",
-    "detail": "GridView",
-    "insertText": "ngay_ct_pd3;"
-  },
-  {
-    "label": "ngay_ct_po2",
-    "detail": "GridView",
-    "insertText": "ngay_ct_po2;"
-  },
-  {
-    "label": "ngay_ct_tu",
-    "detail": "GridView",
-    "insertText": "ngay_ct_tu;"
+    "insertText": "ngay_ct_nc;"
   },
   {
     "label": "ngay_ctgs",
@@ -3955,11 +3615,6 @@
     "insertText": "ngay_cuoi_thang;"
   },
   {
-    "label": "ngay_dai_hoi",
-    "detail": "GridView",
-    "insertText": "ngay_dai_hoi;"
-  },
-  {
     "label": "ngay_dat",
     "detail": "GridView",
     "insertText": "ngay_dat;"
@@ -3970,19 +3625,24 @@
     "insertText": "ngay_den;"
   },
   {
-    "label": "ngay_den_han",
-    "detail": "GridView",
-    "insertText": "ngay_den_han;"
-  },
-  {
     "label": "ngay_dh",
     "detail": "GridView",
     "insertText": "ngay_dh;"
   },
   {
+    "label": "ngay_dkien_bd",
+    "detail": "GridView",
+    "insertText": "ngay_dkien_bd;"
+  },
+  {
     "label": "ngay_dn",
     "detail": "GridView",
     "insertText": "ngay_dn;"
+  },
+  {
+    "label": "ngay_dung",
+    "detail": "GridView",
+    "insertText": "ngay_dung;"
   },
   {
     "label": "ngay_dvsd",
@@ -4000,34 +3660,19 @@
     "insertText": "ngay_giao;"
   },
   {
-    "label": "ngay_giao_ncc",
+    "label": "ngay_hddt",
     "detail": "GridView",
-    "insertText": "ngay_giao_ncc;"
-  },
-  {
-    "label": "ngay_giao_yc",
-    "detail": "GridView",
-    "insertText": "ngay_giao_yc;"
-  },
-  {
-    "label": "ngay_hd",
-    "detail": "GridView",
-    "insertText": "ngay_hd;"
-  },
-  {
-    "label": "ngay_hh",
-    "detail": "GridView",
-    "insertText": "ngay_hh;"
-  },
-  {
-    "label": "ngay_hhsd",
-    "detail": "GridView",
-    "insertText": "ngay_hhsd;"
+    "insertText": "ngay_hddt;"
   },
   {
     "label": "ngay_hl",
     "detail": "GridView",
     "insertText": "ngay_hl;"
+  },
+  {
+    "label": "ngay_hl1",
+    "detail": "GridView",
+    "insertText": "ngay_hl1;"
   },
   {
     "label": "ngay_hl2",
@@ -4045,6 +3690,11 @@
     "insertText": "ngay_hl_tu;"
   },
   {
+    "label": "ngay_hoat_dong",
+    "detail": "GridView",
+    "insertText": "ngay_hoat_dong;"
+  },
+  {
     "label": "ngay_hong",
     "detail": "GridView",
     "insertText": "ngay_hong;"
@@ -4053,11 +3703,6 @@
     "label": "ngay_ht",
     "detail": "GridView",
     "insertText": "ngay_ht;"
-  },
-  {
-    "label": "ngay_huu",
-    "detail": "GridView",
-    "insertText": "ngay_huu;"
   },
   {
     "label": "ngay_ket_thuc",
@@ -4073,6 +3718,16 @@
     "label": "ngay_kh1",
     "detail": "GridView",
     "insertText": "ngay_kh1;"
+  },
+  {
+    "label": "ngay_kh_kt",
+    "detail": "GridView",
+    "insertText": "ngay_kh_kt;"
+  },
+  {
+    "label": "ngay_khoa",
+    "detail": "GridView",
+    "insertText": "ngay_khoa;"
   },
   {
     "label": "ngay_kk",
@@ -4110,9 +3765,9 @@
     "insertText": "ngay_ku2;"
   },
   {
-    "label": "ngay_lc",
+    "label": "ngay_lap",
     "detail": "GridView",
-    "insertText": "ngay_lc;"
+    "insertText": "ngay_lap;"
   },
   {
     "label": "ngay_lct",
@@ -4120,19 +3775,14 @@
     "insertText": "ngay_lct;"
   },
   {
-    "label": "ngay_lh",
-    "detail": "GridView",
-    "insertText": "ngay_lh;"
-  },
-  {
-    "label": "ngay_lo_kd",
-    "detail": "GridView",
-    "insertText": "ngay_lo_kd;"
-  },
-  {
     "label": "ngay_mua",
     "detail": "GridView",
     "insertText": "ngay_mua;"
+  },
+  {
+    "label": "ngay_nc",
+    "detail": "GridView",
+    "insertText": "ngay_nc;"
   },
   {
     "label": "ngay_nghi",
@@ -4165,29 +3815,14 @@
     "insertText": "ngay_pn;"
   },
   {
-    "label": "ngay_quyet_dinh",
-    "detail": "GridView",
-    "insertText": "ngay_quyet_dinh;"
-  },
-  {
     "label": "ngay_sd",
     "detail": "GridView",
     "insertText": "ngay_sd;"
   },
   {
-    "label": "ngay_sinh",
-    "detail": "GridView",
-    "insertText": "ngay_sinh;"
-  },
-  {
     "label": "ngay_sinh_pt",
     "detail": "GridView",
     "insertText": "ngay_sinh_pt;"
-  },
-  {
-    "label": "ngay_sx",
-    "detail": "GridView",
-    "insertText": "ngay_sx;"
   },
   {
     "label": "ngay_tang",
@@ -4210,19 +3845,69 @@
     "insertText": "ngay_th2;"
   },
   {
-    "label": "ngay_tk",
+    "label": "ngay_thg_01",
     "detail": "GridView",
-    "insertText": "ngay_tk;"
+    "insertText": "ngay_thg_01;"
   },
   {
-    "label": "ngay_tl",
+    "label": "ngay_thg_02",
     "detail": "GridView",
-    "insertText": "ngay_tl;"
+    "insertText": "ngay_thg_02;"
   },
   {
-    "label": "ngay_tt",
+    "label": "ngay_thg_03",
     "detail": "GridView",
-    "insertText": "ngay_tt;"
+    "insertText": "ngay_thg_03;"
+  },
+  {
+    "label": "ngay_thg_04",
+    "detail": "GridView",
+    "insertText": "ngay_thg_04;"
+  },
+  {
+    "label": "ngay_thg_05",
+    "detail": "GridView",
+    "insertText": "ngay_thg_05;"
+  },
+  {
+    "label": "ngay_thg_06",
+    "detail": "GridView",
+    "insertText": "ngay_thg_06;"
+  },
+  {
+    "label": "ngay_thg_07",
+    "detail": "GridView",
+    "insertText": "ngay_thg_07;"
+  },
+  {
+    "label": "ngay_thg_08",
+    "detail": "GridView",
+    "insertText": "ngay_thg_08;"
+  },
+  {
+    "label": "ngay_thg_09",
+    "detail": "GridView",
+    "insertText": "ngay_thg_09;"
+  },
+  {
+    "label": "ngay_thg_10",
+    "detail": "GridView",
+    "insertText": "ngay_thg_10;"
+  },
+  {
+    "label": "ngay_thg_11",
+    "detail": "GridView",
+    "insertText": "ngay_thg_11;"
+  },
+  {
+    "label": "ngay_thg_12",
+    "detail": "GridView",
+    "insertText": "ngay_thg_12;"
+  },
+  {
+    "label": "ngay_thoat",
+    "detail": "GridView",
+    "insertText": "ngay_thoat;"
   },
   {
     "label": "ngay_tt0",
@@ -4235,14 +3920,14 @@
     "insertText": "ngay_tu;"
   },
   {
-    "label": "ngay_vao",
-    "detail": "GridView",
-    "insertText": "ngay_vao;"
-  },
-  {
     "label": "ngay_vay",
     "detail": "GridView",
     "insertText": "ngay_vay;"
+  },
+  {
+    "label": "ngay_xac_nhan",
+    "detail": "GridView",
+    "insertText": "ngay_xac_nhan;"
   },
   {
     "label": "ngay_xuat",
@@ -4255,19 +3940,24 @@
     "insertText": "ngay_yc;"
   },
   {
+    "label": "nguoi_dai_dien",
+    "detail": "GridView",
+    "insertText": "nguoi_dai_dien;"
+  },
+  {
     "label": "nguoi_duyet",
     "detail": "GridView",
     "insertText": "nguoi_duyet;"
   },
   {
-    "label": "nguoi_mua",
+    "label": "nguoi_ll",
     "detail": "GridView",
-    "insertText": "nguoi_mua;"
+    "insertText": "nguoi_ll;"
   },
   {
-    "label": "nguoi_quyet_dinh",
+    "label": "nguoi_nhan",
     "detail": "GridView",
-    "insertText": "nguoi_quyet_dinh;"
+    "insertText": "nguoi_nhan;"
   },
   {
     "label": "nguoi_sua",
@@ -4275,19 +3965,24 @@
     "insertText": "nguoi_sua;"
   },
   {
+    "label": "nguoi_tao",
+    "detail": "GridView",
+    "insertText": "nguoi_tao;"
+  },
+  {
     "label": "nguoi_th",
     "detail": "GridView",
     "insertText": "nguoi_th;"
   },
   {
-    "label": "nguoi_thu_huong",
+    "label": "nguoi_uq",
     "detail": "GridView",
-    "insertText": "nguoi_thu_huong;"
+    "insertText": "nguoi_uq;"
   },
   {
-    "label": "nguon%l",
+    "label": "nguoi_xac_nhan",
     "detail": "GridView",
-    "insertText": "nguon%l;"
+    "insertText": "nguoi_xac_nhan;"
   },
   {
     "label": "nguon_dl",
@@ -4330,6 +4025,11 @@
     "insertText": "nh_dc3;"
   },
   {
+    "label": "nh_dvt",
+    "detail": "GridView",
+    "insertText": "nh_dvt;"
+  },
+  {
     "label": "nh_kh1",
     "detail": "GridView",
     "insertText": "nh_kh1;"
@@ -4345,14 +4045,64 @@
     "insertText": "nh_kh3;"
   },
   {
+    "label": "nh_kh3_v",
+    "detail": "GridView",
+    "insertText": "nh_kh3_v;"
+  },
+  {
     "label": "nh_kh9",
     "detail": "GridView",
     "insertText": "nh_kh9;"
   },
   {
-    "label": "nh_kho",
+    "label": "nh_ma_phi",
     "detail": "GridView",
-    "insertText": "nh_kho;"
+    "insertText": "nh_ma_phi;"
+  },
+  {
+    "label": "nh_tb1",
+    "detail": "GridView",
+    "insertText": "nh_tb1;"
+  },
+  {
+    "label": "nh_tb2",
+    "detail": "GridView",
+    "insertText": "nh_tb2;"
+  },
+  {
+    "label": "nh_tb3",
+    "detail": "GridView",
+    "insertText": "nh_tb3;"
+  },
+  {
+    "label": "nh_tk_ck",
+    "detail": "GridView",
+    "insertText": "nh_tk_ck;"
+  },
+  {
+    "label": "nh_tk_dt",
+    "detail": "GridView",
+    "insertText": "nh_tk_dt;"
+  },
+  {
+    "label": "nh_tk_gghb",
+    "detail": "GridView",
+    "insertText": "nh_tk_gghb;"
+  },
+  {
+    "label": "nh_tk_gv",
+    "detail": "GridView",
+    "insertText": "nh_tk_gv;"
+  },
+  {
+    "label": "nh_tk_km",
+    "detail": "GridView",
+    "insertText": "nh_tk_km;"
+  },
+  {
+    "label": "nh_tk_vt",
+    "detail": "GridView",
+    "insertText": "nh_tk_vt;"
   },
   {
     "label": "nh_ts1",
@@ -4388,6 +4138,11 @@
     "label": "nh_vt9",
     "detail": "GridView",
     "insertText": "nh_vt9;"
+  },
+  {
+    "label": "nha_sx",
+    "detail": "GridView",
+    "insertText": "nha_sx;"
   },
   {
     "label": "nhom_thue",
@@ -4445,6 +4200,31 @@
     "insertText": "no_dk_nt0;"
   },
   {
+    "label": "note",
+    "detail": "GridView",
+    "insertText": "note;"
+  },
+  {
+    "label": "ns_lk_thang",
+    "detail": "GridView",
+    "insertText": "ns_lk_thang;"
+  },
+  {
+    "label": "ns_nam",
+    "detail": "GridView",
+    "insertText": "ns_nam;"
+  },
+  {
+    "label": "ns_nam_cl",
+    "detail": "GridView",
+    "insertText": "ns_nam_cl;"
+  },
+  {
+    "label": "ns_thuc_hien",
+    "detail": "GridView",
+    "insertText": "ns_thuc_hien;"
+  },
+  {
     "label": "ntype%l",
     "detail": "GridView",
     "insertText": "ntype%l;"
@@ -4470,29 +4250,14 @@
     "insertText": "order_field_name%l;"
   },
   {
-    "label": "order_field_name_import%l",
-    "detail": "GridView",
-    "insertText": "order_field_name_import%l;"
-  },
-  {
-    "label": "order_no",
-    "detail": "GridView",
-    "insertText": "order_no;"
-  },
-  {
     "label": "order_type_name%l",
     "detail": "GridView",
     "insertText": "order_type_name%l;"
   },
   {
-    "label": "order_type_name_import%l",
+    "label": "page",
     "detail": "GridView",
-    "insertText": "order_type_name_import%l;"
-  },
-  {
-    "label": "para_value%l",
-    "detail": "GridView",
-    "insertText": "para_value%l;"
+    "insertText": "page;"
   },
   {
     "label": "pb_ck",
@@ -4530,19 +4295,24 @@
     "insertText": "phai_thu;"
   },
   {
-    "label": "phan_loai_hang",
+    "label": "phai_thu_lk",
     "detail": "GridView",
-    "insertText": "phan_loai_hang;"
+    "insertText": "phai_thu_lk;"
   },
   {
-    "label": "phan_loai_loi",
+    "label": "phai_thu_lk_nt",
     "detail": "GridView",
-    "insertText": "phan_loai_loi;"
+    "insertText": "phai_thu_lk_nt;"
   },
   {
-    "label": "phi_nhan_yn",
+    "label": "phai_thu_nt",
     "detail": "GridView",
-    "insertText": "phi_nhan_yn;"
+    "insertText": "phai_thu_nt;"
+  },
+  {
+    "label": "phan_loai_ck",
+    "detail": "GridView",
+    "insertText": "phan_loai_ck;"
   },
   {
     "label": "phuong_xa_pt",
@@ -4680,26 +4450,6 @@
     "insertText": "ps_co_nt0;"
   },
   {
-    "label": "ps_co_quy",
-    "detail": "GridView",
-    "insertText": "ps_co_quy;"
-  },
-  {
-    "label": "ps_co_quy_nt",
-    "detail": "GridView",
-    "insertText": "ps_co_quy_nt;"
-  },
-  {
-    "label": "ps_co_thang",
-    "detail": "GridView",
-    "insertText": "ps_co_thang;"
-  },
-  {
-    "label": "ps_co_thang_nt",
-    "detail": "GridView",
-    "insertText": "ps_co_thang_nt;"
-  },
-  {
     "label": "ps_cong",
     "detail": "GridView",
     "insertText": "ps_cong;"
@@ -4760,36 +4510,6 @@
     "insertText": "ps_no0;"
   },
   {
-    "label": "ps_no01",
-    "detail": "GridView",
-    "insertText": "ps_no01;"
-  },
-  {
-    "label": "ps_no01_nt",
-    "detail": "GridView",
-    "insertText": "ps_no01_nt;"
-  },
-  {
-    "label": "ps_no02",
-    "detail": "GridView",
-    "insertText": "ps_no02;"
-  },
-  {
-    "label": "ps_no02_nt",
-    "detail": "GridView",
-    "insertText": "ps_no02_nt;"
-  },
-  {
-    "label": "ps_no03",
-    "detail": "GridView",
-    "insertText": "ps_no03;"
-  },
-  {
-    "label": "ps_no03_nt",
-    "detail": "GridView",
-    "insertText": "ps_no03_nt;"
-  },
-  {
     "label": "ps_no_nt",
     "detail": "GridView",
     "insertText": "ps_no_nt;"
@@ -4798,26 +4518,6 @@
     "label": "ps_no_nt0",
     "detail": "GridView",
     "insertText": "ps_no_nt0;"
-  },
-  {
-    "label": "ps_no_quy",
-    "detail": "GridView",
-    "insertText": "ps_no_quy;"
-  },
-  {
-    "label": "ps_no_quy_nt",
-    "detail": "GridView",
-    "insertText": "ps_no_quy_nt;"
-  },
-  {
-    "label": "ps_no_thang",
-    "detail": "GridView",
-    "insertText": "ps_no_thang;"
-  },
-  {
-    "label": "ps_no_thang_nt",
-    "detail": "GridView",
-    "insertText": "ps_no_thang_nt;"
   },
   {
     "label": "ps_nt",
@@ -4985,26 +4685,6 @@
     "insertText": "pt_nt_lk;"
   },
   {
-    "label": "pt_th_so_voi_nam_truoc",
-    "detail": "GridView",
-    "insertText": "pt_th_so_voi_nam_truoc;"
-  },
-  {
-    "label": "qd_thoi",
-    "detail": "GridView",
-    "insertText": "qd_thoi;"
-  },
-  {
-    "label": "qua_han",
-    "detail": "GridView",
-    "insertText": "qua_han;"
-  },
-  {
-    "label": "qua_han_nt",
-    "detail": "GridView",
-    "insertText": "qua_han_nt;"
-  },
-  {
     "label": "quan_he_pt",
     "detail": "GridView",
     "insertText": "quan_he_pt;"
@@ -5015,11 +4695,6 @@
     "insertText": "quan_huyen_pt;"
   },
   {
-    "label": "quoc_gia",
-    "detail": "GridView",
-    "insertText": "quoc_gia;"
-  },
-  {
     "label": "quoc_gia_pt",
     "detail": "GridView",
     "insertText": "quoc_gia_pt;"
@@ -5028,6 +4703,11 @@
     "label": "quy",
     "detail": "GridView",
     "insertText": "quy;"
+  },
+  {
+    "label": "quy_cach",
+    "detail": "GridView",
+    "insertText": "quy_cach;"
   },
   {
     "label": "quyen",
@@ -5060,14 +4740,19 @@
     "insertText": "r_new;"
   },
   {
-    "label": "rate",
+    "label": "re_pay",
     "detail": "GridView",
-    "insertText": "rate;"
+    "insertText": "re_pay;"
   },
   {
-    "label": "rate_nt",
+    "label": "re_pay_nt",
     "detail": "GridView",
-    "insertText": "rate_nt;"
+    "insertText": "re_pay_nt;"
+  },
+  {
+    "label": "requestForm",
+    "detail": "GridView",
+    "insertText": "requestForm;"
   },
   {
     "label": "round",
@@ -5075,34 +4760,29 @@
     "insertText": "round;"
   },
   {
-    "label": "row_id",
-    "detail": "GridView",
-    "insertText": "row_id;"
-  },
-  {
     "label": "rp_name%l",
     "detail": "GridView",
     "insertText": "rp_name%l;"
   },
   {
-    "label": "sai_can_duoi",
+    "label": "s3",
     "detail": "GridView",
-    "insertText": "sai_can_duoi;"
+    "insertText": "s3;"
   },
   {
-    "label": "sai_can_tren",
+    "label": "sale_type",
     "detail": "GridView",
-    "insertText": "sai_can_tren;"
-  },
-  {
-    "label": "sang_cuon",
-    "detail": "GridView",
-    "insertText": "sang_cuon;"
+    "insertText": "sale_type;"
   },
   {
     "label": "sc_yn",
     "detail": "GridView",
     "insertText": "sc_yn;"
+  },
+  {
+    "label": "sdt_ll",
+    "detail": "GridView",
+    "insertText": "sdt_ll;"
   },
   {
     "label": "sent_status",
@@ -5115,29 +4795,9 @@
     "insertText": "serial_cert;"
   },
   {
-    "label": "ship",
-    "detail": "GridView",
-    "insertText": "ship;"
-  },
-  {
-    "label": "shipment_cx",
-    "detail": "GridView",
-    "insertText": "shipment_cx;"
-  },
-  {
-    "label": "shipment_dk",
-    "detail": "GridView",
-    "insertText": "shipment_dk;"
-  },
-  {
     "label": "si_no",
     "detail": "GridView",
     "insertText": "si_no;"
-  },
-  {
-    "label": "sl",
-    "detail": "GridView",
-    "insertText": "sl;"
   },
   {
     "label": "sl_ban",
@@ -5148,16 +4808,6 @@
     "label": "sl_can_kk",
     "detail": "GridView",
     "insertText": "sl_can_kk;"
-  },
-  {
-    "label": "sl_canh_bao",
-    "detail": "GridView",
-    "insertText": "sl_canh_bao;"
-  },
-  {
-    "label": "sl_cho_ve",
-    "detail": "GridView",
-    "insertText": "sl_cho_ve;"
   },
   {
     "label": "sl_chuan",
@@ -5185,16 +4835,6 @@
     "insertText": "sl_con_kk;"
   },
   {
-    "label": "sl_cong_don",
-    "detail": "GridView",
-    "insertText": "sl_cong_don;"
-  },
-  {
-    "label": "sl_cong_them",
-    "detail": "GridView",
-    "insertText": "sl_cong_them;"
-  },
-  {
     "label": "sl_da_kk",
     "detail": "GridView",
     "insertText": "sl_da_kk;"
@@ -5208,16 +4848,6 @@
     "label": "sl_dat",
     "detail": "GridView",
     "insertText": "sl_dat;"
-  },
-  {
-    "label": "sl_dat_td",
-    "detail": "GridView",
-    "insertText": "sl_dat_td;"
-  },
-  {
-    "label": "sl_dat_tt",
-    "detail": "GridView",
-    "insertText": "sl_dat_tt;"
   },
   {
     "label": "sl_dd_ck",
@@ -5255,11 +4885,6 @@
     "insertText": "sl_dk;"
   },
   {
-    "label": "sl_dm",
-    "detail": "GridView",
-    "insertText": "sl_dm;"
-  },
-  {
     "label": "sl_duyet",
     "detail": "GridView",
     "insertText": "sl_duyet;"
@@ -5273,21 +4898,6 @@
     "label": "sl_hd",
     "detail": "GridView",
     "insertText": "sl_hd;"
-  },
-  {
-    "label": "sl_hd_ht",
-    "detail": "GridView",
-    "insertText": "sl_hd_ht;"
-  },
-  {
-    "label": "sl_hd_huy",
-    "detail": "GridView",
-    "insertText": "sl_hd_huy;"
-  },
-  {
-    "label": "sl_hdm",
-    "detail": "GridView",
-    "insertText": "sl_hdm;"
   },
   {
     "label": "sl_hong",
@@ -5310,14 +4920,14 @@
     "insertText": "sl_kho;"
   },
   {
+    "label": "sl_kiem_ke",
+    "detail": "GridView",
+    "insertText": "sl_kiem_ke;"
+  },
+  {
     "label": "sl_kk",
     "detail": "GridView",
     "insertText": "sl_kk;"
-  },
-  {
-    "label": "sl_ky_nay",
-    "detail": "GridView",
-    "insertText": "sl_ky_nay;"
   },
   {
     "label": "sl_lam_lai",
@@ -5330,34 +4940,9 @@
     "insertText": "sl_lech;"
   },
   {
-    "label": "sl_lo_kd",
-    "detail": "GridView",
-    "insertText": "sl_lo_kd;"
-  },
-  {
-    "label": "sl_loi",
-    "detail": "GridView",
-    "insertText": "sl_loi;"
-  },
-  {
     "label": "sl_mat",
     "detail": "GridView",
     "insertText": "sl_mat;"
-  },
-  {
-    "label": "sl_mau",
-    "detail": "GridView",
-    "insertText": "sl_mau;"
-  },
-  {
-    "label": "sl_mau_den",
-    "detail": "GridView",
-    "insertText": "sl_mau_den;"
-  },
-  {
-    "label": "sl_mau_tu",
-    "detail": "GridView",
-    "insertText": "sl_mau_tu;"
   },
   {
     "label": "sl_max",
@@ -5368,11 +4953,6 @@
     "label": "sl_may",
     "detail": "GridView",
     "insertText": "sl_may;"
-  },
-  {
-    "label": "sl_met_tx_pxk",
-    "detail": "GridView",
-    "insertText": "sl_met_tx_pxk;"
   },
   {
     "label": "sl_min",
@@ -5388,6 +4968,11 @@
     "label": "sl_nhap",
     "detail": "GridView",
     "insertText": "sl_nhap;"
+  },
+  {
+    "label": "sl_nhap_kho",
+    "detail": "GridView",
+    "insertText": "sl_nhap_kho;"
   },
   {
     "label": "sl_nhap_ss",
@@ -5415,24 +5000,9 @@
     "insertText": "sl_px;"
   },
   {
-    "label": "sl_pxk",
-    "detail": "GridView",
-    "insertText": "sl_pxk;"
-  },
-  {
     "label": "sl_qd",
     "detail": "GridView",
     "insertText": "sl_qd;"
-  },
-  {
-    "label": "sl_qdoi",
-    "detail": "GridView",
-    "insertText": "sl_qdoi;"
-  },
-  {
-    "label": "sl_qdsd",
-    "detail": "GridView",
-    "insertText": "sl_qdsd;"
   },
   {
     "label": "sl_sd",
@@ -5460,9 +5030,9 @@
     "insertText": "sl_th;"
   },
   {
-    "label": "sl_theo_mau",
+    "label": "sl_thieu",
     "detail": "GridView",
-    "insertText": "sl_theo_mau;"
+    "insertText": "sl_thieu;"
   },
   {
     "label": "sl_tk",
@@ -5480,11 +5050,6 @@
     "insertText": "sl_tl0;"
   },
   {
-    "label": "sl_to_in",
-    "detail": "GridView",
-    "insertText": "sl_to_in;"
-  },
-  {
     "label": "sl_ton",
     "detail": "GridView",
     "insertText": "sl_ton;"
@@ -5498,6 +5063,11 @@
     "label": "sl_tu",
     "detail": "GridView",
     "insertText": "sl_tu;"
+  },
+  {
+    "label": "sl_xk",
+    "detail": "GridView",
+    "insertText": "sl_xk;"
   },
   {
     "label": "sl_xoa",
@@ -5530,24 +5100,19 @@
     "insertText": "sms;"
   },
   {
-    "label": "so_bill",
+    "label": "so_banh",
     "detail": "GridView",
-    "insertText": "so_bill;"
+    "insertText": "so_banh;"
   },
   {
-    "label": "so_chat_luong",
+    "label": "so_cau",
     "detail": "GridView",
-    "insertText": "so_chat_luong;"
+    "insertText": "so_cau;"
   },
   {
-    "label": "so_chuyen",
+    "label": "so_cky",
     "detail": "GridView",
-    "insertText": "so_chuyen;"
-  },
-  {
-    "label": "so_cont",
-    "detail": "GridView",
-    "insertText": "so_cont;"
+    "insertText": "so_cky;"
   },
   {
     "label": "so_ct",
@@ -5570,9 +5135,9 @@
     "insertText": "so_ct2;"
   },
   {
-    "label": "so_ct_dh",
+    "label": "so_ct_ec",
     "detail": "GridView",
-    "insertText": "so_ct_dh;"
+    "insertText": "so_ct_ec;"
   },
   {
     "label": "so_ct_giam",
@@ -5590,39 +5155,34 @@
     "insertText": "so_ct_hddt0;"
   },
   {
+    "label": "so_ct_kk",
+    "detail": "GridView",
+    "insertText": "so_ct_kk;"
+  },
+  {
     "label": "so_ct_log",
     "detail": "GridView",
     "insertText": "so_ct_log;"
   },
   {
-    "label": "so_ct_pa2",
+    "label": "so_ct_nc",
     "detail": "GridView",
-    "insertText": "so_ct_pa2;"
+    "insertText": "so_ct_nc;"
   },
   {
-    "label": "so_ct_pd3",
+    "label": "so_ct_pr",
     "detail": "GridView",
-    "insertText": "so_ct_pd3;"
+    "insertText": "so_ct_pr;"
   },
   {
-    "label": "so_ct_po2",
+    "label": "so_ct_tc",
     "detail": "GridView",
-    "insertText": "so_ct_po2;"
+    "insertText": "so_ct_tc;"
   },
   {
-    "label": "so_ct_rs",
+    "label": "so_ct_yc",
     "detail": "GridView",
-    "insertText": "so_ct_rs;"
-  },
-  {
-    "label": "so_ct_tt",
-    "detail": "GridView",
-    "insertText": "so_ct_tt;"
-  },
-  {
-    "label": "so_ct_tu",
-    "detail": "GridView",
-    "insertText": "so_ct_tu;"
+    "insertText": "so_ct_yc;"
   },
   {
     "label": "so_ctgs",
@@ -5680,11 +5240,6 @@
     "insertText": "so_du4;"
   },
   {
-    "label": "so_du_kd",
-    "detail": "GridView",
-    "insertText": "so_du_kd;"
-  },
-  {
     "label": "so_du_nt",
     "detail": "GridView",
     "insertText": "so_du_nt;"
@@ -5720,11 +5275,6 @@
     "insertText": "so_du_nt4;"
   },
   {
-    "label": "so_du_tt",
-    "detail": "GridView",
-    "insertText": "so_du_tt;"
-  },
-  {
     "label": "so_gd",
     "detail": "GridView",
     "insertText": "so_gd;"
@@ -5743,6 +5293,11 @@
     "label": "so_hd",
     "detail": "GridView",
     "insertText": "so_hd;"
+  },
+  {
+    "label": "so_hd0",
+    "detail": "GridView",
+    "insertText": "so_hd0;"
   },
   {
     "label": "so_hieu_dc",
@@ -5765,19 +5320,14 @@
     "insertText": "so_huy;"
   },
   {
-    "label": "so_ke_hoach",
-    "detail": "GridView",
-    "insertText": "so_ke_hoach;"
-  },
-  {
     "label": "so_khai_sinh_pt",
     "detail": "GridView",
     "insertText": "so_khai_sinh_pt;"
   },
   {
-    "label": "so_kien",
+    "label": "so_km",
     "detail": "GridView",
-    "insertText": "so_kien;"
+    "insertText": "so_km;"
   },
   {
     "label": "so_ku",
@@ -5800,19 +5350,9 @@
     "insertText": "so_ky_pb;"
   },
   {
-    "label": "so_lan_loi",
+    "label": "so_lit",
     "detail": "GridView",
-    "insertText": "so_lan_loi;"
-  },
-  {
-    "label": "so_lc",
-    "detail": "GridView",
-    "insertText": "so_lc;"
-  },
-  {
-    "label": "so_lo_kd",
-    "detail": "GridView",
-    "insertText": "so_lo_kd;"
+    "insertText": "so_lit;"
   },
   {
     "label": "so_lsx",
@@ -5840,11 +5380,6 @@
     "insertText": "so_luong2;"
   },
   {
-    "label": "so_luong3",
-    "detail": "GridView",
-    "insertText": "so_luong3;"
-  },
-  {
     "label": "so_luong_cl",
     "detail": "GridView",
     "insertText": "so_luong_cl;"
@@ -5870,24 +5405,9 @@
     "insertText": "so_luong_lk;"
   },
   {
-    "label": "so_luong_n",
+    "label": "so_luong_pr",
     "detail": "GridView",
-    "insertText": "so_luong_n;"
-  },
-  {
-    "label": "so_luong_pa2",
-    "detail": "GridView",
-    "insertText": "so_luong_pa2;"
-  },
-  {
-    "label": "so_luong_pd3",
-    "detail": "GridView",
-    "insertText": "so_luong_pd3;"
-  },
-  {
-    "label": "so_luong_po2",
-    "detail": "GridView",
-    "insertText": "so_luong_po2;"
+    "insertText": "so_luong_pr;"
   },
   {
     "label": "so_luong_ss",
@@ -5905,11 +5425,6 @@
     "insertText": "so_luong_thuan;"
   },
   {
-    "label": "so_luong_thuc",
-    "detail": "GridView",
-    "insertText": "so_luong_thuc;"
-  },
-  {
     "label": "so_luong_tl",
     "detail": "GridView",
     "insertText": "so_luong_tl;"
@@ -5923,21 +5438,6 @@
     "label": "so_mat",
     "detail": "GridView",
     "insertText": "so_mat;"
-  },
-  {
-    "label": "so_mau",
-    "detail": "GridView",
-    "insertText": "so_mau;"
-  },
-  {
-    "label": "so_mau_den",
-    "detail": "GridView",
-    "insertText": "so_mau_den;"
-  },
-  {
-    "label": "so_mau_tu",
-    "detail": "GridView",
-    "insertText": "so_mau_tu;"
   },
   {
     "label": "so_max",
@@ -5965,11 +5465,6 @@
     "insertText": "so_ngay_dh;"
   },
   {
-    "label": "so_ngay_giao",
-    "detail": "GridView",
-    "insertText": "so_ngay_giao;"
-  },
-  {
     "label": "so_ngay_qh",
     "detail": "GridView",
     "insertText": "so_ngay_qh;"
@@ -5980,19 +5475,9 @@
     "insertText": "so_ngay_qua;"
   },
   {
-    "label": "so_ngay_qua_han",
-    "detail": "GridView",
-    "insertText": "so_ngay_qua_han;"
-  },
-  {
     "label": "so_ngay_th",
     "detail": "GridView",
     "insertText": "so_ngay_th;"
-  },
-  {
-    "label": "so_ngay_tl",
-    "detail": "GridView",
-    "insertText": "so_ngay_tl;"
   },
   {
     "label": "so_ngay_tong",
@@ -6000,14 +5485,14 @@
     "insertText": "so_ngay_tong;"
   },
   {
+    "label": "so_ngayhh",
+    "detail": "GridView",
+    "insertText": "so_ngayhh;"
+  },
+  {
     "label": "so_ngoai",
     "detail": "GridView",
     "insertText": "so_ngoai;"
-  },
-  {
-    "label": "so_nmh",
-    "detail": "GridView",
-    "insertText": "so_nmh;"
   },
   {
     "label": "so_npt_gt",
@@ -6025,19 +5510,9 @@
     "insertText": "so_ph;"
   },
   {
-    "label": "so_phieu_xuat",
-    "detail": "GridView",
-    "insertText": "so_phieu_xuat;"
-  },
-  {
     "label": "so_pn",
     "detail": "GridView",
     "insertText": "so_pn;"
-  },
-  {
-    "label": "so_quyet_dinh",
-    "detail": "GridView",
-    "insertText": "so_quyet_dinh;"
   },
   {
     "label": "so_sai",
@@ -6048,11 +5523,6 @@
     "label": "so_sd",
     "detail": "GridView",
     "insertText": "so_sd;"
-  },
-  {
-    "label": "so_seal",
-    "detail": "GridView",
-    "insertText": "so_seal;"
   },
   {
     "label": "so_seri",
@@ -6085,6 +5555,16 @@
     "insertText": "so_td;"
   },
   {
+    "label": "so_tham_chieu",
+    "detail": "GridView",
+    "insertText": "so_tham_chieu;"
+  },
+  {
+    "label": "so_tham_chieu2",
+    "detail": "GridView",
+    "insertText": "so_tham_chieu2;"
+  },
+  {
     "label": "so_the_ts",
     "detail": "GridView",
     "insertText": "so_the_ts;"
@@ -6100,19 +5580,9 @@
     "insertText": "so_tien_nt;"
   },
   {
-    "label": "so_tk",
+    "label": "so_truc",
     "detail": "GridView",
-    "insertText": "so_tk;"
-  },
-  {
-    "label": "so_tk_nh",
-    "detail": "GridView",
-    "insertText": "so_tk_nh;"
-  },
-  {
-    "label": "so_tracking",
-    "detail": "GridView",
-    "insertText": "so_tracking;"
+    "insertText": "so_truc;"
   },
   {
     "label": "so_trung",
@@ -6125,14 +5595,19 @@
     "insertText": "so_tu;"
   },
   {
-    "label": "so_xe",
+    "label": "so_uy_quyen",
     "detail": "GridView",
-    "insertText": "so_xe;"
+    "insertText": "so_uy_quyen;"
   },
   {
     "label": "so_xoa",
     "detail": "GridView",
     "insertText": "so_xoa;"
+  },
+  {
+    "label": "so_yc",
+    "detail": "GridView",
+    "insertText": "so_yc;"
   },
   {
     "label": "ssl",
@@ -6150,9 +5625,14 @@
     "insertText": "status2;"
   },
   {
-    "label": "status_cqt",
+    "label": "statusName",
     "detail": "GridView",
-    "insertText": "status_cqt;"
+    "insertText": "statusName;"
+  },
+  {
+    "label": "status_ec_name%l",
+    "detail": "GridView",
+    "insertText": "status_ec_name%l;"
   },
   {
     "label": "status_id",
@@ -6160,14 +5640,14 @@
     "insertText": "status_id;"
   },
   {
-    "label": "status_import",
-    "detail": "GridView",
-    "insertText": "status_import;"
-  },
-  {
     "label": "status_name%l",
     "detail": "GridView",
     "insertText": "status_name%l;"
+  },
+  {
+    "label": "status_sign",
+    "detail": "GridView",
+    "insertText": "status_sign;"
   },
   {
     "label": "statusname",
@@ -6180,19 +5660,9 @@
     "insertText": "statusname%l;"
   },
   {
-    "label": "step",
-    "detail": "GridView",
-    "insertText": "step;"
-  },
-  {
     "label": "stt",
     "detail": "GridView",
     "insertText": "stt;"
-  },
-  {
-    "label": "stt_cd",
-    "detail": "GridView",
-    "insertText": "stt_cd;"
   },
   {
     "label": "stt_ctntxt",
@@ -6213,11 +5683,6 @@
     "label": "stt_rec",
     "detail": "GridView",
     "insertText": "stt_rec;"
-  },
-  {
-    "label": "stt_rec_dh",
-    "detail": "GridView",
-    "insertText": "stt_rec_dh;"
   },
   {
     "label": "sttex",
@@ -6250,9 +5715,109 @@
     "insertText": "sysorder;"
   },
   {
+    "label": "systotal",
+    "detail": "GridView",
+    "insertText": "systotal;"
+  },
+  {
+    "label": "t01",
+    "detail": "GridView",
+    "insertText": "t01;"
+  },
+  {
+    "label": "t02",
+    "detail": "GridView",
+    "insertText": "t02;"
+  },
+  {
+    "label": "t03",
+    "detail": "GridView",
+    "insertText": "t03;"
+  },
+  {
+    "label": "t04",
+    "detail": "GridView",
+    "insertText": "t04;"
+  },
+  {
+    "label": "t05",
+    "detail": "GridView",
+    "insertText": "t05;"
+  },
+  {
+    "label": "t06",
+    "detail": "GridView",
+    "insertText": "t06;"
+  },
+  {
+    "label": "t07",
+    "detail": "GridView",
+    "insertText": "t07;"
+  },
+  {
+    "label": "t08",
+    "detail": "GridView",
+    "insertText": "t08;"
+  },
+  {
+    "label": "t09",
+    "detail": "GridView",
+    "insertText": "t09;"
+  },
+  {
     "label": "t1",
     "detail": "GridView",
     "insertText": "t1;"
+  },
+  {
+    "label": "t10",
+    "detail": "GridView",
+    "insertText": "t10;"
+  },
+  {
+    "label": "t11",
+    "detail": "GridView",
+    "insertText": "t11;"
+  },
+  {
+    "label": "t12",
+    "detail": "GridView",
+    "insertText": "t12;"
+  },
+  {
+    "label": "t13",
+    "detail": "GridView",
+    "insertText": "t13;"
+  },
+  {
+    "label": "t14",
+    "detail": "GridView",
+    "insertText": "t14;"
+  },
+  {
+    "label": "t15",
+    "detail": "GridView",
+    "insertText": "t15;"
+  },
+  {
+    "label": "t16",
+    "detail": "GridView",
+    "insertText": "t16;"
+  },
+  {
+    "label": "t17",
+    "detail": "GridView",
+    "insertText": "t17;"
+  },
+  {
+    "label": "t18",
+    "detail": "GridView",
+    "insertText": "t18;"
+  },
+  {
+    "label": "t19",
+    "detail": "GridView",
+    "insertText": "t19;"
   },
   {
     "label": "t2",
@@ -6260,9 +5825,69 @@
     "insertText": "t2;"
   },
   {
+    "label": "t20",
+    "detail": "GridView",
+    "insertText": "t20;"
+  },
+  {
+    "label": "t21",
+    "detail": "GridView",
+    "insertText": "t21;"
+  },
+  {
+    "label": "t22",
+    "detail": "GridView",
+    "insertText": "t22;"
+  },
+  {
+    "label": "t23",
+    "detail": "GridView",
+    "insertText": "t23;"
+  },
+  {
+    "label": "t24",
+    "detail": "GridView",
+    "insertText": "t24;"
+  },
+  {
+    "label": "t25",
+    "detail": "GridView",
+    "insertText": "t25;"
+  },
+  {
+    "label": "t26",
+    "detail": "GridView",
+    "insertText": "t26;"
+  },
+  {
+    "label": "t27",
+    "detail": "GridView",
+    "insertText": "t27;"
+  },
+  {
+    "label": "t28",
+    "detail": "GridView",
+    "insertText": "t28;"
+  },
+  {
+    "label": "t29",
+    "detail": "GridView",
+    "insertText": "t29;"
+  },
+  {
     "label": "t3",
     "detail": "GridView",
     "insertText": "t3;"
+  },
+  {
+    "label": "t30",
+    "detail": "GridView",
+    "insertText": "t30;"
+  },
+  {
+    "label": "t31",
+    "detail": "GridView",
+    "insertText": "t31;"
   },
   {
     "label": "t4",
@@ -6285,19 +5910,9 @@
     "insertText": "t7;"
   },
   {
-    "label": "t_ck",
-    "detail": "GridView",
-    "insertText": "t_ck;"
-  },
-  {
     "label": "t_cong_suat",
     "detail": "GridView",
     "insertText": "t_cong_suat;"
-  },
-  {
-    "label": "t_cp_nt_po2",
-    "detail": "GridView",
-    "insertText": "t_cp_nt_po2;"
   },
   {
     "label": "t_he_so",
@@ -6355,11 +5970,6 @@
     "insertText": "t_tb_nt;"
   },
   {
-    "label": "t_thanh_toan",
-    "detail": "GridView",
-    "insertText": "t_thanh_toan;"
-  },
-  {
     "label": "t_thue",
     "detail": "GridView",
     "insertText": "t_thue;"
@@ -6395,6 +6005,11 @@
     "insertText": "t_tien_cl_nt;"
   },
   {
+    "label": "t_tien_cn",
+    "detail": "GridView",
+    "insertText": "t_tien_cn;"
+  },
+  {
     "label": "t_tien_nt",
     "detail": "GridView",
     "insertText": "t_tien_nt;"
@@ -6418,16 +6033,6 @@
     "label": "t_tien_pb_nt",
     "detail": "GridView",
     "insertText": "t_tien_pb_nt;"
-  },
-  {
-    "label": "t_tnc_thue_nt",
-    "detail": "GridView",
-    "insertText": "t_tnc_thue_nt;"
-  },
-  {
-    "label": "t_tnt_thue_nt",
-    "detail": "GridView",
-    "insertText": "t_tnt_thue_nt;"
   },
   {
     "label": "t_tt",
@@ -6475,11 +6080,6 @@
     "insertText": "tang_nt;"
   },
   {
-    "label": "tax_status_name",
-    "detail": "GridView",
-    "insertText": "tax_status_name;"
-  },
-  {
     "label": "tb",
     "detail": "GridView",
     "insertText": "tb;"
@@ -6500,6 +6100,51 @@
     "insertText": "tb_nt;"
   },
   {
+    "label": "tc_bao_hanh",
+    "detail": "GridView",
+    "insertText": "tc_bao_hanh;"
+  },
+  {
+    "label": "tc_dia_diem_giao",
+    "detail": "GridView",
+    "insertText": "tc_dia_diem_giao;"
+  },
+  {
+    "label": "tc_dia_diem_th",
+    "detail": "GridView",
+    "insertText": "tc_dia_diem_th;"
+  },
+  {
+    "label": "tc_ho_so_tt",
+    "detail": "GridView",
+    "insertText": "tc_ho_so_tt;"
+  },
+  {
+    "label": "tc_nghiem_thu_dv",
+    "detail": "GridView",
+    "insertText": "tc_nghiem_thu_dv;"
+  },
+  {
+    "label": "tc_qd_dv_khac",
+    "detail": "GridView",
+    "insertText": "tc_qd_dv_khac;"
+  },
+  {
+    "label": "tc_quy_dinh_khac",
+    "detail": "GridView",
+    "insertText": "tc_quy_dinh_khac;"
+  },
+  {
+    "label": "tc_tgian_giao",
+    "detail": "GridView",
+    "insertText": "tc_tgian_giao;"
+  },
+  {
+    "label": "tc_tgian_th",
+    "detail": "GridView",
+    "insertText": "tc_tgian_th;"
+  },
+  {
     "label": "ten",
     "detail": "GridView",
     "insertText": "ten;"
@@ -6510,14 +6155,19 @@
     "insertText": "ten%l;"
   },
   {
-    "label": "ten_bc%l",
+    "label": "ten_bc",
     "detail": "GridView",
-    "insertText": "ten_bc%l;"
+    "insertText": "ten_bc;"
   },
   {
-    "label": "ten_bcex",
+    "label": "ten_bc2",
     "detail": "GridView",
-    "insertText": "ten_bcex;"
+    "insertText": "ten_bc2;"
+  },
+  {
+    "label": "ten_bo",
+    "detail": "GridView",
+    "insertText": "ten_bo;"
   },
   {
     "label": "ten_bp",
@@ -6530,14 +6180,44 @@
     "insertText": "ten_bp%l;"
   },
   {
-    "label": "ten_bp0%l",
+    "label": "ten_bp_dcex",
     "detail": "GridView",
-    "insertText": "ten_bp0%l;"
+    "insertText": "ten_bp_dcex;"
   },
   {
-    "label": "ten_bp_cu",
+    "label": "ten_bp_dnghi%l",
     "detail": "GridView",
-    "insertText": "ten_bp_cu;"
+    "insertText": "ten_bp_dnghi%l;"
+  },
+  {
+    "label": "ten_bp_kk%l",
+    "detail": "GridView",
+    "insertText": "ten_bp_kk%l;"
+  },
+  {
+    "label": "ten_bp_nhan%l",
+    "detail": "GridView",
+    "insertText": "ten_bp_nhan%l;"
+  },
+  {
+    "label": "ten_bp_ns",
+    "detail": "GridView",
+    "insertText": "ten_bp_ns;"
+  },
+  {
+    "label": "ten_bp_ns%l",
+    "detail": "GridView",
+    "insertText": "ten_bp_ns%l;"
+  },
+  {
+    "label": "ten_bp_phi%l",
+    "detail": "GridView",
+    "insertText": "ten_bp_phi%l;"
+  },
+  {
+    "label": "ten_bp_tnex",
+    "detail": "GridView",
+    "insertText": "ten_bp_tnex;"
   },
   {
     "label": "ten_bt",
@@ -6555,11 +6235,6 @@
     "insertText": "ten_ca%l;"
   },
   {
-    "label": "ten_cang%l",
-    "detail": "GridView",
-    "insertText": "ten_cang%l;"
-  },
-  {
     "label": "ten_cb",
     "detail": "GridView",
     "insertText": "ten_cb;"
@@ -6570,19 +6245,34 @@
     "insertText": "ten_ccv%l;"
   },
   {
+    "label": "ten_chi_tieu%l",
+    "detail": "GridView",
+    "insertText": "ten_chi_tieu%l;"
+  },
+  {
     "label": "ten_chuc_nang",
     "detail": "GridView",
     "insertText": "ten_chuc_nang;"
   },
   {
-    "label": "ten_chuong%l",
-    "detail": "GridView",
-    "insertText": "ten_chuong%l;"
-  },
-  {
     "label": "ten_ck%l",
     "detail": "GridView",
     "insertText": "ten_ck%l;"
+  },
+  {
+    "label": "ten_ck_tl%l",
+    "detail": "GridView",
+    "insertText": "ten_ck_tl%l;"
+  },
+  {
+    "label": "ten_cky%l",
+    "detail": "GridView",
+    "insertText": "ten_cky%l;"
+  },
+  {
+    "label": "ten_cky_bd",
+    "detail": "GridView",
+    "insertText": "ten_cky_bd;"
   },
   {
     "label": "ten_cm%l",
@@ -6600,6 +6290,16 @@
     "insertText": "ten_cn%l;"
   },
   {
+    "label": "ten_combo",
+    "detail": "GridView",
+    "insertText": "ten_combo;"
+  },
+  {
+    "label": "ten_combo2",
+    "detail": "GridView",
+    "insertText": "ten_combo2;"
+  },
+  {
     "label": "ten_cp%l",
     "detail": "GridView",
     "insertText": "ten_cp%l;"
@@ -6615,9 +6315,14 @@
     "insertText": "ten_ct%l;"
   },
   {
-    "label": "ten_ctcl%l",
+    "label": "ten_ct_ns",
     "detail": "GridView",
-    "insertText": "ten_ctcl%l;"
+    "insertText": "ten_ct_ns;"
+  },
+  {
+    "label": "ten_ct_ns0%l",
+    "detail": "GridView",
+    "insertText": "ten_ct_ns0%l;"
   },
   {
     "label": "ten_ctcp%l",
@@ -6625,14 +6330,24 @@
     "insertText": "ten_ctcp%l;"
   },
   {
-    "label": "ten_cty%l",
+    "label": "ten_cv",
     "detail": "GridView",
-    "insertText": "ten_cty%l;"
+    "insertText": "ten_cv;"
   },
   {
-    "label": "ten_dac_tinh%l",
+    "label": "ten_cv%l",
     "detail": "GridView",
-    "insertText": "ten_dac_tinh%l;"
+    "insertText": "ten_cv%l;"
+  },
+  {
+    "label": "ten_cv%lex",
+    "detail": "GridView",
+    "insertText": "ten_cv%lex;"
+  },
+  {
+    "label": "ten_cv_bd",
+    "detail": "GridView",
+    "insertText": "ten_cv_bd;"
   },
   {
     "label": "ten_dashboard%l",
@@ -6665,16 +6380,6 @@
     "insertText": "ten_dh;"
   },
   {
-    "label": "ten_diem",
-    "detail": "GridView",
-    "insertText": "ten_diem;"
-  },
-  {
-    "label": "ten_diem%l",
-    "detail": "GridView",
-    "insertText": "ten_diem%l;"
-  },
-  {
     "label": "ten_dn",
     "detail": "GridView",
     "insertText": "ten_dn;"
@@ -6700,34 +6405,24 @@
     "insertText": "ten_dtqt%l;"
   },
   {
-    "label": "ten_dtqt1",
-    "detail": "GridView",
-    "insertText": "ten_dtqt1;"
-  },
-  {
-    "label": "ten_dtqt2",
-    "detail": "GridView",
-    "insertText": "ten_dtqt2;"
-  },
-  {
-    "label": "ten_dtqt3",
-    "detail": "GridView",
-    "insertText": "ten_dtqt3;"
-  },
-  {
     "label": "ten_dvcs%l",
     "detail": "GridView",
     "insertText": "ten_dvcs%l;"
   },
   {
-    "label": "ten_dvcs%lex",
+    "label": "ten_dvt",
     "detail": "GridView",
-    "insertText": "ten_dvcs%lex;"
+    "insertText": "ten_dvt;"
   },
   {
     "label": "ten_dvt%l",
     "detail": "GridView",
     "insertText": "ten_dvt%l;"
+  },
+  {
+    "label": "ten_file",
+    "detail": "GridView",
+    "insertText": "ten_file;"
   },
   {
     "label": "ten_gd",
@@ -6738,16 +6433,6 @@
     "label": "ten_gd%l",
     "detail": "GridView",
     "insertText": "ten_gd%l;"
-  },
-  {
-    "label": "ten_gt%l",
-    "detail": "GridView",
-    "insertText": "ten_gt%l;"
-  },
-  {
-    "label": "ten_hai_quan%l",
-    "detail": "GridView",
-    "insertText": "ten_hai_quan%l;"
   },
   {
     "label": "ten_hd",
@@ -6795,6 +6480,21 @@
     "insertText": "ten_id%l;"
   },
   {
+    "label": "ten_kb",
+    "detail": "GridView",
+    "insertText": "ten_kb;"
+  },
+  {
+    "label": "ten_kbex",
+    "detail": "GridView",
+    "insertText": "ten_kbex;"
+  },
+  {
+    "label": "ten_kenh_bh",
+    "detail": "GridView",
+    "insertText": "ten_kenh_bh;"
+  },
+  {
     "label": "ten_key",
     "detail": "GridView",
     "insertText": "ten_key;"
@@ -6825,9 +6525,19 @@
     "insertText": "ten_kh1%lex;"
   },
   {
+    "label": "ten_khdd%l",
+    "detail": "GridView",
+    "insertText": "ten_khdd%l;"
+  },
+  {
     "label": "ten_khex",
     "detail": "GridView",
     "insertText": "ten_khex;"
+  },
+  {
+    "label": "ten_khhoadonex",
+    "detail": "GridView",
+    "insertText": "ten_khhoadonex;"
   },
   {
     "label": "ten_kho",
@@ -6840,11 +6550,6 @@
     "insertText": "ten_kho%l;"
   },
   {
-    "label": "ten_khuon%l",
-    "detail": "GridView",
-    "insertText": "ten_khuon%l;"
-  },
-  {
     "label": "ten_kieu%l",
     "detail": "GridView",
     "insertText": "ten_kieu%l;"
@@ -6855,24 +6560,14 @@
     "insertText": "ten_kieu_duyet;"
   },
   {
-    "label": "ten_kk",
-    "detail": "GridView",
-    "insertText": "ten_kk;"
-  },
-  {
     "label": "ten_kn%l",
     "detail": "GridView",
     "insertText": "ten_kn%l;"
   },
   {
-    "label": "ten_kq",
+    "label": "ten_kqex",
     "detail": "GridView",
-    "insertText": "ten_kq;"
-  },
-  {
-    "label": "ten_kq%l",
-    "detail": "GridView",
-    "insertText": "ten_kq%l;"
+    "insertText": "ten_kqex;"
   },
   {
     "label": "ten_kt",
@@ -6885,6 +6580,21 @@
     "insertText": "ten_ktt%l;"
   },
   {
+    "label": "ten_ktv",
+    "detail": "GridView",
+    "insertText": "ten_ktv;"
+  },
+  {
+    "label": "ten_ktv%l",
+    "detail": "GridView",
+    "insertText": "ten_ktv%l;"
+  },
+  {
+    "label": "ten_ktvex",
+    "detail": "GridView",
+    "insertText": "ten_ktvex;"
+  },
+  {
     "label": "ten_ku",
     "detail": "GridView",
     "insertText": "ten_ku;"
@@ -6895,9 +6605,9 @@
     "insertText": "ten_ku%l;"
   },
   {
-    "label": "ten_kv%l",
+    "label": "ten_kv",
     "detail": "GridView",
-    "insertText": "ten_kv%l;"
+    "insertText": "ten_kv;"
   },
   {
     "label": "ten_ky",
@@ -6920,11 +6630,6 @@
     "insertText": "ten_ld_dc;"
   },
   {
-    "label": "ten_lo",
-    "detail": "GridView",
-    "insertText": "ten_lo;"
-  },
-  {
     "label": "ten_lo%l",
     "detail": "GridView",
     "insertText": "ten_lo%l;"
@@ -6940,14 +6645,24 @@
     "insertText": "ten_loai%l;"
   },
   {
+    "label": "ten_loai2",
+    "detail": "GridView",
+    "insertText": "ten_loai2;"
+  },
+  {
+    "label": "ten_loai_cp",
+    "detail": "GridView",
+    "insertText": "ten_loai_cp;"
+  },
+  {
     "label": "ten_loai_ct%l",
     "detail": "GridView",
     "insertText": "ten_loai_ct%l;"
   },
   {
-    "label": "ten_loai_ctex",
+    "label": "ten_loai_dl",
     "detail": "GridView",
-    "insertText": "ten_loai_ctex;"
+    "insertText": "ten_loai_dl;"
   },
   {
     "label": "ten_loai_gt",
@@ -6960,14 +6675,19 @@
     "insertText": "ten_loai_hd%l;"
   },
   {
-    "label": "ten_loai_loi",
+    "label": "ten_loai_hd%lex",
     "detail": "GridView",
-    "insertText": "ten_loai_loi;"
+    "insertText": "ten_loai_hd%lex;"
   },
   {
-    "label": "ten_loai_qd%l",
+    "label": "ten_loai_tb",
     "detail": "GridView",
-    "insertText": "ten_loai_qd%l;"
+    "insertText": "ten_loai_tb;"
+  },
+  {
+    "label": "ten_loai_tb%l",
+    "detail": "GridView",
+    "insertText": "ten_loai_tb%l;"
   },
   {
     "label": "ten_loai_td",
@@ -6980,11 +6700,6 @@
     "insertText": "ten_loai_vt%l;"
   },
   {
-    "label": "ten_loi",
-    "detail": "GridView",
-    "insertText": "ten_loi;"
-  },
-  {
     "label": "ten_loi%l",
     "detail": "GridView",
     "insertText": "ten_loi%l;"
@@ -6993,11 +6708,6 @@
     "label": "ten_lsx",
     "detail": "GridView",
     "insertText": "ten_lsx;"
-  },
-  {
-    "label": "ten_ma_dvcs%l",
-    "detail": "GridView",
-    "insertText": "ten_ma_dvcs%l;"
   },
   {
     "label": "ten_mau%l",
@@ -7010,6 +6720,11 @@
     "insertText": "ten_mau_ct%l;"
   },
   {
+    "label": "ten_mau_hd",
+    "detail": "GridView",
+    "insertText": "ten_mau_hd;"
+  },
+  {
     "label": "ten_may",
     "detail": "GridView",
     "insertText": "ten_may;"
@@ -7018,16 +6733,6 @@
     "label": "ten_may%l",
     "detail": "GridView",
     "insertText": "ten_may%l;"
-  },
-  {
-    "label": "ten_may%lex",
-    "detail": "GridView",
-    "insertText": "ten_may%lex;"
-  },
-  {
-    "label": "ten_mayin%l",
-    "detail": "GridView",
-    "insertText": "ten_mayin%l;"
   },
   {
     "label": "ten_md",
@@ -7050,9 +6755,9 @@
     "insertText": "ten_ncc;"
   },
   {
-    "label": "ten_ngan",
+    "label": "ten_ng_sd",
     "detail": "GridView",
-    "insertText": "ten_ngan;"
+    "insertText": "ten_ng_sd;"
   },
   {
     "label": "ten_ngan%l",
@@ -7070,29 +6775,14 @@
     "insertText": "ten_nguon;"
   },
   {
-    "label": "ten_nguon%l",
-    "detail": "GridView",
-    "insertText": "ten_nguon%l;"
-  },
-  {
-    "label": "ten_nh",
-    "detail": "GridView",
-    "insertText": "ten_nh;"
-  },
-  {
     "label": "ten_nh%l",
     "detail": "GridView",
     "insertText": "ten_nh%l;"
   },
   {
-    "label": "ten_nh%lex",
+    "label": "ten_nh1",
     "detail": "GridView",
-    "insertText": "ten_nh%lex;"
-  },
-  {
-    "label": "ten_nh0%l",
-    "detail": "GridView",
-    "insertText": "ten_nh0%l;"
+    "insertText": "ten_nh1;"
   },
   {
     "label": "ten_nh1%l",
@@ -7100,9 +6790,19 @@
     "insertText": "ten_nh1%l;"
   },
   {
+    "label": "ten_nh2",
+    "detail": "GridView",
+    "insertText": "ten_nh2;"
+  },
+  {
     "label": "ten_nh2%l",
     "detail": "GridView",
     "insertText": "ten_nh2%l;"
+  },
+  {
+    "label": "ten_nh3",
+    "detail": "GridView",
+    "insertText": "ten_nh3;"
   },
   {
     "label": "ten_nh3%l",
@@ -7130,9 +6830,19 @@
     "insertText": "ten_nh_kh9%l;"
   },
   {
-    "label": "ten_nh_kho%l",
+    "label": "ten_nh_tb1",
     "detail": "GridView",
-    "insertText": "ten_nh_kho%l;"
+    "insertText": "ten_nh_tb1;"
+  },
+  {
+    "label": "ten_nh_tb2",
+    "detail": "GridView",
+    "insertText": "ten_nh_tb2;"
+  },
+  {
+    "label": "ten_nh_tb3",
+    "detail": "GridView",
+    "insertText": "ten_nh_tb3;"
   },
   {
     "label": "ten_nh_vt1%l",
@@ -7155,19 +6865,19 @@
     "insertText": "ten_nh_vt9%l;"
   },
   {
-    "label": "ten_nhdv%lex",
-    "detail": "GridView",
-    "insertText": "ten_nhdv%lex;"
-  },
-  {
-    "label": "ten_nhex",
-    "detail": "GridView",
-    "insertText": "ten_nhex;"
-  },
-  {
     "label": "ten_nhom",
     "detail": "GridView",
     "insertText": "ten_nhom;"
+  },
+  {
+    "label": "ten_nhom%l",
+    "detail": "GridView",
+    "insertText": "ten_nhom%l;"
+  },
+  {
+    "label": "ten_nhom_bp%l",
+    "detail": "GridView",
+    "insertText": "ten_nhom_bp%l;"
   },
   {
     "label": "ten_nhom_vt",
@@ -7200,11 +6910,6 @@
     "insertText": "ten_nl%l;"
   },
   {
-    "label": "ten_nn%l",
-    "detail": "GridView",
-    "insertText": "ten_nn%l;"
-  },
-  {
     "label": "ten_ns",
     "detail": "GridView",
     "insertText": "ten_ns;"
@@ -7220,14 +6925,19 @@
     "insertText": "ten_nt%l;"
   },
   {
+    "label": "ten_nv",
+    "detail": "GridView",
+    "insertText": "ten_nv;"
+  },
+  {
     "label": "ten_nv%l",
     "detail": "GridView",
     "insertText": "ten_nv%l;"
   },
   {
-    "label": "ten_nvbh",
+    "label": "ten_nv_ql",
     "detail": "GridView",
-    "insertText": "ten_nvbh;"
+    "insertText": "ten_nv_ql;"
   },
   {
     "label": "ten_nvbh%l",
@@ -7235,14 +6945,14 @@
     "insertText": "ten_nvbh%l;"
   },
   {
+    "label": "ten_nvbhex",
+    "detail": "GridView",
+    "insertText": "ten_nvbhex;"
+  },
+  {
     "label": "ten_nvmh%l",
     "detail": "GridView",
     "insertText": "ten_nvmh%l;"
-  },
-  {
-    "label": "ten_nvu%l",
-    "detail": "GridView",
-    "insertText": "ten_nvu%l;"
   },
   {
     "label": "ten_nx",
@@ -7255,34 +6965,9 @@
     "insertText": "ten_nx%l;"
   },
   {
-    "label": "ten_ph_loai",
-    "detail": "GridView",
-    "insertText": "ten_ph_loai;"
-  },
-  {
-    "label": "ten_ph_loai%l",
-    "detail": "GridView",
-    "insertText": "ten_ph_loai%l;"
-  },
-  {
-    "label": "ten_phan_loai%lex",
-    "detail": "GridView",
-    "insertText": "ten_phan_loai%lex;"
-  },
-  {
-    "label": "ten_phi",
-    "detail": "GridView",
-    "insertText": "ten_phi;"
-  },
-  {
     "label": "ten_phi%l",
     "detail": "GridView",
     "insertText": "ten_phi%l;"
-  },
-  {
-    "label": "ten_phi%lex",
-    "detail": "GridView",
-    "insertText": "ten_phi%lex;"
   },
   {
     "label": "ten_pl%lex",
@@ -7305,11 +6990,6 @@
     "insertText": "ten_px%l;"
   },
   {
-    "label": "ten_qg%l",
-    "detail": "GridView",
-    "insertText": "ten_qg%l;"
-  },
-  {
     "label": "ten_qh%l",
     "detail": "GridView",
     "insertText": "ten_qh%l;"
@@ -7325,9 +7005,9 @@
     "insertText": "ten_qt%l;"
   },
   {
-    "label": "ten_qt2",
+    "label": "ten_qt%lex",
     "detail": "GridView",
-    "insertText": "ten_qt2;"
+    "insertText": "ten_qt%lex;"
   },
   {
     "label": "ten_quyen",
@@ -7340,11 +7020,6 @@
     "insertText": "ten_quyen%l;"
   },
   {
-    "label": "ten_rb%l",
-    "detail": "GridView",
-    "insertText": "ten_rb%l;"
-  },
-  {
     "label": "ten_row",
     "detail": "GridView",
     "insertText": "ten_row;"
@@ -7353,11 +7028,6 @@
     "label": "ten_snk%l",
     "detail": "GridView",
     "insertText": "ten_snk%l;"
-  },
-  {
-    "label": "ten_sp",
-    "detail": "GridView",
-    "insertText": "ten_sp;"
   },
   {
     "label": "ten_sp%l",
@@ -7375,19 +7045,54 @@
     "insertText": "ten_spex;"
   },
   {
-    "label": "ten_taitrong",
+    "label": "ten_status",
     "detail": "GridView",
-    "insertText": "ten_taitrong;"
+    "insertText": "ten_status;"
   },
   {
-    "label": "ten_taitrong%l",
+    "label": "ten_status_duyet",
     "detail": "GridView",
-    "insertText": "ten_taitrong%l;"
+    "insertText": "ten_status_duyet;"
+  },
+  {
+    "label": "ten_status_duyet%lex",
+    "detail": "GridView",
+    "insertText": "ten_status_duyet%lex;"
+  },
+  {
+    "label": "ten_su_viec",
+    "detail": "GridView",
+    "insertText": "ten_su_viec;"
+  },
+  {
+    "label": "ten_tb",
+    "detail": "GridView",
+    "insertText": "ten_tb;"
   },
   {
     "label": "ten_tb%l",
     "detail": "GridView",
     "insertText": "ten_tb%l;"
+  },
+  {
+    "label": "ten_tb%lex",
+    "detail": "GridView",
+    "insertText": "ten_tb%lex;"
+  },
+  {
+    "label": "ten_tb2",
+    "detail": "GridView",
+    "insertText": "ten_tb2;"
+  },
+  {
+    "label": "ten_tbex",
+    "detail": "GridView",
+    "insertText": "ten_tbex;"
+  },
+  {
+    "label": "ten_tbkd%l",
+    "detail": "GridView",
+    "insertText": "ten_tbkd%l;"
   },
   {
     "label": "ten_tc%l",
@@ -7410,9 +7115,9 @@
     "insertText": "ten_thue%l;"
   },
   {
-    "label": "ten_tieu_muc%l",
+    "label": "ten_tinh_trang%l",
     "detail": "GridView",
-    "insertText": "ten_tieu_muc%l;"
+    "insertText": "ten_tinh_trang%l;"
   },
   {
     "label": "ten_tk",
@@ -7470,6 +7175,11 @@
     "insertText": "ten_tn%l;"
   },
   {
+    "label": "ten_trang_thai",
+    "detail": "GridView",
+    "insertText": "ten_trang_thai;"
+  },
+  {
     "label": "ten_trang_thai%l",
     "detail": "GridView",
     "insertText": "ten_trang_thai%l;"
@@ -7483,6 +7193,11 @@
     "label": "ten_trang_thai_huy",
     "detail": "GridView",
     "insertText": "ten_trang_thai_huy;"
+  },
+  {
+    "label": "ten_trang_thaiex",
+    "detail": "GridView",
+    "insertText": "ten_trang_thaiex;"
   },
   {
     "label": "ten_ts",
@@ -7505,14 +7220,14 @@
     "insertText": "ten_tt%l;"
   },
   {
-    "label": "ten_tt_gd",
+    "label": "ten_tt_kk%l",
     "detail": "GridView",
-    "insertText": "ten_tt_gd;"
+    "insertText": "ten_tt_kk%l;"
   },
   {
-    "label": "ten_tt_po2",
+    "label": "ten_tt_tb",
     "detail": "GridView",
-    "insertText": "ten_tt_po2;"
+    "insertText": "ten_tt_tb;"
   },
   {
     "label": "ten_tu_trang_thai",
@@ -7550,44 +7265,14 @@
     "insertText": "ten_vt0%l;"
   },
   {
-    "label": "ten_vt_in",
+    "label": "ten_vtdd%l",
     "detail": "GridView",
-    "insertText": "ten_vt_in;"
-  },
-  {
-    "label": "ten_vt_pa2",
-    "detail": "GridView",
-    "insertText": "ten_vt_pa2;"
-  },
-  {
-    "label": "ten_vt_pd3",
-    "detail": "GridView",
-    "insertText": "ten_vt_pd3;"
-  },
-  {
-    "label": "ten_vt_po2",
-    "detail": "GridView",
-    "insertText": "ten_vt_po2;"
+    "insertText": "ten_vtdd%l;"
   },
   {
     "label": "ten_vtex",
     "detail": "GridView",
     "insertText": "ten_vtex;"
-  },
-  {
-    "label": "ten_vtr",
-    "detail": "GridView",
-    "insertText": "ten_vtr;"
-  },
-  {
-    "label": "ten_vtr_cu",
-    "detail": "GridView",
-    "insertText": "ten_vtr_cu;"
-  },
-  {
-    "label": "ten_vung%l",
-    "detail": "GridView",
-    "insertText": "ten_vung%l;"
   },
   {
     "label": "ten_vv",
@@ -7625,6 +7310,21 @@
     "insertText": "tg_cho;"
   },
   {
+    "label": "tg_doi",
+    "detail": "GridView",
+    "insertText": "tg_doi;"
+  },
+  {
+    "label": "tg_hang_tinh",
+    "detail": "GridView",
+    "insertText": "tg_hang_tinh;"
+  },
+  {
+    "label": "tg_hang_tp",
+    "detail": "GridView",
+    "insertText": "tg_hang_tp;"
+  },
+  {
     "label": "tg_kk",
     "detail": "GridView",
     "insertText": "tg_kk;"
@@ -7635,14 +7335,69 @@
     "insertText": "tg_th;"
   },
   {
-    "label": "tham_nien",
+    "label": "tg_xu_ly",
     "detail": "GridView",
-    "insertText": "tham_nien;"
+    "insertText": "tg_xu_ly;"
   },
   {
-    "label": "thang",
+    "label": "th_ngay_thg_01",
     "detail": "GridView",
-    "insertText": "thang;"
+    "insertText": "th_ngay_thg_01;"
+  },
+  {
+    "label": "th_ngay_thg_02",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_02;"
+  },
+  {
+    "label": "th_ngay_thg_03",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_03;"
+  },
+  {
+    "label": "th_ngay_thg_04",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_04;"
+  },
+  {
+    "label": "th_ngay_thg_05",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_05;"
+  },
+  {
+    "label": "th_ngay_thg_06",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_06;"
+  },
+  {
+    "label": "th_ngay_thg_07",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_07;"
+  },
+  {
+    "label": "th_ngay_thg_08",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_08;"
+  },
+  {
+    "label": "th_ngay_thg_09",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_09;"
+  },
+  {
+    "label": "th_ngay_thg_10",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_10;"
+  },
+  {
+    "label": "th_ngay_thg_11",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_11;"
+  },
+  {
+    "label": "th_ngay_thg_12",
+    "detail": "GridView",
+    "insertText": "th_ngay_thg_12;"
   },
   {
     "label": "thanh_toan",
@@ -7650,19 +7405,79 @@
     "insertText": "thanh_toan;"
   },
   {
-    "label": "thay_dao",
+    "label": "theo_hop_dong",
     "detail": "GridView",
-    "insertText": "thay_dao;"
+    "insertText": "theo_hop_dong;"
   },
   {
-    "label": "thoi_han",
+    "label": "thg_01",
     "detail": "GridView",
-    "insertText": "thoi_han;"
+    "insertText": "thg_01;"
   },
   {
-    "label": "thong_tin_kh",
+    "label": "thg_02",
     "detail": "GridView",
-    "insertText": "thong_tin_kh;"
+    "insertText": "thg_02;"
+  },
+  {
+    "label": "thg_03",
+    "detail": "GridView",
+    "insertText": "thg_03;"
+  },
+  {
+    "label": "thg_04",
+    "detail": "GridView",
+    "insertText": "thg_04;"
+  },
+  {
+    "label": "thg_05",
+    "detail": "GridView",
+    "insertText": "thg_05;"
+  },
+  {
+    "label": "thg_06",
+    "detail": "GridView",
+    "insertText": "thg_06;"
+  },
+  {
+    "label": "thg_07",
+    "detail": "GridView",
+    "insertText": "thg_07;"
+  },
+  {
+    "label": "thg_08",
+    "detail": "GridView",
+    "insertText": "thg_08;"
+  },
+  {
+    "label": "thg_09",
+    "detail": "GridView",
+    "insertText": "thg_09;"
+  },
+  {
+    "label": "thg_10",
+    "detail": "GridView",
+    "insertText": "thg_10;"
+  },
+  {
+    "label": "thg_11",
+    "detail": "GridView",
+    "insertText": "thg_11;"
+  },
+  {
+    "label": "thg_12",
+    "detail": "GridView",
+    "insertText": "thg_12;"
+  },
+  {
+    "label": "thhuong_hieu",
+    "detail": "GridView",
+    "insertText": "thhuong_hieu;"
+  },
+  {
+    "label": "thua_thieu",
+    "detail": "GridView",
+    "insertText": "thua_thieu;"
   },
   {
     "label": "thue",
@@ -7880,29 +7695,14 @@
     "insertText": "thue_tncn;"
   },
   {
-    "label": "thue_vat",
-    "detail": "GridView",
-    "insertText": "thue_vat;"
-  },
-  {
     "label": "thuyet_minh",
     "detail": "GridView",
     "insertText": "thuyet_minh;"
   },
   {
-    "label": "ti_le",
+    "label": "ticket",
     "detail": "GridView",
-    "insertText": "ti_le;"
-  },
-  {
-    "label": "ti_le_ll",
-    "detail": "GridView",
-    "insertText": "ti_le_ll;"
-  },
-  {
-    "label": "ti_le_ll_nt",
-    "detail": "GridView",
-    "insertText": "ti_le_ll_nt;"
+    "insertText": "ticket;"
   },
   {
     "label": "tien",
@@ -7913,6 +7713,51 @@
     "label": "tien0",
     "detail": "GridView",
     "insertText": "tien0;"
+  },
+  {
+    "label": "tien01",
+    "detail": "GridView",
+    "insertText": "tien01;"
+  },
+  {
+    "label": "tien02",
+    "detail": "GridView",
+    "insertText": "tien02;"
+  },
+  {
+    "label": "tien03",
+    "detail": "GridView",
+    "insertText": "tien03;"
+  },
+  {
+    "label": "tien04",
+    "detail": "GridView",
+    "insertText": "tien04;"
+  },
+  {
+    "label": "tien05",
+    "detail": "GridView",
+    "insertText": "tien05;"
+  },
+  {
+    "label": "tien06",
+    "detail": "GridView",
+    "insertText": "tien06;"
+  },
+  {
+    "label": "tien07",
+    "detail": "GridView",
+    "insertText": "tien07;"
+  },
+  {
+    "label": "tien08",
+    "detail": "GridView",
+    "insertText": "tien08;"
+  },
+  {
+    "label": "tien09",
+    "detail": "GridView",
+    "insertText": "tien09;"
   },
   {
     "label": "tien0_kn",
@@ -7933,6 +7778,21 @@
     "label": "tien1",
     "detail": "GridView",
     "insertText": "tien1;"
+  },
+  {
+    "label": "tien10",
+    "detail": "GridView",
+    "insertText": "tien10;"
+  },
+  {
+    "label": "tien11",
+    "detail": "GridView",
+    "insertText": "tien11;"
+  },
+  {
+    "label": "tien12",
+    "detail": "GridView",
+    "insertText": "tien12;"
   },
   {
     "label": "tien2",
@@ -7965,31 +7825,6 @@
     "insertText": "tien4;"
   },
   {
-    "label": "tien5",
-    "detail": "GridView",
-    "insertText": "tien5;"
-  },
-  {
-    "label": "tien6",
-    "detail": "GridView",
-    "insertText": "tien6;"
-  },
-  {
-    "label": "tien7",
-    "detail": "GridView",
-    "insertText": "tien7;"
-  },
-  {
-    "label": "tien_ban",
-    "detail": "GridView",
-    "insertText": "tien_ban;"
-  },
-  {
-    "label": "tien_ban_nt",
-    "detail": "GridView",
-    "insertText": "tien_ban_nt;"
-  },
-  {
     "label": "tien_cd",
     "detail": "GridView",
     "insertText": "tien_cd;"
@@ -8020,11 +7855,6 @@
     "insertText": "tien_cl_nt;"
   },
   {
-    "label": "tien_cong_don",
-    "detail": "GridView",
-    "insertText": "tien_cong_don;"
-  },
-  {
     "label": "tien_cp",
     "detail": "GridView",
     "insertText": "tien_cp;"
@@ -8033,21 +7863,6 @@
     "label": "tien_cp_nt",
     "detail": "GridView",
     "insertText": "tien_cp_nt;"
-  },
-  {
-    "label": "tien_ct_dn_lk",
-    "detail": "GridView",
-    "insertText": "tien_ct_dn_lk;"
-  },
-  {
-    "label": "tien_ct_pt_lk",
-    "detail": "GridView",
-    "insertText": "tien_ct_pt_lk;"
-  },
-  {
-    "label": "tien_da_nop",
-    "detail": "GridView",
-    "insertText": "tien_da_nop;"
   },
   {
     "label": "tien_dc",
@@ -8075,26 +7890,6 @@
     "insertText": "tien_hd_nt;"
   },
   {
-    "label": "tien_hh",
-    "detail": "GridView",
-    "insertText": "tien_hh;"
-  },
-  {
-    "label": "tien_ket_hop_nt",
-    "detail": "GridView",
-    "insertText": "tien_ket_hop_nt;"
-  },
-  {
-    "label": "tien_kh",
-    "detail": "GridView",
-    "insertText": "tien_kh;"
-  },
-  {
-    "label": "tien_kh_nt",
-    "detail": "GridView",
-    "insertText": "tien_kh_nt;"
-  },
-  {
     "label": "tien_kn",
     "detail": "GridView",
     "insertText": "tien_kn;"
@@ -8103,21 +7898,6 @@
     "label": "tien_kt",
     "detail": "GridView",
     "insertText": "tien_kt;"
-  },
-  {
-    "label": "tien_ky_nay",
-    "detail": "GridView",
-    "insertText": "tien_ky_nay;"
-  },
-  {
-    "label": "tien_lai",
-    "detail": "GridView",
-    "insertText": "tien_lai;"
-  },
-  {
-    "label": "tien_lai_nt",
-    "detail": "GridView",
-    "insertText": "tien_lai_nt;"
   },
   {
     "label": "tien_lk",
@@ -8160,21 +7940,6 @@
     "insertText": "tien_nt0_lk;"
   },
   {
-    "label": "tien_nt0_pa2",
-    "detail": "GridView",
-    "insertText": "tien_nt0_pa2;"
-  },
-  {
-    "label": "tien_nt0_pd3",
-    "detail": "GridView",
-    "insertText": "tien_nt0_pd3;"
-  },
-  {
-    "label": "tien_nt0_po2",
-    "detail": "GridView",
-    "insertText": "tien_nt0_po2;"
-  },
-  {
     "label": "tien_nt1",
     "detail": "GridView",
     "insertText": "tien_nt1;"
@@ -8208,21 +7973,6 @@
     "label": "tien_nt4",
     "detail": "GridView",
     "insertText": "tien_nt4;"
-  },
-  {
-    "label": "tien_nt5",
-    "detail": "GridView",
-    "insertText": "tien_nt5;"
-  },
-  {
-    "label": "tien_nt6",
-    "detail": "GridView",
-    "insertText": "tien_nt6;"
-  },
-  {
-    "label": "tien_nt7",
-    "detail": "GridView",
-    "insertText": "tien_nt7;"
   },
   {
     "label": "tien_nt_cl",
@@ -8275,39 +8025,9 @@
     "insertText": "tien_pb_nt;"
   },
   {
-    "label": "tien_phai_thu",
-    "detail": "GridView",
-    "insertText": "tien_phai_thu;"
-  },
-  {
-    "label": "tien_phai_tra_nt",
-    "detail": "GridView",
-    "insertText": "tien_phai_tra_nt;"
-  },
-  {
-    "label": "tien_sai_can_duoi",
-    "detail": "GridView",
-    "insertText": "tien_sai_can_duoi;"
-  },
-  {
-    "label": "tien_sai_can_tren",
-    "detail": "GridView",
-    "insertText": "tien_sai_can_tren;"
-  },
-  {
     "label": "tien_thu",
     "detail": "GridView",
     "insertText": "tien_thu;"
-  },
-  {
-    "label": "tien_tinh_lai",
-    "detail": "GridView",
-    "insertText": "tien_tinh_lai;"
-  },
-  {
-    "label": "tien_tinh_lai_nt",
-    "detail": "GridView",
-    "insertText": "tien_tinh_lai_nt;"
   },
   {
     "label": "tien_ton",
@@ -8328,16 +8048,6 @@
     "label": "tien_tu",
     "detail": "GridView",
     "insertText": "tien_tu;"
-  },
-  {
-    "label": "tien_von",
-    "detail": "GridView",
-    "insertText": "tien_von;"
-  },
-  {
-    "label": "tien_von_nt",
-    "detail": "GridView",
-    "insertText": "tien_von_nt;"
   },
   {
     "label": "tien_von_thuan",
@@ -8380,24 +8090,9 @@
     "insertText": "tieu_de;"
   },
   {
-    "label": "tieu_de2",
-    "detail": "GridView",
-    "insertText": "tieu_de2;"
-  },
-  {
     "label": "timeout",
     "detail": "GridView",
     "insertText": "timeout;"
-  },
-  {
-    "label": "tinh_gia_yn",
-    "detail": "GridView",
-    "insertText": "tinh_gia_yn;"
-  },
-  {
-    "label": "tinh_thanh",
-    "detail": "GridView",
-    "insertText": "tinh_thanh;"
   },
   {
     "label": "tinh_thanh_pt",
@@ -8428,11 +8123,6 @@
     "label": "tk_0_gt",
     "detail": "GridView",
     "insertText": "tk_0_gt;"
-  },
-  {
-    "label": "tk_cl_gv",
-    "detail": "GridView",
-    "insertText": "tk_cl_gv;"
   },
   {
     "label": "tk_cltg",
@@ -8490,19 +8180,9 @@
     "insertText": "tk_gt;"
   },
   {
-    "label": "tk_gui",
-    "detail": "GridView",
-    "insertText": "tk_gui;"
-  },
-  {
     "label": "tk_gv",
     "detail": "GridView",
     "insertText": "tk_gv;"
-  },
-  {
-    "label": "tk_gv_kho",
-    "detail": "GridView",
-    "insertText": "tk_gv_kho;"
   },
   {
     "label": "tk_kh",
@@ -8545,19 +8225,19 @@
     "insertText": "tk_pb;"
   },
   {
-    "label": "tk_phi",
-    "detail": "GridView",
-    "insertText": "tk_phi;"
-  },
-  {
     "label": "tk_sc",
     "detail": "GridView",
     "insertText": "tk_sc;"
   },
   {
-    "label": "tk_thu",
+    "label": "tk_tg",
     "detail": "GridView",
-    "insertText": "tk_thu;"
+    "insertText": "tk_tg;"
+  },
+  {
+    "label": "tk_thu_huong",
+    "detail": "GridView",
+    "insertText": "tk_thu_huong;"
   },
   {
     "label": "tk_ts",
@@ -8570,24 +8250,9 @@
     "insertText": "tk_vt;"
   },
   {
-    "label": "tk_vt_dm",
-    "detail": "GridView",
-    "insertText": "tk_vt_dm;"
-  },
-  {
-    "label": "tk_vt_kho",
-    "detail": "GridView",
-    "insertText": "tk_vt_kho;"
-  },
-  {
     "label": "tknh",
     "detail": "GridView",
     "insertText": "tknh;"
-  },
-  {
-    "label": "tl",
-    "detail": "GridView",
-    "insertText": "tl;"
   },
   {
     "label": "tl_ck",
@@ -8595,14 +8260,14 @@
     "insertText": "tl_ck;"
   },
   {
-    "label": "tl_co_tuc",
+    "label": "tl_cp",
     "detail": "GridView",
-    "insertText": "tl_co_tuc;"
+    "insertText": "tl_cp;"
   },
   {
-    "label": "tl_hh",
+    "label": "tl_duoi_dt",
     "detail": "GridView",
-    "insertText": "tl_hh;"
+    "insertText": "tl_duoi_dt;"
   },
   {
     "label": "tl_ht",
@@ -8613,16 +8278,6 @@
     "label": "tl_kh",
     "detail": "GridView",
     "insertText": "tl_kh;"
-  },
-  {
-    "label": "tl_lai",
-    "detail": "GridView",
-    "insertText": "tl_lai;"
-  },
-  {
-    "label": "tl_lai_nt",
-    "detail": "GridView",
-    "insertText": "tl_lai_nt;"
   },
   {
     "label": "tl_pb",
@@ -8668,6 +8323,16 @@
     "label": "tl_tong_nt",
     "detail": "GridView",
     "insertText": "tl_tong_nt;"
+  },
+  {
+    "label": "tl_tren_dt",
+    "detail": "GridView",
+    "insertText": "tl_tren_dt;"
+  },
+  {
+    "label": "tl_trich",
+    "detail": "GridView",
+    "insertText": "tl_trich;"
   },
   {
     "label": "tn_ct",
@@ -8765,11 +8430,6 @@
     "insertText": "ton_cuoi;"
   },
   {
-    "label": "ton_cuoi_qd",
-    "detail": "GridView",
-    "insertText": "ton_cuoi_qd;"
-  },
-  {
     "label": "ton_cuoi_ss",
     "detail": "GridView",
     "insertText": "ton_cuoi_ss;"
@@ -8805,19 +8465,9 @@
     "insertText": "ton_kho13;"
   },
   {
-    "label": "ton_quy_doi",
-    "detail": "GridView",
-    "insertText": "ton_quy_doi;"
-  },
-  {
     "label": "ton_ss",
     "detail": "GridView",
     "insertText": "ton_ss;"
-  },
-  {
-    "label": "tong",
-    "detail": "GridView",
-    "insertText": "tong;"
   },
   {
     "label": "tong_gt",
@@ -8840,19 +8490,9 @@
     "insertText": "tong_gt_nt1;"
   },
   {
-    "label": "tong_nt",
-    "detail": "GridView",
-    "insertText": "tong_nt;"
-  },
-  {
     "label": "trang_thai",
     "detail": "GridView",
     "insertText": "trang_thai;"
-  },
-  {
-    "label": "trang_thai_ct",
-    "detail": "GridView",
-    "insertText": "trang_thai_ct;"
   },
   {
     "label": "trang_thai_duyet",
@@ -8865,24 +8505,24 @@
     "insertText": "trang_thai_huy;"
   },
   {
-    "label": "tri_gia_ht",
+    "label": "trans_ecode",
     "detail": "GridView",
-    "insertText": "tri_gia_ht;"
+    "insertText": "trans_ecode;"
   },
   {
-    "label": "tri_gia_huy",
+    "label": "trans_edescription",
     "detail": "GridView",
-    "insertText": "tri_gia_huy;"
+    "insertText": "trans_edescription;"
   },
   {
-    "label": "trong_luong",
+    "label": "trans_status",
     "detail": "GridView",
-    "insertText": "trong_luong;"
+    "insertText": "trans_status;"
   },
   {
-    "label": "trong_so",
+    "label": "transfer_ynex",
     "detail": "GridView",
-    "insertText": "trong_so;"
+    "insertText": "transfer_ynex;"
   },
   {
     "label": "truc_tiep",
@@ -8895,9 +8535,19 @@
     "insertText": "ts;"
   },
   {
+    "label": "ts_db",
+    "detail": "GridView",
+    "insertText": "ts_db;"
+  },
+  {
     "label": "tt",
     "detail": "GridView",
     "insertText": "tt;"
+  },
+  {
+    "label": "tt_dat_hang",
+    "detail": "GridView",
+    "insertText": "tt_dat_hang;"
   },
   {
     "label": "tt_nt",
@@ -8905,19 +8555,14 @@
     "insertText": "tt_nt;"
   },
   {
+    "label": "tt_tb",
+    "detail": "GridView",
+    "insertText": "tt_tb;"
+  },
+  {
     "label": "tt_yn",
     "detail": "GridView",
     "insertText": "tt_yn;"
-  },
-  {
-    "label": "ttdb",
-    "detail": "GridView",
-    "insertText": "ttdb;"
-  },
-  {
-    "label": "ttdb_nt",
-    "detail": "GridView",
-    "insertText": "ttdb_nt;"
   },
   {
     "label": "tu_thang",
@@ -8928,46 +8573,6 @@
     "label": "tu_trang_thai",
     "detail": "GridView",
     "insertText": "tu_trang_thai;"
-  },
-  {
-    "label": "tuan_lh",
-    "detail": "GridView",
-    "insertText": "tuan_lh;"
-  },
-  {
-    "label": "tuan_tk",
-    "detail": "GridView",
-    "insertText": "tuan_tk;"
-  },
-  {
-    "label": "tuoi",
-    "detail": "GridView",
-    "insertText": "tuoi;"
-  },
-  {
-    "label": "tuoi_huu",
-    "detail": "GridView",
-    "insertText": "tuoi_huu;"
-  },
-  {
-    "label": "tuoi_nam",
-    "detail": "GridView",
-    "insertText": "tuoi_nam;"
-  },
-  {
-    "label": "tuoi_no",
-    "detail": "GridView",
-    "insertText": "tuoi_no;"
-  },
-  {
-    "label": "tuoi_no_nt",
-    "detail": "GridView",
-    "insertText": "tuoi_no_nt;"
-  },
-  {
-    "label": "tuoi_thang",
-    "detail": "GridView",
-    "insertText": "tuoi_thang;"
   },
   {
     "label": "ty_gia",
@@ -9070,6 +8675,11 @@
     "insertText": "u_status;"
   },
   {
+    "label": "u_status_name",
+    "detail": "GridView",
+    "insertText": "u_status_name;"
+  },
+  {
     "label": "u_status_name%l",
     "detail": "GridView",
     "insertText": "u_status_name%l;"
@@ -9088,6 +8698,16 @@
     "label": "uq_yn",
     "detail": "GridView",
     "insertText": "uq_yn;"
+  },
+  {
+    "label": "url_api",
+    "detail": "GridView",
+    "insertText": "url_api;"
+  },
+  {
+    "label": "us_api",
+    "detail": "GridView",
+    "insertText": "us_api;"
   },
   {
     "label": "userID",
@@ -9115,14 +8735,19 @@
     "insertText": "user_id;"
   },
   {
+    "label": "user_id0",
+    "detail": "GridView",
+    "insertText": "user_id0;"
+  },
+  {
+    "label": "user_id2",
+    "detail": "GridView",
+    "insertText": "user_id2;"
+  },
+  {
     "label": "user_lst",
     "detail": "GridView",
     "insertText": "user_lst;"
-  },
-  {
-    "label": "user_lst2",
-    "detail": "GridView",
-    "insertText": "user_lst2;"
   },
   {
     "label": "user_name",
@@ -9130,14 +8755,9 @@
     "insertText": "user_name;"
   },
   {
-    "label": "user_nh",
+    "label": "username",
     "detail": "GridView",
-    "insertText": "user_nh;"
-  },
-  {
-    "label": "val_view%l",
-    "detail": "GridView",
-    "insertText": "val_view%l;"
+    "insertText": "username;"
   },
   {
     "label": "val_view%lex",
@@ -9145,9 +8765,14 @@
     "insertText": "val_view%lex;"
   },
   {
-    "label": "value",
+    "label": "vcb_file_id",
     "detail": "GridView",
-    "insertText": "value;"
+    "insertText": "vcb_file_id;"
+  },
+  {
+    "label": "vcb_trans_id",
+    "detail": "GridView",
+    "insertText": "vcb_trans_id;"
   },
   {
     "label": "vi_tri",
@@ -9160,49 +8785,14 @@
     "insertText": "vi_tri_yn;"
   },
   {
-    "label": "von_da_tra_ht",
+    "label": "vt_tieu_hao",
     "detail": "GridView",
-    "insertText": "von_da_tra_ht;"
+    "insertText": "vt_tieu_hao;"
   },
   {
-    "label": "von_da_tra_ht_nt",
+    "label": "vuot_ns",
     "detail": "GridView",
-    "insertText": "von_da_tra_ht_nt;"
-  },
-  {
-    "label": "von_ptck",
-    "detail": "GridView",
-    "insertText": "von_ptck;"
-  },
-  {
-    "label": "von_ptck_nt",
-    "detail": "GridView",
-    "insertText": "von_ptck_nt;"
-  },
-  {
-    "label": "von_ptht",
-    "detail": "GridView",
-    "insertText": "von_ptht;"
-  },
-  {
-    "label": "von_ptht_nt",
-    "detail": "GridView",
-    "insertText": "von_ptht_nt;"
-  },
-  {
-    "label": "von_ptlk",
-    "detail": "GridView",
-    "insertText": "von_ptlk;"
-  },
-  {
-    "label": "von_ptlk_nt",
-    "detail": "GridView",
-    "insertText": "von_ptlk_nt;"
-  },
-  {
-    "label": "vs_lo_lip",
-    "detail": "GridView",
-    "insertText": "vs_lo_lip;"
+    "insertText": "vuot_ns;"
   },
   {
     "label": "width",
@@ -9240,16 +8830,6 @@
     "insertText": "xcode;"
   },
   {
-    "label": "xcode_me",
-    "detail": "GridView",
-    "insertText": "xcode_me;"
-  },
-  {
-    "label": "xcode_truoc",
-    "detail": "GridView",
-    "insertText": "xcode_truoc;"
-  },
-  {
     "label": "xkey",
     "detail": "GridView",
     "insertText": "xkey;"
@@ -9270,9 +8850,14 @@
     "insertText": "xname;"
   },
   {
-    "label": "xpivot",
+    "label": "xsize",
     "detail": "GridView",
-    "insertText": "xpivot;"
+    "insertText": "xsize;"
+  },
+  {
+    "label": "xstatus",
+    "detail": "GridView",
+    "insertText": "xstatus;"
   },
   {
     "label": "xstatus_name",

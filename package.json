@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.30",
+  "version": "0.0.32",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -19,6 +19,7 @@
   ],
   "main": "./src/extension.js",
   "publisher": "Nguyen-Hong-Dat",
+  "sheetIdGoogleSheet": "1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA",
   "contributes": {
     "menus": {
       "editor/context": [
@@ -190,7 +191,7 @@
       },
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
-        "title": "FBO: Render XML To Database"
+        "title": "FBO: Render XML To Database (Reload Vscode before to ensure with no error)"
       },
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
@@ -307,7 +308,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.99.8",
+    "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {

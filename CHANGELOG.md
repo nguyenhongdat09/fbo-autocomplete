@@ -61,3 +61,11 @@
 - add definition controller 
 # Version 0.0.29
 - Fixing
+# Version 0.0.29
+- Fixing
+# Version 0.0.30
+- Fix render missing field
+# Version 0.0.31
+- Fix render missing field
+# Version 0.0.32
+- GenerateCopyFile thêm rl(,,,)

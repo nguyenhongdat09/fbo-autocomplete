@@ -59,10 +59,8 @@ class CompletionProvider extends ana {
         };
         completionItem.range = new vscode.Range(position, position); // Đảm bảo chỉ thay đổi từ vị trí hiện tại
         return completionItem;
-    }
-
-
-
+    } 
+ 
     getDatabase(folderName) {
         const dbPath = path.join(__dirname, '..', 'Database', folderName);
         return level(dbPath, { createIfMissing: false }, function (err) {
@@ -71,6 +69,7 @@ class CompletionProvider extends ana {
             }
         });
     }
+
     async getValueFromDatabase(db, key_split) {
         const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
         var text = await db.get(key); // Sử dụng Promise API của level
@@ -80,7 +79,7 @@ class CompletionProvider extends ana {
             var ref_text = await db.get(reference)
             if (ref_text)
                 text += '\n' + ref_text;
-        }
+        } 
         return text; // Trả về kết quả nếu tìm thấy
     }
 

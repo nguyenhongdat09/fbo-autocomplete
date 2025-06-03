@@ -15,17 +15,17 @@ class ContextMenuHandler {
         this.app_dataChecker = new app_dataChecker();
         // Đăng ký command cho context menu   
         const commandMap = [
-            {name: "fboFile.openRevealFolder", handler: this.openRevealFolder},
-            {name: "fboFile.CopyPath",         handler: () => this.CopyPath()},
-            {name: "fboFile.CopyFile",         handler: () => this.copyFile()},
-            {name: "fboFile.DeleteFile",       handler: async () => await this.deleteFile()},
-            {name: "fboFile.FixWebConfig",     handler: async (group) => await this.fixWebConfig(group)},
-            {name: "fboFile.PasteFilesToGroup",     handler: async (group) => await this.PasteFilesToGroup(group)},
-            {name: "fboFile.GenerateCopyFile",     handler: async () => await this.GenerateCopyFile()},
-            {name: "fboFile.RenameFile",     handler: async () =>  this.renameFileCommand()},
-           
+            { name: "fboFile.openRevealFolder", handler: this.openRevealFolder },
+            { name: "fboFile.CopyPath", handler: () => this.CopyPath() },
+            { name: "fboFile.CopyFile", handler: () => this.copyFile() },
+            { name: "fboFile.DeleteFile", handler: async () => await this.deleteFile() },
+            { name: "fboFile.FixWebConfig", handler: async (group) => await this.fixWebConfig(group) },
+            { name: "fboFile.PasteFilesToGroup", handler: async (group) => await this.PasteFilesToGroup(group) },
+            { name: "fboFile.GenerateCopyFile", handler: async () => await this.GenerateCopyFile() },
+            { name: "fboFile.RenameFile", handler: async () => this.renameFileCommand() },
+
         ]
-        for(const {name, handler} of commandMap){
+        for (const { name, handler } of commandMap) {
             this.context.subscriptions.push(
                 vscode.commands.registerCommand(name, handler)
             )
@@ -33,10 +33,10 @@ class ContextMenuHandler {
         this.treeView.onDidChangeSelection((e) => {
             const isFileSelected = e.selection.length > 0 && e.selection.every(item => item.contextValue === 'file');
             vscode.commands.executeCommand('setContext', 'fboViewFileSelected', isFileSelected);
-        });   
+        });
     }
 
-    async GenerateCopyFile(){
+    async GenerateCopyFile() {
         const targets = this.getSelectedTargets();
         if (targets.length === 0) {
             vscode.window.showWarningMessage("Không có file nào được chọn để copy.");
@@ -45,12 +45,12 @@ class ContextMenuHandler {
         await this.generateCopyForFiles(targets);
     }
 
-    async PasteFilesToGroup(group){
+    async PasteFilesToGroup(group) {
         if (!group) {
             vscode.window.showWarningMessage("Vui lòng chọn một group để paste.");
             return;
-        } 
-        var filePaths =  await this.getFilePathsFromWindowsClipboard();
+        }
+        var filePaths = await this.getFilePathsFromWindowsClipboard();
         if (!filePaths || filePaths.length === 0) {
             vscode.window.showWarningMessage("Không tìm thấy file nào trong clipboard.");
             return;
@@ -76,39 +76,39 @@ class ContextMenuHandler {
                 '-Command',
                 'Get-Clipboard -Format FileDropList | ForEach-Object { $_.FullName }'
             ]);
-    
+
             var output = '';
             var error = '';
-    
+
             ps.stdout.on('data', (data) => {
                 output += data.toString();
             });
-    
+
             ps.stderr.on('data', (data) => {
                 error += data.toString();
             });
-    
+
             ps.on('close', (code) => {
                 if (code !== 0 || error) {
                     console.error('❌ Clipboard read error:', error.trim());
                     return resolve([]);
                 }
-    
+
                 const files = output
                     .split(/\r?\n/)
                     .map(line => line.trim())
                     .filter(line => line.length > 0);
-    
+
                 resolve(files);
             });
-    
+
             ps.on('error', (err) => {
                 console.error('❌ Spawn error:', err);
                 resolve([]);
             });
         });
     }
-     
+
 
     openRevealFolder(uri) {
         if (!uri) {
@@ -140,34 +140,59 @@ class ContextMenuHandler {
     async CopyPath() {
         const paths = this.getPathsSelect();
         await vscode.env.clipboard.writeText(paths.join('\n'));
-    } 
+    }
+    parseRenameInput(input, oldName) {
+        var m1 = /^rl\((s|e),\s*(\d+),\s*([^)]+)\)$/i.exec(input);  // Kiểu 1
+        if (m1) {
+            var pos = m1[1], count = parseInt(m1[2]), replacement = m1[3];
+            if (pos === 's') {
+                return replacement + oldName.slice(count);
+            } else { // pos === 'e'
+                return oldName.slice(0, oldName.length - count) + replacement;
+            }
+        }
+
+        var m2 = /^rl\(([^,]+),\s*([^)]+)\)$/i.exec(input); // Kiểu 2
+        if (m2) {
+            var from = m2[1], to = m2[2];
+            return oldName.replace(from, to);
+        }
+
+        // Kiểu 3: Nhập nguyên chuỗi
+        return input;
+    }
+
     async generateCopyForFiles(files) {
         if (!files?.length) return;
+
         const groupItems = Array.from(this.treeDataProvider.groupItems.values()).filter(groupItem => groupItem.label !== 'Other');
-        // Bước 1: Nhập tên base
-        const newBaseName = await vscode.window.showInputBox({
-            prompt: 'Nhập tên file mới (không cần đuôi)',
+
+        // Bước 1: Nhập tên base hoặc cú pháp thay thế
+        const input = await vscode.window.showInputBox({
+            prompt: 'Nhập tên file mới hoặc cú pháp rl(s|e, N, VALUE)',
             placeHolder: '',
             validateInput: (value) => !value ? 'Tên không được để trống' : null
         });
-        if (!newBaseName) return;
-        
+        if (!input) return;
+
         // Bước 2: Chọn group path đích
         const targetGroup = await vscode.window.showQuickPick(groupItems, {
             placeHolder: 'Chọn đường dẫn group để lưu các file copy'
         });
         if (!targetGroup) return;
-        // Tạo tên file mới và đường dẫn mới
+
+        const targetPath = targetGroup.resourceUri.fsPath;
         var changedPaths = files.map((item) => {
-            const sourcePath = item?.resourceUri?.fsPath; // Đường dẫn file nguồn
+            const sourcePath = item?.resourceUri?.fsPath;
             if (!fs.existsSync(sourcePath)) return '';
             const ext = path.extname(sourcePath);
-            const newFileName = path.join(path.dirname(sourcePath), `${newBaseName}${ext}`); 
-            return [sourcePath, newFileName]
-        }) 
-        var targetPath = targetGroup.resourceUri.fsPath;
-        this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1); 
+            let newBaseName = input;
+            const newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(newBaseName, path.basename(sourcePath, ext))}${ext}`);
+            return [sourcePath, newFileName];
+        }); 
+        this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);
     }
+
 
 
     async closeTabByUri(uriToClose) {
@@ -256,7 +281,7 @@ class ContextMenuHandler {
     }
     async fixWebConfig(group) {
         if (!group) return;
-        try { 
+        try {
             var file = path.join(group.resourceUri.fsPath, 'Web.config');
             if (!fs.existsSync(file)) vscode.window.showErrorMessage(`❌ Không tìm thấy file ${file}`)
             // 🧠 Đọc nội dung gốc
@@ -273,11 +298,11 @@ class ContextMenuHandler {
             vscode.window.showErrorMessage(`❌ Không thể fix ${file}: ${err.message}`);
         }
     }
- 
+
     async deleteFile() {
         const paths = this.getPathsSelect();
         if (!paths || paths.length === 0) return;
-        
+
         const confirm = await vscode.window.showWarningMessage(
             `🗑️ Bạn có chắc muốn xoá ${paths.length} file không?`,
             { modal: true },
@@ -288,10 +313,10 @@ class ContextMenuHandler {
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
         // 🔍 Lọc các tab thuộc nhóm cần đóng
         const targetTabs = tabs.filter(tab => {
-            const input = tab.input; 
+            const input = tab.input;
             return input && typeof input === "object" && "uri" in input && paths.includes(input.uri.fsPath);
         });
-        
+
         if (targetTabs.length > 0) {
             // 🔥 Đóng tất cả các tab thuộc nhóm
             await vscode.window.tabGroups.close(targetTabs);
@@ -305,9 +330,9 @@ class ContextMenuHandler {
                     vscode.window.showErrorMessage(`❌ Không thể xoá ${filePath}: ${err.message}`);
                 }
             }
-        }  
+        }
     }
-    
+
 
 }
 module.exports = ContextMenuHandler;

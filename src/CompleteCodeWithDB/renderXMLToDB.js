@@ -1,32 +1,38 @@
-
 const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
 const ana = require('./AnalystXMLFile');
 var level = require('level-rocksdb');
+var Constant = require('../constant') 
 
 class RenderXMLToDB extends ana {
     constructor() {
         super()
         this.excludeHrFile = true; //Khong lay file HR
-        this.dbRender = new DatabaseRender(); 
+        this.dbRender = new DatabaseRender();
     }
 
-    run(context) {
+    run(context, completeCodeByHandle) {
+        this.constant = new Constant(context)
         const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', async () => {
             await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
                 title: "Rendering",
                 cancellable: false
-            }, async (progress) => { 
-             var val = await this.AnalystField();
-              await this.dbRender.run(val);
+            }, async (progress) => {
+                var val = await this.AnalystField();
+                // await this.dbRender.deleteDatabase()
+                await this.dbRender.run(val);
                 await this.dbRender.saveToAutoCompleteJson();
+                this.reloadCompleteField(completeCodeByHandle);
             });
-            
         });
 
         context.subscriptions.push(render);
+    }
+
+    reloadCompleteField(completeCodeByHandle) { 
+        completeCodeByHandle.loadFromJson()
     }
 
     getPathDirGridFiler() {
@@ -83,7 +89,7 @@ class RenderXMLToDB extends ana {
             'Grid': this.gridField.bind(this),
         }
         //Debugger
-        //  paths = paths.filter(([key, value]) => key == 'Dir');
+        // paths = paths.filter(([key, value]) => key == 'Dir');
 
         var fields_of_folders = await Promise.all(
             paths.map(async ([folder, paths]) => {
@@ -168,10 +174,10 @@ class RenderXMLToDB extends ana {
     }
 
 
-   
+
     async filterDirField(paths) {
         var fields = await Promise.all(
-            paths.map(path => { 
+            paths.map(path => {
                 return this.getListField(path)
             })
         );
@@ -202,6 +208,23 @@ class DatabaseRender {
         this.baseDir = this.createBasePath();
         this.dbMap = new Map(); // Lưu nhiều DB theo folder
     }
+
+    deleteDatabase() {
+        var db_folder = ['Filter', 'GridInput', 'GridView', 'Dir'];
+        db_folder.forEach((folder) => {
+            var folderPath = path.join(this.paths.database, folder);
+            // Xóa thư mục (nếu tồn tại)
+            if (fs.existsSync(folderPath)) {
+                try {
+                    fs.rmSync(folderPath, { recursive: true, force: true });
+                }
+                catch (ex) {
+                    vscode.window.showErrorMessage(`Xin reload lại Vscode và thử lại.`);
+                }
+            }
+        });
+    }
+
 
     createBasePath() {
         var baseDir = this.paths.database;
@@ -277,34 +300,45 @@ class DatabaseRender {
     async getAllKeys(folder) {
         const db = this.getDbForFolder(folder);
         const keys = [];
-        return new Promise((resolve, reject) => {
-            db.createReadStream()
-                .on('data', (data) => {
-                    keys.push(data.key);
-                })
-                .on('end', () => {
-                    resolve(keys);
-                })
-                .on('error', (err) => {
-                    reject(err);
-                });
-        });
+        try {
+            await new Promise((resolve, reject) => {
+                db.createReadStream()
+                    .on('data', (data) => {
+                        keys.push(data.key);
+                    })
+                    .on('end', resolve)
+                    .on('error', reject);
+            });
+
+            return keys;
+
+        } finally {
+            await db.close(); // Luôn đóng DB dù thành công hay lỗi
+            this.dbMap.clear();
+        }
     }
+
     async getValueForKey(folder, key) {
         const db = this.getDbForFolder(folder);
-        return new Promise((resolve, reject) => {
-            db.get(key, (err, value) => {
-                if (err) {
-                    if (err.notFound) {
-                        resolve(null);  // Nếu không tìm thấy key
+        try {
+            const value = await new Promise((resolve, reject) => {
+                db.get(key, (err, value) => {
+                    if (err) {
+                        if (err.notFound) {
+                            resolve(null);  // Key không tồn tại
+                        } else {
+                            reject(err);    // Lỗi khác
+                        }
                     } else {
-                        reject(err);  // Lỗi khác (ví dụ lỗi đọc db)
+                        resolve(value);
                     }
-                } else {
-                    resolve(value);
-                }
+                });
             });
-        });
+            return value;
+        } finally {
+            await db.close(); // Đóng DB sau khi đọc xong, kể cả khi có lỗi
+        }
     }
+
 }
 module.exports = RenderXMLToDB;

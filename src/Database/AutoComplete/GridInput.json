@@ -1,53 +1,43 @@
 [
   {
-    "label": "an_com",
+    "label": "active_yn",
     "detail": "GridInput",
-    "insertText": "an_com;"
+    "insertText": "active_yn;"
   },
   {
-    "label": "an_ynex",
+    "label": "ban_hang_yn",
     "detail": "GridInput",
-    "insertText": "an_ynex;"
+    "insertText": "ban_hang_yn;"
   },
   {
-    "label": "b",
+    "label": "bank_codeat",
     "detail": "GridInput",
-    "insertText": "b;"
+    "insertText": "bank_codeat;"
   },
   {
-    "label": "bao_tri",
+    "label": "bank_descriptionex",
     "detail": "GridInput",
-    "insertText": "bao_tri;"
+    "insertText": "bank_descriptionex;"
+  },
+  {
+    "label": "bank_refex",
+    "detail": "GridInput",
+    "insertText": "bank_refex;"
+  },
+  {
+    "label": "bank_resultex",
+    "detail": "GridInput",
+    "insertText": "bank_resultex;"
+  },
+  {
+    "label": "bank_statusex",
+    "detail": "GridInput",
+    "insertText": "bank_statusex;"
   },
   {
     "label": "bex",
     "detail": "GridInput",
     "insertText": "bex;"
-  },
-  {
-    "label": "bg_so",
-    "detail": "GridInput",
-    "insertText": "bg_so;"
-  },
-  {
-    "label": "bien_phi_yn",
-    "detail": "GridInput",
-    "insertText": "bien_phi_yn;"
-  },
-  {
-    "label": "bo_phan",
-    "detail": "GridInput",
-    "insertText": "bo_phan;"
-  },
-  {
-    "label": "bp_me",
-    "detail": "GridInput",
-    "insertText": "bp_me;"
-  },
-  {
-    "label": "bu_hao",
-    "detail": "GridInput",
-    "insertText": "bu_hao;"
   },
   {
     "label": "buoc_tinh",
@@ -60,16 +50,6 @@
     "insertText": "buoc_tinh2;"
   },
   {
-    "label": "bvmt",
-    "detail": "GridInput",
-    "insertText": "bvmt;"
-  },
-  {
-    "label": "bvmt_nt",
-    "detail": "GridInput",
-    "insertText": "bvmt_nt;"
-  },
-  {
     "label": "cach_tinh",
     "detail": "GridInput",
     "insertText": "cach_tinh;"
@@ -80,19 +60,9 @@
     "insertText": "cach_tinhat;"
   },
   {
-    "label": "can_nang",
+    "label": "cast(0 as bit) as tag",
     "detail": "GridInput",
-    "insertText": "can_nang;"
-  },
-  {
-    "label": "cap_them_dh",
-    "detail": "GridInput",
-    "insertText": "cap_them_dh;"
-  },
-  {
-    "label": "cat_toi",
-    "detail": "GridInput",
-    "insertText": "cat_toi;"
+    "insertText": "cast(0 as bit) as tag;"
   },
   {
     "label": "cc_sd",
@@ -103,11 +73,6 @@
     "label": "ccode",
     "detail": "GridInput",
     "insertText": "ccode;"
-  },
-  {
-    "label": "cd_ncc",
-    "detail": "GridInput",
-    "insertText": "cd_ncc;"
   },
   {
     "label": "cd_sau",
@@ -125,59 +90,19 @@
     "insertText": "cex;"
   },
   {
-    "label": "chenh_lech",
+    "label": "check_yn",
     "detail": "GridInput",
-    "insertText": "chenh_lech;"
+    "insertText": "check_yn;"
   },
   {
-    "label": "chenh_lech_nt",
+    "label": "chi_dao_bp",
     "detail": "GridInput",
-    "insertText": "chenh_lech_nt;"
+    "insertText": "chi_dao_bp;"
   },
   {
-    "label": "chenh_lech_sl",
+    "label": "chi_dao_gd",
     "detail": "GridInput",
-    "insertText": "chenh_lech_sl;"
-  },
-  {
-    "label": "chenh_lech_sn",
-    "detail": "GridInput",
-    "insertText": "chenh_lech_sn;"
-  },
-  {
-    "label": "chenh_lech_thieu_sl",
-    "detail": "GridInput",
-    "insertText": "chenh_lech_thieu_sl;"
-  },
-  {
-    "label": "chenh_lech_thieu_tt",
-    "detail": "GridInput",
-    "insertText": "chenh_lech_thieu_tt;"
-  },
-  {
-    "label": "chenh_lech_thua_sl",
-    "detail": "GridInput",
-    "insertText": "chenh_lech_thua_sl;"
-  },
-  {
-    "label": "chenh_lech_thua_tt",
-    "detail": "GridInput",
-    "insertText": "chenh_lech_thua_tt;"
-  },
-  {
-    "label": "chenh_lech_tl",
-    "detail": "GridInput",
-    "insertText": "chenh_lech_tl;"
-  },
-  {
-    "label": "chi_nhanh",
-    "detail": "GridInput",
-    "insertText": "chi_nhanh;"
-  },
-  {
-    "label": "chi_phi",
-    "detail": "GridInput",
-    "insertText": "chi_phi;"
+    "insertText": "chi_dao_gd;"
   },
   {
     "label": "chi_tieu",
@@ -190,24 +115,9 @@
     "insertText": "chi_tieu%l;"
   },
   {
-    "label": "chieu_cao",
+    "label": "chinh_sach",
     "detail": "GridInput",
-    "insertText": "chieu_cao;"
-  },
-  {
-    "label": "chieu_dai",
-    "detail": "GridInput",
-    "insertText": "chieu_dai;"
-  },
-  {
-    "label": "chitieu_tong_ynex",
-    "detail": "GridInput",
-    "insertText": "chitieu_tong_ynex;"
-  },
-  {
-    "label": "chon",
-    "detail": "GridInput",
-    "insertText": "chon;"
+    "insertText": "chinh_sach;"
   },
   {
     "label": "chonex",
@@ -215,9 +125,19 @@
     "insertText": "chonex;"
   },
   {
+    "label": "chu_ky",
+    "detail": "GridInput",
+    "insertText": "chu_ky;"
+  },
+  {
     "label": "chuc_vu",
     "detail": "GridInput",
     "insertText": "chuc_vu;"
+  },
+  {
+    "label": "chung_loaiex",
+    "detail": "GridInput",
+    "insertText": "chung_loaiex;"
   },
   {
     "label": "chuoi_ngay",
@@ -225,29 +145,9 @@
     "insertText": "chuoi_ngay;"
   },
   {
-    "label": "chuyen_do_day",
-    "detail": "GridInput",
-    "insertText": "chuyen_do_day;"
-  },
-  {
-    "label": "chuyen_duc_trong",
-    "detail": "GridInput",
-    "insertText": "chuyen_duc_trong;"
-  },
-  {
-    "label": "chuyen_kho_dd",
-    "detail": "GridInput",
-    "insertText": "chuyen_kho_dd;"
-  },
-  {
     "label": "ck",
     "detail": "GridInput",
     "insertText": "ck;"
-  },
-  {
-    "label": "ck_dv_nt",
-    "detail": "GridInput",
-    "insertText": "ck_dv_nt;"
   },
   {
     "label": "ck_ex",
@@ -275,9 +175,9 @@
     "insertText": "ck_nt_ex2;"
   },
   {
-    "label": "ckex",
+    "label": "cl_nt",
     "detail": "GridInput",
-    "insertText": "ckex;"
+    "insertText": "cl_nt;"
   },
   {
     "label": "cl_ntex",
@@ -285,9 +185,9 @@
     "insertText": "cl_ntex;"
   },
   {
-    "label": "client_code",
+    "label": "cl_yn",
     "detail": "GridInput",
-    "insertText": "client_code;"
+    "insertText": "cl_yn;"
   },
   {
     "label": "cmnd",
@@ -300,34 +200,19 @@
     "insertText": "cn_nn_duoi12;"
   },
   {
-    "label": "cn_tt_gia",
-    "detail": "GridInput",
-    "insertText": "cn_tt_gia;"
-  },
-  {
-    "label": "co_dk",
-    "detail": "GridInput",
-    "insertText": "co_dk;"
-  },
-  {
-    "label": "co_dk_nt",
-    "detail": "GridInput",
-    "insertText": "co_dk_nt;"
-  },
-  {
     "label": "code",
     "detail": "GridInput",
     "insertText": "code;"
   },
   {
-    "label": "comment",
+    "label": "color",
     "detail": "GridInput",
-    "insertText": "comment;"
+    "insertText": "color;"
   },
   {
-    "label": "con_lai",
+    "label": "con_laiex",
     "detail": "GridInput",
-    "insertText": "con_lai;"
+    "insertText": "con_laiex;"
   },
   {
     "label": "con_pt_nt",
@@ -340,19 +225,14 @@
     "insertText": "cong_suat;"
   },
   {
-    "label": "cong_thucex",
-    "detail": "GridInput",
-    "insertText": "cong_thucex;"
-  },
-  {
     "label": "cong_tru",
     "detail": "GridInput",
     "insertText": "cong_tru;"
   },
   {
-    "label": "cong_truex",
+    "label": "const_yn",
     "detail": "GridInput",
-    "insertText": "cong_truex;"
+    "insertText": "const_yn;"
   },
   {
     "label": "content",
@@ -360,19 +240,14 @@
     "insertText": "content;"
   },
   {
-    "label": "content2",
-    "detail": "GridInput",
-    "insertText": "content2;"
-  },
-  {
     "label": "controller",
     "detail": "GridInput",
     "insertText": "controller;"
   },
   {
-    "label": "count_nv",
+    "label": "controllerName%l",
     "detail": "GridInput",
-    "insertText": "count_nv;"
+    "insertText": "controllerName%l;"
   },
   {
     "label": "cp",
@@ -385,24 +260,9 @@
     "insertText": "cp_bh;"
   },
   {
-    "label": "cp_bh_nk_ntex",
-    "detail": "GridInput",
-    "insertText": "cp_bh_nk_ntex;"
-  },
-  {
-    "label": "cp_bh_nkex",
-    "detail": "GridInput",
-    "insertText": "cp_bh_nkex;"
-  },
-  {
     "label": "cp_bh_nt",
     "detail": "GridInput",
     "insertText": "cp_bh_nt;"
-  },
-  {
-    "label": "cp_dv_nt",
-    "detail": "GridInput",
-    "insertText": "cp_dv_nt;"
   },
   {
     "label": "cp_gc",
@@ -415,29 +275,9 @@
     "insertText": "cp_khac;"
   },
   {
-    "label": "cp_khac_nk_ntex",
-    "detail": "GridInput",
-    "insertText": "cp_khac_nk_ntex;"
-  },
-  {
-    "label": "cp_khac_nkex",
-    "detail": "GridInput",
-    "insertText": "cp_khac_nkex;"
-  },
-  {
     "label": "cp_khac_nt",
     "detail": "GridInput",
     "insertText": "cp_khac_nt;"
-  },
-  {
-    "label": "cp_nk_ntex",
-    "detail": "GridInput",
-    "insertText": "cp_nk_ntex;"
-  },
-  {
-    "label": "cp_nkex",
-    "detail": "GridInput",
-    "insertText": "cp_nkex;"
   },
   {
     "label": "cp_nt",
@@ -445,24 +285,14 @@
     "insertText": "cp_nt;"
   },
   {
-    "label": "cp_toi_thieu",
+    "label": "cp_thuc_te",
     "detail": "GridInput",
-    "insertText": "cp_toi_thieu;"
+    "insertText": "cp_thuc_te;"
   },
   {
     "label": "cp_vc",
     "detail": "GridInput",
     "insertText": "cp_vc;"
-  },
-  {
-    "label": "cp_vc_nk_ntex",
-    "detail": "GridInput",
-    "insertText": "cp_vc_nk_ntex;"
-  },
-  {
-    "label": "cp_vc_nkex",
-    "detail": "GridInput",
-    "insertText": "cp_vc_nkex;"
   },
   {
     "label": "cp_vc_nt",
@@ -473,61 +303,6 @@
     "label": "created_mail_yn",
     "detail": "GridInput",
     "insertText": "created_mail_yn;"
-  },
-  {
-    "label": "ct_cd_dt",
-    "detail": "GridInput",
-    "insertText": "ct_cd_dt;"
-  },
-  {
-    "label": "ct_chi_phiex",
-    "detail": "GridInput",
-    "insertText": "ct_chi_phiex;"
-  },
-  {
-    "label": "ct_chi_tieu",
-    "detail": "GridInput",
-    "insertText": "ct_chi_tieu;"
-  },
-  {
-    "label": "ct_dt_pb",
-    "detail": "GridInput",
-    "insertText": "ct_dt_pb;"
-  },
-  {
-    "label": "ct_gia_dk",
-    "detail": "GridInput",
-    "insertText": "ct_gia_dk;"
-  },
-  {
-    "label": "ct_gia_dkex",
-    "detail": "GridInput",
-    "insertText": "ct_gia_dkex;"
-  },
-  {
-    "label": "ct_gia_kqex",
-    "detail": "GridInput",
-    "insertText": "ct_gia_kqex;"
-  },
-  {
-    "label": "ct_gia_pv",
-    "detail": "GridInput",
-    "insertText": "ct_gia_pv;"
-  },
-  {
-    "label": "ct_gia_refex",
-    "detail": "GridInput",
-    "insertText": "ct_gia_refex;"
-  },
-  {
-    "label": "ct_hao_hutex",
-    "detail": "GridInput",
-    "insertText": "ct_hao_hutex;"
-  },
-  {
-    "label": "ct_kd",
-    "detail": "GridInput",
-    "insertText": "ct_kd;"
   },
   {
     "label": "ct_ln",
@@ -545,189 +320,14 @@
     "insertText": "ct_nxt;"
   },
   {
-    "label": "ct_rut_gon",
-    "detail": "GridInput",
-    "insertText": "ct_rut_gon;"
-  },
-  {
     "label": "ct_so",
     "detail": "GridInput",
     "insertText": "ct_so;"
   },
   {
-    "label": "ct_sp",
+    "label": "da_layex",
     "detail": "GridInput",
-    "insertText": "ct_sp;"
-  },
-  {
-    "label": "ct_ts",
-    "detail": "GridInput",
-    "insertText": "ct_ts;"
-  },
-  {
-    "label": "cthuc_ngan",
-    "detail": "GridInput",
-    "insertText": "cthuc_ngan;"
-  },
-  {
-    "label": "cthuc_nganex",
-    "detail": "GridInput",
-    "insertText": "cthuc_nganex;"
-  },
-  {
-    "label": "d1",
-    "detail": "GridInput",
-    "insertText": "d1;"
-  },
-  {
-    "label": "d10",
-    "detail": "GridInput",
-    "insertText": "d10;"
-  },
-  {
-    "label": "d11",
-    "detail": "GridInput",
-    "insertText": "d11;"
-  },
-  {
-    "label": "d12",
-    "detail": "GridInput",
-    "insertText": "d12;"
-  },
-  {
-    "label": "d13",
-    "detail": "GridInput",
-    "insertText": "d13;"
-  },
-  {
-    "label": "d14",
-    "detail": "GridInput",
-    "insertText": "d14;"
-  },
-  {
-    "label": "d15",
-    "detail": "GridInput",
-    "insertText": "d15;"
-  },
-  {
-    "label": "d16",
-    "detail": "GridInput",
-    "insertText": "d16;"
-  },
-  {
-    "label": "d17",
-    "detail": "GridInput",
-    "insertText": "d17;"
-  },
-  {
-    "label": "d18",
-    "detail": "GridInput",
-    "insertText": "d18;"
-  },
-  {
-    "label": "d19",
-    "detail": "GridInput",
-    "insertText": "d19;"
-  },
-  {
-    "label": "d2",
-    "detail": "GridInput",
-    "insertText": "d2;"
-  },
-  {
-    "label": "d20",
-    "detail": "GridInput",
-    "insertText": "d20;"
-  },
-  {
-    "label": "d21",
-    "detail": "GridInput",
-    "insertText": "d21;"
-  },
-  {
-    "label": "d22",
-    "detail": "GridInput",
-    "insertText": "d22;"
-  },
-  {
-    "label": "d23",
-    "detail": "GridInput",
-    "insertText": "d23;"
-  },
-  {
-    "label": "d24",
-    "detail": "GridInput",
-    "insertText": "d24;"
-  },
-  {
-    "label": "d25",
-    "detail": "GridInput",
-    "insertText": "d25;"
-  },
-  {
-    "label": "d26",
-    "detail": "GridInput",
-    "insertText": "d26;"
-  },
-  {
-    "label": "d27",
-    "detail": "GridInput",
-    "insertText": "d27;"
-  },
-  {
-    "label": "d28",
-    "detail": "GridInput",
-    "insertText": "d28;"
-  },
-  {
-    "label": "d29",
-    "detail": "GridInput",
-    "insertText": "d29;"
-  },
-  {
-    "label": "d3",
-    "detail": "GridInput",
-    "insertText": "d3;"
-  },
-  {
-    "label": "d30",
-    "detail": "GridInput",
-    "insertText": "d30;"
-  },
-  {
-    "label": "d31",
-    "detail": "GridInput",
-    "insertText": "d31;"
-  },
-  {
-    "label": "d4",
-    "detail": "GridInput",
-    "insertText": "d4;"
-  },
-  {
-    "label": "d5",
-    "detail": "GridInput",
-    "insertText": "d5;"
-  },
-  {
-    "label": "d6",
-    "detail": "GridInput",
-    "insertText": "d6;"
-  },
-  {
-    "label": "d7",
-    "detail": "GridInput",
-    "insertText": "d7;"
-  },
-  {
-    "label": "d8",
-    "detail": "GridInput",
-    "insertText": "d8;"
-  },
-  {
-    "label": "d9",
-    "detail": "GridInput",
-    "insertText": "d9;"
+    "insertText": "da_layex;"
   },
   {
     "label": "da_tt_nt",
@@ -745,29 +345,29 @@
     "insertText": "dai_dien;"
   },
   {
-    "label": "danh_gia",
-    "detail": "GridInput",
-    "insertText": "danh_gia;"
-  },
-  {
-    "label": "danh_giaat",
-    "detail": "GridInput",
-    "insertText": "danh_giaat;"
-  },
-  {
     "label": "date",
     "detail": "GridInput",
     "insertText": "date;"
   },
   {
-    "label": "datetime0",
+    "label": "datetime4",
     "detail": "GridInput",
-    "insertText": "datetime0;"
+    "insertText": "datetime4;"
   },
   {
-    "label": "datetime2",
+    "label": "dd_gh_yn",
     "detail": "GridInput",
-    "insertText": "datetime2;"
+    "insertText": "dd_gh_yn;"
+  },
+  {
+    "label": "dd_kd_yn",
+    "detail": "GridInput",
+    "insertText": "dd_kd_yn;"
+  },
+  {
+    "label": "default_yn",
+    "detail": "GridInput",
+    "insertText": "default_yn;"
   },
   {
     "label": "den_ngay",
@@ -785,14 +385,29 @@
     "insertText": "deny_mail_yn;"
   },
   {
-    "label": "deny_post_gl",
-    "detail": "GridInput",
-    "insertText": "deny_post_gl;"
-  },
-  {
     "label": "dept_id",
     "detail": "GridInput",
     "insertText": "dept_id;"
+  },
+  {
+    "label": "dept_id_dc",
+    "detail": "GridInput",
+    "insertText": "dept_id_dc;"
+  },
+  {
+    "label": "description",
+    "detail": "GridInput",
+    "insertText": "description;"
+  },
+  {
+    "label": "description_ec",
+    "detail": "GridInput",
+    "insertText": "description_ec;"
+  },
+  {
+    "label": "description_old",
+    "detail": "GridInput",
+    "insertText": "description_old;"
   },
   {
     "label": "dh_ln",
@@ -810,39 +425,24 @@
     "insertText": "dia_chi;"
   },
   {
-    "label": "dia_chi_kh",
+    "label": "dia_chi_gh",
     "detail": "GridInput",
-    "insertText": "dia_chi_kh;"
+    "insertText": "dia_chi_gh;"
+  },
+  {
+    "label": "dia_diem_gh",
+    "detail": "GridInput",
+    "insertText": "dia_diem_gh;"
+  },
+  {
+    "label": "dia_diem_kk",
+    "detail": "GridInput",
+    "insertText": "dia_diem_kk;"
   },
   {
     "label": "dich_vu_hddt",
     "detail": "GridInput",
     "insertText": "dich_vu_hddt;"
-  },
-  {
-    "label": "diem",
-    "detail": "GridInput",
-    "insertText": "diem;"
-  },
-  {
-    "label": "diem_ngam_dinhat",
-    "detail": "GridInput",
-    "insertText": "diem_ngam_dinhat;"
-  },
-  {
-    "label": "diem_so",
-    "detail": "GridInput",
-    "insertText": "diem_so;"
-  },
-  {
-    "label": "diem_toi_daex",
-    "detail": "GridInput",
-    "insertText": "diem_toi_daex;"
-  },
-  {
-    "label": "diem_toi_thieuex",
-    "detail": "GridInput",
-    "insertText": "diem_toi_thieuex;"
   },
   {
     "label": "dien_giai",
@@ -860,79 +460,29 @@
     "insertText": "dien_giaiex;"
   },
   {
-    "label": "dien_nang",
+    "label": "dieu_khoan",
     "detail": "GridInput",
-    "insertText": "dien_nang;"
+    "insertText": "dieu_khoan;"
   },
   {
-    "label": "dien_thoai_lh",
+    "label": "dieu_kien",
     "detail": "GridInput",
-    "insertText": "dien_thoai_lh;"
+    "insertText": "dieu_kien;"
   },
   {
-    "label": "dieu_kien_tt",
+    "label": "dk_khac_den",
     "detail": "GridInput",
-    "insertText": "dieu_kien_tt;"
+    "insertText": "dk_khac_den;"
   },
   {
-    "label": "dinh_luong",
+    "label": "dk_khac_tu",
     "detail": "GridInput",
-    "insertText": "dinh_luong;"
+    "insertText": "dk_khac_tu;"
   },
   {
-    "label": "dinh_luong_chuan",
+    "label": "do_chinh_xac",
     "detail": "GridInput",
-    "insertText": "dinh_luong_chuan;"
-  },
-  {
-    "label": "dinh_luong_nex",
-    "detail": "GridInput",
-    "insertText": "dinh_luong_nex;"
-  },
-  {
-    "label": "dinh_luong_ttex",
-    "detail": "GridInput",
-    "insertText": "dinh_luong_ttex;"
-  },
-  {
-    "label": "dinh_luong_xcex",
-    "detail": "GridInput",
-    "insertText": "dinh_luong_xcex;"
-  },
-  {
-    "label": "dinh_luongex",
-    "detail": "GridInput",
-    "insertText": "dinh_luongex;"
-  },
-  {
-    "label": "dinh_muc_kg",
-    "detail": "GridInput",
-    "insertText": "dinh_muc_kg;"
-  },
-  {
-    "label": "dinh_phi_yn",
-    "detail": "GridInput",
-    "insertText": "dinh_phi_yn;"
-  },
-  {
-    "label": "dm_kg",
-    "detail": "GridInput",
-    "insertText": "dm_kg;"
-  },
-  {
-    "label": "do_day",
-    "detail": "GridInput",
-    "insertText": "do_day;"
-  },
-  {
-    "label": "do_day_nhua_tp",
-    "detail": "GridInput",
-    "insertText": "do_day_nhua_tp;"
-  },
-  {
-    "label": "do_kho",
-    "detail": "GridInput",
-    "insertText": "do_kho;"
+    "insertText": "do_chinh_xac;"
   },
   {
     "label": "doi_tuong",
@@ -940,19 +490,19 @@
     "insertText": "doi_tuong;"
   },
   {
-    "label": "don_gia",
-    "detail": "GridInput",
-    "insertText": "don_gia;"
-  },
-  {
     "label": "ds_dk",
     "detail": "GridInput",
     "insertText": "ds_dk;"
   },
   {
-    "label": "ds_email",
+    "label": "ds_nc_so",
     "detail": "GridInput",
-    "insertText": "ds_email;"
+    "insertText": "ds_nc_so;"
+  },
+  {
+    "label": "ds_stt_recex",
+    "detail": "GridInput",
+    "insertText": "ds_stt_recex;"
   },
   {
     "label": "ds_tk_coex",
@@ -970,19 +520,14 @@
     "insertText": "ds_tklk;"
   },
   {
-    "label": "du_dau",
+    "label": "dt_spat",
     "detail": "GridInput",
-    "insertText": "du_dau;"
+    "insertText": "dt_spat;"
   },
   {
-    "label": "du_dau_nt",
+    "label": "dt_vt_val_ctat",
     "detail": "GridInput",
-    "insertText": "du_dau_nt;"
-  },
-  {
-    "label": "dung_in_yn",
-    "detail": "GridInput",
-    "insertText": "dung_in_yn;"
+    "insertText": "dt_vt_val_ctat;"
   },
   {
     "label": "dung_kt",
@@ -1000,9 +545,14 @@
     "insertText": "duyetex;"
   },
   {
-    "label": "dvcs",
+    "label": "dv_phe_duyet",
     "detail": "GridInput",
-    "insertText": "dvcs;"
+    "insertText": "dv_phe_duyet;"
+  },
+  {
+    "label": "dv_thuc_hien",
+    "detail": "GridInput",
+    "insertText": "dv_thuc_hien;"
   },
   {
     "label": "dvt",
@@ -1010,14 +560,14 @@
     "insertText": "dvt;"
   },
   {
-    "label": "dvt1",
-    "detail": "GridInput",
-    "insertText": "dvt1;"
-  },
-  {
     "label": "dvt2",
     "detail": "GridInput",
     "insertText": "dvt2;"
+  },
+  {
+    "label": "dvt_dx",
+    "detail": "GridInput",
+    "insertText": "dvt_dx;"
   },
   {
     "label": "dvt_gocex",
@@ -1025,34 +575,9 @@
     "insertText": "dvt_gocex;"
   },
   {
-    "label": "dvt_nat",
+    "label": "dvt_qd",
     "detail": "GridInput",
-    "insertText": "dvt_nat;"
-  },
-  {
-    "label": "dvt_qdoi",
-    "detail": "GridInput",
-    "insertText": "dvt_qdoi;"
-  },
-  {
-    "label": "dvt_tcat",
-    "detail": "GridInput",
-    "insertText": "dvt_tcat;"
-  },
-  {
-    "label": "dvt_xcat",
-    "detail": "GridInput",
-    "insertText": "dvt_xcat;"
-  },
-  {
-    "label": "dvt_xhd",
-    "detail": "GridInput",
-    "insertText": "dvt_xhd;"
-  },
-  {
-    "label": "dvt_xhdat",
-    "detail": "GridInput",
-    "insertText": "dvt_xhdat;"
+    "insertText": "dvt_qd;"
   },
   {
     "label": "dvtat",
@@ -1065,24 +590,14 @@
     "insertText": "dvtex;"
   },
   {
-    "label": "dxa_ln",
+    "label": "ec_field",
     "detail": "GridInput",
-    "insertText": "dxa_ln;"
+    "insertText": "ec_field;"
   },
   {
-    "label": "dxa_so",
+    "label": "email",
     "detail": "GridInput",
-    "insertText": "dxa_so;"
-  },
-  {
-    "label": "email_lh",
-    "detail": "GridInput",
-    "insertText": "email_lh;"
-  },
-  {
-    "label": "error_count",
-    "detail": "GridInput",
-    "insertText": "error_count;"
+    "insertText": "email;"
   },
   {
     "label": "error_log",
@@ -1095,19 +610,39 @@
     "insertText": "excel_yn;"
   },
   {
+    "label": "external_yn",
+    "detail": "GridInput",
+    "insertText": "external_yn;"
+  },
+  {
+    "label": "f_field",
+    "detail": "GridInput",
+    "insertText": "f_field;"
+  },
+  {
+    "label": "fcode2",
+    "detail": "GridInput",
+    "insertText": "fcode2;"
+  },
+  {
+    "label": "fdata",
+    "detail": "GridInput",
+    "insertText": "fdata;"
+  },
+  {
     "label": "field",
     "detail": "GridInput",
     "insertText": "field;"
   },
   {
-    "label": "field_import_yn",
-    "detail": "GridInput",
-    "insertText": "field_import_yn;"
-  },
-  {
     "label": "file_enc",
     "detail": "GridInput",
     "insertText": "file_enc;"
+  },
+  {
+    "label": "file_id_sign",
+    "detail": "GridInput",
+    "insertText": "file_id_sign;"
   },
   {
     "label": "file_name",
@@ -1145,14 +680,14 @@
     "insertText": "gc_td1;"
   },
   {
-    "label": "gc_td2",
-    "detail": "GridInput",
-    "insertText": "gc_td2;"
-  },
-  {
     "label": "gc_td3",
     "detail": "GridInput",
     "insertText": "gc_td3;"
+  },
+  {
+    "label": "gh_yn",
+    "detail": "GridInput",
+    "insertText": "gh_yn;"
   },
   {
     "label": "ghi_chu",
@@ -1160,24 +695,19 @@
     "insertText": "ghi_chu;"
   },
   {
-    "label": "ghi_chu_sk",
+    "label": "ghi_chu1",
     "detail": "GridInput",
-    "insertText": "ghi_chu_sk;"
+    "insertText": "ghi_chu1;"
   },
   {
-    "label": "ghi_chu_sx",
+    "label": "ghi_chu_cs",
     "detail": "GridInput",
-    "insertText": "ghi_chu_sx;"
+    "insertText": "ghi_chu_cs;"
   },
   {
-    "label": "ghi_chu_ver",
+    "label": "ghi_chu_ttll",
     "detail": "GridInput",
-    "insertText": "ghi_chu_ver;"
-  },
-  {
-    "label": "ghi_chuex",
-    "detail": "GridInput",
-    "insertText": "ghi_chuex;"
+    "insertText": "ghi_chu_ttll;"
   },
   {
     "label": "gia",
@@ -1210,26 +740,6 @@
     "insertText": "gia_ban_nt;"
   },
   {
-    "label": "gia_chuan_nt",
-    "detail": "GridInput",
-    "insertText": "gia_chuan_nt;"
-  },
-  {
-    "label": "gia_chuanex",
-    "detail": "GridInput",
-    "insertText": "gia_chuanex;"
-  },
-  {
-    "label": "gia_dx",
-    "detail": "GridInput",
-    "insertText": "gia_dx;"
-  },
-  {
-    "label": "gia_dx_nt",
-    "detail": "GridInput",
-    "insertText": "gia_dx_nt;"
-  },
-  {
     "label": "gia_nt",
     "detail": "GridInput",
     "insertText": "gia_nt;"
@@ -1258,6 +768,21 @@
     "label": "gia_ntex",
     "detail": "GridInput",
     "insertText": "gia_ntex;"
+  },
+  {
+    "label": "gia_qd2",
+    "detail": "GridInput",
+    "insertText": "gia_qd2;"
+  },
+  {
+    "label": "gia_qd_nt2",
+    "detail": "GridInput",
+    "insertText": "gia_qd_nt2;"
+  },
+  {
+    "label": "gia_rms",
+    "detail": "GridInput",
+    "insertText": "gia_rms;"
   },
   {
     "label": "gia_tb_ynex",
@@ -1295,6 +820,11 @@
     "insertText": "gia_tri_den;"
   },
   {
+    "label": "gia_tri_den_nt",
+    "detail": "GridInput",
+    "insertText": "gia_tri_den_nt;"
+  },
+  {
     "label": "gia_tri_nd",
     "detail": "GridInput",
     "insertText": "gia_tri_nd;"
@@ -1310,9 +840,24 @@
     "insertText": "gia_tri_nt;"
   },
   {
+    "label": "gia_tri_ts_nt",
+    "detail": "GridInput",
+    "insertText": "gia_tri_ts_nt;"
+  },
+  {
     "label": "gia_tri_tu",
     "detail": "GridInput",
     "insertText": "gia_tri_tu;"
+  },
+  {
+    "label": "gia_tri_tu_nt",
+    "detail": "GridInput",
+    "insertText": "gia_tri_tu_nt;"
+  },
+  {
+    "label": "giao_hang_yn",
+    "detail": "GridInput",
+    "insertText": "giao_hang_yn;"
   },
   {
     "label": "giao_yn",
@@ -1320,29 +865,9 @@
     "insertText": "giao_yn;"
   },
   {
-    "label": "giay_nkat",
+    "label": "giay_xuly",
     "detail": "GridInput",
-    "insertText": "giay_nkat;"
-  },
-  {
-    "label": "giay_xcat",
-    "detail": "GridInput",
-    "insertText": "giay_xcat;"
-  },
-  {
-    "label": "giay_xkat",
-    "detail": "GridInput",
-    "insertText": "giay_xkat;"
-  },
-  {
-    "label": "gin_ln",
-    "detail": "GridInput",
-    "insertText": "gin_ln;"
-  },
-  {
-    "label": "gin_so",
-    "detail": "GridInput",
-    "insertText": "gin_so;"
+    "insertText": "giay_xuly;"
   },
   {
     "label": "gio_bd",
@@ -1353,21 +878,6 @@
     "label": "gio_kt",
     "detail": "GridInput",
     "insertText": "gio_kt;"
-  },
-  {
-    "label": "gioi_tinh",
-    "detail": "GridInput",
-    "insertText": "gioi_tinh;"
-  },
-  {
-    "label": "gm2_ynex",
-    "detail": "GridInput",
-    "insertText": "gm2_ynex;"
-  },
-  {
-    "label": "gm_ynex",
-    "detail": "GridInput",
-    "insertText": "gm_ynex;"
   },
   {
     "label": "gr_id",
@@ -1475,11 +985,6 @@
     "insertText": "gt_khac_nt;"
   },
   {
-    "label": "gt_muc_tieu",
-    "detail": "GridInput",
-    "insertText": "gt_muc_tieu;"
-  },
-  {
     "label": "gt_ns",
     "detail": "GridInput",
     "insertText": "gt_ns;"
@@ -1493,11 +998,6 @@
     "label": "gt_nt",
     "detail": "GridInput",
     "insertText": "gt_nt;"
-  },
-  {
-    "label": "gt_ntex",
-    "detail": "GridInput",
-    "insertText": "gt_ntex;"
   },
   {
     "label": "gt_pb",
@@ -1525,19 +1025,24 @@
     "insertText": "gt_th;"
   },
   {
+    "label": "gt_th_dnc",
+    "detail": "GridInput",
+    "insertText": "gt_th_dnc;"
+  },
+  {
     "label": "gt_th_nt",
     "detail": "GridInput",
     "insertText": "gt_th_nt;"
   },
   {
-    "label": "ham_luong_ran",
+    "label": "gt_th_po",
     "detail": "GridInput",
-    "insertText": "ham_luong_ran;"
+    "insertText": "gt_th_po;"
   },
   {
-    "label": "ham_luong_tb",
+    "label": "gt_th_pr",
     "detail": "GridInput",
-    "insertText": "ham_luong_tb;"
+    "insertText": "gt_th_pr;"
   },
   {
     "label": "han_tt",
@@ -1545,19 +1050,9 @@
     "insertText": "han_tt;"
   },
   {
-    "label": "hao_hut_dm",
+    "label": "hang_muc",
     "detail": "GridInput",
-    "insertText": "hao_hut_dm;"
-  },
-  {
-    "label": "hao_hut_qt_ct_ktt",
-    "detail": "GridInput",
-    "insertText": "hao_hut_qt_ct_ktt;"
-  },
-  {
-    "label": "hao_hut_tc",
-    "detail": "GridInput",
-    "insertText": "hao_hut_tc;"
+    "insertText": "hang_muc;"
   },
   {
     "label": "hash",
@@ -1585,44 +1080,9 @@
     "insertText": "he_so1;"
   },
   {
-    "label": "he_so_kg",
+    "label": "he_so_2",
     "detail": "GridInput",
-    "insertText": "he_so_kg;"
-  },
-  {
-    "label": "he_so_m",
-    "detail": "GridInput",
-    "insertText": "he_so_m;"
-  },
-  {
-    "label": "he_so_met_txex",
-    "detail": "GridInput",
-    "insertText": "he_so_met_txex;"
-  },
-  {
-    "label": "he_so_mt",
-    "detail": "GridInput",
-    "insertText": "he_so_mt;"
-  },
-  {
-    "label": "he_so_n",
-    "detail": "GridInput",
-    "insertText": "he_so_n;"
-  },
-  {
-    "label": "he_so_xc",
-    "detail": "GridInput",
-    "insertText": "he_so_xc;"
-  },
-  {
-    "label": "he_so_xhd",
-    "detail": "GridInput",
-    "insertText": "he_so_xhd;"
-  },
-  {
-    "label": "he_soat",
-    "detail": "GridInput",
-    "insertText": "he_soat;"
+    "insertText": "he_so_2;"
   },
   {
     "label": "he_soex",
@@ -1650,34 +1110,19 @@
     "insertText": "ho_tro_bh;"
   },
   {
-    "label": "hoan_tien",
-    "detail": "GridInput",
-    "insertText": "hoan_tien;"
-  },
-  {
-    "label": "hoan_tien_nt",
-    "detail": "GridInput",
-    "insertText": "hoan_tien_nt;"
-  },
-  {
-    "label": "hop",
-    "detail": "GridInput",
-    "insertText": "hop;"
-  },
-  {
     "label": "hop_dong_yn",
     "detail": "GridInput",
     "insertText": "hop_dong_yn;"
   },
   {
-    "label": "hs_code",
+    "label": "hopdong_ln",
     "detail": "GridInput",
-    "insertText": "hs_code;"
+    "insertText": "hopdong_ln;"
   },
   {
-    "label": "hs_dung_moi",
+    "label": "hopdong_so",
     "detail": "GridInput",
-    "insertText": "hs_dung_moi;"
+    "insertText": "hopdong_so;"
   },
   {
     "label": "hs_hh",
@@ -1685,14 +1130,9 @@
     "insertText": "hs_hh;"
   },
   {
-    "label": "hs_qdoi",
+    "label": "html_duyetex",
     "detail": "GridInput",
-    "insertText": "hs_qdoi;"
-  },
-  {
-    "label": "ht_yn",
-    "detail": "GridInput",
-    "insertText": "ht_yn;"
+    "insertText": "html_duyetex;"
   },
   {
     "label": "huyex",
@@ -1715,6 +1155,11 @@
     "insertText": "id;"
   },
   {
+    "label": "id_f2",
+    "detail": "GridInput",
+    "insertText": "id_f2;"
+  },
+  {
     "label": "id_no",
     "detail": "GridInput",
     "insertText": "id_no;"
@@ -1725,9 +1170,24 @@
     "insertText": "id_nsd;"
   },
   {
+    "label": "id_rms",
+    "detail": "GridInput",
+    "insertText": "id_rms;"
+  },
+  {
     "label": "in_yn",
     "detail": "GridInput",
     "insertText": "in_yn;"
+  },
+  {
+    "label": "ir_ln",
+    "detail": "GridInput",
+    "insertText": "ir_ln;"
+  },
+  {
+    "label": "ir_so",
+    "detail": "GridInput",
+    "insertText": "ir_so;"
   },
   {
     "label": "isEnable",
@@ -1735,39 +1195,9 @@
     "insertText": "isEnable;"
   },
   {
-    "label": "is_dung_moiex",
+    "label": "isHideex",
     "detail": "GridInput",
-    "insertText": "is_dung_moiex;"
-  },
-  {
-    "label": "is_keoex",
-    "detail": "GridInput",
-    "insertText": "is_keoex;"
-  },
-  {
-    "label": "is_ln",
-    "detail": "GridInput",
-    "insertText": "is_ln;"
-  },
-  {
-    "label": "is_nhuaex",
-    "detail": "GridInput",
-    "insertText": "is_nhuaex;"
-  },
-  {
-    "label": "is_phu_gia",
-    "detail": "GridInput",
-    "insertText": "is_phu_gia;"
-  },
-  {
-    "label": "is_phu_giaex",
-    "detail": "GridInput",
-    "insertText": "is_phu_giaex;"
-  },
-  {
-    "label": "is_so",
-    "detail": "GridInput",
-    "insertText": "is_so;"
+    "insertText": "isHideex;"
   },
   {
     "label": "k",
@@ -1775,9 +1205,9 @@
     "insertText": "k;"
   },
   {
-    "label": "kd_bat_buocex",
+    "label": "ke_toan_yn",
     "detail": "GridInput",
-    "insertText": "kd_bat_buocex;"
+    "insertText": "ke_toan_yn;"
   },
   {
     "label": "kem_theo",
@@ -1785,14 +1215,9 @@
     "insertText": "kem_theo;"
   },
   {
-    "label": "ket_qua",
+    "label": "ket_qua_kd",
     "detail": "GridInput",
-    "insertText": "ket_qua;"
-  },
-  {
-    "label": "key_x",
-    "detail": "GridInput",
-    "insertText": "key_x;"
+    "insertText": "ket_qua_kd;"
   },
   {
     "label": "keys",
@@ -1800,124 +1225,19 @@
     "insertText": "keys;"
   },
   {
-    "label": "kh_giao_yn",
+    "label": "kg_100to",
     "detail": "GridInput",
-    "insertText": "kh_giao_yn;"
+    "insertText": "kg_100to;"
   },
   {
-    "label": "khac",
+    "label": "kh_ynex",
     "detail": "GridInput",
-    "insertText": "khac;"
+    "insertText": "kh_ynex;"
   },
   {
-    "label": "khac_so_mau_in",
+    "label": "kiem_dinh_yn",
     "detail": "GridInput",
-    "insertText": "khac_so_mau_in;"
-  },
-  {
-    "label": "kho_cat_k1",
-    "detail": "GridInput",
-    "insertText": "kho_cat_k1;"
-  },
-  {
-    "label": "kho_cat_k2",
-    "detail": "GridInput",
-    "insertText": "kho_cat_k2;"
-  },
-  {
-    "label": "kho_doc_gnkex",
-    "detail": "GridInput",
-    "insertText": "kho_doc_gnkex;"
-  },
-  {
-    "label": "kho_doc_gxcex",
-    "detail": "GridInput",
-    "insertText": "kho_doc_gxcex;"
-  },
-  {
-    "label": "kho_doc_gxkex",
-    "detail": "GridInput",
-    "insertText": "kho_doc_gxkex;"
-  },
-  {
-    "label": "kho_doc_nex",
-    "detail": "GridInput",
-    "insertText": "kho_doc_nex;"
-  },
-  {
-    "label": "kho_doc_xcex",
-    "detail": "GridInput",
-    "insertText": "kho_doc_xcex;"
-  },
-  {
-    "label": "kho_docex",
-    "detail": "GridInput",
-    "insertText": "kho_docex;"
-  },
-  {
-    "label": "kho_giay_k1",
-    "detail": "GridInput",
-    "insertText": "kho_giay_k1;"
-  },
-  {
-    "label": "kho_giay_k2",
-    "detail": "GridInput",
-    "insertText": "kho_giay_k2;"
-  },
-  {
-    "label": "kho_ngang_gnkex",
-    "detail": "GridInput",
-    "insertText": "kho_ngang_gnkex;"
-  },
-  {
-    "label": "kho_ngang_gxcex",
-    "detail": "GridInput",
-    "insertText": "kho_ngang_gxcex;"
-  },
-  {
-    "label": "kho_ngang_gxkex",
-    "detail": "GridInput",
-    "insertText": "kho_ngang_gxkex;"
-  },
-  {
-    "label": "kho_ngang_nex",
-    "detail": "GridInput",
-    "insertText": "kho_ngang_nex;"
-  },
-  {
-    "label": "kho_ngang_xcex",
-    "detail": "GridInput",
-    "insertText": "kho_ngang_xcex;"
-  },
-  {
-    "label": "kho_ngangex",
-    "detail": "GridInput",
-    "insertText": "kho_ngangex;"
-  },
-  {
-    "label": "khoi_luong_keo",
-    "detail": "GridInput",
-    "insertText": "khoi_luong_keo;"
-  },
-  {
-    "label": "khong_hang",
-    "detail": "GridInput",
-    "insertText": "khong_hang;"
-  },
-  {
-    "label": "kich_co",
-    "detail": "GridInput",
-    "insertText": "kich_co;"
-  },
-  {
-    "label": "kich_thuoc",
-    "detail": "GridInput",
-    "insertText": "kich_thuoc;"
-  },
-  {
-    "label": "kieu_cap_nhatex",
-    "detail": "GridInput",
-    "insertText": "kieu_cap_nhatex;"
+    "insertText": "kiem_dinh_yn;"
   },
   {
     "label": "kieu_cdat",
@@ -1950,11 +1270,6 @@
     "insertText": "kieu_ggex;"
   },
   {
-    "label": "kieu_ghi_nhanex",
-    "detail": "GridInput",
-    "insertText": "kieu_ghi_nhanex;"
-  },
-  {
     "label": "kieu_gvex",
     "detail": "GridInput",
     "insertText": "kieu_gvex;"
@@ -1965,39 +1280,9 @@
     "insertText": "kieu_lo;"
   },
   {
-    "label": "kieu_nhap_ynex",
-    "detail": "GridInput",
-    "insertText": "kieu_nhap_ynex;"
-  },
-  {
-    "label": "kieu_nhapat",
-    "detail": "GridInput",
-    "insertText": "kieu_nhapat;"
-  },
-  {
-    "label": "kieu_pb",
-    "detail": "GridInput",
-    "insertText": "kieu_pb;"
-  },
-  {
-    "label": "kieu_pbex",
-    "detail": "GridInput",
-    "insertText": "kieu_pbex;"
-  },
-  {
     "label": "kieu_ph",
     "detail": "GridInput",
     "insertText": "kieu_ph;"
-  },
-  {
-    "label": "kieu_tinh_xex",
-    "detail": "GridInput",
-    "insertText": "kieu_tinh_xex;"
-  },
-  {
-    "label": "kieu_tinhex",
-    "detail": "GridInput",
-    "insertText": "kieu_tinhex;"
   },
   {
     "label": "kieu_tlex",
@@ -2015,16 +1300,6 @@
     "insertText": "kk_lai;"
   },
   {
-    "label": "kl_dung_moi",
-    "detail": "GridInput",
-    "insertText": "kl_dung_moi;"
-  },
-  {
-    "label": "kl_kg",
-    "detail": "GridInput",
-    "insertText": "kl_kg;"
-  },
-  {
     "label": "km_yn",
     "detail": "GridInput",
     "insertText": "km_yn;"
@@ -2038,6 +1313,11 @@
     "label": "kt_so",
     "detail": "GridInput",
     "insertText": "kt_so;"
+  },
+  {
+    "label": "kt_yn",
+    "detail": "GridInput",
+    "insertText": "kt_yn;"
   },
   {
     "label": "ky",
@@ -2230,6 +1510,16 @@
     "insertText": "lien_hd;"
   },
   {
+    "label": "line_dl",
+    "detail": "GridInput",
+    "insertText": "line_dl;"
+  },
+  {
+    "label": "line_dlex",
+    "detail": "GridInput",
+    "insertText": "line_dlex;"
+  },
+  {
     "label": "line_nbr",
     "detail": "GridInput",
     "insertText": "line_nbr;"
@@ -2245,24 +1535,14 @@
     "insertText": "line_nbr1;"
   },
   {
-    "label": "link_labelex",
+    "label": "line_nbrex",
     "detail": "GridInput",
-    "insertText": "link_labelex;"
+    "insertText": "line_nbrex;"
   },
   {
-    "label": "list_id",
+    "label": "link_dau",
     "detail": "GridInput",
-    "insertText": "list_id;"
-  },
-  {
-    "label": "list_img",
-    "detail": "GridInput",
-    "insertText": "list_img;"
-  },
-  {
-    "label": "ln_sx1",
-    "detail": "GridInput",
-    "insertText": "ln_sx1;"
+    "insertText": "link_dau;"
   },
   {
     "label": "lo_yn",
@@ -2295,9 +1575,9 @@
     "insertText": "loai_ct;"
   },
   {
-    "label": "loai_dt",
+    "label": "loai_db",
     "detail": "GridInput",
-    "insertText": "loai_dt;"
+    "insertText": "loai_db;"
   },
   {
     "label": "loai_dtat",
@@ -2315,11 +1595,6 @@
     "insertText": "loai_gia;"
   },
   {
-    "label": "loai_hangat",
-    "detail": "GridInput",
-    "insertText": "loai_hangat;"
-  },
-  {
     "label": "loai_hd",
     "detail": "GridInput",
     "insertText": "loai_hd;"
@@ -2330,24 +1605,14 @@
     "insertText": "loai_hdat;"
   },
   {
-    "label": "loai_kkat",
-    "detail": "GridInput",
-    "insertText": "loai_kkat;"
-  },
-  {
-    "label": "loai_ky",
-    "detail": "GridInput",
-    "insertText": "loai_ky;"
-  },
-  {
-    "label": "loai_lsx",
-    "detail": "GridInput",
-    "insertText": "loai_lsx;"
-  },
-  {
     "label": "loai_pb",
     "detail": "GridInput",
     "insertText": "loai_pb;"
+  },
+  {
+    "label": "loai_ps",
+    "detail": "GridInput",
+    "insertText": "loai_ps;"
   },
   {
     "label": "loai_qhat",
@@ -2355,29 +1620,14 @@
     "insertText": "loai_qhat;"
   },
   {
-    "label": "loai_sk",
+    "label": "loai_spat",
     "detail": "GridInput",
-    "insertText": "loai_sk;"
-  },
-  {
-    "label": "loai_slat",
-    "detail": "GridInput",
-    "insertText": "loai_slat;"
-  },
-  {
-    "label": "loai_tinh_diemat",
-    "detail": "GridInput",
-    "insertText": "loai_tinh_diemat;"
+    "insertText": "loai_spat;"
   },
   {
     "label": "loai_tn",
     "detail": "GridInput",
     "insertText": "loai_tn;"
-  },
-  {
-    "label": "loai_tsex",
-    "detail": "GridInput",
-    "insertText": "loai_tsex;"
   },
   {
     "label": "loai_vcat",
@@ -2390,24 +1640,9 @@
     "insertText": "loai_vtat;"
   },
   {
-    "label": "loai_yc",
-    "detail": "GridInput",
-    "insertText": "loai_yc;"
-  },
-  {
     "label": "loaiat",
     "detail": "GridInput",
     "insertText": "loaiat;"
-  },
-  {
-    "label": "lop_nhua",
-    "detail": "GridInput",
-    "insertText": "lop_nhua;"
-  },
-  {
-    "label": "lop_nhuaat",
-    "detail": "GridInput",
-    "insertText": "lop_nhuaat;"
   },
   {
     "label": "ls",
@@ -2415,19 +1650,14 @@
     "insertText": "ls;"
   },
   {
+    "label": "lst_img",
+    "detail": "GridInput",
+    "insertText": "lst_img;"
+  },
+  {
     "label": "lstuser2lk",
     "detail": "GridInput",
     "insertText": "lstuser2lk;"
-  },
-  {
-    "label": "lsx_ln",
-    "detail": "GridInput",
-    "insertText": "lsx_ln;"
-  },
-  {
-    "label": "lsx_so",
-    "detail": "GridInput",
-    "insertText": "lsx_so;"
   },
   {
     "label": "luong_cb_nt",
@@ -2435,9 +1665,14 @@
     "insertText": "luong_cb_nt;"
   },
   {
-    "label": "luot_ghep",
+    "label": "ly_do",
     "detail": "GridInput",
-    "insertText": "luot_ghep;"
+    "insertText": "ly_do;"
+  },
+  {
+    "label": "ly_do_tc",
+    "detail": "GridInput",
+    "insertText": "ly_do_tc;"
   },
   {
     "label": "ly_doex",
@@ -2450,24 +1685,9 @@
     "insertText": "ma2;"
   },
   {
-    "label": "ma_aql",
-    "detail": "GridInput",
-    "insertText": "ma_aql;"
-  },
-  {
     "label": "ma_bp",
     "detail": "GridInput",
     "insertText": "ma_bp;"
-  },
-  {
-    "label": "ma_bp0",
-    "detail": "GridInput",
-    "insertText": "ma_bp0;"
-  },
-  {
-    "label": "ma_bp0at",
-    "detail": "GridInput",
-    "insertText": "ma_bp0at;"
   },
   {
     "label": "ma_bp_dcat",
@@ -2475,14 +1695,34 @@
     "insertText": "ma_bp_dcat;"
   },
   {
+    "label": "ma_bp_ktv",
+    "detail": "GridInput",
+    "insertText": "ma_bp_ktv;"
+  },
+  {
+    "label": "ma_bp_ntsat",
+    "detail": "GridInput",
+    "insertText": "ma_bp_ntsat;"
+  },
+  {
+    "label": "ma_bp_qltsat",
+    "detail": "GridInput",
+    "insertText": "ma_bp_qltsat;"
+  },
+  {
+    "label": "ma_bp_sdat",
+    "detail": "GridInput",
+    "insertText": "ma_bp_sdat;"
+  },
+  {
     "label": "ma_bpat",
     "detail": "GridInput",
     "insertText": "ma_bpat;"
   },
   {
-    "label": "ma_btpex",
+    "label": "ma_bpex",
     "detail": "GridInput",
-    "insertText": "ma_btpex;"
+    "insertText": "ma_bpex;"
   },
   {
     "label": "ma_ca",
@@ -2530,24 +1770,24 @@
     "insertText": "ma_cdat;"
   },
   {
-    "label": "ma_chi_tieu",
-    "detail": "GridInput",
-    "insertText": "ma_chi_tieu;"
-  },
-  {
-    "label": "ma_chi_tieuat",
-    "detail": "GridInput",
-    "insertText": "ma_chi_tieuat;"
-  },
-  {
-    "label": "ma_chuongat",
-    "detail": "GridInput",
-    "insertText": "ma_chuongat;"
-  },
-  {
     "label": "ma_ck",
     "detail": "GridInput",
     "insertText": "ma_ck;"
+  },
+  {
+    "label": "ma_ck_tl",
+    "detail": "GridInput",
+    "insertText": "ma_ck_tl;"
+  },
+  {
+    "label": "ma_cky",
+    "detail": "GridInput",
+    "insertText": "ma_cky;"
+  },
+  {
+    "label": "ma_ckyat",
+    "detail": "GridInput",
+    "insertText": "ma_ckyat;"
   },
   {
     "label": "ma_cmat",
@@ -2555,14 +1795,14 @@
     "insertText": "ma_cmat;"
   },
   {
-    "label": "ma_cn",
+    "label": "ma_combo",
     "detail": "GridInput",
-    "insertText": "ma_cn;"
+    "insertText": "ma_combo;"
   },
   {
-    "label": "ma_cong",
+    "label": "ma_cot",
     "detail": "GridInput",
-    "insertText": "ma_cong;"
+    "insertText": "ma_cot;"
   },
   {
     "label": "ma_cpat",
@@ -2590,9 +1830,9 @@
     "insertText": "ma_ct1;"
   },
   {
-    "label": "ma_ct_dh",
+    "label": "ma_ct_00",
     "detail": "GridInput",
-    "insertText": "ma_ct_dh;"
+    "insertText": "ma_ct_00;"
   },
   {
     "label": "ma_ct_gs",
@@ -2600,29 +1840,34 @@
     "insertText": "ma_ct_gs;"
   },
   {
-    "label": "ma_ct_hd",
-    "detail": "GridInput",
-    "insertText": "ma_ct_hd;"
-  },
-  {
     "label": "ma_ct_in",
     "detail": "GridInput",
     "insertText": "ma_ct_in;"
   },
   {
-    "label": "ma_ct_pa2",
+    "label": "ma_ct_kk",
     "detail": "GridInput",
-    "insertText": "ma_ct_pa2;"
+    "insertText": "ma_ct_kk;"
   },
   {
-    "label": "ma_ct_pd3",
+    "label": "ma_ct_nc",
     "detail": "GridInput",
-    "insertText": "ma_ct_pd3;"
+    "insertText": "ma_ct_nc;"
   },
   {
-    "label": "ma_ct_po2",
+    "label": "ma_ct_ns",
     "detail": "GridInput",
-    "insertText": "ma_ct_po2;"
+    "insertText": "ma_ct_ns;"
+  },
+  {
+    "label": "ma_ct_tc",
+    "detail": "GridInput",
+    "insertText": "ma_ct_tc;"
+  },
+  {
+    "label": "ma_ct_yc",
+    "detail": "GridInput",
+    "insertText": "ma_ct_yc;"
   },
   {
     "label": "ma_ctat",
@@ -2630,29 +1875,19 @@
     "insertText": "ma_ctat;"
   },
   {
-    "label": "ma_ctclat",
+    "label": "ma_ctcpat",
     "detail": "GridInput",
-    "insertText": "ma_ctclat;"
+    "insertText": "ma_ctcpat;"
   },
   {
-    "label": "ma_ctcp",
+    "label": "ma_cv",
     "detail": "GridInput",
-    "insertText": "ma_ctcp;"
+    "insertText": "ma_cv;"
   },
   {
-    "label": "ma_cthuc",
+    "label": "ma_cvat",
     "detail": "GridInput",
-    "insertText": "ma_cthuc;"
-  },
-  {
-    "label": "ma_dac_tinh",
-    "detail": "GridInput",
-    "insertText": "ma_dac_tinh;"
-  },
-  {
-    "label": "ma_dac_tinhat",
-    "detail": "GridInput",
-    "insertText": "ma_dac_tinhat;"
+    "insertText": "ma_cvat;"
   },
   {
     "label": "ma_dc",
@@ -2665,21 +1900,6 @@
     "insertText": "ma_dcat;"
   },
   {
-    "label": "ma_diem",
-    "detail": "GridInput",
-    "insertText": "ma_diem;"
-  },
-  {
-    "label": "ma_diemat",
-    "detail": "GridInput",
-    "insertText": "ma_diemat;"
-  },
-  {
-    "label": "ma_dn",
-    "detail": "GridInput",
-    "insertText": "ma_dn;"
-  },
-  {
     "label": "ma_dotat",
     "detail": "GridInput",
     "insertText": "ma_dotat;"
@@ -2690,14 +1910,9 @@
     "insertText": "ma_dt;"
   },
   {
-    "label": "ma_dv_nk",
+    "label": "ma_dtat",
     "detail": "GridInput",
-    "insertText": "ma_dv_nk;"
-  },
-  {
-    "label": "ma_dv_nkat",
-    "detail": "GridInput",
-    "insertText": "ma_dv_nkat;"
+    "insertText": "ma_dtat;"
   },
   {
     "label": "ma_dvcs",
@@ -2715,24 +1930,14 @@
     "insertText": "ma_gd;"
   },
   {
-    "label": "ma_hai_quan",
-    "detail": "GridInput",
-    "insertText": "ma_hai_quan;"
-  },
-  {
-    "label": "ma_hai_quanat",
-    "detail": "GridInput",
-    "insertText": "ma_hai_quanat;"
-  },
-  {
     "label": "ma_hd",
     "detail": "GridInput",
     "insertText": "ma_hd;"
   },
   {
-    "label": "ma_hda",
+    "label": "ma_hd_po",
     "detail": "GridInput",
-    "insertText": "ma_hda;"
+    "insertText": "ma_hd_po;"
   },
   {
     "label": "ma_hdat",
@@ -2740,14 +1945,14 @@
     "insertText": "ma_hdat;"
   },
   {
-    "label": "ma_hrbp",
-    "detail": "GridInput",
-    "insertText": "ma_hrbp;"
-  },
-  {
     "label": "ma_hs",
     "detail": "GridInput",
     "insertText": "ma_hs;"
+  },
+  {
+    "label": "ma_kb",
+    "detail": "GridInput",
+    "insertText": "ma_kb;"
   },
   {
     "label": "ma_kh",
@@ -2755,19 +1960,9 @@
     "insertText": "ma_kh;"
   },
   {
-    "label": "ma_kh2_tcat",
-    "detail": "GridInput",
-    "insertText": "ma_kh2_tcat;"
-  },
-  {
     "label": "ma_kh2at",
     "detail": "GridInput",
     "insertText": "ma_kh2at;"
-  },
-  {
-    "label": "ma_kh9",
-    "detail": "GridInput",
-    "insertText": "ma_kh9;"
   },
   {
     "label": "ma_kh_hd",
@@ -2790,24 +1985,9 @@
     "insertText": "ma_khat;"
   },
   {
-    "label": "ma_khex",
-    "detail": "GridInput",
-    "insertText": "ma_khex;"
-  },
-  {
     "label": "ma_kho",
     "detail": "GridInput",
     "insertText": "ma_kho;"
-  },
-  {
-    "label": "ma_kho0",
-    "detail": "GridInput",
-    "insertText": "ma_kho0;"
-  },
-  {
-    "label": "ma_kho_tcat",
-    "detail": "GridInput",
-    "insertText": "ma_kho_tcat;"
   },
   {
     "label": "ma_kho_xuatex",
@@ -2840,19 +2020,14 @@
     "insertText": "ma_kieu;"
   },
   {
-    "label": "ma_kk",
-    "detail": "GridInput",
-    "insertText": "ma_kk;"
-  },
-  {
-    "label": "ma_kqat",
-    "detail": "GridInput",
-    "insertText": "ma_kqat;"
-  },
-  {
     "label": "ma_ktat",
     "detail": "GridInput",
     "insertText": "ma_ktat;"
+  },
+  {
+    "label": "ma_ktvat",
+    "detail": "GridInput",
+    "insertText": "ma_ktvat;"
   },
   {
     "label": "ma_ku",
@@ -2870,6 +2045,16 @@
     "insertText": "ma_ky;"
   },
   {
+    "label": "ma_kyat",
+    "detail": "GridInput",
+    "insertText": "ma_kyat;"
+  },
+  {
+    "label": "ma_ld",
+    "detail": "GridInput",
+    "insertText": "ma_ld;"
+  },
+  {
     "label": "ma_ldat",
     "detail": "GridInput",
     "insertText": "ma_ldat;"
@@ -2880,19 +2065,9 @@
     "insertText": "ma_lo;"
   },
   {
-    "label": "ma_lo_tcat",
-    "detail": "GridInput",
-    "insertText": "ma_lo_tcat;"
-  },
-  {
     "label": "ma_lo_trinh",
     "detail": "GridInput",
     "insertText": "ma_lo_trinh;"
-  },
-  {
-    "label": "ma_loai",
-    "detail": "GridInput",
-    "insertText": "ma_loai;"
   },
   {
     "label": "ma_loai1",
@@ -2910,9 +2085,9 @@
     "insertText": "ma_loai3;"
   },
   {
-    "label": "ma_loai_dkat",
+    "label": "ma_loai_dl",
     "detail": "GridInput",
-    "insertText": "ma_loai_dkat;"
+    "insertText": "ma_loai_dl;"
   },
   {
     "label": "ma_loai_gtat",
@@ -2920,34 +2095,14 @@
     "insertText": "ma_loai_gtat;"
   },
   {
-    "label": "ma_loai_kdat",
-    "detail": "GridInput",
-    "insertText": "ma_loai_kdat;"
-  },
-  {
-    "label": "ma_loai_nkat",
-    "detail": "GridInput",
-    "insertText": "ma_loai_nkat;"
-  },
-  {
     "label": "ma_loai_tb",
     "detail": "GridInput",
     "insertText": "ma_loai_tb;"
   },
   {
-    "label": "ma_loai_vt_khoex",
-    "detail": "GridInput",
-    "insertText": "ma_loai_vt_khoex;"
-  },
-  {
     "label": "ma_loaiat",
     "detail": "GridInput",
     "insertText": "ma_loaiat;"
-  },
-  {
-    "label": "ma_loaiex",
-    "detail": "GridInput",
-    "insertText": "ma_loaiex;"
   },
   {
     "label": "ma_loat",
@@ -2965,11 +2120,6 @@
     "insertText": "ma_loi;"
   },
   {
-    "label": "ma_loiat",
-    "detail": "GridInput",
-    "insertText": "ma_loiat;"
-  },
-  {
     "label": "ma_lsx",
     "detail": "GridInput",
     "insertText": "ma_lsx;"
@@ -2985,16 +2135,6 @@
     "insertText": "ma_lsxn;"
   },
   {
-    "label": "ma_ly_doat",
-    "detail": "GridInput",
-    "insertText": "ma_ly_doat;"
-  },
-  {
-    "label": "ma_mam",
-    "detail": "GridInput",
-    "insertText": "ma_mam;"
-  },
-  {
     "label": "ma_mau",
     "detail": "GridInput",
     "insertText": "ma_mau;"
@@ -3008,11 +2148,6 @@
     "label": "ma_maubc",
     "detail": "GridInput",
     "insertText": "ma_maubc;"
-  },
-  {
-    "label": "ma_may",
-    "detail": "GridInput",
-    "insertText": "ma_may;"
   },
   {
     "label": "ma_mayat",
@@ -3040,39 +2175,14 @@
     "insertText": "ma_ncat;"
   },
   {
-    "label": "ma_ncc_cd",
-    "detail": "GridInput",
-    "insertText": "ma_ncc_cd;"
-  },
-  {
-    "label": "ma_nghiep_vu",
-    "detail": "GridInput",
-    "insertText": "ma_nghiep_vu;"
-  },
-  {
-    "label": "ma_nguon",
-    "detail": "GridInput",
-    "insertText": "ma_nguon;"
-  },
-  {
-    "label": "ma_nguonat",
-    "detail": "GridInput",
-    "insertText": "ma_nguonat;"
-  },
-  {
     "label": "ma_nh",
     "detail": "GridInput",
     "insertText": "ma_nh;"
   },
   {
-    "label": "ma_nh0",
+    "label": "ma_nhat",
     "detail": "GridInput",
-    "insertText": "ma_nh0;"
-  },
-  {
-    "label": "ma_nh0at",
-    "detail": "GridInput",
-    "insertText": "ma_nh0at;"
+    "insertText": "ma_nhat;"
   },
   {
     "label": "ma_nkat",
@@ -3130,6 +2240,11 @@
     "insertText": "ma_nv;"
   },
   {
+    "label": "ma_nv_ql",
+    "detail": "GridInput",
+    "insertText": "ma_nv_ql;"
+  },
+  {
     "label": "ma_nvat",
     "detail": "GridInput",
     "insertText": "ma_nvat;"
@@ -3140,19 +2255,14 @@
     "insertText": "ma_nvbh;"
   },
   {
-    "label": "ma_nvbhat",
+    "label": "ma_nvex",
     "detail": "GridInput",
-    "insertText": "ma_nvbhat;"
+    "insertText": "ma_nvex;"
   },
   {
-    "label": "ma_nvlex",
+    "label": "ma_nvtat",
     "detail": "GridInput",
-    "insertText": "ma_nvlex;"
-  },
-  {
-    "label": "ma_nvu",
-    "detail": "GridInput",
-    "insertText": "ma_nvu;"
+    "insertText": "ma_nvtat;"
   },
   {
     "label": "ma_nx",
@@ -3165,39 +2275,29 @@
     "insertText": "ma_nxat;"
   },
   {
-    "label": "ma_pd1",
-    "detail": "GridInput",
-    "insertText": "ma_pd1;"
-  },
-  {
-    "label": "ma_ph_loai",
-    "detail": "GridInput",
-    "insertText": "ma_ph_loai;"
-  },
-  {
     "label": "ma_phi",
     "detail": "GridInput",
     "insertText": "ma_phi;"
   },
   {
-    "label": "ma_phiat",
+    "label": "ma_phuong_ghat",
     "detail": "GridInput",
-    "insertText": "ma_phiat;"
-  },
-  {
-    "label": "ma_pp_xex",
-    "detail": "GridInput",
-    "insertText": "ma_pp_xex;"
-  },
-  {
-    "label": "ma_ppat",
-    "detail": "GridInput",
-    "insertText": "ma_ppat;"
+    "insertText": "ma_phuong_ghat;"
   },
   {
     "label": "ma_pt",
     "detail": "GridInput",
     "insertText": "ma_pt;"
+  },
+  {
+    "label": "ma_pt_hd",
+    "detail": "GridInput",
+    "insertText": "ma_pt_hd;"
+  },
+  {
+    "label": "ma_pt_pt",
+    "detail": "GridInput",
+    "insertText": "ma_pt_pt;"
   },
   {
     "label": "ma_px",
@@ -3210,11 +2310,6 @@
     "insertText": "ma_px_nat;"
   },
   {
-    "label": "ma_pxa",
-    "detail": "GridInput",
-    "insertText": "ma_pxa;"
-  },
-  {
     "label": "ma_pxat",
     "detail": "GridInput",
     "insertText": "ma_pxat;"
@@ -3225,24 +2320,24 @@
     "insertText": "ma_pxn;"
   },
   {
+    "label": "ma_qt",
+    "detail": "GridInput",
+    "insertText": "ma_qt;"
+  },
+  {
     "label": "ma_qtat",
     "detail": "GridInput",
     "insertText": "ma_qtat;"
   },
   {
+    "label": "ma_quan_ghat",
+    "detail": "GridInput",
+    "insertText": "ma_quan_ghat;"
+  },
+  {
     "label": "ma_quyen",
     "detail": "GridInput",
     "insertText": "ma_quyen;"
-  },
-  {
-    "label": "ma_rb",
-    "detail": "GridInput",
-    "insertText": "ma_rb;"
-  },
-  {
-    "label": "ma_rbat",
-    "detail": "GridInput",
-    "insertText": "ma_rbat;"
   },
   {
     "label": "ma_snk",
@@ -3265,24 +2360,9 @@
     "insertText": "ma_so_thue;"
   },
   {
-    "label": "ma_soex",
-    "detail": "GridInput",
-    "insertText": "ma_soex;"
-  },
-  {
     "label": "ma_sp",
     "detail": "GridInput",
     "insertText": "ma_sp;"
-  },
-  {
-    "label": "ma_sp_nvlat",
-    "detail": "GridInput",
-    "insertText": "ma_sp_nvlat;"
-  },
-  {
-    "label": "ma_spat",
-    "detail": "GridInput",
-    "insertText": "ma_spat;"
   },
   {
     "label": "ma_ss",
@@ -3293,6 +2373,26 @@
     "label": "ma_tb",
     "detail": "GridInput",
     "insertText": "ma_tb;"
+  },
+  {
+    "label": "ma_tb_me",
+    "detail": "GridInput",
+    "insertText": "ma_tb_me;"
+  },
+  {
+    "label": "ma_tbat",
+    "detail": "GridInput",
+    "insertText": "ma_tbat;"
+  },
+  {
+    "label": "ma_tbex",
+    "detail": "GridInput",
+    "insertText": "ma_tbex;"
+  },
+  {
+    "label": "ma_tbkd",
+    "detail": "GridInput",
+    "insertText": "ma_tbkd;"
   },
   {
     "label": "ma_tc1",
@@ -3315,9 +2415,24 @@
     "insertText": "ma_tcat;"
   },
   {
-    "label": "ma_tdat",
+    "label": "ma_td1",
     "detail": "GridInput",
-    "insertText": "ma_tdat;"
+    "insertText": "ma_td1;"
+  },
+  {
+    "label": "ma_td1at",
+    "detail": "GridInput",
+    "insertText": "ma_td1at;"
+  },
+  {
+    "label": "ma_td2",
+    "detail": "GridInput",
+    "insertText": "ma_td2;"
+  },
+  {
+    "label": "ma_td3",
+    "detail": "GridInput",
+    "insertText": "ma_td3;"
   },
   {
     "label": "ma_thue",
@@ -3335,26 +2450,6 @@
     "insertText": "ma_thue_nkat;"
   },
   {
-    "label": "ma_thue_nkex",
-    "detail": "GridInput",
-    "insertText": "ma_thue_nkex;"
-  },
-  {
-    "label": "ma_thue_pb",
-    "detail": "GridInput",
-    "insertText": "ma_thue_pb;"
-  },
-  {
-    "label": "ma_thue_pbat",
-    "detail": "GridInput",
-    "insertText": "ma_thue_pbat;"
-  },
-  {
-    "label": "ma_thue_tcat",
-    "detail": "GridInput",
-    "insertText": "ma_thue_tcat;"
-  },
-  {
     "label": "ma_thue_ttdb",
     "detail": "GridInput",
     "insertText": "ma_thue_ttdb;"
@@ -3365,29 +2460,19 @@
     "insertText": "ma_thue_ttdbat;"
   },
   {
-    "label": "ma_thue_tv",
-    "detail": "GridInput",
-    "insertText": "ma_thue_tv;"
-  },
-  {
-    "label": "ma_thue_tvat",
-    "detail": "GridInput",
-    "insertText": "ma_thue_tvat;"
-  },
-  {
     "label": "ma_thueat",
     "detail": "GridInput",
     "insertText": "ma_thueat;"
   },
   {
-    "label": "ma_thueex",
+    "label": "ma_tieu_chiat",
     "detail": "GridInput",
-    "insertText": "ma_thueex;"
+    "insertText": "ma_tieu_chiat;"
   },
   {
-    "label": "ma_tieu_mucat",
+    "label": "ma_tinh_ghat",
     "detail": "GridInput",
-    "insertText": "ma_tieu_mucat;"
+    "insertText": "ma_tinh_ghat;"
   },
   {
     "label": "ma_tn",
@@ -3405,19 +2490,9 @@
     "insertText": "ma_truongat;"
   },
   {
-    "label": "ma_tt",
-    "detail": "GridInput",
-    "insertText": "ma_tt;"
-  },
-  {
     "label": "ma_ttat",
     "detail": "GridInput",
     "insertText": "ma_ttat;"
-  },
-  {
-    "label": "ma_ttck",
-    "detail": "GridInput",
-    "insertText": "ma_ttck;"
   },
   {
     "label": "ma_vcat",
@@ -3425,19 +2500,9 @@
     "insertText": "ma_vcat;"
   },
   {
-    "label": "ma_ver",
-    "detail": "GridInput",
-    "insertText": "ma_ver;"
-  },
-  {
     "label": "ma_vi_tri",
     "detail": "GridInput",
     "insertText": "ma_vi_tri;"
-  },
-  {
-    "label": "ma_vi_tri_tcat",
-    "detail": "GridInput",
-    "insertText": "ma_vi_tri_tcat;"
   },
   {
     "label": "ma_vi_triat",
@@ -3480,44 +2545,9 @@
     "insertText": "ma_vt2lk;"
   },
   {
-    "label": "ma_vt9",
-    "detail": "GridInput",
-    "insertText": "ma_vt9;"
-  },
-  {
-    "label": "ma_vt_lsx",
-    "detail": "GridInput",
-    "insertText": "ma_vt_lsx;"
-  },
-  {
-    "label": "ma_vt_nat",
-    "detail": "GridInput",
-    "insertText": "ma_vt_nat;"
-  },
-  {
-    "label": "ma_vt_ncc",
-    "detail": "GridInput",
-    "insertText": "ma_vt_ncc;"
-  },
-  {
-    "label": "ma_vt_tcat",
-    "detail": "GridInput",
-    "insertText": "ma_vt_tcat;"
-  },
-  {
-    "label": "ma_vt_thay_theat",
-    "detail": "GridInput",
-    "insertText": "ma_vt_thay_theat;"
-  },
-  {
     "label": "ma_vt_xat",
     "detail": "GridInput",
     "insertText": "ma_vt_xat;"
-  },
-  {
-    "label": "ma_vt_xcat",
-    "detail": "GridInput",
-    "insertText": "ma_vt_xcat;"
   },
   {
     "label": "ma_vtat",
@@ -3525,29 +2555,9 @@
     "insertText": "ma_vtat;"
   },
   {
-    "label": "ma_vtex",
+    "label": "ma_vtlk",
     "detail": "GridInput",
-    "insertText": "ma_vtex;"
-  },
-  {
-    "label": "ma_vung",
-    "detail": "GridInput",
-    "insertText": "ma_vung;"
-  },
-  {
-    "label": "ma_vung0",
-    "detail": "GridInput",
-    "insertText": "ma_vung0;"
-  },
-  {
-    "label": "ma_vung_cd",
-    "detail": "GridInput",
-    "insertText": "ma_vung_cd;"
-  },
-  {
-    "label": "ma_vungat",
-    "detail": "GridInput",
-    "insertText": "ma_vungat;"
+    "insertText": "ma_vtlk;"
   },
   {
     "label": "ma_vv",
@@ -3555,9 +2565,19 @@
     "insertText": "ma_vv;"
   },
   {
+    "label": "ma_vv_d",
+    "detail": "GridInput",
+    "insertText": "ma_vv_d;"
+  },
+  {
     "label": "ma_vvat",
     "detail": "GridInput",
     "insertText": "ma_vvat;"
+  },
+  {
+    "label": "ma_vvex",
+    "detail": "GridInput",
+    "insertText": "ma_vvex;"
   },
   {
     "label": "ma_xu_ly",
@@ -3565,44 +2585,9 @@
     "insertText": "ma_xu_ly;"
   },
   {
-    "label": "man_dinh_luong",
+    "label": "mail_sdt",
     "detail": "GridInput",
-    "insertText": "man_dinh_luong;"
-  },
-  {
-    "label": "man_do_day",
-    "detail": "GridInput",
-    "insertText": "man_do_day;"
-  },
-  {
-    "label": "man_ty_trong",
-    "detail": "GridInput",
-    "insertText": "man_ty_trong;"
-  },
-  {
-    "label": "mat_ab",
-    "detail": "GridInput",
-    "insertText": "mat_ab;"
-  },
-  {
-    "label": "mat_abat",
-    "detail": "GridInput",
-    "insertText": "mat_abat;"
-  },
-  {
-    "label": "mat_dien",
-    "detail": "GridInput",
-    "insertText": "mat_dien;"
-  },
-  {
-    "label": "mat_phai",
-    "detail": "GridInput",
-    "insertText": "mat_phai;"
-  },
-  {
-    "label": "mat_trai",
-    "detail": "GridInput",
-    "insertText": "mat_trai;"
+    "insertText": "mail_sdt;"
   },
   {
     "label": "mau_bcat",
@@ -3613,6 +2598,16 @@
     "label": "mau_chuan",
     "detail": "GridInput",
     "insertText": "mau_chuan;"
+  },
+  {
+    "label": "mau_hd",
+    "detail": "GridInput",
+    "insertText": "mau_hd;"
+  },
+  {
+    "label": "mau_in",
+    "detail": "GridInput",
+    "insertText": "mau_in;"
   },
   {
     "label": "mau_in_yn",
@@ -3630,24 +2625,9 @@
     "insertText": "mau_so;"
   },
   {
-    "label": "may_hu",
+    "label": "mh_yn",
     "detail": "GridInput",
-    "insertText": "may_hu;"
-  },
-  {
-    "label": "mkey",
-    "detail": "GridInput",
-    "insertText": "mkey;"
-  },
-  {
-    "label": "mo_ln",
-    "detail": "GridInput",
-    "insertText": "mo_ln;"
-  },
-  {
-    "label": "mo_nbr",
-    "detail": "GridInput",
-    "insertText": "mo_nbr;"
+    "insertText": "mh_yn;"
   },
   {
     "label": "mo_ta",
@@ -3655,9 +2635,9 @@
     "insertText": "mo_ta;"
   },
   {
-    "label": "mo_xb",
+    "label": "model",
     "detail": "GridInput",
-    "insertText": "mo_xb;"
+    "insertText": "model;"
   },
   {
     "label": "mst",
@@ -3675,24 +2655,39 @@
     "insertText": "mst_kh;"
   },
   {
-    "label": "muc_thue",
+    "label": "mt_nam",
     "detail": "GridInput",
-    "insertText": "muc_thue;"
+    "insertText": "mt_nam;"
   },
   {
-    "label": "n1",
+    "label": "mt_nam_nt",
     "detail": "GridInput",
-    "insertText": "n1;"
+    "insertText": "mt_nam_nt;"
   },
   {
-    "label": "n2",
+    "label": "mt_quy",
     "detail": "GridInput",
-    "insertText": "n2;"
+    "insertText": "mt_quy;"
   },
   {
-    "label": "n3",
+    "label": "mt_quy_nt",
     "detail": "GridInput",
-    "insertText": "n3;"
+    "insertText": "mt_quy_nt;"
+  },
+  {
+    "label": "mt_thang",
+    "detail": "GridInput",
+    "insertText": "mt_thang;"
+  },
+  {
+    "label": "mt_thang_nt",
+    "detail": "GridInput",
+    "insertText": "mt_thang_nt;"
+  },
+  {
+    "label": "muc_uu_tien",
+    "detail": "GridInput",
+    "insertText": "muc_uu_tien;"
   },
   {
     "label": "nam",
@@ -3703,6 +2698,11 @@
     "label": "name",
     "detail": "GridInput",
     "insertText": "name;"
+  },
+  {
+    "label": "nameex",
+    "detail": "GridInput",
+    "insertText": "nameex;"
   },
   {
     "label": "nang_suat",
@@ -3735,19 +2735,24 @@
     "insertText": "nc_th;"
   },
   {
-    "label": "ncc_tx",
+    "label": "ng_de_xuat",
     "detail": "GridInput",
-    "insertText": "ncc_tx;"
+    "insertText": "ng_de_xuat;"
   },
   {
-    "label": "nd_loi_nh",
+    "label": "ngam_dinh",
     "detail": "GridInput",
-    "insertText": "nd_loi_nh;"
+    "insertText": "ngam_dinh;"
   },
   {
     "label": "ngan_hang",
     "detail": "GridInput",
     "insertText": "ngan_hang;"
+  },
+  {
+    "label": "ngan_hangex",
+    "detail": "GridInput",
+    "insertText": "ngan_hangex;"
   },
   {
     "label": "ngay",
@@ -3780,14 +2785,14 @@
     "insertText": "ngay_ct2;"
   },
   {
+    "label": "ngay_ct_00",
+    "detail": "GridInput",
+    "insertText": "ngay_ct_00;"
+  },
+  {
     "label": "ngay_ct_gs",
     "detail": "GridInput",
     "insertText": "ngay_ct_gs;"
-  },
-  {
-    "label": "ngay_ct_hd",
-    "detail": "GridInput",
-    "insertText": "ngay_ct_hd;"
   },
   {
     "label": "ngay_ct_i",
@@ -3795,34 +2800,34 @@
     "insertText": "ngay_ct_i;"
   },
   {
-    "label": "ngay_ct_tkex",
-    "detail": "GridInput",
-    "insertText": "ngay_ct_tkex;"
-  },
-  {
     "label": "ngay_dat",
     "detail": "GridInput",
     "insertText": "ngay_dat;"
   },
   {
-    "label": "ngay_giam_bh",
+    "label": "ngay_den",
     "detail": "GridInput",
-    "insertText": "ngay_giam_bh;"
+    "insertText": "ngay_den;"
+  },
+  {
+    "label": "ngay_dh_gn",
+    "detail": "GridInput",
+    "insertText": "ngay_dh_gn;"
+  },
+  {
+    "label": "ngay_dn",
+    "detail": "GridInput",
+    "insertText": "ngay_dn;"
+  },
+  {
+    "label": "ngay_dung",
+    "detail": "GridInput",
+    "insertText": "ngay_dung;"
   },
   {
     "label": "ngay_giao",
     "detail": "GridInput",
     "insertText": "ngay_giao;"
-  },
-  {
-    "label": "ngay_giao_truoc",
-    "detail": "GridInput",
-    "insertText": "ngay_giao_truoc;"
-  },
-  {
-    "label": "ngay_giaoex",
-    "detail": "GridInput",
-    "insertText": "ngay_giaoex;"
   },
   {
     "label": "ngay_hd",
@@ -3845,14 +2850,14 @@
     "insertText": "ngay_hd_lq;"
   },
   {
+    "label": "ngay_hddt",
+    "detail": "GridInput",
+    "insertText": "ngay_hddt;"
+  },
+  {
     "label": "ngay_hdex",
     "detail": "GridInput",
     "insertText": "ngay_hdex;"
-  },
-  {
-    "label": "ngay_het_cd",
-    "detail": "GridInput",
-    "insertText": "ngay_het_cd;"
   },
   {
     "label": "ngay_hhbh",
@@ -3880,14 +2885,14 @@
     "insertText": "ngay_hl_tu;"
   },
   {
-    "label": "ngay_hop_dong",
+    "label": "ngay_hoan_thanh",
     "detail": "GridInput",
-    "insertText": "ngay_hop_dong;"
+    "insertText": "ngay_hoan_thanh;"
   },
   {
-    "label": "ngay_hop_dongex",
+    "label": "ngay_hoat_dong",
     "detail": "GridInput",
-    "insertText": "ngay_hop_dongex;"
+    "insertText": "ngay_hoat_dong;"
   },
   {
     "label": "ngay_ht",
@@ -3895,19 +2900,19 @@
     "insertText": "ngay_ht;"
   },
   {
-    "label": "ngay_kh1",
+    "label": "ngay_kd",
     "detail": "GridInput",
-    "insertText": "ngay_kh1;"
+    "insertText": "ngay_kd;"
   },
   {
-    "label": "ngay_kh2",
+    "label": "ngay_ket_thuc",
     "detail": "GridInput",
-    "insertText": "ngay_kh2;"
+    "insertText": "ngay_ket_thuc;"
   },
   {
-    "label": "ngay_kham",
+    "label": "ngay_kk",
     "detail": "GridInput",
-    "insertText": "ngay_kham;"
+    "insertText": "ngay_kk;"
   },
   {
     "label": "ngay_kt",
@@ -3920,54 +2925,14 @@
     "insertText": "ngay_ku;"
   },
   {
-    "label": "ngay_lam_lai",
-    "detail": "GridInput",
-    "insertText": "ngay_lam_lai;"
-  },
-  {
     "label": "ngay_lct",
     "detail": "GridInput",
     "insertText": "ngay_lct;"
   },
   {
-    "label": "ngay_lo_kd",
+    "label": "ngay_mua",
     "detail": "GridInput",
-    "insertText": "ngay_lo_kd;"
-  },
-  {
-    "label": "ngay_nghi_den",
-    "detail": "GridInput",
-    "insertText": "ngay_nghi_den;"
-  },
-  {
-    "label": "ngay_nghi_dg1",
-    "detail": "GridInput",
-    "insertText": "ngay_nghi_dg1;"
-  },
-  {
-    "label": "ngay_nghi_dg2",
-    "detail": "GridInput",
-    "insertText": "ngay_nghi_dg2;"
-  },
-  {
-    "label": "ngay_nghi_sau",
-    "detail": "GridInput",
-    "insertText": "ngay_nghi_sau;"
-  },
-  {
-    "label": "ngay_nghi_truoc",
-    "detail": "GridInput",
-    "insertText": "ngay_nghi_truoc;"
-  },
-  {
-    "label": "ngay_nghi_tu",
-    "detail": "GridInput",
-    "insertText": "ngay_nghi_tu;"
-  },
-  {
-    "label": "ngay_nhan",
-    "detail": "GridInput",
-    "insertText": "ngay_nhan;"
+    "insertText": "ngay_mua;"
   },
   {
     "label": "ngay_nhap",
@@ -3990,19 +2955,9 @@
     "insertText": "ngay_phieu;"
   },
   {
-    "label": "ngay_sieu_am",
-    "detail": "GridInput",
-    "insertText": "ngay_sieu_am;"
-  },
-  {
     "label": "ngay_sinh",
     "detail": "GridInput",
     "insertText": "ngay_sinh;"
-  },
-  {
-    "label": "ngay_sinh_con",
-    "detail": "GridInput",
-    "insertText": "ngay_sinh_con;"
   },
   {
     "label": "ngay_sx",
@@ -4010,24 +2965,14 @@
     "insertText": "ngay_sx;"
   },
   {
-    "label": "ngay_tang_bh",
+    "label": "ngay_td1",
     "detail": "GridInput",
-    "insertText": "ngay_tang_bh;"
-  },
-  {
-    "label": "ngay_tc",
-    "detail": "GridInput",
-    "insertText": "ngay_tc;"
+    "insertText": "ngay_td1;"
   },
   {
     "label": "ngay_tdtt",
     "detail": "GridInput",
     "insertText": "ngay_tdtt;"
-  },
-  {
-    "label": "ngay_th",
-    "detail": "GridInput",
-    "insertText": "ngay_th;"
   },
   {
     "label": "ngay_th1",
@@ -4040,14 +2985,19 @@
     "insertText": "ngay_th2;"
   },
   {
-    "label": "ngay_thang7",
+    "label": "ngay_thdk",
     "detail": "GridInput",
-    "insertText": "ngay_thang7;"
+    "insertText": "ngay_thdk;"
   },
   {
-    "label": "ngay_tl",
+    "label": "ngay_thkd",
     "detail": "GridInput",
-    "insertText": "ngay_tl;"
+    "insertText": "ngay_thkd;"
+  },
+  {
+    "label": "ngay_thuc_hien",
+    "detail": "GridInput",
+    "insertText": "ngay_thuc_hien;"
   },
   {
     "label": "ngay_tt",
@@ -4060,14 +3010,39 @@
     "insertText": "ngay_tt_xoay;"
   },
   {
+    "label": "ngay_tu",
+    "detail": "GridInput",
+    "insertText": "ngay_tu;"
+  },
+  {
     "label": "ngay_yc",
     "detail": "GridInput",
     "insertText": "ngay_yc;"
   },
   {
-    "label": "nguoi_lh",
+    "label": "nguoi_dx",
     "detail": "GridInput",
-    "insertText": "nguoi_lh;"
+    "insertText": "nguoi_dx;"
+  },
+  {
+    "label": "nguoi_ll",
+    "detail": "GridInput",
+    "insertText": "nguoi_ll;"
+  },
+  {
+    "label": "nguoi_nhan",
+    "detail": "GridInput",
+    "insertText": "nguoi_nhan;"
+  },
+  {
+    "label": "nguoi_nhanex",
+    "detail": "GridInput",
+    "insertText": "nguoi_nhanex;"
+  },
+  {
+    "label": "nguoi_thuc_hien",
+    "detail": "GridInput",
+    "insertText": "nguoi_thuc_hien;"
   },
   {
     "label": "nguoi_tinh",
@@ -4075,9 +3050,19 @@
     "insertText": "nguoi_tinh;"
   },
   {
+    "label": "nguoi_yc",
+    "detail": "GridInput",
+    "insertText": "nguoi_yc;"
+  },
+  {
     "label": "nguon",
     "detail": "GridInput",
     "insertText": "nguon;"
+  },
+  {
+    "label": "nguon_vt",
+    "detail": "GridInput",
+    "insertText": "nguon_vt;"
   },
   {
     "label": "nguyen_gia",
@@ -4155,14 +3140,29 @@
     "insertText": "nh_vt3at;"
   },
   {
+    "label": "nh_vt4at",
+    "detail": "GridInput",
+    "insertText": "nh_vt4at;"
+  },
+  {
+    "label": "nh_vt5at",
+    "detail": "GridInput",
+    "insertText": "nh_vt5at;"
+  },
+  {
+    "label": "nh_vt6at",
+    "detail": "GridInput",
+    "insertText": "nh_vt6at;"
+  },
+  {
     "label": "nh_vt9",
     "detail": "GridInput",
     "insertText": "nh_vt9;"
   },
   {
-    "label": "nhan_vien",
+    "label": "nh_vtlk",
     "detail": "GridInput",
-    "insertText": "nhan_vien;"
+    "insertText": "nh_vtlk;"
   },
   {
     "label": "nhap_sl",
@@ -4185,29 +3185,9 @@
     "insertText": "nhieu_dvt0ex;"
   },
   {
-    "label": "nhieu_dvt_nex",
-    "detail": "GridInput",
-    "insertText": "nhieu_dvt_nex;"
-  },
-  {
-    "label": "nhieu_dvt_xcex",
-    "detail": "GridInput",
-    "insertText": "nhieu_dvt_xcex;"
-  },
-  {
     "label": "nhieu_dvtex",
     "detail": "GridInput",
     "insertText": "nhieu_dvtex;"
-  },
-  {
-    "label": "nhom_mau",
-    "detail": "GridInput",
-    "insertText": "nhom_mau;"
-  },
-  {
-    "label": "nhu_cau_tt",
-    "detail": "GridInput",
-    "insertText": "nhu_cau_tt;"
   },
   {
     "label": "nk",
@@ -4235,29 +3215,9 @@
     "insertText": "nm_so;"
   },
   {
-    "label": "no_dk",
-    "detail": "GridInput",
-    "insertText": "no_dk;"
-  },
-  {
-    "label": "no_dk_nt",
-    "detail": "GridInput",
-    "insertText": "no_dk_nt;"
-  },
-  {
     "label": "noi_dung",
     "detail": "GridInput",
     "insertText": "noi_dung;"
-  },
-  {
-    "label": "noi_xuat",
-    "detail": "GridInput",
-    "insertText": "noi_xuat;"
-  },
-  {
-    "label": "note",
-    "detail": "GridInput",
-    "insertText": "note;"
   },
   {
     "label": "notify_mail_yn",
@@ -4265,19 +3225,29 @@
     "insertText": "notify_mail_yn;"
   },
   {
-    "label": "number_format",
+    "label": "ns_lk_thang",
     "detail": "GridInput",
-    "insertText": "number_format;"
+    "insertText": "ns_lk_thang;"
   },
   {
-    "label": "nvl_chinh_yn",
+    "label": "ns_nam",
     "detail": "GridInput",
-    "insertText": "nvl_chinh_yn;"
+    "insertText": "ns_nam;"
   },
   {
-    "label": "nvl_khong_dat",
+    "label": "ns_nam_cl",
     "detail": "GridInput",
-    "insertText": "nvl_khong_dat;"
+    "insertText": "ns_nam_cl;"
+  },
+  {
+    "label": "ns_thuc_hien",
+    "detail": "GridInput",
+    "insertText": "ns_thuc_hien;"
+  },
+  {
+    "label": "nv_ksat",
+    "detail": "GridInput",
+    "insertText": "nv_ksat;"
   },
   {
     "label": "ong_ba",
@@ -4290,44 +3260,9 @@
     "insertText": "order_id;"
   },
   {
-    "label": "order_id_import",
-    "detail": "GridInput",
-    "insertText": "order_id_import;"
-  },
-  {
     "label": "order_type",
     "detail": "GridInput",
     "insertText": "order_type;"
-  },
-  {
-    "label": "order_type_import",
-    "detail": "GridInput",
-    "insertText": "order_type_import;"
-  },
-  {
-    "label": "packet_bd",
-    "detail": "GridInput",
-    "insertText": "packet_bd;"
-  },
-  {
-    "label": "packet_kt",
-    "detail": "GridInput",
-    "insertText": "packet_kt;"
-  },
-  {
-    "label": "packet_status",
-    "detail": "GridInput",
-    "insertText": "packet_status;"
-  },
-  {
-    "label": "packet_status_name",
-    "detail": "GridInput",
-    "insertText": "packet_status_name;"
-  },
-  {
-    "label": "paper_ynex",
-    "detail": "GridInput",
-    "insertText": "paper_ynex;"
   },
   {
     "label": "parallel_yn",
@@ -4335,74 +3270,14 @@
     "insertText": "parallel_yn;"
   },
   {
-    "label": "pb",
-    "detail": "GridInput",
-    "insertText": "pb;"
-  },
-  {
-    "label": "pb_do_day",
-    "detail": "GridInput",
-    "insertText": "pb_do_day;"
-  },
-  {
-    "label": "pb_nt",
-    "detail": "GridInput",
-    "insertText": "pb_nt;"
-  },
-  {
     "label": "pdf_yn",
     "detail": "GridInput",
     "insertText": "pdf_yn;"
   },
   {
-    "label": "pending_type",
+    "label": "phan_loai",
     "detail": "GridInput",
-    "insertText": "pending_type;"
-  },
-  {
-    "label": "pending_type_name",
-    "detail": "GridInput",
-    "insertText": "pending_type_name;"
-  },
-  {
-    "label": "pex",
-    "detail": "GridInput",
-    "insertText": "pex;"
-  },
-  {
-    "label": "ph_yn",
-    "detail": "GridInput",
-    "insertText": "ph_yn;"
-  },
-  {
-    "label": "pham_chat_kem_sl",
-    "detail": "GridInput",
-    "insertText": "pham_chat_kem_sl;"
-  },
-  {
-    "label": "pham_chat_kem_tt",
-    "detail": "GridInput",
-    "insertText": "pham_chat_kem_tt;"
-  },
-  {
-    "label": "pham_chat_tot_sl",
-    "detail": "GridInput",
-    "insertText": "pham_chat_tot_sl;"
-  },
-  {
-    "label": "pham_chat_tot_tt",
-    "detail": "GridInput",
-    "insertText": "pham_chat_tot_tt;"
-  },
-  {
-    "label": "phi_nh",
-    "detail": "GridInput",
-    "insertText": "phi_nh;"
-  },
-  {
-    "label": "phi_nh_nt",
-    "detail": "GridInput",
-    "insertText": "phi_nh_nt;"
+    "insertText": "phan_loai;"
   },
   {
     "label": "phuong_xa",
@@ -4430,44 +3305,14 @@
     "insertText": "pn_soat;"
   },
   {
-    "label": "po_so",
+    "label": "pr1_ln",
     "detail": "GridInput",
-    "insertText": "po_so;"
+    "insertText": "pr1_ln;"
   },
   {
-    "label": "pp_ck_dv_nt",
+    "label": "pr1_so",
     "detail": "GridInput",
-    "insertText": "pp_ck_dv_nt;"
-  },
-  {
-    "label": "pp_ck_nt",
-    "detail": "GridInput",
-    "insertText": "pp_ck_nt;"
-  },
-  {
-    "label": "pp_cp_dv_nt",
-    "detail": "GridInput",
-    "insertText": "pp_cp_dv_nt;"
-  },
-  {
-    "label": "pp_cp_nt",
-    "detail": "GridInput",
-    "insertText": "pp_cp_nt;"
-  },
-  {
-    "label": "pp_kd",
-    "detail": "GridInput",
-    "insertText": "pp_kd;"
-  },
-  {
-    "label": "prd_id",
-    "detail": "GridInput",
-    "insertText": "prd_id;"
-  },
-  {
-    "label": "print_type",
-    "detail": "GridInput",
-    "insertText": "print_type;"
+    "insertText": "pr1_so;"
   },
   {
     "label": "ps",
@@ -4510,11 +3355,6 @@
     "insertText": "pt_nt;"
   },
   {
-    "label": "pt_ttat",
-    "detail": "GridInput",
-    "insertText": "pt_ttat;"
-  },
-  {
     "label": "px_gia_dd",
     "detail": "GridInput",
     "insertText": "px_gia_dd;"
@@ -4530,14 +3370,19 @@
     "insertText": "px_so;"
   },
   {
+    "label": "pxdc_ln",
+    "detail": "GridInput",
+    "insertText": "pxdc_ln;"
+  },
+  {
+    "label": "pxdc_so",
+    "detail": "GridInput",
+    "insertText": "pxdc_so;"
+  },
+  {
     "label": "qc_yn",
     "detail": "GridInput",
     "insertText": "qc_yn;"
-  },
-  {
-    "label": "qd_tung_phan",
-    "detail": "GridInput",
-    "insertText": "qd_tung_phan;"
   },
   {
     "label": "quan_he",
@@ -4550,29 +3395,9 @@
     "insertText": "quan_huyen;"
   },
   {
-    "label": "qui_cach_lsx",
-    "detail": "GridInput",
-    "insertText": "qui_cach_lsx;"
-  },
-  {
-    "label": "qui_ra_met",
-    "detail": "GridInput",
-    "insertText": "qui_ra_met;"
-  },
-  {
     "label": "quoc_gia",
     "detail": "GridInput",
     "insertText": "quoc_gia;"
-  },
-  {
-    "label": "quy_cach",
-    "detail": "GridInput",
-    "insertText": "quy_cach;"
-  },
-  {
-    "label": "quy_doi",
-    "detail": "GridInput",
-    "insertText": "quy_doi;"
   },
   {
     "label": "quyen_so",
@@ -4590,14 +3415,14 @@
     "insertText": "readonly_ynex;"
   },
   {
-    "label": "replace_yn",
-    "detail": "GridInput",
-    "insertText": "replace_yn;"
-  },
-  {
     "label": "report_id",
     "detail": "GridInput",
     "insertText": "report_id;"
+  },
+  {
+    "label": "resign_yn",
+    "detail": "GridInput",
+    "insertText": "resign_yn;"
   },
   {
     "label": "rework",
@@ -4615,19 +3440,9 @@
     "insertText": "rp_file_id;"
   },
   {
-    "label": "s1",
+    "label": "s3at",
     "detail": "GridInput",
-    "insertText": "s1;"
-  },
-  {
-    "label": "s2",
-    "detail": "GridInput",
-    "insertText": "s2;"
-  },
-  {
-    "label": "s3",
-    "detail": "GridInput",
-    "insertText": "s3;"
+    "insertText": "s3at;"
   },
   {
     "label": "s6",
@@ -4635,54 +3450,29 @@
     "insertText": "s6;"
   },
   {
-    "label": "sai_can_duoi",
+    "label": "sdt",
     "detail": "GridInput",
-    "insertText": "sai_can_duoi;"
+    "insertText": "sdt;"
   },
   {
-    "label": "sai_can_tren",
+    "label": "sign_date",
     "detail": "GridInput",
-    "insertText": "sai_can_tren;"
+    "insertText": "sign_date;"
   },
   {
-    "label": "san_pham_moi",
+    "label": "sign_yn",
     "detail": "GridInput",
-    "insertText": "san_pham_moi;"
+    "insertText": "sign_yn;"
   },
   {
-    "label": "say_thai_yn",
+    "label": "signer",
     "detail": "GridInput",
-    "insertText": "say_thai_yn;"
-  },
-  {
-    "label": "scl_ghi_chuex",
-    "detail": "GridInput",
-    "insertText": "scl_ghi_chuex;"
-  },
-  {
-    "label": "scl_gia_ntex",
-    "detail": "GridInput",
-    "insertText": "scl_gia_ntex;"
-  },
-  {
-    "label": "scl_sl_tuex",
-    "detail": "GridInput",
-    "insertText": "scl_sl_tuex;"
-  },
-  {
-    "label": "sl",
-    "detail": "GridInput",
-    "insertText": "sl;"
+    "insertText": "signer;"
   },
   {
     "label": "sl_bd_cds",
     "detail": "GridInput",
     "insertText": "sl_bd_cds;"
-  },
-  {
-    "label": "sl_cho_ve",
-    "detail": "GridInput",
-    "insertText": "sl_cho_ve;"
   },
   {
     "label": "sl_cl",
@@ -4705,16 +3495,6 @@
     "insertText": "sl_dat;"
   },
   {
-    "label": "sl_dat_td",
-    "detail": "GridInput",
-    "insertText": "sl_dat_td;"
-  },
-  {
-    "label": "sl_dat_tt",
-    "detail": "GridInput",
-    "insertText": "sl_dat_tt;"
-  },
-  {
     "label": "sl_den",
     "detail": "GridInput",
     "insertText": "sl_den;"
@@ -4730,14 +3510,24 @@
     "insertText": "sl_dh0;"
   },
   {
-    "label": "sl_dinh_muc",
+    "label": "sl_dh_gn",
     "detail": "GridInput",
-    "insertText": "sl_dinh_muc;"
+    "insertText": "sl_dh_gn;"
+  },
+  {
+    "label": "sl_dong",
+    "detail": "GridInput",
+    "insertText": "sl_dong;"
   },
   {
     "label": "sl_duyet",
     "detail": "GridInput",
     "insertText": "sl_duyet;"
+  },
+  {
+    "label": "sl_dxa",
+    "detail": "GridInput",
+    "insertText": "sl_dxa;"
   },
   {
     "label": "sl_giao",
@@ -4750,34 +3540,14 @@
     "insertText": "sl_hd;"
   },
   {
-    "label": "sl_hda",
-    "detail": "GridInput",
-    "insertText": "sl_hda;"
-  },
-  {
-    "label": "sl_hdm",
-    "detail": "GridInput",
-    "insertText": "sl_hdm;"
-  },
-  {
-    "label": "sl_hdm_huy",
-    "detail": "GridInput",
-    "insertText": "sl_hdm_huy;"
-  },
-  {
     "label": "sl_hong",
     "detail": "GridInput",
     "insertText": "sl_hong;"
   },
   {
-    "label": "sl_huy",
+    "label": "sl_kd",
     "detail": "GridInput",
-    "insertText": "sl_huy;"
-  },
-  {
-    "label": "sl_kd_nh2",
-    "detail": "GridInput",
-    "insertText": "sl_kd_nh2;"
+    "insertText": "sl_kd;"
   },
   {
     "label": "sl_kdex",
@@ -4788,31 +3558,6 @@
     "label": "sl_kg",
     "detail": "GridInput",
     "insertText": "sl_kg;"
-  },
-  {
-    "label": "sl_kg_n",
-    "detail": "GridInput",
-    "insertText": "sl_kg_n;"
-  },
-  {
-    "label": "sl_kg_xc",
-    "detail": "GridInput",
-    "insertText": "sl_kg_xc;"
-  },
-  {
-    "label": "sl_kgth",
-    "detail": "GridInput",
-    "insertText": "sl_kgth;"
-  },
-  {
-    "label": "sl_kgth_n",
-    "detail": "GridInput",
-    "insertText": "sl_kgth_n;"
-  },
-  {
-    "label": "sl_kgth_xc",
-    "detail": "GridInput",
-    "insertText": "sl_kgth_xc;"
   },
   {
     "label": "sl_kk",
@@ -4830,21 +3575,6 @@
     "insertText": "sl_lam_lai;"
   },
   {
-    "label": "sl_lo_kd",
-    "detail": "GridInput",
-    "insertText": "sl_lo_kd;"
-  },
-  {
-    "label": "sl_loi",
-    "detail": "GridInput",
-    "insertText": "sl_loi;"
-  },
-  {
-    "label": "sl_mau",
-    "detail": "GridInput",
-    "insertText": "sl_mau;"
-  },
-  {
     "label": "sl_max",
     "detail": "GridInput",
     "insertText": "sl_max;"
@@ -4855,29 +3585,19 @@
     "insertText": "sl_may;"
   },
   {
-    "label": "sl_met",
-    "detail": "GridInput",
-    "insertText": "sl_met;"
-  },
-  {
-    "label": "sl_met_dau_vao",
-    "detail": "GridInput",
-    "insertText": "sl_met_dau_vao;"
-  },
-  {
-    "label": "sl_met_dm",
-    "detail": "GridInput",
-    "insertText": "sl_met_dm;"
-  },
-  {
-    "label": "sl_met_tx",
-    "detail": "GridInput",
-    "insertText": "sl_met_tx;"
-  },
-  {
     "label": "sl_min",
     "detail": "GridInput",
     "insertText": "sl_min;"
+  },
+  {
+    "label": "sl_n",
+    "detail": "GridInput",
+    "insertText": "sl_n;"
+  },
+  {
+    "label": "sl_n_lai",
+    "detail": "GridInput",
+    "insertText": "sl_n_lai;"
   },
   {
     "label": "sl_nc",
@@ -4895,6 +3615,21 @@
     "insertText": "sl_nhap;"
   },
   {
+    "label": "sl_nhap_bdsc",
+    "detail": "GridInput",
+    "insertText": "sl_nhap_bdsc;"
+  },
+  {
+    "label": "sl_nhap_goc",
+    "detail": "GridInput",
+    "insertText": "sl_nhap_goc;"
+  },
+  {
+    "label": "sl_nhap_lai",
+    "detail": "GridInput",
+    "insertText": "sl_nhap_lai;"
+  },
+  {
     "label": "sl_nm0ex",
     "detail": "GridInput",
     "insertText": "sl_nm0ex;"
@@ -4910,39 +3645,9 @@
     "insertText": "sl_pnd;"
   },
   {
-    "label": "sl_pnh",
+    "label": "sl_po",
     "detail": "GridInput",
-    "insertText": "sl_pnh;"
-  },
-  {
-    "label": "sl_pr1",
-    "detail": "GridInput",
-    "insertText": "sl_pr1;"
-  },
-  {
-    "label": "sl_pxh",
-    "detail": "GridInput",
-    "insertText": "sl_pxh;"
-  },
-  {
-    "label": "sl_q08",
-    "detail": "GridInput",
-    "insertText": "sl_q08;"
-  },
-  {
-    "label": "sl_q12",
-    "detail": "GridInput",
-    "insertText": "sl_q12;"
-  },
-  {
-    "label": "sl_q14",
-    "detail": "GridInput",
-    "insertText": "sl_q14;"
-  },
-  {
-    "label": "sl_qdoi",
-    "detail": "GridInput",
-    "insertText": "sl_qdoi;"
+    "insertText": "sl_po;"
   },
   {
     "label": "sl_sd",
@@ -4950,14 +3655,9 @@
     "insertText": "sl_sd;"
   },
   {
-    "label": "sl_sp",
+    "label": "sl_sd_thang",
     "detail": "GridInput",
-    "insertText": "sl_sp;"
-  },
-  {
-    "label": "sl_sp_thung",
-    "detail": "GridInput",
-    "insertText": "sl_sp_thung;"
+    "insertText": "sl_sd_thang;"
   },
   {
     "label": "sl_ss",
@@ -4970,34 +3670,9 @@
     "insertText": "sl_ss0ex;"
   },
   {
-    "label": "sl_sx",
+    "label": "sl_tl",
     "detail": "GridInput",
-    "insertText": "sl_sx;"
-  },
-  {
-    "label": "sl_sx1ex",
-    "detail": "GridInput",
-    "insertText": "sl_sx1ex;"
-  },
-  {
-    "label": "sl_th",
-    "detail": "GridInput",
-    "insertText": "sl_th;"
-  },
-  {
-    "label": "sl_them",
-    "detail": "GridInput",
-    "insertText": "sl_them;"
-  },
-  {
-    "label": "sl_thieu",
-    "detail": "GridInput",
-    "insertText": "sl_thieu;"
-  },
-  {
-    "label": "sl_thuc_hien",
-    "detail": "GridInput",
-    "insertText": "sl_thuc_hien;"
+    "insertText": "sl_tl;"
   },
   {
     "label": "sl_tlex",
@@ -5010,49 +3685,9 @@
     "insertText": "sl_tn;"
   },
   {
-    "label": "sl_to",
-    "detail": "GridInput",
-    "insertText": "sl_to;"
-  },
-  {
-    "label": "sl_to_in",
-    "detail": "GridInput",
-    "insertText": "sl_to_in;"
-  },
-  {
-    "label": "sl_to_n",
-    "detail": "GridInput",
-    "insertText": "sl_to_n;"
-  },
-  {
-    "label": "sl_to_xc",
-    "detail": "GridInput",
-    "insertText": "sl_to_xc;"
-  },
-  {
-    "label": "sl_toi_thieuex",
-    "detail": "GridInput",
-    "insertText": "sl_toi_thieuex;"
-  },
-  {
     "label": "sl_ton",
     "detail": "GridInput",
     "insertText": "sl_ton;"
-  },
-  {
-    "label": "sl_toth",
-    "detail": "GridInput",
-    "insertText": "sl_toth;"
-  },
-  {
-    "label": "sl_toth_n",
-    "detail": "GridInput",
-    "insertText": "sl_toth_n;"
-  },
-  {
-    "label": "sl_toth_xc",
-    "detail": "GridInput",
-    "insertText": "sl_toth_xc;"
   },
   {
     "label": "sl_tt",
@@ -5070,14 +3705,19 @@
     "insertText": "sl_tu;"
   },
   {
+    "label": "sl_xk",
+    "detail": "GridInput",
+    "insertText": "sl_xk;"
+  },
+  {
     "label": "sl_xuat",
     "detail": "GridInput",
     "insertText": "sl_xuat;"
   },
   {
-    "label": "sl_xuat_bu",
+    "label": "sl_xuat_bdsc",
     "detail": "GridInput",
-    "insertText": "sl_xuat_bu;"
+    "insertText": "sl_xuat_bdsc;"
   },
   {
     "label": "sl_xuat_ex",
@@ -5090,34 +3730,19 @@
     "insertText": "sl_yc;"
   },
   {
-    "label": "sl_zdn",
+    "label": "sl_yccg",
     "detail": "GridInput",
-    "insertText": "sl_zdn;"
+    "insertText": "sl_yccg;"
   },
   {
-    "label": "so_bg",
+    "label": "sl_ztc",
     "detail": "GridInput",
-    "insertText": "so_bg;"
-  },
-  {
-    "label": "so_bgat",
-    "detail": "GridInput",
-    "insertText": "so_bgat;"
+    "insertText": "sl_ztc;"
   },
   {
     "label": "so_bi_mat",
     "detail": "GridInput",
     "insertText": "so_bi_mat;"
-  },
-  {
-    "label": "so_btg",
-    "detail": "GridInput",
-    "insertText": "so_btg;"
-  },
-  {
-    "label": "so_chat_luong",
-    "detail": "GridInput",
-    "insertText": "so_chat_luong;"
   },
   {
     "label": "so_chuyenex",
@@ -5145,14 +3770,19 @@
     "insertText": "so_ct2ex;"
   },
   {
+    "label": "so_ct_00",
+    "detail": "GridInput",
+    "insertText": "so_ct_00;"
+  },
+  {
+    "label": "so_ct_ec",
+    "detail": "GridInput",
+    "insertText": "so_ct_ec;"
+  },
+  {
     "label": "so_ct_gs",
     "detail": "GridInput",
     "insertText": "so_ct_gs;"
-  },
-  {
-    "label": "so_ct_hd",
-    "detail": "GridInput",
-    "insertText": "so_ct_hd;"
   },
   {
     "label": "so_ct_hddt",
@@ -5160,24 +3790,19 @@
     "insertText": "so_ct_hddt;"
   },
   {
-    "label": "so_ct_hdmex",
-    "detail": "GridInput",
-    "insertText": "so_ct_hdmex;"
-  },
-  {
     "label": "so_ct_i",
     "detail": "GridInput",
     "insertText": "so_ct_i;"
   },
   {
-    "label": "so_ct_sx1",
+    "label": "so_ct_yccg",
     "detail": "GridInput",
-    "insertText": "so_ct_sx1;"
+    "insertText": "so_ct_yccg;"
   },
   {
-    "label": "so_ct_tkat",
+    "label": "so_ct_yccgat",
     "detail": "GridInput",
-    "insertText": "so_ct_tkat;"
+    "insertText": "so_ct_yccgat;"
   },
   {
     "label": "so_ctex",
@@ -5185,19 +3810,29 @@
     "insertText": "so_ctex;"
   },
   {
+    "label": "so_cuon",
+    "detail": "GridInput",
+    "insertText": "so_cuon;"
+  },
+  {
     "label": "so_dh",
     "detail": "GridInput",
     "insertText": "so_dh;"
   },
   {
-    "label": "so_dhkh",
+    "label": "so_dhat",
     "detail": "GridInput",
-    "insertText": "so_dhkh;"
+    "insertText": "so_dhat;"
   },
   {
     "label": "so_dongex",
     "detail": "GridInput",
     "insertText": "so_dongex;"
+  },
+  {
+    "label": "so_duong_gh",
+    "detail": "GridInput",
+    "insertText": "so_duong_gh;"
   },
   {
     "label": "so_gio",
@@ -5210,6 +3845,11 @@
     "insertText": "so_hd;"
   },
   {
+    "label": "so_hd1",
+    "detail": "GridInput",
+    "insertText": "so_hd1;"
+  },
+  {
     "label": "so_hd_lq",
     "detail": "GridInput",
     "insertText": "so_hd_lq;"
@@ -5220,44 +3860,9 @@
     "insertText": "so_hdat;"
   },
   {
-    "label": "so_hop_dong",
+    "label": "so_kd",
     "detail": "GridInput",
-    "insertText": "so_hop_dong;"
-  },
-  {
-    "label": "so_kg",
-    "detail": "GridInput",
-    "insertText": "so_kg;"
-  },
-  {
-    "label": "so_kg_gnk",
-    "detail": "GridInput",
-    "insertText": "so_kg_gnk;"
-  },
-  {
-    "label": "so_kg_gnk_th",
-    "detail": "GridInput",
-    "insertText": "so_kg_gnk_th;"
-  },
-  {
-    "label": "so_kg_gxc",
-    "detail": "GridInput",
-    "insertText": "so_kg_gxc;"
-  },
-  {
-    "label": "so_kg_gxc_th",
-    "detail": "GridInput",
-    "insertText": "so_kg_gxc_th;"
-  },
-  {
-    "label": "so_kg_gxk",
-    "detail": "GridInput",
-    "insertText": "so_kg_gxk;"
-  },
-  {
-    "label": "so_kg_gxk_th",
-    "detail": "GridInput",
-    "insertText": "so_kg_gxk_th;"
+    "insertText": "so_kd;"
   },
   {
     "label": "so_khai_sinh",
@@ -5265,34 +3870,19 @@
     "insertText": "so_khai_sinh;"
   },
   {
-    "label": "so_kien",
-    "detail": "GridInput",
-    "insertText": "so_kien;"
-  },
-  {
-    "label": "so_ks",
-    "detail": "GridInput",
-    "insertText": "so_ks;"
-  },
-  {
     "label": "so_lan",
     "detail": "GridInput",
     "insertText": "so_lan;"
   },
   {
-    "label": "so_lo_kd",
+    "label": "so_lan_kt",
     "detail": "GridInput",
-    "insertText": "so_lo_kd;"
+    "insertText": "so_lan_kt;"
   },
   {
     "label": "so_lsx",
     "detail": "GridInput",
     "insertText": "so_lsx;"
-  },
-  {
-    "label": "so_lsxat",
-    "detail": "GridInput",
-    "insertText": "so_lsxat;"
   },
   {
     "label": "so_luong",
@@ -5325,44 +3915,14 @@
     "insertText": "so_luong3;"
   },
   {
-    "label": "so_luong_kg",
+    "label": "so_luong_den",
     "detail": "GridInput",
-    "insertText": "so_luong_kg;"
+    "insertText": "so_luong_den;"
   },
   {
-    "label": "so_luong_kk",
+    "label": "so_luong_dx",
     "detail": "GridInput",
-    "insertText": "so_luong_kk;"
-  },
-  {
-    "label": "so_luong_m",
-    "detail": "GridInput",
-    "insertText": "so_luong_m;"
-  },
-  {
-    "label": "so_luong_mau",
-    "detail": "GridInput",
-    "insertText": "so_luong_mau;"
-  },
-  {
-    "label": "so_luong_ncdk",
-    "detail": "GridInput",
-    "insertText": "so_luong_ncdk;"
-  },
-  {
-    "label": "so_luong_nhap_kg",
-    "detail": "GridInput",
-    "insertText": "so_luong_nhap_kg;"
-  },
-  {
-    "label": "so_luong_nhap_lai",
-    "detail": "GridInput",
-    "insertText": "so_luong_nhap_lai;"
-  },
-  {
-    "label": "so_luong_nhap_to",
-    "detail": "GridInput",
-    "insertText": "so_luong_nhap_to;"
+    "insertText": "so_luong_dx;"
   },
   {
     "label": "so_luong_nvl",
@@ -5370,54 +3930,19 @@
     "insertText": "so_luong_nvl;"
   },
   {
-    "label": "so_luong_px0",
-    "detail": "GridInput",
-    "insertText": "so_luong_px0;"
-  },
-  {
     "label": "so_luong_qd",
     "detail": "GridInput",
     "insertText": "so_luong_qd;"
   },
   {
-    "label": "so_luong_ttd",
+    "label": "so_luong_tu",
     "detail": "GridInput",
-    "insertText": "so_luong_ttd;"
-  },
-  {
-    "label": "so_luong_yc_kg",
-    "detail": "GridInput",
-    "insertText": "so_luong_yc_kg;"
-  },
-  {
-    "label": "so_luong_yc_m",
-    "detail": "GridInput",
-    "insertText": "so_luong_yc_m;"
-  },
-  {
-    "label": "so_luong_yc_to",
-    "detail": "GridInput",
-    "insertText": "so_luong_yc_to;"
+    "insertText": "so_luong_tu;"
   },
   {
     "label": "so_luongex",
     "detail": "GridInput",
     "insertText": "so_luongex;"
-  },
-  {
-    "label": "so_met_den",
-    "detail": "GridInput",
-    "insertText": "so_met_den;"
-  },
-  {
-    "label": "so_met_to",
-    "detail": "GridInput",
-    "insertText": "so_met_to;"
-  },
-  {
-    "label": "so_met_tu",
-    "detail": "GridInput",
-    "insertText": "so_met_tu;"
   },
   {
     "label": "so_ngay",
@@ -5428,16 +3953,6 @@
     "label": "so_ngay_bh",
     "detail": "GridInput",
     "insertText": "so_ngay_bh;"
-  },
-  {
-    "label": "so_ngay_giao",
-    "detail": "GridInput",
-    "insertText": "so_ngay_giao;"
-  },
-  {
-    "label": "so_ngay_qua_han",
-    "detail": "GridInput",
-    "insertText": "so_ngay_qua_han;"
   },
   {
     "label": "so_ngay_sp",
@@ -5455,19 +3970,9 @@
     "insertText": "so_phieuat;"
   },
   {
-    "label": "so_phut",
-    "detail": "GridInput",
-    "insertText": "so_phut;"
-  },
-  {
     "label": "so_po",
     "detail": "GridInput",
     "insertText": "so_po;"
-  },
-  {
-    "label": "so_seri",
-    "detail": "GridInput",
-    "insertText": "so_seri;"
   },
   {
     "label": "so_seri0",
@@ -5480,9 +3985,9 @@
     "insertText": "so_seriex;"
   },
   {
-    "label": "so_tc",
+    "label": "so_tem",
     "detail": "GridInput",
-    "insertText": "so_tc;"
+    "insertText": "so_tem;"
   },
   {
     "label": "so_tham_chieu",
@@ -5490,9 +3995,14 @@
     "insertText": "so_tham_chieu;"
   },
   {
-    "label": "so_tham_chieu_ncc",
+    "label": "so_tham_chieu2",
     "detail": "GridInput",
-    "insertText": "so_tham_chieu_ncc;"
+    "insertText": "so_tham_chieu2;"
+  },
+  {
+    "label": "so_tham_chieuex",
+    "detail": "GridInput",
+    "insertText": "so_tham_chieuex;"
   },
   {
     "label": "so_the_ts",
@@ -5503,51 +4013,6 @@
     "label": "so_the_tsat",
     "detail": "GridInput",
     "insertText": "so_the_tsat;"
-  },
-  {
-    "label": "so_theo_doi",
-    "detail": "GridInput",
-    "insertText": "so_theo_doi;"
-  },
-  {
-    "label": "so_to",
-    "detail": "GridInput",
-    "insertText": "so_to;"
-  },
-  {
-    "label": "so_to_gnk",
-    "detail": "GridInput",
-    "insertText": "so_to_gnk;"
-  },
-  {
-    "label": "so_to_gnk_th",
-    "detail": "GridInput",
-    "insertText": "so_to_gnk_th;"
-  },
-  {
-    "label": "so_to_gxc",
-    "detail": "GridInput",
-    "insertText": "so_to_gxc;"
-  },
-  {
-    "label": "so_to_gxc_th",
-    "detail": "GridInput",
-    "insertText": "so_to_gxc_th;"
-  },
-  {
-    "label": "so_to_gxk",
-    "detail": "GridInput",
-    "insertText": "so_to_gxk;"
-  },
-  {
-    "label": "so_to_gxk_th",
-    "detail": "GridInput",
-    "insertText": "so_to_gxk_th;"
-  },
-  {
-    "label": "so_ver",
-    "detail": "GridInput",
-    "insertText": "so_ver;"
   },
   {
     "label": "status",
@@ -5575,14 +4040,29 @@
     "insertText": "status2at;"
   },
   {
+    "label": "status_ec_last",
+    "detail": "GridInput",
+    "insertText": "status_ec_last;"
+  },
+  {
+    "label": "status_ec_name%l",
+    "detail": "GridInput",
+    "insertText": "status_ec_name%l;"
+  },
+  {
     "label": "status_name%lex",
     "detail": "GridInput",
     "insertText": "status_name%lex;"
   },
   {
-    "label": "status_ph",
+    "label": "status_nameex",
     "detail": "GridInput",
-    "insertText": "status_ph;"
+    "insertText": "status_nameex;"
+  },
+  {
+    "label": "status_yn",
+    "detail": "GridInput",
+    "insertText": "status_yn;"
   },
   {
     "label": "statusat",
@@ -5605,11 +4085,6 @@
     "insertText": "stt;"
   },
   {
-    "label": "stt0",
-    "detail": "GridInput",
-    "insertText": "stt0;"
-  },
-  {
     "label": "stt_cn",
     "detail": "GridInput",
     "insertText": "stt_cn;"
@@ -5618,6 +4093,11 @@
     "label": "stt_ct_nkc",
     "detail": "GridInput",
     "insertText": "stt_ct_nkc;"
+  },
+  {
+    "label": "stt_in",
+    "detail": "GridInput",
+    "insertText": "stt_in;"
   },
   {
     "label": "stt_phan_he",
@@ -5633,6 +4113,11 @@
     "label": "stt_rec0",
     "detail": "GridInput",
     "insertText": "stt_rec0;"
+  },
+  {
+    "label": "stt_rec02",
+    "detail": "GridInput",
+    "insertText": "stt_rec02;"
   },
   {
     "label": "stt_rec0bg",
@@ -5655,14 +4140,9 @@
     "insertText": "stt_rec0dh;"
   },
   {
-    "label": "stt_rec0dn",
+    "label": "stt_rec0ex",
     "detail": "GridInput",
-    "insertText": "stt_rec0dn;"
-  },
-  {
-    "label": "stt_rec0dxa",
-    "detail": "GridInput",
-    "insertText": "stt_rec0dxa;"
+    "insertText": "stt_rec0ex;"
   },
   {
     "label": "stt_rec0gd",
@@ -5670,19 +4150,19 @@
     "insertText": "stt_rec0gd;"
   },
   {
-    "label": "stt_rec0gin",
-    "detail": "GridInput",
-    "insertText": "stt_rec0gin;"
-  },
-  {
     "label": "stt_rec0hd",
     "detail": "GridInput",
     "insertText": "stt_rec0hd;"
   },
   {
-    "label": "stt_rec0is",
+    "label": "stt_rec0hopdong",
     "detail": "GridInput",
-    "insertText": "stt_rec0is;"
+    "insertText": "stt_rec0hopdong;"
+  },
+  {
+    "label": "stt_rec0ir",
+    "detail": "GridInput",
+    "insertText": "stt_rec0ir;"
   },
   {
     "label": "stt_rec0kh",
@@ -5695,19 +4175,9 @@
     "insertText": "stt_rec0kt;"
   },
   {
-    "label": "stt_rec0lsx",
-    "detail": "GridInput",
-    "insertText": "stt_rec0lsx;"
-  },
-  {
     "label": "stt_rec0lx",
     "detail": "GridInput",
     "insertText": "stt_rec0lx;"
-  },
-  {
-    "label": "stt_rec0man",
-    "detail": "GridInput",
-    "insertText": "stt_rec0man;"
   },
   {
     "label": "stt_rec0nc",
@@ -5720,14 +4190,14 @@
     "insertText": "stt_rec0nm;"
   },
   {
-    "label": "stt_rec0pd5",
-    "detail": "GridInput",
-    "insertText": "stt_rec0pd5;"
-  },
-  {
     "label": "stt_rec0pn",
     "detail": "GridInput",
     "insertText": "stt_rec0pn;"
+  },
+  {
+    "label": "stt_rec0pr1",
+    "detail": "GridInput",
+    "insertText": "stt_rec0pr1;"
   },
   {
     "label": "stt_rec0px",
@@ -5735,19 +4205,9 @@
     "insertText": "stt_rec0px;"
   },
   {
-    "label": "stt_rec0sa",
+    "label": "stt_rec0pxdc",
     "detail": "GridInput",
-    "insertText": "stt_rec0sa;"
-  },
-  {
-    "label": "stt_rec0sx1",
-    "detail": "GridInput",
-    "insertText": "stt_rec0sx1;"
-  },
-  {
-    "label": "stt_rec0tc",
-    "detail": "GridInput",
-    "insertText": "stt_rec0tc;"
+    "insertText": "stt_rec0pxdc;"
   },
   {
     "label": "stt_rec0tk",
@@ -5760,9 +4220,9 @@
     "insertText": "stt_rec0tl;"
   },
   {
-    "label": "stt_rec0ttmh",
+    "label": "stt_rec0tl2",
     "detail": "GridInput",
-    "insertText": "stt_rec0ttmh;"
+    "insertText": "stt_rec0tl2;"
   },
   {
     "label": "stt_rec0yc",
@@ -5770,24 +4230,14 @@
     "insertText": "stt_rec0yc;"
   },
   {
-    "label": "stt_rec0ycb",
+    "label": "stt_rec0yccg",
     "detail": "GridInput",
-    "insertText": "stt_rec0ycb;"
+    "insertText": "stt_rec0yccg;"
   },
   {
-    "label": "stt_rec0zcg",
+    "label": "stt_rec0ztc",
     "detail": "GridInput",
-    "insertText": "stt_rec0zcg;"
-  },
-  {
-    "label": "stt_rec0zcu",
-    "detail": "GridInput",
-    "insertText": "stt_rec0zcu;"
-  },
-  {
-    "label": "stt_rec0zdn",
-    "detail": "GridInput",
-    "insertText": "stt_rec0zdn;"
+    "insertText": "stt_rec0ztc;"
   },
   {
     "label": "stt_rec1",
@@ -5795,14 +4245,19 @@
     "insertText": "stt_rec1;"
   },
   {
+    "label": "stt_rec_bd",
+    "detail": "GridInput",
+    "insertText": "stt_rec_bd;"
+  },
+  {
+    "label": "stt_rec_bd0",
+    "detail": "GridInput",
+    "insertText": "stt_rec_bd0;"
+  },
+  {
     "label": "stt_rec_bg",
     "detail": "GridInput",
     "insertText": "stt_rec_bg;"
-  },
-  {
-    "label": "stt_rec_btg",
-    "detail": "GridInput",
-    "insertText": "stt_rec_btg;"
   },
   {
     "label": "stt_rec_cd",
@@ -5815,29 +4270,34 @@
     "insertText": "stt_rec_ct;"
   },
   {
+    "label": "stt_rec_dd",
+    "detail": "GridInput",
+    "insertText": "stt_rec_dd;"
+  },
+  {
     "label": "stt_rec_dh",
     "detail": "GridInput",
     "insertText": "stt_rec_dh;"
   },
   {
-    "label": "stt_rec_dn",
+    "label": "stt_rec_dl",
     "detail": "GridInput",
-    "insertText": "stt_rec_dn;"
+    "insertText": "stt_rec_dl;"
   },
   {
-    "label": "stt_rec_dxa",
+    "label": "stt_rec_dm",
     "detail": "GridInput",
-    "insertText": "stt_rec_dxa;"
+    "insertText": "stt_rec_dm;"
+  },
+  {
+    "label": "stt_rec_ec",
+    "detail": "GridInput",
+    "insertText": "stt_rec_ec;"
   },
   {
     "label": "stt_rec_gd",
     "detail": "GridInput",
     "insertText": "stt_rec_gd;"
-  },
-  {
-    "label": "stt_rec_gin",
-    "detail": "GridInput",
-    "insertText": "stt_rec_gin;"
   },
   {
     "label": "stt_rec_gs",
@@ -5850,19 +4310,19 @@
     "insertText": "stt_rec_hd;"
   },
   {
-    "label": "stt_rec_is",
+    "label": "stt_rec_hopdong",
     "detail": "GridInput",
-    "insertText": "stt_rec_is;"
+    "insertText": "stt_rec_hopdong;"
+  },
+  {
+    "label": "stt_rec_ir",
+    "detail": "GridInput",
+    "insertText": "stt_rec_ir;"
   },
   {
     "label": "stt_rec_kd",
     "detail": "GridInput",
     "insertText": "stt_rec_kd;"
-  },
-  {
-    "label": "stt_rec_key",
-    "detail": "GridInput",
-    "insertText": "stt_rec_key;"
   },
   {
     "label": "stt_rec_kh",
@@ -5875,29 +4335,9 @@
     "insertText": "stt_rec_kt;"
   },
   {
-    "label": "stt_rec_lsx",
-    "detail": "GridInput",
-    "insertText": "stt_rec_lsx;"
-  },
-  {
     "label": "stt_rec_lx",
     "detail": "GridInput",
     "insertText": "stt_rec_lx;"
-  },
-  {
-    "label": "stt_rec_man",
-    "detail": "GridInput",
-    "insertText": "stt_rec_man;"
-  },
-  {
-    "label": "stt_rec_mo0xb",
-    "detail": "GridInput",
-    "insertText": "stt_rec_mo0xb;"
-  },
-  {
-    "label": "stt_rec_mo_xb",
-    "detail": "GridInput",
-    "insertText": "stt_rec_mo_xb;"
   },
   {
     "label": "stt_rec_nc",
@@ -5915,26 +4355,6 @@
     "insertText": "stt_rec_nt;"
   },
   {
-    "label": "stt_rec_nv",
-    "detail": "GridInput",
-    "insertText": "stt_rec_nv;"
-  },
-  {
-    "label": "stt_rec_pa2",
-    "detail": "GridInput",
-    "insertText": "stt_rec_pa2;"
-  },
-  {
-    "label": "stt_rec_pd3",
-    "detail": "GridInput",
-    "insertText": "stt_rec_pd3;"
-  },
-  {
-    "label": "stt_rec_pd5",
-    "detail": "GridInput",
-    "insertText": "stt_rec_pd5;"
-  },
-  {
     "label": "stt_rec_phieu",
     "detail": "GridInput",
     "insertText": "stt_rec_phieu;"
@@ -5945,9 +4365,9 @@
     "insertText": "stt_rec_pn;"
   },
   {
-    "label": "stt_rec_po2",
+    "label": "stt_rec_pr1",
     "detail": "GridInput",
-    "insertText": "stt_rec_po2;"
+    "insertText": "stt_rec_pr1;"
   },
   {
     "label": "stt_rec_px",
@@ -5955,19 +4375,44 @@
     "insertText": "stt_rec_px;"
   },
   {
-    "label": "stt_rec_sa",
+    "label": "stt_rec_pxdc",
     "detail": "GridInput",
-    "insertText": "stt_rec_sa;"
+    "insertText": "stt_rec_pxdc;"
   },
   {
-    "label": "stt_rec_sx1",
+    "label": "stt_rec_ref",
     "detail": "GridInput",
-    "insertText": "stt_rec_sx1;"
+    "insertText": "stt_rec_ref;"
   },
   {
-    "label": "stt_rec_tc",
+    "label": "stt_rec_sc",
     "detail": "GridInput",
-    "insertText": "stt_rec_tc;"
+    "insertText": "stt_rec_sc;"
+  },
+  {
+    "label": "stt_rec_sc0",
+    "detail": "GridInput",
+    "insertText": "stt_rec_sc0;"
+  },
+  {
+    "label": "stt_rec_tb",
+    "detail": "GridInput",
+    "insertText": "stt_rec_tb;"
+  },
+  {
+    "label": "stt_rec_tbd",
+    "detail": "GridInput",
+    "insertText": "stt_rec_tbd;"
+  },
+  {
+    "label": "stt_rec_tbex",
+    "detail": "GridInput",
+    "insertText": "stt_rec_tbex;"
+  },
+  {
+    "label": "stt_rec_tbs",
+    "detail": "GridInput",
+    "insertText": "stt_rec_tbs;"
   },
   {
     "label": "stt_rec_tk",
@@ -5980,14 +4425,14 @@
     "insertText": "stt_rec_tl;"
   },
   {
+    "label": "stt_rec_tl2",
+    "detail": "GridInput",
+    "insertText": "stt_rec_tl2;"
+  },
+  {
     "label": "stt_rec_tt",
     "detail": "GridInput",
     "insertText": "stt_rec_tt;"
-  },
-  {
-    "label": "stt_rec_ttmh",
-    "detail": "GridInput",
-    "insertText": "stt_rec_ttmh;"
   },
   {
     "label": "stt_rec_v",
@@ -6000,24 +4445,19 @@
     "insertText": "stt_rec_yc;"
   },
   {
-    "label": "stt_rec_zcg",
+    "label": "stt_rec_yccg",
     "detail": "GridInput",
-    "insertText": "stt_rec_zcg;"
+    "insertText": "stt_rec_yccg;"
   },
   {
-    "label": "stt_rec_zcu",
+    "label": "stt_rec_ztc",
     "detail": "GridInput",
-    "insertText": "stt_rec_zcu;"
+    "insertText": "stt_rec_ztc;"
   },
   {
-    "label": "stt_rec_zdn",
+    "label": "stt_ref",
     "detail": "GridInput",
-    "insertText": "stt_rec_zdn;"
-  },
-  {
-    "label": "stt_sx",
-    "detail": "GridInput",
-    "insertText": "stt_sx;"
+    "insertText": "stt_ref;"
   },
   {
     "label": "sttkey",
@@ -6030,9 +4470,9 @@
     "insertText": "style;"
   },
   {
-    "label": "sua_ket_qua",
+    "label": "su_viec",
     "detail": "GridInput",
-    "insertText": "sua_ket_qua;"
+    "insertText": "su_viec;"
   },
   {
     "label": "sua_kh",
@@ -6100,9 +4540,74 @@
     "insertText": "t_gt_da_pb_nt;"
   },
   {
+    "label": "t_gt_ns",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns;"
+  },
+  {
+    "label": "t_gt_ns_cl",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns_cl;"
+  },
+  {
+    "label": "t_gt_ns_cl_dnc",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns_cl_dnc;"
+  },
+  {
+    "label": "t_gt_ns_cl_po",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns_cl_po;"
+  },
+  {
+    "label": "t_gt_ns_cl_pr",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns_cl_pr;"
+  },
+  {
+    "label": "t_gt_ns_nam",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns_nam;"
+  },
+  {
+    "label": "t_gt_ns_nam_cl",
+    "detail": "GridInput",
+    "insertText": "t_gt_ns_nam_cl;"
+  },
+  {
+    "label": "t_gt_th",
+    "detail": "GridInput",
+    "insertText": "t_gt_th;"
+  },
+  {
+    "label": "t_gt_th_dnc",
+    "detail": "GridInput",
+    "insertText": "t_gt_th_dnc;"
+  },
+  {
+    "label": "t_gt_th_po",
+    "detail": "GridInput",
+    "insertText": "t_gt_th_po;"
+  },
+  {
+    "label": "t_gt_th_pr",
+    "detail": "GridInput",
+    "insertText": "t_gt_th_pr;"
+  },
+  {
     "label": "t_huy",
     "detail": "GridInput",
     "insertText": "t_huy;"
+  },
+  {
+    "label": "t_khau_hao_ntex",
+    "detail": "GridInput",
+    "insertText": "t_khau_hao_ntex;"
+  },
+  {
+    "label": "t_khau_haoex",
+    "detail": "GridInput",
+    "insertText": "t_khau_haoex;"
   },
   {
     "label": "t_nguyen_gia_nt",
@@ -6110,19 +4615,29 @@
     "insertText": "t_nguyen_gia_nt;"
   },
   {
+    "label": "t_nguyen_gia_ntex",
+    "detail": "GridInput",
+    "insertText": "t_nguyen_gia_ntex;"
+  },
+  {
+    "label": "t_nguyen_giaex",
+    "detail": "GridInput",
+    "insertText": "t_nguyen_giaex;"
+  },
+  {
     "label": "t_ps_no_nt",
     "detail": "GridInput",
     "insertText": "t_ps_no_nt;"
   },
   {
-    "label": "t_sl_dh",
-    "detail": "GridInput",
-    "insertText": "t_sl_dh;"
-  },
-  {
     "label": "t_so_luong",
     "detail": "GridInput",
     "insertText": "t_so_luong;"
+  },
+  {
+    "label": "t_so_luong_n",
+    "detail": "GridInput",
+    "insertText": "t_so_luong_n;"
   },
   {
     "label": "t_thanh_toan",
@@ -6155,14 +4670,24 @@
     "insertText": "t_tien;"
   },
   {
-    "label": "t_tien2",
+    "label": "t_tien_cl_nt",
     "detail": "GridInput",
-    "insertText": "t_tien2;"
+    "insertText": "t_tien_cl_nt;"
   },
   {
     "label": "t_tien_i",
     "detail": "GridInput",
     "insertText": "t_tien_i;"
+  },
+  {
+    "label": "t_tien_n_nt",
+    "detail": "GridInput",
+    "insertText": "t_tien_n_nt;"
+  },
+  {
+    "label": "t_tien_nh_nt",
+    "detail": "GridInput",
+    "insertText": "t_tien_nh_nt;"
   },
   {
     "label": "t_tien_nt",
@@ -6195,11 +4720,6 @@
     "insertText": "t_tt_nt;"
   },
   {
-    "label": "t_tt_nt0",
-    "detail": "GridInput",
-    "insertText": "t_tt_nt0;"
-  },
-  {
     "label": "t_tt_ntex",
     "detail": "GridInput",
     "insertText": "t_tt_ntex;"
@@ -6220,19 +4740,9 @@
     "insertText": "tag;"
   },
   {
-    "label": "tag1",
-    "detail": "GridInput",
-    "insertText": "tag1;"
-  },
-  {
     "label": "tag1ex",
     "detail": "GridInput",
     "insertText": "tag1ex;"
-  },
-  {
-    "label": "tag2",
-    "detail": "GridInput",
-    "insertText": "tag2;"
   },
   {
     "label": "tag2ex",
@@ -6245,9 +4755,14 @@
     "insertText": "tagex;"
   },
   {
-    "label": "tao_ct_yn",
+    "label": "tang_yn",
     "detail": "GridInput",
-    "insertText": "tao_ct_yn;"
+    "insertText": "tang_yn;"
+  },
+  {
+    "label": "tao_dn_yn",
+    "detail": "GridInput",
+    "insertText": "tao_dn_yn;"
   },
   {
     "label": "tao_loex",
@@ -6255,14 +4770,24 @@
     "insertText": "tao_loex;"
   },
   {
-    "label": "tap_theo_doi",
-    "detail": "GridInput",
-    "insertText": "tap_theo_doi;"
-  },
-  {
     "label": "tax_code",
     "detail": "GridInput",
     "insertText": "tax_code;"
+  },
+  {
+    "label": "tbd_so",
+    "detail": "GridInput",
+    "insertText": "tbd_so;"
+  },
+  {
+    "label": "tbl_join",
+    "detail": "GridInput",
+    "insertText": "tbl_join;"
+  },
+  {
+    "label": "tbs_so",
+    "detail": "GridInput",
+    "insertText": "tbs_so;"
   },
   {
     "label": "tc_hd",
@@ -6285,11 +4810,6 @@
     "insertText": "ten_bc%lex;"
   },
   {
-    "label": "ten_bp",
-    "detail": "GridInput",
-    "insertText": "ten_bp;"
-  },
-  {
     "label": "ten_bp%l",
     "detail": "GridInput",
     "insertText": "ten_bp%l;"
@@ -6300,14 +4820,34 @@
     "insertText": "ten_bp%lex;"
   },
   {
-    "label": "ten_bp0%lex",
+    "label": "ten_bp_dc%lex",
     "detail": "GridInput",
-    "insertText": "ten_bp0%lex;"
+    "insertText": "ten_bp_dc%lex;"
   },
   {
-    "label": "ten_btpex",
+    "label": "ten_bp_nts%lex",
     "detail": "GridInput",
-    "insertText": "ten_btpex;"
+    "insertText": "ten_bp_nts%lex;"
+  },
+  {
+    "label": "ten_bp_nv%l",
+    "detail": "GridInput",
+    "insertText": "ten_bp_nv%l;"
+  },
+  {
+    "label": "ten_bp_qlts%lex",
+    "detail": "GridInput",
+    "insertText": "ten_bp_qlts%lex;"
+  },
+  {
+    "label": "ten_bp_sd%lex",
+    "detail": "GridInput",
+    "insertText": "ten_bp_sd%lex;"
+  },
+  {
+    "label": "ten_bpex",
+    "detail": "GridInput",
+    "insertText": "ten_bpex;"
   },
   {
     "label": "ten_ca%lex",
@@ -6345,19 +4885,9 @@
     "insertText": "ten_cd2;"
   },
   {
-    "label": "ten_chi_tieu%lex",
+    "label": "ten_cky%lex",
     "detail": "GridInput",
-    "insertText": "ten_chi_tieu%lex;"
-  },
-  {
-    "label": "ten_chi_tieuex",
-    "detail": "GridInput",
-    "insertText": "ten_chi_tieuex;"
-  },
-  {
-    "label": "ten_chuong%lex",
-    "detail": "GridInput",
-    "insertText": "ten_chuong%lex;"
+    "insertText": "ten_cky%lex;"
   },
   {
     "label": "ten_cm%lex",
@@ -6368,6 +4898,16 @@
     "label": "ten_cn",
     "detail": "GridInput",
     "insertText": "ten_cn;"
+  },
+  {
+    "label": "ten_cot",
+    "detail": "GridInput",
+    "insertText": "ten_cot;"
+  },
+  {
+    "label": "ten_cot2",
+    "detail": "GridInput",
+    "insertText": "ten_cot2;"
   },
   {
     "label": "ten_cp%lex",
@@ -6385,29 +4925,19 @@
     "insertText": "ten_ct%lex;"
   },
   {
-    "label": "ten_ctcl%lex",
-    "detail": "GridInput",
-    "insertText": "ten_ctcl%lex;"
-  },
-  {
     "label": "ten_ctcp%lex",
     "detail": "GridInput",
     "insertText": "ten_ctcp%lex;"
   },
   {
-    "label": "ten_cthuc",
+    "label": "ten_cv%l",
     "detail": "GridInput",
-    "insertText": "ten_cthuc;"
+    "insertText": "ten_cv%l;"
   },
   {
-    "label": "ten_cthucex",
+    "label": "ten_cv%lex",
     "detail": "GridInput",
-    "insertText": "ten_cthucex;"
-  },
-  {
-    "label": "ten_dac_tinh%lex",
-    "detail": "GridInput",
-    "insertText": "ten_dac_tinh%lex;"
+    "insertText": "ten_cv%lex;"
   },
   {
     "label": "ten_dc",
@@ -6420,29 +4950,14 @@
     "insertText": "ten_dc%lex;"
   },
   {
+    "label": "ten_dc_exex",
+    "detail": "GridInput",
+    "insertText": "ten_dc_exex;"
+  },
+  {
     "label": "ten_dh",
     "detail": "GridInput",
     "insertText": "ten_dh;"
-  },
-  {
-    "label": "ten_diem%lex",
-    "detail": "GridInput",
-    "insertText": "ten_diem%lex;"
-  },
-  {
-    "label": "ten_diem_ndex",
-    "detail": "GridInput",
-    "insertText": "ten_diem_ndex;"
-  },
-  {
-    "label": "ten_dn",
-    "detail": "GridInput",
-    "insertText": "ten_dn;"
-  },
-  {
-    "label": "ten_doi_tac",
-    "detail": "GridInput",
-    "insertText": "ten_doi_tac;"
   },
   {
     "label": "ten_dot%lex",
@@ -6450,9 +4965,19 @@
     "insertText": "ten_dot%lex;"
   },
   {
-    "label": "ten_dv_nk%lex",
+    "label": "ten_dt_sp%lex",
     "detail": "GridInput",
-    "insertText": "ten_dv_nk%lex;"
+    "insertText": "ten_dt_sp%lex;"
+  },
+  {
+    "label": "ten_dt_vt_val_ct%lex",
+    "detail": "GridInput",
+    "insertText": "ten_dt_vt_val_ct%lex;"
+  },
+  {
+    "label": "ten_dtqt%lex",
+    "detail": "GridInput",
+    "insertText": "ten_dtqt%lex;"
   },
   {
     "label": "ten_dvcs",
@@ -6470,24 +4995,9 @@
     "insertText": "ten_dvt%lex;"
   },
   {
-    "label": "ten_dvt_n%lex",
+    "label": "ten_fileex",
     "detail": "GridInput",
-    "insertText": "ten_dvt_n%lex;"
-  },
-  {
-    "label": "ten_dvt_tc%lex",
-    "detail": "GridInput",
-    "insertText": "ten_dvt_tc%lex;"
-  },
-  {
-    "label": "ten_dvt_xc%lex",
-    "detail": "GridInput",
-    "insertText": "ten_dvt_xc%lex;"
-  },
-  {
-    "label": "ten_dvt_xhd%lex",
-    "detail": "GridInput",
-    "insertText": "ten_dvt_xhd%lex;"
+    "insertText": "ten_fileex;"
   },
   {
     "label": "ten_gd%l",
@@ -6495,39 +5005,9 @@
     "insertText": "ten_gd%l;"
   },
   {
-    "label": "ten_gnk%lex",
-    "detail": "GridInput",
-    "insertText": "ten_gnk%lex;"
-  },
-  {
-    "label": "ten_gxc%lex",
-    "detail": "GridInput",
-    "insertText": "ten_gxc%lex;"
-  },
-  {
-    "label": "ten_gxk%lex",
-    "detail": "GridInput",
-    "insertText": "ten_gxk%lex;"
-  },
-  {
-    "label": "ten_hai_quan%lex",
-    "detail": "GridInput",
-    "insertText": "ten_hai_quan%lex;"
-  },
-  {
     "label": "ten_hd%lex",
     "detail": "GridInput",
     "insertText": "ten_hd%lex;"
-  },
-  {
-    "label": "ten_hrbp%l",
-    "detail": "GridInput",
-    "insertText": "ten_hrbp%l;"
-  },
-  {
-    "label": "ten_hs%lex",
-    "detail": "GridInput",
-    "insertText": "ten_hs%lex;"
   },
   {
     "label": "ten_kh",
@@ -6555,11 +5035,6 @@
     "insertText": "ten_kh_i%lex;"
   },
   {
-    "label": "ten_kh_tc%lex",
-    "detail": "GridInput",
-    "insertText": "ten_kh_tc%lex;"
-  },
-  {
     "label": "ten_khex",
     "detail": "GridInput",
     "insertText": "ten_khex;"
@@ -6585,24 +5060,34 @@
     "insertText": "ten_kieu_cd%lex;"
   },
   {
-    "label": "ten_kieu_nhapex",
-    "detail": "GridInput",
-    "insertText": "ten_kieu_nhapex;"
-  },
-  {
-    "label": "ten_kq%lex",
-    "detail": "GridInput",
-    "insertText": "ten_kq%lex;"
-  },
-  {
     "label": "ten_kt%lex",
     "detail": "GridInput",
     "insertText": "ten_kt%lex;"
   },
   {
+    "label": "ten_ktv%l",
+    "detail": "GridInput",
+    "insertText": "ten_ktv%l;"
+  },
+  {
+    "label": "ten_ktv%lex",
+    "detail": "GridInput",
+    "insertText": "ten_ktv%lex;"
+  },
+  {
+    "label": "ten_ktvex",
+    "detail": "GridInput",
+    "insertText": "ten_ktvex;"
+  },
+  {
     "label": "ten_ku%lex",
     "detail": "GridInput",
     "insertText": "ten_ku%lex;"
+  },
+  {
+    "label": "ten_ky%lex",
+    "detail": "GridInput",
+    "insertText": "ten_ky%lex;"
   },
   {
     "label": "ten_ld%lex",
@@ -6630,11 +5115,6 @@
     "insertText": "ten_lo_trinh%l;"
   },
   {
-    "label": "ten_loai%l",
-    "detail": "GridInput",
-    "insertText": "ten_loai%l;"
-  },
-  {
     "label": "ten_loai%lex",
     "detail": "GridInput",
     "insertText": "ten_loai%lex;"
@@ -6645,19 +5125,9 @@
     "insertText": "ten_loai_cd%lex;"
   },
   {
-    "label": "ten_loai_ct%l",
-    "detail": "GridInput",
-    "insertText": "ten_loai_ct%l;"
-  },
-  {
     "label": "ten_loai_gt%lex",
     "detail": "GridInput",
     "insertText": "ten_loai_gt%lex;"
-  },
-  {
-    "label": "ten_loai_hang%lex",
-    "detail": "GridInput",
-    "insertText": "ten_loai_hang%lex;"
   },
   {
     "label": "ten_loai_hd%lex",
@@ -6665,49 +5135,19 @@
     "insertText": "ten_loai_hd%lex;"
   },
   {
-    "label": "ten_loai_lsx",
-    "detail": "GridInput",
-    "insertText": "ten_loai_lsx;"
-  },
-  {
-    "label": "ten_loai_nk%lex",
-    "detail": "GridInput",
-    "insertText": "ten_loai_nk%lex;"
-  },
-  {
     "label": "ten_loai_qh%lex",
     "detail": "GridInput",
     "insertText": "ten_loai_qh%lex;"
   },
   {
-    "label": "ten_loai_slex",
+    "label": "ten_loai_sp%lex",
     "detail": "GridInput",
-    "insertText": "ten_loai_slex;"
-  },
-  {
-    "label": "ten_loai_tdex",
-    "detail": "GridInput",
-    "insertText": "ten_loai_tdex;"
+    "insertText": "ten_loai_sp%lex;"
   },
   {
     "label": "ten_loai_vt%lex",
     "detail": "GridInput",
     "insertText": "ten_loai_vt%lex;"
-  },
-  {
-    "label": "ten_loaiex",
-    "detail": "GridInput",
-    "insertText": "ten_loaiex;"
-  },
-  {
-    "label": "ten_loi%lex",
-    "detail": "GridInput",
-    "insertText": "ten_loi%lex;"
-  },
-  {
-    "label": "ten_lop%lex",
-    "detail": "GridInput",
-    "insertText": "ten_lop%lex;"
   },
   {
     "label": "ten_lsx%l",
@@ -6720,39 +5160,14 @@
     "insertText": "ten_lsx%lex;"
   },
   {
-    "label": "ten_ly_do%lex",
-    "detail": "GridInput",
-    "insertText": "ten_ly_do%lex;"
-  },
-  {
-    "label": "ten_mam%l",
-    "detail": "GridInput",
-    "insertText": "ten_mam%l;"
-  },
-  {
-    "label": "ten_matex",
-    "detail": "GridInput",
-    "insertText": "ten_matex;"
-  },
-  {
     "label": "ten_mau_ct%lex",
     "detail": "GridInput",
     "insertText": "ten_mau_ct%lex;"
   },
   {
-    "label": "ten_may%l",
-    "detail": "GridInput",
-    "insertText": "ten_may%l;"
-  },
-  {
     "label": "ten_may%lex",
     "detail": "GridInput",
     "insertText": "ten_may%lex;"
-  },
-  {
-    "label": "ten_md%l",
-    "detail": "GridInput",
-    "insertText": "ten_md%l;"
   },
   {
     "label": "ten_nc%lex",
@@ -6765,34 +5180,19 @@
     "insertText": "ten_nguon;"
   },
   {
-    "label": "ten_nguon%lex",
-    "detail": "GridInput",
-    "insertText": "ten_nguon%lex;"
-  },
-  {
     "label": "ten_nh%lex",
     "detail": "GridInput",
     "insertText": "ten_nh%lex;"
   },
   {
-    "label": "ten_nh1%l",
-    "detail": "GridInput",
-    "insertText": "ten_nh1%l;"
-  },
-  {
-    "label": "ten_nh2%l",
-    "detail": "GridInput",
-    "insertText": "ten_nh2%l;"
-  },
-  {
-    "label": "ten_nh3%l",
-    "detail": "GridInput",
-    "insertText": "ten_nh3%l;"
-  },
-  {
     "label": "ten_nh_nc%lex",
     "detail": "GridInput",
     "insertText": "ten_nh_nc%lex;"
+  },
+  {
+    "label": "ten_nh_vt%lex",
+    "detail": "GridInput",
+    "insertText": "ten_nh_vt%lex;"
   },
   {
     "label": "ten_nh_vt1%lex",
@@ -6805,14 +5205,24 @@
     "insertText": "ten_nh_vt2%lex;"
   },
   {
-    "label": "ten_nh_vt2ex",
-    "detail": "GridInput",
-    "insertText": "ten_nh_vt2ex;"
-  },
-  {
     "label": "ten_nh_vt3%lex",
     "detail": "GridInput",
     "insertText": "ten_nh_vt3%lex;"
+  },
+  {
+    "label": "ten_nh_vt4%lex",
+    "detail": "GridInput",
+    "insertText": "ten_nh_vt4%lex;"
+  },
+  {
+    "label": "ten_nh_vt5%lex",
+    "detail": "GridInput",
+    "insertText": "ten_nh_vt5%lex;"
+  },
+  {
+    "label": "ten_nh_vt6%lex",
+    "detail": "GridInput",
+    "insertText": "ten_nh_vt6%lex;"
   },
   {
     "label": "ten_nk%lex",
@@ -6830,14 +5240,14 @@
     "insertText": "ten_ns%lex;"
   },
   {
+    "label": "ten_nv%l",
+    "detail": "GridInput",
+    "insertText": "ten_nv%l;"
+  },
+  {
     "label": "ten_nv%lex",
     "detail": "GridInput",
     "insertText": "ten_nv%lex;"
-  },
-  {
-    "label": "ten_nvbh%lex",
-    "detail": "GridInput",
-    "insertText": "ten_nvbh%lex;"
   },
   {
     "label": "ten_nvex",
@@ -6845,14 +5255,9 @@
     "insertText": "ten_nvex;"
   },
   {
-    "label": "ten_nvlex",
+    "label": "ten_nvt%lex",
     "detail": "GridInput",
-    "insertText": "ten_nvlex;"
-  },
-  {
-    "label": "ten_nvu%lex",
-    "detail": "GridInput",
-    "insertText": "ten_nvu%lex;"
+    "insertText": "ten_nvt%lex;"
   },
   {
     "label": "ten_nx%l",
@@ -6865,19 +5270,9 @@
     "insertText": "ten_nx%lex;"
   },
   {
-    "label": "ten_ph_loai%lex",
+    "label": "ten_phuong%lex",
     "detail": "GridInput",
-    "insertText": "ten_ph_loai%lex;"
-  },
-  {
-    "label": "ten_phi%lex",
-    "detail": "GridInput",
-    "insertText": "ten_phi%lex;"
-  },
-  {
-    "label": "ten_pp%lex",
-    "detail": "GridInput",
-    "insertText": "ten_pp%lex;"
+    "insertText": "ten_phuong%lex;"
   },
   {
     "label": "ten_pt",
@@ -6885,14 +5280,14 @@
     "insertText": "ten_pt;"
   },
   {
+    "label": "ten_pt%lex",
+    "detail": "GridInput",
+    "insertText": "ten_pt%lex;"
+  },
+  {
     "label": "ten_pt2",
     "detail": "GridInput",
     "insertText": "ten_pt2;"
-  },
-  {
-    "label": "ten_pt_tt%lex",
-    "detail": "GridInput",
-    "insertText": "ten_pt_tt%lex;"
   },
   {
     "label": "ten_ptkt",
@@ -6910,34 +5305,49 @@
     "insertText": "ten_px_n%lex;"
   },
   {
+    "label": "ten_qt%l",
+    "detail": "GridInput",
+    "insertText": "ten_qt%l;"
+  },
+  {
     "label": "ten_qt%lex",
     "detail": "GridInput",
     "insertText": "ten_qt%lex;"
   },
   {
-    "label": "ten_rb%lex",
+    "label": "ten_quan%lex",
     "detail": "GridInput",
-    "insertText": "ten_rb%lex;"
+    "insertText": "ten_quan%lex;"
   },
   {
-    "label": "ten_sp%lex",
+    "label": "ten_su_viec",
     "detail": "GridInput",
-    "insertText": "ten_sp%lex;"
+    "insertText": "ten_su_viec;"
   },
   {
-    "label": "ten_sp_nvl%lex",
+    "label": "ten_tb",
     "detail": "GridInput",
-    "insertText": "ten_sp_nvl%lex;"
+    "insertText": "ten_tb;"
   },
   {
-    "label": "ten_spex",
+    "label": "ten_tb%l",
     "detail": "GridInput",
-    "insertText": "ten_spex;"
+    "insertText": "ten_tb%l;"
   },
   {
-    "label": "ten_status_ph%lex",
+    "label": "ten_tb%lex",
     "detail": "GridInput",
-    "insertText": "ten_status_ph%lex;"
+    "insertText": "ten_tb%lex;"
+  },
+  {
+    "label": "ten_tbex",
+    "detail": "GridInput",
+    "insertText": "ten_tbex;"
+  },
+  {
+    "label": "ten_tbkd%l",
+    "detail": "GridInput",
+    "insertText": "ten_tbkd%l;"
   },
   {
     "label": "ten_tc%lex",
@@ -6945,14 +5355,9 @@
     "insertText": "ten_tc%lex;"
   },
   {
-    "label": "ten_td%lex",
+    "label": "ten_td1%lex",
     "detail": "GridInput",
-    "insertText": "ten_td%lex;"
-  },
-  {
-    "label": "ten_thue%l",
-    "detail": "GridInput",
-    "insertText": "ten_thue%l;"
+    "insertText": "ten_td1%lex;"
   },
   {
     "label": "ten_thue%lex",
@@ -6970,29 +5375,24 @@
     "insertText": "ten_thue_nk%lex;"
   },
   {
-    "label": "ten_thue_pb%lex",
-    "detail": "GridInput",
-    "insertText": "ten_thue_pb%lex;"
-  },
-  {
     "label": "ten_thue_ttdb%lex",
     "detail": "GridInput",
     "insertText": "ten_thue_ttdb%lex;"
   },
   {
-    "label": "ten_thue_tv%lex",
+    "label": "ten_tieu_chi%lex",
     "detail": "GridInput",
-    "insertText": "ten_thue_tv%lex;"
+    "insertText": "ten_tieu_chi%lex;"
   },
   {
-    "label": "ten_tieu_muc%lex",
+    "label": "ten_tinh_thanh%lex",
     "detail": "GridInput",
-    "insertText": "ten_tieu_muc%lex;"
+    "insertText": "ten_tinh_thanh%lex;"
   },
   {
-    "label": "ten_tk%l",
+    "label": "ten_tinh_trang%lex",
     "detail": "GridInput",
-    "insertText": "ten_tk%l;"
+    "insertText": "ten_tinh_trang%lex;"
   },
   {
     "label": "ten_tk%lex",
@@ -7080,6 +5480,16 @@
     "insertText": "ten_tn%lex;"
   },
   {
+    "label": "ten_trang_thai",
+    "detail": "GridInput",
+    "insertText": "ten_trang_thai;"
+  },
+  {
+    "label": "ten_trang_thaiex",
+    "detail": "GridInput",
+    "insertText": "ten_trang_thaiex;"
+  },
+  {
     "label": "ten_truong%lex",
     "detail": "GridInput",
     "insertText": "ten_truong%lex;"
@@ -7093,6 +5503,11 @@
     "label": "ten_ts%lex",
     "detail": "GridInput",
     "insertText": "ten_ts%lex;"
+  },
+  {
+    "label": "ten_ts_exex",
+    "detail": "GridInput",
+    "insertText": "ten_ts_exex;"
   },
   {
     "label": "ten_tt",
@@ -7140,34 +5555,9 @@
     "insertText": "ten_vt%lex;"
   },
   {
-    "label": "ten_vt2ex",
-    "detail": "GridInput",
-    "insertText": "ten_vt2ex;"
-  },
-  {
-    "label": "ten_vt_dau_vao",
-    "detail": "GridInput",
-    "insertText": "ten_vt_dau_vao;"
-  },
-  {
-    "label": "ten_vt_e",
-    "detail": "GridInput",
-    "insertText": "ten_vt_e;"
-  },
-  {
     "label": "ten_vt_gocex",
     "detail": "GridInput",
     "insertText": "ten_vt_gocex;"
-  },
-  {
-    "label": "ten_vt_hq",
-    "detail": "GridInput",
-    "insertText": "ten_vt_hq;"
-  },
-  {
-    "label": "ten_vt_hqex",
-    "detail": "GridInput",
-    "insertText": "ten_vt_hqex;"
   },
   {
     "label": "ten_vt_in",
@@ -7175,59 +5565,14 @@
     "insertText": "ten_vt_in;"
   },
   {
-    "label": "ten_vt_in%l",
-    "detail": "GridInput",
-    "insertText": "ten_vt_in%l;"
-  },
-  {
-    "label": "ten_vt_n%lex",
-    "detail": "GridInput",
-    "insertText": "ten_vt_n%lex;"
-  },
-  {
-    "label": "ten_vt_tc%lex",
-    "detail": "GridInput",
-    "insertText": "ten_vt_tc%lex;"
-  },
-  {
-    "label": "ten_vt_thay_theex",
-    "detail": "GridInput",
-    "insertText": "ten_vt_thay_theex;"
-  },
-  {
     "label": "ten_vt_x%lex",
     "detail": "GridInput",
     "insertText": "ten_vt_x%lex;"
   },
   {
-    "label": "ten_vt_xc%lex",
-    "detail": "GridInput",
-    "insertText": "ten_vt_xc%lex;"
-  },
-  {
-    "label": "ten_vtex",
-    "detail": "GridInput",
-    "insertText": "ten_vtex;"
-  },
-  {
-    "label": "ten_vung%lex",
-    "detail": "GridInput",
-    "insertText": "ten_vung%lex;"
-  },
-  {
-    "label": "ten_vung_cu%lex",
-    "detail": "GridInput",
-    "insertText": "ten_vung_cu%lex;"
-  },
-  {
     "label": "ten_vv%lex",
     "detail": "GridInput",
     "insertText": "ten_vv%lex;"
-  },
-  {
-    "label": "ten_yeu_cau",
-    "detail": "GridInput",
-    "insertText": "ten_yeu_cau;"
   },
   {
     "label": "tg_bd_cds",
@@ -7270,11 +5615,6 @@
     "insertText": "tg_chuyen;"
   },
   {
-    "label": "tg_du",
-    "detail": "GridInput",
-    "insertText": "tg_du;"
-  },
-  {
     "label": "tg_gc",
     "detail": "GridInput",
     "insertText": "tg_gc;"
@@ -7290,29 +5630,9 @@
     "insertText": "tg_vs;"
   },
   {
-    "label": "thang",
+    "label": "tg_xlex",
     "detail": "GridInput",
-    "insertText": "thang;"
-  },
-  {
-    "label": "thanh_phan",
-    "detail": "GridInput",
-    "insertText": "thanh_phan;"
-  },
-  {
-    "label": "thanh_phan_ct",
-    "detail": "GridInput",
-    "insertText": "thanh_phan_ct;"
-  },
-  {
-    "label": "thanh_phan_ctat",
-    "detail": "GridInput",
-    "insertText": "thanh_phan_ctat;"
-  },
-  {
-    "label": "thanh_phanat",
-    "detail": "GridInput",
-    "insertText": "thanh_phanat;"
+    "insertText": "tg_xlex;"
   },
   {
     "label": "thanh_tien_nvl",
@@ -7325,59 +5645,79 @@
     "insertText": "thanh_tien_nvl_nt;"
   },
   {
-    "label": "them_lan_dau",
+    "label": "thg_01",
     "detail": "GridInput",
-    "insertText": "them_lan_dau;"
+    "insertText": "thg_01;"
   },
   {
-    "label": "thieu_nguoi",
+    "label": "thg_02",
     "detail": "GridInput",
-    "insertText": "thieu_nguoi;"
+    "insertText": "thg_02;"
   },
   {
-    "label": "thieu_nvl",
+    "label": "thg_03",
     "detail": "GridInput",
-    "insertText": "thieu_nvl;"
+    "insertText": "thg_03;"
   },
   {
-    "label": "thoi_gian",
+    "label": "thg_04",
     "detail": "GridInput",
-    "insertText": "thoi_gian;"
+    "insertText": "thg_04;"
   },
   {
-    "label": "thoi_gian_doi_sp",
+    "label": "thg_05",
     "detail": "GridInput",
-    "insertText": "thoi_gian_doi_sp;"
+    "insertText": "thg_05;"
   },
   {
-    "label": "thoi_gian_giao_ca",
+    "label": "thg_06",
     "detail": "GridInput",
-    "insertText": "thoi_gian_giao_ca;"
+    "insertText": "thg_06;"
+  },
+  {
+    "label": "thg_07",
+    "detail": "GridInput",
+    "insertText": "thg_07;"
+  },
+  {
+    "label": "thg_08",
+    "detail": "GridInput",
+    "insertText": "thg_08;"
+  },
+  {
+    "label": "thg_09",
+    "detail": "GridInput",
+    "insertText": "thg_09;"
+  },
+  {
+    "label": "thg_10",
+    "detail": "GridInput",
+    "insertText": "thg_10;"
+  },
+  {
+    "label": "thg_11",
+    "detail": "GridInput",
+    "insertText": "thg_11;"
+  },
+  {
+    "label": "thg_12",
+    "detail": "GridInput",
+    "insertText": "thg_12;"
+  },
+  {
+    "label": "thoi_gian_hl",
+    "detail": "GridInput",
+    "insertText": "thoi_gian_hl;"
+  },
+  {
+    "label": "thoi_han",
+    "detail": "GridInput",
+    "insertText": "thoi_han;"
   },
   {
     "label": "thue",
     "detail": "GridInput",
     "insertText": "thue;"
-  },
-  {
-    "label": "thue_bvmt",
-    "detail": "GridInput",
-    "insertText": "thue_bvmt;"
-  },
-  {
-    "label": "thue_bvmt_nt",
-    "detail": "GridInput",
-    "insertText": "thue_bvmt_nt;"
-  },
-  {
-    "label": "thue_cl",
-    "detail": "GridInput",
-    "insertText": "thue_cl;"
-  },
-  {
-    "label": "thue_cl_nt",
-    "detail": "GridInput",
-    "insertText": "thue_cl_nt;"
   },
   {
     "label": "thue_cnex",
@@ -7395,16 +5735,6 @@
     "insertText": "thue_giam_nt;"
   },
   {
-    "label": "thue_nk",
-    "detail": "GridInput",
-    "insertText": "thue_nk;"
-  },
-  {
-    "label": "thue_nk_nt",
-    "detail": "GridInput",
-    "insertText": "thue_nk_nt;"
-  },
-  {
     "label": "thue_nt",
     "detail": "GridInput",
     "insertText": "thue_nt;"
@@ -7420,24 +5750,9 @@
     "insertText": "thue_suat;"
   },
   {
-    "label": "thue_suat_in",
-    "detail": "GridInput",
-    "insertText": "thue_suat_in;"
-  },
-  {
     "label": "thue_suat_nk",
     "detail": "GridInput",
     "insertText": "thue_suat_nk;"
-  },
-  {
-    "label": "thue_suat_nkex",
-    "detail": "GridInput",
-    "insertText": "thue_suat_nkex;"
-  },
-  {
-    "label": "thue_suat_pb",
-    "detail": "GridInput",
-    "insertText": "thue_suat_pb;"
   },
   {
     "label": "thue_suat_ttdb",
@@ -7445,29 +5760,9 @@
     "insertText": "thue_suat_ttdb;"
   },
   {
-    "label": "thue_suat_tv",
-    "detail": "GridInput",
-    "insertText": "thue_suat_tv;"
-  },
-  {
     "label": "thue_suatex",
     "detail": "GridInput",
     "insertText": "thue_suatex;"
-  },
-  {
-    "label": "thue_ttdb",
-    "detail": "GridInput",
-    "insertText": "thue_ttdb;"
-  },
-  {
-    "label": "thue_ttdb_nt",
-    "detail": "GridInput",
-    "insertText": "thue_ttdb_nt;"
-  },
-  {
-    "label": "ticket",
-    "detail": "GridInput",
-    "insertText": "ticket;"
   },
   {
     "label": "tien",
@@ -7480,9 +5775,19 @@
     "insertText": "tien0;"
   },
   {
+    "label": "tien0ex",
+    "detail": "GridInput",
+    "insertText": "tien0ex;"
+  },
+  {
     "label": "tien2",
     "detail": "GridInput",
     "insertText": "tien2;"
+  },
+  {
+    "label": "tien2_den",
+    "detail": "GridInput",
+    "insertText": "tien2_den;"
   },
   {
     "label": "tien2_ex",
@@ -7495,9 +5800,19 @@
     "insertText": "tien2_ex2;"
   },
   {
+    "label": "tien2_tu",
+    "detail": "GridInput",
+    "insertText": "tien2_tu;"
+  },
+  {
     "label": "tien3",
     "detail": "GridInput",
     "insertText": "tien3;"
+  },
+  {
+    "label": "tien_ck",
+    "detail": "GridInput",
+    "insertText": "tien_ck;"
   },
   {
     "label": "tien_cl_nt",
@@ -7513,16 +5828,6 @@
     "label": "tien_cp_nt",
     "detail": "GridInput",
     "insertText": "tien_cp_nt;"
-  },
-  {
-    "label": "tien_dat",
-    "detail": "GridInput",
-    "insertText": "tien_dat;"
-  },
-  {
-    "label": "tien_dat0ex",
-    "detail": "GridInput",
-    "insertText": "tien_dat0ex;"
   },
   {
     "label": "tien_den",
@@ -7545,19 +5850,9 @@
     "insertText": "tien_hd_ntex;"
   },
   {
-    "label": "tien_ket_hop_nt",
+    "label": "tien_nam",
     "detail": "GridInput",
-    "insertText": "tien_ket_hop_nt;"
-  },
-  {
-    "label": "tien_kk_nt",
-    "detail": "GridInput",
-    "insertText": "tien_kk_nt;"
-  },
-  {
-    "label": "tien_moi_gioi",
-    "detail": "GridInput",
-    "insertText": "tien_moi_gioi;"
+    "insertText": "tien_nam;"
   },
   {
     "label": "tien_nhap",
@@ -7615,29 +5910,34 @@
     "insertText": "tien_nt_x_ex;"
   },
   {
-    "label": "tien_pb",
+    "label": "tien_ntex",
     "detail": "GridInput",
-    "insertText": "tien_pb;"
+    "insertText": "tien_ntex;"
   },
   {
-    "label": "tien_phai_tra_nt",
+    "label": "tien_quy",
     "detail": "GridInput",
-    "insertText": "tien_phai_tra_nt;"
+    "insertText": "tien_quy;"
   },
   {
-    "label": "tien_ss_nt",
+    "label": "tien_rms",
     "detail": "GridInput",
-    "insertText": "tien_ss_nt;"
+    "insertText": "tien_rms;"
   },
   {
-    "label": "tien_tt",
+    "label": "tien_thang",
     "detail": "GridInput",
-    "insertText": "tien_tt;"
+    "insertText": "tien_thang;"
   },
   {
-    "label": "tien_tt_nt",
+    "label": "tien_ts",
     "detail": "GridInput",
-    "insertText": "tien_tt_nt;"
+    "insertText": "tien_ts;"
+  },
+  {
+    "label": "tien_ts_nt",
+    "detail": "GridInput",
+    "insertText": "tien_ts_nt;"
   },
   {
     "label": "tien_tu",
@@ -7655,19 +5955,14 @@
     "insertText": "tien_xuat_ex;"
   },
   {
+    "label": "tienex",
+    "detail": "GridInput",
+    "insertText": "tienex;"
+  },
+  {
     "label": "tinh_chat",
     "detail": "GridInput",
     "insertText": "tinh_chat;"
-  },
-  {
-    "label": "tinh_chatex",
-    "detail": "GridInput",
-    "insertText": "tinh_chatex;"
-  },
-  {
-    "label": "tinh_diem_cl",
-    "detail": "GridInput",
-    "insertText": "tinh_diem_cl;"
   },
   {
     "label": "tinh_gt_yn",
@@ -7680,14 +5975,14 @@
     "insertText": "tinh_thanh;"
   },
   {
-    "label": "tinh_thue_nk",
-    "detail": "GridInput",
-    "insertText": "tinh_thue_nk;"
-  },
-  {
     "label": "tinh_thue_yn",
     "detail": "GridInput",
     "insertText": "tinh_thue_yn;"
+  },
+  {
+    "label": "tinh_trang",
+    "detail": "GridInput",
+    "insertText": "tinh_trang;"
   },
   {
     "label": "tinh_trang%l",
@@ -7698,6 +5993,11 @@
     "label": "tinh_trang_hddt",
     "detail": "GridInput",
     "insertText": "tinh_trang_hddt;"
+  },
+  {
+    "label": "tinh_trangat",
+    "detail": "GridInput",
+    "insertText": "tinh_trangat;"
   },
   {
     "label": "tk",
@@ -7713,11 +6013,6 @@
     "label": "tk_ckat",
     "detail": "GridInput",
     "insertText": "tk_ckat;"
-  },
-  {
-    "label": "tk_cn_taxex",
-    "detail": "GridInput",
-    "insertText": "tk_cn_taxex;"
   },
   {
     "label": "tk_cnex",
@@ -7745,11 +6040,6 @@
     "insertText": "tk_cpbh;"
   },
   {
-    "label": "tk_cpbh_tcat",
-    "detail": "GridInput",
-    "insertText": "tk_cpbh_tcat;"
-  },
-  {
     "label": "tk_cpbhat",
     "detail": "GridInput",
     "insertText": "tk_cpbhat;"
@@ -7768,11 +6058,6 @@
     "label": "tk_dt",
     "detail": "GridInput",
     "insertText": "tk_dt;"
-  },
-  {
-    "label": "tk_dt_tcat",
-    "detail": "GridInput",
-    "insertText": "tk_dt_tcat;"
   },
   {
     "label": "tk_dtat",
@@ -7805,11 +6090,6 @@
     "insertText": "tk_gv;"
   },
   {
-    "label": "tk_gv_tcat",
-    "detail": "GridInput",
-    "insertText": "tk_gv_tcat;"
-  },
-  {
     "label": "tk_gvat",
     "detail": "GridInput",
     "insertText": "tk_gvat;"
@@ -7830,14 +6110,19 @@
     "insertText": "tk_ln;"
   },
   {
-    "label": "tk_me",
-    "detail": "GridInput",
-    "insertText": "tk_me;"
-  },
-  {
     "label": "tk_nh",
     "detail": "GridInput",
     "insertText": "tk_nh;"
+  },
+  {
+    "label": "tk_nhanex",
+    "detail": "GridInput",
+    "insertText": "tk_nhanex;"
+  },
+  {
+    "label": "tk_nhex",
+    "detail": "GridInput",
+    "insertText": "tk_nhex;"
   },
   {
     "label": "tk_no",
@@ -7870,9 +6155,9 @@
     "insertText": "tk_thue_nkat;"
   },
   {
-    "label": "tk_thue_tcat",
+    "label": "tk_thue_noat",
     "detail": "GridInput",
-    "insertText": "tk_thue_tcat;"
+    "insertText": "tk_thue_noat;"
   },
   {
     "label": "tk_thue_ttdb",
@@ -7900,11 +6185,6 @@
     "insertText": "tk_vt;"
   },
   {
-    "label": "tk_vt_tcat",
-    "detail": "GridInput",
-    "insertText": "tk_vt_tcat;"
-  },
-  {
     "label": "tk_vtat",
     "detail": "GridInput",
     "insertText": "tk_vtat;"
@@ -7920,24 +6200,19 @@
     "insertText": "tkat;"
   },
   {
-    "label": "tkvt_dvcs",
-    "detail": "GridInput",
-    "insertText": "tkvt_dvcs;"
-  },
-  {
     "label": "tl",
     "detail": "GridInput",
     "insertText": "tl;"
   },
   {
-    "label": "tl_chenh_lech",
+    "label": "tl2_ln",
     "detail": "GridInput",
-    "insertText": "tl_chenh_lech;"
+    "insertText": "tl2_ln;"
   },
   {
-    "label": "tl_chiu_thue",
+    "label": "tl2_so",
     "detail": "GridInput",
-    "insertText": "tl_chiu_thue;"
+    "insertText": "tl2_so;"
   },
   {
     "label": "tl_ck",
@@ -7945,19 +6220,29 @@
     "insertText": "tl_ck;"
   },
   {
-    "label": "tl_hao_hut",
+    "label": "tl_ck_hd",
     "detail": "GridInput",
-    "insertText": "tl_hao_hut;"
+    "insertText": "tl_ck_hd;"
+  },
+  {
+    "label": "tl_ck_them",
+    "detail": "GridInput",
+    "insertText": "tl_ck_them;"
+  },
+  {
+    "label": "tl_ck_tt",
+    "detail": "GridInput",
+    "insertText": "tl_ck_tt;"
+  },
+  {
+    "label": "tl_cp",
+    "detail": "GridInput",
+    "insertText": "tl_cp;"
   },
   {
     "label": "tl_hh",
     "detail": "GridInput",
     "insertText": "tl_hh;"
-  },
-  {
-    "label": "tl_hhex",
-    "detail": "GridInput",
-    "insertText": "tl_hhex;"
   },
   {
     "label": "tl_kt",
@@ -7973,16 +6258,6 @@
     "label": "tl_ln",
     "detail": "GridInput",
     "insertText": "tl_ln;"
-  },
-  {
-    "label": "tl_moi_gioi",
-    "detail": "GridInput",
-    "insertText": "tl_moi_gioi;"
-  },
-  {
-    "label": "tl_nhom",
-    "detail": "GridInput",
-    "insertText": "tl_nhom;"
   },
   {
     "label": "tl_pb",
@@ -8015,11 +6290,6 @@
     "insertText": "tn_tt_nt;"
   },
   {
-    "label": "ton",
-    "detail": "GridInput",
-    "insertText": "ton;"
-  },
-  {
     "label": "ton13",
     "detail": "GridInput",
     "insertText": "ton13;"
@@ -8030,19 +6300,14 @@
     "insertText": "ton13ex;"
   },
   {
-    "label": "ton_dau",
-    "detail": "GridInput",
-    "insertText": "ton_dau;"
-  },
-  {
-    "label": "ton_kho_tt",
-    "detail": "GridInput",
-    "insertText": "ton_kho_tt;"
-  },
-  {
     "label": "ton_yn",
     "detail": "GridInput",
     "insertText": "ton_yn;"
+  },
+  {
+    "label": "trang_thai",
+    "detail": "GridInput",
+    "insertText": "trang_thai;"
   },
   {
     "label": "trang_thai_tt",
@@ -8050,34 +6315,14 @@
     "insertText": "trang_thai_tt;"
   },
   {
-    "label": "trang_thaiex",
+    "label": "trich_theo",
     "detail": "GridInput",
-    "insertText": "trang_thaiex;"
-  },
-  {
-    "label": "tri_gia",
-    "detail": "GridInput",
-    "insertText": "tri_gia;"
-  },
-  {
-    "label": "trong_so",
-    "detail": "GridInput",
-    "insertText": "trong_so;"
-  },
-  {
-    "label": "trong_soex",
-    "detail": "GridInput",
-    "insertText": "trong_soex;"
+    "insertText": "trich_theo;"
   },
   {
     "label": "tru_dm",
     "detail": "GridInput",
     "insertText": "tru_dm;"
-  },
-  {
-    "label": "truc_hu",
-    "detail": "GridInput",
-    "insertText": "truc_hu;"
   },
   {
     "label": "tt",
@@ -8088,11 +6333,6 @@
     "label": "tt_gs",
     "detail": "GridInput",
     "insertText": "tt_gs;"
-  },
-  {
-    "label": "tt_gt_clex",
-    "detail": "GridInput",
-    "insertText": "tt_gt_clex;"
   },
   {
     "label": "tt_nt",
@@ -8110,9 +6350,9 @@
     "insertText": "tt_qd;"
   },
   {
-    "label": "tt_ton_kho",
+    "label": "tt_tb",
     "detail": "GridInput",
-    "insertText": "tt_ton_kho;"
+    "insertText": "tt_tb;"
   },
   {
     "label": "ttdb",
@@ -8125,11 +6365,6 @@
     "insertText": "ttdb_nt;"
   },
   {
-    "label": "tu_choi_yn",
-    "detail": "GridInput",
-    "insertText": "tu_choi_yn;"
-  },
-  {
     "label": "tu_ngay",
     "detail": "GridInput",
     "insertText": "tu_ngay;"
@@ -8138,26 +6373,6 @@
     "label": "tu_so",
     "detail": "GridInput",
     "insertText": "tu_so;"
-  },
-  {
-    "label": "tuoi_thai",
-    "detail": "GridInput",
-    "insertText": "tuoi_thai;"
-  },
-  {
-    "label": "tuy_chon",
-    "detail": "GridInput",
-    "insertText": "tuy_chon;"
-  },
-  {
-    "label": "tv",
-    "detail": "GridInput",
-    "insertText": "tv;"
-  },
-  {
-    "label": "tv_nt",
-    "detail": "GridInput",
-    "insertText": "tv_nt;"
   },
   {
     "label": "ty_gia",
@@ -8185,69 +6400,14 @@
     "insertText": "ty_le;"
   },
   {
-    "label": "ty_le_hh",
+    "label": "ty_trong_den",
     "detail": "GridInput",
-    "insertText": "ty_le_hh;"
+    "insertText": "ty_trong_den;"
   },
   {
-    "label": "ty_le_lt",
+    "label": "ty_trong_tu",
     "detail": "GridInput",
-    "insertText": "ty_le_lt;"
-  },
-  {
-    "label": "ty_le_mau",
-    "detail": "GridInput",
-    "insertText": "ty_le_mau;"
-  },
-  {
-    "label": "ty_le_phu",
-    "detail": "GridInput",
-    "insertText": "ty_le_phu;"
-  },
-  {
-    "label": "ty_le_tp",
-    "detail": "GridInput",
-    "insertText": "ty_le_tp;"
-  },
-  {
-    "label": "ty_trong",
-    "detail": "GridInput",
-    "insertText": "ty_trong;"
-  },
-  {
-    "label": "ty_trong_chuan",
-    "detail": "GridInput",
-    "insertText": "ty_trong_chuan;"
-  },
-  {
-    "label": "ty_trong_chuanex",
-    "detail": "GridInput",
-    "insertText": "ty_trong_chuanex;"
-  },
-  {
-    "label": "ty_trong_gnkex",
-    "detail": "GridInput",
-    "insertText": "ty_trong_gnkex;"
-  },
-  {
-    "label": "ty_trong_gxcex",
-    "detail": "GridInput",
-    "insertText": "ty_trong_gxcex;"
-  },
-  {
-    "label": "ty_trong_gxkex",
-    "detail": "GridInput",
-    "insertText": "ty_trong_gxkex;"
-  },
-  {
-    "label": "ty_trong_tb",
-    "detail": "GridInput",
-    "insertText": "ty_trong_tb;"
-  },
-  {
-    "label": "ty_trongex",
-    "detail": "GridInput",
-    "insertText": "ty_trongex;"
+    "insertText": "ty_trong_tu;"
   },
   {
     "label": "type",
@@ -8265,19 +6425,19 @@
     "insertText": "typechangeex;"
   },
   {
+    "label": "u0",
+    "detail": "GridInput",
+    "insertText": "u0;"
+  },
+  {
     "label": "u0ex",
     "detail": "GridInput",
     "insertText": "u0ex;"
   },
   {
-    "label": "u1ex",
+    "label": "u2",
     "detail": "GridInput",
-    "insertText": "u1ex;"
-  },
-  {
-    "label": "u2ex",
-    "detail": "GridInput",
-    "insertText": "u2ex;"
+    "insertText": "u2;"
   },
   {
     "label": "u3ex",
@@ -8285,19 +6445,14 @@
     "insertText": "u3ex;"
   },
   {
-    "label": "u_status_name%lex",
-    "detail": "GridInput",
-    "insertText": "u_status_name%lex;"
-  },
-  {
-    "label": "u_statusat",
-    "detail": "GridInput",
-    "insertText": "u_statusat;"
-  },
-  {
     "label": "urls",
     "detail": "GridInput",
     "insertText": "urls;"
+  },
+  {
+    "label": "userId",
+    "detail": "GridInput",
+    "insertText": "userId;"
   },
   {
     "label": "user_id",
@@ -8305,24 +6460,9 @@
     "insertText": "user_id;"
   },
   {
-    "label": "user_id0",
-    "detail": "GridInput",
-    "insertText": "user_id0;"
-  },
-  {
-    "label": "user_id2",
-    "detail": "GridInput",
-    "insertText": "user_id2;"
-  },
-  {
     "label": "user_id4",
     "detail": "GridInput",
     "insertText": "user_id4;"
-  },
-  {
-    "label": "user_lst",
-    "detail": "GridInput",
-    "insertText": "user_lst;"
   },
   {
     "label": "user_yn",
@@ -8338,21 +6478,6 @@
     "label": "v_uy_quyenex",
     "detail": "GridInput",
     "insertText": "v_uy_quyenex;"
-  },
-  {
-    "label": "vat_tu_ai_yn",
-    "detail": "GridInput",
-    "insertText": "vat_tu_ai_yn;"
-  },
-  {
-    "label": "ve_sinh_dinh_ky",
-    "detail": "GridInput",
-    "insertText": "ve_sinh_dinh_ky;"
-  },
-  {
-    "label": "ve_sinh_vao_ca",
-    "detail": "GridInput",
-    "insertText": "ve_sinh_vao_ca;"
   },
   {
     "label": "vi_tri_yn",
@@ -8385,34 +6510,9 @@
     "insertText": "volume;"
   },
   {
-    "label": "vt_giayex",
-    "detail": "GridInput",
-    "insertText": "vt_giayex;"
-  },
-  {
-    "label": "vt_thay_the_yn",
-    "detail": "GridInput",
-    "insertText": "vt_thay_the_yn;"
-  },
-  {
-    "label": "vt_thu_hoi",
-    "detail": "GridInput",
-    "insertText": "vt_thu_hoi;"
-  },
-  {
-    "label": "vung_cuat",
-    "detail": "GridInput",
-    "insertText": "vung_cuat;"
-  },
-  {
     "label": "weight",
     "detail": "GridInput",
     "insertText": "weight;"
-  },
-  {
-    "label": "xColumn",
-    "detail": "GridInput",
-    "insertText": "xColumn;"
   },
   {
     "label": "xKey",
@@ -8440,11 +6540,6 @@
     "insertText": "x_paint_day;"
   },
   {
-    "label": "xac_nhan",
-    "detail": "GridInput",
-    "insertText": "xac_nhan;"
-  },
-  {
     "label": "xac_nhanex",
     "detail": "GridInput",
     "insertText": "xac_nhanex;"
@@ -8460,14 +6555,9 @@
     "insertText": "xaction_exex;"
   },
   {
-    "label": "xcodeat",
+    "label": "xid",
     "detail": "GridInput",
-    "insertText": "xcodeat;"
-  },
-  {
-    "label": "xcodeex",
-    "detail": "GridInput",
-    "insertText": "xcodeex;"
+    "insertText": "xid;"
   },
   {
     "label": "xk_yn",
@@ -8478,6 +6568,11 @@
     "label": "xkey",
     "detail": "GridInput",
     "insertText": "xkey;"
+  },
+  {
+    "label": "xpivot",
+    "detail": "GridInput",
+    "insertText": "xpivot;"
   },
   {
     "label": "xstatus",
@@ -8510,11 +6605,6 @@
     "insertText": "xtype;"
   },
   {
-    "label": "xtype_name",
-    "detail": "GridInput",
-    "insertText": "xtype_name;"
-  },
-  {
     "label": "xtypeat",
     "detail": "GridInput",
     "insertText": "xtypeat;"
@@ -8530,63 +6620,43 @@
     "insertText": "xu_ly;"
   },
   {
-    "label": "xuat_xu",
+    "label": "y_kien",
     "detail": "GridInput",
-    "insertText": "xuat_xu;"
+    "insertText": "y_kien;"
   },
   {
-    "label": "xy_ly",
+    "label": "y_kien_dx",
     "detail": "GridInput",
-    "insertText": "xy_ly;"
+    "insertText": "y_kien_dx;"
   },
   {
-    "label": "yeu_cau",
+    "label": "yc_ln",
     "detail": "GridInput",
-    "insertText": "yeu_cau;"
+    "insertText": "yc_ln;"
   },
   {
-    "label": "yeu_cau_sx",
+    "label": "yc_so",
     "detail": "GridInput",
-    "insertText": "yeu_cau_sx;"
+    "insertText": "yc_so;"
   },
   {
-    "label": "yeu_cau_them",
+    "label": "yccg_ln",
     "detail": "GridInput",
-    "insertText": "yeu_cau_them;"
+    "insertText": "yccg_ln;"
   },
   {
-    "label": "zcg_ln",
+    "label": "zkey",
     "detail": "GridInput",
-    "insertText": "zcg_ln;"
+    "insertText": "zkey;"
   },
   {
-    "label": "zcg_so",
+    "label": "ztc_ln",
     "detail": "GridInput",
-    "insertText": "zcg_so;"
+    "insertText": "ztc_ln;"
   },
   {
-    "label": "zcg_soex",
+    "label": "ztc_so",
     "detail": "GridInput",
-    "insertText": "zcg_soex;"
-  },
-  {
-    "label": "zcu_ln",
-    "detail": "GridInput",
-    "insertText": "zcu_ln;"
-  },
-  {
-    "label": "zcu_so",
-    "detail": "GridInput",
-    "insertText": "zcu_so;"
-  },
-  {
-    "label": "zdn_ln",
-    "detail": "GridInput",
-    "insertText": "zdn_ln;"
-  },
-  {
-    "label": "zdn_so",
-    "detail": "GridInput",
-    "insertText": "zdn_so;"
+    "insertText": "ztc_so;"
   }
 ]
