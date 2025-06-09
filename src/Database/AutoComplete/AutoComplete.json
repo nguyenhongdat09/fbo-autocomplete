@@ -17,7 +17,7 @@
   {
     "label": "_getItemValue(row (int), column (int))",
     "detail": "(GRID) Get Value Of Cell",
-    "insertText": "_getItemValue(${1:0}, ${2:})"
+    "insertText": "_getItemValue(${1:0}, g._getColumnOrder('${2:}'))"
   },
   {
     "label": "_setColumnVisible(colunm (int), bool)",
@@ -258,5 +258,10 @@
     "label": "get_id()",
     "detail": "",
     "insertText": "get_id()"
+  },
+  {
+    "label": "getItem()",
+    "detail": "(FORM) Get Field",
+    "insertText": "getItem('${1:}')"
   }
 ]

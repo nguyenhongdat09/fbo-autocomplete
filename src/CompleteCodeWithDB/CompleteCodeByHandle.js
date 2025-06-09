@@ -19,10 +19,6 @@ class CompleteCodeByHandle {
     constructor(sheetId) {
         this.sheetId = sheetId;
         this.companyFunctions = [];
-        this.dirField = [];
-        this.gridInputField = [];
-        this.gridViewField = [];
-        this.filterField = [];
         this.optionField = [];
         this.shortCutField = [];
         this.providerHandles = [];

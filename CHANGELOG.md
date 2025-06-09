@@ -68,4 +68,6 @@
 # Version 0.0.31
 - Fix render missing field
 # Version 0.0.32
-- GenerateCopyFile thêm rl(,,,)
+- GenerateCopyFile add rl(,,,)
+- Fixing autocomplete on Database not json to Reduce RAM used
+- Fixing ReadEntity not readline() cause RAM increase

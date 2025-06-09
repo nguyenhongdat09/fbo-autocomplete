@@ -49,9 +49,9 @@
  * Released under the MIT License.
  */
 
-/*! @azure/msal-common v15.6.0 2025-05-06 */
+/*! @azure/msal-common v15.7.0 2025-05-30 */
 
-/*! @azure/msal-node v3.5.3 2025-05-06 */
+/*! @azure/msal-node v3.6.0 2025-05-30 */
 
 /*! Axios v1.9.0 Copyright (c) 2025 Matt Zabriskie and contributors */
 
