@@ -12,7 +12,7 @@ class RenderXMLToDB extends ana {
         this.dbRender = new DatabaseRender();
     }
 
-    run(context, completeCodeByHandle) {
+    run(context) {
         this.constant = new Constant(context)
         const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', async () => {
             await vscode.window.withProgress({
@@ -23,17 +23,12 @@ class RenderXMLToDB extends ana {
                 var val = await this.AnalystField();
                 // await this.dbRender.deleteDatabase()
                 await this.dbRender.run(val);
-                await this.dbRender.saveToAutoCompleteJson();
-                this.reloadCompleteField(completeCodeByHandle);
+               // await this.dbRender.saveToAutoCompleteJson();
             });
         });
 
         context.subscriptions.push(render);
-    }
-
-    reloadCompleteField(completeCodeByHandle) { 
-        completeCodeByHandle.loadFromJson()
-    }
+    } 
 
     getPathDirGridFiler() {
         var pathFile = vscode.window.activeTextEditor.document.uri.fsPath;

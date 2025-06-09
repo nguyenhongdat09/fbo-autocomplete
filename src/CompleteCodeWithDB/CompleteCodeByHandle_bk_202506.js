@@ -92,7 +92,11 @@ class CompleteCodeByHandle {
     // Đọc dữ liệu từ file JSON
     loadFromJson() {
         const files = [
-            ['companyFunctions', autocompleteJsonPath], 
+            ['companyFunctions', autocompleteJsonPath],
+            ['gridViewField', path.join(__dirname, '..', 'Database/AutoComplete/GridView.json')],
+            ['gridInputField', path.join(__dirname, '..', 'Database/AutoComplete/GridInput.json')],
+            ['dirField', path.join(__dirname, '..', 'Database/AutoComplete/Dir.json')],
+            ['filterField', path.join(__dirname, '..', 'Database/AutoComplete/Filter.json')],
             ['optionField', path.join(__dirname, '..', 'Database/AutoComplete/Options.json')],
             ['shortCutField', path.join(__dirname, '..', 'Database/AutoComplete/Shortcut.json')],
         ];
@@ -185,9 +189,31 @@ class CompleteCodeByHandle {
         }
         const [, objectPrefix, partialFunction] = match;
         if (objectPrefix) {
+            switch (name_folder) {
+                case 'GridInput':
+                    arr = this.gridInputField;
+                    break;
+                case 'GridView':
+                    arr = this.gridViewField;
+                    break;
+                case 'Dir':
+                    arr = this.dirField;
+                    break;
+                case 'Filter':
+                    arr = this.filterField;
+                    break;
+                default:
+                    break;
+            }
             var folderdbPath = path.join(__dirname, '..', 'Database', name_folder)
             var arr_field = await this.getAllKeys(folderdbPath, name_folder);
-            return arr_field.map(item => this.createCompletionItem(item));   
+       
+            /*
+            return arr
+                .filter(func => func.label.toLowerCase().includes(partialFunction.toLowerCase())) // So khớp bất kể chữ hoa/thường
+                .map(func => this.createCompletionItem(func));
+                */
+             return arr_field.map(item => this.createCompletionItem(item));   
         }
         return undefined;
     }

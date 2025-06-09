@@ -77,10 +77,8 @@ async function activate(context) {
    
     const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
     completeCodeByHandle.run(context);
-   
     var renderdb = new RenderXMLToDB()
-    renderdb.run(context, completeCodeByHandle);
-
+    renderdb.run(context);
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
