@@ -32,6 +32,7 @@ class CustomDefinition {
             this.resolveShowFormDefinition(document, word, position) ||
             this.DefinitionActionCase(document, word, position) ||
             this.DefinitionButtonCase(document, word, position) ||
+            this.DefinitionViewItemCase(document, word, position) ||
             null
         );
     }
@@ -105,7 +106,7 @@ class CustomDefinition {
     }
     resolveShowFormDefinition(document, word, position) {
         const showForms = this.getLineContentShowForm(document), path_definition = [];
-
+        
         for (const show of showForms) {
             if (show.formName === word) {
                 const filterPath = path.join(
@@ -167,7 +168,7 @@ class CustomDefinition {
             if (targetCase) {
                 return new vscode.Location(document.uri, targetCase.position);
             }
-             // ✅ Nếu không có case, trỏ đến dòng có ExecuteCommand(sender, e)
+            // ✅ Nếu không có case, trỏ đến dòng có ExecuteCommand(sender, e)
             for (let i = 0; i < document.lineCount; i++) {
                 const lineText = document.lineAt(i).text;
                 if (/ResponseComplete\s*\(\s*sender\s*,\s*e\s*\)/.test(lineText)) {
@@ -175,7 +176,7 @@ class CustomDefinition {
                 }
             }
         }
- 
+
         return null;
     }
 
@@ -289,8 +290,49 @@ class CustomDefinition {
         if (result) return result;
     }
     //#endregion 
+    //#region item view => field item
 
 
+    resolveViewItemDefinition(document, position, word) {
+        const rawWord = word.replace(/[\[\]]/g, '');
+        const fieldName = rawWord.split('.')[0];
+        const currentLine = position.line;
+        const totalLines = document.lineCount;
+
+        // 1️⃣ Nếu đang đứng trong dòng <field name="xxx"> thì tìm view dùng nó
+        const currentLineText = document.lineAt(currentLine).text;
+        const isFieldLine = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i').test(currentLineText);
+
+        if (isFieldLine) {
+            const pattern = new RegExp(`\\[${fieldName}(?:\\.\\w+)?\\]`, 'g'); // [field] hoặc [field].Label
+            for (let i = 0; i < totalLines; i++) {
+                const lineText = document.lineAt(i).text;
+                if (pattern.test(lineText)) {
+                    const index = lineText.indexOf(`[${fieldName}`);
+                    return new vscode.Location(document.uri, new vscode.Position(i, index));
+                }
+            }
+        }
+
+        // 2️⃣ Nếu đang ở dòng chứa [xxx] hoặc [xxx].Label → trỏ lên <field name="xxx">
+        const fieldPattern = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i');
+        for (let i = 0; i < totalLines; i++) {
+            const lineText = document.lineAt(i).text;
+            if (fieldPattern.test(lineText)) {
+                const index = lineText.indexOf(fieldName);
+                return new vscode.Location(document.uri, new vscode.Position(i, index));
+            }
+        }
+
+        return null;
+    }
+
+
+    DefinitionViewItemCase(document, word, position) {
+        const result = this.resolveViewItemDefinition(document, position, word);
+        if (result) return result;
+    }
+    //#endregion 
 
     checkFolderValid() {
         var folderName = this.getFolderName();
