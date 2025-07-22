@@ -14,8 +14,7 @@
         - `$mgr` dùng gen ra phần thẻ <row> file Filter/Grid
      - ##### Phần gen processing FBO  
         - `$gpf;` 
-## Cách cài đặt 
-- Sau khi install .vsix mở file bất kỳ ở một trong 3 Folder Grid, Dir, Filter bấm **Ctrl + Shift + P** Nhập **Render XML To Database** => Enter. 
+### Cách cài đặt 
 ## Giải thích tổng quát cách thức hoạt động
 - Khi **Render XML To Database** Gói sẽ tìm các file trong cả 3 folder là Grid, Dir, Filter phân tích các trường `<field>` lấy name ra và lưu vào database. Lúc này mới bắt đầu nhập `$f, $gi, $gv` thì mới ra dữ liệu
     - #### Quy tắc nhập
@@ -42,4 +41,5 @@
 ## Tìm Definition của Lookup hoặc file trong Keyword "showForm()"
 - Ctrl + Click chuột vào controller thì sẽ thấy được definition ví dụ controller="Item" hoặc g.showForm('zzzFilter)
 - Ctrl + Click chuột vào action id, case , button git
+- Hoặc dùng Ctrl + Shift + P tìm FBO: Show All File in show form bấm vào thì sẽ show tất cả file liên quan trong code showForm('filexxx')
  

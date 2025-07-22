@@ -44,7 +44,9 @@ packageJson.dependencies = {
   "strip-ansi": "^7.1.0",
   "cli-table3": "^0.6.5",
   "level-rocksdb": "^5.0.0",
-  "rocksdb": "^5.2.1" 
+  "rocksdb": "^5.2.1" ,
+  "crypto-js": "^4.2.0",
+  "node-machine-id": "^1.1.12"
 };
 packageJson.main = "./src/extension.js",
   fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));

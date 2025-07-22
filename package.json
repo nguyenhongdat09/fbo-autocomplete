@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.33",
+  "version": "0.0.34",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -276,6 +276,10 @@
       {
         "command": "fbo-autocomplete.showQueryResult",
         "title": "Show Query Result"
+      },
+      {
+        "command": "fbo-autocomplete.showAllFileShowForm",
+        "title": "FBO: Show All File in show form"
       }
     ],
     "languages": [
@@ -308,19 +312,21 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.99.9",
+    "webpack": "^5.100.2",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "cli-table3": "^0.6.5",
+    "crypto-js": "^4.2.0",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "mssql": "^11.0.1",
-    "strip-ansi": "^7.1.0",
-    "cli-table3": "^0.6.5",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1"
+    "mssql": "^11.0.1",
+    "node-machine-id": "^1.1.12",
+    "rocksdb": "^5.2.1",
+    "strip-ansi": "^7.1.0"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",
@@ -329,7 +335,9 @@
     "googletrans": "^1.0.21",
     "mssql": "^11.0.1",
     "strip-ansi": "^7.1.0",
-    "cli-table3": "^0.6.5"
+    "cli-table3": "^0.6.5",
+    "crypto-js": "^4.2.0",
+    "node-machine-id": "^1.1.12"
   },
   "extensionDependencies": [
     "redhat.vscode-xml",

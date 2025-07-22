@@ -24,49 +24,21 @@ const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
 const CustomDefinition = require("./Definition/CustomDefinition");
 var Constant = require('./constant')
+const showAllFileShowForm = require('./Definition/showAllFileShowForm');
+
+
+
 
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
-const https = require('https');
-function decodeUrl(encoded) {
-    return Buffer.from(encoded, 'base64').toString('utf8');
-}
-
-var licenseUrl = decodeUrl('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL25ndXllbmhvbmdkYXQwOS9mYm9fbGljZW5zZS9tYWluL2xpY2Vuc2UuanNvbg==');
-function checkLicense() {
-    return new Promise((resolve) => {
-        https.get(licenseUrl, (res) => {
-            let data = '';
-            res.on('data', chunk => data += chunk);
-            res.on('end', () => {
-                try {
-                    var json = JSON.parse(data);
-                    if (!json.active) {
-                        //vscode.window.showErrorMessage('Extension has been disabled. Contact support.');
-                        return resolve(false);
-                    } 
-                    return resolve(true);
-                } catch (e) {
-                  //  vscode.window.showErrorMessage('Invalid license format');
-                    return resolve(false);
-                }
-            });
-        }).on('error', (e) => {
-            //vscode.window.showErrorMessage('License fetch failed: ' + e.message);
-            return resolve(false);
-        });
-    });
-}
-
-
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 async function activate(context) {
-    console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
+    var checkLicense = require('./license/checklicense').checkLicense;
     var constant = new Constant(context);
-    var license = await checkLicense();
+    var license = await checkLicense(); 
     if(!license) return
     const provider = new CompletionProvider(); 
     provider.run(context)
@@ -271,7 +243,9 @@ async function activate(context) {
 
     const defi = new CustomDefinition()
     defi.run(context);
-
+    var shaf= vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm)  
+ 
+    context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
