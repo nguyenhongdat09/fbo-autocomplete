@@ -297,36 +297,41 @@ class CustomDefinition {
         const rawWord = word.replace(/[\[\]]/g, '');
         const fieldName = rawWord.split('.')[0];
         const currentLine = position.line;
-        const totalLines = document.lineCount;
         const currentLineText = document.lineAt(currentLine).text;
-        const isGridFolder = document.uri.fsPath.toLowerCase().includes('\\grid\\');
-
-        // Nếu là file Grid
-        if (isGridFolder) {
-            for (let i = 0; i < totalLines; i++) {
-                if (i === currentLine) continue;
-
-                const lineText = document.lineAt(i).text;
-                const pattern = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i');
-
-                if (pattern.test(lineText)) {
-                    const index = lineText.indexOf(fieldName);
-                    return new vscode.Location(document.uri, new vscode.Position(i, index));
-                }
-            }
-
-            return null;
-        }
-
+        const totalLines = document.lineCount;
         const filePath = document.uri.fsPath.toLowerCase();
+
+        const isInGrid = filePath.includes('\\grid\\');
         const isInFilterOrDir = filePath.includes('\\filter\\') || filePath.includes('\\dir\\');
 
-        if (isInFilterOrDir) {
-            const isFieldLine = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i').test(currentLineText);
+        // 🎯 GRID: view <=> fields
+        if (isInGrid) {
+            const fieldPattern = new RegExp(`<field\\b[^>]*\\bname=["']${fieldName}["']`, 'i');
+            const isFieldLine = fieldPattern.test(currentLineText);
+
             if (isFieldLine) {
-                const pattern = new RegExp(`\\[${fieldName}(?:\\.\\w+)?\\]`, 'g'); // [field] hoặc [field].Label
                 for (let i = 0; i < totalLines; i++) {
+                    if (i === currentLine) continue; // bỏ qua dòng hiện tại
                     const lineText = document.lineAt(i).text;
+                    if (fieldPattern.test(lineText)) {
+                        const index = lineText.indexOf(fieldName);
+                        return new vscode.Location(document.uri, new vscode.Position(i, index));
+                    }
+                }
+            }
+        }
+
+        // 🎯 FILTER & DIR: <field> <=> <item ... [field]>
+        if (isInFilterOrDir) {
+            const isFieldLine = new RegExp(`<field\\b[^>]*\\bname=["']${fieldName}["']`, 'i').test(currentLineText);
+            const isItemUsageLine = new RegExp(`\\[${fieldName}(?:\\.\\w+)?\\]`, 'g').test(currentLineText) && /<item\b[^>]*>/.test(currentLineText);
+
+            // Nếu đang ở <field name="x"> → tìm dòng <item ... [x]>
+            if (isFieldLine) {
+                for (let i = 0; i < totalLines; i++) {
+                    if (i === currentLine) continue;
+                    const lineText = document.lineAt(i).text;
+                    const pattern = new RegExp(`<item\\b[^>]*\\[${fieldName}(?:\\.\\w+)?\\]`, 'i');
                     if (pattern.test(lineText)) {
                         const index = lineText.indexOf(`[${fieldName}`);
                         return new vscode.Location(document.uri, new vscode.Position(i, index));
@@ -334,18 +339,22 @@ class CustomDefinition {
                 }
             }
 
-            const fieldPattern = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i');
-            for (let i = 0; i < totalLines; i++) {
-                const lineText = document.lineAt(i).text;
-                if (fieldPattern.test(lineText)) {
-                    const index = lineText.indexOf(fieldName);
-                    return new vscode.Location(document.uri, new vscode.Position(i, index));
+            // Nếu đang ở <item ... [x]> → tìm dòng <field name="x">
+            if (isItemUsageLine) {
+                for (let i = 0; i < totalLines; i++) {
+                    const lineText = document.lineAt(i).text;
+                    const pattern = new RegExp(`<field\\b[^>]*\\bname=["']${fieldName}["']`, 'i');
+                    if (pattern.test(lineText)) {
+                        const index = lineText.indexOf(fieldName);
+                        return new vscode.Location(document.uri, new vscode.Position(i, index));
+                    }
                 }
             }
         }
 
         return null;
     }
+
 
 
 

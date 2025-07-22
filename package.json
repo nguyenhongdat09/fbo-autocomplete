@@ -317,16 +317,16 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
-    "cli-table3": "^0.6.5",
-    "crypto-js": "^4.2.0",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "level-rocksdb": "^5.0.0",
     "mssql": "^11.0.1",
-    "node-machine-id": "^1.1.12",
+    "strip-ansi": "^7.1.0",
+    "cli-table3": "^0.6.5",
+    "level-rocksdb": "^5.0.0",
     "rocksdb": "^5.2.1",
-    "strip-ansi": "^7.1.0"
+    "crypto-js": "^4.2.0",
+    "node-machine-id": "^1.1.12"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",
