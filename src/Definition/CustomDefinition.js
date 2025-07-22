@@ -106,7 +106,7 @@ class CustomDefinition {
     }
     resolveShowFormDefinition(document, word, position) {
         const showForms = this.getLineContentShowForm(document), path_definition = [];
-        
+
         for (const show of showForms) {
             if (show.formName === word) {
                 const filterPath = path.join(
@@ -298,34 +298,55 @@ class CustomDefinition {
         const fieldName = rawWord.split('.')[0];
         const currentLine = position.line;
         const totalLines = document.lineCount;
-
-        // 1️⃣ Nếu đang đứng trong dòng <field name="xxx"> thì tìm view dùng nó
         const currentLineText = document.lineAt(currentLine).text;
-        const isFieldLine = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i').test(currentLineText);
+        const isGridFolder = document.uri.fsPath.toLowerCase().includes('\\grid\\');
 
-        if (isFieldLine) {
-            const pattern = new RegExp(`\\[${fieldName}(?:\\.\\w+)?\\]`, 'g'); // [field] hoặc [field].Label
+        // Nếu là file Grid
+        if (isGridFolder) {
+            for (let i = 0; i < totalLines; i++) {
+                if (i === currentLine) continue;
+
+                const lineText = document.lineAt(i).text;
+                const pattern = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i');
+
+                if (pattern.test(lineText)) {
+                    const index = lineText.indexOf(fieldName);
+                    return new vscode.Location(document.uri, new vscode.Position(i, index));
+                }
+            }
+
+            return null;
+        }
+
+        const filePath = document.uri.fsPath.toLowerCase();
+        const isInFilterOrDir = filePath.includes('\\filter\\') || filePath.includes('\\dir\\');
+
+        if (isInFilterOrDir) {
+            const isFieldLine = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i').test(currentLineText);
+            if (isFieldLine) {
+                const pattern = new RegExp(`\\[${fieldName}(?:\\.\\w+)?\\]`, 'g'); // [field] hoặc [field].Label
+                for (let i = 0; i < totalLines; i++) {
+                    const lineText = document.lineAt(i).text;
+                    if (pattern.test(lineText)) {
+                        const index = lineText.indexOf(`[${fieldName}`);
+                        return new vscode.Location(document.uri, new vscode.Position(i, index));
+                    }
+                }
+            }
+
+            const fieldPattern = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i');
             for (let i = 0; i < totalLines; i++) {
                 const lineText = document.lineAt(i).text;
-                if (pattern.test(lineText)) {
-                    const index = lineText.indexOf(`[${fieldName}`);
+                if (fieldPattern.test(lineText)) {
+                    const index = lineText.indexOf(fieldName);
                     return new vscode.Location(document.uri, new vscode.Position(i, index));
                 }
             }
         }
 
-        // 2️⃣ Nếu đang ở dòng chứa [xxx] hoặc [xxx].Label → trỏ lên <field name="xxx">
-        const fieldPattern = new RegExp(`<field\\b[^>]*\\bname\\s*=\\s*["']${fieldName}["']`, 'i');
-        for (let i = 0; i < totalLines; i++) {
-            const lineText = document.lineAt(i).text;
-            if (fieldPattern.test(lineText)) {
-                const index = lineText.indexOf(fieldName);
-                return new vscode.Location(document.uri, new vscode.Position(i, index));
-            }
-        }
-
         return null;
     }
+
 
 
     DefinitionViewItemCase(document, word, position) {
