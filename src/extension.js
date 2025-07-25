@@ -4,7 +4,7 @@ const vscode = require('vscode');
 const pathModule = require('path');
 const fs = require('fs');
 const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
-const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB'); 
+const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
 const OpenWithVS2008 = require('./VS2008/openWithVS2008');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
@@ -26,9 +26,6 @@ const CustomDefinition = require("./Definition/CustomDefinition");
 var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 
-
-
-
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 
@@ -36,17 +33,20 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
  * @param {vscode.ExtensionContext} context
  */
 async function activate(context) {
+    vscode.languages.setLanguageConfiguration('xml', {
+        wordPattern: /[a-zA-Z0-9$_.]+/
+    });
     var checkLicense = require('./license/checklicense').checkLicense;
     var constant = new Constant(context);
-    var license = await checkLicense(); 
-    if(!license) return
-    const provider = new CompletionProvider(); 
+    var license = await checkLicense();
+    if (!license) return
+    const provider = new CompletionProvider();
     provider.run(context)
     const upsettings = new updateSettings();
     upsettings.updateSettingsJson.bind(upsettings)(context);
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
-   
+
     const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
     completeCodeByHandle.run(context);
     var renderdb = new RenderXMLToDB()
@@ -104,13 +104,13 @@ async function activate(context) {
             vscode.window.showInformationMessage(`Copied: ${content}`);
         });
     });
-   
+
     //Translate
     const trans = new Trans()
     let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {
         await trans.translateXmlFile.bind(trans)()
     });
-    
+
     let translatePaste = vscode.commands.registerCommand('fbo-autocomplete.translatePaste', async function () {
         // Đọc nội dung bạn vừa copy vào clipboard
         const text = await vscode.env.clipboard.readText();
@@ -243,15 +243,15 @@ async function activate(context) {
 
     const defi = new CustomDefinition()
     defi.run(context);
-    var shaf= vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm)  
- 
+    var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm)
+
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
     context.subscriptions.push(transautoComplete);
     context.subscriptions.push(AddFieldToReport);
-    context.subscriptions.push(translatePaste); 
+    context.subscriptions.push(translatePaste);
     context.subscriptions.push(transAll);
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
@@ -260,18 +260,18 @@ async function activate(context) {
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
 
-  
-  
 
 
-   /*
-    var viewpanelsql = new ViewPanelResult(context)
-    var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
-        viewpanelsql.show();
-      });
-    
-      context.subscriptions.push(disposable);
-*/
+
+
+    /*
+     var viewpanelsql = new ViewPanelResult(context)
+     var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
+         viewpanelsql.show();
+       });
+     
+       context.subscriptions.push(disposable);
+ */
 }
 
 // This method is called when your extension is deactivated

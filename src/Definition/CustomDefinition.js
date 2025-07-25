@@ -33,6 +33,7 @@ class CustomDefinition {
             this.DefinitionActionCase(document, word, position) ||
             this.DefinitionButtonCase(document, word, position) ||
             this.DefinitionViewItemCase(document, word, position) ||
+            this.DefinitionFunctionCase(document, word, position) ||
             null
         );
     }
@@ -363,6 +364,62 @@ class CustomDefinition {
         if (result) return result;
     }
     //#endregion 
+
+    //#region funtion to funtion original
+    resolveFunctionDefinition(document, position, word, currentLineText, totalLines) {
+        // Kiểm tra xem dòng hiện tại có gọi hàm đó không
+        const functionCalls = [...currentLineText.matchAll(/\b([a-zA-Z0-9_$]+)\s*\(/g)];
+        const isFunctionCall = functionCalls.some(match => match[1] === word);
+        console.log(`Checking function definition for: ${word}, isFunctionCall: ${isFunctionCall}`);
+
+        if (isFunctionCall) {
+            const escapedWord = this.escapeRegExp(word);
+            const funcPattern = new RegExp(`function\\s+${escapedWord}\\s*\\(`);
+            for (let i = 0; i < totalLines; i++) {
+                const lineText = document.lineAt(i).text;
+                const match = funcPattern.test(lineText); 
+                if (match) {
+                    const index = lineText.indexOf(word);
+                    return new vscode.Location(document.uri, new vscode.Position(i, index));
+                }
+            }
+        }
+        return null;
+    }
+
+    escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+
+
+    DefinitionFunctionCase(document, word, position) {
+        const currentLineText = document.lineAt(position.line).text;
+        const totalLines = document.lineCount;
+        const word1 = this.getFullWordAtPosition(document, position);
+        const result = this.resolveFunctionDefinition(document, position, word1, currentLineText, totalLines);
+        if (result) return result;
+    }
+    //#endregion 
+    getFullWordAtPosition(document, position) {
+        const lineText = document.lineAt(position.line).text;
+        const cursor = position.character;
+
+        const regex = /[a-zA-Z0-9_$]+/g;
+        let match;
+
+        while ((match = regex.exec(lineText)) !== null) {
+            const start = match.index;
+            const end = regex.lastIndex;
+
+            if (start <= cursor && cursor <= end) {
+                return match[0];
+            }
+        }
+
+        return '';
+    }
+
 
     checkFolderValid() {
         var folderName = this.getFolderName();
