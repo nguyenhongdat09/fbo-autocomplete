@@ -45,6 +45,11 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.CopyNameOfFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
           "command": "fboFile.GenerateCopyFile",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
@@ -242,6 +247,10 @@
         "title": "Copy File"
       },
       {
+        "command": "fboFile.CopyNameOfFile",
+        "title": "Copy Name of File"
+      },
+      {
         "command": "fboFile.GenerateCopyFile",
         "title": "Generate Copy File"
       },
@@ -295,8 +304,7 @@
       }
     ]
   },
-  "icon": "icon.png",
-  "updateUrl": "https://github.com/nguyenhongdat09/fbo-autocomplete/blob/company/update.json",
+  "icon": "icon.png", 
   "scripts": {
     "test": "vscode-test",
     "build": "webpack",

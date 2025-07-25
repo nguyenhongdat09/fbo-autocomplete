@@ -18,6 +18,7 @@ class ContextMenuHandler {
             { name: "fboFile.openRevealFolder", handler: this.openRevealFolder },
             { name: "fboFile.CopyPath", handler: () => this.CopyPath() },
             { name: "fboFile.CopyFile", handler: () => this.copyFile() },
+            { name: "fboFile.CopyNameOfFile", handler: () => this.copyNameOfFile() },
             { name: "fboFile.DeleteFile", handler: async () => await this.deleteFile() },
             { name: "fboFile.FixWebConfig", handler: async (group) => await this.fixWebConfig(group) },
             { name: "fboFile.PasteFilesToGroup", handler: async (group) => await this.PasteFilesToGroup(group) },
@@ -35,6 +36,80 @@ class ContextMenuHandler {
             vscode.commands.executeCommand('setContext', 'fboViewFileSelected', isFileSelected);
         });
     }
+    getPathsSelect() {
+        // Nếu dùng trong TreeView thì lấy từ selection của tree
+        const selected = this.treeView?.selection ?? [];
+        if (!selected || selected.length === 0) {
+            vscode.window.showErrorMessage("Không có file nào được chọn.");
+            return;
+        }
+        const paths = selected.map(item => item.resourceUri?.fsPath).filter(Boolean);
+        if (paths.length === 0) {
+            vscode.window.showErrorMessage("Không tìm thấy đường dẫn nào hợp lệ.");
+            return [];
+        }
+        return paths
+    }
+    //#region Generate Copy File
+     getSelectedTargets() {
+        // Ưu tiên từ treeView
+        if (this.treeView?.selection?.length > 0) {
+            return this.treeView.selection.filter(item => item?.resourceUri);
+        }
+        // Nếu không có thì lấy từ tab đang mở
+        const uri = vscode.window.activeTextEditor?.document?.uri;
+        return uri ? [{ resourceUri: uri }] : [];
+    }
+    parseRenameInput(input, oldName) {
+        var m1 = /^rl\((s|e),\s*(\d+),\s*([^)]+)\)$/i.exec(input);  // Kiểu 1
+        if (m1) {
+            var pos = m1[1], count = parseInt(m1[2]), replacement = m1[3];
+            if (pos === 's') {
+                return replacement + oldName.slice(count);
+            } else { // pos === 'e'
+                return oldName.slice(0, oldName.length - count) + replacement;
+            }
+        }
+
+        var m2 = /^rl\(([^,]+),\s*([^)]+)\)$/i.exec(input); // Kiểu 2
+        if (m2) {
+            var from = m2[1], to = m2[2];
+            return oldName.replace(from, to);
+        }
+
+        // Kiểu 3: Nhập nguyên chuỗi
+        return input;
+    }
+    async generateCopyForFiles(files) {
+        if (!files?.length) return;
+
+        const groupItems = Array.from(this.treeDataProvider.groupItems.values()).filter(groupItem => groupItem.label !== 'Other');
+
+        // Bước 1: Nhập tên base hoặc cú pháp thay thế
+        const input = await vscode.window.showInputBox({
+            prompt: 'Nhập tên file mới hoặc cú pháp rl(s|e, N, VALUE)',
+            placeHolder: '',
+            validateInput: (value) => !value ? 'Tên không được để trống' : null
+        });
+        if (!input) return;
+
+        // Bước 2: Chọn group path đích
+        const targetGroup = await vscode.window.showQuickPick(groupItems, {
+            placeHolder: 'Chọn đường dẫn group để lưu các file copy'
+        });
+        if (!targetGroup) return;
+
+        const targetPath = targetGroup.resourceUri.fsPath;
+        var changedPaths = files.map((item) => {
+            const sourcePath = item?.resourceUri?.fsPath;
+            if (!fs.existsSync(sourcePath)) return '';
+            const ext = path.extname(sourcePath);
+            let newBaseName = input;
+            const newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(newBaseName, path.basename(sourcePath, ext))}${ext}`);
+            return [sourcePath, newFileName];
+        }); 
+        this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);
+    }
 
     async GenerateCopyFile() {
         const targets = this.getSelectedTargets();
@@ -44,31 +119,8 @@ class ContextMenuHandler {
         }
         await this.generateCopyForFiles(targets);
     }
-
-    async PasteFilesToGroup(group) {
-        if (!group) {
-            vscode.window.showWarningMessage("Vui lòng chọn một group để paste.");
-            return;
-        }
-        var filePaths = await this.getFilePathsFromWindowsClipboard();
-        if (!filePaths || filePaths.length === 0) {
-            vscode.window.showWarningMessage("Không tìm thấy file nào trong clipboard.");
-            return;
-        }
-        await this.app_dataChecker.pasteFilesToGroup(group.resourceUri.fsPath, filePaths, 0);
-    }
-
-
-    getSelectedTargets() {
-        // Ưu tiên từ treeView
-        if (this.treeView?.selection?.length > 0) {
-            return this.treeView.selection.filter(item => item?.resourceUri);
-        }
-        // Nếu không có thì lấy từ tab đang mở
-        const uri = vscode.window.activeTextEditor?.document?.uri;
-        return uri ? [{ resourceUri: uri }] : [];
-    }
-
+    //#endregion
+    //#region Paste Files To Group
     async getFilePathsFromWindowsClipboard() {
         return new Promise((resolve, reject) => {
             const ps = cp.spawn('powershell.exe', [
@@ -108,8 +160,20 @@ class ContextMenuHandler {
             });
         });
     }
-
-
+    async PasteFilesToGroup(group) {
+        if (!group) {
+            vscode.window.showWarningMessage("Vui lòng chọn một group để paste.");
+            return;
+        }
+        var filePaths = await this.getFilePathsFromWindowsClipboard();
+        if (!filePaths || filePaths.length === 0) {
+            vscode.window.showWarningMessage("Không tìm thấy file nào trong clipboard.");
+            return;
+        }
+        await this.app_dataChecker.pasteFilesToGroup(group.resourceUri.fsPath, filePaths, 0);
+    }
+    //#endregion 
+    //#region Open Reveal Folder
     openRevealFolder(uri) {
         if (!uri) {
             vscode.window.showErrorMessage("Không tìm thấy đường dẫn file.");
@@ -122,89 +186,14 @@ class ContextMenuHandler {
 
         require("child_process").exec(openCommand);
     }
-    getPathsSelect() {
-        // Nếu dùng trong TreeView thì lấy từ selection của tree
-        const selected = this.treeView?.selection ?? [];
-        if (!selected || selected.length === 0) {
-            vscode.window.showErrorMessage("Không có file nào được chọn.");
-            return;
-        }
-        const paths = selected.map(item => item.resourceUri?.fsPath).filter(Boolean);
-        if (paths.length === 0) {
-            vscode.window.showErrorMessage("Không tìm thấy đường dẫn nào hợp lệ.");
-            return [];
-        }
-        return paths
-    }
-
+    //#endregion
+    //#region Copy Path
     async CopyPath() {
         const paths = this.getPathsSelect();
         await vscode.env.clipboard.writeText(paths.join('\n'));
     }
-    parseRenameInput(input, oldName) {
-        var m1 = /^rl\((s|e),\s*(\d+),\s*([^)]+)\)$/i.exec(input);  // Kiểu 1
-        if (m1) {
-            var pos = m1[1], count = parseInt(m1[2]), replacement = m1[3];
-            if (pos === 's') {
-                return replacement + oldName.slice(count);
-            } else { // pos === 'e'
-                return oldName.slice(0, oldName.length - count) + replacement;
-            }
-        }
-
-        var m2 = /^rl\(([^,]+),\s*([^)]+)\)$/i.exec(input); // Kiểu 2
-        if (m2) {
-            var from = m2[1], to = m2[2];
-            return oldName.replace(from, to);
-        }
-
-        // Kiểu 3: Nhập nguyên chuỗi
-        return input;
-    }
-
-    async generateCopyForFiles(files) {
-        if (!files?.length) return;
-
-        const groupItems = Array.from(this.treeDataProvider.groupItems.values()).filter(groupItem => groupItem.label !== 'Other');
-
-        // Bước 1: Nhập tên base hoặc cú pháp thay thế
-        const input = await vscode.window.showInputBox({
-            prompt: 'Nhập tên file mới hoặc cú pháp rl(s|e, N, VALUE)',
-            placeHolder: '',
-            validateInput: (value) => !value ? 'Tên không được để trống' : null
-        });
-        if (!input) return;
-
-        // Bước 2: Chọn group path đích
-        const targetGroup = await vscode.window.showQuickPick(groupItems, {
-            placeHolder: 'Chọn đường dẫn group để lưu các file copy'
-        });
-        if (!targetGroup) return;
-
-        const targetPath = targetGroup.resourceUri.fsPath;
-        var changedPaths = files.map((item) => {
-            const sourcePath = item?.resourceUri?.fsPath;
-            if (!fs.existsSync(sourcePath)) return '';
-            const ext = path.extname(sourcePath);
-            let newBaseName = input;
-            const newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(newBaseName, path.basename(sourcePath, ext))}${ext}`);
-            return [sourcePath, newFileName];
-        }); 
-        this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);
-    }
-
-
-
-    async closeTabByUri(uriToClose) {
-        const allTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-        for (const tab of allTabs) {
-            const input = tab.input;
-            if (input instanceof vscode.TabInputText && input.uri.toString() === uriToClose.toString()) {
-                await vscode.window.tabGroups.close([tab]);
-                break;
-            }
-        }
-    }
+    //#endregion 
+    //#region Rename File
     async renameFileCommand(treeItem) {
         let oldUri;
 
@@ -251,8 +240,9 @@ class ContextMenuHandler {
             vscode.window.showErrorMessage(`Không thể đổi tên file: ${err.message}`);
         }
     }
-
-    copyFilesToClipboard(filePaths) {
+    //#endregion
+    //#region Copy File
+      copyFilesToClipboard(filePaths) {
         if (!filePaths || filePaths.length === 0) return;
         const psScript = `
             Add-Type -AssemblyName System.Windows.Forms
@@ -279,6 +269,16 @@ class ContextMenuHandler {
     copyFile() {
         this.copyFilesToClipboard(this.getPathsSelect());
     }
+    //#endregion
+    //#region  Copy Name of File
+    async copyNameOfFile() {
+        const paths = this.getPathsSelect();
+        if (!paths || paths.length === 0) return;
+        const fileNames = paths.map(p => path.basename(p)); 
+        await vscode.env.clipboard.writeText(fileNames.join(','));
+    }
+    //#endregion
+    //#region Fix Web.config
     async fixWebConfig(group) {
         if (!group) return;
         try {
@@ -298,7 +298,8 @@ class ContextMenuHandler {
             vscode.window.showErrorMessage(`❌ Không thể fix ${file}: ${err.message}`);
         }
     }
-
+    //#endregion
+    //#region Delete File
     async deleteFile() {
         const paths = this.getPathsSelect();
         if (!paths || paths.length === 0) return;
@@ -332,7 +333,7 @@ class ContextMenuHandler {
             }
         }
     }
-
+    //#endregion
 
 }
 module.exports = ContextMenuHandler;
