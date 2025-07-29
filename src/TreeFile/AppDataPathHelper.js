@@ -18,7 +18,7 @@ class AppDataPathHelper {
     }
 
     getGroupName() {
-        var projectPath = this.getProjectPath().split('\\');
+        var projectPath = this.getProjectPath().split('\\'); 
         return projectPath.length != 1 ? projectPath.slice(-2).join(' - ') : 'Other';
     }
 

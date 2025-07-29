@@ -248,7 +248,7 @@
       },
       {
         "command": "fboFile.CopyNameOfFile",
-        "title": "Copy Name of File"
+        "title": "Copy File Name"
       },
       {
         "command": "fboFile.GenerateCopyFile",

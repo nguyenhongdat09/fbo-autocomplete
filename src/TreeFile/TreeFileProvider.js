@@ -14,7 +14,7 @@ class TreeHelper {
     }
     getGroupName(filePath) {
         this.app_dataChecker.filePath = filePath;
-        return this.app_dataChecker.getGroupName();
+        return this.app_dataChecker.getGroupName().toUpperCase();
     }
 
     getParentGroup(treeItem) {
