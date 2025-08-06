@@ -33,9 +33,7 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
  * @param {vscode.ExtensionContext} context
  */
 async function activate(context) {
-    vscode.languages.setLanguageConfiguration('xml', {
-        wordPattern: /[a-zA-Z0-9$_.]+/
-    });
+   
     var checkLicense = require('./license/checklicense').checkLicense;
     var constant = new Constant(context);
     var license = await checkLicense();

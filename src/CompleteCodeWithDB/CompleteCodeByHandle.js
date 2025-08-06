@@ -139,6 +139,7 @@ class CompleteCodeByHandle {
         const lineText = document.lineAt(position).text, linePrefix = lineText.substr(0, position.character);
         // Kiểm tra nếu con trỏ đứng ngay sau dấu '$'
         if (linePrefix.endsWith('$')) {
+           console.log( this.shortCutField)
             return this.shortCutField.map(func => this.createCompletionItem(func));
         }
     }

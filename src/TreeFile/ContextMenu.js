@@ -13,6 +13,7 @@ class ContextMenuHandler {
         this.treeView = treeDataProvider.treeView;
         this.treeData = treeDataProvider.treeData;
         this.app_dataChecker = new app_dataChecker();
+        this.config = vscode.workspace.getConfiguration('fbo-autocomplete');
         // Đăng ký command cho context menu   
         const commandMap = [
             { name: "fboFile.openRevealFolder", handler: this.openRevealFolder },
@@ -51,7 +52,7 @@ class ContextMenuHandler {
         return paths
     }
     //#region Generate Copy File
-     getSelectedTargets() {
+    getSelectedTargets() {
         // Ưu tiên từ treeView
         if (this.treeView?.selection?.length > 0) {
             return this.treeView.selection.filter(item => item?.resourceUri);
@@ -107,7 +108,7 @@ class ContextMenuHandler {
             let newBaseName = input;
             const newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(newBaseName, path.basename(sourcePath, ext))}${ext}`);
             return [sourcePath, newFileName];
-        }); 
+        });
         this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);
     }
 
@@ -242,7 +243,7 @@ class ContextMenuHandler {
     }
     //#endregion
     //#region Copy File
-      copyFilesToClipboard(filePaths) {
+    copyFilesToClipboard(filePaths) {
         if (!filePaths || filePaths.length === 0) return;
         const psScript = `
             Add-Type -AssemblyName System.Windows.Forms
@@ -274,7 +275,16 @@ class ContextMenuHandler {
     async copyNameOfFile() {
         const paths = this.getPathsSelect();
         if (!paths || paths.length === 0) return;
-        const fileNames = paths.map(p => path.basename(p)); 
+        const ExtFileNameCopy = this.config.get('ExtFileNameCopy');
+        console.log(ExtFileNameCopy)
+        const fileNames = paths.map(p => {
+            const fileName = path.basename(p);
+            if (String(ExtFileNameCopy) === 'No') {
+                return path.parse(fileName).name; // Lấy tên file không có extension
+            } else {
+                return fileName; // Giữ nguyên tên file có extension
+            }
+        });
         await vscode.env.clipboard.writeText(fileNames.join(','));
     }
     //#endregion
