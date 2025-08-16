@@ -72,3 +72,5 @@
 # Version 0.0.33
 - Fixing autocomplete on Database not json to Reduce RAM used
 - Fixing ReadEntity not readline() cause RAM increase
+# Version 0.0.38
+- Now on the outside the explore tab will not reveale file to the explore tab again 

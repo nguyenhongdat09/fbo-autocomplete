@@ -246,13 +246,24 @@ class TreeFileProvider extends TreeHelper {
             canSelectMany: true // 🔥 Cho phép chọn nhiều file
         });
         // 🔄 Lắng nghe khi document bị sửa (dirty)
-        vscode.workspace.onDidChangeTextDocument(async () => {
-            var cur_Item = this.getCurrentPathActive();
+        vscode.workspace.onDidChangeTextDocument(async (event) => {
+            const cur_Item = this.getCurrentPathActive();
+            if (!cur_Item.parentGroup) return;
+            // Lấy TreeView item đang được chọn
+            const selected = this.treeView.selection[0];
+            // Nếu file đang edit trùng với TreeView selection, skip
+            if (selected && event.document.uri.toString() === selected.resourceUri?.toString()) {
+                return;
+            }
             this.debouncedRefresh();
-            await this.treeView.reveal(cur_Item.parentGroup, { select: false, expand: true });
-            await this.revealActiveFile(cur_Item.parentGroup.label);
+            try {
+                await this.treeView.reveal(cur_Item.parentGroup, { select: false, expand: true });
+                await this.revealActiveFile(cur_Item.parentGroup.label);
+            } catch (err) {
+                console.error(err);
+            }
         });
-
+  
         // 💾 Lắng nghe khi document được lưu lại
         vscode.workspace.onDidSaveTextDocument(() => {
             this.refresh();
