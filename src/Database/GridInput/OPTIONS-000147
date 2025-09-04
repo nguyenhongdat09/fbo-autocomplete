@@ -39,7 +39,7 @@
   allow_mmap_writes=false
   two_write_queues=false
   use_direct_io_for_flush_and_compaction=false
-  create_if_missing=true
+  create_if_missing=false
   error_if_exists=false
   create_missing_column_families=false
   new_table_reader_for_compaction_inputs=false

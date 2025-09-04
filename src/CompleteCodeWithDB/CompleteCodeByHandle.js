@@ -48,6 +48,7 @@ class CompleteCodeByHandle {
         );
         context.subscriptions.push(...this.providerHandles);
     }
+    
 
     // Gọi API và lưu dữ liệu vào file JSON
     async loadFunctions() {
@@ -88,7 +89,7 @@ class CompleteCodeByHandle {
     // Đọc dữ liệu từ file JSON
     loadFromJson() {
         const files = [
-            ['companyFunctions', autocompleteJsonPath], 
+            ['companyFunctions', autocompleteJsonPath],
             ['optionField', path.join(__dirname, '..', 'Database/AutoComplete/Options.json')],
             ['shortCutField', path.join(__dirname, '..', 'Database/AutoComplete/Shortcut.json')],
         ];
@@ -138,8 +139,7 @@ class CompleteCodeByHandle {
     provideShortCutCompletionItems(document, position) {
         const lineText = document.lineAt(position).text, linePrefix = lineText.substr(0, position.character);
         // Kiểm tra nếu con trỏ đứng ngay sau dấu '$'
-        if (linePrefix.endsWith('$')) {
-           console.log( this.shortCutField)
+        if (linePrefix.endsWith('$')) { 
             return this.shortCutField.map(func => this.createCompletionItem(func));
         }
     }
@@ -184,7 +184,8 @@ class CompleteCodeByHandle {
         if (objectPrefix) {
             var folderdbPath = path.join(__dirname, '..', 'Database', name_folder)
             var arr_field = await this.getAllKeys(folderdbPath, name_folder);
-            return arr_field.map(item => this.createCompletionItem(item));   
+            
+            return arr_field.map(item => this.createCompletionItem(item));
         }
         return undefined;
     }
@@ -241,7 +242,7 @@ class CompleteCodeByHandle {
             await db.close(); // Luôn đóng DB dù thành công hay lỗi 
         }
     }
-    
+
 }
 
 module.exports = CompleteCodeByHandle;

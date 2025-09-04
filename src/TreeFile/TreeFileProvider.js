@@ -251,21 +251,23 @@ class TreeFileProvider extends TreeHelper {
             if (!cur_Item.parentGroup) return;
             // Lấy TreeView item đang được chọn
             const selected = this.treeView.selection[0];
+            this.debouncedRefresh();
             // Nếu file đang edit trùng với TreeView selection, skip
             if (selected && event.document.uri.toString() === selected.resourceUri?.toString()) {
                 return;
             }
-            this.debouncedRefresh();
+            
             try {
                 await this.treeView.reveal(cur_Item.parentGroup, { select: false, expand: true });
                 await this.revealActiveFile(cur_Item.parentGroup.label);
             } catch (err) {
                 console.error(err);
             }
+        
         });
-  
+
         // 💾 Lắng nghe khi document được lưu lại
-        vscode.workspace.onDidSaveTextDocument(() => {
+        vscode.workspace.onDidSaveTextDocument((doc) => { 
             this.refresh();
         });
         vscode.window.onDidChangeVisibleTextEditors(() => {
@@ -297,6 +299,7 @@ class TreeFileProvider extends TreeHelper {
                 const parentGroup = this.getParentGroup(treeItem);
                 await this.treeView.reveal(parentGroup, { select: false, expand: true });
                 await this.revealActiveFile(parentGroup.label);
+
             }, 100)
         });
 

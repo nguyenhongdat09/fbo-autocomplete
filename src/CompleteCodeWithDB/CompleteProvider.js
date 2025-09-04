@@ -42,6 +42,7 @@ class CompletionProvider extends ana {
 
         try {
             const text = await this.getTextComplete(line.b, folderName);
+           
             const completionItem = this.createCompleteItem(text, line, position);
             completionItems.push(completionItem);
         } catch (error) {
@@ -74,6 +75,7 @@ class CompletionProvider extends ana {
         const key = key_split[1].replace(';', ''); // Tách lấy key từ inputKey 
         var text = await db.get(key); // Sử dụng Promise API của level
         const match = text.match(/reference="([^"]+)"/);
+       
         if (match) {
             const reference = match[1] + 'ex' // Tách lấy reference từ text
             var ref_text = await db.get(reference)
