@@ -14,6 +14,8 @@
         - `$mgr` dùng gen ra phần thẻ <row> file Filter/Grid
      - ##### Phần gen processing FBO  
         - `$gpf;` 
+    - ##### Tự động phân tích $g.a của các file grid detail rồi gen code switch case
+        - `$gccl;` 
 ### Cách cài đặt 
 ## Giải thích tổng quát cách thức hoạt động
 - Khi **Render XML To Database** Gói sẽ tìm các file trong cả 3 folder là Grid, Dir, Filter phân tích các trường `<field>` lấy name ra và lưu vào database. Lúc này mới bắt đầu nhập `$f, $gi, $gv` thì mới ra dữ liệu

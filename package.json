@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.38",
+  "version": "0.0.39",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -329,7 +329,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.101.2",
+    "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {

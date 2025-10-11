@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { execSync } = require("child_process");
-
+//Run by command -> node build-package.js
 console.log("🚀 Bắt đầu quá trình đóng gói extension...");
 
 // 1. Chạy npm install --production

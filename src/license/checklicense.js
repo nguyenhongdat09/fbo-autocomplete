@@ -6,13 +6,11 @@ const encrypted = 'U2FsdGVkX18ll/362ncJIN0YRq9ru+8OKr1vUV6dsW+8GfHuXKDXGgv509sY5
 const bytes = CryptoJS.AES.decrypt(encrypted, 'datnh');
 const licenseUrl = bytes.toString(CryptoJS.enc.Utf8);
 const { machineIdSync } = require('node-machine-id');
-const rawId = machineIdSync(false);
-
+const rawId = machineIdSync(false); 
 //reg query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography /v MachineGuid    CMD command
 function checkLicense() {
     return new Promise((resolve) => {
-        https.get(licenseUrl, (res) => {
-       
+        https.get(licenseUrl, (res) => { 
             let data = '';
             res.on('data', chunk => data += chunk);
             res.on('end', async () => {

@@ -25,7 +25,7 @@ const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobi
 const CustomDefinition = require("./Definition/CustomDefinition");
 var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
-
+const calculationProvider = require('./CalculationGridDetail/provider');
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 
@@ -72,7 +72,7 @@ async function activate(context) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
     })
-
+    
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
             // Nếu đang bật, hủy CodeLensProvider
@@ -259,7 +259,7 @@ async function activate(context) {
     context.subscriptions.push(onDidSaveTextDocument);
 
 
-
+    calculationProvider.register(context); // ← Thêm dòng này
 
 
     /*

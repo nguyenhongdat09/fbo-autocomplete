@@ -33,5 +33,10 @@
         "label": "mgr",
         "detail": "(Mobile) Gen row from field",
         "insertText": "mgr"
+    },
+    {
+        "label": "gccl",
+        "detail": "(FBO) Gen calculation column",
+        "insertText": "gccl;"
     }
 ]

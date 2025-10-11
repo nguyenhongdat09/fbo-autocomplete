@@ -74,3 +74,7 @@
 - Fixing ReadEntity not readline() cause RAM increase
 # Version 0.0.38
 - Now on the outside the explore tab will not reveale file to the explore tab again 
+# Version 0.0.39
+- Fixing bug when fix file and not notice
+# Version 0.0.40
+- $gccl is now released. It generates code switch case for g.$a 
