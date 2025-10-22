@@ -1,449 +1,63 @@
 const vscode = require('vscode');
-const path = require('path');
-const fs = require('fs');
+const ControllerDefinitionProvider = require('./providers/ControllerDefinitionProvider');
+const ShowFormDefinitionProvider = require('./providers/ShowFormDefinitionProvider');
+const ActionCaseDefinitionProvider = require('./providers/ActionCaseDefinitionProvider');
+const ButtonDefinitionProvider = require('./providers/ButtonDefinitionProvider');
+const ViewFieldDefinitionProvider = require('./providers/ViewFieldDefinitionProvider');
+const FunctionDefinitionProvider = require('./providers/FunctionDefinitionProvider');
+const RequestActionDefinitionProvider = require('./providers/RequestActionDefinitionProvider');  
+const ReportTemplateDefinitionProvider = require('./providers/ReportTemplateDefinitionProvider');  
+const ReportTemplateCommandProvider = require('./providers/ReportTemplateCommandProvider'); // ✅ NEW
+
+/**
+ * Main Definition Provider - Orchestrates all sub-providers
+ * Follows FastBusiness XML patterns for navigation
+ */
 class CustomDefinition {
     constructor() {
-        this.relativeFilter = [['Filter', 'MultiForm'], ['Filter', 'Form'], ['Filter', 'Filter'], ['Grid', 'MultiGrid'], ['Grid', 'Grid'], ['Lookup', 'Lookup']]
+        this.providers = [
+            new ControllerDefinitionProvider(),
+            new ShowFormDefinitionProvider(),
+            new ActionCaseDefinitionProvider(),
+            new ButtonDefinitionProvider(),
+            new ViewFieldDefinitionProvider(),
+            new FunctionDefinitionProvider(),
+            new RequestActionDefinitionProvider(),
+           // new ReportTemplateDefinitionProvider()
+        ];
+         this.reportCommandProvider = new ReportTemplateCommandProvider();
     }
 
+    /**
+     * Register definition provider with VSCode
+     */
     run(context) {
-        // Bind trước để đảm bảo context đúng
-        const boundProvideDefinition = this.provideDefinition.bind(this);
-        const defi = vscode.languages.registerDefinitionProvider(
+        const definitionProvider = vscode.languages.registerDefinitionProvider(
             { scheme: 'file', language: 'xml' },
             {
-                provideDefinition(document, position, token) {
-                    return boundProvideDefinition(document, position, token);
-                }
+                provideDefinition: this.provideDefinition.bind(this)
             }
         );
-        context.subscriptions.push(defi);
+        this.reportCommandProvider.register(context);
+        context.subscriptions.push(definitionProvider);
     }
 
-
+    /**
+     * Main entry point - tries each provider in sequence
+     */
     provideDefinition(document, position, token) {
         const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z0-9_]+/);
-        if (!wordRange) return;
+        if (!wordRange) return null;
 
         const word = document.getText(wordRange);
 
-        return (
-            this.resolveControllerDefinition(document, word, position) ||
-            this.resolveShowFormDefinition(document, word, position) ||
-            this.DefinitionActionCase(document, word, position) ||
-            this.DefinitionButtonCase(document, word, position) ||
-            this.DefinitionViewItemCase(document, word, position) ||
-            this.DefinitionFunctionCase(document, word, position) ||
-            null
-        );
-    }
-
-
-
-    //#region Definition Lookup, Grid 
-    resolveControllerDefinition(document, word, position) {
-        const items = this.getLineContentItems(document);
-        for (const item of items) {
-            if (item.controller === word) {
-                // Kiểm tra position người dùng đang hover có nằm trong đoạn controller="..."
-                const start = item.position;
-                const end = new vscode.Position(start.line, start.character + word.length);
-                const range = new vscode.Range(start, end);
-                if (!range.contains(position)) continue; // bỏ qua nếu không phải đang hover đúng chỗ controller
-
-                const basePath = this.getPath(item.style);
-                let targetFile = path.join(basePath, `${word}.xml`);
-
-                if (!fs.existsSync(targetFile) && item.style === 'Grid') {
-                    targetFile = path.join(basePath, `${word}.f`);
-                }
-
-                if (fs.existsSync(targetFile)) {
-                    return new vscode.Location(vscode.Uri.file(targetFile), new vscode.Position(0, 0));
-                } else {
-                    vscode.window.showWarningMessage(`Không tìm thấy file: ${targetFile}`);
-                }
-            }
-        }
-        return null;
-    }
-
-    getLineContentItems(document) {
-        const linesWithItemsStyle = [];
-        const pattern = /<items[^>]*style=["'](Lookup|AutoComplete|Grid)["'][^>]*controller=["']([^"']+)["']/i;
-
-        for (let i = 0; i < document.lineCount; i++) {
-            const lineText = document.lineAt(i).text;
-            const match = lineText.match(pattern);
-            if (match) {
-                const style = match[1];
-                const controllerName = match[2];
-                const controllerIndex = lineText.indexOf(`controller="${controllerName}"`);
-
-                if (controllerIndex >= 0) {
-                    linesWithItemsStyle.push({
-                        style,
-                        controller: controllerName,
-                        line: i,
-                        position: new vscode.Position(i, controllerIndex + `controller="`.length),
-                        text: lineText.trim()
-                    });
-                }
-            }
-        }
-
-        return linesWithItemsStyle;
-    }
-    //#endregion
-    //#region Definition ShowForm
-    findShowFormRelative(word) {
-        var isFilter = /Filter$/.test(word), file_rela = ['Filter', word]
-        if (!isFilter)
-            return [['Filter', word]]
-        this.relativeFilter.forEach(([folder, name_rela]) => {
-            file_rela.push([folder, word.slice(0, -6) + name_rela])
-        })
-        return file_rela
-    }
-    resolveShowFormDefinition(document, word, position) {
-        const showForms = this.getLineContentShowForm(document), path_definition = [];
-
-        for (const show of showForms) {
-            if (show.formName === word) {
-                const filterPath = path.join(
-                    path.dirname(path.dirname(document.uri.fsPath))
-                );
-                var fileRela = this.findShowFormRelative(word);
-                fileRela.forEach(([folder, name_rela]) => {
-                    var filePath = path.join(filterPath, folder, `${name_rela}.xml`);
-                    if (fs.existsSync(filePath)) {
-                        path_definition.push(new vscode.Location(vscode.Uri.file(filePath), new vscode.Position(0, 0)))
-                    }
-                })
-                return path_definition
-            }
-        }
-        return null;
-    }
-    getLineContentShowForm(document) {
-        const results = [];
-        const pattern = /\b\w+\.showForm\s*\(\s*['"]([^'"]+)['"]\s*\)/;
-
-        for (let i = 0; i < document.lineCount; i++) {
-            const lineText = document.lineAt(i).text;
-            const match = lineText.match(pattern);
-            if (match) {
-                const formName = match[1];
-                const index = lineText.indexOf(match[0]) + match[0].indexOf(formName);
-                results.push({
-                    formName,
-                    line: i,
-                    position: new vscode.Position(i, index),
-                    text: lineText.trim()
-                });
-            }
-        }
-
-        return results;
-    }
-
-    //#endregion
-    //#region Action => Case , Case => Action
-    resolveActionDefinition(document, position, word) {
-        const actions = this.getLineContentActionId(document);
-        const cases = this.getLineContentCaseLine(document);
-        const currentLine = position.line;
-        // Nếu đang đứng tại dòng có case 'xxx'
-        const caseMatch = cases.find(c => c.caseName === word && c.line === currentLine);
-        if (caseMatch) {
-            const targetAction = actions.find(a => a.id === word);
-            if (targetAction) {
-                return new vscode.Location(document.uri, targetAction.position);
-            }
-        }
-
-        // Nếu đang đứng tại dòng có <action id="xxx">
-        const actionMatch = actions.find(a => a.id === word && a.line === currentLine);
-        if (actionMatch) {
-            const targetCase = cases.find(c => c.caseName === word);
-            if (targetCase) {
-                return new vscode.Location(document.uri, targetCase.position);
-            }
-            // ✅ Nếu không có case, trỏ đến dòng có ExecuteCommand(sender, e)
-            for (let i = 0; i < document.lineCount; i++) {
-                const lineText = document.lineAt(i).text;
-                if (/ResponseComplete\s*\(\s*sender\s*,\s*e\s*\)/.test(lineText)) {
-                    return new vscode.Location(document.uri, new vscode.Position(i, 0));
-                }
-            }
+        // Try each provider until one returns a result
+        for (const provider of this.providers) {
+            const result = provider.provideDefinition(document, word, position);
+            if (result) return result;
         }
 
         return null;
-    }
-
-    getLineContentActionId(document) {
-        const results = [];
-        const pattern = /<action\b[^>]*\bid\s*=\s*["']([^"']+)["']/i;
-
-        for (let i = 0; i < document.lineCount; i++) {
-            const lineText = document.lineAt(i).text;
-            const match = lineText.match(pattern);
-            if (match) {
-                const actionId = match[1];
-                const index = lineText.indexOf(match[0]) + match[0].indexOf(actionId);
-                results.push({
-                    id: actionId,
-                    line: i,
-                    position: new vscode.Position(i, index),
-                    text: lineText.trim()
-                });
-            }
-        }
-
-        return results;
-    }
-
-    getLineContentCaseLine(document) {
-        const results = [];
-        const pattern = /case\s*['"]\s*([^'"]+)\s*['"]/;
-
-        for (let i = 0; i < document.lineCount; i++) {
-            const lineText = document.lineAt(i).text;
-            const match = lineText.match(pattern);
-            if (match) {
-                const caseName = match[1];
-                const index = lineText.indexOf(match[0]) + match[0].indexOf(caseName);
-                results.push({
-                    caseName,
-                    line: i,
-                    position: new vscode.Position(i, index),
-                    text: lineText.trim()
-                });
-            }
-        }
-        return results;
-    }
-
-    DefinitionActionCase(document, word, position) {
-        const result = this.resolveActionDefinition(document, position, word);
-        if (result) return result;
-    }
-    //#endregion
-
-    //#region Button => Case , Case => Button
-    resolveButtonDefinition(document, position, word) {
-        const actions = this.getLineContentButtonId(document);
-        const cases = this.getLineContentCaseLine(document);
-        const currentLine = position.line;
-        // Nếu đang đứng tại dòng có case 'xxx'
-        const caseMatch = cases.find(c => c.caseName === word && c.line === currentLine);
-        if (caseMatch) {
-            const targetAction = actions.find(a => a.id === word);
-            if (targetAction) {
-                return new vscode.Location(document.uri, targetAction.position);
-            }
-        }
-
-        // Nếu đang đứng tại dòng có <action id="xxx">
-        const actionMatch = actions.find(a => a.id === word && a.line === currentLine);
-        if (actionMatch) {
-            const targetCase = cases.find(c => c.caseName === word);
-            if (targetCase) {
-                return new vscode.Location(document.uri, targetCase.position);
-            }
-            // ✅ Nếu không có case, trỏ đến dòng có ExecuteCommand(sender, e)
-            for (let i = 0; i < document.lineCount; i++) {
-                const lineText = document.lineAt(i).text;
-                if (/ExecuteCommand\s*\(\s*sender\s*,\s*e\s*\)/.test(lineText)) {
-                    return new vscode.Location(document.uri, new vscode.Position(i, 0));
-                }
-            }
-        }
-
-        return null;
-    }
-
-    getLineContentButtonId(document) {
-        const results = [];
-        const pattern = /<button\b[^>]*\bcommand\s*=\s*["']([^"']+)["']/i;
-
-        for (let i = 0; i < document.lineCount; i++) {
-            const lineText = document.lineAt(i).text;
-            const match = lineText.match(pattern);
-            if (match) {
-                const actionId = match[1];
-                const index = lineText.indexOf(match[0]) + match[0].indexOf(actionId);
-                results.push({
-                    id: actionId,
-                    line: i,
-                    position: new vscode.Position(i, index),
-                    text: lineText.trim()
-                });
-            }
-        }
-
-        return results;
-    }
-
-
-    DefinitionButtonCase(document, word, position) {
-        const result = this.resolveButtonDefinition(document, position, word);
-        if (result) return result;
-    }
-    //#endregion 
-    //#region item view => field item
-
-
-    resolveViewItemDefinition(document, position, word) {
-        const rawWord = word.replace(/[\[\]]/g, '');
-        const fieldName = rawWord.split('.')[0];
-        const currentLine = position.line;
-        const currentLineText = document.lineAt(currentLine).text;
-        const totalLines = document.lineCount;
-        const filePath = document.uri.fsPath.toLowerCase();
-
-        const isInGrid = filePath.includes('\\grid\\');
-        const isInFilterOrDir = filePath.includes('\\filter\\') || filePath.includes('\\dir\\');
-
-        // 🎯 GRID: view <=> fields
-        if (isInGrid) {
-            const fieldPattern = new RegExp(`<field\\b[^>]*\\bname=["']${fieldName}["']`, 'i');
-            const isFieldLine = fieldPattern.test(currentLineText);
-
-            if (isFieldLine) {
-                for (let i = 0; i < totalLines; i++) {
-                    if (i === currentLine) continue; // bỏ qua dòng hiện tại
-                    const lineText = document.lineAt(i).text;
-                    if (fieldPattern.test(lineText)) {
-                        const index = lineText.indexOf(fieldName);
-                        return new vscode.Location(document.uri, new vscode.Position(i, index));
-                    }
-                }
-            }
-        }
-
-        // 🎯 FILTER & DIR: <field> <=> <item ... [field]>
-        if (isInFilterOrDir) {
-            const isFieldLine = new RegExp(`<field\\b[^>]*\\bname=["']${fieldName}["']`, 'i').test(currentLineText);
-            const isItemUsageLine = new RegExp(`\\[${fieldName}(?:\\.\\w+)?\\]`, 'g').test(currentLineText) && /<item\b[^>]*>/.test(currentLineText);
-
-            // Nếu đang ở <field name="x"> → tìm dòng <item ... [x]>
-            if (isFieldLine) {
-                for (let i = 0; i < totalLines; i++) {
-                    if (i === currentLine) continue;
-                    const lineText = document.lineAt(i).text;
-                    const pattern = new RegExp(`<item\\b[^>]*\\[${fieldName}(?:\\.\\w+)?\\]`, 'i');
-                    if (pattern.test(lineText)) {
-                        const index = lineText.indexOf(`[${fieldName}`);
-                        return new vscode.Location(document.uri, new vscode.Position(i, index));
-                    }
-                }
-            }
-
-            // Nếu đang ở <item ... [x]> → tìm dòng <field name="x">
-            if (isItemUsageLine) {
-                for (let i = 0; i < totalLines; i++) {
-                    const lineText = document.lineAt(i).text;
-                    const pattern = new RegExp(`<field\\b[^>]*\\bname=["']${fieldName}["']`, 'i');
-                    if (pattern.test(lineText)) {
-                        const index = lineText.indexOf(fieldName);
-                        return new vscode.Location(document.uri, new vscode.Position(i, index));
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
-
-
-
-    DefinitionViewItemCase(document, word, position) {
-        const result = this.resolveViewItemDefinition(document, position, word);
-        if (result) return result;
-    }
-    //#endregion 
-
-    //#region funtion to funtion original
-    resolveFunctionDefinition(document, position, word, currentLineText, totalLines) {
-        // Kiểm tra xem dòng hiện tại có gọi hàm đó không
-        const functionCalls = [...currentLineText.matchAll(/\b([a-zA-Z0-9_$]+)\s*\(/g)];
-        const isFunctionCall = functionCalls.some(match => match[1] === word);
-        console.log(`Checking function definition for: ${word}, isFunctionCall: ${isFunctionCall}`);
-
-        if (isFunctionCall) {
-            const escapedWord = this.escapeRegExp(word);
-            const funcPattern = new RegExp(`function\\s+${escapedWord}\\s*\\(`);
-            for (let i = 0; i < totalLines; i++) {
-                const lineText = document.lineAt(i).text;
-                const match = funcPattern.test(lineText); 
-                if (match) {
-                    const index = lineText.indexOf(word);
-                    return new vscode.Location(document.uri, new vscode.Position(i, index));
-                }
-            }
-        }
-        return null;
-    }
-
-    escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-
-
-    DefinitionFunctionCase(document, word, position) {
-        const currentLineText = document.lineAt(position.line).text;
-        const totalLines = document.lineCount;
-        const word1 = this.getFullWordAtPosition(document, position);
-        const result = this.resolveFunctionDefinition(document, position, word1, currentLineText, totalLines);
-        if (result) return result;
-    }
-    //#endregion 
-    getFullWordAtPosition(document, position) {
-        const lineText = document.lineAt(position.line).text;
-        const cursor = position.character;
-
-        const regex = /[a-zA-Z0-9_$]+/g;
-        let match;
-
-        while ((match = regex.exec(lineText)) !== null) {
-            const start = match.index;
-            const end = regex.lastIndex;
-
-            if (start <= cursor && cursor <= end) {
-                return match[0];
-            }
-        }
-
-        return '';
-    }
-
-
-    checkFolderValid() {
-        var folderName = this.getFolderName();
-        return ['dir', 'grid', 'filter'].includes(folderName);
-    }
-
-    getFolderName() {
-        return path.basename(path.dirname(vscode.window.activeTextEditor.document.uri.fsPath)).toLowerCase()
-    }
-
-    getPath(style) {
-        var subfolder = ''
-        switch (style) {
-            case 'Lookup':
-            case 'AutoComplete':
-                subfolder = 'lookup';
-                break;
-            case 'Grid':
-                subfolder = 'grid';
-                break;
-            default:
-                return null;
-        }
-        return path.join(path.dirname(path.dirname(vscode.window.activeTextEditor.document.uri.fsPath)), subfolder);
     }
 }
 

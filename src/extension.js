@@ -1,4 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
+
+
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const pathModule = require('path');
@@ -17,12 +19,13 @@ const CheckLegacyCode = require("./CheckLegacy/CheckLegacyCode")
 const updateSettings = require("./updateSettings")
 const DBStatusBarManagerCls = require("./DBQuery/dbBar");
 const QueryDatabase = require("./DBQuery/QueryDatabase");
-const ViewPanelResult = require("./DBQuery/queryResultPanel");
+const ViewPanelResult = require("./DBQuery/QueryResultPanel");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
 const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
 const CustomDefinition = require("./Definition/CustomDefinition");
+const { toggleGrammar } = require("./HighLightSyntax/EnableGrammar.js");
 var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
@@ -32,23 +35,49 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
  * @param {vscode.ExtensionContext} context
  */
+
+
+
+
 async function activate(context) {
-   
-    var checkLicense = require('./license/checklicense').checkLicense;
+
     var constant = new Constant(context);
+
+    // ✅ KHÔNG CẦN truyền context nữa
+    var { checkLicense } = require('./license/checklicense');
     var license = await checkLicense();
-    if (!license) return
+
+    if (!license) {
+        vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
+        return;
+    }
+    const config = vscode.workspace.getConfiguration('fbo-autocomplete');
+
+    const enableGrammar = config.get('enableGrammar', true);
+
+    toggleGrammar(enableGrammar, context.extensionPath);
+
+    // Theo dõi khi user thay đổi setting:
+    vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('fbo-autocomplete.enableGrammar')) {
+            const newValue = vscode.workspace.getConfiguration('fbo-autocomplete').get('enableGrammar');
+            toggleGrammar(newValue, context.extensionPath);
+        }
+    });
+    
     const provider = new CompletionProvider();
-    provider.run(context)
+    provider.run(context);
+
     const upsettings = new updateSettings();
     upsettings.updateSettingsJson.bind(upsettings)(context);
-    const config = vscode.workspace.getConfiguration('fbo-autocomplete');
-    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
 
+    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
     const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
     completeCodeByHandle.run(context);
-    var renderdb = new RenderXMLToDB()
+
+    var renderdb = new RenderXMLToDB();
     renderdb.run(context);
+
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
@@ -59,6 +88,7 @@ async function activate(context) {
             ReadXMLVS2008.readXml(document.uri.fsPath, context);
         }
     });
+
     // Thêm sự kiện lưu file XML
     const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
         if (document.languageId === 'xml' && document.uri.scheme === 'file') {
@@ -71,8 +101,8 @@ async function activate(context) {
         provideHover(document, position) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
-    })
-    
+    });
+
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
             // Nếu đang bật, hủy CodeLensProvider
@@ -89,14 +119,15 @@ async function activate(context) {
                         return EntityCodeLensProvider.provideCodeLenses(document, position);
                     },
                 }
-            )
+            );
         }
         isCodeLensEnabled = !isCodeLensEnabled; // Cập nhật trạng thái
     });
+
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
         var content = entityHoverProvider.findContent.bind(entityHoverProvider)(entity, document.uri.fsPath);
-        content = entityHoverProvider.formatXml(content)
+        content = entityHoverProvider.formatXml(content);
         content = content.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
         vscode.env.clipboard.writeText(content).then(() => {
             vscode.window.showInformationMessage(`Copied: ${content}`);
@@ -104,9 +135,10 @@ async function activate(context) {
     });
 
     //Translate
-    const trans = new Trans()
+    const trans = new Trans();
+
     let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {
-        await trans.translateXmlFile.bind(trans)()
+        await trans.translateXmlFile.bind(trans)();
     });
 
     let translatePaste = vscode.commands.registerCommand('fbo-autocomplete.translatePaste', async function () {
@@ -126,7 +158,7 @@ async function activate(context) {
                 cancellable: false
             }, async (progress, token) => {
                 const selection = editor.selection;
-                const translatedText = await trans.trans_to_en.bind(trans)(text)
+                const translatedText = await trans.trans_to_en.bind(trans)(text);
                 // Ghi lại văn bản đã dịch vào clipboard
                 await vscode.env.clipboard.writeText(translatedText);
 
@@ -144,7 +176,9 @@ async function activate(context) {
             // Dịch nội dung qua Google Translate API 
         }
     });
-    const cvtToEx = new cnv()
+
+    const cvtToEx = new cnv();
+
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
 
@@ -152,14 +186,14 @@ async function activate(context) {
         const folderName = pathModule.basename(folderPath);
         if (folderName != 'Grid') {
             vscode.window.showErrorMessage(`Only Work On Grid File`);
-            return
+            return;
         }
-        const reportPath = path.replace('\\Grid\\', '\\Report\\')
+        const reportPath = path.replace('\\Grid\\', '\\Report\\');
 
         if (fs.existsSync(reportPath)) {
-            const xmlReport = cvtToEx.CvtToFieldReport.bind(cvtToEx)(path)
+            const xmlReport = cvtToEx.CvtToFieldReport.bind(cvtToEx)(path);
 
-            const ReportXml = cvtToEx.addFieldToReport(xmlReport[0], reportPath)
+            const ReportXml = cvtToEx.addFieldToReport(xmlReport[0], reportPath);
 
             if (ReportXml != '') {
                 fs.writeFileSync(reportPath, ReportXml, 'utf8');
@@ -208,12 +242,14 @@ async function activate(context) {
             return;
         }
         if (text) {
-            translateAuto.transWithKeyBoards()
+            translateAuto.transWithKeyBoards();
         }
     });
+
     const chk = new CheckLegacyCode(context);
+
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
-        chk.run.bind(chk)()
+        chk.run.bind(chk)();
     });
 
     const chkMessage = new CheckLegacyMessage();
@@ -221,27 +257,37 @@ async function activate(context) {
 
     if (checkLegacyWhenSave) {
         vscode.workspace.onDidSaveTextDocument((document) => {
-            chk.run.bind(chk)()
+            chk.run.bind(chk)();
         });
     }
+
     /*
-        //Database dbBar
-        const dbstatus = new DBStatusBarManagerCls(context);
-        dbstatus.show()
-        const queryDb = new QueryDatabase(context, dbstatus);
-        */
+    console.time('💾 Database dbBar');
+    //Database dbBar
+    const dbstatus = new DBStatusBarManagerCls(context);
+    dbstatus.show()
+    const queryDb = new QueryDatabase(context, dbstatus);
+    console.timeEnd('💾 Database dbBar');
+    */
+   /*
+    const dbStatusBar = new DBStatusBarManagerCls(context);
+    dbStatusBar.show();
+    const queryDb = new QueryDatabase(context, dbStatusBar);
+*/
     //
     /*Tree view*/
     const treeDataProvider = new TreeFileProvider();
     treeDataProvider.run(context);
-    const contextMenu = new ContextMenuHandler(context, treeDataProvider)
+
+    const contextMenu = new ContextMenuHandler(context, treeDataProvider);
 
     const cmpl_mobile = new CompleteCodeMobile();
-    cmpl_mobile.run(context)
+    cmpl_mobile.run(context);
 
-    const defi = new CustomDefinition()
+    const defi = new CustomDefinition();
     defi.run(context);
-    var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm)
+
+    var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm);
 
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
@@ -257,11 +303,7 @@ async function activate(context) {
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
-
-
-    calculationProvider.register(context); // ← Thêm dòng này
-
-
+    calculationProvider.register(context); 
     /*
      var viewpanelsql = new ViewPanelResult(context)
      var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
@@ -269,15 +311,15 @@ async function activate(context) {
        });
      
        context.subscriptions.push(disposable);
- */
+    */
 }
 
 // This method is called when your extension is deactivated
 function deactivate() {
+    console.log('🛑 Extension deactivated');
 }
 
 module.exports = {
     activate,
     deactivate
 }
-

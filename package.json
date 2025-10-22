@@ -21,6 +21,15 @@
   "publisher": "Nguyen-Hong-Dat",
   "sheetIdGoogleSheet": "1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA",
   "contributes": {
+    "grammars": [
+      {
+        "scopeName": "fastbusiness.injection",
+        "path": "./src/HighLightSyntax/syntaxes/fastbusiness-xml.tmLanguage.json",
+        "injectTo": [
+          "text.xml"
+        ]
+      }
+    ],
     "menus": {
       "editor/context": [
         {
@@ -115,6 +124,11 @@
       "type": "object",
       "title": "Time Delay Translate",
       "properties": {
+        "fbo-autocomplete.enableGrammar": {
+          "type": "boolean",
+          "default": false,
+          "description": "Bật hoặc tắt highlight cú pháp FastBusiness XML."
+        },
         "fbo-autocomplete.translateMode": {
           "type": "string",
           "enum": [
@@ -164,6 +178,16 @@
           "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         }
+      },
+      "fbo-autocomplete.licenseCacheDuration": {
+        "type": "number",
+        "default": 24,
+        "description": "License cache duration in hours"
+      },
+      "fbo-autocomplete.licenseTimeout": {
+        "type": "number",
+        "default": 3000,
+        "description": "License check timeout in milliseconds"
       }
     },
     "keybindings": [
@@ -298,6 +322,18 @@
       {
         "command": "fbo-autocomplete.showAllFileShowForm",
         "title": "FBO: Show All File in show form"
+      },
+      {
+        "command": "fbo-autocomplete.openReportTemplate",
+        "title": "FBO: Open Report Template"
+      },
+      {
+        "command": "fbo-autocomplete.runQuery",
+        "title": "FBO: Execute SQL Query"
+      },
+      {
+        "command": "fbo-autocomplete.selectDatabase",
+        "title": "FBO: Select Database (App/Sys)"
       }
     ],
     "languages": [
