@@ -34,19 +34,13 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 
 /**
  * @param {vscode.ExtensionContext} context
- */
-
-
-
-
+ */ 
 async function activate(context) {
-
     var constant = new Constant(context);
-
     // ✅ KHÔNG CẦN truyền context nữa
     var { checkLicense } = require('./license/checklicense');
     var license = await checkLicense();
-
+ 
     if (!license) {
         vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
         return;

@@ -11,7 +11,7 @@ class DocumentParser {
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
             const match = lineText.match(pattern);
-            
+
             if (match) {
                 const style = match[1];
                 const controllerName = match[2];
@@ -42,11 +42,11 @@ class DocumentParser {
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
             const match = lineText.match(pattern);
-            
+
             if (match) {
                 const formName = match[1];
                 const index = lineText.indexOf(match[0]) + match[0].indexOf(formName);
-                
+
                 results.push({
                     formName,
                     line: i,
@@ -69,11 +69,11 @@ class DocumentParser {
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
             const match = lineText.match(pattern);
-            
+
             if (match) {
                 const actionId = match[1];
                 const index = lineText.indexOf(match[0]) + match[0].indexOf(actionId);
-                
+
                 results.push({
                     id: actionId,
                     line: i,
@@ -96,11 +96,11 @@ class DocumentParser {
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
             const match = lineText.match(pattern);
-            
+
             if (match) {
                 const commandId = match[1];
                 const index = lineText.indexOf(match[0]) + match[0].indexOf(commandId);
-                
+
                 results.push({
                     id: commandId,
                     line: i,
@@ -123,11 +123,11 @@ class DocumentParser {
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
             const match = lineText.match(pattern);
-            
+
             if (match) {
                 const caseName = match[1];
                 const index = lineText.indexOf(match[0]) + match[0].indexOf(caseName);
-                
+
                 results.push({
                     caseName,
                     line: i,
@@ -145,19 +145,30 @@ class DocumentParser {
      */
     static findFunctionDefinition(document, functionName) {
         const escapedName = functionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const funcPattern = new RegExp(`function\\s+${escapedName}\\s*\\(`);
+        const funcPattern = new RegExp(`function\\s+${escapedName}\\s*\\(`, 'i');
+        const scriptPattern = /<script\b/i;
+
+        let scriptPosition = null;
 
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
-            
+
+            // Lưu vị trí thẻ <script> đầu tiên (để fallback)
+            if (scriptPosition === null && scriptPattern.test(lineText)) {
+                scriptPosition = new vscode.Position(i, lineText.indexOf('<'));
+            }
+
+            // Tìm function
             if (funcPattern.test(lineText)) {
                 const index = lineText.indexOf(functionName);
                 return new vscode.Position(i, index);
             }
         }
 
-        return null;
+        // Nếu không tìm thấy function, trả về vị trí <script>
+        return scriptPosition;
     }
+
 
     /**
      * Find specific pattern in document
@@ -165,7 +176,7 @@ class DocumentParser {
     static findPattern(document, pattern, excludeLine = -1) {
         for (let i = 0; i < document.lineCount; i++) {
             if (i === excludeLine) continue;
-            
+
             const lineText = document.lineAt(i).text;
             if (pattern.test(lineText)) {
                 return new vscode.Position(i, 0);
@@ -181,7 +192,7 @@ class DocumentParser {
         const lineText = document.lineAt(position.line).text;
         const cursor = position.character;
         const regex = /[a-zA-Z0-9_$]+/g;
-        
+
         let match;
         while ((match = regex.exec(lineText)) !== null) {
             const start = match.index;
@@ -204,12 +215,12 @@ class DocumentParser {
     }
 
 
-      /**
-     * Parse f.request() or g.request() calls
-     * Patterns:
-     * - f.request('ActionName', 'Context', ['params'], o)
-     * - f.request(o, 'ActionName', 'Context', [''], [''], true)
-     */
+    /**
+   * Parse f.request() or g.request() calls
+   * Patterns:
+   * - f.request('ActionName', 'Context', ['params'], o)
+   * - f.request(o, 'ActionName', 'Context', [''], [''], true)
+   */
     static parseRequestCalls(document) {
         const results = [];
         // Pattern matches: f.request('xxx', ... ) or g.request('xxx', ...)
@@ -249,7 +260,7 @@ class DocumentParser {
 
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
-            
+
             if (pattern.test(lineText)) {
                 // Find the position of action id value
                 const match = lineText.match(new RegExp(`id\\s*=\\s*["']${actionId}["']`, 'i'));
@@ -272,7 +283,7 @@ class DocumentParser {
 
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
-            
+
             if (pattern.test(lineText)) {
                 const index = lineText.indexOf('<response');
                 return new vscode.Position(i, index);
@@ -294,10 +305,10 @@ class DocumentParser {
         const endIndex = startIndex + matchText.length;
         return position.character >= startIndex && position.character <= endIndex;
     }
-     /**
-     * Parse <form> tags with reportFile/templateFile attributes
-     * Returns: { fileName, fileType: 'reportFile'|'templateFile', commandArgument, line, position }
-     */
+    /**
+    * Parse <form> tags with reportFile/templateFile attributes
+    * Returns: { fileName, fileType: 'reportFile'|'templateFile', commandArgument, line, position }
+    */
     static parseReportFormTags(document) {
         const results = [];
 
@@ -308,8 +319,8 @@ class DocumentParser {
             const reportFileMatch = lineText.match(/reportFile\s*=\s*["']([^"']+)["']/i);
             if (reportFileMatch && reportFileMatch[1]) {
                 const fileName = reportFileMatch[1];
-                const startIndex = lineText.indexOf(reportFileMatch[0]) + 
-                                   reportFileMatch[0].indexOf(fileName);
+                const startIndex = lineText.indexOf(reportFileMatch[0]) +
+                    reportFileMatch[0].indexOf(fileName);
 
                 // Find commandArgument on same or nearby lines
                 const commandArg = this.findCommandArgumentNearLine(document, i);
@@ -328,8 +339,8 @@ class DocumentParser {
             const templateFileMatch = lineText.match(/templateFile\s*=\s*["']([^"']+)["']/i);
             if (templateFileMatch && templateFileMatch[1]) {
                 const fileName = templateFileMatch[1];
-                const startIndex = lineText.indexOf(templateFileMatch[0]) + 
-                                   templateFileMatch[0].indexOf(fileName);
+                const startIndex = lineText.indexOf(templateFileMatch[0]) +
+                    templateFileMatch[0].indexOf(fileName);
 
                 // Find commandArgument on same or nearby lines
                 const commandArg = this.findCommandArgumentNearLine(document, i);
@@ -359,7 +370,7 @@ class DocumentParser {
         for (let i = minLine; i <= maxLine; i++) {
             const lineText = document.lineAt(i).text;
             const match = lineText.match(/commandArgument\s*=\s*["']([^"']+)["']/i);
-            
+
             if (match && match[1]) {
                 return match[1].toLowerCase(); // Return 'pdf' or 'excel'
             }

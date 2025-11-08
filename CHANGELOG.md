@@ -78,3 +78,6 @@
 - Fixing bug when fix file and not notice
 # Version 0.0.40
 - $gccl is now released. It generates code switch case for g.$a 
+- Coloring xml 
+- Definiton g.request 
+- Open excel, rpt from report file 

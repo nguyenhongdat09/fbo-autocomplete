@@ -1,5 +1,5 @@
 const CryptoJS = require("crypto-js");
-const https = require('https'); 
+const https = require('https');
 const crypto = require('crypto');
 const vscode = require('vscode');
 const fs = require('fs');
@@ -63,7 +63,7 @@ function decryptData(encrypted) {
  */
 function readLicenseFile() {
     const filePath = getLicenseFilePath();
-    
+
     if (!fs.existsSync(filePath)) {
         console.log('📄 License file not found');
         return null;
@@ -72,7 +72,7 @@ function readLicenseFile() {
     try {
         const encryptedContent = fs.readFileSync(filePath, 'utf8');
         const decrypted = decryptData(encryptedContent);
-        
+
         if (!decrypted) {
             console.warn('⚠️ Failed to decrypt license file');
             return null;
@@ -125,38 +125,39 @@ function getExpireTime() {
  */
 function checkLicenseFromServer() {
     return new Promise((resolve) => {
-        
-        const request = https.get(licenseUrl, (res) => { 
+
+        const request = https.get(licenseUrl, (res) => {
             let data = '';
-            
+
             res.on('data', chunk => data += chunk);
-            
+
             res.on('end', () => {
-                
+
                 try {
                     const json = JSON.parse(data);
-                    
+
                     if (!json.active || !Array.isArray(json.allowedIds)) {
                         return resolve({ valid: false, machineId: null });
                     }
-                    
                     // Tìm machineId hợp lệ
                     let validMachineId = null;
                     const valid = json.allowedIds.some(([_, rawKey]) => {
-                        const hashed = crypto.createHash('sha256').update(rawKey).digest('hex');
+                    const hashed = crypto.createHash('sha256').update(rawKey).digest('hex');
+                    console.log('rawId:', rawId);
+                    console.log('hashed:', hashed);
                         if (hashed === rawId) {
                             validMachineId = rawKey;
                             return true;
                         }
                         return false;
                     });
-                    
+
                     if (!valid) {
                         vscode.window.showErrorMessage('❌ Invalid FBO license key');
                     }
-                    
+
                     return resolve({ valid, machineId: validMachineId });
-                    
+
                 } catch (e) {
                     console.error('License parse error:', e);
                     return resolve({ valid: false, machineId: null });
@@ -183,21 +184,21 @@ function checkLicenseFromServer() {
  * ✅ Main check license function
  */
 async function checkLicense() {
-    
+    console.log(rawId);
     // ✅ BƯỚC 1: Đọc file license
     const licenseData = readLicenseFile();
-    
+
     if (licenseData) {
         const now = Date.now();
         const timeLeft = licenseData.expireTime - now;
-        
+
         // ✅ BƯỚC 2: Kiểm tra expireTime
         if (now < licenseData.expireTime) {
             // ✅ BƯỚC 3: Verify machineId
             const hashed = crypto.createHash('sha256')
                 .update(licenseData.machineId)
                 .digest('hex');
-            
+
             if (hashed === rawId) {
                 const daysLeft = Math.ceil(timeLeft / (24 * 60 * 60 * 1000));
                 return true;
@@ -210,10 +211,10 @@ async function checkLicense() {
     } else {
         console.log('📄 No license file found, checking server...');
     }
-    
+
     // ✅ BƯỚC 4: File không hợp lệ/hết hạn → Check server
     const result = await checkLicenseFromServer();
-    
+
     if (result.timeout || result.error) {
         // Grace period 7 ngày khi server lỗi
         if (licenseData) {
@@ -227,20 +228,20 @@ async function checkLicense() {
                 return true;
             }
         }
-        
+
         vscode.window.showErrorMessage('License verification failed. Please check internet connection.');
         return false;
     }
-    
+
     if (result.valid && result.machineId) {
         // ✅ BƯỚC 5: Ghi license mới vào file
         const expireTime = getExpireTime();
         writeLicenseFile(result.machineId, expireTime);
-        
+
         console.log(`✅ License verified and cached for ${CACHE_DAYS} days`);
         return true;
     }
-    
+
     return false;
 }
 
@@ -258,7 +259,7 @@ async function refreshLicense() {
             return false;
         }
     }
-    
+
     return await checkLicense();
 }
 

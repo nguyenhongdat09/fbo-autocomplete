@@ -44,4 +44,5 @@
 - Ctrl + Click chuột vào controller thì sẽ thấy được definition ví dụ controller="Item" hoặc g.showForm('zzzFilter)
 - Ctrl + Click chuột vào action id, case , button git
 - Hoặc dùng Ctrl + Shift + P tìm FBO: Show All File in show form bấm vào thì sẽ show tất cả file liên quan trong code showForm('filexxx')
- 
+## Mở file excel, rpt từ file report
+- **Ctrl + Shift + P** chức năng Open Report File vào file rpt hoặc excel trong thẻ <reportfile> để mở file đó nhanh chóng

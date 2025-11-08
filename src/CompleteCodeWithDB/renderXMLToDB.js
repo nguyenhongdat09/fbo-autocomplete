@@ -108,7 +108,8 @@ class RenderXMLToDB extends ana {
         var hasAutoComplete = /style\s*=\s*"AutoComplete"/.test(value);
         var hasLookup = /style\s*=\s*"Lookup"/.test(value);
         var hasExternal = /external\s*=\s*"true"/.test(value);
-        var hasGridView = /allow(Sorting|Filter)\s*=\s*"true"/.test(value);
+        var hasGridView = /allow(Sorting|Filter)/.test(value);
+
         var folder_sign;
 
         var folder_sign =

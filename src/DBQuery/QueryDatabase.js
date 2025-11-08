@@ -7,7 +7,7 @@ const AnalystWebConfig = require("./analystWebConfig");
 const sql = require("mssql");
 
 class QueryDatabase {
-    constructor(context, dbStatusBar) {
+    constructor(context, dbStatusBar) { 
         this.context = context;
         this.dbStatusBar = dbStatusBar;
         this.dbInfo = null;
