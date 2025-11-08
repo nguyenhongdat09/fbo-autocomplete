@@ -11,7 +11,12 @@ class CheckLegacyCode {
         if (!editor) return;
 
         const dirPath = path.dirname(editor.document.uri.fsPath); // 👈 chỉ lấy thư mục chứa file
-        if (!(dirPath.includes('Controllers\\Dir') || dirPath.includes('Controllers\\Filter'))) {
+
+        // Support both Windows and Mac/Linux path separators
+        const controllersDirPath = path.join('Controllers', 'Dir');
+        const controllersFilterPath = path.join('Controllers', 'Filter');
+
+        if (!(dirPath.includes(controllersDirPath) || dirPath.includes(controllersFilterPath))) {
             return;
         }
         var content = vscode.window.activeTextEditor.document.getText();
