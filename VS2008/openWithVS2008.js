@@ -3,6 +3,12 @@ const path = require('path');
 const cp = require('child_process');
 class OpenWithVS2008 {
     static open(uri) {
+        // VS2008 is Windows-only, check platform first
+        if (process.platform !== 'win32') {
+            vscode.window.showWarningMessage('Visual Studio 2008 is only available on Windows.');
+            return;
+        }
+
         const filePath = uri.fsPath;
         const vs2008Path = '"C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\Common7\\IDE\\devenv.exe"';
         var dir = path.dirname(filePath);
@@ -37,18 +43,20 @@ class OpenWithVS2008 {
         var file_xsd = '';
         baseNameArr.forEach(ele => {
             if(baseName == ele.baseName){
-                if(baseName == 'Filter') 
-                    file_xsd =  dir.replace('Filter', 'Dir')  + '\\' + 'Dir.xsd';
-                else
-                file_xsd =  dir  + '\\' + ele.file_xsd;
+                if(baseName == 'Filter') {
+                    const dirParent = path.dirname(dir);
+                    file_xsd = path.join(dirParent, 'Dir', 'Dir.xsd');
+                } else {
+                    file_xsd = path.join(dir, ele.file_xsd);
+                }
             }
-        })  
+        })
         // Thêm tham số /edit để mở file trong cửa sổ hiện tại
         const command = `${vs2008Path} /edit "${filePath}" "${file_xsd}"`;
         cp.exec(command, (err) => {
             if (err) {
                 vscode.window.showErrorMessage(`Failed to open file in Visual Studio 2008: ${err.message} file: ${filePath}`);
-            } 
+            }
         });
     }
 }

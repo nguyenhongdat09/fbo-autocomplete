@@ -15,9 +15,26 @@ class RenderXMLToDB {
         const document = activeEditor.document;
         let basePath = document.uri.authority + document.uri.path;
         const prefixesToLoop = ['Dir', 'Grid', 'Filter'];
-        //path theo công ty 
-        basePath = `\\\\${basePath.substring(0, basePath.indexOf('App_Data'))}App_Data\\Controllers\\`;
-        //Path theo đường dẫn cứng  
+
+        //path theo công ty - support both Windows UNC and Mac/Linux paths
+        if (basePath.indexOf('App_Data') !== -1) {
+            const appDataIndex = basePath.indexOf('App_Data');
+            const baseDir = basePath.substring(0, appDataIndex);
+
+            // On Windows with network path (UNC)
+            if (document.uri.authority && process.platform === 'win32') {
+                basePath = path.join('\\\\' + baseDir, 'App_Data', 'Controllers') + path.sep;
+            } else {
+                // Mac/Linux or local Windows path
+                // Remove leading slash on Windows if it's a drive letter path
+                let cleanBase = baseDir;
+                if (process.platform === 'win32' && cleanBase.startsWith('/') && cleanBase.charAt(2) === ':') {
+                    cleanBase = cleanBase.substring(1);
+                }
+                basePath = path.join(cleanBase, 'App_Data', 'Controllers') + path.sep;
+            }
+        }
+        //Path theo đường dẫn cứng
         /*
          basePath = document.uri.path
          let endIndex = basePath.indexOf('Controllers/') + 'Controllers/'.length;
@@ -59,10 +76,10 @@ class RenderXMLToDB {
                         // Đợi tất cả các file được xử lý và trả về mảng keyValuePairs
                         const keyValuePairsArray = [];
                         for (const filePath of filePaths) {
-                            const dirName = path.dirname(filePath).split('\\').pop(); // lấy thư mục trước file
+                            const dirName = path.basename(path.dirname(filePath)); // lấy thư mục trước file
                             const baseName = path.basename(filePath); // lấy tên file
                             progress.report({ message: `${dirName}/${baseName}` });
-                            const keyValuePair = await this.parseXMLFile(filePath); // parse từng file 
+                            const keyValuePair = await this.parseXMLFile(filePath); // parse từng file
                             keyValuePairsArray.push(keyValuePair);
                         }
                         // Gộp tất cả keyValuePairs lại thành một object duy nhất

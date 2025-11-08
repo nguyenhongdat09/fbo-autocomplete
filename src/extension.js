@@ -175,21 +175,23 @@ async function activate(context) {
     }); 
     const cvtToEx = new cnv()
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
-        var path = vscode.window.activeTextEditor.document.uri.fsPath;
-        
-        const folderPath = pathModule.dirname(path);
+        var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
+
+        const folderPath = pathModule.dirname(filePath);
         const folderName = pathModule.basename(folderPath);
         if (folderName != 'Grid') {
             vscode.window.showErrorMessage(`Only Work On Grid File`);
             return
         }
-        const reportPath = path.replace('\\Grid\\', '\\Report\\')
-       
+        // Replace Grid folder with Report folder in a cross-platform way
+        const parentPath = pathModule.dirname(folderPath);
+        const reportPath = pathModule.join(parentPath, 'Report', pathModule.basename(filePath));
+
         if (fs.existsSync(reportPath)) {
-            const xmlReport = cvtToEx.CvtToFieldReport.bind(cvtToEx)(path)
-           
+            const xmlReport = cvtToEx.CvtToFieldReport.bind(cvtToEx)(filePath)
+
             const ReportXml = cvtToEx.addFieldToReport(xmlReport[0], reportPath)
-            
+
             if (ReportXml != '') {
                 fs.writeFileSync(reportPath, ReportXml, 'utf8');
                 vscode.window.showInformationMessage('Report updated successfully!');
@@ -200,8 +202,8 @@ async function activate(context) {
     });
 
     let cvtExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', async function () {
-        var path = vscode.window.activeTextEditor.document.uri.fsPath;
-        const folderPath = pathModule.dirname(path);
+        var gridPath = vscode.window.activeTextEditor.document.uri.fsPath;
+        const folderPath = pathModule.dirname(gridPath);
         const folderName = pathModule.basename(folderPath);
         if (folderName !== 'Grid') {
             vscode.window.showErrorMessage(`This Feature is only Work On Grid File`);
@@ -213,15 +215,15 @@ async function activate(context) {
             filters: { 'Excel Files': ['xlsx'] },
             defaultUri:  vscode.Uri.file('output.xlsx')
         };
-    
+
         const fileUri = await vscode.window.showSaveDialog(options);
-    
+
         if (!fileUri) {
             vscode.window.showWarningMessage("Hủy xuất file Excel.");
             return;
         }
         // Gọi hàm export với đường dẫn đã chọn
-        cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
+        cvtToEx.exportToExcel.bind(cvtToEx)(gridPath, fileUri.fsPath);
     });
     
     const translateAuto = new TranslateAuto(trans);
