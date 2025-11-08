@@ -23,10 +23,22 @@ const REQUEST_TIMEOUT = 5000;
 function getDatabasePath() {
     return path.resolve(__dirname, '..', 'Database');
 }
+let storagePath;
 
+function initStorage(context) {
+    storagePath = context.globalStorageUri.fsPath;
+    if (!fs.existsSync(storagePath)) {
+        fs.mkdirSync(storagePath, { recursive: true });
+    }
+}
+
+function getLicenseFilePath() {
+    return path.join(storagePath, LICENSE_FILE_NAME);
+}
 /**
  * ✅ Lấy đường dẫn file license
  */
+/*
 function getLicenseFilePath() {
     const databaseDir = getDatabasePath();
     // Tạo folder Database nếu chưa tồn tại
@@ -36,7 +48,7 @@ function getLicenseFilePath() {
     const filePath = path.join(databaseDir, LICENSE_FILE_NAME);
     return filePath;
 }
-
+*/
 /**
  * Mã hóa data bằng AES-256
  */
@@ -284,3 +296,4 @@ function clearLicenseCache() {
 exports.checkLicense = checkLicense;
 exports.refreshLicense = refreshLicense;
 exports.clearLicenseCache = clearLicenseCache;
+exports.initStorage = initStorage;
