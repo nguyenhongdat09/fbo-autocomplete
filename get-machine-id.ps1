@@ -23,7 +23,7 @@ try {
     $sha256 = [System.Security.Cryptography.SHA256]::Create()
     $bytes = [System.Text.Encoding]::UTF8.GetBytes($machineGuid)
     $hash = $sha256.ComputeHash($bytes)
-    $hashedId = [System.BitConverter]::ToString($hash).Replace('-','').ToLower()
+    $hashedId = [System.BitConverter]::ToString($hash).Replace("-","").ToLower()
 
     Write-Host "Hashed Machine ID (SHA-256):" -ForegroundColor Yellow
     Write-Host $hashedId
