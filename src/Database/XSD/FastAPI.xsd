@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema id="Import" targetNamespace="urn:schemas-fast-com:fast-api" elementFormDefault="qualified" xmlns="urn:schemas-fast-com:fast-api" xmlns:a="urn:schemas-fast-com:fast-api" xmlns:mstns="urn:schemas-fast-com:fast-api" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="import" type="importType" />
+  <xs:complexType name="importType">
+    <xs:sequence>
+      <xs:element name="fields" type="fieldsType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="query" type="queryType" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="fields" type="fieldsType" />
+  <xs:complexType name="fieldsType">
+    <xs:sequence>
+      <xs:element name="field" type="fieldType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>    
+    <xs:attribute name="table" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Bảng dự định sẽ lưu, vd: dmkh, nếu chứng từ hay báo cáo thì để trống, bảng tmp sẽ lưu là #_data</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>    
+    <xs:attribute name="type" type="apiType" use="required">
+      <xs:annotation>
+        <xs:documentation>Kiểu Danh mục, Chứng từ hay Voucher</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>    
+    <xs:attribute name="voucherCode" type="xs:string" >
+      <xs:annotation>
+        <xs:documentation>Mã chứng từ khi type là Voucher</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="enable" type="xs:boolean" >
+      <xs:annotation>
+        <xs:documentation>True: được phép đồng bộ, False: tắt chức năng đồng bộ của phiếu này đi</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+  </xs:complexType>
+
+  <xs:complexType name="fieldType">
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Tên cột ghi trong tài liệu chuyển giao cho đối tác, VD: CustomerID</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="fastName" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>Tên cột lưu trong phần mềm fas, VD: ma_kh, không khai báo sẽ lấy name mang xuống</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" type="dataType" use="required"/>
+    <xs:attribute name="isPrimaryKey" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>Khóa chính nếu là danh mục, chứng từ thì để trắng</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="allowNull" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>Cho phép rỗng hay không, nếu là khóa chính thì không được rỗng</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="upperCase" type="xs:boolean" use="optional"/>
+    <xs:attribute name="maxLength" type="xs:int" use="optional"/>
+    <xs:attribute name="hidden" type="xs:boolean" use="optional">
+      <xs:annotation>
+        <xs:documentation>Dùng khai báo mặt định giá trị, không được truyền đi</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="defaultValue" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>Nếu dữ liệu đối tác trả về null, '', 0 tùy theo loại, thì sẽ dùng giá trị này</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="justContent" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>Giá trị chỉ nằm trong trong danh sách đã được khai. VD: 1, 2, 3..</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="checkIrregular" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation>Check ký tự đặc biệt</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+   
+  </xs:complexType>
+
+  <xs:complexType name="queryType">
+    <xs:sequence>
+      <xs:element name="text" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="dataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="numeric"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="datetime"/>
+      <xs:enumeration value="bool"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="apiType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="List">
+        <xs:annotation>
+          <xs:documentation>
+            Đồng bộ cho danh mục
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Voucher">
+        <xs:annotation>
+          <xs:documentation>
+            Đồng bộ cho chứng từ
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Transfer">
+        <xs:annotation>
+          <xs:documentation>
+            Chuyển số liệu danh mục, chứng từ sang đối tác
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Report">
+        <xs:annotation>
+          <xs:documentation>
+            Đổ dữ liệu báo cáo về cho đối tác
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

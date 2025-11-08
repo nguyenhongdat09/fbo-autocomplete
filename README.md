@@ -8,10 +8,15 @@
         -  `$gi.field;` dùng cho file Grid các trường dạng **Input**: `$gi.ma_kh;`
         -  `$gv.field;` dùng cho file Grid các trường dạng **View**: `$gv.ma_kh;`
     - ##### Phần gen thẻ `<view>`
-        - `$gff;`
-
-## Cách cài đặt 
-- Sau khi install .vsix mở file bất kỳ ở một trong 3 Folder Grid, Dir, Filter bấm **Ctrl + Shift + P** Nhập **Render XML To Database** => Enter. 
+        - `$gff;` 
+    - ##### Phần gen code tự động ở mobile (đặc trưng là có tiền tố $m)
+        - `$mgp` dùng gen ra Processing file Filter/Dir
+        - `$mgr` dùng gen ra phần thẻ <row> file Filter/Grid
+     - ##### Phần gen processing FBO  
+        - `$gpf;` 
+    - ##### Tự động phân tích $g.a của các file grid detail rồi gen code switch case
+        - `$gccl;` 
+### Cách cài đặt 
 ## Giải thích tổng quát cách thức hoạt động
 - Khi **Render XML To Database** Gói sẽ tìm các file trong cả 3 folder là Grid, Dir, Filter phân tích các trường `<field>` lấy name ra và lưu vào database. Lúc này mới bắt đầu nhập `$f, $gi, $gv` thì mới ra dữ liệu
     - #### Quy tắc nhập
@@ -20,17 +25,24 @@
         - Nếu là AutoComplete thì nhập `$f.fieldat;`
 ## Hiện Code Lens 
 - Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
-![My Image](/images/ShowCodeLens.PNG)
+![Alt text](/media/ShowCodeLens.PNG)
 ## Autocomplete code dạng hàm, biến 
 - Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
 ## Translate 
 - Copy text và bấm **Ctrl + Shift + V** để dịch đoạn vừa copy thành tiếng việt
 ## Convert To Excel 
-- Ở tại file Grid Bấm **Ctrl + Shift + V** nhập **Add Field To Report File** để gen các trường trong grid thành các field bên file Report cùng tên 
+- Ở tại file Grid Bấm **Ctrl + Shift + P** nhập **Add Field To Report File** để gen các trường trong grid thành các field bên file Report cùng tên 
     + Ví dụ: ở file Grid zcaa.xml bấm như trên sẽ tìm file Report zcaa.xml tương ứng để gen ra các trường h_a, h_b .....
 ## Check Legacy Dir/Filter
 - Kiểm tra field thiếu so với item và ngược lại 
-- Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa
- 
-
- 
+- Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa  
+ ## Check File Options/Message.xml
+- Kiểm tra duplicate field trong Fields  
+## Paste file dự án này qua dự án khác 
+- Chọn nhiều file và thả vào header dự án khác
+## Tìm Definition của Lookup hoặc file trong Keyword "showForm()"
+- Ctrl + Click chuột vào controller thì sẽ thấy được definition ví dụ controller="Item" hoặc g.showForm('zzzFilter)
+- Ctrl + Click chuột vào action id, case , button git
+- Hoặc dùng Ctrl + Shift + P tìm FBO: Show All File in show form bấm vào thì sẽ show tất cả file liên quan trong code showForm('filexxx')
+## Mở file excel, rpt từ file report
+- **Ctrl + Shift + P** chức năng Open Report File vào file rpt hoặc excel trong thẻ <reportfile> để mở file đó nhanh chóng

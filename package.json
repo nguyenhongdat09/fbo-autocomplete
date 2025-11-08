@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.7",
+  "version": "0.0.40",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -19,16 +19,104 @@
   ],
   "main": "./src/extension.js",
   "publisher": "Nguyen-Hong-Dat",
+  "sheetIdGoogleSheet": "1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA",
   "contributes": {
+    "grammars": [
+      {
+        "scopeName": "fastbusiness.injection",
+        "path": "./src/HighLightSyntax/syntaxes/fastbusiness-xml.tmLanguage.json",
+        "injectTo": [
+          "text.xml"
+        ]
+      }
+    ],
     "menus": {
       "editor/context": [
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "fbo"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "fboFile.openRevealFolder",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
         },
         {
-          "command": "fbo-autocomplete.ApplyTranslateFBO",
-          "group": "fbo"
+          "command": "fboFile.CopyPath",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.CopyFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.CopyNameOfFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.GenerateCopyFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.RenameFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.DeleteFile",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.FixWebConfig",
+          "when": "view == fbo_file && viewItem == group",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.PasteFilesToGroup",
+          "when": "view == fbo_file && viewItem == group",
+          "group": "navigation"
+        },
+        {
+          "command": "fbo-autocomplete.closeFile",
+          "when": "viewItem == file",
+          "group": "inline"
+        },
+        {
+          "command": "fbo-autocomplete.closeGroupFiles",
+          "when": "viewItem == group",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "fbo-autocomplete.reloadTree",
+          "when": "view == fbo_file",
+          "group": "navigation",
+          "tooltip": "Reload Tree"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "Fbo_File_Tab",
+          "title": "FBO File",
+          "icon": "images/doc_bar.svg"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "fbo_file",
+          "name": "FBO Project"
         }
       ]
     },
@@ -36,6 +124,11 @@
       "type": "object",
       "title": "Time Delay Translate",
       "properties": {
+        "fbo-autocomplete.enableGrammar": {
+          "type": "boolean",
+          "default": false,
+          "description": "Bật hoặc tắt highlight cú pháp FastBusiness XML."
+        },
         "fbo-autocomplete.translateMode": {
           "type": "string",
           "enum": [
@@ -46,13 +139,55 @@
           "default": "autocomplete",
           "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
         },
+        "fbo-autocomplete.sortTree": {
+          "type": "string",
+          "enum": [
+            "folderName",
+            "FileName"
+          ],
+          "default": "folderName",
+          "description": "Sort theo tên file hoặc folder chứa file"
+        },
+        "fbo-autocomplete.iconRule": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No"
+          ],
+          "default": "No",
+          "description": "Theo đuôi file hoặc không"
+        },
+        "fbo-autocomplete.ExtFileNameCopy": {
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No"
+          ],
+          "default": "Yes",
+          "description": "Có lấy định dạng file khi Copy File Name không"
+        },
         "fbo-autocomplete.delay": {
           "type": "number",
           "default": 1000,
           "minimum": 1000,
           "maximum": 15000,
           "description": "Số mili-giây chờ sau khi người dùng nhập trước khi dịch tự động."
+        },
+        "fbo-autocomplete.checkLegacyWhenSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         }
+      },
+      "fbo-autocomplete.licenseCacheDuration": {
+        "type": "number",
+        "default": 24,
+        "description": "License cache duration in hours"
+      },
+      "fbo-autocomplete.licenseTimeout": {
+        "type": "number",
+        "default": 3000,
+        "description": "License check timeout in milliseconds"
       }
     },
     "keybindings": [
@@ -67,16 +202,26 @@
         "key": "alt+shift+q",
         "mac": "alt+shift+q",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "fbo-autocomplete.runQuery",
+        "key": "f4",
+        "mac": "f4",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "ctrl+shift+d",
+        "command": "fboFile.RenameFile"
       }
     ],
     "commands": [
       {
         "command": "my-fbo-toolkit.openWithVS2008",
-        "title": "Open With VS 2008"
+        "title": "FBO: Open With VS 2008"
       },
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
-        "title": "Apply Translate FBO (v -> e)"
+        "title": "FBO: Apply Translate FBO (v -> e)"
       },
       {
         "command": "fbo-autocomplete.applyCompletionItem",
@@ -84,7 +229,7 @@
       },
       {
         "command": "fbo-autocomplete.renderXmlTodDB",
-        "title": "FBO: Render XML To Database"
+        "title": "FBO: Render XML To Database (Reload Vscode before to ensure with no error)"
       },
       {
         "command": "fbo-autocomplete.showEntityCodeLens",
@@ -105,6 +250,90 @@
       {
         "command": "fbo-autocomplete.CheckLegacyDirFilter",
         "title": "FBO: Check Legacy Dir/Filter"
+      },
+      {
+        "command": "fbo-autocomplete.CheckLegacyMessage",
+        "title": "FBO: Check Legacy Message"
+      },
+      {
+        "command": "fbo-autocomplete.autoConnectSQL",
+        "title": "FBO: Connect Sql Server"
+      },
+      {
+        "command": "fbo-autocomplete.TreeTabReload",
+        "title": "FBO: Reload Tab FBO Folder"
+      },
+      {
+        "command": "fboFile.openRevealFolder",
+        "title": "Open Contaniner Folder"
+      },
+      {
+        "command": "fboFile.PasteFilesToGroup",
+        "title": "Paste Files To Group"
+      },
+      {
+        "command": "fboFile.CopyPath",
+        "title": "Copy Path"
+      },
+      {
+        "command": "fboFile.CopyFile",
+        "title": "Copy File"
+      },
+      {
+        "command": "fboFile.CopyNameOfFile",
+        "title": "Copy File Name"
+      },
+      {
+        "command": "fboFile.GenerateCopyFile",
+        "title": "Generate Copy File"
+      },
+      {
+        "command": "fboFile.RenameFile",
+        "title": "Rename File"
+      },
+      {
+        "command": "fboFile.DeleteFile",
+        "title": "Delete File"
+      },
+      {
+        "command": "fboFile.FixWebConfig",
+        "title": "Fix Web.config"
+      },
+      {
+        "command": "fbo-autocomplete.reloadTree",
+        "title": "Reload Tree",
+        "category": "FBO",
+        "icon": "images/ic_reload.svg"
+      },
+      {
+        "command": "fbo-autocomplete.closeFile",
+        "title": "Close File",
+        "icon": "$(close)"
+      },
+      {
+        "command": "fbo-autocomplete.closeGroupFiles",
+        "title": "Close Group",
+        "icon": "$(close)"
+      },
+      {
+        "command": "fbo-autocomplete.showQueryResult",
+        "title": "Show Query Result"
+      },
+      {
+        "command": "fbo-autocomplete.showAllFileShowForm",
+        "title": "FBO: Show All File in show form"
+      },
+      {
+        "command": "fbo-autocomplete.openReportTemplate",
+        "title": "FBO: Open Report Template"
+      },
+      {
+        "command": "fbo-autocomplete.runQuery",
+        "title": "FBO: Execute SQL Query"
+      },
+      {
+        "command": "fbo-autocomplete.selectDatabase",
+        "title": "FBO: Select Database (App/Sys)"
       }
     ],
     "languages": [
@@ -116,12 +345,11 @@
         ],
         "extensions": [
           ".xml"
-        ],
-        "configuration": "./language-configuration.json"
+        ]
       }
     ]
   },
-  "updateUrl": "https://github.com/nguyenhongdat09/fbo-autocomplete/blob/company/update.json",
+  "icon": "icon.png",
   "scripts": {
     "test": "vscode-test",
     "build": "webpack",
@@ -137,7 +365,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.98.0",
+    "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
@@ -145,13 +373,27 @@
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
+    "mssql": "^11.0.1",
+    "strip-ansi": "^7.1.0",
+    "cli-table3": "^0.6.5",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1"
+    "rocksdb": "^5.2.1",
+    "crypto-js": "^4.2.0",
+    "node-machine-id": "^1.1.12"
   },
   "_commented_dependencies": {
     "axios": "^1.7.9",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
-    "googletrans": "^1.0.21"
-  }
+    "googletrans": "^1.0.21",
+    "mssql": "^11.0.1",
+    "strip-ansi": "^7.1.0",
+    "cli-table3": "^0.6.5",
+    "crypto-js": "^4.2.0",
+    "node-machine-id": "^1.1.12"
+  },
+  "extensionDependencies": [
+    "redhat.vscode-xml",
+    "mikeburgh.xml-format"
+  ]
 }

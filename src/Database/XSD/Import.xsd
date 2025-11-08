@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema id="Import" targetNamespace="urn:schemas-fast-com:data-import" elementFormDefault="qualified" xmlns="urn:schemas-fast-com:data-import" xmlns:a="urn:schemas-fast-com:data-import" xmlns:mstns="urn:schemas-fast-com:data-import" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="import" type="importType" />
+  <xs:complexType name="importType">
+    <xs:sequence>
+      <xs:element name="setting" type="settingType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="variable" type="variableType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="query" type="queryType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="fields" type="fieldsType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="parameters" type="parametersType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="declare" type="commandType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="checking" type="commandType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="processing" type="commandType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="script" type="commandType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="filter" type="xs:string" use="optional"/>
+    <xs:attribute name="table" type="xs:string" use="optional"/>
+    <xs:attribute name="database" type="databaseName" use="optional"/>
+    <xs:attribute name="importMode" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="settingType">
+    <xs:all>
+      <xs:element name="type" type="typeType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="startRow" type="intType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="maxFileSize" type="intType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="uploadTimeOut" type="intType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="importRecordTimeout" type="intType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="allowFileExtension" type="stringType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="onProcessFail" type="stringType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="onProcessComplete" type="stringType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="uploadContentType" type="stringType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="baseTable" type="stringType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="table" type="tableType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="temporary" type="tableType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="denyFields" type="stringType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="listTable" type="stringType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="alias" type="stringType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dependence" type="tableType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="gap" type="stringType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="value" type="stringType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="templateMapping " type="intType" minOccurs="0" maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="variableType">
+    <xs:sequence>
+      <xs:element name="var" type="varType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="queryType">
+    <xs:sequence>
+      <xs:element name="command" type="commandType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="views" type="viewsType" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewsType">
+    <xs:sequence>
+      <xs:element name="fields" type="fieldsType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fieldsType">
+    <xs:sequence>
+      <xs:element name="field" type="fieldType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="identity" type="xs:boolean" use="optional"/>
+    <xs:attribute name="name" type="xs:string" use="optional"/>
+    <xs:attribute name="index" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="parametersType">
+    <xs:sequence>
+      <xs:element name="parameter" type="parameterType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fieldType">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="column" type="xs:string" use="required"/>
+    <xs:attribute name="type" use="optional">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="String"/>
+          <xs:enumeration value="DateTime"/>
+          <xs:enumeration value="Boolean"/>
+          <xs:enumeration value="Decimal"/>
+          <xs:enumeration value="Int"/>
+          <xs:enumeration value="Float"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="ansi" type="xs:boolean" use="optional"/>
+    <xs:attribute name="defaultValue" type="xs:string" use="optional"/>
+    <xs:attribute name="isPrimaryKey" type="xs:boolean" use="optional"/>
+    <xs:attribute name="allowNulls" type="xs:boolean" use="optional"/>
+    <xs:attribute name="upperCase" type="xs:boolean" use="optional"/>
+    <xs:attribute name="maxLength" type="xs:int" use="optional"/>
+    <xs:attribute name="reference" type="xs:string" use="optional"/>
+    <xs:attribute name="alias" type="xs:string" use="optional"/>
+    <xs:attribute name="relation" type="xs:string" use="optional"/>
+    <xs:attribute name="check" type="xs:string" use="optional"/>
+    <xs:attribute name="condition" type="xs:string" use="optional"/>
+    <xs:attribute name="tag" type="xs:string" use="optional"/>
+    <xs:attribute name="list" type="xs:string" use="optional"/>
+    <xs:attribute name="resource" type="xs:string" use="optional"/>
+    <xs:attribute name="expression" type="xs:string" use="optional"/>
+    <xs:attribute name="insertValue" type="xs:string" use="optional"/>
+    <xs:attribute name="updateValue" type="xs:string" use="optional"/>
+    <xs:attribute name="category" type="xs:string" use="optional"/>
+    <xs:attribute name="errorCode" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="parameterType">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="cell" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="xs:string" use="optional"/>
+    <xs:attribute name="defaultValue" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="commandType">
+    <xs:sequence>
+      <xs:element name="text" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="intType">
+    <xs:attribute name="value" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="stringType">
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="tableType">
+    <xs:attribute name="value" type="xs:string"/>
+    <xs:attribute name="alias" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="typeType">
+    <xs:attribute name="value">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="List"/>
+          <xs:enumeration value="Voucher"/>
+          <xs:enumeration value="Other"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="databaseName">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ext"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="varType">
+    <xs:sequence>
+      <xs:element name="header" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="v" type="xs:string" use="required"/>
+          <xs:attribute name="e" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+</xs:schema>

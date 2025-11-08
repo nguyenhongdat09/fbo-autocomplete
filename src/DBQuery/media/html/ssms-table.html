@@ -1,0 +1,140 @@
+<!-- File: src/DBQuery/media/html/ssms-table.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Results</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{CSS_URI}}">
+</head>
+<body>
+    <!-- Tab Container -->
+    <div class="tab-container" id="tabContainer"></div>
+
+    <!-- Results Tab Content -->
+    <div class="tab-content" id="resultsTab">
+        <div class="table-wrapper">
+            <div class="table-container" id="tableContainer">
+                <!-- Table will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages Tab Content -->
+    <div class="tab-content" id="messagesTab" style="display: none;">
+        <div class="messages-container" id="messagesContainer"></div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu" style="display: none;">
+        <div class="context-menu-item" data-action="copy">
+            <span class="menu-icon">📋</span>
+            <span class="menu-text">Copy</span>
+            <span class="menu-shortcut">Ctrl+C</span>
+        </div>
+        <div class="context-menu-item" data-action="copyWithHeaders">
+            <span class="menu-icon">📑</span>
+            <span class="menu-text">Copy with Headers</span>
+        </div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" data-action="selectAll">
+            <span class="menu-icon">☑️</span>
+            <span class="menu-text">Select All</span>
+            <span class="menu-shortcut">Ctrl+A</span>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar" id="statusBar">
+        <div class="status-item" id="rowInfo">0 rows</div>
+        <div class="status-separator">|</div>
+        <div class="status-item" id="selectedInfo">Selected: 0</div>
+        <div class="status-separator">|</div>
+        <div class="status-item" id="statisticsInfo"></div>
+        <div class="status-separator">|</div>
+        <div class="status-item" id="executionTime">0ms</div>
+        <div class="status-item status-right" id="dbInfo"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Data injection point -->
+    {{DATA}}
+
+    <!-- Script injection point -->
+    {{SCRIPTS}}
+
+    <!-- Initialize -->
+    <script>
+        // Wait for all scripts to load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded');
+            
+            // Check if all required classes are loaded
+            const checkInterval = setInterval(() => {
+                if (typeof CONFIG !== 'undefined' && 
+                    typeof ContextMenu !== 'undefined' && 
+                    typeof TabManager !== 'undefined' && 
+                    typeof SSMSTable !== 'undefined') {
+                    
+                    clearInterval(checkInterval);
+                    console.log('All scripts loaded successfully');
+                    
+                    try {
+                        if (!window.queryResults) {
+                            throw new Error('No query results data found');
+                        }
+
+                        console.log('Creating SSMSTable instance...');
+                        window.table = new SSMSTable(window.queryResults, CONFIG);
+                        window.table.render();
+                        console.log('Table rendered successfully');
+
+                    } catch (error) {
+                        console.error('Initialization error:', error);
+                        document.body.innerHTML = `
+                            <div style="padding: 20px; color: red;">
+                                <h3>Error Loading Results</h3>
+                                <pre>${error.message}\n\nStack:\n${error.stack}</pre>
+                            </div>
+                        `;
+                    }
+                } else {
+                    console.log('Waiting for scripts...', {
+                        CONFIG: typeof CONFIG !== 'undefined',
+                        ContextMenu: typeof ContextMenu !== 'undefined',
+                        TabManager: typeof TabManager !== 'undefined',
+                        SSMSTable: typeof SSMSTable !== 'undefined'
+                    });
+                }
+            }, 100);
+            
+            // Timeout after 5 seconds
+            setTimeout(() => {
+                clearInterval(checkInterval);
+                if (typeof SSMSTable === 'undefined') {
+                    document.body.innerHTML = `
+                        <div style="padding: 20px; color: red;">
+                            <h3>Error: Scripts failed to load</h3>
+                            <p>Please check:</p>
+                            <ul>
+                                <li>File paths are correct</li>
+                                <li>Scripts exist in media/js/ folder</li>
+                                <li>VSCode output console for errors</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

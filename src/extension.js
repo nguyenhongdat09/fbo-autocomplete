@@ -1,47 +1,77 @@
 // The module 'vscode' contains the VS Code extensibility API
+
+
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const pathModule = require('path');
 const fs = require('fs');
-const CompletionProvider = require('../CompleteCodeWithDB/CompleteProvider');
-const renderXMLToDB = require('../CompleteCodeWithDB/renderXMLToDB');
-const OpenWithVS2008 = require('../VS2008/openWithVS2008');
-const ReadXMLVS2008 = require('../VS2008/ReadXMLVS2008');
-const EntityHoverProvider = require("../VS2008/EntityHoverProvider");
-const EntityCodeLensProvider = require("../VS2008/EntityCodeLensProvider");
-const CompleteCodeByHandle = require("../CompleteCodeWithDB/CompleteCodeByHandle");
-const Trans = require("../Translate/Translate")
-const cnv = require("../ConvertToExcel/ConvertGridToHeader")
-const TranslateAuto = require("../Translate/TranslateAuto")
-const CheckLegacyCode = require("../CheckLegacy/CheckLegacyCode")
+const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
+const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
+const OpenWithVS2008 = require('./VS2008/openWithVS2008');
+const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
+const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
+const EntityCodeLensProvider = require("./VS2008/EntityCodeLensProvider");
+const CompleteCodeByHandle = require("./CompleteCodeWithDB/CompleteCodeByHandle");
+const Trans = require("./Translate/Translate")
+const cnv = require("./ConvertToExcel/ConvertGridToHeader")
+const TranslateAuto = require("./Translate/TranslateAuto")
+const CheckLegacyCode = require("./CheckLegacy/CheckLegacyCode")
+const updateSettings = require("./updateSettings")
+const DBStatusBarManagerCls = require("./DBQuery/dbBar");
+const QueryDatabase = require("./DBQuery/QueryDatabase");
+const ViewPanelResult = require("./DBQuery/QueryResultPanel");
+const TreeFileProvider = require("./TreeFile/TreeFileProvider");
+const ContextMenuHandler = require("./TreeFile/ContextMenu");
+const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
+const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
+const CustomDefinition = require("./Definition/CustomDefinition");
+const { toggleGrammar } = require("./HighLightSyntax/EnableGrammar.js");
+var Constant = require('./constant')
+const showAllFileShowForm = require('./Definition/showAllFileShowForm');
+const calculationProvider = require('./CalculationGridDetail/provider');
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
  * @param {vscode.ExtensionContext} context
- */
+ */ 
 async function activate(context) {
-    console.log('Congratulations, your extension "fbo-autocomplete" is now active!');
+    var constant = new Constant(context);
+    // ✅ KHÔNG CẦN truyền context nữa
+    var { checkLicense, initStorage } = require('./license/checklicense');
+    initStorage(context);
+    var license = await checkLicense();
+    
+    if (!license) {
+        vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
+        return;
+    }
+    const config = vscode.workspace.getConfiguration('fbo-autocomplete');
+
+    const enableGrammar = config.get('enableGrammar', true);
+
+    toggleGrammar(enableGrammar, context.extensionPath);
+
+    // Theo dõi khi user thay đổi setting:
+    vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('fbo-autocomplete.enableGrammar')) {
+            const newValue = vscode.workspace.getConfiguration('fbo-autocomplete').get('enableGrammar');
+            toggleGrammar(newValue, context.extensionPath);
+        }
+    });
+    
     const provider = new CompletionProvider();
-    const autoCompleteFields = vscode.commands.registerCommand('fbo-autocomplete.applyCompletionItem', async (line, position) => {
-        provider.applyCompletionItem(line, position);
-    });
+    provider.run(context);
 
-    const render = vscode.commands.registerCommand('fbo-autocomplete.renderXmlTodDB', () => {
-        renderXMLToDB.render();
-    });
+    const upsettings = new updateSettings();
+    upsettings.updateSettingsJson.bind(upsettings)(context);
 
-    const providerAutoComplete = vscode.languages.registerInlineCompletionItemProvider(
-        { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
-        {
-            provideInlineCompletionItems: provider.provideCompletionItems.bind(provider),
-        }
-    );
-    const genViewFromFields = vscode.languages.registerInlineCompletionItemProvider(
-        { language: 'xml', scheme: 'file' }, // Áp dụng cho file XML
-        {
-            provideInlineCompletionItems: provider.genViewFromFields.bind(provider),
-        }
-    );
+    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
+    const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
+    completeCodeByHandle.run(context);
+
+    var renderdb = new RenderXMLToDB();
+    renderdb.run(context);
+
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
@@ -49,22 +79,23 @@ async function activate(context) {
     // Thêm sự kiện mở file XML
     const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'xml' && document.uri.scheme === 'file') {
-            ReadXMLVS2008.readXml(document.uri.fsPath);
-        }
-    });
-    // Thêm sự kiện lưu file XML
-    const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
-        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
-            ReadXMLVS2008.readXml(document.uri.fsPath);
+            ReadXMLVS2008.readXml(document.uri.fsPath, context);
         }
     });
 
-    const entityHoverProvider = new EntityHoverProvider(__dirname);
+    // Thêm sự kiện lưu file XML
+    const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
+        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
+            ReadXMLVS2008.readXml(document.uri.fsPath, context);
+        }
+    });
+
+    const entityHoverProvider = new EntityHoverProvider(__dirname, context);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
-    })
+    });
 
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
@@ -82,62 +113,28 @@ async function activate(context) {
                         return EntityCodeLensProvider.provideCodeLenses(document, position);
                     },
                 }
-            )
+            );
         }
         isCodeLensEnabled = !isCodeLensEnabled; // Cập nhật trạng thái
     });
+
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
         var content = entityHoverProvider.findContent.bind(entityHoverProvider)(entity, document.uri.fsPath);
-        content = entityHoverProvider.formatXml(content)
+        content = entityHoverProvider.formatXml(content);
         content = content.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
         vscode.env.clipboard.writeText(content).then(() => {
             vscode.window.showInformationMessage(`Copied: ${content}`);
         });
     });
 
-    //const sheetId = '1ibZ3A0alAuin1q9EvSWlrMwQR_utBYl7bguDd55co0U'; // ID Google Sheet
-    const sheetId = '1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA'; // ID Google Sheet
-    const completeCodeByHandle = new CompleteCodeByHandle(sheetId);
-
-    const getDataGGS = vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {
-        await completeCodeByHandle.loadFunctions();
-    })
-    completeCodeByHandle.loadFromJson(); // Load từ JSON khi extension khởi động
-    const providerHandle = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideCompletionItems.bind(completeCodeByHandle),
-        },
-        '.' // Các ký tự kích hoạt autocomplete
-    );
-    const providerTwpDotHandle = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideCompletionTwoDotItems.bind(completeCodeByHandle),
-        },
-        '.' // Các ký tự kích hoạt autocomplete
-    );
-    //Complete cho $f, $gi, $gv
-    const providerHandleField = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideCompletionFieldItems.bind(completeCodeByHandle),
-        },
-        '.' // Các ký tự kích hoạt autocomplete
-    );
     //Translate
-    const trans = new Trans()
+    const trans = new Trans();
+
     let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {
-        await trans.translateXmlFile.bind(trans)()
+        await trans.translateXmlFile.bind(trans)();
     });
-    const provideroptionsHandle = vscode.languages.registerCompletionItemProvider(
-        { language: 'xml' }, // Áp dụng cho file XML
-        {
-            provideCompletionItems: completeCodeByHandle.provideOptionsCompletionItems.bind(completeCodeByHandle),
-        },
-        '@' // Ký tự kích hoạt autocomplete
-    ); 
+
     let translatePaste = vscode.commands.registerCommand('fbo-autocomplete.translatePaste', async function () {
         // Đọc nội dung bạn vừa copy vào clipboard
         const text = await vscode.env.clipboard.readText();
@@ -155,10 +152,10 @@ async function activate(context) {
                 cancellable: false
             }, async (progress, token) => {
                 const selection = editor.selection;
-                const translatedText = await trans.trans_to_en.bind(trans)(text)
+                const translatedText = await trans.trans_to_en.bind(trans)(text);
                 // Ghi lại văn bản đã dịch vào clipboard
                 await vscode.env.clipboard.writeText(translatedText);
-                
+
                 // Đảm bảo gọi lệnh paste khi có editor mở và sẵn sàng
                 editor.edit(editBuilder => {
                     if (!selection.isEmpty) {
@@ -172,8 +169,10 @@ async function activate(context) {
             });
             // Dịch nội dung qua Google Translate API 
         }
-    }); 
-    const cvtToEx = new cnv()
+    });
+
+    const cvtToEx = new cnv();
+
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
         var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
 
@@ -181,7 +180,7 @@ async function activate(context) {
         const folderName = pathModule.basename(folderPath);
         if (folderName != 'Grid') {
             vscode.window.showErrorMessage(`Only Work On Grid File`);
-            return
+            return;
         }
         // Replace Grid folder with Report folder in a cross-platform way
         const parentPath = pathModule.dirname(folderPath);
@@ -213,7 +212,7 @@ async function activate(context) {
         const options = {
             title: "Chọn vị trí lưu Excel",
             filters: { 'Excel Files': ['xlsx'] },
-            defaultUri:  vscode.Uri.file('output.xlsx')
+            defaultUri: vscode.Uri.file('output.xlsx')
         };
 
         const fileUri = await vscode.window.showSaveDialog(options);
@@ -225,7 +224,7 @@ async function activate(context) {
         // Gọi hàm export với đường dẫn đã chọn
         cvtToEx.exportToExcel.bind(cvtToEx)(gridPath, fileUri.fsPath);
     });
-    
+
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();
 
@@ -239,40 +238,82 @@ async function activate(context) {
             return;
         }
         if (text) {
-            translateAuto.transWithKeyBoards()
+            translateAuto.transWithKeyBoards();
         }
     });
-    const chk = new CheckLegacyCode(__dirname);
+
+    const chk = new CheckLegacyCode(context);
+
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
-        
-        chk.run.bind(chk)()
+        chk.run.bind(chk)();
     });
+
+    const chkMessage = new CheckLegacyMessage();
+    chkMessage.run(context);
+
+    if (checkLegacyWhenSave) {
+        vscode.workspace.onDidSaveTextDocument((document) => {
+            chk.run.bind(chk)();
+        });
+    }
+
+    /*
+    console.time('💾 Database dbBar');
+    //Database dbBar
+    const dbstatus = new DBStatusBarManagerCls(context);
+    dbstatus.show()
+    const queryDb = new QueryDatabase(context, dbstatus);
+    console.timeEnd('💾 Database dbBar');
+    */
+   /*
+    const dbStatusBar = new DBStatusBarManagerCls(context);
+    dbStatusBar.show();
+    const queryDb = new QueryDatabase(context, dbStatusBar);
+*/
+    //
+    /*Tree view*/
+    const treeDataProvider = new TreeFileProvider();
+    treeDataProvider.run(context);
+
+    const contextMenu = new ContextMenuHandler(context, treeDataProvider);
+
+    const cmpl_mobile = new CompleteCodeMobile();
+    cmpl_mobile.run(context);
+
+    const defi = new CustomDefinition();
+    defi.run(context);
+
+    var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm);
+
+    context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(transautoWithKey);
     context.subscriptions.push(transautoComplete);
     context.subscriptions.push(AddFieldToReport);
     context.subscriptions.push(translatePaste);
-    context.subscriptions.push(provideroptionsHandle);
     context.subscriptions.push(transAll);
-    context.subscriptions.push(getDataGGS);
-    context.subscriptions.push(providerTwpDotHandle);
-    context.subscriptions.push(providerHandle);
-    context.subscriptions.push(providerHandleField);
     context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
-    context.subscriptions.push(render);
-    context.subscriptions.push(providerAutoComplete);
-    context.subscriptions.push(autoCompleteFields);
-    context.subscriptions.push(genViewFromFields);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
+    calculationProvider.register(context); 
+    /*
+     var viewpanelsql = new ViewPanelResult(context)
+     var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
+         viewpanelsql.show();
+       });
+     
+       context.subscriptions.push(disposable);
+    */
 }
 
 // This method is called when your extension is deactivated
-function deactivate() { }
+function deactivate() {
+    console.log('🛑 Extension deactivated');
+}
 
 module.exports = {
     activate,

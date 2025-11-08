@@ -5,7 +5,7 @@ module.exports = {
   target: 'node', // Chạy trong môi trường Node.js
   entry: './src/extension.js', // File chính của extension
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'src/dist'), // Xuất vào src/dist
     filename: 'extension.js',
     libraryTarget: 'commonjs2', // Định dạng cho VS Code Extension
   },

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+  <style>
+  body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    .grid-wrapper {
+      margin-top: 10px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      overflow-x: auto; /* Enable horizontal scrolling */
+    }
+
+    .grid-wrapper .gridjs-table {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .gridjs-table th, .gridjs-table td {
+      white-space: nowrap; /* Prevent text wrapping */
+      text-overflow: ellipsis; /* Display ellipsis for overflowed text */
+      overflow: hidden; /* Hide overflow text */
+    }
+
+    .gridjs-table th {
+      background-color: #f0f0f0;
+    }
+
+    .gridjs-table td {
+      padding: 8px 12px;
+      width: auto; /* Allow columns to auto-size */
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-wrapper" id="grid"></div>
+  <script>
+    new gridjs.Grid({
+      columns: [
+        "ID", "Name", "Age", "Address", "City", "State", "Country", "Phone", "Email", 
+        "Gender", "Occupation", "Hobby", "Company", "Position", "Department", "Salary", 
+        "DateOfJoining", "Project", "Status", "LastUpdate"
+      ],
+      data: [
+        [1, "Alice", 30, "123 Main St", "New York", "NY", "USA", "123-456-7890", "alice@example.com", 
+        "Female", "Engineer", "Reading", "TechCorp", "Software Engineer", "R&D", "$1000", 
+        "2020-01-01", "Project A", "Active", "2022-05-01"],
+        [2, "Bob", 25, "456 Oak St", "Los Angeles", "CA", "USA", "987-654-3210", "bob@example.com", 
+        "Male", "Designer", "Cycling", "CreativeWorks", "UI/UX Designer", "Design", "$1200", 
+        "2019-06-15", "Project B", "Inactive", "2021-11-20"],
+        [3, "Charlie", 35, "789 Pine St", "Chicago", "IL", "USA", "555-123-4567", "charlie@example.com", 
+        "Male", "Manager", "Cooking", "BizInc", "Project Manager", "Operations", "$1500", 
+        "2018-03-10", "Project C", "Active", "2023-02-10"],
+        [4, "David", 40, "101 Maple St", "San Francisco", "CA", "USA", "444-321-7654", "david@example.com", 
+        "Male", "Architect", "Photography", "BuildIt", "Senior Architect", "Design", "$1800", 
+        "2017-08-05", "Project D", "Active", "2023-01-25"]
+      ],
+      pagination: {
+        enabled: true,
+        limit: 5
+      }, 
+      sort: true,
+      search: true,
+      resizable: true // Enable column resizing
+    }).render(document.getElementById("grid"));
+  </script>
+</body>
+</html>

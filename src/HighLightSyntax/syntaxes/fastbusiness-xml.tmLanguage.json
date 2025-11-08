@@ -1,0 +1,210 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "FastBusiness Keywords Highlight",
+  "scopeName": "fastbusiness.injection",
+ "injectionSelector": "L:text.xml, L:string.unquoted.cdata.xml",
+   "patterns": [
+    {
+      "comment": "TEST - Match # followed by word characters",
+      "match": "#\\w+",
+      "name": "entity.name.type.table.temp.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Temporary tables",
+      "match": "#[a-zA-Z_][a-zA-Z0-9_]*",
+      "name": "entity.name.type.table.temp.sql.fastbusiness"
+    }, 
+    {
+      "comment": "JavaScript keywords - Control flow",
+      "match": "\\b(function|return|if|else|for|while|switch|case|then|when|break|default|continue)\\b",
+      "name": "keyword.control.flow.js.fastbusiness"
+    },
+    {
+      "comment": "JavaScript keywords - Variable declaration",
+      "match": "\\b(var|const|let)\\b",
+      "name": "storage.type.js.fastbusiness"
+    },
+    {
+      "comment": "JavaScript keywords - Other",
+      "match": "\\b(new|this|typeof|instanceof|try|catch|finally|throw|async|await)\\b",
+      "name": "keyword.operator.js.fastbusiness"
+    },
+    {
+      "comment": "SQL DML keywords (case-insensitive)",
+      "match": "(?i)\\b(select|insert|update|delete|exec|execute)\\b",
+      "name": "keyword.dml.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL DDL keywords (case-insensitive)",
+      "match": "(?i)\\b(create|alter|drop|table|procedure|function)\\b",
+      "name": "keyword.ddl.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Control flow (case-insensitive)",
+      "match": "(?i)\\b(declare|begin|end|if|else|while|return)\\b",
+      "name": "keyword.control.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Clauses - short (case-insensitive, ONLY with space after)",
+      "match": "(?i)\\b(on|and|as|or|in|by|set)(?=\\s)",
+      "name": "keyword.clause.short.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Clauses - other keywords (case-insensitive)",
+      "match": "(?i)\\b(from|where|join|not|into|exists|order|group|having|union|distinct|top|left|right|inner|outer|cross|with|values|nolock)\\b",
+      "name": "keyword.clause.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Window functions (case-insensitive)",
+      "match": "(?i)\\b(row_number|rank|dense_rank|ntile|lead|lag|first_value|last_value)(?=\\s*\\()",
+      "name": "support.function.window.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Aggregate functions (case-insensitive)",
+      "match": "(?i)\\b(count|sum|avg|min|max|stdev|var|string_agg)(?=\\s*\\()",
+      "name": "support.function.aggregate.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Date functions (case-insensitive)",
+      "match": "(?i)\\b(getdate|dateadd|datediff|datepart|datename|year|month|day|eomonth|datefromparts|convert|cast)(?=\\s*\\()",
+      "name": "support.function.date.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL String functions (case-insensitive)",
+      "match": "(?i)\\b(substring|left|right|len|ltrim|rtrim|trim|upper|lower|replace|concat|charindex|patindex|stuff|replicate|reverse|format)(?=\\s*\\()",
+      "name": "support.function.string.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Math functions (case-insensitive)",
+      "match": "(?i)\\b(abs|ceiling|floor|round|power|sqrt|exp|log|log10|sign|rand)(?=\\s*\\()",
+      "name": "support.function.math.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Conversion functions (case-insensitive)",
+      "match": "(?i)\\b(cast|convert|try_cast|try_convert|parse|try_parse)(?=\\s*\\()",
+      "name": "support.function.convert.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Other functions (case-insensitive)",
+      "match": "(?i)\\b(isnull|coalesce|nullif|iif|case|choose|newid|scope_identity|ident_current)(?=\\s*\\()",
+      "name": "support.function.other.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL OVER clause keyword (case-insensitive)",
+      "match": "(?i)\\b(over|partition)(?=\\s*\\()",
+      "name": "keyword.other.over.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL Data types with parameters - numbers (case-insensitive)",
+      "match": "(?i)\\b(varchar|nvarchar|char|nchar|varbinary)\\s*\\(\\s*\\d+\\s*\\)",
+      "name": "storage.type.sql.withparams.fastbusiness"
+    },
+   
+    {
+      "comment": "SQL Data types with parameters - max (case-insensitive)",
+      "match": "(?i)\\b(varchar|nvarchar|varbinary)\\s*\\(\\s*max\\s*\\)",
+      "name": "storage.type.sql.withmax.fastbusiness"
+    },
+    {
+      "comment": "SQL Data types with two parameters - decimal (case-insensitive)",
+      "match": "(?i)\\b(decimal|numeric)\\s*\\(\\s*\\d+\\s*,\\s*\\d+\\s*\\)",
+      "name": "storage.type.sql.withtwoparams.fastbusiness"
+    },
+    {
+      "comment": "SQL Data types without parameters (case-insensitive)",
+      "match": "(?i)\\b(varchar|nvarchar|char|nchar|int|bigint|smallint|tinyint|decimal|numeric|float|datetime|smalldatetime|date|time|bit|text|ntext|binary|varbinary|output)\\b",
+      "name": "storage.type.sql.fastbusiness"
+    },
+    
+    {
+      "comment": "Partition placeholders - FULL MATCH with $",
+      "match": "@@(prime|inquiry|master)\\$partition\\$(current|previous)",
+      "name": "variable.parameter.sql.fastbusiness"
+    },
+    {
+      "comment": "Partition placeholders - BASE ONLY",
+      "match": "@@(prime|inquiry|master)\\b",
+      "name": "variable.parameter.sql.fastbusiness"
+    },
+    {
+      "comment": "System variables",
+      "match": "@@(userID|sysDatabaseName|whereClause|fieldExternal|orderByClause|admin|language|unit|id|pageIndex|pageCount|textList|textExternal|textOrderBy|queryString|refresh|appDatabaseName|lastPage|lastCount|firstItem|lastItem|action|partition|table|master|inquiry|prime|userName|view|operation|page|fields|form|keyMaster|keyDetail|expression|increase|extension|viewAccessMode)\\b",
+      "name": "variable.parameter.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL user variables - with $ prefix (@$variable)",
+      "match": "@\\$[a-zA-Z_][a-zA-Z0-9_]*\\b",
+      "name": "variable.other.dollar.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL user variables - normal (@variable)",
+      "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
+      "name": "variable.parameter.sql.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness SQL functions",
+      "match": "\\b(dbo\\.)?(FastBusiness\\$[a-zA-Z0-9_$]+)",
+      "name": "entity.name.function.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness custom functions with $ (set$Voucher$EmptyExternalField)",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\$[a-zA-Z0-9_$]+",
+      "name": "entity.name.function.custom.fastbusiness"
+    },
+    {
+      "comment": "JavaScript Global Objects - $func, $message, $get, $find, document",
+      "match": "\\$(func|message|get|find|cookie|common)\\b",
+      "name": "support.variable.global.js.fastbusiness"
+    },
+    {
+      "comment": "JavaScript document object",
+      "match": "\\bdocument\\b",
+      "name": "support.variable.dom.js.fastbusiness"
+    },
+    {
+      "comment": "JavaScript Global Functions - String, setTimeout, etc",
+      "match": "\\b(String|DateTime|setTimeout|setInterval|clearTimeout|clearInterval|parseInt|parseFloat|isNaN|isFinite)\\b",
+      "name": "support.function.builtin.js.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness JS Utility Methods - WITH parentheses",
+      "match": "\\.(trim|show|hide|hideWait|showWait|formatDate|formatNumber|formatCurrency|getElementById)\\s*\\(",
+      "name": "support.function.utility.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness JS Event Handlers - add_xxx",
+      "match": "\\.(add_onRender|add_activeTabChanged|add_onResponseComplete|add_itemValueChanged|add_commandEvent|add_uploaded|remove_commandEvent|remove_onResponseComplete|remove_itemValueChanged|onTabChanged)\\s*\\(",
+      "name": "support.function.event.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness JS Callback Methods - onXxx",
+      "match": "\\b(onCurrencySelected|onCurrencyChanged|onDateChanged|onCurrencySelected|initialize|onTabChanged)\\b",
+      "name": "support.function.callback.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness JS Grid Methods - underscore prefix and all methods",
+      "match": "\\.(_setReadOnly|_setColumnVisible|_suspendLayout|_resumeLayout|_setItemValue|_getItemValue|_getColumnOrder|_rowCount|_activeRow|_appendRow|_insertRow|_deleteRow|_removeRowNumber|_getItem|_allFields|_checked|_controlBehavior|_findButton|_action|_language|_fields|_tabContainer|_baseCurrency|_errorObject|getItemValue|setItemValue|getItem|validFields|request|executeAggregate|showForm|focus|get_element|get_object|get_id|goToPage|live|setReferenceKeyFilter|validExpression|validRowExpression|onclick|onchange|set_completionKeyFilter|set_completionCheckFilter|_activeCell|_activeColumn|ItemKeyFilter|completionFilter|ItemCheckFilter|setSequenceNumber|setContinuance|addGridFields|addTotalFields|onExchangeRateChanged|_set_number|setItemGridBehavior|set_referenceFields|set_executeExpression|executeExpression|setFormLayout|init|set_currencyFields|setItemControlBehavior|setItemValues|focusWhenTabChanged|assignExpression|get_tabs|_hide|remove_activeTabChanged|remove_onRender|_voucherNumberBehavior|appDatabaseName|checkCode|_loaded|body|_formScript|_denyFocus|add_loading|setItemFieldValue|set_memvars|_looking|remove_loading|cancelEvent|getFullYear)\\b",
+      "name": "support.function.grid.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness JS Array/String methods",
+      "match": "\\.(indexOf|format|slice|splice|push|pop|shift|unshift|join|split|toLowerCase|toUpperCase|substring|charAt|charCodeAt)\\s*\\(",
+      "name": "support.function.builtin.method.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness JS properties WITHOUT parentheses",
+      "match": "\\.(parentForm|grid|field|AllowNulls|disabled|value|length)\\b",
+      "name": "entity.name.function.method.fastbusiness"
+    },
+    {
+      "comment": "FastBusiness special properties with $",
+      "match": "\\.(\\$a|\\$h|\\$t|\\$k|\\$\\w+)\\b",
+      "name": "variable.other.property.dollar.fastbusiness"
+    },
+    {
+      "comment": "Property access - e.type.xxx, o.xxx, eventArgs.xxx",
+      "match": "\\b(e\\.type\\.(Action|Context|Result|Object|Value)|e\\.(object)|o\\.(grid|field|parentForm)|eventArgs\\.(get_object|get_type))\\b",
+      "name": "variable.other.property.chain.fastbusiness"
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "name": "FastBusiness Colors",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#1e1e1e",
+    "editor.foreground": "#d4d4d4"
+  },
+  "tokenColors": [
+    {
+      "name": "JavaScript Control Flow Keywords",
+      "scope": "keyword.control.flow.js.fastbusiness",
+      "settings": {
+        "foreground": "#C586C0",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "JavaScript Variable Declaration",
+      "scope": "storage.type.js.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "JavaScript Operators",
+      "scope": "keyword.operator.js.fastbusiness",
+      "settings": {
+        "foreground": "#D16969"
+      }
+    },
+    {
+      "name": "SQL String Literals",
+      "scope": "string.quoted.single.sql.fastbusiness",
+      "settings": {
+        "foreground": "#CE9178"
+      }
+    },
+    {
+      "name": "SQL DML Keywords",
+      "scope": "keyword.dml.sql.fastbusiness",
+      "settings": {
+        "foreground": "#569CD6",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "SQL DDL Keywords",
+      "scope": "keyword.ddl.sql.fastbusiness",
+      "settings": {
+        "foreground": "#4FC1FF",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "SQL Control Flow",
+      "scope": "keyword.control.sql.fastbusiness",
+      "settings": {
+        "foreground": "#C586C0"
+      }
+    },
+    {
+      "name": "SQL Clauses - Short (on, and, as, or, in, by)",
+      "scope": "keyword.clause.short.sql.fastbusiness",
+      "settings": {
+        "foreground": "#9CDCFE",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "SQL Clauses",
+      "scope": "keyword.clause.sql.fastbusiness",
+      "settings": {
+        "foreground": "#9CDCFE"
+      }
+    },
+    {
+      "name": "SQL Window Functions",
+      "scope": "support.function.window.sql.fastbusiness",
+      "settings": {
+        "foreground": "#DCDCAA",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "SQL Aggregate Functions",
+      "scope": "support.function.aggregate.sql.fastbusiness",
+      "settings": {
+        "foreground": "#DCDCAA",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "SQL Date Functions",
+      "scope": "support.function.date.sql.fastbusiness",
+      "settings": {
+        "foreground": "#F1FA8C"
+      }
+    },
+    {
+      "name": "SQL String Functions",
+      "scope": "support.function.string.sql.fastbusiness",
+      "settings": {
+        "foreground": "#8BE9FD"
+      }
+    },
+    {
+      "name": "SQL Math Functions",
+      "scope": "support.function.math.sql.fastbusiness",
+      "settings": {
+        "foreground": "#FF79C6"
+      }
+    },
+    {
+      "name": "SQL Conversion Functions",
+      "scope": "support.function.convert.sql.fastbusiness",
+      "settings": {
+        "foreground": "#BD93F9"
+      }
+    },
+    {
+      "name": "SQL Other Functions",
+      "scope": "support.function.other.sql.fastbusiness",
+      "settings": {
+        "foreground": "#50FA7B"
+      }
+    },
+    {
+      "name": "SQL OVER Keyword",
+      "scope": "keyword.other.over.sql.fastbusiness",
+      "settings": {
+        "foreground": "#FFB86C",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "SQL Data Types with max",
+      "scope": "storage.type.sql.withmax.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0",
+        "fontStyle": "bold italic underline"
+      }
+    },
+    {
+      "name": "SQL Data Types with Parameters",
+      "scope": "storage.type.sql.withparams.fastbusiness, storage.type.sql.withtwoparams.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0",
+        "fontStyle": "bold italic"
+      }
+    },
+    {
+      "name": "SQL Data Types",
+      "scope": "storage.type.sql.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Partition Placeholders - Full",
+      "scope": "constant.partition.full.fastbusiness",
+      "settings": {
+        "foreground": "#B267E6",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Partition Placeholders - Base",
+      "scope": "constant.partition.base.fastbusiness",
+      "settings": {
+        "foreground": "#BD93F9",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "System Variables",
+      "scope": "variable.system.fastbusiness",
+      "settings": {
+        "foreground": "#D7BA7D",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "SQL User Variables with $ (@$variable)",
+      "scope": "variable.other.dollar.sql.fastbusiness",
+      "settings": {
+        "foreground": "#FF79C6",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "FastBusiness Functions",
+      "scope": "entity.name.function.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "FastBusiness Custom Functions with $",
+      "scope": "entity.name.function.custom.fastbusiness",
+      "settings": {
+        "foreground": "#F1FA8C",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "JavaScript Global Objects ($func, $message, etc)",
+      "scope": "support.variable.global.js.fastbusiness",
+      "settings": {
+        "foreground": "#FF6AC1",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "JavaScript document object",
+      "scope": "support.variable.dom.js.fastbusiness",
+      "settings": {
+        "foreground": "#FF6AC1",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "JavaScript Built-in Functions",
+      "scope": "support.function.builtin.js.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0"
+      }
+    },
+    {
+      "name": "FastBusiness Utility Methods",
+      "scope": "support.function.utility.fastbusiness",
+      "settings": {
+        "foreground": "#50FA7B"
+      }
+    },
+    {
+      "name": "FastBusiness Event Handlers",
+      "scope": "support.function.event.fastbusiness",
+      "settings": {
+        "foreground": "#FFB86C",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Temp Table Names",
+      "scope": "entity.name.type.table.temp.sql.fastbusiness",
+      "settings": {
+        "foreground": "#FFB86C" 
+      }
+    },
+    {
+      "name": "FastBusiness Setup Methods",
+      "scope": "support.function.setup.fastbusiness",
+      "settings": {
+        "foreground": "#8BE9FD"
+      }
+    },
+    {
+      "name": "FastBusiness Callback Methods",
+      "scope": "support.function.callback.fastbusiness",
+      "settings": {
+        "foreground": "#BD93F9"
+      }
+    },
+    {
+      "name": "FastBusiness Grid Methods (_xxx)",
+      "scope": "support.function.grid.fastbusiness",
+      "settings": {
+        "foreground": "#F1FA8C"
+      }
+    },
+    {
+      "name": "FastBusiness Methods",
+      "scope": "entity.name.function.method.fastbusiness",
+      "settings": {
+        "foreground": "#DCDCAA"
+      }
+    },
+    {
+      "name": "JavaScript Built-in Array/String Methods",
+      "scope": "support.function.builtin.method.fastbusiness",
+      "settings": {
+        "foreground": "#4EC9B0"
+      }
+    },
+    {
+      "name": "FastBusiness $ Properties",
+      "scope": "variable.other.property.dollar.fastbusiness",
+      "settings": {
+        "foreground": "#FF79C6",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Property Chain (e.type.Action, o.grid)",
+      "scope": "variable.other.property.chain.fastbusiness",
+      "settings": {
+        "foreground": "#8BE9FD",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "JS Objects - Long Form",
+      "scope": "variable.language.js.fastbusiness",
+      "settings": {
+        "foreground": "#4FC1FF",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "JS Objects - Short Form (f, g, o, e)",
+      "scope": "variable.language.short.js.fastbusiness",
+      "settings": {
+        "foreground": "#FFB86C",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "SQL Line Comments",
+      "scope": "comment.line.double-dash.sql.fastbusiness",
+      "settings": {
+        "foreground": "#6A9955",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Brackets and Parentheses",
+      "scope": "punctuation.brackets.fastbusiness",
+      "settings": {
+        "foreground": "#C586C0"
+      }
+    },
+    {
+      "name": "SQL User Variables - MUST BE LAST TO OVERRIDE!",
+      "scope": "variable.parameter.sql.fastbusiness",
+      "settings": {
+        "foreground": "#309499"
+      }
+    }
+  ]
+}
