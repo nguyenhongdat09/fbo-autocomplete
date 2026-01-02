@@ -35,6 +35,11 @@
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "fbo"
+        },
+        {
+          "command": "fbo-autocomplete.OpenWithVSCode",
+          "group": "fbo",
+          "when": "resourceLangId == xml"
         }
       ],
       "view/item/context": [
@@ -84,6 +89,16 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.openBrowser",
+          "when": "view == fbo_file && viewItem == group",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.openCustomBrowser",
+          "when": "view == fbo_file && viewItem == group",
+          "group": "navigation"
+        },
+        {
           "command": "fbo-autocomplete.closeFile",
           "when": "viewItem == file",
           "group": "inline"
@@ -91,6 +106,11 @@
         {
           "command": "fbo-autocomplete.closeGroupFiles",
           "when": "viewItem == group",
+          "group": "inline"
+        },
+        {
+          "command": "fboFile.openBrowser",
+          "when": "view == fbo_file && viewItem == group",
           "group": "inline"
         }
       ],
@@ -177,6 +197,32 @@
           "type": "boolean",
           "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
+        },
+        "fbo-autocomplete.PathVsCode": {
+          "type": "string",
+          "default": "C:\\\\Program Files\\\\Microsoft VS Code\\\\Code.exe",
+          "description": "Đường dẫn để mở file bằng VSCODE."
+        },
+        "fbo-autocomplete.extensionKey": {
+          "type": "string",
+          "default": "",
+          "description": "🔑 Extension Key (auto-generated, read-only). Copy this key and send to admin to get License Key.",
+          "readOnly": true
+        },
+        "fbo-autocomplete.licenseKey": {
+          "type": "string",
+          "default": "",
+          "description": "🎫 License Key (enter the key you received from admin)"
+        },
+        "fbo-autocomplete.browserBaseUrl": {
+          "type": "string",
+          "default": "http://172.168.5.14",
+          "description": "Base URL cho Simple Browser (ví dụ: http://172.168.5.14)"
+        },
+        "fbo-autocomplete.browserLoginPath": {
+          "type": "string",
+          "default": "/Main/Login.aspx",
+          "description": "Đường dẫn login mặc định (ví dụ: /Main/Login.aspx)"
         }
       },
       "fbo-autocomplete.licenseCacheDuration": {
@@ -218,6 +264,10 @@
       {
         "command": "my-fbo-toolkit.openWithVS2008",
         "title": "FBO: Open With VS 2008"
+      },
+      {
+        "command": "fbo-autocomplete.OpenWithVSCode",
+        "title": "FBO: Open With VS Code"
       },
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
@@ -300,6 +350,15 @@
         "title": "Fix Web.config"
       },
       {
+        "command": "fboFile.openBrowser",
+        "title": "Open Browser",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "fboFile.openCustomBrowser",
+        "title": "Open Browser (Custom URL)"
+      },
+      {
         "command": "fbo-autocomplete.reloadTree",
         "title": "Reload Tree",
         "category": "FBO",
@@ -334,6 +393,10 @@
       {
         "command": "fbo-autocomplete.selectDatabase",
         "title": "FBO: Select Database (App/Sys)"
+      },
+      {
+        "command": "fbo-autocomplete.OpenWithVSCode",
+        "title": "FBO: Open With VS Code"
       }
     ],
     "languages": [
@@ -365,7 +428,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.102.1",
+    "webpack": "^5.103.0",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {

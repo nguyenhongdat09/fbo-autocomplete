@@ -143,7 +143,6 @@ class ContextMenuHandler {
 
             ps.on('close', (code) => {
                 if (code !== 0 || error) {
-                    console.error('❌ Clipboard read error:', error.trim());
                     return resolve([]);
                 }
 
@@ -156,7 +155,6 @@ class ContextMenuHandler {
             });
 
             ps.on('error', (err) => {
-                console.error('❌ Spawn error:', err);
                 resolve([]);
             });
         });
@@ -210,7 +208,6 @@ class ContextMenuHandler {
         const oldPath = oldUri.fsPath;
         const dir = path.dirname(oldPath);
         const oldName = path.basename(oldPath);
-        // 👉 Trước khi rename, đảm bảo tab đó đang được active (để tránh edge case khi rename từ phím F2)
         await vscode.window.showTextDocument(oldUri, { preview: false });
         const newName = await vscode.window.showInputBox({
             prompt: 'Nhập tên mới cho file',
@@ -228,13 +225,10 @@ class ContextMenuHandler {
         const newUri = vscode.Uri.file(newPath);
 
         try {
-            // 👉 Đóng đúng tab đang active (vì ta đã ép nó active ở trên)
             if (vscode.window.activeTextEditor?.document?.uri.toString() === oldUri.toString()) {
                 await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
             }
-            // 🔁 Rename file
             fs.renameSync(oldPath, newPath);
-            // 🔼 Mở lại file đã rename
             await vscode.window.showTextDocument(newUri, { preview: false });
 
         } catch (err) {
@@ -254,16 +248,11 @@ class ContextMenuHandler {
         const tempDir = os.tmpdir();
         const psFilePath = path.join(tempDir, "fbo_copy.ps1");
         fs.writeFileSync(psFilePath, psScript);
-        // ⚡ Thực thi file PowerShell ngầm
         const command = `powershell -WindowStyle Hidden -ExecutionPolicy Bypass -File "${psFilePath}"`;
         exec(command, (error, stdout, stderr) => {
             if (error) {
                 vscode.window.showErrorMessage("⚠️ Copy file(s) failed: " + error.message);
-                console.error("❌ Error:", error);
                 return;
-            }
-            if (stderr) {
-                console.warn("⚠️ PowerShell stderr:", stderr);
             }
         });
     }
@@ -276,13 +265,12 @@ class ContextMenuHandler {
         const paths = this.getPathsSelect();
         if (!paths || paths.length === 0) return;
         const ExtFileNameCopy = this.config.get('ExtFileNameCopy');
-        console.log(ExtFileNameCopy)
         const fileNames = paths.map(p => {
             const fileName = path.basename(p);
             if (String(ExtFileNameCopy) === 'No') {
-                return path.parse(fileName).name; // Lấy tên file không có extension
+                return path.parse(fileName).name;
             } else {
-                return fileName; // Giữ nguyên tên file có extension
+                return fileName;
             }
         });
         await vscode.env.clipboard.writeText(fileNames.join(','));
@@ -294,13 +282,9 @@ class ContextMenuHandler {
         try {
             var file = path.join(group.resourceUri.fsPath, 'Web.config');
             if (!fs.existsSync(file)) vscode.window.showErrorMessage(`❌ Không tìm thấy file ${file}`)
-            // 🧠 Đọc nội dung gốc
             const originalContent = fs.readFileSync(file, 'utf8');
-            // ✅ Thêm 1 dấu cách cuối file
             const modifiedContent = originalContent + ' ';
-            // 💾 Ghi lại để IIS nhận thay đổi
             fs.writeFileSync(file, modifiedContent, 'utf8');
-            // ⏳ Chờ 100ms rồi trả lại như cũ
             await new Promise(resolve => setTimeout(resolve, 100));
             fs.writeFileSync(file, originalContent, 'utf8');
             vscode.window.showInformationMessage(`✅ Đã "fix" ${file}`);
@@ -322,20 +306,17 @@ class ContextMenuHandler {
 
         if (confirm !== 'Yes') return;
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-        // 🔍 Lọc các tab thuộc nhóm cần đóng
         const targetTabs = tabs.filter(tab => {
             const input = tab.input;
             return input && typeof input === "object" && "uri" in input && paths.includes(input.uri.fsPath);
         });
 
         if (targetTabs.length > 0) {
-            // 🔥 Đóng tất cả các tab thuộc nhóm
             await vscode.window.tabGroups.close(targetTabs);
-            // Delete files
             for (const filePath of paths) {
                 try {
                     if (fs.existsSync(filePath)) {
-                        fs.unlinkSync(filePath); // hoặc dùng fs.rmSync nếu cần xoá folder
+                        fs.unlinkSync(filePath);
                     }
                 } catch (err) {
                     vscode.window.showErrorMessage(`❌ Không thể xoá ${filePath}: ${err.message}`);

@@ -1,5 +1,3 @@
-// The module 'vscode' contains the VS Code extensibility API
-
 
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
@@ -8,6 +6,7 @@ const fs = require('fs');
 const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
 const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
 const OpenWithVS2008 = require('./VS2008/openWithVS2008');
+const OpenWithVSCode = require('./VS2008/openWithVSCode');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
 const EntityCodeLensProvider = require("./VS2008/EntityCodeLensProvider");
@@ -26,6 +25,7 @@ const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
 const CustomDefinition = require("./Definition/CustomDefinition");
 const { toggleGrammar } = require("./HighLightSyntax/EnableGrammar.js");
+const AnalystXML = require('./TreeFile/BrowserHandle/AnalystXML'); 
 var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
@@ -35,20 +35,20 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
  * @param {vscode.ExtensionContext} context
  */ 
 async function activate(context) {
-    var constant = new Constant(context);
-    // ✅ KHÔNG CẦN truyền context nữa
-    var { checkLicense, initStorage } = require('./license/checklicense');
-    initStorage(context);
-    var license = await checkLicense();
     
+    var anl = new AnalystXML();
+    anl.run(context);
+
+    var constant = new Constant(context);
+    // ✅ Sử dụng license check mới (by key)
+    var { checkLicense } = require('./license/checklicense_byKey');
+    var license = await checkLicense();
     if (!license) {
         vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
         return;
     }
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
-
     const enableGrammar = config.get('enableGrammar', true);
-
     toggleGrammar(enableGrammar, context.extensionPath);
 
     // Theo dõi khi user thay đổi setting:
@@ -75,6 +75,11 @@ async function activate(context) {
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
+    let openWithVSCode = vscode.commands.registerCommand('fbo-autocomplete.OpenWithVSCode', (uri) => {
+        OpenWithVSCode.open(uri);
+    });
+
+   
 
     // Thêm sự kiện mở file XML
     const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
@@ -130,7 +135,6 @@ async function activate(context) {
 
     //Translate
     const trans = new Trans();
-
     let transAll = vscode.commands.registerCommand('fbo-autocomplete.ApplyTranslateFBO', async (uri) => {
         await trans.translateXmlFile.bind(trans)();
     });
@@ -172,7 +176,6 @@ async function activate(context) {
     });
 
     const cvtToEx = new cnv();
-
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
         var path = vscode.window.activeTextEditor.document.uri.fsPath;
 
@@ -274,15 +277,13 @@ async function activate(context) {
     treeDataProvider.run(context);
 
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
-
     const cmpl_mobile = new CompleteCodeMobile();
     cmpl_mobile.run(context);
 
     const defi = new CustomDefinition();
     defi.run(context);
-
     var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm);
-
+ 
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
@@ -295,6 +296,7 @@ async function activate(context) {
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
+    context.subscriptions.push(openWithVSCode);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
     calculationProvider.register(context); 

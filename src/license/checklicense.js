@@ -137,26 +137,38 @@ function getExpireTime() {
  */
 function checkLicenseFromServer() {
     return new Promise((resolve) => {
-
-        const request = https.get(licenseUrl, (res) => {
-            let data = '';
-
-            res.on('data', chunk => data += chunk);
-
-            res.on('end', () => {
+        console.log('🔗 Fetching license from:', licenseUrl);
+        
+        // Bypass SSL certificate verification cho GitHub raw content
+        const options = new URL(licenseUrl);
+        options.rejectUnauthorized = false;
+        options.agent = new https.Agent({
+            rejectUnauthorized: false
+        });
+        
+        const request = https.get(options, (res) => {
+            console.log('📡 Response received, status:', res.statusCode);
+            let data = ''; 
+            res.on('data', chunk => {
+                console.log('📥 Received chunk:', chunk.length, 'bytes');
+                data += chunk;
+            });
+            res.on('end', () => { 
+                console.log('✅ Response ended, total data:', data.length, 'bytes');
+                console.log('📄 Response data:', data.substring(0, 200)); // Log first 200 chars
 
                 try {
                     const json = JSON.parse(data);
-
+                    console.log('✅ JSON parsed successfully');
                     if (!json.active || !Array.isArray(json.allowedIds)) {
+                        console.warn('⚠️ Missing active or allowedIds field');
                         return resolve({ valid: false, machineId: null });
                     }
                     // Tìm machineId hợp lệ
                     let validMachineId = null;
                     const valid = json.allowedIds.some(([_, rawKey]) => {
                     const hashed = crypto.createHash('sha256').update(rawKey).digest('hex');
-                    console.log('rawId:', rawId);
-                    console.log('hashed:', hashed);
+           
                         if (hashed === rawId) {
                             validMachineId = rawKey;
                             return true;
@@ -176,17 +188,19 @@ function checkLicenseFromServer() {
                 }
             });
         });
-
+ 
         // Timeout handler
         request.setTimeout(REQUEST_TIMEOUT, () => {
-            console.warn(`⚠️ License API timeout after ${REQUEST_TIMEOUT}ms`);
+            console.warn(`⏱️ License API timeout after ${REQUEST_TIMEOUT}ms`);
             request.destroy();
             return resolve({ valid: false, machineId: null, timeout: true });
         });
 
         // Error handler
         request.on('error', (e) => {
-            console.error('License API error:', e.message);
+            console.error('❌ License API error:', e.message);
+            console.error('   Code:', e.code);
+            console.error('   Full error:', e);
             return resolve({ valid: false, machineId: null, error: true });
         });
     });
@@ -196,7 +210,8 @@ function checkLicenseFromServer() {
  * ✅ Main check license function
  */
 async function checkLicense() {
-    console.log(rawId);
+    console.log('🔐 Starting license check...');
+    console.log('🖥️ Machine ID:', rawId);
     // ✅ BƯỚC 1: Đọc file license
     const licenseData = readLicenseFile();
 
@@ -223,9 +238,10 @@ async function checkLicense() {
     } else {
         console.log('📄 No license file found, checking server...');
     }
-
+    
     // ✅ BƯỚC 4: File không hợp lệ/hết hạn → Check server
     const result = await checkLicenseFromServer();
+    console.log('📋 Server response:', result);
 
     if (result.timeout || result.error) {
         // Grace period 7 ngày khi server lỗi
@@ -244,6 +260,7 @@ async function checkLicense() {
         vscode.window.showErrorMessage('License verification failed. Please check internet connection.');
         return false;
     }
+    
 
     if (result.valid && result.machineId) {
         // ✅ BƯỚC 5: Ghi license mới vào file

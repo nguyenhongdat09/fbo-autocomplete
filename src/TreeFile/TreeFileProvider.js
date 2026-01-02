@@ -2,6 +2,7 @@ const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 const app_dataChecker = require("./AppDataPathHelper");
+const OpenBrowser = require("./BrowserHandle/OpenBrowser");
 
 class TreeHelper {
     constructor() {
@@ -142,8 +143,6 @@ class TreeFileProvider extends TreeHelper {
     }
 
     async run(context) {
-        console.time('🌳 TreeFileProvider.run');
-
         this.context = context;
 
         this.treeView = vscode.window.createTreeView("fbo_file", {
@@ -171,7 +170,7 @@ class TreeFileProvider extends TreeHelper {
                             await this.treeView.reveal(parentGroup, { select: false, expand: true });
                             await this.revealActiveFile(parentGroup.label);
                         } catch (err) {
-                            console.error('Reveal error:', err);
+                            // Ignore error
                         }
                     }
                 }
@@ -232,7 +231,6 @@ class TreeFileProvider extends TreeHelper {
 
             // Nếu chưa có, thêm vào tree (file mới kéo vào)
             if (!treeItem) {
-                console.log(`📄 New file opened: ${path.basename(filePath)}`);
                 this.addFileToTree(filePath);
                 await this.refreshEvent.fire();
 
@@ -250,9 +248,8 @@ class TreeFileProvider extends TreeHelper {
                     try {
                         await this.treeView.reveal(parentGroup, { select: false, expand: true });
                         await this.revealActiveFile(parentGroup.label);
-                        console.log(`✅ Revealed: ${path.basename(filePath)}`);
                     } catch (err) {
-                        console.error('Reveal error:', err);
+                        // Ignore error
                     }
                 }
             }
@@ -278,7 +275,6 @@ class TreeFileProvider extends TreeHelper {
 
                 // Nếu file chưa có trong tree, add vào
                 if (!treeItem) {
-                    console.log(`📄 Active editor not in tree: ${path.basename(filePath)}`);
                     this.addFileToTree(filePath);
                     await this.refreshEvent.fire();
                     await new Promise(resolve => setTimeout(resolve, 100));
@@ -332,9 +328,11 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        context.subscriptions.push(this.treeView, disposable);
+        // ✅ OpenBrowser - Đăng ký commands mở browser
+        const openBrowser = new OpenBrowser();
+        openBrowser.registerCommands(context);
 
-        console.timeEnd('🌳 TreeFileProvider.run');
+        context.subscriptions.push(this.treeView, disposable);
     }
 
     async buildTreeOptimized() {
