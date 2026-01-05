@@ -1,4 +1,5 @@
 const vscode = require("vscode");
+const path = require("path");
 const AnalystXML = require("./AnalystXML");
 
 class OpenBrowser {
@@ -14,11 +15,9 @@ class OpenBrowser {
      */
     extractProjectNameFromPath(filePath) {
         const normalizedPath = filePath.replace(/\//g, '\\');
-        
         if (!normalizedPath.includes('CustomerPro')) {
             return null;
         }
-        
         const parts = normalizedPath.split('\\');
         const customerProIndex = parts.findIndex(part => part === 'CustomerPro');
         
@@ -42,7 +41,6 @@ class OpenBrowser {
         }
 
         const filePath = editor.document.uri.fsPath;
-        
         // Chỉ xử lý file .xml hoặc .aspx
         if (!filePath.endsWith('.xml') && !filePath.endsWith('.aspx')) {
             vscode.window.showWarningMessage('File hiện tại không phải là XML hoặc ASPX.');

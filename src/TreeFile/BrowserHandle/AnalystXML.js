@@ -2,6 +2,8 @@ const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
 const AnalystASPX = require("./AnalystASPX");
+const SyncDBOpenBrowser = require("./syncDBOpenBrowser");
+
 
 class AnalystXML {
     constructor() {
@@ -14,10 +16,24 @@ class AnalystXML {
         this.json_save_name = 'file_xml_to_aspx_info.json';
         this.fileSaveListener = null; // Lưu listener để cleanup sau này
         this.fileOpenListener = null; // Lưu listener cho sự kiện mở file
+        this.pathDatabase = path.join(__dirname, '..', '..', 'Database');
+        this.pathDatabaseOpenBrowser = '';
+        this.saveTimeouts = new Map(); // Debounce: lưu timeout theo từng file
+        this.analystAllTimeouts = new Map(); // Debounce cho analystAll theo project
+        this.syncDB = new SyncDBOpenBrowser();
     }
+    //Xử lý path Database 
+    setPathDatabase() { 
+        if (!fs.existsSync(this.pathDatabase)) {
+            this.pathDatabase = path.join(__dirname, '..', 'Database'); 
+        } 
+        this.pathDatabaseOpenBrowser = path.join(this.pathDatabase, 'OpenBrowser');
+    }
+
+
     //Lấy từ phần từ trong results VD : phân tử nó là {aspx: 'query_sothk.aspx', controller: 'QuerySalesSummaryByPeriod'} thì lấy controller để tìm file XML tương ứng trong các folder App_Data\Controllers\Dir, App_Data\Controllers\Grid, App_Data\Controllers\Filter, App_Data\Controllers\Report, App_Data\Controllers\Templates\Upload
     findXMLFilesForControllers(filePath, results) {
-        var folders = [this.dir, this.filter, this.report, this.upload];
+        var folders = [this.dir, this.filter, this.grid, this.report, this.upload];
         var aspx_xml = [];
         results.forEach(item => {
             var controllerName = item.controller;
@@ -41,10 +57,9 @@ class AnalystXML {
                 if (folder === this.filter && fileXMLUrl !== '') {
                     var ImportFormXML = this.regexAnalyzeXMLImportForm(aspxName, fileXMLUrl);
                     aspx_xml = aspx_xml.concat(ImportFormXML);
-                    if (ImportFormXML.length > 0)
-                        console.log("ImportFormXML:", ImportFormXML);
                 }
             });
+
         })
         //loop aspx_xml để loại bỏ các phần tử trùng lặp dựa trên aspxName và xmlPath
         aspx_xml = aspx_xml.filter((item, index, self) =>
@@ -54,9 +69,11 @@ class AnalystXML {
         //loop aspx_xml để chạy hàm regexAnalyzeXMLShowForm cho từng phần tử
         aspx_xml2.forEach(item => {
             var pathIncludeXML = this.anl.getUrlFromFilePath(item.xmlPath, this.grid);
-            var contentXML = fs.readFileSync(item.xmlPath, 'utf-8');
+            var contentXML = fs.readFileSync(item.xmlPath, 'utf-8'); 
             var showFormResults = this.regexAnalyzeXMLShowForm(item.aspxName, pathIncludeXML, contentXML);
             aspx_xml = aspx_xml.concat(showFormResults);
+            var ApprovalXMLExternalResults = this.ApprovalXMLExternal(item.aspxName, item.xmlPath);
+            aspx_xml = aspx_xml.concat(ApprovalXMLExternalResults);
         });
         //Loại thêm các phần tử trùng lặp lần nữa
         aspx_xml = aspx_xml.filter((item, index, self) =>
@@ -118,6 +135,47 @@ class AnalystXML {
         }
         return results;
     }
+
+
+    ApprovalXMLExternal(aspxName, filePath) {
+        /*
+        xét file filePath có tên cuối cùng là *Approval.xml hay không nếu có thì thay thế nó bằng Item, Detail, Files để tạo thành các file xml mới và kiểm tra các file xml đó có tồn tại không nếu có thì trả về mảng các object {aspxName, xmlPath}
+        VD: \\172.168.5.14\CustomerPro\FBI\CCI_FBI\FBISP24\App_Data\Controllers\Grid\PD5Approval.xml thì tạo ra \\172.168.5.14\CustomerPro\FBI\CCI_FBI\FBISP24\App_Data\Controllers\Grid\PD5ApprovalItem.xml, \\172.168.5.14\CustomerPro\FBI\CCI_FBI\FBISP24\App_Data\Controllers\Grid\PD5ApprovalDetail.xml, \\172.168.5.14\CustomerPro\FBI\CCI_FBI\FBISP24\App_Data\Controllers\Grid\PD5ApprovalFiles.xml 
+        và add vào results
+        */
+        const results = [];
+        //Check thêm folder chứa nó có phải là Grid không   
+        if (!filePath.endsWith('Approval.xml') && !filePath.includes('\\Grid\\')) {
+            return results;
+        }
+        
+        // Split path to get folder and filename
+        const pathParts = filePath.split(/[/\\]/);
+        const fileName = pathParts.pop(); // Get filename
+        const folderPath = pathParts.join("\\"); // Get folder path
+        
+        // Get base name by removing "Approval.xml"
+        const baseName = fileName.replace('Approval.xml', '');
+        
+        // Suffixes to check: Item, Detail, Files
+        const suffixes = ['ApprovalItem.xml', 'ApprovalDetail.xml', 'ApprovalFiles.xml'];
+        
+        // Check each suffix
+        suffixes.forEach(suffix => {
+            const newFileName = baseName + suffix;
+            const newFilePath = `${folderPath}\\${newFileName}`;
+            
+            if (fs.existsSync(newFilePath)) {
+                results.push({
+                    aspxName: aspxName,
+                    xmlPath: newFilePath
+                });
+            }
+        });
+        
+        return results;
+    }
+
     regexAnalyzeXMLFormExtractData(aspxName, xmlFilePath) {
         const pathParts = xmlFilePath.split(/[/\\]/);
         const fileName = pathParts.pop();
@@ -235,14 +293,11 @@ class AnalystXML {
         if (!projectName) {
             return null;
         }
-        // Lấy đường dẫn đến folder Database của extension
-        const extensionPath = vscode.extensions.getExtension('fbo-autocomplete')?.extensionPath
-            || path.join(__dirname, '..', '..', '..');
-        const databasePath = path.join(extensionPath, 'src', 'Database');
-
+        // Lấy đường dẫn đến folder Database của extension 
+        this.setPathDatabase();
+        var databasePath = this.pathDatabaseOpenBrowser;
         // Tạo đường dẫn đến folder project
         const projectFolderPath = path.join(databasePath, projectName);
-
         try {
             // Tạo folder Database nếu chưa có
             if (!fs.existsSync(databasePath)) {
@@ -300,22 +355,43 @@ class AnalystXML {
         }
     }
 
+     syncDBFunc(projectFolderPath){
+        //Sync cloud về trước 
+        this.setPathDatabase();
+        var databasePath = this.pathDatabaseOpenBrowser;
+        var cloudDBPath = this.syncDB.getAllProjectPaths(this.syncDB.urlSync); //array 
+        var localDBPath = this.syncDB.getAllProjectPaths(databasePath); //array 
+        var folderNameLocal = path.basename(projectFolderPath);
+        var checkHaveInLocal = this.syncDB.checkFolderExistInProjectPaths(localDBPath, folderNameLocal);
+        var checkHaveInCloud = this.syncDB.checkFolderExistInProjectPaths(cloudDBPath, folderNameLocal);    
+         //Nếu không có trong local thì copy từ cloud về local
+        if (!checkHaveInLocal) {
+            this.syncDB.copyFolder(path.join(this.syncDB.urlSync, folderNameLocal), projectFolderPath);
+        } 
+        //Nếu không có trong cloud thì copy từ local lên cloud
+        if (!checkHaveInCloud) {
+            this.syncDB.copyFolder(projectFolderPath, this.syncDB.urlSync);
+        } 
+        //
+    }
+    
     /**
      * Tra cứu aspxName dựa vào xmlPath từ file JSON
      * @param {string} xmlFilePath - Đường dẫn đến file XML cần tra cứu
      * @returns {string|null} - aspxName hoặc null nếu không tìm thấy
-     */
+     */ 
     lookupAspxNameByXmlPath(xmlFilePath) {
         const projectFolderPath = this.createProjectFolder(xmlFilePath);
         if (!projectFolderPath) {
             return null;
         }
+       
         try {
             const jsonFilePath = path.join(projectFolderPath, this.json_save_name);
             if (!fs.existsSync(jsonFilePath)) {
                 console.log('File JSON chưa được tạo. Vui lòng chạy phân tích trước.');
                 return null;
-            }
+            } 
             const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8'));
             const normalizedPath = xmlFilePath.replace(/\//g, '\\');
             // Tra cứu từ map
@@ -443,77 +519,109 @@ class AnalystXML {
     }
 
     /**
-     * Refresh dữ liệu XML khi save file
+     * Refresh dữ liệu XML khi save file (chạy ngầm, non-blocking)
      * @param {string} filePath - Đường dẫn file đang được save
-     * @returns {boolean} - true nếu thành công
      */
     refreshXmlFileOnSave(filePath) {
-        // Kiểm tra file có phải XML không
-        if (!filePath.endsWith('.xml')) {
-            return false;
+        // Debounce: Hủy timeout cũ nếu có
+        if (this.saveTimeouts.has(filePath)) {
+            clearTimeout(this.saveTimeouts.get(filePath));
         }
 
-        // Tạo folder project và lấy đường dẫn
-        const projectFolderPath = this.createProjectFolder(filePath);
-        if (!projectFolderPath) {
-            console.log('Không thể xác định project folder');
-            return false;
-        }
-
-        // Lấy aspxName từ JSON dựa vào filePath
-        const aspxName = this.lookupAspxNameByXmlPath(filePath);
-        if (!aspxName) {
-            console.log(`Không tìm thấy aspxName cho file: ${filePath}`);
-            this.analystAll(filePath); // Chạy phân tích lại toàn bộ
-            return false;
-        }
-
-        console.log(`Refreshing XML for aspx: ${aspxName}, file: ${filePath}`);
-
-        // Phát hiện loại folder
-        const folderType = this.detectFolderType(filePath);
-        let newXmlPaths = [];
-
-        try {
-            const contentXML = fs.readFileSync(filePath, 'utf-8');
-
-            // Nếu là Dir hoặc Filter: tìm Grid Detail
-            if (folderType === 'dir' || folderType === 'filter') {
-                const folderPath = path.dirname(filePath);
-                const detailResults = this.regexAnalyzeXMLDetail(aspxName, folderPath, contentXML);
-                newXmlPaths = newXmlPaths.concat(detailResults);
-                if (folderType === 'dir') {
-                const importFormResults = this.regexAnalyzeXMLImportForm(aspxName, filePath);
-                newXmlPaths = newXmlPaths.concat(importFormResults);
+        // Tạo timeout mới: chỉ chạy sau 500ms không có save event
+        const timeoutId = setTimeout(() => {
+            // Xóa timeout khỏi Map
+            this.saveTimeouts.delete(filePath);
+            // Chạy ngầm không block UI
+            setImmediate(async () => {
+            try {  
+                const projectFolderPath = this.createProjectFolder(filePath);
+                if (!projectFolderPath) {
+                    return ;
                 }
-                // Nếu là Filter: tìm ImportForm
-                if (folderType === 'filter') {
-                    // Tìm Form/Grid/Lookup liên quan
-                    const formExtractResults = this.regexAnalyzeXMLFormExtractData(aspxName, filePath);
-                    newXmlPaths = newXmlPaths.concat(formExtractResults);
+                this.syncDBFunc(projectFolderPath);
+
+                console.log(`Bắt đầu refresh XML cho: ${path.basename(filePath)}`);
+               
+                // Lấy aspxName từ JSON dựa vào filePath
+                const aspxName = this.lookupAspxNameByXmlPath(filePath);
+                if (!aspxName) {
+                    console.log(`Không tìm thấy aspxName cho file: ${filePath}, chạy phân tích toàn bộ...`);
+                    this.analystAll(filePath); // Đã là non-blocking
+                    return;
                 }
-            }
 
-            // Nếu là Grid: tìm showForm
-            if (folderType === 'grid') {
-                const folderPath = path.dirname(filePath);
-                const showFormResults = this.regexAnalyzeXMLShowForm(aspxName, folderPath, contentXML);
-                newXmlPaths = newXmlPaths.concat(showFormResults);
-            }
+                console.log(`Refreshing XML for aspx: ${aspxName}, file: ${filePath}`);
 
-            // Cập nhật JSON với các xmlPath mới
-            if (newXmlPaths.length > 0) {
-                this.updateJsonWithNewXmlPaths(projectFolderPath, aspxName, newXmlPaths);
-                console.log(`Đã tìm thêm ${newXmlPaths.length} file XML liên quan`);
-                return true;
-            } else {
-                console.log('Không tìm thấy file XML mới');
-                return true;
+                // Phát hiện loại folder
+                const folderType = this.detectFolderType(filePath);
+                let newXmlPaths = [];
+
+                // Đọc file content (wrap trong setImmediate để non-blocking)
+                const contentXML = await new Promise((resolve, reject) => {
+                    setImmediate(() => {
+                        try {
+                            const content = fs.readFileSync(filePath, 'utf-8');
+                            resolve(content);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    });
+                });
+
+                // Xử lý theo loại folder (wrap trong setImmediate)
+                await new Promise((resolve) => {
+                    setImmediate(() => {
+                        // Nếu là Dir hoặc Filter: tìm Grid Detail
+                        if (folderType === 'dir' || folderType === 'filter') {
+                            const folderPath = path.dirname(filePath);
+                            const detailResults = this.regexAnalyzeXMLDetail(aspxName, folderPath, contentXML);
+                            newXmlPaths = newXmlPaths.concat(detailResults);
+                            
+                            if (folderType === 'dir') {
+                                const importFormResults = this.regexAnalyzeXMLImportForm(aspxName, filePath);
+                                newXmlPaths = newXmlPaths.concat(importFormResults);
+                            }
+                            
+                            // Nếu là Filter: tìm ImportForm
+                            if (folderType === 'filter') {
+                                const formExtractResults = this.regexAnalyzeXMLFormExtractData(aspxName, filePath);
+                                newXmlPaths = newXmlPaths.concat(formExtractResults);
+                            }
+                        }
+
+                        // Nếu là Grid: tìm showForm
+                        if (folderType === 'grid') {
+                            const folderPath = path.dirname(filePath);
+                            const showFormResults = this.regexAnalyzeXMLShowForm(aspxName, folderPath, contentXML);
+                            newXmlPaths = newXmlPaths.concat(showFormResults);
+                            const approvalExternalResults = this.ApprovalXMLExternal(aspxName, filePath);
+                            newXmlPaths = newXmlPaths.concat(approvalExternalResults);
+                        }
+                        resolve();
+                    });
+                });
+
+                // Cập nhật JSON với các xmlPath mới
+                if (newXmlPaths.length > 0) {
+                    await new Promise((resolve) => {
+                        setImmediate(() => {
+                            this.updateJsonWithNewXmlPaths(projectFolderPath, aspxName, newXmlPaths);
+                            console.log(`✓ Đã tìm thêm ${newXmlPaths.length} file XML liên quan`);
+                            resolve();
+                        });
+                    });
+                } else {
+                    console.log('Không tìm thấy file XML mới');
+                }
+            } catch (error) {
+                console.error(`Lỗi khi refresh XML: ${error.message}`);
             }
-        } catch (error) {
-            vscode.window.showErrorMessage(`Lỗi khi refresh XML: ${error.message}`);
-            return false;
-        }
+            });
+        }, 500); // Chờ 500ms sau lần save cuối
+
+        // Lưu timeout vào Map
+        this.saveTimeouts.set(filePath, timeoutId);
     }
 
     /**
@@ -521,17 +629,8 @@ class AnalystXML {
      * @param {string} filePath - Đường dẫn file đang được save
      */
     onFileSave(filePath) {
-        // Chạy trong background, không block UI
-        setTimeout(() => {
-            try {
-                const success = this.refreshXmlFileOnSave(filePath);
-                if (success) {
-                    console.log(`✓ Đã refresh dữ liệu cho file: ${path.basename(filePath)}`);
-                }
-            } catch (error) {
-                console.error(`Lỗi khi refresh file: ${error.message}`);
-            }
-        }, 100);
+        // Gọi trực tiếp, không cần setTimeout vì refreshXmlFileOnSave đã non-blocking
+        this.refreshXmlFileOnSave(filePath);
     }
 
     /**
@@ -546,12 +645,25 @@ class AnalystXML {
         // Đăng ký listener mới
         this.fileSaveListener = vscode.workspace.onDidSaveTextDocument((document) => {
             const filePath = document.uri.fsPath;
-            // Chỉ xử lý file XML trong folder Controllers
-            if (filePath.endsWith('.xml') && filePath.includes('\\Controllers\\')) {
+            
+            // Chỉ xử lý file XML trong folder Controllers và Folder chứa nó là Dir, Filter, Grid, Upload, Report
+            var isCorrectFile = this.checkFileToAnalyze(filePath);
+            if (isCorrectFile) {
                 this.onFileSave(filePath);
             }
         });
         return this.fileSaveListener;
+    }
+
+    checkFileToAnalyze(filePath) {
+        // Chỉ xử lý file .xml hoặc .aspx hoặc XML trong folder Controllers và Folder chứa nó là Dir, Filter, Grid, Upload, Report
+        const folderTypes = ['\\Dir\\', '\\Filter\\', '\\Grid\\', '\\Upload\\', '\\Report\\', '\\Main\\'];
+        const isInControllers = filePath.includes('\\Controllers\\');
+        const isInFolderType = folderTypes.some(type => filePath.includes(type));
+        if (((filePath.endsWith('.xml')  && isInFolderType) || filePath.endsWith('.aspx')) && isInControllers ) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -566,9 +678,10 @@ class AnalystXML {
         }
 
         const jsonFilePath = path.join(projectFolderPath, this.json_save_name);
+        
+
         return fs.existsSync(jsonFilePath);
     }
-
     /**
      * Đăng ký sự kiện lắng nghe khi mở file
      * @returns {vscode.Disposable} - Disposable để cleanup
@@ -582,15 +695,20 @@ class AnalystXML {
         // Đăng ký listener mới
         this.fileOpenListener = vscode.workspace.onDidOpenTextDocument((document) => {
             const filePath = document.uri.fsPath;
+            var isCorrectFile = this.checkFileToAnalyze(filePath);
             // Chỉ xử lý file .xml hoặc .aspx
-            if (!filePath.endsWith('.xml') && !filePath.endsWith('.aspx')) {
+            if (!isCorrectFile) {
                 return;
             }
+            setImmediate(async () => {
+                this.syncDBFunc(this.createProjectFolder(filePath));
+            });
             // Check xem đã có JSON chưa
             if (this.hasProjectJson(filePath)) {
                 console.log(`Project đã có JSON, bỏ qua phân tích cho file: ${path.basename(filePath)}`);
                 return;
             }
+            
             // Chưa có JSON, chạy phân tích
             console.log(`Project chưa có JSON, bắt đầu phân tích cho file: ${path.basename(filePath)}`);
             // Lưu file path tạm để analystAll có thể dùng
@@ -604,6 +722,18 @@ class AnalystXML {
      * Hủy đăng ký sự kiện
      */
     disposeFileSaveListener() {
+        // Hủy tất cả timeout đang pending
+        this.saveTimeouts.forEach((timeoutId) => {
+            clearTimeout(timeoutId);
+        });
+        this.saveTimeouts.clear();
+
+        // Hủy tất cả analystAll timeout đang pending
+        this.analystAllTimeouts.forEach((timeoutId) => {
+            clearTimeout(timeoutId);
+        });
+        this.analystAllTimeouts.clear();
+
         if (this.fileSaveListener) {
             this.fileSaveListener.dispose();
             this.fileSaveListener = null;
@@ -615,29 +745,123 @@ class AnalystXML {
     }
 
     analystAll(filePath) {
+        // Lấy project name để debounce theo project
+        const projectName = this.extractProjectName(filePath);
+        if (!projectName) {
+            console.log('Không thể xác định project name');
+            return;
+        }
+
+        // Debounce: Hủy timeout cũ cho project này
+        if (this.analystAllTimeouts.has(projectName)) {
+            clearTimeout(this.analystAllTimeouts.get(projectName));
+            console.log(`Hủy phân tích cũ cho project: ${projectName}`);
+        }
+
+        // Tạo timeout mới: chỉ chạy sau 1000ms không có gọi mới
+        const timeoutId = setTimeout(() => {
+            // Xóa timeout khỏi Map
+            this.analystAllTimeouts.delete(projectName);
+            
+            console.log(`Bắt đầu phân tích toàn bộ cho project: ${projectName}`);
+            
+            // Chạy ngầm không block UI
+            setImmediate(async () => {
+                try {
+                    console.log('Bắt đầu phân tích XML ở background...');
+                    
+                    const aspxResults = this.anl.run(filePath);
+                    console.log('Đã quét ASPX, tìm thấy:', aspxResults ? aspxResults.length : 0);
+                    
+                    // Tạo folder project và lấy đường dẫn
+                    const projectFolderPath = this.createProjectFolder(filePath);
+                    if (!projectFolderPath) {
+                        console.error('Không thể tạo project folder');
+                        return;
+                    }
+                    
+                    // Tìm các file XML (chạy async)
+                    console.log('Bắt đầu tìm file XML...');
+                    const xmlResults = await new Promise((resolve) => {
+                        setImmediate(() => {
+                            console.log('Đang gọi findXMLFilesForControllers...');
+                            const xmlFiles = this.findXMLFilesForControllers(filePath, aspxResults);
+                            console.log('Hoàn thành findXMLFilesForControllers, tìm thấy:', xmlFiles.length);
+                            resolve(xmlFiles);
+                        });
+                    });
+                    
+                    console.log(`Tìm thấy ${xmlResults.length} file XML liên quan.`);
+                    
+                    // Lưu kết quả vào JSON (chạy async)
+                    if (xmlResults && xmlResults.length > 0) {
+                        await new Promise((resolve) => {
+                            setImmediate(() => {
+                                console.log('Bắt đầu lưu JSON...');
+                                const success = this.saveXmlResultsToJson(projectFolderPath, xmlResults);
+                                if (success) {
+                                    console.log(`✓ Đã phân tích và lưu ${xmlResults.length} file XML (background)`);
+                                    // Hiển thị thông báo nhẹ không blocking
+                                    vscode.window.setStatusBarMessage(
+                                        `✓ Đã phân tích ${xmlResults.length} file XML`, 
+                                        3000
+                                    );
+                                }
+                                resolve();
+                            });
+                        });
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi phân tích XML:', error);
+                    vscode.window.setStatusBarMessage(`✗ Lỗi phân tích XML: ${error.message}`, 5000);
+                }
+            });
+        }, 1000); // Chờ 1000ms (1 giây) sau lần gọi cuối
+
+        // Lưu timeout vào Map
+        this.analystAllTimeouts.set(projectName, timeoutId);
+    }
+ 
+    /**
+     * Phiên bản analystAll với progress notification (blocking)
+     * Dùng khi user chủ động gọi lệnh
+     */
+    analystAllWithProgress(filePath) {
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
-            title: "Đang chạy phân tích lại tất cả ASPX file...",
+            title: "Đang phân tích ASPX file...",
             cancellable: false
         }, async (progress) => {
-            const results = this.anl.run(filePath);
-            // console.time('findXMLFilesForControllers');
-            // Tạo folder project và lấy đường dẫn
-            const projectFolderPath = this.createProjectFolder(filePath);
-            // Tìm các file XML
-            const xmlResults = this.findXMLFilesForControllers(filePath, results);
-            // console.timeEnd('findXMLFilesForControllers');
-            // Lưu kết quả vào JSON
-            if (projectFolderPath && xmlResults && xmlResults.length > 0) {
-                const success = this.saveXmlResultsToJson(projectFolderPath, xmlResults);
-                if (success) {
-                    vscode.window.showInformationMessage(`✓ Đã phân tích và lưu ${xmlResults.length} file XML.`);
+            try {
+                progress.report({ increment: 0, message: "Đang quét..." });
+                
+                const results = this.anl.run(filePath);
+                progress.report({ increment: 30, message: "Đã quét ASPX" });
+                
+                const projectFolderPath = this.createProjectFolder(filePath);
+                if (!projectFolderPath) {
+                    throw new Error('Không thể tạo project folder');
                 }
+                
+                progress.report({ increment: 50, message: "Đang tìm XML..." });
+                const xmlResults = this.findXMLFilesForControllers(filePath, results);
+                
+                progress.report({ increment: 80, message: "Đang lưu JSON..." });
+                if (xmlResults && xmlResults.length > 0) {
+                    const success = this.saveXmlResultsToJson(projectFolderPath, xmlResults);
+                    if (success) {
+                        progress.report({ increment: 100 });
+                        vscode.window.showInformationMessage(`✓ Đã phân tích và lưu ${xmlResults.length} file XML.`);
+                    }
+                } else {
+                    vscode.window.showWarningMessage('Không tìm thấy file XML nào.');
+                }
+            } catch (error) {
+                vscode.window.showErrorMessage(`Lỗi khi phân tích: ${error.message}`);
             }
         });
     }
-
-
+ 
     run(context) {
         this.registerFileSaveListener();
         this.registerFileOpenListener();

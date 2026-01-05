@@ -36,8 +36,7 @@ let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
  */ 
 async function activate(context) {
     
-    var anl = new AnalystXML();
-    anl.run(context);
+  
 
     var constant = new Constant(context);
     // ✅ Sử dụng license check mới (by key)
@@ -308,6 +307,8 @@ async function activate(context) {
      
        context.subscriptions.push(disposable);
     */
+    var anl = new AnalystXML();
+    anl.run(context);
 }
 
 // This method is called when your extension is deactivated
