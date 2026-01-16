@@ -81,3 +81,6 @@
 - Coloring xml 
 - Definiton g.request 
 - Open excel, rpt from report file 
+# Version 0.0.41
+- Open Link FBO
+- Delete Struct

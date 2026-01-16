@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.40",
+  "version": "0.0.41",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -355,7 +355,7 @@
       },
       {
         "command": "fboFile.openBrowser",
-        "title": "Open Browser",
+        "title": "0pen Browser",
         "icon": "$(globe)"
       },
       {
@@ -370,7 +370,7 @@
       },
       {
         "command": "fbo-autocomplete.openBrowserForFile",
-        "title": "Apen FBO Link",
+        "title": "0pen FBO Link",
         "icon": "$(link-external)"
       },
       {
