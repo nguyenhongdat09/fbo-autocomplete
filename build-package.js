@@ -15,6 +15,31 @@ execSync("npm install webpack webpack-cli --save-dev", { stdio: "inherit" });
 console.log("⚒ Chạy build...");
 execSync("npm run build", { stdio: "inherit" });
 
+// 3.5. Copy các file BrowserHandle vào dist folder
+console.log("📋 Sao chép files BrowserHandle vào dist...");
+const path = require('path');
+
+const filesToCopy = [
+  'AnalystXML.worker.js',
+  'AnalystXML.js',
+  'OpenBrowser.js',
+  'AnalystASPX.js',
+  'syncDBOpenBrowser.js',
+  'OpenLinkByChrome.js'
+];
+
+filesToCopy.forEach(fileName => {
+  const src = path.resolve(__dirname, `src/TreeFile/BrowserHandle/${fileName}`);
+  const dest = path.resolve(__dirname, `src/dist/${fileName}`);
+  
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, dest);
+    console.log(`✓ Sao chép ${src} → ${dest}`);
+  } else {
+    console.warn(`⚠ File không tìm thấy: ${src}`);
+  }
+});
+
 // 4. Chỉnh sửa package.json
 console.log("📜 Sửa package.json...");
 const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));

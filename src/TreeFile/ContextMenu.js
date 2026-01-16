@@ -20,8 +20,10 @@ class ContextMenuHandler {
             { name: "fboFile.CopyPath", handler: () => this.CopyPath() },
             { name: "fboFile.CopyFile", handler: () => this.copyFile() },
             { name: "fboFile.CopyNameOfFile", handler: () => this.copyNameOfFile() },
+            { name: "fboFile.CopyNameOfFileNoEx", handler: () => this.copyNameOfFileNoEx() },
             { name: "fboFile.DeleteFile", handler: async () => await this.deleteFile() },
             { name: "fboFile.FixWebConfig", handler: async (group) => await this.fixWebConfig(group) },
+            { name: "fboFile.DeleteStruct", handler: async (group) => await this.deleteStruct(group) },
             { name: "fboFile.PasteFilesToGroup", handler: async (group) => await this.PasteFilesToGroup(group) },
             { name: "fboFile.GenerateCopyFile", handler: async () => await this.GenerateCopyFile() },
             { name: "fboFile.RenameFile", handler: async () => this.renameFileCommand() },
@@ -275,6 +277,22 @@ class ContextMenuHandler {
         });
         await vscode.env.clipboard.writeText(fileNames.join(','));
     }
+    async copyNameOfFileNoEx() {
+        //Sửa lại hàm copyNameOfFile để không có phần mở rộng
+        const paths = this.getPathsSelect();
+        if (!paths || paths.length === 0) return;
+        const ExtFileNameCopy = this.config.get('ExtFileNameCopy');
+        const fileNames = paths.map(p => {
+            var fileName = path.basename(p);
+            fileName = path.parse(fileName).name; // Bỏ phần mở rộng luôn
+            if (String(ExtFileNameCopy) === 'No') {
+                return path.parse(fileName).name;
+            } else {
+                return fileName;
+            }
+        });
+        await vscode.env.clipboard.writeText(fileNames.join(','));
+    }
     //#endregion
     //#region Fix Web.config
     async fixWebConfig(group) {
@@ -292,6 +310,31 @@ class ContextMenuHandler {
             vscode.window.showErrorMessage(`❌ Không thể fix ${file}: ${err.message}`);
         }
     }
+    //#endregion
+    //#region Xóa struct
+    async deleteStruct(group) {
+        if (!group) return;
+        try {
+            //Join vơi App_Data\Controllers\Structure
+            var folderStruct = path.join(group.resourceUri.fsPath,  'App_Data', 'Controllers', 'Structure');
+            var folderDelete = ['App', 'Dir', 'Filter', 'Grid']
+            folderDelete.forEach(folderName => {
+                var folder = path.join(folderStruct, folderName);
+                //Loop xóa tất cả file trong folder
+                if (fs.existsSync(folder)) {
+                    var files = fs.readdirSync(folder);
+                    files.forEach(f => {
+                        var filePath = path.join(folder, f);
+                        fs.unlinkSync(filePath);
+                    });
+                }
+            });
+            
+        } catch (err) {
+            vscode.window.showErrorMessage(` ${err.message}`);
+        }
+    }
+
     //#endregion
     //#region Delete File
     async deleteFile() {

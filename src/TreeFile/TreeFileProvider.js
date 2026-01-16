@@ -140,6 +140,7 @@ class TreeFileProvider extends TreeHelper {
         this.debouncedRefresh = this.debounce(() => this.refresh(), 300);
         this._isInitialized = false;
         this._buildPromise = null;
+        this._lastSelect = { path: null, time: 0 };
     }
 
     async run(context) {
@@ -331,7 +332,12 @@ class TreeFileProvider extends TreeHelper {
         // ✅ OpenBrowser - Đăng ký commands mở browser
         const openBrowser = new OpenBrowser();
         openBrowser.registerCommands(context);
-
+     
+        // trong constructor hoặc run, khởi tạo biến lưu trạng thái
+        //await openBrowser.openBrowserForFile(filePath);
+        // sau khi this.treeView được tạo (trong run)
+       
+        
         context.subscriptions.push(this.treeView, disposable);
     }
 

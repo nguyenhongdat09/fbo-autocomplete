@@ -46,6 +46,10 @@ async function activate(context) {
         vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
         return;
     }
+    /*Tree view*/
+    const treeDataProvider = new TreeFileProvider();
+    treeDataProvider.run(context);
+
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const enableGrammar = config.get('enableGrammar', true);
     toggleGrammar(enableGrammar, context.extensionPath);
@@ -74,9 +78,9 @@ async function activate(context) {
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
-    let openWithVSCode = vscode.commands.registerCommand('fbo-autocomplete.OpenWithVSCode', (uri) => {
-        OpenWithVSCode.open(uri);
-    });
+    // let openWithVSCode = vscode.commands.registerCommand('fbo-autocomplete.OpenWithVSCode', (uri) => {
+    //     OpenWithVSCode.open(uri);
+    // });
 
    
 
@@ -271,9 +275,7 @@ async function activate(context) {
     const queryDb = new QueryDatabase(context, dbStatusBar);
 */
     //
-    /*Tree view*/
-    const treeDataProvider = new TreeFileProvider();
-    treeDataProvider.run(context);
+  
 
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
     const cmpl_mobile = new CompleteCodeMobile();
@@ -295,10 +297,10 @@ async function activate(context) {
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
-    context.subscriptions.push(openWithVSCode);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
     calculationProvider.register(context); 
+    // context.subscriptions.push(openWithVSCode);
     /*
      var viewpanelsql = new ViewPanelResult(context)
      var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {

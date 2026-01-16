@@ -35,11 +35,6 @@
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "fbo"
-        },
-        {
-          "command": "fbo-autocomplete.OpenWithVSCode",
-          "group": "fbo",
-          "when": "resourceLangId == xml"
         }
       ],
       "view/item/context": [
@@ -64,6 +59,11 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.CopyNameOfFileNoEx",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation"
+        },
+        {
           "command": "fboFile.GenerateCopyFile",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
@@ -84,12 +84,7 @@
           "group": "navigation"
         },
         {
-          "command": "fboFile.PasteFilesToGroup",
-          "when": "view == fbo_file && viewItem == group",
-          "group": "navigation"
-        },
-        {
-          "command": "fboFile.openBrowser",
+          "command": "fboFile.DeleteStruct",
           "when": "view == fbo_file && viewItem == group",
           "group": "navigation"
         },
@@ -97,6 +92,11 @@
           "command": "fboFile.openCustomBrowser",
           "when": "view == fbo_file && viewItem == group",
           "group": "navigation"
+        },
+        {
+          "command": "fbo-autocomplete.openBrowserForFile",
+          "when": "viewItem == file",
+          "group": "inline"
         },
         {
           "command": "fbo-autocomplete.closeFile",
@@ -266,10 +266,6 @@
         "title": "FBO: Open With VS 2008"
       },
       {
-        "command": "fbo-autocomplete.OpenWithVSCode",
-        "title": "FBO: Open With VS Code"
-      },
-      {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
         "title": "FBO: Apply Translate FBO (v -> e)"
       },
@@ -334,6 +330,10 @@
         "title": "Copy File Name"
       },
       {
+        "command": "fboFile.CopyNameOfFileNoEx",
+        "title": "Copy File Name No Extension"
+      },
+      {
         "command": "fboFile.GenerateCopyFile",
         "title": "Generate Copy File"
       },
@@ -350,6 +350,10 @@
         "title": "Fix Web.config"
       },
       {
+        "command": "fboFile.DeleteStruct",
+        "title": "Delete Struct"
+      },
+      {
         "command": "fboFile.openBrowser",
         "title": "Open Browser",
         "icon": "$(globe)"
@@ -363,6 +367,11 @@
         "title": "Reload Tree",
         "category": "FBO",
         "icon": "images/ic_reload.svg"
+      },
+      {
+        "command": "fbo-autocomplete.openBrowserForFile",
+        "title": "Apen FBO Link",
+        "icon": "$(link-external)"
       },
       {
         "command": "fbo-autocomplete.closeFile",
@@ -397,6 +406,10 @@
       {
         "command": "fbo-autocomplete.OpenWithVSCode",
         "title": "FBO: Open With VS Code"
+      },
+      {
+        "command": "fbo-autocomplete.analyzeXmlProject",
+        "title": "FBO: Analyze XML Project (Enable File Monitoring)"
       }
     ],
     "languages": [
