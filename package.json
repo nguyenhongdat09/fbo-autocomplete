@@ -198,10 +198,10 @@
           "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         },
-        "fbo-autocomplete.PathVsCode": {
+        "fbo-autocomplete.Vs2008Path": {
           "type": "string",
-          "default": "C:\\\\Program Files\\\\Microsoft VS Code\\\\Code.exe",
-          "description": "Đường dẫn để mở file bằng VSCODE."
+          "default": "C:\\\\Program Files (x86)\\\\Microsoft Visual Studio 9.0\\\\Common7\\\\IDE\\\\devenv.exe",
+          "description": "Đường dẫn để mở file bằng VS2008."
         },
         "fbo-autocomplete.extensionKey": {
           "type": "string",

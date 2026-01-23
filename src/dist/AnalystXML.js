@@ -1,4 +1,4 @@
-const fs = require("fs");
+﻿const fs = require("fs");
 const path = require("path");
 const { Worker } = require('worker_threads');
 const AnalystASPX = require("./AnalystASPX");
@@ -97,7 +97,7 @@ class AnalystXML {
                 const pathIncludeXML = this.anl.getUrlFromFilePath(filePath, folder);
                 if (!pathIncludeXML) {
                     continue;
-                }
+                } 
 
                 const fileXML = this.confirmExistsXML(aspxName, controllerName, pathIncludeXML);
                 const fileXMLUrl = fileXML ? fileXML.xmlPath : '';
@@ -123,6 +123,7 @@ class AnalystXML {
                 }
             }
         }
+
         //loop aspx_xml để loại bỏ các phần tử trùng lặp dựa trên aspxName và xmlPath
         aspx_xml = aspx_xml.filter((item, index, self) =>
             index === self.findIndex((t) => (t.aspxName === item.aspxName && t.xmlPath === item.xmlPath))
@@ -190,30 +191,55 @@ class AnalystXML {
 
     regexAnalyzeXMLShowForm(aspxName, folderPath, contentXML) {
         /*
-        
-        Regex showForm('ViewReceiptFilter') lấy ra ViewReceiptFilter yếu tố chính là .showForm('...') ví dụ g.showForm('LTBPO1Filter'); thì lấy ra LTBPO1Filter
-        Sau đó nối pathIncludeXMLFilter + controllerName + .xml để lấy file xml tương ứng ví dụ .pathIncludeXMLFilter + \ViewReceiptFilter.xml
+        Hỗ trợ 2 dạng gọi show form trong XML/JS:
+        1) g.showForm('ViewReceiptFilter') hoặc .showForm('ViewReceiptFilter')
+        2) show$Form(g, 'ViewReceiptFilter') (hoặc show$Form(someVar, "ViewReceiptFilter"))
+        Lấy ra tên controller (ViewReceiptFilter) rồi nối pathIncludeXMLFilter + controller + .xml
         */
         var pathIncludeXMLFilter = this.anl.getUrlFromFilePath(folderPath, this.filter);
-        const showFormRegex = /\.showForm\(['"]([^'"]+)['"]\)/g;
+
+        // 1) dạng dot: .showForm('Name')
+        const dotShowFormRegex = /\.showForm\(\s*['"]([^'\"]+)['"]\s*\)/g;
+        // 2) dạng dollar: show$Form(someVar, 'Name') -> lấy arg thứ 2
+        const showDollarFormRegex = /show\$Form\(\s*[^,()]+?\s*,\s*['"]([^'\"]+)['"]\s*\)/g;
 
         var results = [];
         var match;
-        while ((match = showFormRegex.exec(contentXML)) !== null) {
+        // Kiểm tra dạng .showForm(...)
+        while ((match = dotShowFormRegex.exec(contentXML)) !== null) {
             var controllerName = match[1];
-            //console.log(` fileXMLUrl: ${filePath}` , ` controllerName: ${controllerName}`);
             var xmlFilePath = `${pathIncludeXMLFilter}\\${controllerName}.xml`;
             var excludeController = ['fsdGallerManager'];
 
             if (fs.existsSync(xmlFilePath) && !excludeController.includes(controllerName)) {
-                results.push({
-                    aspxName: aspxName,
-                    xmlPath: xmlFilePath
-                });
+                results.push({ aspxName: aspxName, xmlPath: xmlFilePath }); 
                 var formExtractDataResults = this.regexAnalyzeXMLFormExtractData(aspxName, xmlFilePath);
+                var detailResults = this.regexAnalyzeXMLDetail(aspxName, pathIncludeXMLFilter, contentXML);
                 results = results.concat(formExtractDataResults);
+                results = results.concat(detailResults);
             }
         }
+
+        // Kiểm tra dạng show$Form(var, ...)
+        while ((match = showDollarFormRegex.exec(contentXML)) !== null) {
+            var controllerName2 = match[1];
+            var xmlFilePath2 = `${pathIncludeXMLFilter}\\${controllerName2}.xml`;
+            var excludeController2 = ['fsdGallerManager'];
+           
+            if (fs.existsSync(xmlFilePath2) && !excludeController2.includes(controllerName2)) {
+                results.push({ aspxName: aspxName, xmlPath: xmlFilePath2 });
+                var formExtractDataResults2 = this.regexAnalyzeXMLFormExtractData(aspxName, xmlFilePath2);
+                var detailResults = this.regexAnalyzeXMLDetail(aspxName, pathIncludeXMLFilter, contentXML);
+                results = results.concat(formExtractDataResults2);
+                results = results.concat(detailResults);
+            }
+        }
+
+        // Loại trùng lặp (aspxName + xmlPath)
+        results = results.filter((item, index, self) =>
+            index === self.findIndex((t) => (t.aspxName === item.aspxName && t.xmlPath === item.xmlPath))
+        );
+
         return results;
     }
 

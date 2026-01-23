@@ -73,24 +73,47 @@ class AnalystASPX {
                 content = buffer.toString('utf-8');
             }
             
-            // Tìm trong ASPX có thẻ lấy ra nội dung bên trong Controller VD: <FastBusiness:ReportExtender ID="MainReport" runat="server" TargetControlID="panelReport" ReadOnly="true" Controller="DTTran"/>  thì lấy ra DTTran nếu không có thì bỏ qua file đó 
-            //Trả về tên file aspx và tên controller ví dụ {aspx: test.aspx, controller: DTTran}
-            let controllerMatch = content.match(/Controller=["']([^"']+)["']/);
-            
-            // Nếu không match và chưa thử UTF-16 LE, thử lại với UTF-16 LE
-            if (!controllerMatch && buffer[0] !== 0xFF) {
-                content = buffer.toString('utf16le');
-                controllerMatch = content.match(/Controller=["']([^"']+)["']/);
+            // Tìm Controller trong ASPX.
+            // Ưu tiên thẻ <FastBusiness:ReportExtender ... Controller="..."/>
+            // Nếu không có thì fallback sang tìm bất kỳ attribute Controller="..."
+            // Trả về tên file aspx và tên controller ví dụ {aspx: test.aspx, controller: DTTran}
+
+            let controllerName = null;
+
+            // Try FastBusiness:ReportExtender first (case-insensitive)
+            let reportExtenderMatch = content.match(/<FastBusiness:ReportExtender\b[^>]*Controller=["']([^"']+)["'][^>]*>/i);
+            if (reportExtenderMatch) {
+                controllerName = reportExtenderMatch[1];
             }
-            
-            if (controllerMatch) {
-                const controllerName = controllerMatch[1];
-                //đổi filePath thành tên file aspx
+
+            // Fallback: any Controller="..."
+            if (!controllerName) {
+                const controllerMatch = content.match(/Controller=["']([^"']+)["']/);
+                if (controllerMatch) controllerName = controllerMatch[1];
+            }
+
+            // Nếu chưa tìm được và chưa thử UTF-16 LE, thử lại với UTF-16 LE encoding
+            if (!controllerName && buffer[0] !== 0xFF) {
+                content = buffer.toString('utf16le');
+
+                reportExtenderMatch = content.match(/<FastBusiness:ReportExtender\b[^>]*Controller=["']([^"']+)["'][^>]*>/i);
+                if (reportExtenderMatch) {
+                    controllerName = reportExtenderMatch[1];
+                }
+
+                if (!controllerName) {
+                    const controllerMatch2 = content.match(/Controller=["']([^"']+)["']/);
+                    if (controllerMatch2) controllerName = controllerMatch2[1];
+                }
+            }
+
+            if (controllerName) {
                 return {
                     aspx: fileName,
                     controller: controllerName
                 };
             }
+
             return null;
         } catch (error) {
             return null;
@@ -99,6 +122,8 @@ class AnalystASPX {
     // hàm gọi getAllASSPXFiles và xử lý từng file aspx
     async processAllASPXFiles(projectPath) {
         var aspxFiles = await this.getAllASSPXFiles(projectPath);
+        //Chỉ lấy aspx cactbpc để test 
+       // aspxFiles = aspxFiles.filter(filePath => filePath.toLowerCase().includes('cactbpc.aspx'));
         const results = await Promise.all(aspxFiles.map(filePath => this.processingASPXFile(filePath)));
         return results.filter(result => result !== null);
     }
