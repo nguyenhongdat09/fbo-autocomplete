@@ -1,0 +1,17 @@
+# Ignore everything
+*
+# Allow all directories
+!*/
+Help/
+App_Data/Controllers/Lookup/
+App_Data/Controllers/Include/
+App_Data/Controllers/Grid/Config
+App_Data/Controllers/Structure/
+App_Data/Controllers/View/
+App_Data/Controllers/Option/
+!App_Data/Controllers/Option/Message.xml
+App_Data/Controllers/Flow/
+App_Data/Controllers/Allocation/
+
+# Allow xml and js files
+!*.xml 

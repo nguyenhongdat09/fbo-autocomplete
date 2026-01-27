@@ -40,6 +40,7 @@ async function activate(context) {
 
     var constant = new Constant(context);
     // ✅ Sử dụng license check mới (by key)
+   // var { checkLicense } = require('./license/checklicense');
     var { checkLicense } = require('./license/checklicense_byKey');
     var license = await checkLicense();
     if (!license) {

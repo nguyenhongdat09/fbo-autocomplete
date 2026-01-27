@@ -67,6 +67,7 @@ class AnalystXML {
         this.fileOpenListener = null; // Lưu listener cho sự kiện mở file
         this.pathDatabase = path.join(__dirname, '..', '..', 'Database');
         this.pathDatabaseOpenBrowser = '';
+        this.pathDatabaseCursorIgnore = '';
         this.saveTimeouts = new Map(); // Debounce: lưu timeout theo từng file
         this.analystAllTimeouts = new Map(); // Debounce cho analystAll theo project
         this.syncDB = new SyncDBOpenBrowser();
@@ -81,6 +82,12 @@ class AnalystXML {
             this.pathDatabase = path.join(__dirname, '..', 'Database');
         }
         this.pathDatabaseOpenBrowser = path.join(this.pathDatabase, 'OpenBrowser');
+    }
+    setPathDatabaseCursorIgore() {
+        if (!fs.existsSync(this.pathDatabase)) {
+            this.pathDatabase = path.join(__dirname, '..', 'Database');
+        }
+        this.pathDatabaseCursorIgnore = path.join(this.pathDatabase, '.cursorignore');
     }
 
 
@@ -178,7 +185,6 @@ class AnalystXML {
         while ((match = itemsRegex.exec(contentXML)) !== null) {
             var controllerName = match[1];
             var xmlFilePath = `${pathIncludeXMLGrid}\\${controllerName}.xml`;
-
             if (fs.existsSync(xmlFilePath)) {
                 results.push({
                     aspxName: aspxName,
@@ -389,6 +395,47 @@ class AnalystXML {
         return `${folder2}_${folder3}`;
     }
 
+
+
+    extractProjectPath(xmlFilePath) {
+        // Chuẩn hóa đường dẫn (chuyển / thành \)
+        const normalizedPath = xmlFilePath.replace(/\//g, '\\');
+
+        // Kiểm tra có chứa CustomerPro không
+        if (!normalizedPath.includes('CustomerPro')) {
+            return null;
+        }
+
+        // Tách đường dẫn thành mảng các folder
+        const parts = normalizedPath.split('\\');
+
+        // Tìm vị trí của CustomerPro
+        const customerProIndex = parts.findIndex(part => part === 'CustomerPro');
+
+        if (customerProIndex === -1) {
+            return null;
+        }
+
+        
+        // Lấy đường dẫn đến folder project (CustomerPro + 3 folder con)
+        const projectParts = parts.slice(0, customerProIndex + 4);
+        return projectParts.join('\\');
+    }
+
+    /**
+     * Normalize a path for use as a JSON map key (consistent separators + lowercase)
+     * @param {string} p
+     * @returns {string}
+     */
+    normalizePathKey(p) {
+        if (!p) return p;
+        try {
+            return p.replace(/\//g, '\\\\').replace(/\\+/g, '\\\\').toLowerCase();
+        } catch (e) {
+            return p.replace(/\//g, '\\\\').toLowerCase();
+        }
+    }
+
     /**
      * Tạo folder trong Database của extension để lưu các file XML đã phân tích
      * @param {string} xmlFilePath - Đường dẫn đến file XML
@@ -432,14 +479,14 @@ class AnalystXML {
         if (!projectFolderPath || !xmlResults) {
             return false;
         }
-
+        
         try {
             const jsonFilePath = path.join(projectFolderPath, this.json_save_name);
             // Tạo object map để tra cứu nhanh theo xmlPath
             const xmlPathMap = {};
             xmlResults.forEach(item => {
-                // Chuẩn hóa đường dẫn để làm key
-                const normalizedPath = item.xmlPath.replace(/\//g, '\\');
+                // Chuẩn hóa đường dẫn để làm key (case-insensitive)
+                const normalizedPath = this.normalizePathKey(item.xmlPath);
                 xmlPathMap[normalizedPath] = {
                     aspxName: item.aspxName,
                     xmlPath: item.xmlPath
@@ -455,6 +502,7 @@ class AnalystXML {
 
             await fs.promises.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2), 'utf-8');
             console.log(`Đã lưu ${xmlResults.length} file XML vào ${jsonFilePath}`);
+            await this.syncDBFunc(projectFolderPath, 1);
             return true;
         } catch (error) {
             showErrorMessage(`Lỗi khi lưu JSON: ${error.message}`);
@@ -462,12 +510,12 @@ class AnalystXML {
         }
     }
 
-    async syncDBFunc(projectFolderPath) {
+    async syncDBFunc(projectFolderPath, override_yn = 0) {
         if (!projectFolderPath) {
             return;
         }
         const folderNameLocal = path.basename(projectFolderPath);
-        if (this.projectsDbSynced.has(folderNameLocal)) {
+        if (this.projectsDbSynced.has(folderNameLocal) && override_yn != 2) {
             return;
         }
         //Sync cloud về trước 
@@ -485,6 +533,15 @@ class AnalystXML {
             //Nếu không có trong cloud thì copy từ local lên cloud
             if (!checkHaveInCloud) {
                 await this.syncDB.copyFolder(projectFolderPath, this.syncDB.urlSync);
+            }
+            //Nếu override_yn == 1 thì copy  đè từ local lên cloud
+            if (override_yn == 1) {
+                await this.syncDB.copyFolder(projectFolderPath, this.syncDB.urlSync);
+            }
+            //Nếu override_yn == 1 thì copy  đè từ cloud lên local
+            if (override_yn == 2) {
+                await this.syncDB.copyFolder(path.join(this.syncDB.urlSync, folderNameLocal), projectFolderPath);
+                return;
             }
             this.projectsDbSynced.add(folderNameLocal);
         } catch (error) {
@@ -512,15 +569,25 @@ class AnalystXML {
                 return null;
             }
             const jsonData = JSON.parse(await fs.promises.readFile(jsonFilePath, 'utf-8'));
-            const normalizedPath = xmlFilePath.replace(/\//g, '\\');
-            // Tra cứu từ map
-            if (jsonData.xmlPathMap && jsonData.xmlPathMap[normalizedPath]) {
-                return jsonData.xmlPathMap[normalizedPath].aspxName;
+            const normalizedPath = this.normalizePathKey(xmlFilePath);
+            console.log(`Tra cứu aspxName cho XML: ${normalizedPath}`);
+
+            // Rebuild a normalized map from any existing keys (handles older files with different casing)
+            if (jsonData.xmlPathMap) {
+                const normMap = {};
+                for (const k in jsonData.xmlPathMap) {
+                    if (!Object.prototype.hasOwnProperty.call(jsonData.xmlPathMap, k)) continue;
+                    normMap[this.normalizePathKey(k)] = jsonData.xmlPathMap[k];
+                }
+                if (normMap[normalizedPath]) {
+                    return normMap[normalizedPath].aspxName;
+                }
             }
+
             // Fallback: tìm trong mảng nếu map không có
             if (jsonData.xmlList) {
                 const found = jsonData.xmlList.find(item =>
-                    item.xmlPath.replace(/\//g, '\\') === normalizedPath
+                    this.normalizePathKey(item.xmlPath) === normalizedPath
                 );
                 return found ? found.aspxName : null;
             }
@@ -580,9 +647,9 @@ class AnalystXML {
 
             // Thêm các xmlPath mới (không trùng lặp)
             newXmlPaths.forEach(newItem => {
-                const normalizedNewPath = newItem.xmlPath.replace(/\//g, '\\');
+                const normalizedNewPath = this.normalizePathKey(newItem.xmlPath);
                 const exists = xmlList.some(item =>
-                    item.xmlPath.replace(/\//g, '\\') === normalizedNewPath
+                    this.normalizePathKey(item.xmlPath) === normalizedNewPath
                 );
 
                 if (!exists) {
@@ -594,7 +661,7 @@ class AnalystXML {
             // Tạo lại map
             const xmlPathMap = {};
             xmlList.forEach(item => {
-                const normalizedPath = item.xmlPath.replace(/\//g, '\\');
+                const normalizedPath = this.normalizePathKey(item.xmlPath);
                 xmlPathMap[normalizedPath] = {
                     aspxName: item.aspxName,
                     xmlPath: item.xmlPath
@@ -703,11 +770,11 @@ class AnalystXML {
         const normalizedPath = xmlFilePath.replace(/\//g, '\\');
 
         if (normalizedPath.includes('\\Controllers\\Dir\\')) {
-            return 'dir';
+            return 'Dir';
         } else if (normalizedPath.includes('\\Controllers\\Filter\\')) {
-            return 'filter';
+            return 'Filter';
         } else if (normalizedPath.includes('\\Controllers\\Grid\\')) {
-            return 'grid';
+            return 'Grid';
         }
 
         return null;
@@ -735,23 +802,20 @@ class AnalystXML {
                         return;
                     }
                     await this.syncDBFunc(projectFolderPath);
-
                     console.log(`Bắt đầu refresh XML cho: ${path.basename(filePath)}`);
                     // Nếu chưa có JSON thì chạy quét toàn project (giờ chạy qua worker nên không block UI)
                     if (!this.hasProjectJson(filePath)) {
                         this.analystAll(filePath);
                         return;
                     }
-
                     // Lấy aspxName từ JSON dựa vào filePath
                     const aspxName = await this.lookupAspxNameByXmlPath(filePath, { silentMissingJson: true });
                     if (!aspxName) {
                         console.log(`Không tìm thấy aspxName cho file: ${filePath} (JSON đã có nhưng chưa map)`);
+                        await this.syncDBFunc(projectFolderPath, 2);
                         return;
                     }
-
                     console.log(`Refreshing XML for aspx: ${aspxName}, file: ${filePath}`);
-
                     // Phát hiện loại folder
                     const folderType = this.detectFolderType(filePath);
                     let newXmlPaths = [];
@@ -763,25 +827,25 @@ class AnalystXML {
                     await new Promise((resolve) => {
                         setImmediate(() => {
                             // Nếu là Dir hoặc Filter: tìm Grid Detail
-                            if (folderType === 'dir' || folderType === 'filter') {
+                            if (folderType === 'Dir' || folderType === 'Filter') {
                                 const folderPath = path.dirname(filePath);
                                 const detailResults = this.regexAnalyzeXMLDetail(aspxName, folderPath, contentXML);
                                 newXmlPaths = newXmlPaths.concat(detailResults);
 
-                                if (folderType === 'dir') {
+                                if (folderType === 'Dir') {
                                     const importFormResults = this.regexAnalyzeXMLImportForm(aspxName, filePath);
                                     newXmlPaths = newXmlPaths.concat(importFormResults);
                                 }
 
                                 // Nếu là Filter: tìm ImportForm
-                                if (folderType === 'filter') {
+                                if (folderType === 'Filter') {
                                     const formExtractResults = this.regexAnalyzeXMLFormExtractData(aspxName, filePath);
                                     newXmlPaths = newXmlPaths.concat(formExtractResults);
                                 }
                             }
 
                             // Nếu là Grid: tìm showForm
-                            if (folderType === 'grid') {
+                            if (folderType === 'Grid') {
                                 const folderPath = path.dirname(filePath);
                                 const showFormResults = this.regexAnalyzeXMLShowForm(aspxName, folderPath, contentXML);
                                 newXmlPaths = newXmlPaths.concat(showFormResults);
@@ -796,6 +860,7 @@ class AnalystXML {
                     if (newXmlPaths.length > 0) {
                         await this.updateJsonWithNewXmlPaths(projectFolderPath, aspxName, newXmlPaths);
                         console.log(`✓ Đã tìm thêm ${newXmlPaths.length} file XML liên quan`);
+                        await this.syncDBFunc(projectFolderPath, 1);
                     } else {
                         console.log('Không tìm thấy file XML mới');
                     }
@@ -817,7 +882,24 @@ class AnalystXML {
         // Gọi trực tiếp, không cần setTimeout vì refreshXmlFileOnSave đã non-blocking
         this.refreshXmlFileOnSave(filePath);
     }
-
+    copyCursorIgnoreToProject(pathProject) {
+        //Copy file từ this.pathDatabaseCursorIgnore đến pathProject
+        try {
+            this.setPathDatabaseCursorIgore();
+            if (!fs.existsSync(this.pathDatabaseCursorIgnore)) {
+                return;
+            }
+            const fileName = path.basename(this.pathDatabaseCursorIgnore);
+            const destPath = path.join(pathProject, fileName);
+            //Neu đã có rồi thì không copy nữa
+            if (fs.existsSync(destPath)) {
+                return;
+            }
+            fs.copyFileSync(this.pathDatabaseCursorIgnore, destPath);
+        } catch (error) {
+            console.error(`Lỗi khi copy cursor ignore: ${error.message}`);
+        }
+    }
     /**
      * Đăng ký sự kiện lắng nghe khi save file
         * @returns {import('vscode').Disposable|null} - Disposable để cleanup
@@ -834,6 +916,7 @@ class AnalystXML {
         // Đăng ký listener mới
         this.fileSaveListener = v.workspace.onDidSaveTextDocument((document) => {
             const filePath = document.uri.fsPath;
+            this.copyCursorIgnoreToProject(this.extractProjectPath(filePath));
             // Chỉ xử lý file XML trong folder Controllers và Folder chứa nó là Dir, Filter, Grid, Upload, Report
             var isCorrectFile = this.checkFileToAnalyze(filePath);
             if (isCorrectFile) {
@@ -843,6 +926,7 @@ class AnalystXML {
         return this.fileSaveListener;
     }
      
+
     checkFileToAnalyze(filePath) {
         // Chỉ xử lý file .xml hoặc .aspx hoặc XML trong folder Controllers và Folder chứa nó là Dir, Filter, Grid, Upload, Report
         const folderTypes = ['\\Dir\\', '\\Filter\\', '\\Grid\\', '\\Upload\\', '\\Report\\', '\\Main\\'];
@@ -864,10 +948,7 @@ class AnalystXML {
         if (!projectFolderPath) {
             return false;
         }
-
         const jsonFilePath = path.join(projectFolderPath, this.json_save_name);
-
-
         return fs.existsSync(jsonFilePath);
     }
     /**
@@ -885,22 +966,21 @@ class AnalystXML {
         }
 
         // Đăng ký listener mới
-        this.fileOpenListener = v.workspace.onDidOpenTextDocument((document) => {
+        this.fileOpenListener = v.workspace.onDidOpenTextDocument(async (document) => {
             const filePath = document.uri.fsPath;
             var isCorrectFile = this.checkFileToAnalyze(filePath);
             // Chỉ xử lý file .xml hoặc .aspx
             if (!isCorrectFile) {
                 return;
             }
-            setImmediate(async () => {
-                const projectFolderPath = this.createProjectFolder(filePath);
-                if (projectFolderPath) {
-                    await this.syncDBFunc(projectFolderPath);
-                }
-            });
+            const projectFolderPath = this.createProjectFolder(filePath);
+            if (projectFolderPath) {
+                await this.syncDBFunc(projectFolderPath);
+            }
             // Nếu chưa có JSON thì tự quét toàn project (worker)
             if (!this.hasProjectJson(filePath)) {
-                this.analystAll(filePath);
+                this.analystAll(filePath); 
+                await this.syncDBFunc(projectFolderPath, 1);
                 return;
             }
         });

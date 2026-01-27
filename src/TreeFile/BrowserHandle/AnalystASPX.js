@@ -33,9 +33,12 @@ class AnalystASPX {
                     const fullPath = `${dir}\\${file}`;
                     try {
                         const stat = await fs.promises.stat(fullPath);
+                        //if fullpath la \\172.168.5.14\CustomerPro\FBI\LUMOS\R2SP223\Main\Z02Tran.aspx thi log ra 
+                       
                         if (stat.isDirectory()) {
                             await readDirectoryRecursively(fullPath); // Đệ quy nếu là thư mục
                         } else if (stat.isFile() && file.toLowerCase().endsWith('.aspx')) {
+                            
                             aspxFiles.push(fullPath); // Thêm file .aspx vào mảng
                         }
                     } catch (statError) {
@@ -48,6 +51,7 @@ class AnalystASPX {
         }
         
         await readDirectoryRecursively(mainDir);
+        
         return aspxFiles;
     }
     //Phân tích từng file aspx để lấy các thông tin cần thiết
@@ -123,7 +127,7 @@ class AnalystASPX {
     async processAllASPXFiles(projectPath) {
         var aspxFiles = await this.getAllASSPXFiles(projectPath);
         //Chỉ lấy aspx cactbpc để test 
-       // aspxFiles = aspxFiles.filter(filePath => filePath.toLowerCase().includes('cactbpc.aspx'));
+     //   aspxFiles = aspxFiles.filter(filePath => filePath.toLowerCase().includes('z02tran.aspx'));
         const results = await Promise.all(aspxFiles.map(filePath => this.processingASPXFile(filePath)));
         return results.filter(result => result !== null);
     }

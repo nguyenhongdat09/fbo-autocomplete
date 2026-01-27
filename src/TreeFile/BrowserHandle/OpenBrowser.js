@@ -76,6 +76,8 @@ class OpenBrowser {
         }
         // Nếu file là .xml, tra cứu aspxName từ JSON
         var aspxName = await this.analystXML.lookupAspxNameByXmlPath(filePath);
+        
+
         const baseUrl = this.config.get('browserBaseUrl', 'http://172.168.5.14');
         if (!aspxName) {
             //Chạy lại phân tích toàn bộ để cập nhật dữ liệu
