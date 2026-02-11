@@ -293,6 +293,12 @@ class TreeFileProvider extends TreeHelper {
                         await this.treeView.reveal(parentGroup, { select: false, expand: true });
                         await this.revealActiveFile(parentGroup.label);
                     } catch (err) { }
+                    if (this.dbStatusBar && parentGroup.label && (parentGroup.label || "").toUpperCase() !== "OTHER") {
+                        if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === "function") {
+                            this.dbStatusBar.reloadDbOptionsFromGroups();
+                        }
+                        this.dbStatusBar.updateText(parentGroup.label + " (App)");
+                    }
                 }
             }, 100);
         });

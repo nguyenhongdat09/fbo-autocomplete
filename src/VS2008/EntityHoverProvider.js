@@ -5,7 +5,26 @@ const path = require("path");
 class EntityHoverProvider {
     constructor(extensionDirectory, context) {
         this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML" , "JsonEntity");
-    }  
+        /** @type {string | null} Nội dung entity lần hover gần nhất (để copy) */
+        this._lastEntityContent = null;
+    }
+
+    getLastEntityContent() {
+        return this._lastEntityContent || "";
+    }
+
+    /**
+     * Copy nội dung Entity hover lần gần nhất vào clipboard (dùng cho command entityHoverCopyContent).
+     */
+    async copyContentToClipboard() {
+        const text = this._lastEntityContent || "";
+        if (!text) {
+            vscode.window.showInformationMessage("Không có nội dung Entity để copy.");
+            return;
+        }
+        await vscode.env.clipboard.writeText(text);
+    }
+
      formatXml(xml) {
         const PADDING = ' '.repeat(2); // Đặt indent size
         const reg = /(>)(<)(\/*)/g;
@@ -67,16 +86,19 @@ class EntityHoverProvider {
                     const markdownContent = new vscode.MarkdownString();
                     markdownContent.appendMarkdown(`### 🎯 Entity Content 🎯 \n`);
                     let formattedContent;
-                    
-                    formattedContent = this.formatXml( entityContent.Content);
+
+                    formattedContent = this.formatXml(entityContent.Content);
                     formattedContent = formattedContent.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
+                    this._lastEntityContent = formattedContent;
+
                     markdownContent.appendMarkdown(`\`\`\`xml\n${formattedContent}\n\`\`\``);
+                    markdownContent.appendMarkdown("\n\n[Copy to clipboard](command:fbo-autocomplete.entityHoverCopyContent)");
                     markdownContent.isTrusted = true; // Cho phép markdown có nội dung nhúng
                     return new vscode.Hover(markdownContent);
                 }
             }
         }
-        return new vscode.Hover("Entity not found.");
+        return new vscode.Hover("Entity not found."); 
     }
  
 

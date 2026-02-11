@@ -40,7 +40,12 @@
         {
           "command": "fbo-autocomplete.runSqlFile",
           "when": "resourceExtname == .sql",
-          "group": "run"
+          "group": "fbo"
+        },
+        {
+          "command": "fbo-autocomplete.peekSql",
+          "when": "resourceExtname == .xml || resourceExtname == .sql",
+          "group": "fbo"
         }
       ],
       "editor/title": [
@@ -425,6 +430,19 @@
           "light": "images/play.svg",
           "dark": "images/play.svg"
         }
+      },
+      {
+        "command": "fbo-autocomplete.peekSql",
+        "title": "FBO: Peek SQL",
+        "icon": "$(search)"
+      },
+      {
+        "command": "fbo-autocomplete.peekSqlCopyContent",
+        "title": "FBO: Copy Peek SQL to Clipboard"
+      },
+      {
+        "command": "fbo-autocomplete.entityHoverCopyContent",
+        "title": "FBO: Copy Entity Hover to Clipboard"
       },
       {
         "command": "fbo-autocomplete.selectDatabase",

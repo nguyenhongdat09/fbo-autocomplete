@@ -30,6 +30,7 @@ var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
 const { runCurrentSqlFile } = require("./DBQuery/QueryDatabase");
+const PeekSqlClass = require("./DBQuery/PeekSql");
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -106,6 +107,15 @@ async function activate(context) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
         },
     });
+    const peekSql = new PeekSqlClass();
+    const peekSqlHover = vscode.languages.registerHoverProvider(
+        [{ language: "xml", scheme: "file" }, { language: "sql", scheme: "file" }],
+        {
+            provideHover(document, position) {
+                return peekSql.provideHover(document, position);
+            },
+        }
+    );
 
     const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
         if (isCodeLensEnabled) {
@@ -278,6 +288,17 @@ async function activate(context) {
     );
     context.subscriptions.push(runSqlFileCmd);
 
+    const peekSqlCmd = vscode.commands.registerCommand("fbo-autocomplete.peekSql", async () => {
+        try {
+            await peekSql.runPeekSql();
+        } catch (err) {
+            console.error("[FBO peekSql] Error:", err);
+            vscode.window.showErrorMessage("Peek SQL: " + (err && err.message));
+        }
+    });
+    const peekSqlCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.peekSqlCopyContent", () => peekSql.copyContentToClipboard());
+    const entityHoverCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyContent", () => entityHoverProvider.copyContentToClipboard());
+
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
     const cmpl_mobile = new CompleteCodeMobile();
     cmpl_mobile.run(context);
@@ -285,7 +306,10 @@ async function activate(context) {
     const defi = new CustomDefinition();
     defi.run(context);
     var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm);
- 
+    context.subscriptions.push(peekSqlCmd);
+    context.subscriptions.push(peekSqlCopyCmd);
+    context.subscriptions.push(entityHoverCopyCmd);
+    context.subscriptions.push(peekSqlHover); 
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
