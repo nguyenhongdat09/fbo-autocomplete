@@ -1,5 +1,7 @@
 // File: src/DBQuery/QueryResultPanel.js
-
+const vscode = require("vscode");
+const path = require("path");
+const fs = require("fs");
 class QueryResultPanel {
     // Add static property to track panel
     static currentPanel = null;
@@ -207,23 +209,7 @@ class QueryResultPanel {
     }
 
 
-    handleWebviewMessage(message) {
-        switch (message.command) {
-            case 'refresh':
-                this.refreshQuery();
-                break;
-            case 'error':
-                vscode.window.showErrorMessage(message.message);
-                break;
-            case 'info':
-                vscode.window.showInformationMessage(message.message);
-                break;
-            case 'log':
-                console.log('[WebView]', message.message);
-                break;
-        }
-    }
-
+    
     refreshQuery() {
         if (!this.currentResults) return;
         vscode.window.showInformationMessage('Re-running query...');

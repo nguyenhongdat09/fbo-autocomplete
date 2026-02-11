@@ -1,429 +1,250 @@
 // File: src/DBQuery/QueryDatabase.js
-
-const vscode = require("vscode");
+// Chức năng: Chạy file .sql dựa trên DB đang chọn trong DBStatusBarManager
  
-const path = require("path");
-const AnalystWebConfig = require("./analystWebConfig");
+const vscode = require("vscode");
 const sql = require("mssql");
+const DBStatusBarManager = require("./dbBar");
 
-class QueryDatabase {
-    constructor(context, dbStatusBar) { 
-        this.context = context;
-        this.dbStatusBar = dbStatusBar;
-        this.dbInfo = null;
-        this.resultPanel = null; // ✅ Store panel instance
+// Output channel và diagnostics cho việc chạy file .sql
+const outputChannel = vscode.window.createOutputChannel("FBO SQL");
+const sqlDiagnostics = vscode.languages.createDiagnosticCollection("fbo-sql");
 
-        // Register F4 command
-        let f4Command = vscode.commands.registerCommand("fbo-autocomplete.runQuery", () => {
-            this.handleF4Press();
+/** Dòng chỉ chứa GO (batch separator của SSMS), không gửi lên server */
+const GO_LINE_REGEX = /^\s*GO\s*$/im;
+
+/**
+ * Tách script thành các batch theo GO (giống SSMS). GO không được gửi lên SQL Server.
+ * @param {string} sqlText
+ * @returns {{ batches: string[], startLines: number[] }} startLines[i] = dòng bắt đầu (0-based) của batch i trong file
+ */
+function splitScriptByGo(sqlText) {
+    const lines = sqlText.split(/\r\n|\r|\n/);
+    const batches = [];
+    const startLines = [];
+    let current = [];
+    let startLine = 0;
+    for (let i = 0; i < lines.length; i++) {
+        if (GO_LINE_REGEX.test(lines[i])) {
+            const batch = current.join("\n").trim();
+            if (batch) {
+                batches.push(batch);
+                startLines.push(startLine);
+            }
+            current = [];
+            startLine = i + 1;
+        } else {
+            current.push(lines[i]);
+        }
+    }
+    const last = current.join("\n").trim();
+    if (last) {
+        batches.push(last);
+        startLines.push(startLine);
+    }
+    return { batches, startLines };
+}
+
+/**
+ * Thực thi một batch SQL, trả về messages và hasError (và line number trong batch nếu lỗi)
+ * @param {sql.ConnectionPool} pool - đã connect
+ * @param {string} query
+ * @param {number} batchStartLine - dòng bắt đầu batch trong file (0-based), dùng để cộng vào err.lineNumber
+ * @returns {Promise<{messages:string[],hasError:boolean}>}
+ */
+function runOneBatch(pool, query, batchStartLine) {
+    const messages = [];
+    let hasError = false;
+    return new Promise((resolve, reject) => {
+        const request = new sql.Request(pool);
+        request.stream = true;
+        request.on("info", info => {
+            if (info && info.message) messages.push(info.message);
         });
-        this.context.subscriptions.push(f4Command);
-    }
-
-    getProjectRootFolder() {
-        const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor) return null;
-
-        const filePath = activeEditor.document.uri.fsPath;
-        const parts = filePath.split(path.sep);
-        const index = parts.findIndex(part => part === "App_Data");
-
-        if (index > 0) {
-            return parts.slice(0, index).join(path.sep);
-        }
-
-        return null;
-    }
-
-    async handleF4Press() {
-        const rootFolder = this.getProjectRootFolder();
-        if (!rootFolder) {
-            vscode.window.showInformationMessage("Tô câu lệnh của bạn trên XML rồi F4 lại bạn nhé.");
-            return;
-        }
-
-        const webConfigPath = path.join(rootFolder, "Web.config");
-
+        request.on("error", err2 => {
+            hasError = true;
+            if (err2) {
+                const lineInFile = (typeof err2.lineNumber === "number" && err2.lineNumber > 0)
+                    ? batchStartLine + err2.lineNumber
+                    : batchStartLine + 1;
+                messages.push("Line " + lineInFile);
+                if (err2.message) messages.push(err2.message);
+            }
+        });
+        request.on("rowsaffected", rowCount => {
+            if (typeof rowCount === "number") {
+                messages.push(`(${rowCount} row${rowCount !== 1 ? "s" : ""} affected)`);
+            }
+        });
+        request.on("done", () => resolve({ messages, hasError }));
         try {
-            const analyst = new AnalystWebConfig(webConfigPath);
-            analyst.loadConfig();
-            const selectedDb = this.dbStatusBar.selectedDB.toLowerCase();
-            this.dbInfo = analyst.getDbConnection(selectedDb);
+            request.query(query);
+        } catch (e) {
+            hasError = true;
+            messages.push("Line " + (batchStartLine + 1));
+            messages.push(e.message);
+            resolve({ messages, hasError });
+        }
+    });
+}
 
-            const editor = vscode.window.activeTextEditor;
-            const selection = editor.selection;
-            const selectedText = editor.document.getText(selection).trim();
+/**
+ * Thực thi script SQL (có thể chứa nhiều batch phân cách bởi GO), gom messages giống SSMS
+ * @param {string} script - toàn bộ script (sẽ tách theo GO)
+ * @param {{server:string,database:string,user:string,password:string}} connInfo
+ * @returns {Promise<{messages:string[],hasError:boolean}>}
+ */
+async function executeSqlMessageOnly(script, connInfo) {
+    if (!connInfo) {
+        throw new Error("Không có thông tin kết nối DB.");
+    }
 
-            if (selectedText) {
-                console.log('Executing query:', selectedText.substring(0, 100) + '...');
+    const { batches, startLines } = splitScriptByGo(script);
+    if (batches.length === 0) {
+        return { messages: [], hasError: false };
+    }
 
-                // Show loading indicator
-                await vscode.window.withProgress({
-                    location: vscode.ProgressLocation.Notification,
-                    title: "Executing query...",
-                    cancellable: false
-                }, async () => {
-                    try {
-                        const result = await this.executeQuery(selectedText);
+    const config = {
+        user: connInfo.user,
+        password: connInfo.password,
+        server: connInfo.server,
+        database: connInfo.database,
+        options: {
+            encrypt: false,
+            enableArithAbort: true,
+            trustServerCertificate: true
+        }
+    };
 
-                        console.log('Query result:', result ? 'Success' : 'Null');
+    let pool;
+    try {
+        pool = await sql.connect(config);
+    } catch (err) {
+        return {
+            messages: ["Connection error: " + (err && err.message)],
+            hasError: true
+        };
+    }
 
-                        if (result) {
-                            console.log('Result sets:', result.resultSets.length);
-                            console.log('Messages:', result.messages.length);
-                            console.log('Has error:', result.hasError);
+    const allMessages = [];
+    let hasError = false;
+    try {
+        for (let i = 0; i < batches.length; i++) {
+            const { messages, hasError: batchError } = await runOneBatch(pool, batches[i], startLines[i]);
+            allMessages.push(...messages);
+            if (batchError) hasError = true;
+        }
+    } finally {
+        try {
+            await pool.close();
+        } catch (e) {
+            // ignore
+        }
+    }
+    return { messages: allMessages, hasError };
+}
 
-                            try {
-                                // ✅ Import QueryResultPanel
-                                const QueryResultPanel = require("./QueryResultPanel");
+/**
+ * Chạy SQL cho file .sql hiện tại, dùng DB đang chọn trên status bar
+ */
+async function runCurrentSqlFile() {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        vscode.window.showErrorMessage("Không có editor nào đang mở.");
+        return;
+    }
 
-                                // ✅ Reuse or create new panel
-                                if (!this.resultPanel) {
-                                    console.log('Creating new panel...');
-                                    this.resultPanel = new QueryResultPanel(this.context);
-                                } else {
-                                    console.log('Reusing existing panel...');
-                                }
+    const doc = editor.document;
+    if (!doc || !doc.uri) {
+        vscode.window.showErrorMessage("Không đọc được document hoặc uri.");
+        console.error("[FBO runSqlFile] doc hoặc doc.uri undefined", { doc: !!doc, uri: doc && doc.uri });
+        return;
+    }
+    const uri = doc.uri;
+    const fsPath = uri.fsPath;
+    if (uri.scheme !== "file" || typeof fsPath !== "string" || !fsPath.toLowerCase().endsWith(".sql")) {
+        vscode.window.showErrorMessage("Chức năng này chỉ dùng cho file .sql.");
+        return;
+    }
 
-                                console.log('Showing panel...');
-                                this.resultPanel.show(result);
-                                console.log('Panel shown successfully');
+    const selection = editor.selection;
+    const sqlText = (selection && !selection.isEmpty)
+        ? doc.getText(selection).trim()
+        : doc.getText().trim();
 
-                            } catch (panelError) {
-                                console.error('Panel error:', panelError);
-                                console.error('Stack:', panelError.stack);
-                                vscode.window.showErrorMessage('Error showing panel: ' + panelError.message);
-                            }
+    if (!sqlText) {
+        vscode.window.showErrorMessage("Không có câu lệnh SQL để chạy.");
+        return;
+    }
 
-                        } else {
-                            console.error('Query returned null result');
-                            vscode.window.showErrorMessage('Query returned no result');
-                        }
-                    } catch (queryError) {
-                        console.error('Query execution error:', queryError);
-                        console.error('Stack:', queryError.stack);
-                        vscode.window.showErrorMessage('Query error: ' + queryError.message);
+    const dbStatus = DBStatusBarManager.current;
+    if (!dbStatus || !dbStatus.dbInfoSelected || !dbStatus.dbInfoSelected.connection) {
+        vscode.window.showErrorMessage("Chưa chọn database hoặc không lấy được thông tin kết nối từ status bar.");
+        return;
+    }
+
+    // Xoá diagnostics cũ cho file hiện tại
+    sqlDiagnostics.set(doc.uri, []);
+
+    await vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: "Executing SQL file...",
+        cancellable: false
+    }, async () => {
+        try {
+            const { messages, hasError } = await executeSqlMessageOnly(
+                sqlText,
+                dbStatus.dbInfoSelected.connection
+            );
+
+            // Ghi ra OutputChannel giống tab Messages (bỏ qua dòng "Line N" chỉ dùng cho parse)
+            outputChannel.clear();
+            const lineOnlyRegex = /^Line\s+(\d+)$/i;
+            if (messages.length) {
+                messages.forEach(m => {
+                    if (!lineOnlyRegex.test((m && m.trim) ? m.trim() : m)) {
+                        outputChannel.appendLine(m);
                     }
                 });
             } else {
-                vscode.window.showErrorMessage("Vui lòng chọn một đoạn SQL để thực thi.");
+                outputChannel.appendLine("(No messages)");
             }
-        } catch (error) {
-            console.error('F4 handler error:', error);
-            console.error('Stack:', error.stack);
-            vscode.window.showErrorMessage("Lỗi: " + error.message);
-        }
-    }
+            outputChannel.show(true);
 
-
-    async executeQuery(query) {
-        if (!this.dbInfo) {
-            throw new Error("Không có thông tin kết nối DB");
-        }
-
-        console.log('Connecting to database:', this.dbInfo.database);
-
-        const config = {
-            user: this.dbInfo.user,
-            password: this.dbInfo.password,
-            server: this.dbInfo.server,
-            database: this.dbInfo.database,
-            options: {
-                encrypt: false,
-                enableArithAbort: true,
-                trustServerCertificate: true
+            // Nếu có lỗi thì chỉ đưa message LỖI vào Problems (bỏ qua "(N rows affected)", "Line N" trung gian)
+            if (hasError) {
+                const diagnostics = [];
+                const lineRegex = /^Line\s+(\d+)$/i;
+                const isInfoMessage = (m) => /^\(\d+\s+rows?\s+affected\)$/i.test(m.trim()) || /^Completion\s+time:/i.test(m.trim()) || /^Line\s+\d+$/i.test(m);
+                let lastErrorLine = 0; // 0-based
+                for (const msg of messages) {
+                    const lineMatch = msg.match(lineRegex);
+                    if (lineMatch) {
+                        const n = parseInt(lineMatch[1], 10);
+                        if (!isNaN(n) && n > 0) {
+                            lastErrorLine = Math.min(n - 1, doc.lineCount - 1);
+                            if (lastErrorLine < 0) lastErrorLine = 0;
+                        }
+                        continue; // Không thêm "Line N" vào Problems
+                    }
+                    if (isInfoMessage(msg)) continue; // Bỏ qua rows affected, completion time
+                    const line = lastErrorLine;
+                    const range = new vscode.Range(line, 0, line, doc.lineAt(line).text.length);
+                    diagnostics.push(new vscode.Diagnostic(range, msg, vscode.DiagnosticSeverity.Error));
+                }
+                if (diagnostics.length) {
+                    sqlDiagnostics.set(doc.uri, diagnostics);
+                }
             }
-        };
-
-        const startTime = Date.now();
-
-        return new Promise((resolve, reject) => {
-            sql.connect(config, err => {
-                if (err) {
-                    console.error('SQL connection error:', err);
-                    reject(new Error("Lỗi kết nối SQL: " + err.message));
-                    return;
-                }
-
-                console.log('Connected to SQL Server');
-
-                const request = new sql.Request();
-                request.stream = true;
-
-                let resultSets = [];
-                let currentSet = null;
-                let messages = [];
-                let hasError = false;
-
-                request.on("info", info => {
-                    console.log('SQL Info:', info.message);
-                    messages.push({
-                        type: 'info',
-                        message: info.message,
-                        timestamp: new Date().toISOString()
-                    });
-                });
-
-                request.on("error", err => {
-                    console.error('SQL error:', err);
-                    hasError = true;
-                    messages.push({
-                        type: 'error',
-                        message: err.message,
-                        timestamp: new Date().toISOString()
-                    });
-                });
-
-                request.on("recordset", columns => {
-                    console.log('Recordset received, columns:', Object.keys(columns).length);
-                    currentSet = {
-                        columns: this.parseColumns(columns),
-                        rows: [],
-                        rowCount: 0
-                    };
-                    resultSets.push(currentSet);
-                });
-
-                request.on("row", row => {
-                    if (currentSet) {
-                        const rowData = Object.values(row);
-                        currentSet.rows.push(rowData);
-                        currentSet.rowCount++;
-                    }
-                });
-
-                request.on("rowsaffected", rowCount => {
-                    console.log('Rows affected:', rowCount);
-                    messages.push({
-                        type: 'info',
-                        message: `(${rowCount} row${rowCount !== 1 ? 's' : ''} affected)`,
-                        timestamp: new Date().toISOString()
-                    });
-                });
-
-                request.on("done", () => {
-                    const executionTime = Date.now() - startTime;
-                    console.log('Query completed in', executionTime, 'ms');
-                    console.log('Result sets:', resultSets.length);
-
-                    if (resultSets.length > 0) {
-                        console.log('Total rows:', resultSets.reduce((sum, rs) => sum + rs.rowCount, 0));
-                    }
-
-                    // Check max rows limit
-                    const totalRows = resultSets.reduce((sum, rs) => sum + rs.rowCount, 0);
-                    const MAX_ROWS = 20000;
-
-                    if (totalRows > MAX_ROWS) {
-                        console.warn('Truncating results from', totalRows, 'to', MAX_ROWS);
-                        messages.push({
-                            type: 'warning',
-                            message: `⚠️ Result truncated to ${MAX_ROWS} rows (total: ${totalRows})`,
-                            timestamp: new Date().toISOString()
-                        });
-
-                        let remaining = MAX_ROWS;
-                        resultSets = resultSets.map(rs => {
-                            if (remaining <= 0) {
-                                return { ...rs, rows: [], rowCount: 0 };
-                            }
-                            const take = Math.min(remaining, rs.rowCount);
-                            remaining -= take;
-                            return {
-                                ...rs,
-                                rows: rs.rows.slice(0, take),
-                                rowCount: take
-                            };
-                        });
-                    }
-
-                    const result = {
-                        resultSets,
-                        messages,
-                        executionTime,
-                        query,
-                        database: this.dbInfo.database,
-                        hasError,
-                        timestamp: new Date().toISOString()
-                    };
-
-                    console.log('Closing SQL connection...');
-
-                    // ✅ Close connection properly
-                    try {
-                        sql.close(() => {
-                            console.log('SQL connection closed');
-                            resolve(result);
-                        });
-                    } catch (closeError) {
-                        console.error('Error closing connection:', closeError);
-                        // Still resolve even if close fails
-                        resolve(result);
-                    }
-                });
-
-                try {
-                    console.log('Executing query...');
-                    request.query(query);
-                } catch (execError) {
-                    console.error('Query execution error:', execError);
-                    sql.close();
-                    reject(new Error('Query execution error: ' + execError.message));
-                }
-            });
-        });
-    }
-
-    /**
-     * Execute SQL query and return structured result
-     * @param {string} query - SQL query to execute
-     * @returns {Promise<QueryResult>}
-     */
-    async executeQuery(query) {
-        if (!this.dbInfo) {
-            vscode.window.showErrorMessage("Không có thông tin kết nối DB.");
-            return null;
+        } catch (err) {
+            console.error("[FBO runSqlFile] executeSqlMessageOnly/display error:", err);
+            console.error("[FBO runSqlFile] stack:", err && err.stack);
+            outputChannel.clear();
+            outputChannel.appendLine(`Error: ${err && err.message}`);
+            outputChannel.show(true);
         }
-
-        const config = {
-            user: this.dbInfo.user,
-            password: this.dbInfo.password,
-            server: this.dbInfo.server,
-            database: this.dbInfo.database,
-            options: {
-                encrypt: false,
-                enableArithAbort: true,
-                trustServerCertificate: true
-            }
-        };
-
-        const startTime = Date.now();
-
-        return new Promise((resolve, reject) => {
-            sql.connect(config, err => {
-                if (err) {
-                    vscode.window.showErrorMessage("Lỗi kết nối SQL: " + err.message);
-                    reject(err);
-                    return;
-                }
-
-                const request = new sql.Request();
-                request.stream = true;
-
-                let resultSets = [];
-                let currentSet = null;
-                let messages = [];
-                let hasError = false;
-
-                request.on("info", info => {
-                    messages.push({
-                        type: 'info',
-                        message: info.message,
-                        timestamp: new Date().toISOString()
-                    });
-                });
-
-                request.on("error", err => {
-                    hasError = true;
-                    messages.push({
-                        type: 'error',
-                        message: err.message,
-                        timestamp: new Date().toISOString()
-                    });
-                });
-
-                request.on("recordset", columns => {
-                    // New result set
-                    currentSet = {
-                        columns: this.parseColumns(columns),
-                        rows: [],
-                        rowCount: 0
-                    };
-                    resultSets.push(currentSet);
-                });
-
-                request.on("row", row => {
-                    if (currentSet) {
-                        // Convert row to array, preserving order
-                        const rowData = Object.values(row);
-                        currentSet.rows.push(rowData);
-                        currentSet.rowCount++;
-                    }
-                });
-
-                request.on("rowsaffected", rowCount => {
-                    messages.push({
-                        type: 'info',
-                        message: `(${rowCount} row${rowCount !== 1 ? 's' : ''} affected)`,
-                        timestamp: new Date().toISOString()
-                    });
-                });
-
-                request.on("done", () => {
-                    const executionTime = Date.now() - startTime;
-
-                    // Check max rows limit
-                    const totalRows = resultSets.reduce((sum, rs) => sum + rs.rowCount, 0);
-                    const MAX_ROWS = 20000; // ✅ From config
-
-                    if (totalRows > MAX_ROWS) {
-                        messages.push({
-                            type: 'warning',
-                            message: `⚠️ Result truncated to ${MAX_ROWS} rows (total: ${totalRows})`,
-                            timestamp: new Date().toISOString()
-                        });
-
-                        // Truncate result sets
-                        let remaining = MAX_ROWS;
-                        resultSets = resultSets.map(rs => {
-                            if (remaining <= 0) {
-                                return { ...rs, rows: [], rowCount: 0 };
-                            }
-                            const take = Math.min(remaining, rs.rowCount);
-                            remaining -= take;
-                            return {
-                                ...rs,
-                                rows: rs.rows.slice(0, take),
-                                rowCount: take
-                            };
-                        });
-                    }
-
-                    const result = {
-                        resultSets,
-                        messages,
-                        executionTime,
-                        query,
-                        database: this.dbInfo.database,
-                        hasError,
-                        timestamp: new Date().toISOString()
-                    };
-
-                    sql.close();
-                    resolve(result);
-                });
-
-                request.query(query);
-            });
-        });
-    }
-
-    /**
-     * Parse column metadata
-     */
-    parseColumns(columns) {
-        return Object.keys(columns).map(name => {
-            const col = columns[name];
-            return {
-                name: name,
-                type: col.type?.name || 'unknown',
-                length: col.length,
-                nullable: col.nullable,
-                precision: col.precision,
-                scale: col.scale
-            };
-        });
-    }
+    });
 }
 
-module.exports = QueryDatabase;
+module.exports = {
+    runCurrentSqlFile
+};

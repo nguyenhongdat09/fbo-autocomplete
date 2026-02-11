@@ -15,7 +15,8 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onLanguage:xml"
+    "onLanguage:xml",
+    "onLanguage:sql"
   ],
   "main": "./src/extension.js",
   "publisher": "Nguyen-Hong-Dat",
@@ -35,6 +36,18 @@
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "fbo"
+        },
+        {
+          "command": "fbo-autocomplete.runSqlFile",
+          "when": "resourceExtname == .sql",
+          "group": "run"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "fbo-autocomplete.runSqlFile",
+          "when": "resourceExtname == .sql",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
@@ -256,6 +269,12 @@
         "when": "editorTextFocus"
       },
       {
+        "command": "fbo-autocomplete.runSqlFile",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a",
+        "when": "editorTextFocus && resourceExtname == .sql"
+      },
+      {
         "key": "ctrl+shift+d",
         "command": "fboFile.RenameFile"
       }
@@ -400,6 +419,14 @@
         "title": "FBO: Execute SQL Query"
       },
       {
+        "command": "fbo-autocomplete.runSqlFile",
+        "title": "FBO: Run SQL File",
+        "icon": {
+          "light": "images/play.svg",
+          "dark": "images/play.svg"
+        }
+      },
+      {
         "command": "fbo-autocomplete.selectDatabase",
         "title": "FBO: Select Database (App/Sys)"
       },
@@ -441,7 +468,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.104.1",
+    "webpack": "^5.105.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {

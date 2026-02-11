@@ -968,6 +968,7 @@ class AnalystXML {
         // Đăng ký listener mới
         this.fileOpenListener = v.workspace.onDidOpenTextDocument(async (document) => {
             const filePath = document.uri.fsPath;
+            this.copyCursorIgnoreToProject(this.extractProjectPath(filePath));
             var isCorrectFile = this.checkFileToAnalyze(filePath);
             // Chỉ xử lý file .xml hoặc .aspx
             if (!isCorrectFile) {
@@ -1138,7 +1139,7 @@ class AnalystXML {
         context.subscriptions.push(analyzeXmlCommand);
         
         this.registerFileSaveListener();
-        this.registerFileOpenListener();
+        // this.registerFileOpenListener();
         // Push cả 2 listeners vào subscriptions để cleanup khi deactivate
         if (this.fileSaveListener) {
             context.subscriptions.push(this.fileSaveListener);

@@ -45,11 +45,13 @@ class OpenWithVS2008 {
             }
         })  
         // Thêm tham số /edit để mở file trong cửa sổ hiện tại
-        const command = `${vs2008Path} /edit "${filePath}" "${file_xsd}"`;
-        cp.exec(command, (err) => {
+        // Use execFile to avoid shell parsing issues when the VS path contains spaces
+        const args = ['/edit', filePath];
+        if (file_xsd) args.push(file_xsd);
+        cp.execFile(vs2008Path, args, (err) => {
             if (err) {
                 vscode.window.showErrorMessage(`Failed to open file in Visual Studio 2008: ${err.message} file: ${filePath}`);
-            } 
+            }
         });
     }
 }

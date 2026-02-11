@@ -17,7 +17,7 @@ const TranslateAuto = require("./Translate/TranslateAuto")
 const CheckLegacyCode = require("./CheckLegacy/CheckLegacyCode")
 const updateSettings = require("./updateSettings")
 const DBStatusBarManagerCls = require("./DBQuery/dbBar");
-const QueryDatabase = require("./DBQuery/QueryDatabase");
+const QueryDatabase = require("./DBQuery/QueryDatabase_old");
 const ViewPanelResult = require("./DBQuery/QueryResultPanel");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
@@ -29,6 +29,7 @@ const AnalystXML = require('./TreeFile/BrowserHandle/AnalystXML');
 var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
+const { runCurrentSqlFile } = require("./DBQuery/QueryDatabase");
 let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
 let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
@@ -262,21 +263,20 @@ async function activate(context) {
         });
     }
 
-    /*
-    console.time('💾 Database dbBar');
-    //Database dbBar
-    const dbstatus = new DBStatusBarManagerCls(context);
-    dbstatus.show()
-    const queryDb = new QueryDatabase(context, dbstatus);
-    console.timeEnd('💾 Database dbBar');
-    */
-   /*
-    const dbStatusBar = new DBStatusBarManagerCls(context);
-    dbStatusBar.show();
-    const queryDb = new QueryDatabase(context, dbStatusBar);
-*/
-    //
-  
+    // Command chạy file .sql dựa trên DB đang chọn ở status bar
+    const runSqlFileCmd = vscode.commands.registerCommand(
+        "fbo-autocomplete.runSqlFile",
+        async () => {
+            try {
+                await runCurrentSqlFile();
+            } catch (err) {
+                console.error("[FBO runSqlFile] Error:", err);
+                console.error("[FBO runSqlFile] Stack:", err && err.stack);
+                vscode.window.showErrorMessage("Run SQL File: " + (err && err.message));
+            }
+        }
+    );
+    context.subscriptions.push(runSqlFileCmd);
 
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
     const cmpl_mobile = new CompleteCodeMobile();

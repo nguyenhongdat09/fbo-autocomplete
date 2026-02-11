@@ -1,8 +1,10 @@
+
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 const app_dataChecker = require("./AppDataPathHelper");
 const OpenBrowser = require("./BrowserHandle/OpenBrowser");
+const DBStatusBarManager = require("../DBQuery/dbBar");
 
 class TreeHelper {
     constructor() {
@@ -141,6 +143,7 @@ class TreeFileProvider extends TreeHelper {
         this._isInitialized = false;
         this._buildPromise = null;
         this._lastSelect = { path: null, time: 0 };
+        this.dbStatusBar = null;
     }
 
     async run(context) {
@@ -337,7 +340,8 @@ class TreeFileProvider extends TreeHelper {
         //await openBrowser.openBrowserForFile(filePath);
         // sau khi this.treeView được tạo (trong run)
        
-        
+        this.dbStatusBar = new DBStatusBarManager(context); 
+        this.dbStatusBar.show();
         context.subscriptions.push(this.treeView, disposable);
     }
 
@@ -463,9 +467,23 @@ class TreeFileProvider extends TreeHelper {
 
             return [...this.treeData.keys()].map(groupName => this.groupItems.get(groupName));
         })();
-
+        
         const result = await this._buildPromise;
-        this._buildPromise = null;
+        this._buildPromise = null; 
+
+        // Cập nhật groupItems cho status bar DB và reload lại danh sách DB
+        if (this.dbStatusBar) {
+            this.dbStatusBar.groupItems = this.groupItems;
+            if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === 'function') {
+                try {
+                    this.dbStatusBar.reloadDbOptionsFromGroups();
+                } catch (e) {
+                    console.error("[FBO dbBar] reloadDbOptionsFromGroups error:", e);
+                    console.error("[FBO dbBar] stack:", e && e.stack);
+                }
+            }
+        }
+
         return result;
     }
 

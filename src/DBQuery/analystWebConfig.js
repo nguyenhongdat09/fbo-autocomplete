@@ -2,20 +2,19 @@ const fs = require("fs");
 const path = require("path");
 
 class AnalystWebConfig {
-    constructor(filePath) {
-        this.filePath = filePath;
+    constructor() {
         this.dbConnections = {
             app: null,
             sys: null
         };
     }
 
-    loadConfig() {
-        if (!fs.existsSync(this.filePath)) {
-            throw new Error(`Không tìm thấy file Web.config tại: ${this.filePath}`);
+    loadConfig(filePath) {
+        if (!fs.existsSync(filePath)) {
+            throw new Error(`Không tìm thấy file Web.config tại: ${filePath}`);
         }
 
-        const xmlData = fs.readFileSync(this.filePath, "utf-8");
+        const xmlData = fs.readFileSync(filePath, "utf-8");
 
         // Regex tìm connectionString
         const regex = /<add\s+name="(appConnectionString|sysConnectionString)"\s+connectionString="([^"]+)"/g;
@@ -31,7 +30,6 @@ class AnalystWebConfig {
         if (this.dbConnections.sys && this.dbConnections.app) {
             const sysDb = this.dbConnections.sys.database;
             let appDb = sysDb.replace(/_(S|Sys)$/, "_A").replace(/_Sys$/, "_App");
-
             this.dbConnections.app.database = appDb;
         }
     }

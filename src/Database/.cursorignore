@@ -14,4 +14,5 @@ App_Data/Controllers/Flow/
 App_Data/Controllers/Allocation/
 
 # Allow xml and js files
-!*.xml 
+!*.xml
+!*.sql 
