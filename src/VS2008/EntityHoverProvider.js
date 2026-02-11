@@ -84,7 +84,8 @@ class EntityHoverProvider {
                 if (entityContent) {
                     // Markdown để hiển thị nội dung nổi bật
                     const markdownContent = new vscode.MarkdownString();
-                    markdownContent.appendMarkdown(`### 🎯 Entity Content 🎯 \n`);
+                    markdownContent.appendMarkdown(`### 🎯 Entity Content 🎯 \n\n`);
+                    markdownContent.appendMarkdown("[Copy to clipboard](command:fbo-autocomplete.entityHoverCopyContent)\n\n");
                     let formattedContent;
 
                     formattedContent = this.formatXml(entityContent.Content);
@@ -92,7 +93,6 @@ class EntityHoverProvider {
                     this._lastEntityContent = formattedContent;
 
                     markdownContent.appendMarkdown(`\`\`\`xml\n${formattedContent}\n\`\`\``);
-                    markdownContent.appendMarkdown("\n\n[Copy to clipboard](command:fbo-autocomplete.entityHoverCopyContent)");
                     markdownContent.isTrusted = true; // Cho phép markdown có nội dung nhúng
                     return new vscode.Hover(markdownContent);
                 }

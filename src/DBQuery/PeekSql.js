@@ -234,12 +234,12 @@ class PeekSql {
 
         const md = new vscode.MarkdownString();
         md.appendMarkdown("### Peek SQL\n\n");
+        md.appendMarkdown("[Copy to clipboard](command:fbo-autocomplete.peekSqlCopyContent)\n\n");
         if (this._lastPeekIsTable) {
             md.appendMarkdown(this._lastPeekContent);
         } else {
             md.appendCodeblock(this._lastPeekContent, "sql");
         }
-        md.appendMarkdown("\n\n[Copy to clipboard](command:fbo-autocomplete.peekSqlCopyContent)");
         md.isTrusted = true;
         return new vscode.Hover(md, this._lastPeekRange);
     }
