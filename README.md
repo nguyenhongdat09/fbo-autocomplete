@@ -23,9 +23,6 @@
         - Nếu là trường bình thường thì nhập `$f.field;`
         - Nếu là lookup thì nhập `$f.fieldlk;`
         - Nếu là AutoComplete thì nhập `$f.fieldat;`
-## Hiện Code Lens 
-- Nhập **Ctrl + Shift + P** Nhập **Show/Hide Entity CodeLens** 
-![Alt text](/media/ShowCodeLens.PNG)
 ## Autocomplete code dạng hàm, biến 
 - Nhập **Ctrl + Shift + P** Nhập **Get Data Autocomplete** để lấy dữ liệu của sheet Autocomplete trên GG sheet Chung FSD 
 ## Translate 
@@ -33,6 +30,10 @@
 ## Convert To Excel 
 - Ở tại file Grid Bấm **Ctrl + Shift + P** nhập **Add Field To Report File** để gen các trường trong grid thành các field bên file Report cùng tên 
     + Ví dụ: ở file Grid zcaa.xml bấm như trên sẽ tìm file Report zcaa.xml tương ứng để gen ra các trường h_a, h_b .....
+## Run SQL
+- Chọn database trên **status bar** (click vào "DB: ...") rồi mở file **.sql**. Dùng **FBO: Run SQL File** (menu chuột phải hoặc nút Run trên editor) để chạy toàn file hoặc đoạn SQL đang chọn. Kết quả hiển thị dạng Messages trong Output; lỗi được đẩy vào Problems.
+## Peek SQL
+- Trong file **XML** hoặc **.sql**: tô chọn tên object (proc, view, function, bảng), chuột phải chọn **FBO: Peek SQL**. Extension kiểm tra object trong DB đang chọn: nếu là **bảng (type U)** thì hiển thị danh sách cột (Column Name, Type); nếu là **proc/view/function** thì lấy định nghĩa bằng `sp_helptext` và hiển thị trong Hover. Trong Hover có link **Copy to clipboard** để copy nội dung đã peek.
 ## Check Legacy Dir/Filter
 - Kiểm tra field thiếu so với item và ngược lại 
 - Kiểm tra 111 so với field đằng sau của <item> xem có thiếu hay thừa  

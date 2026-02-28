@@ -302,10 +302,6 @@
         "title": "FBO: Render XML To Database (Reload Vscode before to ensure with no error)"
       },
       {
-        "command": "fbo-autocomplete.showEntityCodeLens",
-        "title": "FBO: Show/Hide Entity CodeLens"
-      },
-      {
         "command": "fbo-autocomplete.getDataAutocomplete",
         "title": "FBO: Get Data Autocomplete"
       },

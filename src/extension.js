@@ -9,7 +9,6 @@ const OpenWithVS2008 = require('./VS2008/openWithVS2008');
 const OpenWithVSCode = require('./VS2008/openWithVSCode');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
-const EntityCodeLensProvider = require("./VS2008/EntityCodeLensProvider");
 const CompleteCodeByHandle = require("./CompleteCodeWithDB/CompleteCodeByHandle");
 const Trans = require("./Translate/Translate")
 const cnv = require("./ConvertToExcel/ConvertGridToHeader")
@@ -31,8 +30,6 @@ const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
 const { runCurrentSqlFile } = require("./DBQuery/QueryDatabase");
 const PeekSqlClass = require("./DBQuery/PeekSql");
-let codeLensDisposable = null; // Lưu trữ Disposable của CodeLensProvider
-let isCodeLensEnabled = false; // Trạng thái bật/tắt CodeLens
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -116,27 +113,6 @@ async function activate(context) {
             },
         }
     );
-
-    const showEntityCodeLens = vscode.commands.registerCommand('fbo-autocomplete.showEntityCodeLens', () => {
-        if (isCodeLensEnabled) {
-            // Nếu đang bật, hủy CodeLensProvider
-            if (codeLensDisposable) {
-                codeLensDisposable.dispose();
-                codeLensDisposable = null;
-            }
-        } else {
-            // Nếu đang tắt, đăng ký lại CodeLensProvider
-            codeLensDisposable = vscode.languages.registerCodeLensProvider(
-                { language: "xml", scheme: "file" },
-                {
-                    provideCodeLenses(document, position) {
-                        return EntityCodeLensProvider.provideCodeLenses(document, position);
-                    },
-                }
-            );
-        }
-        isCodeLensEnabled = !isCodeLensEnabled; // Cập nhật trạng thái
-    });
 
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
@@ -318,7 +294,6 @@ async function activate(context) {
     context.subscriptions.push(AddFieldToReport);
     context.subscriptions.push(translatePaste);
     context.subscriptions.push(transAll);
-    context.subscriptions.push(showEntityCodeLens);
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);

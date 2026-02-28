@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 
 class AnalystWebConfig {
     constructor() {
@@ -17,7 +16,7 @@ class AnalystWebConfig {
         const xmlData = fs.readFileSync(filePath, "utf-8");
 
         // Regex tìm connectionString
-        const regex = /<add\s+name="(appConnectionString|sysConnectionString)"\s+connectionString="([^"]+)"/g;
+        const regex = /<add\s+name="(appConnectionString|syncConnectionString|sysConnectionString)"\s+connectionString="([^"]+)"/g;
         let match;
 
         while ((match = regex.exec(xmlData)) !== null) {
@@ -25,7 +24,7 @@ class AnalystWebConfig {
             const connString = match[2]; // Chuỗi connection string
             // Parse connection string
             
-            this.dbConnections[name.includes("app") ? "app" : "sys"] = this.parseConnectionString(connString);
+            this.dbConnections[name.includes("app") ? "app" : name.includes("sync") ? "app" : "sys"] = this.parseConnectionString(connString);
         }
         if (this.dbConnections.sys && this.dbConnections.app) {
             const sysDb = this.dbConnections.sys.database;

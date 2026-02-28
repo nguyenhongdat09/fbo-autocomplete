@@ -69,7 +69,9 @@ class ConvertGridToHeader {
         const gridFieldRegex = /<field name="(.*?)"\s*\/>/g;
 
         // Tạo danh sách các field mới
-        let newFields = [...xmlContent.matchAll(gridFieldRegex)].map(match => {
+        //Add thêm mặc định tu_ngay, den_ngay, tu_ky, den_ky, nam 
+        console.log(path);
+        var newFields = [...xmlContent.matchAll(gridFieldRegex)].map(match => {
             let fieldName = match[1];
             let newFieldName = `h_${fieldName}`;
             if (headersMap.hasOwnProperty(fieldName)) {
@@ -78,6 +80,16 @@ class ConvertGridToHeader {
                 return `<field name="${newFieldName.replace('%l', '')}" type= "String">\n    <header v="${header.v}" e="${header.e}" />\n</field>`;
             }
         });
+        [
+            { name: "h_tu_ngay", v: "Từ ngày", e: "From Date" },
+            { name: "h_den_ngay", v: "Đến ngày", e: "To Date" },
+            { name: "h_tu_ky", v: "Từ kỳ", e: "From Period" },
+            { name: "h_den_ky", v: "Đến kỳ", e: "To Period" },
+            { name: "h_nam", v: "Năm", e: "Year" }
+        ].forEach(f =>
+            newFields.push(`<field name="${f.name}" type="String" >\n    <header v="${f.v}" e="${f.e}" />\n</field>`)
+        );
+        
         let Headers = [...xmlContent.matchAll(gridFieldRegex)]
             .map(match => {
                 let fieldName = match[1];
@@ -88,14 +100,12 @@ class ConvertGridToHeader {
                 return null;
             })
             .filter(item => item !== null); // Loại bỏ các giá trị null
-
         return [newFields.join('\n'), Headers];
     }
 
     exportToExcel(inputPath, outputPath) {
         var cvt = this.CvtToFieldReport(inputPath);
         var headers = cvt[1];
-        console.log(1)
         if (!Array.isArray(headers) || !Array.isArray(headers[0])) {
             console.error('Lỗi: headers phải là một mảng hai chiều');
             return;
@@ -195,15 +205,13 @@ class ConvertGridToHeader {
             let lastMatch = matches[matches.length - 1][0]; // Lấy thẻ <fields> cuối cùng tìm được
             // Trích xuất danh sách name từ lastMatch
             let lastFieldNames = [...lastMatch.matchAll(/<field\s+name="([^"]+)"/g)].map(m => m[1]);
-
             // Trích xuất danh sách name từ xml truyền vào
             let newFields = [...xml.matchAll(/<field\s+name="([^"]+)".*?>[\s\S]*?<\/field>/g)]
             // Loại bỏ các field có name trùng
             let filteredXml = newFields
                 .filter(m => !lastFieldNames.includes(m[1]))  // Chỉ giữ lại field chưa tồn tại
                 .map(m => m[0])  // Lấy nội dung field
-                .join("\n");
-
+                .join("\n"); 
             if (filteredXml.trim() !== "") {
                 xmlContent = xmlContent.replace(lastMatch, lastMatch.replace(/<\/fields>/, filteredXml + "\n</fields>"));
             }

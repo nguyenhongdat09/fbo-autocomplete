@@ -49,7 +49,6 @@ class DBStatusBarManager {
         this.statusBarItem.text = `$(database) DB: ${this.selectedDB}`;
         // Cập nhật lại thông tin DB đang chọn
         this.updateDbInfoSelected();
-        console.log(this.dbInfoSelected);
     }
 
     /**

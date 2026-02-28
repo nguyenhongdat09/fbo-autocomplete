@@ -23,6 +23,7 @@ class EntityHoverProvider {
             return;
         }
         await vscode.env.clipboard.writeText(text);
+        vscode.window.showInformationMessage("Đã copy.");
     }
 
      formatXml(xml) {
