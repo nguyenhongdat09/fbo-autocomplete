@@ -378,7 +378,10 @@ class TreeFileProvider extends TreeHelper {
                 const ext = path.extname(filePath).toLowerCase();
 
                 this.app_dataChecker.filePath = filePath;
-                const groupName = this.app_dataChecker.getGroupName().toUpperCase();
+                let groupName = this.app_dataChecker.getGroupName().toUpperCase();
+                if (filePath.toLowerCase().endsWith(".md.plan")) {
+                    groupName = "OTHER";
+                }
 
                 return {
                     filePath,
@@ -503,7 +506,10 @@ class TreeFileProvider extends TreeHelper {
 
         const folderName = path.basename(path.dirname(filePath));
         this.app_dataChecker.filePath = filePath;
-        const groupName = this.app_dataChecker.getGroupName().toUpperCase();
+        let groupName = this.app_dataChecker.getGroupName().toUpperCase();
+        if (filePath.toLowerCase().endsWith(".md.plan")) {
+            groupName = "OTHER";
+        }
         if (!groupName) return;
 
         const item = new vscode.TreeItem(uri, vscode.TreeItemCollapsibleState.None);

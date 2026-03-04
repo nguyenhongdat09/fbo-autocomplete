@@ -98,6 +98,22 @@ async function activate(context) {
         }
     });
 
+    // Khi sắp lưu file XML: tự động thêm UTF-8 BOM nếu bật cấu hình và file chưa có BOM
+    const onWillSaveXmlBom = vscode.workspace.onWillSaveTextDocument((event) => {
+        const xmlSaveUtf8Bom = vscode.workspace.getConfiguration('fbo-autocomplete').get('xmlSaveUtf8Bom', true);
+        if (!xmlSaveUtf8Bom) return;
+        const doc = event.document;
+        if (doc.uri.scheme !== 'file') return;
+        const path = (doc.uri.fsPath || '').toLowerCase();
+        if (!path.endsWith('.xml')) return;
+        const text = doc.getText();
+        if (text.length === 0) return;
+        if (text.charCodeAt(0) === 0xFEFF) return; // đã có BOM
+        event.waitUntil(Promise.resolve([
+            new vscode.TextEdit(new vscode.Range(0, 0, 0, 0), '\uFEFF')
+        ]));
+    });
+
     const entityHoverProvider = new EntityHoverProvider(__dirname, context);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
@@ -299,6 +315,7 @@ async function activate(context) {
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(onDidSaveTextDocument);
+    context.subscriptions.push(onWillSaveXmlBom);
     calculationProvider.register(context); 
     // context.subscriptions.push(openWithVSCode);
     /*

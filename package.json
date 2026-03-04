@@ -22,6 +22,12 @@
   "publisher": "Nguyen-Hong-Dat",
   "sheetIdGoogleSheet": "1QQmIxycaz67WIWGqP8sYYegVuqJwQF9wnebgXg5TNyA",
   "contributes": {
+    "submenus": [
+      {
+        "id": "fbo-autocomplete.fboSubmenu",
+        "label": "FBO"
+      }
+    ],
     "grammars": [
       {
         "scopeName": "fastbusiness.injection",
@@ -34,18 +40,21 @@
     "menus": {
       "editor/context": [
         {
-          "command": "my-fbo-toolkit.openWithVS2008",
+          "submenu": "fbo-autocomplete.fboSubmenu",
           "group": "fbo"
+        }
+      ],
+      "fbo-autocomplete.fboSubmenu": [
+        {
+          "command": "my-fbo-toolkit.openWithVS2008"
         },
         {
           "command": "fbo-autocomplete.runSqlFile",
-          "when": "resourceExtname == .sql",
-          "group": "fbo"
+          "when": "resourceExtname == .sql"
         },
         {
           "command": "fbo-autocomplete.peekSql",
-          "when": "resourceExtname == .xml || resourceExtname == .sql",
-          "group": "fbo"
+          "when": "resourceExtname == .xml || resourceExtname == .sql"
         }
       ],
       "editor/title": [
@@ -216,6 +225,11 @@
           "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         },
+        "fbo-autocomplete.xmlSaveUtf8Bom": {
+          "type": "boolean",
+          "default": true,
+          "description": "Khi lưu file XML, tự động chuyển định dạng sang UTF-8 with BOM (chèn BOM nếu chưa có)."
+        },
         "fbo-autocomplete.Vs2008Path": {
           "type": "string",
           "default": "C:\\\\Program Files (x86)\\\\Microsoft Visual Studio 9.0\\\\Common7\\\\IDE\\\\devenv.exe",
@@ -287,7 +301,7 @@
     "commands": [
       {
         "command": "my-fbo-toolkit.openWithVS2008",
-        "title": "FBO: Open With VS 2008"
+        "title": "Open With VS 2008"
       },
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
@@ -421,7 +435,7 @@
       },
       {
         "command": "fbo-autocomplete.runSqlFile",
-        "title": "FBO: Run SQL File",
+        "title": "Run SQL File",
         "icon": {
           "light": "images/play.svg",
           "dark": "images/play.svg"
@@ -429,7 +443,7 @@
       },
       {
         "command": "fbo-autocomplete.peekSql",
-        "title": "FBO: Peek SQL",
+        "title": "Peek SQL",
         "icon": "$(search)"
       },
       {
@@ -482,7 +496,7 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.105.1",
+    "webpack": "^5.105.4",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
