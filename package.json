@@ -41,7 +41,7 @@
       "editor/context": [
         {
           "submenu": "fbo-autocomplete.fboSubmenu",
-          "group": "fbo"
+          "group": "navigation@0"
         }
       ],
       "fbo-autocomplete.fboSubmenu": [
@@ -143,9 +143,21 @@
       ],
       "view/title": [
         {
+          "command": "fbo-autocomplete.fboFileTreeFilter",
+          "when": "view == fbo_file",
+          "group": "navigation@1",
+          "tooltip": "Lọc file / thư mục trong cây"
+        },
+        {
+          "command": "fbo-autocomplete.fboFileTreeClearFilter",
+          "when": "view == fbo_file && fboFileTreeFilterActive",
+          "group": "navigation@2",
+          "tooltip": "Xóa bộ lọc"
+        },
+        {
           "command": "fbo-autocomplete.reloadTree",
           "when": "view == fbo_file",
-          "group": "navigation",
+          "group": "navigation@9",
           "tooltip": "Reload Tree"
         }
       ]
@@ -186,6 +198,15 @@
           "default": "autocomplete",
           "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
         },
+        "fbo-autocomplete.ideType": {
+          "type": "string",
+          "enum": [
+            "vscode",
+            "cursor"
+          ],
+          "default": "vscode",
+          "description": "Chọn IDE khi cập nhật settings.json: 'vscode' (Code) hoặc 'cursor' (Cursor)."
+        },
         "fbo-autocomplete.sortTree": {
           "type": "string",
           "enum": [
@@ -225,11 +246,6 @@
           "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
         },
-        "fbo-autocomplete.xmlSaveUtf8Bom": {
-          "type": "boolean",
-          "default": true,
-          "description": "Khi lưu file XML, tự động chuyển định dạng sang UTF-8 with BOM (chèn BOM nếu chưa có)."
-        },
         "fbo-autocomplete.Vs2008Path": {
           "type": "string",
           "default": "C:\\\\Program Files (x86)\\\\Microsoft Visual Studio 9.0\\\\Common7\\\\IDE\\\\devenv.exe",
@@ -255,6 +271,19 @@
           "type": "string",
           "default": "/Main/Login.aspx",
           "description": "Đường dẫn login mặc định (ví dụ: /Main/Login.aspx)"
+        },
+        "fbo-autocomplete.fileTreeLayout": {
+          "type": "string",
+          "enum": [
+            "oneLevel",
+            "nested"
+          ],
+          "enumDescriptions": [
+            "Một cấp: nhóm (group) → danh sách file phẳng.",
+            "Nhiều cấp: nhóm → thư mục con → file (theo cấu trúc thư mục dự án)."
+          ],
+          "default": "oneLevel",
+          "description": "Kiểu cây view FBO Project. Sau khi đổi, hãy Reload Window để áp dụng (mở Command Palette → 'Developer: Reload Window')."
         }
       },
       "fbo-autocomplete.licenseCacheDuration": {
@@ -401,6 +430,18 @@
         "title": "Reload Tree",
         "category": "FBO",
         "icon": "images/ic_reload.svg"
+      },
+      {
+        "command": "fbo-autocomplete.fboFileTreeFilter",
+        "title": "FBO: Lọc cây Project",
+        "category": "FBO",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "fbo-autocomplete.fboFileTreeClearFilter",
+        "title": "FBO: Xóa lọc cây Project",
+        "category": "FBO",
+        "icon": "$(clear-all)"
       },
       {
         "command": "fbo-autocomplete.openBrowserForFile",

@@ -4,21 +4,22 @@ const path = require('path');
 const os = require('os');
 class updateSettingsJson {
     getUserSettingsPath() {
+        const ideType = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('ideType', 'vscode'));
+        const appName = ideType.toLowerCase() === 'cursor' ? 'Cursor' : 'Code';
         let appDataPath = '';
-        
+
         if (process.platform === 'win32') {
-            appDataPath = path.join(os.homedir(), 'AppData', 'Roaming', 'Code', 'User', 'settings.json');
+            appDataPath = path.join(os.homedir(), 'AppData', 'Roaming', appName, 'User', 'settings.json');
         } else if (process.platform === 'darwin') { // macOS
-            appDataPath = path.join(os.homedir(), 'Library', 'Application Support', 'Code', 'User', 'settings.json');
+            appDataPath = path.join(os.homedir(), 'Library', 'Application Support', appName, 'User', 'settings.json');
         } else { // Linux
-            appDataPath = path.join(os.homedir(), '.config', 'Code', 'User', 'settings.json');
+            appDataPath = path.join(os.homedir(), '.config', appName, 'User', 'settings.json');
         }
-    
         return appDataPath;
     }
     updateSettingsJson(context) {
         const settingsPath = this.getUserSettingsPath();
-        
+        console.log(settingsPath);
         if (!fs.existsSync(settingsPath)) {
             vscode.window.showErrorMessage("Không tìm thấy settings.json!");
             return;
@@ -32,8 +33,10 @@ class updateSettingsJson {
             try {
                 let settings = JSON.parse(data);
                 // Lấy đường dẫn thư mục XSD trong extension
-                const extensionPath = path.join(context.extensionPath, 'src', 'Database', 'XSD');
-                const extensionPathMobile = path.join(context.extensionPath, 'src', 'Database', 'Mobile');
+                var  extensionPath = path.join(context.extensionPath, 'src', 'Database', 'XSD');
+                var extensionPathMobile = path.join(context.extensionPath, 'src', 'Database', 'Mobile');
+                var ideType = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('ideType', 'vscode'));
+                extensionPathMobile = ideType.toLowerCase() === 'cursor' ? extensionPathMobile.replace('.vscode', '.cursor') : extensionPathMobile.replace('.cursor', '.vscode');
                 // 🛑 Xóa toàn bộ "xml.fileAssociations"
                 settings["xml.fileAssociations"] = [
                     { "pattern": "**/Controllers/Dir/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },
@@ -49,7 +52,6 @@ class updateSettingsJson {
                     { "pattern": "**/Mobile/Dir/*.xml", "systemId": path.join(extensionPathMobile, "Dir.xsd") },
                     { "pattern": "**/Mobile/Grid/*.xml", "systemId": path.join(extensionPathMobile, "Grid.xsd") }
                 ];
-               
                 // 📝 Ghi lại file settings.json với danh sách mới
                 fs.writeFile(settingsPath, JSON.stringify(settings, null, 4), 'utf8', (err) => {
                     if (err) {

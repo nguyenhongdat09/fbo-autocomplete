@@ -1,4 +1,5 @@
-// @ts-nocheck — TreeItem được gắn thêm thuộc tính fbo* cho cây nhiều cấp.
+
+// @ts-nocheck
 
 const vscode = require("vscode");
 const path = require("path");
@@ -8,6 +9,7 @@ function fboTreeLabel(label) {
     if (label == null) return "";
     return typeof label === "string" ? label : (label.label || "");
 }
+
 const app_dataChecker = require("./AppDataPathHelper");
 const OpenBrowser = require("./BrowserHandle/OpenBrowser");
 const DBStatusBarManager = require("../DBQuery/dbBar");
@@ -22,57 +24,21 @@ class TreeHelper {
         this.parent = parent;
     }
 
-    _findFileInItems(items, filePath) {
-        if (!items || !items.length) return null;
-        for (const it of items) {
-            if (it.contextValue === "file" && it.resourceUri && it.resourceUri.fsPath === filePath) {
-                return it;
-            }
-            if (it.contextValue === "folder" && it.fboFolderKey) {
-                const children = this.parent.folderChildren.get(it.fboFolderKey);
-                const found = this._findFileInItems(children, filePath);
-                if (found) return found;
-            }
-        }
-        return null;
-    }
-
-    _collectFileUrisFromItems(items, outSet) {
-        if (!items || !items.length) return;
-        for (const it of items) {
-            if (it.contextValue === "file" && it.resourceUri) {
-                outSet.add(it.resourceUri.toString());
-            } else if (it.contextValue === "folder" && it.fboFolderKey) {
-                this._collectFileUrisFromItems(this.parent.folderChildren.get(it.fboFolderKey), outSet);
-            }
-        }
-    }
-
     getGroupName(filePath) {
         this.app_dataChecker.filePath = filePath;
         return this.app_dataChecker.getGroupName().toUpperCase();
     }
 
     getParentGroup(treeItem) {
-        if (!treeItem || treeItem.contextValue !== "file") return null;
-        const groupName = treeItem.fboGroupName;
-        if (groupName && this.parent.groupItems && this.parent.groupItems.has(groupName)) {
-            return this.parent.groupItems.get(groupName);
-        }
-        const fp = treeItem.resourceUri && treeItem.resourceUri.fsPath;
-        if (!fp) return null;
         for (const [group, items] of this.parent.treeData) {
-            const found = this._findFileInItems(items, fp);
-            if (found === treeItem) {
-                return this.parent.groupItems.get(group) || null;
-            }
+            if (items.includes(treeItem)) return new vscode.TreeItem(group, vscode.TreeItemCollapsibleState.Expanded);
         }
         return null;
     }
 
     getTreeItemByPath(filePath) {
-        for (const [, items] of this.parent.treeData) {
-            const foundItem = this._findFileInItems(items, filePath);
+        for (const [group, items] of this.parent.treeData) {
+            const foundItem = items.find(item => item.resourceUri.fsPath === filePath);
             if (foundItem) return foundItem;
         }
         return null;
@@ -127,9 +93,7 @@ class TreeHelper {
     async closeGroupFiles(groupName) {
         if (!this.parent.treeData.has(groupName)) return;
 
-        const uriSet = new Set();
-        this._collectFileUrisFromItems(this.parent.treeData.get(groupName), uriSet);
-        const files = [...uriSet];
+        const files = this.parent.treeData.get(groupName).map(item => item.resourceUri.toString());
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
 
         const targetTabs = tabs.filter(tab => {
@@ -159,7 +123,7 @@ class TreeHelper {
     async revealActiveFile(group_label) {
         var cur_Item = this.getCurrentPathActive();
         if (cur_Item && cur_Item.parentGroup) {
-            if (group_label != cur_Item.parentGroup.label) return
+            if (fboTreeLabel(group_label) !== fboTreeLabel(cur_Item.parentGroup.label)) return;
             try {
                 await this.parent.treeView.reveal(cur_Item.treeItem, { select: true, expand: false });
             } catch (error) {
@@ -182,21 +146,14 @@ class TreeFileProvider extends TreeHelper {
         this.dragMimeTypes = [this.typeDr];
         this.treeView = null;
         this.groupItems = new Map();
-        /** @type {Map<string, import('vscode').TreeItem[]>} */
-        this.folderChildren = new Map();
-        /** @type {Map<string, import('vscode').TreeItem>} */
-        this.folderItems = new Map();
         this.context = null;
         this.debouncedRefresh = this.debounce(() => this.refresh(), 300);
         this._isInitialized = false;
         this._buildPromise = null;
         this._lastSelect = { path: null, time: 0 };
         this.dbStatusBar = null;
-        /** Chuỗi gốc người dùng nhập (để hiển thị / lưu workspace). */
         this._treeFilterRaw = "";
-        /** Lọc dạng substring (lowercase); rỗng nếu chỉ dùng glob. */
         this._treeFilterSubstr = "";
-        /** Glob đơn giản trên tên file / nhãn folder khi có ký tự `*`. */
         this._treeFilterGlobRe = null;
     }
 
@@ -248,29 +205,15 @@ class TreeFileProvider extends TreeHelper {
         return bl.includes(this._treeFilterSubstr) || fl.includes(this._treeFilterSubstr);
     }
 
-    _applyTreeFilterToItems(items) {
+    /** Cây 1 cấp: chỉ các node file dưới group. */
+    _applyTreeFilterToFlatFileItems(items) {
         if (!items || !items.length) {
             return [];
         }
         if (!this._hasActiveTreeFilter()) {
             return items;
         }
-        const out = [];
-        for (const it of items) {
-            if (it.contextValue === "file") {
-                if (this._treeFilterFileMatches(it)) {
-                    out.push(it);
-                }
-            } else if (it.contextValue === "folder") {
-                const subRaw = this.folderChildren.get(it.fboFolderKey) || [];
-                const subFiltered = this._applyTreeFilterToItems(subRaw);
-                const name = fboTreeLabel(it.label);
-                if (subFiltered.length > 0 || this._treeFilterLabelMatches(name)) {
-                    out.push(it);
-                }
-            }
-        }
-        return out;
+        return items.filter((it) => it.contextValue === "file" && this._treeFilterFileMatches(it));
     }
 
     _filterRootGroupItems(roots) {
@@ -280,10 +223,8 @@ class TreeFileProvider extends TreeHelper {
         return roots.filter((g) => {
             const label = fboTreeLabel(g.label);
             const raw = this.treeData.get(label) || [];
-            const filtered = this._applyTreeFilterToItems(raw);
-            if (filtered.length > 0) {
-                return true;
-            }
+            const filtered = this._applyTreeFilterToFlatFileItems(raw);
+            if (filtered.length > 0) return true;
             return this._treeFilterLabelMatches(label);
         });
     }
@@ -294,158 +235,6 @@ class TreeFileProvider extends TreeHelper {
         }
         this.treeView.description = undefined;
         vscode.commands.executeCommand("setContext", "fboFileTreeFilterActive", !!this._treeFilterRaw);
-    }
-
-    _relDirSegments(groupPath, filePath) {
-        if (!groupPath) return [];
-        const dir = path.dirname(filePath);
-        let relDir = path.relative(groupPath, dir);
-        if (!relDir || relDir === ".") return [];
-        if (relDir.startsWith("..") || path.isAbsolute(relDir)) return [];
-        return relDir.split(path.sep).filter(Boolean);
-    }
-
-    /**
-     * Phần suffix của fboFolderKey: luôn dùng segment chữ thường để gộp Lookup/lookup
-     * (UNC/Windows không phân biệt hoa thường; VS Code có thể trả về path khác nhau từng tab).
-     */
-    _folderKeySuffixNormalized(segments, endExclusive) {
-        return segments.slice(0, endExclusive).map((s) => s.toLowerCase()).join("/");
-    }
-
-    /**
-     * @param {string} groupName
-     * @param {string[]} segments
-     * @param {string} groupPath
-     * @returns {string|null} fboFolderKey of deepest folder, or null if segments empty
-     */
-    _ensureFolderNodes(groupName, segments, groupPath) {
-        if (!segments.length || !groupPath) return null;
-        let parentFolderKey = null;
-        let accumPath = groupPath;
-        for (let i = 0; i < segments.length; i++) {
-            const seg = segments[i];
-            const folderKey = `${groupName}::${this._folderKeySuffixNormalized(segments, i + 1)}`;
-            if (!this.folderItems.has(folderKey)) {
-                accumPath = path.join(accumPath, seg);
-                const folderItem = new vscode.TreeItem(seg, vscode.TreeItemCollapsibleState.Collapsed);
-                folderItem.resourceUri = vscode.Uri.file(accumPath);
-                folderItem.contextValue = "folder";
-                folderItem.fboFolderKey = folderKey;
-                folderItem.fboGroupName = groupName;
-                folderItem.fboParentFolderKey = parentFolderKey;
-                folderItem.iconPath = vscode.ThemeIcon.Folder;
-                this.folderItems.set(folderKey, folderItem);
-                this.folderChildren.set(folderKey, []);
-                if (parentFolderKey === null) {
-                    this.treeData.get(groupName).push(folderItem);
-                } else {
-                    this.folderChildren.get(parentFolderKey).push(folderItem);
-                }
-            } else {
-                const existing = this.folderItems.get(folderKey);
-                if (existing && existing.resourceUri && existing.resourceUri.fsPath) {
-                    accumPath = existing.resourceUri.fsPath;
-                } else {
-                    accumPath = path.join(accumPath, seg);
-                }
-            }
-            parentFolderKey = folderKey;
-        }
-        return parentFolderKey;
-    }
-
-    _sortFolderTreeItems(items, sortType) {
-        if (!items || !items.length) return;
-        items.sort((a, b) => {
-            const af = a.contextValue === "file";
-            const bf = b.contextValue === "file";
-            if (!af && bf) return -1;
-            if (af && !bf) return 1;
-            const labelA = typeof a.label === "string" ? a.label : (a.label && a.label.label) || "";
-            const labelB = typeof b.label === "string" ? b.label : (b.label && b.label.label) || "";
-            if (!af && !bf) return labelA.localeCompare(labelB);
-            const fa = a.resourceUri.fsPath;
-            const fb = b.resourceUri.fsPath;
-            const ea = path.extname(fa).toLowerCase();
-            const eb = path.extname(fb).toLowerCase();
-            if (ea !== eb) return ea.localeCompare(eb);
-            if (String(sortType) === "folderName") {
-                const da = path.basename(path.dirname(fa));
-                const db = path.basename(path.dirname(fb));
-                const c = da.localeCompare(db);
-                if (c !== 0) return c;
-            }
-            return labelA.localeCompare(labelB);
-        });
-    }
-
-    _collectFileFsPathsFromItems(items, outSet) {
-        if (!items || !items.length) return;
-        for (const it of items) {
-            if (it.contextValue === "file" && it.resourceUri) {
-                outSet.add(it.resourceUri.fsPath);
-            } else if (it.contextValue === "folder" && it.fboFolderKey) {
-                this._collectFileFsPathsFromItems(this.folderChildren.get(it.fboFolderKey), outSet);
-            }
-        }
-    }
-
-    _removeFileFromItems(items, filePath) {
-        if (!items || !items.length) return false;
-        for (let i = 0; i < items.length; i++) {
-            const it = items[i];
-            if (it.contextValue === "file" && it.resourceUri && it.resourceUri.fsPath === filePath) {
-                items.splice(i, 1);
-                return true;
-            }
-            if (it.contextValue === "folder" && it.fboFolderKey) {
-                const ch = this.folderChildren.get(it.fboFolderKey);
-                if (ch && this._removeFileFromItems(ch, filePath)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    _pruneEmptyFoldersForGroup(groupName) {
-        let changed = true;
-        while (changed) {
-            changed = false;
-            for (const [key, folderItem] of [...this.folderItems.entries()]) {
-                if (folderItem.fboGroupName !== groupName) continue;
-                const ch = this.folderChildren.get(key);
-                if (!ch || ch.length !== 0) continue;
-                const pk = folderItem.fboParentFolderKey;
-                if (pk) {
-                    const pl = this.folderChildren.get(pk);
-                    if (pl) {
-                        const idx = pl.indexOf(folderItem);
-                        if (idx !== -1) pl.splice(idx, 1);
-                    }
-                } else {
-                    const roots = this.treeData.get(groupName);
-                    if (roots) {
-                        const idx = roots.indexOf(folderItem);
-                        if (idx !== -1) roots.splice(idx, 1);
-                    }
-                }
-                this.folderChildren.delete(key);
-                this.folderItems.delete(key);
-                changed = true;
-            }
-        }
-    }
-
-    _clearFolderMapsForGroup(groupName) {
-        const prefix = `${groupName}::`;
-        for (const key of [...this.folderItems.keys()]) {
-            if (key.startsWith(prefix)) {
-                this.folderItems.delete(key);
-                this.folderChildren.delete(key);
-            }
-        }
     }
 
     async run(context) {
@@ -636,8 +425,6 @@ class TreeFileProvider extends TreeHelper {
             vscode.window.showInformationMessage("FBO File Tree đã được reload!");
         });
 
-        this._syncTreeViewFilterBadge();
-
         // ✅ onDidExpandElement - Reveal khi expand group
         this.treeView.onDidExpandElement(async (event) => {
             const element = event.element;
@@ -656,37 +443,8 @@ class TreeFileProvider extends TreeHelper {
        
         this.dbStatusBar = new DBStatusBarManager(context); 
         this.dbStatusBar.show();
+        this._syncTreeViewFilterBadge();
         context.subscriptions.push(this.treeView, disposable);
-    }
-
-    async promptTreeFilter() {
-        if (!this.context) {
-            return;
-        }
-        const value = await vscode.window.showInputBox({
-            title: "Lọc cây FBO Project",
-            placeHolder: "VD: SI, Grid, *.xml — để trống để xóa lọc",
-            value: this._treeFilterRaw,
-            prompt: "Khớp chuỗi trong tên/đường dẫn file (không phân biệt hoa thường). Có dấu * thì glob theo tên file hoặc tên folder.",
-            ignoreFocusOut: true,
-        });
-        if (value === undefined) {
-            return;
-        }
-        this._setFilterFromString(value);
-        await this.context.workspaceState.update("fboFileTree.filter", this._treeFilterRaw);
-        this._syncTreeViewFilterBadge();
-        this.refreshEvent.fire();
-    }
-
-    async clearTreeFilter() {
-        if (!this.context) {
-            return;
-        }
-        this._setFilterFromString("");
-        await this.context.workspaceState.update("fboFileTree.filter", "");
-        this._syncTreeViewFilterBadge();
-        this.refreshEvent.fire();
     }
 
     async buildTreeOptimized() {
@@ -697,8 +455,6 @@ class TreeFileProvider extends TreeHelper {
         this._buildPromise = (async () => {
             this.treeData.clear();
             this.groupItems.clear();
-            this.folderChildren.clear();
-            this.folderItems.clear();
 
             const openFiles = await this.getOpenEditors();
 
@@ -762,38 +518,28 @@ class TreeFileProvider extends TreeHelper {
                 return iconCache.get(key);
             };
 
-            // Build items (group → folder* → file)
+            // Build items
             for (const data of fileData) {
-                const { filePath, folderName, ext, groupName } = data;
+                const { filePath, folderName, fileName, ext, groupName, dirname } = data;
 
                 if (!this.treeData.has(groupName)) {
                     const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
                     groupItem.contextValue = "group";
 
                     this.app_dataChecker.filePath = filePath;
-                    const groupPathInit = this.app_dataChecker.getProjectPath();
-                    if (groupPathInit) {
-                        groupItem.resourceUri = vscode.Uri.file(groupPathInit);
+                    const groupPath = this.app_dataChecker.getProjectPath();
+                    if (groupPath) {
+                        groupItem.resourceUri = vscode.Uri.file(groupPath);
                     }
 
                     this.treeData.set(groupName, []);
                     this.groupItems.set(groupName, groupItem);
                 }
 
-                const groupItemRef = this.groupItems.get(groupName);
-                const groupPath = groupItemRef && groupItemRef.resourceUri && groupItemRef.resourceUri.fsPath;
-                const segments = this._relDirSegments(groupPath || "", filePath);
-                const parentFolderKey = this._ensureFolderNodes(groupName, segments, groupPath || "");
-                const parentList = parentFolderKey
-                    ? this.folderChildren.get(parentFolderKey)
-                    : this.treeData.get(groupName);
-
                 const uri = vscode.Uri.file(filePath);
                 const item = new vscode.TreeItem(uri, vscode.TreeItemCollapsibleState.None);
                 item.resourceUri = uri;
                 item.contextValue = "file";
-                item.fboGroupName = groupName;
-                item.fboParentFolderKey = parentFolderKey;
 
                 item.description = `(${folderName})`;
 
@@ -812,14 +558,7 @@ class TreeFileProvider extends TreeHelper {
                     }
                 }
 
-                parentList.push(item);
-            }
-
-            for (const [, items] of this.treeData) {
-                this._sortFolderTreeItems(items, sortType);
-            }
-            for (const [, items] of this.folderChildren) {
-                this._sortFolderTreeItems(items, sortType);
+                this.treeData.get(groupName).push(item);
             }
 
             return [...this.treeData.keys()].map(groupName => this.groupItems.get(groupName));
@@ -851,7 +590,6 @@ class TreeFileProvider extends TreeHelper {
     addFileToTree(filePath) {
         const uri = vscode.Uri.file(filePath);
         if (uri.scheme !== 'file') return;
-        if (this.getTreeItemByPath(filePath)) return;
 
         const folderName = path.basename(path.dirname(filePath));
         this.app_dataChecker.filePath = filePath;
@@ -861,14 +599,9 @@ class TreeFileProvider extends TreeHelper {
         }
         if (!groupName) return;
 
-        const config = vscode.workspace.getConfiguration('fbo-autocomplete');
-        const sortType = config.get('sortTree', 'FileName');
-        const iconRule = config.get('sortTree', 'iconRule');
-
         const item = new vscode.TreeItem(uri, vscode.TreeItemCollapsibleState.None);
         item.resourceUri = uri;
         item.contextValue = "file";
-        item.fboGroupName = groupName;
         item.description = `(${folderName})`;
 
         item.command = {
@@ -876,6 +609,9 @@ class TreeFileProvider extends TreeHelper {
             arguments: [uri],
             title: "Mở file"
         };
+
+        const config = vscode.workspace.getConfiguration('fbo-autocomplete');
+        const iconRule = config.get('sortTree', 'iconRule');
 
         if (String(iconRule) === 'Yes') {
             const iconName = `${path.extname(filePath).toLowerCase()}_icon.svg`;
@@ -908,25 +644,15 @@ class TreeFileProvider extends TreeHelper {
             this.groupItems.set(groupName, groupItem);
         }
 
-        const groupItemRef = this.groupItems.get(groupName);
-        const groupPath = groupItemRef && groupItemRef.resourceUri && groupItemRef.resourceUri.fsPath;
-        const segments = this._relDirSegments(groupPath || "", filePath);
-        const parentFolderKey = this._ensureFolderNodes(groupName, segments, groupPath || "");
-        item.fboParentFolderKey = parentFolderKey;
-        const parentList = parentFolderKey
-            ? this.folderChildren.get(parentFolderKey)
-            : this.treeData.get(groupName);
-
-        parentList.push(item);
-        this._sortFolderTreeItems(parentList, sortType);
+        this.treeData.get(groupName).push(item);
     }
 
     async smartRefresh() {
         const currentFiles = await this.getOpenEditors();
         const existingFiles = new Set();
 
-        for (const [, items] of this.treeData) {
-            this._collectFileFsPathsFromItems(items, existingFiles);
+        for (const [group, items] of this.treeData) {
+            items.forEach(item => existingFiles.add(item.resourceUri.fsPath));
         }
 
         const newFiles = currentFiles.filter(f => !existingFiles.has(f));
@@ -940,14 +666,13 @@ class TreeFileProvider extends TreeHelper {
     }
 
     removeSingleFile(filePath) {
-        for (const [groupName, items] of this.treeData) {
-            if (this._removeFileFromItems(items, filePath)) {
-                this._pruneEmptyFoldersForGroup(groupName);
-                const roots = this.treeData.get(groupName);
-                if (!roots || roots.length === 0) {
-                    this._clearFolderMapsForGroup(groupName);
-                    this.treeData.delete(groupName);
-                    this.groupItems.delete(groupName);
+        for (const [group, items] of this.treeData) {
+            const index = items.findIndex(item => item.resourceUri.fsPath === filePath);
+            if (index !== -1) {
+                items.splice(index, 1);
+                if (items.length === 0) {
+                    this.treeData.delete(group);
+                    this.groupItems.delete(group);
                 }
                 break;
             }
@@ -967,36 +692,15 @@ class TreeFileProvider extends TreeHelper {
             const roots = await this.buildTreeOptimized();
             return this._filterRootGroupItems(roots);
         }
-        if (element.contextValue === "group") {
-            const raw = this.treeData.get(fboTreeLabel(element.label)) || [];
-            return this._applyTreeFilterToItems(raw);
-        }
-        if (element.contextValue === "folder" && element.fboFolderKey) {
-            const raw = this.folderChildren.get(element.fboFolderKey) || [];
-            return this._applyTreeFilterToItems(raw);
-        }
-        return [];
+        const label = fboTreeLabel(element.label);
+        const raw = this.treeData.get(label) || [];
+        return this._applyTreeFilterToFlatFileItems(raw);
     }
 
     getParent(element) {
         if (!element) return null;
         if (element.contextValue === "file") {
-            if (element.fboParentFolderKey) {
-                return this.folderItems.get(element.fboParentFolderKey) || null;
-            }
-            if (element.fboGroupName) {
-                return this.groupItems.get(element.fboGroupName) || null;
-            }
-            return null;
-        }
-        if (element.contextValue === "folder") {
-            if (element.fboParentFolderKey) {
-                return this.folderItems.get(element.fboParentFolderKey) || null;
-            }
-            if (element.fboGroupName) {
-                return this.groupItems.get(element.fboGroupName) || null;
-            }
-            return null;
+            return this.getParentGroup(element);
         }
         return null;
     }
@@ -1012,6 +716,36 @@ class TreeFileProvider extends TreeHelper {
     async refresh() {
         this.parentSet = this;
         await this.buildTreeOptimized();
+        this.refreshEvent.fire();
+    }
+
+    async promptTreeFilter() {
+        if (!this.context) {
+            return;
+        }
+        const value = await vscode.window.showInputBox({
+            title: "Lọc cây FBO Project (1 cấp)",
+            placeHolder: "VD: SI, Grid, *.xml — để trống để xóa lọc",
+            value: this._treeFilterRaw,
+            prompt: "Khớp chuỗi trong tên/đường dẫn file (không phân biệt hoa thường). Có dấu * thì glob theo tên file hoặc tên nhóm.",
+            ignoreFocusOut: true,
+        });
+        if (value === undefined) {
+            return;
+        }
+        this._setFilterFromString(value);
+        await this.context.workspaceState.update("fboFileTree.filter", this._treeFilterRaw);
+        this._syncTreeViewFilterBadge();
+        this.refreshEvent.fire();
+    }
+
+    async clearTreeFilter() {
+        if (!this.context) {
+            return;
+        }
+        this._setFilterFromString("");
+        await this.context.workspaceState.update("fboFileTree.filter", "");
+        this._syncTreeViewFilterBadge();
         this.refreshEvent.fire();
     }
 
@@ -1035,7 +769,7 @@ class TreeFileProvider extends TreeHelper {
         if (!target || !target.resourceUri) return;
         const destPath = target.resourceUri.fsPath;
         if (!destPath) return;
-        if (target.contextValue !== "group" && target.contextValue !== "folder") return;
+        if (target.contextValue !== "group") return;
 
         console.log(target, dataTransfer, token);
         const item = dataTransfer.get(this.typeDr);

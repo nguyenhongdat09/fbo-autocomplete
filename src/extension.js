@@ -19,6 +19,8 @@ const DBStatusBarManagerCls = require("./DBQuery/dbBar");
 const QueryDatabase = require("./DBQuery/QueryDatabase_old");
 const ViewPanelResult = require("./DBQuery/QueryResultPanel");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
+const TreeFileProviderOneLevel = require("./TreeFile/TreeFileProviderOneLevel");
+const { registerDirtyFileDecorations } = require("./TreeFile/DirtyFileDecoration");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
 const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
 const CompleteCodeMobile = require("./CompleteCodeWithDB/Mobile/CompleteCodeMobile");
@@ -33,9 +35,7 @@ const PeekSqlClass = require("./DBQuery/PeekSql");
 /**
  * @param {vscode.ExtensionContext} context
  */ 
-async function activate(context) {
-    
-  
+async function activate(context) { 
 
     var constant = new Constant(context);
     // ✅ Sử dụng license check mới (by key)
@@ -46,10 +46,23 @@ async function activate(context) {
         vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
         return;
     }
-    /*Tree view*/
-    const treeDataProvider = new TreeFileProvider();
+    
+    /*Tree view — chọn provider theo fbo-autocomplete.fileTreeLayout */
+    const treeLayout = vscode.workspace.getConfiguration('fbo-autocomplete').get('fileTreeLayout', 'nested');
+    const TreeCtor = treeLayout === 'oneLevel' ? TreeFileProviderOneLevel : TreeFileProvider;
+    const treeDataProvider = new TreeCtor();
     treeDataProvider.run(context);
+    registerDirtyFileDecorations(context);
 
+    context.subscriptions.push(
+        vscode.commands.registerCommand('fbo-autocomplete.fboFileTreeFilter', async () => {
+            await treeDataProvider.promptTreeFilter();
+        }),
+        vscode.commands.registerCommand('fbo-autocomplete.fboFileTreeClearFilter', async () => {
+            await treeDataProvider.clearTreeFilter();
+        })
+    );
+    // Enđ trê 
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const enableGrammar = config.get('enableGrammar', true);
     toggleGrammar(enableGrammar, context.extensionPath);
@@ -59,6 +72,16 @@ async function activate(context) {
         if (e.affectsConfiguration('fbo-autocomplete.enableGrammar')) {
             const newValue = vscode.workspace.getConfiguration('fbo-autocomplete').get('enableGrammar');
             toggleGrammar(newValue, context.extensionPath);
+        }
+        if (e.affectsConfiguration('fbo-autocomplete.fileTreeLayout')) {
+            vscode.window.showInformationMessage(
+                'FBO: Để áp dụng kiểu cây mới (1 cấp / nhiều cấp), vui lòng tải lại cửa sổ.',
+                'Reload Window'
+            ).then((choice) => {
+                if (choice === 'Reload Window') {
+                    vscode.commands.executeCommand('workbench.action.reloadWindow');
+                }
+            });
         }
     });
     
@@ -81,9 +104,7 @@ async function activate(context) {
     // let openWithVSCode = vscode.commands.registerCommand('fbo-autocomplete.OpenWithVSCode', (uri) => {
     //     OpenWithVSCode.open(uri);
     // });
-
-   
-
+ 
     // Thêm sự kiện mở file XML
     const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
         if (document.languageId === 'xml' && document.uri.scheme === 'file') {
@@ -91,28 +112,10 @@ async function activate(context) {
         }
     });
 
-    // Thêm sự kiện lưu file XML
-    const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
-        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
-            ReadXMLVS2008.readXml(document.uri.fsPath, context);
-        }
-    });
+    // UTF-8 BOM bytes để ghi xuống đĩa (không chèn vào nội dung editor → tránh hiển thị dấu ?)
+    const UTF8_BOM = Buffer.from([0xEF, 0xBB, 0xBF]);
 
-    // Khi sắp lưu file XML: tự động thêm UTF-8 BOM nếu bật cấu hình và file chưa có BOM
-    const onWillSaveXmlBom = vscode.workspace.onWillSaveTextDocument((event) => {
-        const xmlSaveUtf8Bom = vscode.workspace.getConfiguration('fbo-autocomplete').get('xmlSaveUtf8Bom', true);
-        if (!xmlSaveUtf8Bom) return;
-        const doc = event.document;
-        if (doc.uri.scheme !== 'file') return;
-        const path = (doc.uri.fsPath || '').toLowerCase();
-        if (!path.endsWith('.xml')) return;
-        const text = doc.getText();
-        if (text.length === 0) return;
-        if (text.charCodeAt(0) === 0xFEFF) return; // đã có BOM
-        event.waitUntil(Promise.resolve([
-            new vscode.TextEdit(new vscode.Range(0, 0, 0, 0), '\uFEFF')
-        ]));
-    });
+    
 
     const entityHoverProvider = new EntityHoverProvider(__dirname, context);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
@@ -314,8 +317,6 @@ async function activate(context) {
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
-    context.subscriptions.push(onDidSaveTextDocument);
-    context.subscriptions.push(onWillSaveXmlBom);
     calculationProvider.register(context); 
     // context.subscriptions.push(openWithVSCode);
     /*
