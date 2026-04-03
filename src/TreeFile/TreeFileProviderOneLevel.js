@@ -131,6 +131,52 @@ class TreeHelper {
             }
         }
     }
+
+    _parseDroppedFsPaths(dataTransfer) {
+        const item = dataTransfer.get(this.typeDr);
+        const droppedValue = item?.value;
+        if (!droppedValue) return [];
+        const uriListText = typeof droppedValue === "string"
+            ? droppedValue
+            : (typeof droppedValue?.asString === "function" ? droppedValue.asString() : null);
+        if (!uriListText) return [];
+        return uriListText
+            .split(/\r?\n/)
+            .map(s => s.trim())
+            .filter(s => !!s && !s.startsWith("#"))
+            .map(s => {
+                try { return vscode.Uri.parse(s); } catch { return null; }
+            })
+            .filter(uri => !!uri && uri.scheme === "file")
+            .map(uri => uri.fsPath);
+    }
+
+    async _openDroppedFsPaths(filePaths) {
+        for (const fp of filePaths) {
+            try {
+                await vscode.window.showTextDocument(vscode.Uri.file(fp), { preview: false, viewColumn: vscode.ViewColumn.Active });
+            } catch (err) {
+                vscode.window.showWarningMessage(`Không thể mở file: ${fp}`);
+            }
+        }
+    }
+
+    _getPasteDestinationForDropTarget(dropTargetFsPath, sourceFilePath) {
+        this.app_dataChecker.filePath = sourceFilePath;
+        const parts = this.app_dataChecker.getPathAfterProject();
+        if (!parts || parts.length < 2 || !parts[1]) return null;
+        return path.join(dropTargetFsPath, parts[1]);
+    }
+
+    _isDroppedFileAlreadyAtTarget(dropTargetFsPath, sourceFilePath) {
+        const expected = this._getPasteDestinationForDropTarget(dropTargetFsPath, sourceFilePath);
+        if (!expected) return false;
+        try {
+            return path.normalize(sourceFilePath) === path.normalize(expected);
+        } catch {
+            return false;
+        }
+    }
 }
 
 class TreeFileProvider extends TreeHelper {
@@ -765,38 +811,49 @@ class TreeFileProvider extends TreeHelper {
         dataTransfer.set(this.typeDr, new vscode.DataTransferItem(uriList));
     }
 
-    handleDrop(target, dataTransfer, token) {
-        if (!target || !target.resourceUri) return;
-        const destPath = target.resourceUri.fsPath;
-        if (!destPath) return;
-        if (target.contextValue !== "group") return;
-
-        console.log(target, dataTransfer, token);
-        const item = dataTransfer.get(this.typeDr);
-        const droppedValue = item?.value;
-        if (!droppedValue) return;
-
-        const uriListText = typeof droppedValue === "string"
-            ? droppedValue
-            : (typeof droppedValue?.asString === "function" ? droppedValue.asString() : null);
-
-        if (!uriListText) return;
-
-        const filePaths = uriListText
-            .split(/\r?\n/)
-            .map(s => s.trim())
-            .filter(s => !!s && !s.startsWith("#"))
-            .map(s => {
-                try { return vscode.Uri.parse(s); } catch { return null; }
-            })
-            .filter(uri => !!uri)
-            .map(uri => uri.fsPath);
-
+    async handleDrop(target, dataTransfer, token) {
+        const filePaths = this._parseDroppedFsPaths(dataTransfer);
         if (!filePaths.length) return;
-        try {
-            this.app_dataChecker.pasteFilesToGroup(destPath, filePaths, 0);
-        } catch (ex) {
-            console.log(ex);
+
+        // Kéo vào vùng trống / không phải nhóm: chỉ mở file (không paste).
+        if (!target || !target.resourceUri || target.contextValue !== "group") {
+            await this._openDroppedFsPaths(filePaths);
+            return;
+        }
+
+        const destPath = target.resourceUri.fsPath;
+        if (!destPath) {
+            await this._openDroppedFsPaths(filePaths);
+            return;
+        }
+
+        const toOpen = [];
+        const toPaste = [];
+        for (const fp of filePaths) {
+            this.app_dataChecker.filePath = fp;
+            if (this.app_dataChecker.getGroupName() === "Other") {
+                toOpen.push(fp);
+                continue;
+            }
+            const parts = this.app_dataChecker.getPathAfterProject();
+            if (!parts || parts.length < 2 || !parts[1]) {
+                toOpen.push(fp);
+                continue;
+            }
+            if (this._isDroppedFileAlreadyAtTarget(destPath, fp)) {
+                toOpen.push(fp);
+            } else {
+                toPaste.push(fp);
+            }
+        }
+
+        await this._openDroppedFsPaths(toOpen);
+        if (toPaste.length) {
+            try {
+                await this.app_dataChecker.pasteFilesToGroup(destPath, toPaste, 0);
+            } catch (ex) {
+                console.log(ex);
+            }
         }
     }
 }
