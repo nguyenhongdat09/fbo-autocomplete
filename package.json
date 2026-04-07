@@ -132,7 +132,7 @@
         },
         {
           "command": "fbo-autocomplete.closeGroupFiles",
-          "when": "viewItem == group",
+          "when": "view == fbo_file && (viewItem == group || viewItem == folder)",
           "group": "inline"
         },
         {

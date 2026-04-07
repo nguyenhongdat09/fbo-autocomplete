@@ -90,7 +90,10 @@ class TreeHelper {
         await this.parent.refresh()
     }
 
-    async closeGroupFiles(groupName) {
+    async closeGroupFiles(element) {
+        if (!element || element.contextValue !== "group") return;
+
+        const groupName = fboTreeLabel(element.label);
         if (!this.parent.treeData.has(groupName)) return;
 
         const files = this.parent.treeData.get(groupName).map(item => item.resourceUri.toString());
@@ -98,7 +101,10 @@ class TreeHelper {
 
         const targetTabs = tabs.filter(tab => {
             const input = tab.input;
-            return input && typeof input === "object" && "uri" in input && files.includes(input.uri.toString());
+            if (!input || typeof input !== "object") return false;
+            if ("uri" in input && files.includes(input.uri.toString())) return true;
+            if ("resource" in input && files.includes(input.resource.toString())) return true;
+            return false;
         });
 
         if (targetTabs.length > 0) {
@@ -461,9 +467,7 @@ class TreeFileProvider extends TreeHelper {
         });
 
         vscode.commands.registerCommand('fbo-autocomplete.closeGroupFiles', async (element) => {
-            if (element && element.label) {
-                await this.closeGroupFiles(element.label);
-            }
+            await this.closeGroupFiles(element);
         });
 
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", async () => {

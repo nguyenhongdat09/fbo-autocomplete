@@ -124,23 +124,40 @@ class TreeHelper {
         await this.parent.refresh()
     }
 
-    async closeGroupFiles(groupName) {
-        if (!this.parent.treeData.has(groupName)) return;
+    async closeGroupFiles(element) {
+        if (!element) return;
 
         const uriSet = new Set();
-        this._collectFileUrisFromItems(this.parent.treeData.get(groupName), uriSet);
+        if (element.contextValue === "group") {
+            const groupName = fboTreeLabel(element.label);
+            if (!this.parent.treeData.has(groupName)) return;
+            this._collectFileUrisFromItems(this.parent.treeData.get(groupName), uriSet);
+        } else if (element.contextValue === "folder" && element.fboFolderKey) {
+            const children = this.parent.folderChildren.get(element.fboFolderKey);
+            this._collectFileUrisFromItems(children || [], uriSet);
+        } else {
+            return;
+        }
+
         const files = [...uriSet];
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
 
         const targetTabs = tabs.filter(tab => {
             const input = tab.input;
-            return input && typeof input === "object" && "uri" in input && files.includes(input.uri.toString());
+            if (!input || typeof input !== "object") return false;
+            if ("uri" in input && files.includes(input.uri.toString())) return true;
+            if ("resource" in input && files.includes(input.resource.toString())) return true;
+            return false;
         });
 
         if (targetTabs.length > 0) {
             await vscode.window.tabGroups.close(targetTabs);
         } else {
-            console.warn(`⚠️ Không tìm thấy file nào trong Open Editors cho nhóm: ${groupName}`);
+            const scope =
+                element.contextValue === "folder" && element.resourceUri
+                    ? element.resourceUri.fsPath
+                    : fboTreeLabel(element.label);
+            console.warn(`⚠️ Không tìm thấy file nào trong Open Editors trong phạm vi: ${scope}`);
         }
 
         await this.parent.refresh();
@@ -672,9 +689,7 @@ class TreeFileProvider extends TreeHelper {
         });
 
         vscode.commands.registerCommand('fbo-autocomplete.closeGroupFiles', async (element) => {
-            if (element && element.label) {
-                await this.closeGroupFiles(element.label);
-            }
+            await this.closeGroupFiles(element);
         });
 
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", async () => {
