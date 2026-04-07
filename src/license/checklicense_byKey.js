@@ -7,27 +7,41 @@ const { machineIdSync } = require('node-machine-id');
 // ✅ CONFIG
 const KEY_FILE_NAME = 'extensionKey.dat';
 
+/** @type {import('vscode').ExtensionContext | null} */
+let _lastLicenseContext = null;
+
 // Lấy Machine ID (hash SHA256)
 const machineId = machineIdSync(true); // true = return original ID (not hashed)
 const machineIdHash = crypto.createHash('sha256').update(machineId).digest('hex').substring(0, 8); // Lấy 8 ký tự đầu
 
 /**
- * ✅ Lấy đường dẫn folder Database (giống DatabaseRender)
+ * Đường dẫn extensionKey.dat trong globalStorage (sống qua update VSIX).
+ * @param {import('vscode').ExtensionContext} [context]
  */
-function getDatabasePath() {
-    return path.resolve(__dirname, '..', 'Database');
+function getKeyFilePath(context) {
+    const ctx = context || _lastLicenseContext;
+    if (!ctx || !ctx.globalStorageUri) {
+        throw new Error('checklicense_byKey: ExtensionContext.globalStorageUri is required');
+    }
+    const dir = ctx.globalStorageUri.fsPath;
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+    return path.join(dir, KEY_FILE_NAME);
 }
 
-/**
- * Lấy đường dẫn file extensionKey.dat
- */
-function getKeyFilePath() {
-    const databaseDir = getDatabasePath();
-    // Tạo folder Database nếu chưa tồn tại
-    if (!fs.existsSync(databaseDir)) {
-        fs.mkdirSync(databaseDir, { recursive: true });
+function tryReadKeyFromFile(filePath) {
+    if (!filePath || !fs.existsSync(filePath)) return null;
+    try {
+        const k = fs.readFileSync(filePath, 'utf8').trim();
+        return k || null;
+    } catch {
+        return null;
     }
-    return path.join(databaseDir, KEY_FILE_NAME);
+}
+
+function isKeyValidForThisMachine(key) {
+    return !!(key && key.length >= 8 && key.substring(0, 8) === machineIdHash);
 }
 
 /**
@@ -116,29 +130,47 @@ function generateLicenseKey(extensionKey) {
 }
 
 /**
- * Đọc hoặc tạo extensionKey
+ * Đọc hoặc tạo extensionKey (globalStorage; migrate từ settings hoặc Database cũ trong extension)
+ * @param {import('vscode').ExtensionContext} context
  */
-function getOrCreateExtensionKey() {
-    const filePath = getKeyFilePath();
-    
-    // Nếu file đã tồn tại → đọc
-    if (fs.existsSync(filePath)) {
-        try {
-            const key = fs.readFileSync(filePath, 'utf8').trim();
-            return key;
-        } catch (e) {
-            // Error reading key file
-        }
+function getOrCreateExtensionKey(context) {
+    _lastLicenseContext = context;
+    const filePath = getKeyFilePath(context);
+
+    const existing = tryReadKeyFromFile(filePath);
+    if (existing) {
+        return existing;
     }
-    
-    // Nếu chưa có → tạo mới
+
+    const config = vscode.workspace.getConfiguration('fbo-autocomplete');
+    const fromSettings = String(config.get('extensionKey', '') || '').trim();
+    if (fromSettings && isKeyValidForThisMachine(fromSettings)) {
+        try {
+            fs.writeFileSync(filePath, fromSettings, 'utf8');
+        } catch {
+            // ignore
+        }
+        return fromSettings;
+    }
+
+    const legacyPath = path.join(context.extensionPath, 'Database', KEY_FILE_NAME);
+    const fromLegacy = tryReadKeyFromFile(legacyPath);
+    if (fromLegacy && isKeyValidForThisMachine(fromLegacy)) {
+        try {
+            fs.writeFileSync(filePath, fromLegacy, 'utf8');
+        } catch {
+            // ignore
+        }
+        return fromLegacy;
+    }
+
     const newKey = generateRandomKey();
     try {
         fs.writeFileSync(filePath, newKey, 'utf8');
-    } catch (e) {
-        // Error writing key file
+    } catch {
+        // ignore
     }
-    
+
     return newKey;
 }
 
@@ -157,16 +189,22 @@ function updateExtensionKeyInSettings(extensionKey) {
 
 /**
  * ✅ Main check license function
+ * @param {import('vscode').ExtensionContext} context
  */
-async function checkLicense() {
+async function checkLicense(context) {
+    if (!context || !context.globalStorageUri) {
+        vscode.window.showErrorMessage('❌ Internal error: extension context missing for license.');
+        return false;
+    }
+
     // Bước 1: Lấy hoặc tạo extension key
-    const extensionKey = getOrCreateExtensionKey();
+    const extensionKey = getOrCreateExtensionKey(context);
     
     // Bước 2: ⚠️ VERIFY MACHINE ID - Kiểm tra 8 ký tự đầu có khớp với machine hiện tại không
     const keyMachineIdPart = extensionKey.substring(0, 8);
     if (keyMachineIdPart !== machineIdHash) {
         // Xóa file key cũ và tạo mới cho máy này
-        const filePath = getKeyFilePath();
+        const filePath = getKeyFilePath(context);
         if (fs.existsSync(filePath)) {
             fs.unlinkSync(filePath);
         }
@@ -222,29 +260,39 @@ async function checkLicense() {
 
 /**
  * Force refresh - xóa key cũ và tạo mới (dùng cho debug)
+ * @param {import('vscode').ExtensionContext} [context]
  */
-async function refreshLicense() {
-    const filePath = getKeyFilePath();
+async function refreshLicense(context) {
+    const ctx = context || _lastLicenseContext;
+    if (!ctx || !ctx.globalStorageUri) {
+        return false;
+    }
+    const filePath = getKeyFilePath(ctx);
     if (fs.existsSync(filePath)) {
         try {
             fs.unlinkSync(filePath);
-        } catch (e) {
+        } catch {
             return false;
         }
     }
-    return await checkLicense();
+    return await checkLicense(ctx);
 }
 
 /**
  * Clear license cache
+ * @param {import('vscode').ExtensionContext} [context]
  */
-function clearLicenseCache() {
-    const filePath = getKeyFilePath();
+function clearLicenseCache(context) {
+    const ctx = context || _lastLicenseContext;
+    if (!ctx || !ctx.globalStorageUri) {
+        return false;
+    }
+    const filePath = getKeyFilePath(ctx);
     if (fs.existsSync(filePath)) {
         try {
             fs.unlinkSync(filePath);
             return true;
-        } catch (e) {
+        } catch {
             return false;
         }
     }

@@ -1,3 +1,6 @@
 node_modules
 .vscode-test/
 
+# Key máy dev — không commit / không đóng gói nhầm
+src/Database/extensionKey.dat
+

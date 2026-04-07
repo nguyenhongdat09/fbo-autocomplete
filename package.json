@@ -276,25 +276,33 @@
           "type": "string",
           "enum": [
             "oneLevel",
-            "nested"
+            "nested",
+            "dynamic"
           ],
           "enumDescriptions": [
             "Một cấp: nhóm (group) → danh sách file phẳng.",
-            "Nhiều cấp: nhóm → thư mục con → file (theo cấu trúc thư mục dự án)."
+            "Nhiều cấp: nhóm → thư mục con → file (theo cấu trúc thư mục dự án).",
+            "Dynamic: mỗi group — ít file thì phẳng; từ ngưỡng (fileTreeDynamicMinFiles) trở lên thì nhiều cấp."
           ],
           "default": "oneLevel",
-          "description": "Kiểu cây view FBO Project. Sau khi đổi, hãy Reload Window để áp dụng (mở Command Palette → 'Developer: Reload Window')."
+          "description": "Kiểu cây view FBO Project. Đổi layout (oneLevel / nested / dynamic) cần Reload Window. Đổi chỉ ngưỡng dynamic có thể refresh cây."
+        },
+        "fbo-autocomplete.fileTreeDynamicMinFiles": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "description": "Chỉ khi fileTreeLayout = dynamic: số file đang mở trong một group ≥ giá trị này thì dùng cây nhiều cấp; nhỏ hơn thì phẳng dưới group."
+        },
+        "fbo-autocomplete.licenseCacheDuration": {
+          "type": "number",
+          "default": 24,
+          "description": "License cache duration in hours"
+        },
+        "fbo-autocomplete.licenseTimeout": {
+          "type": "number",
+          "default": 3000,
+          "description": "License check timeout in milliseconds"
         }
-      },
-      "fbo-autocomplete.licenseCacheDuration": {
-        "type": "number",
-        "default": 24,
-        "description": "License cache duration in hours"
-      },
-      "fbo-autocomplete.licenseTimeout": {
-        "type": "number",
-        "default": 3000,
-        "description": "License check timeout in milliseconds"
       }
     },
     "keybindings": [

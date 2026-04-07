@@ -20,6 +20,7 @@ const QueryDatabase = require("./DBQuery/QueryDatabase_old");
 const ViewPanelResult = require("./DBQuery/QueryResultPanel");
 const TreeFileProvider = require("./TreeFile/TreeFileProvider");
 const TreeFileProviderOneLevel = require("./TreeFile/TreeFileProviderOneLevel");
+const TreeFileProviderDynamic = require("./TreeFile/TreeFileProviderDynamic");
 const { registerDirtyFileDecorations } = require("./TreeFile/DirtyFileDecoration");
 const ContextMenuHandler = require("./TreeFile/ContextMenu");
 const CheckLegacyMessage = require("./CheckLegacy/CheckLagacyMessage");
@@ -41,15 +42,20 @@ async function activate(context) {
     // ✅ Sử dụng license check mới (by key)
    // var { checkLicense } = require('./license/checklicense');
     var { checkLicense } = require('./license/checklicense_byKey');
-    var license = await checkLicense();
+    var license = await checkLicense(context);
     if (!license) {
         vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
         return;
     }
     
     /*Tree view — chọn provider theo fbo-autocomplete.fileTreeLayout */
-    const treeLayout = vscode.workspace.getConfiguration('fbo-autocomplete').get('fileTreeLayout', 'nested');
-    const TreeCtor = treeLayout === 'oneLevel' ? TreeFileProviderOneLevel : TreeFileProvider;
+    const treeLayout = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('fileTreeLayout', 'nested'));
+    const TreeCtor =
+        treeLayout === 'oneLevel'
+            ? TreeFileProviderOneLevel
+            : treeLayout === 'dynamic'
+                ? TreeFileProviderDynamic
+                : TreeFileProvider;
     const treeDataProvider = new TreeCtor();
     treeDataProvider.run(context);
     registerDirtyFileDecorations(context);
@@ -75,13 +81,18 @@ async function activate(context) {
         }
         if (e.affectsConfiguration('fbo-autocomplete.fileTreeLayout')) {
             vscode.window.showInformationMessage(
-                'FBO: Để áp dụng kiểu cây mới (1 cấp / nhiều cấp), vui lòng tải lại cửa sổ.',
+                'FBO: Để áp dụng kiểu cây mới (oneLevel / nested / dynamic), vui lòng Reload Window.',
                 'Reload Window'
             ).then((choice) => {
                 if (choice === 'Reload Window') {
                     vscode.commands.executeCommand('workbench.action.reloadWindow');
                 }
             });
+        }
+        if (e.affectsConfiguration('fbo-autocomplete.fileTreeDynamicMinFiles')) {
+            if (typeof treeDataProvider.refresh === 'function') {
+                void treeDataProvider.refresh();
+            }
         }
     });
     

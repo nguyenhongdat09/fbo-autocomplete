@@ -359,6 +359,23 @@ class TreeFileProvider extends TreeHelper {
         vscode.commands.executeCommand("setContext", "fboFileTreeFilterActive", !!this._treeFilterRaw);
     }
 
+    /**
+     * @param {string} groupName
+     * @param {number} fileCountInGroup
+     * @returns {boolean}
+     */
+    _shouldNestGroup(groupName, fileCountInGroup) {
+        return true;
+    }
+
+    _countFilesInGroup(groupName) {
+        const items = this.treeData.get(groupName);
+        if (!items || !items.length) return 0;
+        const s = new Set();
+        this._collectFileFsPathsFromItems(items, s);
+        return s.size;
+    }
+
     _relDirSegments(groupPath, filePath) {
         if (!groupPath) return [];
         const dir = path.dirname(filePath);
@@ -811,6 +828,11 @@ class TreeFileProvider extends TreeHelper {
                 }
             });
 
+            const groupCounts = new Map();
+            for (const d of fileData) {
+                groupCounts.set(d.groupName, (groupCounts.get(d.groupName) || 0) + 1);
+            }
+
             // Pre-compute icon paths
             const iconCache = new Map();
             const getIconPath = (key) => {
@@ -843,8 +865,10 @@ class TreeFileProvider extends TreeHelper {
 
                 const groupItemRef = this.groupItems.get(groupName);
                 const groupPath = groupItemRef && groupItemRef.resourceUri && groupItemRef.resourceUri.fsPath;
-                const segments = this._relDirSegments(groupPath || "", filePath);
-                const parentFolderKey = this._ensureFolderNodes(groupName, segments, groupPath || "");
+                const totalInGroup = groupCounts.get(groupName);
+                const nest = this._shouldNestGroup(groupName, totalInGroup);
+                const segments = nest ? this._relDirSegments(groupPath || "", filePath) : [];
+                const parentFolderKey = nest ? this._ensureFolderNodes(groupName, segments, groupPath || "") : null;
                 const parentList = parentFolderKey
                     ? this.folderChildren.get(parentFolderKey)
                     : this.treeData.get(groupName);
@@ -969,10 +993,18 @@ class TreeFileProvider extends TreeHelper {
             this.groupItems.set(groupName, groupItem);
         }
 
+        const prevCount = this._countFilesInGroup(groupName);
+        const nextCount = prevCount + 1;
+        if (this._shouldNestGroup(groupName, prevCount) !== this._shouldNestGroup(groupName, nextCount)) {
+            void this.buildTreeOptimized().then(() => this.refreshEvent.fire());
+            return;
+        }
+
         const groupItemRef = this.groupItems.get(groupName);
         const groupPath = groupItemRef && groupItemRef.resourceUri && groupItemRef.resourceUri.fsPath;
-        const segments = this._relDirSegments(groupPath || "", filePath);
-        const parentFolderKey = this._ensureFolderNodes(groupName, segments, groupPath || "");
+        const nest = this._shouldNestGroup(groupName, nextCount);
+        const segments = nest ? this._relDirSegments(groupPath || "", filePath) : [];
+        const parentFolderKey = nest ? this._ensureFolderNodes(groupName, segments, groupPath || "") : null;
         item.fboParentFolderKey = parentFolderKey;
         const parentList = parentFolderKey
             ? this.folderChildren.get(parentFolderKey)
@@ -1001,6 +1033,10 @@ class TreeFileProvider extends TreeHelper {
     }
 
     removeSingleFile(filePath) {
+        const treeItem = this.getTreeItemByPath(filePath);
+        const trackedGroup = treeItem && treeItem.fboGroupName;
+        const prevCount = trackedGroup != null ? this._countFilesInGroup(trackedGroup) : 0;
+
         for (const [groupName, items] of this.treeData) {
             if (this._removeFileFromItems(items, filePath)) {
                 this._pruneEmptyFoldersForGroup(groupName);
@@ -1009,6 +1045,12 @@ class TreeFileProvider extends TreeHelper {
                     this._clearFolderMapsForGroup(groupName);
                     this.treeData.delete(groupName);
                     this.groupItems.delete(groupName);
+                }
+                if (trackedGroup != null && prevCount > 0) {
+                    const nextCount = prevCount - 1;
+                    if (this._shouldNestGroup(trackedGroup, prevCount) !== this._shouldNestGroup(trackedGroup, nextCount)) {
+                        void this.buildTreeOptimized().then(() => this.refreshEvent.fire());
+                    }
                 }
                 break;
             }
