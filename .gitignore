@@ -1,6 +1,10 @@
 node_modules
 .vscode-test/
 
+# build-package.js — file tạm khi ghi package.json (Windows)
+package.json.__fbo_writing__
+package-lock.json.__fbo_packaging__
+
 # Key máy dev — không commit / không đóng gói nhầm
 src/Database/extensionKey.dat
 

@@ -112,7 +112,8 @@ class ConvertGridToHeader {
         }
 
         // Đọc file template Excel
-        const templatePath = pathModule.join(__dirname, '..', 'Database/mau_chuan.xlsx');
+        const { resolveBundledDatabaseRoot } = require('../extensionDatabasePaths');
+        const templatePath = pathModule.join(resolveBundledDatabaseRoot(), 'mau_chuan.xlsx');
 
         if (!fs.existsSync(templatePath)) {
             console.error('Lỗi: Không tìm thấy file mau_chuan.xlsx');

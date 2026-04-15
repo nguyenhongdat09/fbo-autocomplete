@@ -4,17 +4,6 @@ const fs = require('fs');
 const path = require('path');
 var level = require('level-rocksdb');
 
-// Đường dẫn tới file JSON chứa thông tin tài khoản dịch vụ
-const credentialsPath = path.join(__dirname, '..', '/Database/autocompletesheet-447706-3cfebe8ddb5a.json');
-const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
-// Tạo client từ tài khoản dịch vụ
-const auth = new google.auth.GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-});
-// Đường dẫn tới file JSON để lưu dữ liệu
-const autocompleteJsonPath = path.join(__dirname, '..', './Database/AutoComplete/AutoComplete.json');
-
 class CompleteCodeByHandle {
     constructor(sheetId) {
         this.sheetId = sheetId;
@@ -23,8 +12,45 @@ class CompleteCodeByHandle {
         this.shortCutField = [];
         this.providerHandles = [];
     }
+
+    _userDbRoot() {
+        const { getUserDatabaseRoot } = require('../extensionDatabasePaths');
+        return getUserDatabaseRoot();
+    }
+
+    _autoCompleteDir() {
+        return path.join(this._userDbRoot(), 'AutoComplete');
+    }
+
+    _autocompleteJsonPath() {
+        return path.join(this._autoCompleteDir(), 'AutoComplete.json');
+    }
+
+    _optionsJsonPath() {
+        return path.join(this._autoCompleteDir(), 'Options.json');
+    }
+
+    _shortcutJsonPath() {
+        return path.join(this._autoCompleteDir(), 'Shortcut.json');
+    }
+
+    /** Credentials đi kèm extension (bundle), không ghi trong user DB */
+    _getGoogleSheetsAuth() {
+        const { resolveBundledDatabaseRoot } = require('../extensionDatabasePaths');
+        const credPath = path.join(resolveBundledDatabaseRoot(), 'autocompletesheet-447706-3cfebe8ddb5a.json');
+        if (!fs.existsSync(credPath)) {
+            vscode.window.showErrorMessage('Không tìm thấy file credentials Google Sheets trong extension.');
+            return null;
+        }
+        const credentials = JSON.parse(fs.readFileSync(credPath, 'utf8'));
+        return new google.auth.GoogleAuth({
+            credentials,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+        });
+    }
+
     run(context) {
-        this.loadFromJson(); // Load từ JSON khi extension khởi động
+        this.loadFromJson();
         const getDataGGS = vscode.commands.registerCommand('fbo-autocomplete.getDataAutocomplete', async () => {
             await this.loadFunctions();
         });
@@ -48,9 +74,7 @@ class CompleteCodeByHandle {
         );
         context.subscriptions.push(...this.providerHandles);
     }
-    
 
-    // Gọi API và lưu dữ liệu vào file JSON
     async loadFunctions() {
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
@@ -58,8 +82,12 @@ class CompleteCodeByHandle {
             cancellable: false
         }, async (progress, token) => {
             try {
+                const auth = this._getGoogleSheetsAuth();
+                if (!auth) {
+                    return;
+                }
                 const sheets = google.sheets({ version: 'v4', auth });
-                const range = 'AutoComplete!A2:C'; // Lấy từ hàng 2 trở đi, cột A đến C
+                const range = 'AutoComplete!A2:C';
                 const response = await sheets.spreadsheets.values.get({
                     spreadsheetId: this.sheetId,
                     range,
@@ -68,12 +96,13 @@ class CompleteCodeByHandle {
                 if (rows && rows.length) {
                     const data = rows.map(([label, detail, insertText]) => ({
                         label,
-                        detail: detail || '', // Đảm bảo không có giá trị undefined
+                        detail: detail || '',
                         insertText: insertText || '',
                     }));
 
-                    // Lưu dữ liệu vào file JSON
-                    fs.writeFileSync(autocompleteJsonPath, JSON.stringify(data, null, 2), 'utf8');
+                    fs.mkdirSync(this._autoCompleteDir(), { recursive: true });
+                    const outPath = this._autocompleteJsonPath();
+                    fs.writeFileSync(outPath, JSON.stringify(data, null, 2), 'utf8');
                     this.companyFunctions = data;
 
                     console.log('Data saved to AutoComplete.json');
@@ -86,12 +115,12 @@ class CompleteCodeByHandle {
         });
     }
 
-    // Đọc dữ liệu từ file JSON
     loadFromJson() {
+        const autocompleteJsonPath = this._autocompleteJsonPath();
         const files = [
             ['companyFunctions', autocompleteJsonPath],
-            ['optionField', path.join(__dirname, '..', 'Database/AutoComplete/Options.json')],
-            ['shortCutField', path.join(__dirname, '..', 'Database/AutoComplete/Shortcut.json')],
+            ['optionField', this._optionsJsonPath()],
+            ['shortCutField', this._shortcutJsonPath()],
         ];
         try {
             if (fs.existsSync(autocompleteJsonPath)) {
@@ -107,67 +136,54 @@ class CompleteCodeByHandle {
     }
 
     provideCompletionItems(document, position) {
-        // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
         const linePrefix = document.lineAt(position).text.substr(0, position.character);
         const exclude = ['$gi.', '$gv.', '$f.'];
         if (exclude.some(prefix => linePrefix.includes(prefix))) {
             return undefined;
         }
-        // Biểu thức chính quy được sửa đổi để hỗ trợ gạch dưới (_)
         const match = linePrefix.match(/\b([a-zA-Z_][a-zA-Z0-9_]*\.)?([a-zA-Z0-9_]*)$/);
         if (!match) {
             return undefined;
         }
         const [, objectPrefix, partialFunction] = match;
-        // Nếu có objectPrefix (vd: "a."), tìm các chức năng liên quan
         if (objectPrefix) {
             return this.companyFunctions
-                .filter(func => func.label.toLowerCase().includes(partialFunction.toLowerCase())) // So khớp bất kể chữ hoa/thường
+                .filter(func => func.label.toLowerCase().includes(partialFunction.toLowerCase()))
                 .map(func => this.createCompletionItem(func));
         }
 
-        // Nếu không có objectPrefix, trả về undefined (không gợi ý gì)
         return undefined;
     }
     provideOptionsCompletionItems(document, position) {
         const lineText = document.lineAt(position).text, linePrefix = lineText.substr(0, position.character);
-        // Kiểm tra nếu con trỏ đứng ngay sau dấu '@'
         if (linePrefix.endsWith('@')) {
             return this.optionField.map(func => this.createCompletionItem(func));
         }
     }
     provideShortCutCompletionItems(document, position) {
         const lineText = document.lineAt(position).text, linePrefix = lineText.substr(0, position.character);
-        // Kiểm tra nếu con trỏ đứng ngay sau dấu '$'
-        if (linePrefix.endsWith('$')) { 
+        if (linePrefix.endsWith('$')) {
             return this.shortCutField.map(func => this.createCompletionItem(func));
         }
     }
-    //Xử lý lúc nhập có 2 dấu chấm a.get().
     provideCompletionTwoDotItems(document, position) {
-        // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
         const linePrefix = document.lineAt(position).text.substr(0, position.character);
 
-        // Regex để kiểm tra xem có hai dấu chấm liên tiếp trước đó không
         const twoDotsMatch = linePrefix.match(/([a-zA-Z_][a-zA-Z0-9_]*)\(([^)]*)\)\.$/);
         if (twoDotsMatch) {
-            // Nếu phát hiện hai dấu chấm sau hàm, cung cấp gợi ý phù hợp
             return [
                 this.createCompletionItem({ label: 'value', detail: 'Get or set the value', insertText: 'value' }),
                 this.createCompletionItem({ label: 'focus', detail: 'Set focus to the element', insertText: 'focus()' }),
             ];
         }
 
-        return undefined; // Không có gợi ý nếu không khớp
+        return undefined;
     }
 
     async provideCompletionFieldItems(document, position) {
-        // Lấy toàn bộ đoạn văn bản trước vị trí hiện tại
         const linePrefix = document.lineAt(position).text.substr(0, position.character);
-        // Biểu thức chính quy kiểm tra tiền tố hợp lệ 
         var f_prefix = linePrefix.trim().substring(0, 2);
         var gi_prefix = linePrefix.trim().substring(0, 3);
-        // Kiểm tra nếu objectPrefix thuộc danh sách include
         if (!(f_prefix === '$f' || gi_prefix === '$gi' || gi_prefix === '$gv')) {
             return undefined;
         }
@@ -175,16 +191,15 @@ class CompleteCodeByHandle {
         if (name_folder == '') {
             return undefined;
         }
-        var arr = [];
         const match = linePrefix.match(/\b([a-zA-Z_][a-zA-Z0-9_]*\.)?([a-zA-Z0-9_]*)$/);
         if (!match) {
             return undefined;
         }
         const [, objectPrefix, partialFunction] = match;
         if (objectPrefix) {
-            var folderdbPath = path.join(__dirname, '..', 'Database', name_folder)
+            var folderdbPath = path.join(this._userDbRoot(), name_folder);
             var arr_field = await this.getAllKeys(folderdbPath, name_folder);
-            
+
             return arr_field.map(item => this.createCompletionItem(item));
         }
         return undefined;
@@ -192,15 +207,15 @@ class CompleteCodeByHandle {
 
     getFolderName(inputText, document) {
         let prefixFolder = '';
-        const path = document.uri.path;
-        var controller = 'Controllers'
+        const pathDoc = document.uri.path;
+        var controller = 'Controllers';
         if (inputText.trim().startsWith('$f')) {
-            if (path.includes(`${controller}/Dir`)) {
+            if (pathDoc.includes(`${controller}/Dir`)) {
                 prefixFolder = 'Dir';
-            } else if (path.includes(`${controller}/Filter`)) {
+            } else if (pathDoc.includes(`${controller}/Filter`)) {
                 prefixFolder = 'Filter';
             }
-        } else if (path.includes(`${controller}/Grid`)) {
+        } else if (pathDoc.includes(`${controller}/Grid`)) {
             if (inputText.trim().startsWith('$gv')) {
                 prefixFolder = 'GridView';
             } else if (inputText.trim().startsWith('$gi')) {
@@ -229,17 +244,17 @@ class CompleteCodeByHandle {
                     .on('end', resolve)
                     .on('error', reject);
             });
-            keys = keys.filter(key => !key.includes('&'))
+            keys = keys.filter(key => !key.includes('&'));
             var arr_field = keys.map((key) => {
                 return {
                     "label": key,
                     "detail": `${name_folder}`,
                     "insertText": `${key};`
-                }
-            })
+                };
+            });
             return arr_field;
         } finally {
-            await db.close(); // Luôn đóng DB dù thành công hay lỗi 
+            await db.close();
         }
     }
 

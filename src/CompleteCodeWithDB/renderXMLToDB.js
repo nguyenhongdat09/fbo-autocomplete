@@ -197,10 +197,12 @@ class RenderXMLToDB extends ana {
 
 class DatabaseRender {
     constructor() {
+        const { getUserDatabaseRoot } = require('../extensionDatabasePaths');
+        const database = getUserDatabaseRoot();
         this.paths = {
-            database: path.resolve(__dirname, '..', 'Database'),
-            db_autoComplete: path.resolve(__dirname, '..', 'Database', 'AutoComplete')
-        }
+            database,
+            db_autoComplete: path.join(database, 'AutoComplete')
+        };
         this.baseDir = this.createBasePath();
         this.dbMap = new Map(); // Lưu nhiều DB theo folder
     }

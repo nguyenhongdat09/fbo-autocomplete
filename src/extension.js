@@ -31,14 +31,18 @@ const AnalystXML = require('./TreeFile/BrowserHandle/AnalystXML');
 var Constant = require('./constant')
 const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
-const { runCurrentSqlFile } = require("./DBQuery/QueryDatabase");
+const { runCurrentSqlFileVisual } = require("./DBQuery/QueryDatabaseVisualResult");
 const PeekSqlClass = require("./DBQuery/PeekSql");
+const { registerFormatXml } = require("./FormatXML/registerFormatXml");
 /**
  * @param {vscode.ExtensionContext} context
  */ 
 async function activate(context) { 
 
     var constant = new Constant(context);
+    const { ensureUserDatabaseRoot } = require("./extensionDatabasePaths");
+    ensureUserDatabaseRoot(context);
+
     // ✅ Sử dụng license check mới (by key)
    // var { checkLicense } = require('./license/checklicense');
     var { checkLicense } = require('./license/checklicense_byKey');
@@ -47,7 +51,9 @@ async function activate(context) {
         vscode.window.showErrorMessage('❌ Invalid license. Extension disabled.');
         return;
     }
-    
+
+    registerFormatXml(context);
+
     /*Tree view — chọn provider theo fbo-autocomplete.fileTreeLayout */
     const treeLayout = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('fileTreeLayout', 'nested'));
     const TreeCtor =
@@ -279,12 +285,12 @@ async function activate(context) {
         });
     }
 
-    // Command chạy file .sql dựa trên DB đang chọn ở status bar
+    // Command chạy SQL từ file .sql hoặc .xml (selection hoặc toàn file), DB từ status bar
     const runSqlFileCmd = vscode.commands.registerCommand(
         "fbo-autocomplete.runSqlFile",
         async () => {
             try {
-                await runCurrentSqlFile();
+                await runCurrentSqlFileVisual(context);
             } catch (err) {
                 console.error("[FBO runSqlFile] Error:", err);
                 console.error("[FBO runSqlFile] Stack:", err && err.stack);

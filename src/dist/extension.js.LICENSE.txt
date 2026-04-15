@@ -53,13 +53,13 @@
 
 /*! @azure/msal-node v5.1.2 2026-04-01 */
 
-/*! Axios v1.14.0 Copyright (c) 2026 Matt Zabriskie and contributors */
+/*! Axios v1.15.0 Copyright (c) 2026 Matt Zabriskie and contributors */
 
 /*! THIS FILE IS AUTO-GENERATED */
 
 /*! crc32.js (C) 2014-present SheetJS -- http://sheetjs.com */
 
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 

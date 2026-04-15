@@ -63,7 +63,8 @@ class CompletionProvider extends ana {
     } 
  
     getDatabase(folderName) {
-        const dbPath = path.join(__dirname, '..', 'Database', folderName);
+        const { getUserDatabaseRoot } = require('../extensionDatabasePaths');
+        const dbPath = path.join(getUserDatabaseRoot(), folderName);
         return level(dbPath, { createIfMissing: false }, function (err) {
             if (err instanceof level.errors.OpenError) {
                 vscode.window.showErrorMessage(`failed to open database: ${err}`);

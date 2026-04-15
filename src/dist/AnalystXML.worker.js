@@ -13,8 +13,10 @@ async function main() {
         throw new Error('Missing workerData.filePath');
     }
 
-    // Import lazily inside worker.
-    const analyst = new AnalystXML();
+    // Import lazily inside worker (worker thread: truyền userDatabaseRoot từ main).
+    const analyst = new AnalystXML({
+        userDatabaseRoot: workerData && workerData.userDatabaseRoot ? workerData.userDatabaseRoot : null,
+    });
     const startedAt = Date.now();
     postProgress(0, 'Đang quét ASPX...');
     const aspxResults = await analyst.anl.run(filePath);

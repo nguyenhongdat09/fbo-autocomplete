@@ -8,6 +8,8 @@ test/**
 .gitignore
 .yarnrc
 package-lock.json
+package.json.__fbo_writing__
+package-lock.json.__fbo_packaging__
 webpack.config.js
 tsconfig.json
 eslint.config.mjs
@@ -20,6 +22,8 @@ vsc-extension-quickstart.md
 
 src/**
 !src/Database/**
+!src/DBQuery/**
+!src/FormatXML/**
 !src/HighLightSyntax/**
 !src/dist/**
 !src/ReadXML/**

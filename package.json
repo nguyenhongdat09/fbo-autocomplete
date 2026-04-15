@@ -50,7 +50,7 @@
         },
         {
           "command": "fbo-autocomplete.runSqlFile",
-          "when": "resourceExtname == .sql"
+          "when": "resourceExtname == .sql || resourceExtname == .xml"
         },
         {
           "command": "fbo-autocomplete.peekSql",
@@ -60,7 +60,7 @@
       "editor/title": [
         {
           "command": "fbo-autocomplete.runSqlFile",
-          "when": "resourceExtname == .sql",
+          "when": "resourceExtname == .sql || resourceExtname == .xml",
           "group": "navigation"
         }
       ],
@@ -328,7 +328,7 @@
         "command": "fbo-autocomplete.runSqlFile",
         "key": "ctrl+shift+a",
         "mac": "cmd+shift+a",
-        "when": "editorTextFocus && resourceExtname == .sql"
+        "when": "editorTextFocus && (resourceExtname == .sql || resourceExtname == .xml)"
       },
       {
         "key": "ctrl+shift+d",
@@ -532,10 +532,12 @@
   "icon": "icon.png",
   "scripts": {
     "test": "vscode-test",
-    "build": "webpack",
-    "watch": "webpack --watch"
+    "build": "node ./node_modules/webpack/bin/webpack.js",
+    "watch": "node ./node_modules/webpack/bin/webpack.js --watch",
+    "vendor:ag-grid": "node scripts/vendor-ag-grid.js"
   },
   "devDependencies": {
+    "ag-grid-community": "^31.3.2",
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@types/mocha": "^10.0.10",
@@ -545,35 +547,23 @@
     "@vscode/test-electron": "^2.4.1",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
-    "webpack": "^5.105.4",
+    "webpack": "^5.106.0",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "cli-table3": "^0.6.5",
+    "crypto-js": "^4.2.0",
     "exceljs": "^4.4.0",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
-    "mssql": "^11.0.1",
-    "strip-ansi": "^7.1.0",
-    "cli-table3": "^0.6.5",
     "level-rocksdb": "^5.0.0",
-    "rocksdb": "^5.2.1",
-    "crypto-js": "^4.2.0",
-    "node-machine-id": "^1.1.12"
-  },
-  "_commented_dependencies": {
-    "axios": "^1.7.9",
-    "exceljs": "^4.4.0",
-    "googleapis": "^144.0.0",
-    "googletrans": "^1.0.21",
     "mssql": "^11.0.1",
-    "strip-ansi": "^7.1.0",
-    "cli-table3": "^0.6.5",
-    "crypto-js": "^4.2.0",
-    "node-machine-id": "^1.1.12"
+    "node-machine-id": "^1.1.12",
+    "rocksdb": "^5.2.1",
+    "strip-ansi": "^7.1.0"
   },
   "extensionDependencies": [
-    "redhat.vscode-xml",
-    "mikeburgh.xml-format"
+    "redhat.vscode-xml"
   ]
 }

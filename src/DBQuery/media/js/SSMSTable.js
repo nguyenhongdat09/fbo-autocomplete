@@ -18,6 +18,44 @@ class SSMSTable {
 
         // Current result set (support multiple in future)
         this.currentResultSetIndex = 0;
+
+        this._globalListenersBound = false;
+        this._resizeDocumentListenersBound = false;
+        this._resizeDrag = { active: false, startX: 0, startWidth: 0, colIndex: -1 };
+        this._onKeyDown = (e) => this.handleKeyDown(e);
+        this._onTableContextMenu = (e) => {
+            e.preventDefault();
+            if (this.contextMenu) {
+                this.contextMenu.show(e.clientX, e.clientY);
+            }
+        };
+        this._onResizeMouseMove = (e) => {
+            const s = this._resizeDrag;
+            if (!s.active) return;
+            const diff = e.clientX - s.startX;
+            const newWidth = Math.max(
+                this.config.ui.columnMinWidth,
+                Math.min(this.config.ui.columnMaxWidth, s.startWidth + diff)
+            );
+            const th = document.querySelector(`th.column-header[data-col="${s.colIndex}"]`);
+            if (th) {
+                th.style.width = newWidth + 'px';
+                this.columnWidths.set(s.colIndex, newWidth);
+                document.querySelectorAll(`td[data-col="${s.colIndex}"]`).forEach((td) => {
+                    td.style.width = newWidth + 'px';
+                });
+            }
+        };
+        this._onResizeMouseUp = () => {
+            const s = this._resizeDrag;
+            if (s.active) {
+                s.active = false;
+                document.querySelectorAll('.resize-handle').forEach((h) => {
+                    h.classList.remove('resizing');
+                });
+                document.body.style.cursor = '';
+            }
+        };
     }
 
     render() {
@@ -25,6 +63,8 @@ class SSMSTable {
             // Initialize components
             this.tabManager = new TabManager(this.data);
             this.tabManager.init();
+
+            this.initResultSetSelect();
 
             // Render content
             this.renderTable();
@@ -46,6 +86,43 @@ class SSMSTable {
             console.error('Render error:', error);
             this.showError(error.message);
         }
+    }
+
+    /**
+     * Dropdown chọn result set khi có nhiều bảng (nhiều SELECT / nhiều batch).
+     */
+    initResultSetSelect() {
+        const toolbar = document.getElementById('resultSetToolbar');
+        const select = document.getElementById('resultSetSelect');
+        if (!toolbar || !select) return;
+
+        const sets = this.data.resultSets || [];
+        if (sets.length <= 1) {
+            toolbar.style.display = 'none';
+            select.innerHTML = '';
+            this.currentResultSetIndex = 0;
+            return;
+        }
+
+        toolbar.style.display = 'flex';
+        select.innerHTML = sets
+            .map((rs, i) => {
+                const label = rs.name || `Result set ${i + 1} (${rs.rowCount} rows)`;
+                return `<option value="${i}">${this.escapeHtml(label)}</option>`;
+            })
+            .join('');
+
+        const idx = Math.min(this.currentResultSetIndex, sets.length - 1);
+        this.currentResultSetIndex = idx;
+        select.value = String(idx);
+
+        select.onchange = () => {
+            this.currentResultSetIndex = parseInt(select.value, 10) || 0;
+            this.clearSelection();
+            this.renderTable();
+            this.updateStatusBar();
+            this.attachTableListenersOnly();
+        };
     }
 
     renderTable() {
@@ -185,13 +262,15 @@ class SSMSTable {
         html += '<br>';
 
         // Messages
-        messages.forEach(msg => {
-            const icon = msg.type === 'error' ? '❌' :
-                msg.type === 'warning' ? '⚠️' : 'ℹ️';
+        (messages || []).forEach((msg) => {
+            const text = typeof msg === 'string' ? msg : (msg && msg.message) || '';
+            const mtype = typeof msg === 'string' ? 'info' : (msg && msg.type) || 'info';
+            const icon = mtype === 'error' ? '❌' :
+                mtype === 'warning' ? '⚠️' : 'ℹ️';
 
-            html += `<div class="message-line ${msg.type}">`;
+            html += `<div class="message-line ${mtype}">`;
             html += `<span class="message-icon">${icon}</span>`;
-            html += `<span class="message-content">${this.escapeHtml(msg.message)}</span>`;
+            html += `<span class="message-content">${this.escapeHtml(text)}</span>`;
             html += `</div>`;
         });
 
@@ -233,18 +312,28 @@ class SSMSTable {
     // File: src/DBQuery/media/js/SSMSTable.js (continued)
 
     attachEventListeners() {
-        // Corner cell - Select all
+        if (!this._globalListenersBound) {
+            this._globalListenersBound = true;
+            document.addEventListener('keydown', this._onKeyDown);
+            const tc = document.getElementById('tableContainer');
+            if (tc) {
+                tc.addEventListener('contextmenu', this._onTableContextMenu);
+            }
+        }
+        this.attachTableListenersOnly();
+    }
+
+    attachTableListenersOnly() {
         const cornerCell = document.getElementById('cornerCell');
         if (cornerCell) {
             cornerCell.addEventListener('click', () => this.selectAll());
         }
 
-        // Column headers
-        document.querySelectorAll('.column-header').forEach(th => {
+        document.querySelectorAll('.column-header').forEach((th) => {
             th.addEventListener('click', (e) => {
                 if (e.target.classList.contains('resize-handle')) return;
 
-                const colIndex = parseInt(e.currentTarget.dataset.col);
+                const colIndex = parseInt(e.currentTarget.dataset.col, 10);
 
                 if (e.shiftKey) {
                     this.sortByColumn(colIndex);
@@ -254,88 +343,42 @@ class SSMSTable {
             });
         });
 
-        // Column resize
         this.attachResizeHandlers();
 
-        // Row numbers
-        document.querySelectorAll('.row-number').forEach(td => {
+        document.querySelectorAll('.row-number').forEach((td) => {
             td.addEventListener('click', (e) => {
-                const rowIndex = parseInt(e.currentTarget.dataset.row);
+                const rowIndex = parseInt(e.currentTarget.dataset.row, 10);
                 this.selectRow(rowIndex);
             });
         });
 
-        // Data cells
-        document.querySelectorAll('td[data-row][data-col]').forEach(td => {
+        document.querySelectorAll('td[data-row][data-col]').forEach((td) => {
             if (!td.classList.contains('row-number')) {
                 td.addEventListener('click', (e) => this.handleCellClick(e));
                 td.addEventListener('dblclick', (e) => this.handleCellDoubleClick(e));
             }
         });
-
-        // Context menu
-        document.getElementById('tableContainer').addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            this.contextMenu.show(e.clientX, e.clientY);
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => this.handleKeyDown(e));
     }
 
     attachResizeHandlers() {
-        let resizing = false;
-        let startX = 0;
-        let startWidth = 0;
-        let colIndex = -1;
+        if (!this._resizeDocumentListenersBound) {
+            this._resizeDocumentListenersBound = true;
+            document.addEventListener('mousemove', this._onResizeMouseMove);
+            document.addEventListener('mouseup', this._onResizeMouseUp);
+        }
 
-        document.querySelectorAll('.resize-handle').forEach(handle => {
+        document.querySelectorAll('.resize-handle').forEach((handle) => {
             handle.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
-                resizing = true;
-                startX = e.clientX;
-                colIndex = parseInt(e.target.dataset.col);
-
+                const s = this._resizeDrag;
+                s.active = true;
+                s.startX = e.clientX;
+                s.colIndex = parseInt(e.target.dataset.col, 10);
                 const th = e.target.parentElement;
-                startWidth = th.offsetWidth;
-
+                s.startWidth = th.offsetWidth;
                 handle.classList.add('resizing');
                 document.body.style.cursor = 'col-resize';
             });
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!resizing) return;
-
-            const diff = e.clientX - startX;
-            const newWidth = Math.max(
-                this.config.ui.columnMinWidth,
-                Math.min(this.config.ui.columnMaxWidth, startWidth + diff)
-            );
-
-            // Update column width
-            const th = document.querySelector(`th.column-header[data-col="${colIndex}"]`);
-            if (th) {
-                th.style.width = newWidth + 'px';
-                // File: src/DBQuery/media/js/SSMSTable.js (continued - Part 2)
-
-                this.columnWidths.set(colIndex, newWidth);
-
-                // Update all cells in this column
-                document.querySelectorAll(`td[data-col="${colIndex}"]`).forEach(td => {
-                    td.style.width = newWidth + 'px';
-                });
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (resizing) {
-                resizing = false;
-                document.querySelectorAll('.resize-handle').forEach(h => {
-                    h.classList.remove('resizing');
-                });
-                document.body.style.cursor = '';
-            }
         });
     }
 
@@ -761,9 +804,10 @@ class SSMSTable {
         document.getElementById('rowInfo').textContent =
             `${rowCount} row${rowCount !== 1 ? 's' : ''}`;
 
-        // Selected info
-        document.getElementById('selectedInfo').textContent =
-            `Selected: ${this.selectedCells.size}`;
+        const selectedEl = document.getElementById('selectedInfo');
+        if (selectedEl) {
+            selectedEl.textContent = `Selected: ${this.selectedCells.size}`;
+        }
 
         // Statistics
         this.updateStatistics();

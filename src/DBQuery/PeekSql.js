@@ -122,6 +122,34 @@ class PeekSql {
     }
 
     /**
+     * Proc/function/view: CREATE → ALTER; thêm GO cuối (cho SSMS). Bảng (U) không qua hàm này.
+     * @param {string} objectType
+     * @param {string} sqlText
+     * @returns {string}
+     */
+    _transformDefinitionForAlter(objectType, sqlText) {
+        const t = (objectType || "").toUpperCase();
+        if (!sqlText) return sqlText;
+
+        let s = sqlText;
+        if (t === "P") {
+            s = s.replace(/\bCREATE\s+(PROCEDURE|PROC)\b/i, "ALTER $1");
+        } else if (t === "FN" || t === "IF" || t === "TF") {
+            s = s.replace(/\bCREATE\s+FUNCTION\b/i, "ALTER FUNCTION");
+        } else if (t === "V") {
+            s = s.replace(/\bCREATE\s+VIEW\b/i, "ALTER VIEW");
+        } else {
+            return s;
+        }
+
+        s = s.replace(/\s+$/, "");
+        if (!/\bGO\s*$/i.test(s)) {
+            s += "\n\nGO";
+        }
+        return s;
+    }
+
+    /**
      * Command handler: lấy selection, check DB, sp_helptext, set last peek, show hover.
      * Chỉ dùng khi editor là file XML (caller/package.json when đã check).
      */
@@ -202,6 +230,7 @@ class PeekSql {
                     vscode.window.showInformationMessage("Không lấy được định nghĩa cho: " + selectedText);
                     return;
                 }
+                content = this._transformDefinitionForAlter(objectType, content);
             }
 
             this._lastPeekUri = doc.uri.toString();

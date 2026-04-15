@@ -67,15 +67,24 @@ class TabManager {
             tab.classList.toggle('active', isActive);
         });
 
-        // Show/hide content
+        // Show/hide content — phải dùng display:flex giống .tab-content.active trong CSS,
+        // không dùng block (sẽ phá flex:1 của .table-wrapper / .messages-container → mất scrollbar).
         document.querySelectorAll('.tab-content').forEach(content => {
             content.style.display = 'none';
+            content.classList.remove('active');
         });
 
         const contentElement = document.getElementById(tabId + 'Tab');
         if (contentElement) {
-            contentElement.style.display = 'block';
             contentElement.classList.add('active');
+            contentElement.style.display = 'flex';
+            contentElement.style.flexDirection = 'column';
+        }
+
+        if (tabId === 'results') {
+            requestAnimationFrame(() => {
+                window.dispatchEvent(new Event('resize'));
+            });
         }
     }
 

@@ -128,7 +128,7 @@
     },
     {
       "comment": "System variables",
-      "match": "@@(userID|sysDatabaseName|whereClause|fieldExternal|orderByClause|admin|language|unit|id|pageIndex|pageCount|textList|textExternal|textOrderBy|queryString|refresh|appDatabaseName|lastPage|lastCount|firstItem|lastItem|action|partition|table|master|inquiry|prime|userName|view|operation|page|fields|form|keyMaster|keyDetail|expression|increase|extension|viewAccessMode|type|stt_rec|contactID|checking|inserting|updating|FETCH_STATUS|voucherCode|control|primaryKey|userId)\\b",
+      "match": "@@(userID|sysDatabaseName|whereClause|fieldExternal|orderByClause|admin|language|unit|id|pageIndex|pageCount|textList|textExternal|textOrderBy|queryString|refresh|appDatabaseName|lastPage|lastCount|firstItem|lastItem|action|partition|table|master|inquiry|prime|userName|view|operation|page|fields|form|keyMaster|keyDetail|expression|increase|extension|viewAccessMode|type|stt_rec|contactID|checking|inserting|updating|FETCH_STATUS|voucherCode|control|primaryKey|userId|fieldClientDefault|fieldColumn|fieldParam|fieldUpdate)\\b",
       "name": "variable.parameter.sql.fastbusiness"
     }, 
     {

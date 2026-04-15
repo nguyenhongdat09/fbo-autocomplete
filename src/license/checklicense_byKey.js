@@ -15,19 +15,13 @@ const machineId = machineIdSync(true); // true = return original ID (not hashed)
 const machineIdHash = crypto.createHash('sha256').update(machineId).digest('hex').substring(0, 8); // Lấy 8 ký tự đầu
 
 /**
- * Đường dẫn extensionKey.dat trong globalStorage (sống qua update VSIX).
+ * extensionKey.dat trong globalStorage/Database (cùng folder user DB, sống qua update VSIX).
+ * Cần ensureUserDatabaseRoot(context) trước checkLicense.
  * @param {import('vscode').ExtensionContext} [context]
  */
 function getKeyFilePath(context) {
-    const ctx = context || _lastLicenseContext;
-    if (!ctx || !ctx.globalStorageUri) {
-        throw new Error('checklicense_byKey: ExtensionContext.globalStorageUri is required');
-    }
-    const dir = ctx.globalStorageUri.fsPath;
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-    return path.join(dir, KEY_FILE_NAME);
+    const { getUserDatabaseRoot } = require('../extensionDatabasePaths');
+    return path.join(getUserDatabaseRoot(), KEY_FILE_NAME);
 }
 
 function tryReadKeyFromFile(filePath) {
@@ -142,6 +136,20 @@ function getOrCreateExtensionKey(context) {
         return existing;
     }
 
+    const legacyGlobalRootKey = path.join(context.globalStorageUri.fsPath, KEY_FILE_NAME);
+    const fromLegacyGlobal = tryReadKeyFromFile(legacyGlobalRootKey);
+    if (fromLegacyGlobal && isKeyValidForThisMachine(fromLegacyGlobal)) {
+        try {
+            fs.writeFileSync(filePath, fromLegacyGlobal, 'utf8');
+            if (fs.existsSync(legacyGlobalRootKey)) {
+                fs.unlinkSync(legacyGlobalRootKey);
+            }
+        } catch {
+            // ignore
+        }
+        return fromLegacyGlobal;
+    }
+
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const fromSettings = String(config.get('extensionKey', '') || '').trim();
     if (fromSettings && isKeyValidForThisMachine(fromSettings)) {
@@ -153,15 +161,20 @@ function getOrCreateExtensionKey(context) {
         return fromSettings;
     }
 
-    const legacyPath = path.join(context.extensionPath, 'Database', KEY_FILE_NAME);
-    const fromLegacy = tryReadKeyFromFile(legacyPath);
-    if (fromLegacy && isKeyValidForThisMachine(fromLegacy)) {
-        try {
-            fs.writeFileSync(filePath, fromLegacy, 'utf8');
-        } catch {
-            // ignore
+    const legacyPaths = [
+        path.join(context.extensionPath, 'src', 'Database', KEY_FILE_NAME),
+        path.join(context.extensionPath, 'Database', KEY_FILE_NAME),
+    ];
+    for (const legacyPath of legacyPaths) {
+        const fromLegacy = tryReadKeyFromFile(legacyPath);
+        if (fromLegacy && isKeyValidForThisMachine(fromLegacy)) {
+            try {
+                fs.writeFileSync(filePath, fromLegacy, 'utf8');
+            } catch {
+                // ignore
+            }
+            return fromLegacy;
         }
-        return fromLegacy;
     }
 
     const newKey = generateRandomKey();

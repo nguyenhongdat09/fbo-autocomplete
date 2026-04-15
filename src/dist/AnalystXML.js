@@ -55,7 +55,11 @@ function setStatusBarMessage(message, timeoutMs) {
 
 
 class AnalystXML {
-    constructor() {
+    /**
+     * @param {{ userDatabaseRoot?: string|null }} [options]
+     */
+    constructor(options = {}) {
+        this._userDatabaseRootOverride = options.userDatabaseRoot || null;
         this.anl = new AnalystASPX();
         this.dir = ['App_Data', 'Controllers', 'Dir'];
         this.grid = ['App_Data', 'Controllers', 'Grid'];
@@ -76,16 +80,37 @@ class AnalystXML {
         this.projectsDbSynced = new Set(); // Tránh sync DB lặp lại gây nặng
         this.workersByProject = new Map(); // Worker theo project
     }
-    //Xử lý path Database 
+    //Xử lý path Database (user: globalStorage/Database)
     setPathDatabase() {
-        if (!fs.existsSync(this.pathDatabase)) {
-            this.pathDatabase = path.join(__dirname, '..', 'Database');
+        if (this._userDatabaseRootOverride) {
+            this.pathDatabase = this._userDatabaseRootOverride;
+            this.pathDatabaseOpenBrowser = path.join(this.pathDatabase, 'OpenBrowser');
+            return;
+        }
+        try {
+            const { getUserDatabaseRoot } = require('../../extensionDatabasePaths');
+            this.pathDatabase = getUserDatabaseRoot();
+        } catch {
+            this.pathDatabase = path.join(__dirname, '..', '..', 'Database');
+            if (!fs.existsSync(this.pathDatabase)) {
+                this.pathDatabase = path.join(__dirname, '..', 'Database');
+            }
         }
         this.pathDatabaseOpenBrowser = path.join(this.pathDatabase, 'OpenBrowser');
     }
     setPathDatabaseCursorIgore() {
-        if (!fs.existsSync(this.pathDatabase)) {
-            this.pathDatabase = path.join(__dirname, '..', 'Database');
+        if (this._userDatabaseRootOverride) {
+            this.pathDatabaseCursorIgnore = path.join(this._userDatabaseRootOverride, '.cursorignore');
+            return;
+        }
+        try {
+            const { getUserDatabaseRoot } = require('../../extensionDatabasePaths');
+            this.pathDatabase = getUserDatabaseRoot();
+        } catch {
+            this.pathDatabase = path.join(__dirname, '..', '..', 'Database');
+            if (!fs.existsSync(this.pathDatabase)) {
+                this.pathDatabase = path.join(__dirname, '..', 'Database');
+            }
         }
         this.pathDatabaseCursorIgnore = path.join(this.pathDatabase, '.cursorignore');
     }
@@ -705,8 +730,16 @@ class AnalystXML {
             this.workersByProject.delete(projectName);
         }
 
+        let userDatabaseRoot = null;
+        try {
+            const { getUserDatabaseRoot } = require('../../extensionDatabasePaths');
+            userDatabaseRoot = getUserDatabaseRoot();
+        } catch {
+            userDatabaseRoot = null;
+        }
+
         const worker = new Worker(this._getWorkerPath(), {
-            workerData: { filePath },
+            workerData: { filePath, userDatabaseRoot },
         });
         this.workersByProject.set(projectName, worker);
 

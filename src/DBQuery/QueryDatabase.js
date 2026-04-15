@@ -12,6 +12,15 @@ const sqlDiagnostics = vscode.languages.createDiagnosticCollection("fbo-sql");
 /** Dòng chỉ chứa GO (batch separator của SSMS), không gửi lên server */
 const GO_LINE_REGEX = /^\s*GO\s*$/im;
 
+/** Thời gian chờ kết nối (ms). */
+const SQL_CONNECTION_TIMEOUT_MS = 120000;
+
+/**
+ * Thời gian chờ một batch SQL (ms). 0 = không giới hạn (tedious / node-mssql).
+ * Mặc định thư viện là 15s — script lâu hay index rebuild dễ bị timeout.
+ */
+const SQL_REQUEST_TIMEOUT_MS = 0;
+
 /**
  * Tách script thành các batch theo GO (giống SSMS). GO không được gửi lên SQL Server.
  * @param {string} sqlText
@@ -108,6 +117,8 @@ async function executeSqlMessageOnly(script, connInfo) {
         password: connInfo.password,
         server: connInfo.server,
         database: connInfo.database,
+        connectionTimeout: SQL_CONNECTION_TIMEOUT_MS,
+        requestTimeout: SQL_REQUEST_TIMEOUT_MS,
         options: {
             encrypt: false,
             enableArithAbort: true,
@@ -161,8 +172,9 @@ async function runCurrentSqlFile() {
     }
     const uri = doc.uri;
     const fsPath = uri.fsPath;
-    if (uri.scheme !== "file" || typeof fsPath !== "string" || !fsPath.toLowerCase().endsWith(".sql")) {
-        vscode.window.showErrorMessage("Chức năng này chỉ dùng cho file .sql.");
+    const lower = typeof fsPath === "string" ? fsPath.toLowerCase() : "";
+    if (uri.scheme !== "file" || (!lower.endsWith(".sql") && !lower.endsWith(".xml"))) {
+        vscode.window.showErrorMessage("Chức năng này chỉ dùng cho file .sql hoặc .xml.");
         return;
     }
 
@@ -246,5 +258,6 @@ async function runCurrentSqlFile() {
 }
 
 module.exports = {
-    runCurrentSqlFile
+    runCurrentSqlFile,
+    sqlDiagnostics,
 };
