@@ -8,7 +8,9 @@ class DBStatusBarManager {
     constructor(context) {
         this.context = context;
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+        this.pinStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 99);
         this.selectedDB = "";  
+        this.isPinned = !!context.workspaceState.get("fbo.dbStatusBar.pinned", false);
         this.statusBarItem.text = `$(database) DB: ${this.selectedDB}`;
         this.statusBarItem.tooltip = "Chọn database để chạy SQL";
         this.statusBarItem.command = "fbo-autocomplete.selectDatabase"; // Gọi command khi click
@@ -27,7 +29,10 @@ class DBStatusBarManager {
      
     async show() {  
         this.statusBarItem.show();
+        this._renderPinStatusBar();
+        this.pinStatusBarItem.show();
         this.context.subscriptions.push(this.statusBarItem);
+        this.context.subscriptions.push(this.pinStatusBarItem);
         //
         let selectDbCommand = vscode.commands.registerCommand("fbo-autocomplete.selectDatabase", async () => { 
             const selected = await vscode.window.showQuickPick( this.dbOptions, {
@@ -38,6 +43,17 @@ class DBStatusBarManager {
             }
         });
         this.context.subscriptions.push(selectDbCommand);
+
+        const togglePinCommand = vscode.commands.registerCommand("fbo-autocomplete.togglePinDatabase", async () => {
+            this.isPinned = !this.isPinned;
+            await this.context.workspaceState.update("fbo.dbStatusBar.pinned", this.isPinned);
+            this._renderPinStatusBar();
+            vscode.window.setStatusBarMessage(
+                this.isPinned ? "FBO DB: Đã ghim DB hiện tại" : "FBO DB: Đã bỏ ghim DB",
+                1800
+            );
+        });
+        this.context.subscriptions.push(togglePinCommand);
     } 
 
     updateText(newDB) {
@@ -49,6 +65,18 @@ class DBStatusBarManager {
         this.statusBarItem.text = `$(database) DB: ${this.selectedDB}`;
         // Cập nhật lại thông tin DB đang chọn
         this.updateDbInfoSelected();
+    }
+
+    /**
+     * Tự đổi DB theo group của XML khi đổi tab.
+     * Nếu đang pin thì bỏ qua để giữ nguyên DB hiện tại.
+     */
+    tryAutoUpdateText(newDB) {
+        if (this.isPinned) {
+            return false;
+        }
+        this.updateText(newDB);
+        return true;
     }
 
     /**
@@ -168,6 +196,20 @@ class DBStatusBarManager {
 
     dispose() {
         this.statusBarItem.dispose();
+        this.pinStatusBarItem.dispose();
+    }
+
+    _renderPinStatusBar() {
+        if (!this.pinStatusBarItem) {
+            return;
+        }
+        this.pinStatusBarItem.text = this.isPinned
+            ? "$(lock)"
+            : "$(unlock)";
+        this.pinStatusBarItem.tooltip = this.isPinned
+            ? "DB đang được ghim. Bấm để bỏ ghim và cho phép tự đổi theo XML group."
+            : "DB tự đổi theo XML group. Bấm để ghim DB hiện tại.";
+        this.pinStatusBarItem.command = "fbo-autocomplete.togglePinDatabase";
     }
 
     

@@ -16,7 +16,9 @@
   ],
   "activationEvents": [
     "onLanguage:xml",
-    "onLanguage:sql"
+    "onLanguage:sql",
+    "onView:fbo_query_results_panel",
+    "onCommand:fbo-autocomplete.ConvertGridToPivotExcel"
   ],
   "main": "./src/extension.js",
   "publisher": "Nguyen-Hong-Dat",
@@ -169,6 +171,13 @@
           "title": "FBO File",
           "icon": "images/doc_bar.svg"
         }
+      ],
+      "panel": [
+        {
+          "id": "fbo_query_results_panel_container",
+          "title": "Query Results",
+          "icon": "images/play.svg"
+        }
       ]
     },
     "views": {
@@ -176,6 +185,13 @@
         {
           "id": "fbo_file",
           "name": "FBO Project"
+        }
+      ],
+      "fbo_query_results_panel_container": [
+        {
+          "id": "fbo_query_results_panel",
+          "name": "Query Results",
+          "type": "webview"
         }
       ]
     },
@@ -331,6 +347,16 @@
         "when": "editorTextFocus && (resourceExtname == .sql || resourceExtname == .xml)"
       },
       {
+        "command": "-workbench.action.debug.start",
+        "key": "f5",
+        "when": "editorLangId == sql || editorLangId == xml"
+      },
+      {
+        "command": "fbo-autocomplete.runSqlFile",
+        "key": "f5",
+        "when": "editorLangId == sql || editorLangId == xml"
+      },
+      {
         "key": "ctrl+shift+d",
         "command": "fboFile.RenameFile"
       }
@@ -363,6 +389,10 @@
       {
         "command": "fbo-autocomplete.ConvertToExcel",
         "title": "FBO: Convert To Excel"
+      },
+      {
+        "command": "fbo-autocomplete.ConvertGridToPivotExcel",
+        "title": "FBO: Convert Grid To Pivot Excel"
       },
       {
         "command": "fbo-autocomplete.CheckLegacyDirFilter",

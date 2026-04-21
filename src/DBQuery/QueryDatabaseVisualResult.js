@@ -28,8 +28,8 @@ function splitScriptByGo(sqlText) {
     let startLine = 0;
     for (let i = 0; i < lines.length; i++) {
         if (GO_LINE_REGEX.test(lines[i])) {
-            const batch = current.join("\n").trim();
-            if (batch) {
+            const batch = current.join("\n");
+            if (batch.trim()) {
                 batches.push(batch);
                 startLines.push(startLine);
             }
@@ -39,8 +39,8 @@ function splitScriptByGo(sqlText) {
             current.push(lines[i]);
         }
     }
-    const last = current.join("\n").trim();
-    if (last) {
+    const last = current.join("\n");
+    if (last.trim()) {
         batches.push(last);
         startLines.push(startLine);
     }
@@ -112,6 +112,123 @@ function columnMeta(name, meta) {
 }
 
 /**
+ * Trả về mảng giá trị theo thứ tự cột metadata.
+ * Hỗ trợ trường hợp mssql gom nhiều cột không tên vào key "" thành 1 mảng.
+ * @param {Record<string, any>} row
+ * @param {string[]} sourceColNames
+ * @returns {any[]}
+ */
+function rowToCellsByColumnOrder(row, sourceColNames) {
+    const safeRow = row && typeof row === "object" ? row : {};
+    const unnamedBucket =
+        Object.prototype.hasOwnProperty.call(safeRow, "") && Array.isArray(safeRow[""])
+            ? safeRow[""]
+            : null;
+    let unnamedIndex = 0;
+    const seenByName = new Map();
+
+    return sourceColNames.map((colName, colIndex) => {
+        const occ = seenByName.get(colName) || 0;
+        seenByName.set(colName, occ + 1);
+
+        if (colName === "" && unnamedBucket) {
+            if (unnamedIndex < unnamedBucket.length) {
+                return serializeCell(unnamedBucket[unnamedIndex++]);
+            }
+        }
+
+        if (Object.prototype.hasOwnProperty.call(safeRow, colName)) {
+            const direct = safeRow[colName];
+            // key "" có thể chứa cả mảng đại diện nhiều cột, không lấy trực tiếp mảng này làm 1 ô.
+            if (!(colName === "" && Array.isArray(direct))) {
+                // Cột trùng tên (vd: select ma_bp, ma_bp) thường được mssql gom thành mảng theo key duy nhất.
+                // Tách theo lần xuất hiện của tên cột để giữ đủ số cột như SSMS.
+                if (Array.isArray(direct)) {
+                    if (occ < direct.length) {
+                        return serializeCell(direct[occ]);
+                    }
+                    return null;
+                }
+                return serializeCell(direct);
+            }
+        }
+
+        if (Array.isArray(safeRow) && colIndex < safeRow.length) {
+            return serializeCell(safeRow[colIndex]);
+        }
+
+        if (unnamedBucket && unnamedIndex < unnamedBucket.length) {
+            return serializeCell(unnamedBucket[unnamedIndex++]);
+        }
+
+        return null;
+    });
+}
+
+/**
+ * Chuẩn hóa danh sách cột theo metadata + dữ liệu hàng đầu tiên có giá trị.
+ * Trường hợp mssql trả 1 key nhưng value là mảng (do cột trùng tên), bung thành nhiều cột cùng tên.
+ * @param {string[]} sourceColNames
+ * @param {Record<string, any>[]} rows
+ * @returns {string[]}
+ */
+function normalizeSourceColumnNames(sourceColNames, rows) {
+    if (!Array.isArray(sourceColNames) || sourceColNames.length === 0) {
+        return [];
+    }
+    const rowList = Array.isArray(rows) ? rows : [];
+    const emptyCountInSource = sourceColNames.filter((n) => !n).length;
+    let unnamedExpandLen = 0;
+    if (emptyCountInSource === 1) {
+        for (let i = 0; i < rowList.length; i++) {
+            const r = rowList[i];
+            if (!r || typeof r !== "object") continue;
+            if (!Object.prototype.hasOwnProperty.call(r, "")) continue;
+            const v = r[""];
+            if (Array.isArray(v) && v.length > 1) {
+                unnamedExpandLen = v.length;
+            }
+            break;
+        }
+    }
+
+    const expanded = [];
+    let emptyExpanded = false;
+    for (const colName of sourceColNames) {
+        if (!colName) {
+            if (!emptyExpanded && unnamedExpandLen > 1) {
+                for (let i = 0; i < unnamedExpandLen; i++) {
+                    expanded.push("");
+                }
+                emptyExpanded = true;
+            } else {
+                expanded.push(colName);
+            }
+            continue;
+        }
+        let arrayLen = 0;
+        for (let i = 0; i < rowList.length; i++) {
+            const r = rowList[i];
+            if (!r || typeof r !== "object") continue;
+            if (!Object.prototype.hasOwnProperty.call(r, colName)) continue;
+            const v = r[colName];
+            if (Array.isArray(v) && v.length > 1) {
+                arrayLen = v.length;
+            }
+            break;
+        }
+        if (arrayLen > 1) {
+            for (let i = 0; i < arrayLen; i++) {
+                expanded.push(colName);
+            }
+        } else {
+            expanded.push(colName);
+        }
+    }
+    return expanded;
+}
+
+/**
  * @param {sql.ConnectionPool} pool
  * @param {string} query
  * @param {number} batchIndex 0-based
@@ -149,12 +266,27 @@ async function runOneBatchVisual(pool, query, batchIndex, batchStartLine, result
             const rsAny = rs;
             const rawCols = rsAny.columns;
             let sourceColNames = [];
-            if (rs.length > 0) {
-                sourceColNames = Object.keys(rs[0]);
-            } else if (Array.isArray(rawCols)) {
+            if (Array.isArray(rawCols)) {
                 sourceColNames = rawCols.map((c) => (c && c.name) || "");
             } else if (rawCols && typeof rawCols === "object") {
                 sourceColNames = Object.keys(rawCols);
+            } else if (rs.length > 0) {
+                sourceColNames = Object.keys(rs[0]);
+            }
+
+            sourceColNames = normalizeSourceColumnNames(sourceColNames, rs);
+
+            // mssql có thể gom nhiều cột không tên vào key "" dạng mảng (vd: select @a, @b).
+            // Khi metadata chỉ còn 1 key "", bung theo số phần tử để hiển thị đủ số cột.
+            if (
+                sourceColNames.length === 1 &&
+                sourceColNames[0] === "" &&
+                rs.length > 0 &&
+                rs[0] &&
+                Array.isArray(rs[0][""]) &&
+                rs[0][""].length > 1
+            ) {
+                sourceColNames = Array.from({ length: rs[0][""].length }, () => "");
             }
             const displayColNames = sourceColNames.map((n) =>
                 n == null || String(n).trim() === "" ? "(No column name)" : String(n)
@@ -173,7 +305,7 @@ async function runOneBatchVisual(pool, query, batchIndex, batchStartLine, result
                 columns = displayColNames.map((displayName) => columnMeta(displayName, null));
             }
 
-            let rows = rs.map((r) => sourceColNames.map((k) => serializeCell(r[k])));
+            let rows = rs.map((r) => rowToCellsByColumnOrder(r, sourceColNames));
             const fullCount = rows.length;
             if (fullCount > MAX_ROWS_PER_RESULT_SET) {
                 rows = rows.slice(0, MAX_ROWS_PER_RESULT_SET);
@@ -226,10 +358,17 @@ async function runOneBatchVisual(pool, query, batchIndex, batchStartLine, result
  * @param {{server:string,database:string,user:string,password:string}} connInfo
  * @returns {Promise<{ resultSets: object[], messages: {type:string,message:string}[], hasError: boolean }>}
  */
-async function executeSqlVisual(script, connInfo) {
+/**
+ * @param {string} script
+ * @param {{server:string,database:string,user:string,password:string}} connInfo
+ * @param {number} [lineOffset] Cộng vào chỉ số dòng batch (0-based) khi script là đoạn chọn — map về document
+ */
+async function executeSqlVisual(script, connInfo, lineOffset) {
     if (!connInfo) {
         throw new Error("Không có thông tin kết nối DB.");
     }
+
+    const baseLine = typeof lineOffset === "number" && lineOffset > 0 ? lineOffset : 0;
 
     const { batches, startLines } = splitScriptByGo(script);
     if (batches.length === 0) {
@@ -272,7 +411,7 @@ async function executeSqlVisual(script, connInfo) {
                 pool,
                 batches[i],
                 i,
-                startLines[i],
+                startLines[i] + baseLine,
                 rsOffset
             );
             allResultSets.push(...resultSets);
@@ -315,9 +454,12 @@ async function runCurrentSqlFileVisual(context) {
     }
 
     const selection = editor.selection;
-    const sqlText = selection && !selection.isEmpty ? doc.getText(selection).trim() : doc.getText().trim();
+    const isSelection = selection && !selection.isEmpty;
+    /** Không trim toàn file: trim xóa dòng trống đầu → lệch số dòng lỗi so với editor (vd select 1/0 sau vài dòng trống). */
+    const sqlText = isSelection ? doc.getText(selection) : doc.getText();
+    const lineOffsetForBatches = isSelection ? selection.start.line : 0;
 
-    if (!sqlText) {
+    if (!sqlText.trim()) {
         vscode.window.showErrorMessage("Không có câu lệnh SQL để chạy.");
         return;
     }
@@ -342,7 +484,8 @@ async function runCurrentSqlFileVisual(context) {
             try {
                 const { resultSets, messages, hasError } = await executeSqlVisual(
                     sqlText,
-                    dbStatus.dbInfoSelected.connection
+                    dbStatus.dbInfoSelected.connection,
+                    lineOffsetForBatches
                 );
 
                 const payload = {
@@ -353,7 +496,7 @@ async function runCurrentSqlFileVisual(context) {
                     database: dbStatus.dbInfoSelected.connection.database || "",
                 };
 
-                const panel = new QueryResultPanel(context);
+                const panel = QueryResultPanel.getShared(context);
                 panel.show(payload);
 
                 if (hasError) {

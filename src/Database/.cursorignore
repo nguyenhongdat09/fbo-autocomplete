@@ -15,4 +15,7 @@ App_Data/Controllers/Allocation/
 
 # Allow xml and js files
 !*.xml
-!*.sql 
+!*.sql
+!*.css
+!*.js
+!*.txt

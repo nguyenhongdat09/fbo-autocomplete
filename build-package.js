@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 const { execSync } = require("child_process");
 
 // Run: node build-package.js
@@ -7,8 +8,21 @@ const { execSync } = require("child_process");
 
 const pkgPath = path.resolve(__dirname, "package.json");
 const pkgWriteTmp = path.resolve(__dirname, "package.json.__fbo_writing__");
+const pkgBackupPath = path.resolve(
+    os.tmpdir(),
+    `fbo-autocomplete.package.json.__fbo_packaging_backup__.${process.pid}`
+);
 const lockPath = path.resolve(__dirname, "package-lock.json");
 const lockStashPath = path.resolve(__dirname, "package-lock.json.__fbo_packaging__");
+const vscodeIgnorePath = path.resolve(__dirname, ".vscodeignore");
+const vscodeIgnoreTmpPath = path.resolve(
+    __dirname,
+    ".vscodeignore.__fbo_packaging__"
+);
+const vscodeIgnoreBackupPath = path.resolve(
+    os.tmpdir(),
+    `fbo-autocomplete.vscodeignore.__fbo_packaging_backup__.${process.pid}`
+);
 
 const pkgAtStart = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
 /** Giữ nguyên dependencies + main trước khi sửa — không cần hardcode từng package mới (vd ag-grid-community). */
@@ -96,6 +110,7 @@ function hasLocalWebpack() {
 
 /** Cờ npm: không đọc/ghi lock (kết hợp stash để chắc chắn). */
 const NPM_INSTALL_FLAGS = "--no-audit --no-fund --no-package-lock";
+const NPM_INSTALL_WITH_DEV_FLAGS = `--include=dev ${NPM_INSTALL_FLAGS}`;
 
 /**
  * @param {string} command
@@ -203,13 +218,19 @@ function writePackageJsonRobust(packageJson) {
 function run() {
     console.log("🚀 Bắt đầu quá trình đóng gói extension...");
     stashPackageLock();
+    backupPackageJson();
 
     try {
         const forceNpm = process.env.FBO_FORCE_NPM_INSTALL === "1";
         if (forceNpm || !hasLocalWebpack()) {
             console.log("📦 Cài đặt dependencies (đầy đủ, cần webpack để build)...");
             printNpmLockHint();
-            execWithRetries(`npm install ${NPM_INSTALL_FLAGS}`, "npm install");
+            execWithRetries(`npm install ${NPM_INSTALL_WITH_DEV_FLAGS}`, "npm install (include dev)");
+            if (!hasLocalWebpack()) {
+                throw new Error(
+                    "Thiếu webpack/webpack-cli sau npm install. Kiểm tra package.json hoặc npm config omit/prod."
+                );
+            }
         } else {
             console.log(
                 "📦 Bỏ qua npm install đầu — đã có webpack trong node_modules."
@@ -277,7 +298,16 @@ function run() {
         );
 
         console.log("📦 Đóng gói extension với vsce...");
-        execSync("vsce package", { stdio: "inherit", cwd: __dirname, shell: isWin });
+        applyPackagingIgnoreOverride();
+        try {
+            execSync("vsce package", {
+                stdio: "inherit",
+                cwd: __dirname,
+                shell: isWin,
+            });
+        } finally {
+            restorePackagingIgnoreOverride();
+        }
 
         console.log("🔄 Phục hồi package.json...");
         if (isWin) {
@@ -295,7 +325,97 @@ function run() {
 
         console.log("✅ Hoàn tất!");
     } finally {
+        restorePackageJsonFromBackup();
         unstashPackageLock();
+    }
+}
+
+function preparePackagingIgnoreFileContent() {
+    const base = fs.existsSync(vscodeIgnorePath)
+        ? fs.readFileSync(vscodeIgnorePath, "utf8")
+        : "";
+    const extraRules = [
+        "",
+        "# Added by build-package.js for packaging only",
+        "PivotExcel/**",
+        "",
+    ].join("\n");
+    return base + extraRules;
+}
+
+function applyPackagingIgnoreOverride() {
+    const nextContent = preparePackagingIgnoreFileContent();
+
+    if (fs.existsSync(vscodeIgnoreBackupPath)) {
+        try {
+            fs.unlinkSync(vscodeIgnoreBackupPath);
+        } catch {
+            /* ignore */
+        }
+    }
+
+    if (fs.existsSync(vscodeIgnorePath)) {
+        fs.copyFileSync(vscodeIgnorePath, vscodeIgnoreBackupPath);
+    } else {
+        fs.writeFileSync(vscodeIgnoreBackupPath, "", "utf8");
+    }
+
+    fs.writeFileSync(vscodeIgnorePath, nextContent, "utf8");
+}
+
+function restorePackagingIgnoreOverride() {
+    if (!fs.existsSync(vscodeIgnoreBackupPath)) {
+        return;
+    }
+
+    try {
+        const oldContent = fs.readFileSync(vscodeIgnoreBackupPath, "utf8");
+        fs.writeFileSync(vscodeIgnorePath, oldContent, "utf8");
+    } finally {
+        try {
+            fs.unlinkSync(vscodeIgnoreBackupPath);
+        } catch {
+            /* ignore */
+        }
+    }
+
+    if (fs.existsSync(vscodeIgnoreTmpPath)) {
+        try {
+            fs.unlinkSync(vscodeIgnoreTmpPath);
+        } catch {
+            /* ignore */
+        }
+    }
+}
+
+function backupPackageJson() {
+    try {
+        fs.copyFileSync(pkgPath, pkgBackupPath);
+    } catch (e) {
+        console.error("❌ Không backup được package.json trước khi đóng gói:", e && e.message);
+        throw e;
+    }
+}
+
+function restorePackageJsonFromBackup() {
+    if (!fs.existsSync(pkgBackupPath)) {
+        return;
+    }
+    try {
+        const backupText = fs.readFileSync(pkgBackupPath, "utf8");
+        const backupJson = JSON.parse(backupText);
+        writePackageJsonRobust(backupJson);
+    } catch (e) {
+        console.error("❌ Không khôi phục được package.json từ backup:", e && e.message);
+        throw e;
+    } finally {
+        try {
+            if (fs.existsSync(pkgBackupPath)) {
+                fs.unlinkSync(pkgBackupPath);
+            }
+        } catch {
+            /* ignore */
+        }
     }
 }
 

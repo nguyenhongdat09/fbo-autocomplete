@@ -8,6 +8,7 @@ const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
 const OpenWithVS2008 = require('./VS2008/openWithVS2008');
 const OpenWithVSCode = require('./VS2008/openWithVSCode');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
+const ReloadEntityBySave = require('./VS2008/ReloadEntityBySave');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
 const CompleteCodeByHandle = require("./CompleteCodeWithDB/CompleteCodeByHandle");
 const Trans = require("./Translate/Translate")
@@ -34,6 +35,7 @@ const calculationProvider = require('./CalculationGridDetail/provider');
 const { runCurrentSqlFileVisual } = require("./DBQuery/QueryDatabaseVisualResult");
 const PeekSqlClass = require("./DBQuery/PeekSql");
 const { registerFormatXml } = require("./FormatXML/registerFormatXml");
+const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -53,6 +55,8 @@ async function activate(context) {
     }
 
     registerFormatXml(context);
+    // Đăng ký Query Results view trong Panel (Ctrl+J)
+    ViewPanelResult.getShared(context);
 
     /*Tree view — chọn provider theo fbo-autocomplete.fileTreeLayout */
     const treeLayout = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('fileTreeLayout', 'nested'));
@@ -122,12 +126,15 @@ async function activate(context) {
     //     OpenWithVSCode.open(uri);
     // });
  
-    // Thêm sự kiện mở file XML
+    // Mở file XML: listener + quét textDocuments (cold start). Logic + debounce trong ReadXMLVS2008.readXmlIfOpenFboDocument.
     const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
-        if (document.languageId === 'xml' && document.uri.scheme === 'file') {
-            ReadXMLVS2008.readXml(document.uri.fsPath, context);
-        }
+        ReadXMLVS2008.readXmlIfOpenFboDocument(document, context);
     });
+    for (const doc of vscode.workspace.textDocuments) {
+        ReadXMLVS2008.readXmlIfOpenFboDocument(doc, context);
+    }
+    const reloadEntityBySave = new ReloadEntityBySave(context);
+    const onDidSaveReloadEntity = reloadEntityBySave.run();
 
     // UTF-8 BOM bytes để ghi xuống đĩa (không chèn vào nội dung editor → tránh hiển thị dấu ?)
     const UTF8_BOM = Buffer.from([0xEF, 0xBB, 0xBF]);
@@ -135,6 +142,9 @@ async function activate(context) {
     
 
     const entityHoverProvider = new EntityHoverProvider(__dirname, context);
+    reloadEntityBySave.setOnReloaded((filePath) => {
+        entityHoverProvider.invalidateFileCache(filePath);
+    });
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
@@ -253,6 +263,18 @@ async function activate(context) {
         cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
     });
 
+    const pivotExcelConverter = new ConvertGridToPivotExcel();
+    const convertGridToPivotExcelCmd = vscode.commands.registerCommand(
+        "fbo-autocomplete.ConvertGridToPivotExcel",
+        async () => {
+            try {
+                await pivotExcelConverter.run();
+            } catch (err) {
+                console.error("[FBO ConvertGridToPivotExcel] Error:", err);
+            }
+        }
+    );
+
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();
 
@@ -289,8 +311,23 @@ async function activate(context) {
     const runSqlFileCmd = vscode.commands.registerCommand(
         "fbo-autocomplete.runSqlFile",
         async () => {
+            const editorBeforeRun = vscode.window.activeTextEditor;
+            const selectionBeforeRun = editorBeforeRun ? editorBeforeRun.selection : null;
+            const selectionsBeforeRun = editorBeforeRun ? editorBeforeRun.selections : null;
+            const viewColumnBeforeRun = editorBeforeRun ? editorBeforeRun.viewColumn : undefined;
             try {
                 await runCurrentSqlFileVisual(context);
+                if (editorBeforeRun && !editorBeforeRun.document.isClosed) {
+                    const reopened = await vscode.window.showTextDocument(editorBeforeRun.document, {
+                        viewColumn: viewColumnBeforeRun,
+                        preserveFocus: false,
+                        preview: false,
+                        selection: selectionBeforeRun || undefined,
+                    });
+                    if (selectionsBeforeRun && selectionsBeforeRun.length > 1) {
+                        reopened.selections = selectionsBeforeRun;
+                    }
+                }
             } catch (err) {
                 console.error("[FBO runSqlFile] Error:", err);
                 console.error("[FBO runSqlFile] Stack:", err && err.stack);
@@ -325,6 +362,7 @@ async function activate(context) {
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
     context.subscriptions.push(cvtExcel);
+    context.subscriptions.push(convertGridToPivotExcelCmd);
     context.subscriptions.push(transautoWithKey);
     context.subscriptions.push(transautoComplete);
     context.subscriptions.push(AddFieldToReport);
@@ -334,6 +372,8 @@ async function activate(context) {
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
+    context.subscriptions.push(onDidSaveReloadEntity);
+    context.subscriptions.push(reloadEntityBySave);
     calculationProvider.register(context); 
     // context.subscriptions.push(openWithVSCode);
     /*

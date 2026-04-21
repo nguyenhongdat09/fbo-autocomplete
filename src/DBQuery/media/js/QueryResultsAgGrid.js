@@ -1,20 +1,29 @@
 // FBO Query Results — AG Grid Community, nhiều bảng xếp dọc (kiểu SSMS).
 
 /**
- * @param {{ name?: string, type?: string }[]} columns
+ * @param {string[]} fieldKeys
  * @param {any[][]} rows
  * @returns {Record<string, unknown>[]}
  */
-function rowsToObjects(columns, rows) {
+function rowsToObjects(fieldKeys, rows) {
     if (!rows || !rows.length) return [];
-    const names = (columns || []).map((c) => (c && c.name) || "");
+    const names = fieldKeys || [];
     return rows.map((row) => {
         const o = {};
         names.forEach((name, i) => {
-            if (name) o[name] = row[i];
+            if (name) o[name] = row ? row[i] : null;
         });
         return o;
     });
+}
+
+/**
+ * Field key nội bộ theo index để tránh đụng key khi cột trùng tên (vd nhiều "(No column name)").
+ * @param {number} index
+ * @returns {string}
+ */
+function buildResultFieldKey(index) {
+    return "__fbo_col_" + index;
 }
 
 /**
@@ -64,7 +73,7 @@ function renderMessages(params) {
         else if (mtype === "warning") icon = "⚠️";
         else if (mtype === "print") icon = "💬";
         else if (mtype === "system") icon = "📊";
-        html += `<div class="message-line ${mtype}"><span class="message-icon">${icon}</span><span class="message-content">${escapeHtml(
+        html += `<div class="message-line ${mtype}"><span class="message-icon">${icon}</span><span class="message-content">${renderSqlLikeMessage(
             text
         )}</span></div>`;
     });
@@ -76,6 +85,61 @@ function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text == null ? "" : String(text);
     return div.innerHTML;
+}
+
+function renderSqlLikeMessage(text) {
+    const src = text == null ? "" : String(text);
+    if (!src) return "";
+    const sqlKeywords = new Set([
+        "SELECT", "FROM", "WHERE", "AND", "OR", "NOT", "IN", "IS", "NULL", "LIKE", "BETWEEN",
+        "GROUP", "BY", "ORDER", "HAVING", "TOP", "DISTINCT", "AS", "JOIN", "INNER", "LEFT",
+        "RIGHT", "FULL", "OUTER", "ON", "UNION", "ALL", "CASE", "WHEN", "THEN", "ELSE", "END",
+        "INSERT", "INTO", "VALUES", "UPDATE", "SET", "DELETE", "CREATE", "ALTER", "DROP",
+        "TABLE", "VIEW", "PROCEDURE", "FUNCTION", "EXEC", "EXECUTE", "DECLARE", "BEGIN",
+        "COMMIT", "ROLLBACK", "TRAN", "TRANSACTION", "IF", "EXISTS", "CAST", "CONVERT",
+    ]);
+
+    const tokenRe = /\/\*[\s\S]*?\*\/|--[^\r\n]*|N?'(?:''|[^'])*'|\b\d+(?:\.\d+)?\b|\b[A-Za-z_][A-Za-z0-9_]*\b|[<>=!~]+|[(),.;*+\-\/]/g;
+    let out = "";
+    let last = 0;
+    let m;
+    while ((m = tokenRe.exec(src)) !== null) {
+        const i = m.index;
+        const t = m[0];
+        if (i > last) {
+            out += escapeHtml(src.slice(last, i));
+        }
+        out += formatSqlTokenHtml(t, sqlKeywords);
+        last = i + t.length;
+    }
+    if (last < src.length) {
+        out += escapeHtml(src.slice(last));
+    }
+    return out;
+}
+
+function formatSqlTokenHtml(token, sqlKeywords) {
+    const t = String(token || "");
+    const esc = escapeHtml(t);
+    if (/^\/\*[\s\S]*\*\/$/.test(t) || /^--/.test(t)) {
+        return `<span class="fbo-msg-sql-comment">${esc}</span>`;
+    }
+    if (/^N?'(?:''|[^'])*'$/.test(t)) {
+        return `<span class="fbo-msg-sql-string">${esc}</span>`;
+    }
+    if (/^\d+(?:\.\d+)?$/.test(t)) {
+        return `<span class="fbo-msg-sql-number">${esc}</span>`;
+    }
+    if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(t)) {
+        if (sqlKeywords.has(t.toUpperCase())) {
+            return `<span class="fbo-msg-sql-keyword">${esc}</span>`;
+        }
+        return `<span class="fbo-msg-sql-ident">${esc}</span>`;
+    }
+    if (/^[<>=!~]+$/.test(t)) {
+        return `<span class="fbo-msg-sql-op">${esc}</span>`;
+    }
+    return esc;
 }
 
 function updateStatusBar(data) {
@@ -181,6 +245,13 @@ function ensureGridCopyShortcutBound() {
 function formatSqlCellDisplay(v, sqlScale) {
     if (v === null || v === undefined) return "NULL";
     if (typeof v === "object") return JSON.stringify(v);
+    if (typeof v === "string") {
+        // ISO datetime UTC -> kiểu hiển thị gần SSMS: yyyy-MM-dd HH:mm:ss
+        const isoUtcMatch = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})(?:\.\d+)?Z$/.exec(v);
+        if (isoUtcMatch) {
+            return isoUtcMatch[1] + " " + isoUtcMatch[2];
+        }
+    }
     if (typeof sqlScale === "number" && sqlScale >= 0 && typeof v === "number" && Number.isFinite(v)) {
         return v.toFixed(sqlScale);
     }
@@ -321,25 +392,18 @@ function fboColIdsFromCellSelection(sel) {
 
 /**
  * @param {HTMLElement} gridHost
- * @param {any} cols
- * @param {string[]} columnFields
+ * @param {Record<string, any>} colMetaByField
+ * @param {string[]} fieldKeys
  */
-function fboPickColsForReportFromSelection(gridHost, cols, columnFields) {
+function fboPickColsForReportFromSelection(gridHost, colMetaByField, fieldKeys) {
     var sel = gridHost.__fboCellSelection;
     if (!sel || sel.size === 0) return [];
     var idSet = fboColIdsFromCellSelection(sel);
-    return columnFields
+    return fieldKeys
         .filter(function (n) {
             return idSet.has(n);
         })
-        .map(function (n) {
-            for (var i = 0; i < cols.length; i++) {
-                if (cols[i] && cols[i].name === n) {
-                    return cols[i];
-                }
-            }
-            return null;
-        })
+        .map(function (n) { return colMetaByField[n] || null; })
         .filter(Boolean);
 }
 
@@ -348,19 +412,20 @@ function fboPickColsForReportFromSelection(gridHost, cols, columnFields) {
  * @param {"generateHeaderToDir"|"generateHeaderToGridInput"} command
  * @param {"normal"|"autocomplete"|"lookup"} fieldVariant
  * @param {HTMLElement} gridHost
- * @param {any} cols
- * @param {string[]} columnFields
+ * @param {Record<string, any>} colMetaByField
+ * @param {string[]} fieldKeys
  * @param {string} emptySelectionMessage
  */
 function fboPostHeaderFieldGenerate(
     command,
     fieldVariant,
     gridHost,
-    cols,
-    columnFields,
+    colMetaByField,
+    fieldKeys,
     emptySelectionMessage
 ) {
-    if (!cols || !cols.length) {
+    const fields = fieldKeys || [];
+    if (!fields.length) {
         window.vscode &&
             window.vscode.postMessage &&
             window.vscode.postMessage({
@@ -369,7 +434,7 @@ function fboPostHeaderFieldGenerate(
             });
         return;
     }
-    const picked = fboPickColsForReportFromSelection(gridHost, cols, columnFields);
+    const picked = fboPickColsForReportFromSelection(gridHost, colMetaByField || {}, fields);
     if (!picked.length) {
         window.vscode &&
             window.vscode.postMessage &&
@@ -433,17 +498,18 @@ function fboEntriesFromCellSelection(gridHost, api) {
  * Không có selection hợp lệ → fallback một ô đang focus.
  * @param {HTMLElement} gridHost
  * @param {any} api
- * @param {string[]} columnFields
+ * @param {string[]} fieldKeys
+ * @param {Record<string, string>} headerByField
  * @param {Record<string, number>|undefined} scaleByField
  * @returns {string}
  */
-function fboBuildCopySelectionWithHeaderTsv(gridHost, api, columnFields, scaleByField) {
+function fboBuildCopySelectionWithHeaderTsv(gridHost, api, fieldKeys, headerByField, scaleByField) {
     var entries = fboEntriesFromCellSelection(gridHost, api);
     if (entries.length === 0) {
         return getFocusedCellWithHeaderTsv(api);
     }
     var selectedCols = fboColIdsFromCellSelection(gridHost.__fboCellSelection);
-    var colOrder = columnFields.filter(function (n) {
+    var colOrder = (fieldKeys || []).filter(function (n) {
         return selectedCols.has(n);
     });
     if (colOrder.length === 0) {
@@ -466,7 +532,10 @@ function fboBuildCopySelectionWithHeaderTsv(gridHost, api, columnFields, scaleBy
         if (!e.node || !e.node.data) return;
         map[e.rowIndex + "\x1f" + e.colId] = formatCellForTsv(e.node.data[e.colId], scale[e.colId]);
     });
-    var lines = [colOrder.join("\t")];
+    var headers = colOrder.map(function (c) {
+        return (headerByField && headerByField[c]) || c;
+    });
+    var lines = [headers.join("\t")];
     rowIndices.forEach(function (r) {
         var cells = colOrder.map(function (c) {
             var v = map[r + "\x1f" + c];
@@ -541,6 +610,292 @@ function fboSelectCellRange(gridHost, api, a, b) {
             }
         }
     }
+}
+
+/**
+ * Ô grid dưới tọa độ màn hình (kéo chuột qua nhiều ô như SSMS).
+ * @param {HTMLElement} gridHost
+ * @param {any} api
+ * @param {number} clientX
+ * @param {number} clientY
+ * @returns {{ rowIndex: number, column: any, node: any }|null}
+ */
+function fboHitTestGridCellParams(gridHost, api, clientX, clientY) {
+    if (!gridHost || !api) {
+        return null;
+    }
+    var el = document.elementFromPoint(clientX, clientY);
+    if (!el || typeof el.closest !== "function" || !gridHost.contains(el)) {
+        return null;
+    }
+    var cell = el.closest(".ag-cell");
+    if (!cell) {
+        return null;
+    }
+    var rowEl = cell.closest(".ag-row");
+    if (!rowEl) {
+        return null;
+    }
+    if (cell.closest && (cell.closest(".ag-header") || cell.closest(".ag-column-drop"))) {
+        return null;
+    }
+    var riAttr = rowEl.getAttribute("row-index");
+    if (riAttr == null || riAttr === "") {
+        riAttr = rowEl.getAttribute("data-row-index");
+    }
+    var colId = cell.getAttribute("col-id");
+    if (colId == null || colId === "") {
+        colId = cell.getAttribute("colid");
+    }
+    if (riAttr == null || colId == null || colId === "") {
+        return null;
+    }
+    var rowIndex = parseInt(riAttr, 10);
+    if (isNaN(rowIndex)) {
+        return null;
+    }
+    var column = typeof api.getColumn === "function" ? api.getColumn(colId) : null;
+    if (!column) {
+        return null;
+    }
+    var node = typeof api.getDisplayedRowAtIndex === "function" ? api.getDisplayedRowAtIndex(rowIndex) : null;
+    if (!node) {
+        return null;
+    }
+    return { rowIndex: rowIndex, column: column, node: node };
+}
+
+/** @param {HTMLElement} gridHost */
+function fboClearDragScrollInterval(gridHost) {
+    if (!gridHost) {
+        return;
+    }
+    if (gridHost.__fboDragScrollIntervalId) {
+        clearInterval(gridHost.__fboDragScrollIntervalId);
+        gridHost.__fboDragScrollIntervalId = null;
+    }
+}
+
+/**
+ * Cuộn viewport khi kéo chọn sát mép (ngang / dọc) — gần SSMS.
+ * @param {HTMLElement} gridHost
+ * @param {number} clientX
+ * @param {number} clientY
+ */
+function fboAutoScrollGridViewportForDrag(gridHost, clientX, clientY) {
+    if (!gridHost) {
+        return;
+    }
+    var margin = 22;
+    var stepH = 36;
+    var stepV = 24;
+
+    var hView = gridHost.querySelector(".ag-center-cols-viewport");
+    if (hView && typeof hView.getBoundingClientRect === "function") {
+        var hr = hView.getBoundingClientRect();
+        if (clientX > hr.right - margin) {
+            hView.scrollLeft += stepH;
+        } else if (clientX < hr.left + margin) {
+            hView.scrollLeft -= stepH;
+        }
+    }
+
+    var vView = gridHost.querySelector(".ag-body-viewport");
+    if (vView && typeof vView.getBoundingClientRect === "function") {
+        var vr = vView.getBoundingClientRect();
+        if (clientY > vr.bottom - margin) {
+            vView.scrollTop += stepV;
+        } else if (clientY < vr.top + margin) {
+            vView.scrollTop -= stepV;
+        }
+    }
+}
+
+/**
+ * @param {HTMLElement} gridHost
+ * @param {any} api
+ */
+function fboEnsureDragScrollInterval(gridHost, api) {
+    if (!gridHost || gridHost.__fboDragScrollIntervalId) {
+        return;
+    }
+    gridHost.__fboDragScrollIntervalId = setInterval(function () {
+        var x = gridHost.__fboLastDragClientX;
+        var y = gridHost.__fboLastDragClientY;
+        if (x == null || y == null) {
+            return;
+        }
+        fboAutoScrollGridViewportForDrag(gridHost, x, y);
+        var start = gridHost.__fboDragSelectStart;
+        if (!start || !api) {
+            return;
+        }
+        var cur = fboHitTestGridCellParams(gridHost, api, x, y);
+        if (!cur || !start.column) {
+            return;
+        }
+        fboSelectCellRange(gridHost, api, start, cur);
+        try {
+            api.setFocusedCell(cur.rowIndex, cur.column);
+        } catch (e0) {
+            /* ignore */
+        }
+        try {
+            api.refreshCells({ force: true });
+        } catch (e1) {
+            /* ignore */
+        }
+    }, 45);
+}
+
+/**
+ * Giữ chuột trái + kéo để chọn hình chữ nhật ô; cuộn khi sát mép.
+ * @param {HTMLElement} gridHost
+ * @param {any} api
+ */
+function fboWireDragCellSelection(gridHost, api) {
+    if (!gridHost || !api || gridHost.__fboDragCellWireDone) {
+        return;
+    }
+    gridHost.__fboDragCellWireDone = true;
+
+    function endDrag() {
+        fboClearDragScrollInterval(gridHost);
+        gridHost.__fboLastDragClientX = null;
+        gridHost.__fboLastDragClientY = null;
+        document.removeEventListener("mousemove", onDocMove, true);
+        document.removeEventListener("mouseup", onDocUp, true);
+        if (gridHost.__fboDragMoved) {
+            gridHost.__fboSuppressCellClickUntil = Date.now() + 450;
+        }
+        gridHost.__fboDragSelectActive = false;
+        gridHost.__fboDragSelectStart = null;
+    }
+
+    function onDocMove(ev) {
+        if (!gridHost.__fboDragSelectActive || (ev.buttons != null && ev.buttons !== 1)) {
+            endDrag();
+            return;
+        }
+        var start = gridHost.__fboDragSelectStart;
+        if (!start || !api) {
+            return;
+        }
+        gridHost.__fboLastDragClientX = ev.clientX;
+        gridHost.__fboLastDragClientY = ev.clientY;
+
+        var dx = ev.clientX - start.clientX;
+        var dy = ev.clientY - start.clientY;
+        var cur = fboHitTestGridCellParams(gridHost, api, ev.clientX, ev.clientY);
+        var movedFar = dx * dx + dy * dy >= 16;
+        var newCell =
+            cur &&
+            (cur.rowIndex !== start.rowIndex ||
+                (cur.column && start.column && cur.column.getColId() !== start.column.getColId()));
+
+        fboAutoScrollGridViewportForDrag(gridHost, ev.clientX, ev.clientY);
+        if (movedFar || newCell) {
+            gridHost.__fboDragMoved = true;
+        }
+        if (cur && (movedFar || newCell)) {
+            fboSelectCellRange(gridHost, api, start, cur);
+            try {
+                api.setFocusedCell(cur.rowIndex, cur.column);
+            } catch (e2) {
+                /* ignore */
+            }
+            try {
+                api.refreshCells({ force: true });
+            } catch (e3) {
+                /* ignore */
+            }
+            fboEnsureDragScrollInterval(gridHost, api);
+        }
+    }
+
+    function onDocUp() {
+        endDrag();
+    }
+
+    gridHost.addEventListener(
+        "mousedown",
+        function (ev) {
+            if (!ev || ev.button !== 0) {
+                return;
+            }
+            if (ev.ctrlKey || ev.metaKey || ev.shiftKey) {
+                return;
+            }
+            if (ev.detail >= 2) {
+                return;
+            }
+            var t = ev.target;
+            if (!t || typeof t.closest !== "function" || !t.closest(".ag-cell")) {
+                return;
+            }
+            gridHost.__fboDragMoved = false;
+            gridHost.__fboDragSelectActive = true;
+            gridHost.__fboSuppressCellClickUntil = 0;
+
+            var cellEl = t.closest(".ag-cell");
+            var rowEl = cellEl ? cellEl.closest(".ag-row") : null;
+            if (
+                !rowEl ||
+                (cellEl.closest &&
+                    (cellEl.closest(".ag-header") || cellEl.closest(".ag-column-drop")))
+            ) {
+                gridHost.__fboDragSelectActive = false;
+                return;
+            }
+            var riAttr = rowEl ? rowEl.getAttribute("row-index") || rowEl.getAttribute("data-row-index") : null;
+            var colId = cellEl ? cellEl.getAttribute("col-id") || cellEl.getAttribute("colid") : null;
+            var rowIndex = riAttr != null ? parseInt(riAttr, 10) : NaN;
+            var column = colId && typeof api.getColumn === "function" ? api.getColumn(colId) : null;
+            var node = !isNaN(rowIndex) && typeof api.getDisplayedRowAtIndex === "function" ? api.getDisplayedRowAtIndex(rowIndex) : null;
+            if (!column || !node || isNaN(rowIndex)) {
+                gridHost.__fboDragSelectActive = false;
+                return;
+            }
+
+            var anchorParams = { rowIndex: rowIndex, column: column, node: node };
+            gridHost.__fboCellSelection.clear();
+            gridHost.__fboCellSelection.add(fboCellSelKey(anchorParams));
+            gridHost.__fboSelectionAnchor = {
+                rowIndex: rowIndex,
+                colId: column.getColId(),
+                node: node,
+            };
+            try {
+                api.setFocusedCell(rowIndex, column);
+            } catch (e4) {
+                /* ignore */
+            }
+            var allColsDn =
+                typeof api.getAllDisplayedColumns === "function"
+                    ? api.getAllDisplayedColumns()
+                    : [];
+            var colIxDn = allColsDn.indexOf(column);
+            updateColumnIndexStatus(colIxDn >= 0 ? colIxDn + 1 : 0);
+            try {
+                api.refreshCells({ force: true });
+            } catch (e5) {
+                /* ignore */
+            }
+            scrollResultSectionIntoView(gridHost);
+
+            gridHost.__fboDragSelectStart = {
+                rowIndex: rowIndex,
+                column: column,
+                node: node,
+                clientX: ev.clientX,
+                clientY: ev.clientY,
+            };
+
+            document.addEventListener("mousemove", onDocMove, true);
+            document.addEventListener("mouseup", onDocUp, true);
+        },
+        true
+    );
 }
 
 /**
@@ -876,50 +1231,16 @@ FboQueryResultHeader.prototype.init = function (params) {
     const actions = document.createElement("div");
     actions.className = "fbo-ag-header-actions";
 
-    if (params.enableFilterButton && typeof params.showFilter === "function") {
-        const filterBtn = document.createElement("button");
-        filterBtn.className = "fbo-ag-header-filter-btn ag-header-cell-filter-button";
-        fboWireAgHeaderIconButton(
-            filterBtn,
-            "ag-icon-filter",
-            "Bộ lọc cột",
-            "Lọc",
-            function (src) {
-                params.showFilter(src);
-            }
-        );
-        this.filterBtn = filterBtn;
-        this._filterChangedSync = fboBindFilterActiveClass(params, filterBtn);
-        this._filterApi = params.api;
-        actions.appendChild(filterBtn);
-    } else {
-        this.filterBtn = null;
-    }
-
-    if (params.enableMenu && typeof params.showColumnMenu === "function") {
-        const menuBtn = document.createElement("button");
-        menuBtn.className = "fbo-ag-header-menu-btn ag-header-cell-menu-button";
-        fboWireAgHeaderIconButton(
-            menuBtn,
-            "ag-icon-menu-alt",
-            "Menu cột",
-            "Menu cột (sắp xếp, cột, …)",
-            function (src) {
-                params.showColumnMenu(src);
-            }
-        );
-        this.menuBtn = menuBtn;
-        actions.appendChild(menuBtn);
-    } else {
-        this.menuBtn = null;
-    }
+    // Ẩn filter/menu icon trên header theo yêu cầu UI; giữ icon ghim để freeze cột.
+    this.filterBtn = null;
+    this.menuBtn = null;
 
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "fbo-ag-pin-btn";
     btn.setAttribute("aria-label", "Ghim cột này và các cột bên trái");
     btn.innerHTML =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg>';
+        '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg>';
     this.pinBtn = btn;
     syncFboPinButtonUi(btn, params.column, params.api);
     btn.addEventListener("mousedown", function (e) {
@@ -1018,14 +1339,14 @@ function syncFboPinButtonUi(btn, column, api) {
 }
 
 /** Chiều cao tối thiểu mỗi grid khi kéo (px). */
-const FBO_AG_GRID_MIN_HEIGHT = 120;
+const FBO_AG_GRID_MIN_HEIGHT = 96;
 
 /**
  * @param {HTMLElement|null} el
  * @returns {number}
  */
 function getGridHostHeightPx(el) {
-    if (!el) return 220;
+    if (!el) return 176;
     const inline = el.style && el.style.height;
     if (inline && String(inline).indexOf("px") !== -1) {
         const n = parseFloat(inline);
@@ -1033,7 +1354,7 @@ function getGridHostHeightPx(el) {
     }
     const h = window.getComputedStyle(el).height;
     const m = parseFloat(h);
-    return !isNaN(m) ? m : 220;
+    return !isNaN(m) ? m : 176;
 }
 
 /**
@@ -1184,48 +1505,61 @@ function initQueryResultsAgGrid() {
         tableContainer.appendChild(section);
 
         const cols = rs.columns || [];
+        const fieldKeys = cols.map((_, colIndex) => buildResultFieldKey(colIndex));
+        /** @type {Record<string, string>} */
+        const headerByField = {};
+        /** @type {Record<string, any>} */
+        const colMetaByField = {};
         /** @type {Record<string, number>} */
         const scaleByField = {};
-        cols.forEach(function (c) {
-            if (c && c.name != null && typeof c.scale === "number" && c.scale >= 0) {
-                scaleByField[c.name] = c.scale;
-            }
-        });
-        const colDefs = cols.map((c) => {
-            const field = c.name;
+        const colDefs = cols.map((c, colIndex) => {
+            const field = fieldKeys[colIndex];
+            const headerName = c && c.name != null ? String(c.name) : "";
             const sqlScale = typeof c.scale === "number" && c.scale >= 0 ? c.scale : undefined;
+            headerByField[field] = headerName;
+            colMetaByField[field] = c;
+            if (typeof sqlScale === "number" && sqlScale >= 0) {
+                scaleByField[field] = sqlScale;
+            }
             return {
                 field,
-                headerName: field,
-                width: 140,
-                minWidth: 72,
-                maxWidth: 560,
+                headerName,
+                width: 112,
+                minWidth: 58,
+                maxWidth: 448,
                 fboSqlScale: sqlScale,
                 valueFormatter: (p) => formatSqlCellDisplay(p.value, sqlScale),
             };
         });
 
-        const rowData = rowsToObjects(cols, rs.rows || []);
+        const rowData = rowsToObjects(fieldKeys, rs.rows || []);
 
         if (!colDefs.length) {
             gridHost.textContent = "(Không có cột — result set rỗng.)";
-            gridHost.style.minHeight = "48px";
-            gridHost.style.padding = "12px";
+            gridHost.style.minHeight = "38px";
+            gridHost.style.padding = "10px";
             agPanels.push({ section, gridHost, api: null });
             return;
         }
 
         const pageSize = 50;
-        const legacyHeight = Math.min(520, Math.max(220, 72 + Math.min(rowData.length, 12) * 28));
-        const compactHeight = 72 + Math.min(rowData.length, 12) * 28;
-        // Giữ chiều cao cũ cho grid lớn, nhưng co lại khi ít dòng.
-        const gridHeight = Math.min(legacyHeight, Math.max(118, compactHeight));
+        /* Chiều cao mặc định: ~8 dòng dữ liệu (+ header/filter + thanh cuộn ngang; + thanh phân trang nếu bật) */
+        const FBO_AG_PREVIEW_ROWS = 8;
+        const rowH = 28;
+        const headerStackPx = 58;
+        const hScrollPadPx = 12;
+        const pagingBarPx = rowData.length > pageSize ? 44 : 0;
+        const rowsForHeight = Math.min(FBO_AG_PREVIEW_ROWS, Math.max(1, rowData.length));
+        const gridHeight = Math.min(
+            380,
+            Math.max(FBO_AG_GRID_MIN_HEIGHT, headerStackPx + rowsForHeight * rowH + hScrollPadPx + pagingBarPx)
+        );
 
         gridHost.style.height = `${gridHeight}px`;
         gridHost.style.width = "100%";
         gridHost.tabIndex = 0;
 
-        const columnFields = cols.map((c) => (c && c.name) || "").filter(Boolean);
+        const columnFields = fieldKeys;
 
         gridHost.__fboCellSelection = new Set();
         gridHost.__fboSelectionAnchor = null;
@@ -1234,7 +1568,9 @@ function initQueryResultsAgGrid() {
             columnDefs: colDefs,
             rowData,
             context: { fboSelectionGridHost: gridHost },
-            headerHeight: 52,
+            headerHeight: 26,
+            rowHeight: 28,
+            floatingFiltersHeight: 20,
             defaultColDef: {
                 sortable: true,
                 resizable: true,
@@ -1247,6 +1583,9 @@ function initQueryResultsAgGrid() {
                             return false;
                         }
                         return h.__fboCellSelection.has(fboCellSelKey(p));
+                    },
+                    "fbo-cell-null": function (p) {
+                        return p == null || p.value === null || p.value === undefined;
                     },
                 },
             },
@@ -1263,6 +1602,14 @@ function initQueryResultsAgGrid() {
             ensureDomOrder: true,
             alwaysShowHorizontalScroll: true,
             onCellClicked: (params) => {
+                if (
+                    gridHost.__fboSuppressCellClickUntil &&
+                    Date.now() < gridHost.__fboSuppressCellClickUntil
+                ) {
+                    delete gridHost.__fboSuppressCellClickUntil;
+                    gridHost.__fboDragMoved = false;
+                    return;
+                }
                 if (params && params.column && params.rowIndex != null) {
                     params.api.setFocusedCell(params.rowIndex, params.column);
                     const allCols =
@@ -1383,12 +1730,13 @@ function initQueryResultsAgGrid() {
                 }
                 const row = getTargetRowData(api);
                 const line = rowToTsv(columnFields, row, scaleByField);
-                const headerLine = columnFields.join("\t");
+                const headerLine = columnFields.map((f) => headerByField[f] || f).join("\t");
                 const copyCell = getFocusedCellTextFromApi(api);
                 const copyCellWithHeader = fboBuildCopySelectionWithHeaderTsv(
                     gridHost,
                     api,
                     columnFields,
+                    headerByField,
                     scaleByField
                 );
                 showGridContextMenu(params.event, [
@@ -1492,7 +1840,8 @@ function initQueryResultsAgGrid() {
                                             });
                                         return;
                                     }
-                                    const gen = new FboPivotExcelHeaderGenerator(columnFields, {
+                                    const headerFields = columnFields.map((f) => headerByField[f] || f);
+                                    const gen = new FboPivotExcelHeaderGenerator(headerFields, {
                                         pivotPrefix: "!2.",
                                     });
                                     postCopy(
@@ -1524,7 +1873,7 @@ function initQueryResultsAgGrid() {
                                     }
                                     const pickedCols = fboPickColsForReportFromSelection(
                                         gridHost,
-                                        cols,
+                                        colMetaByField,
                                         columnFields
                                     );
                                     if (!pickedCols.length) {
@@ -1564,7 +1913,7 @@ function initQueryResultsAgGrid() {
                                                 "generateHeaderToDir",
                                                 "normal",
                                                 gridHost,
-                                                cols,
+                                                colMetaByField,
                                                 columnFields,
                                                 "Chọn ít nhất một ô (click, Ctrl+click, Shift+vùng, double-click hàng). Header To Dir chỉ lấy cột của các ô đang chọn."
                                             );
@@ -1577,7 +1926,7 @@ function initQueryResultsAgGrid() {
                                                 "generateHeaderToDir",
                                                 "autocomplete",
                                                 gridHost,
-                                                cols,
+                                                colMetaByField,
                                                 columnFields,
                                                 "Chọn ít nhất một ô (click, Ctrl+click, Shift+vùng, double-click hàng). Header To Dir chỉ lấy cột của các ô đang chọn."
                                             );
@@ -1590,7 +1939,7 @@ function initQueryResultsAgGrid() {
                                                 "generateHeaderToDir",
                                                 "lookup",
                                                 gridHost,
-                                                cols,
+                                                colMetaByField,
                                                 columnFields,
                                                 "Chọn ít nhất một ô (click, Ctrl+click, Shift+vùng, double-click hàng). Header To Dir chỉ lấy cột của các ô đang chọn."
                                             );
@@ -1609,7 +1958,7 @@ function initQueryResultsAgGrid() {
                                                 "generateHeaderToGridInput",
                                                 "normal",
                                                 gridHost,
-                                                cols,
+                                                colMetaByField,
                                                 columnFields,
                                                 "Chọn ít nhất một ô (click, Ctrl+click, Shift+vùng, double-click hàng). Header To Grid Input chỉ lấy cột của các ô đang chọn."
                                             );
@@ -1622,7 +1971,7 @@ function initQueryResultsAgGrid() {
                                                 "generateHeaderToGridInput",
                                                 "autocomplete",
                                                 gridHost,
-                                                cols,
+                                                colMetaByField,
                                                 columnFields,
                                                 "Chọn ít nhất một ô (click, Ctrl+click, Shift+vùng, double-click hàng). Header To Grid Input chỉ lấy cột của các ô đang chọn."
                                             );
@@ -1635,7 +1984,7 @@ function initQueryResultsAgGrid() {
                                                 "generateHeaderToGridInput",
                                                 "lookup",
                                                 gridHost,
-                                                cols,
+                                                colMetaByField,
                                                 columnFields,
                                                 "Chọn ít nhất một ô (click, Ctrl+click, Shift+vùng, double-click hàng). Header To Grid Input chỉ lấy cột của các ô đang chọn."
                                             );
@@ -1650,6 +1999,7 @@ function initQueryResultsAgGrid() {
         });
 
         gridHost.__fboAgApi = api;
+        fboWireDragCellSelection(gridHost, api);
         window.__fboGridApis.push(api);
 
         gridHost.addEventListener("contextmenu", (ev) => {

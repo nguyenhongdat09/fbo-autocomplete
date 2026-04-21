@@ -1,6 +1,7 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const crypto = require('crypto');
 const { machineIdSync } = require('node-machine-id');
 
@@ -24,6 +25,13 @@ function getKeyFilePath(context) {
     return path.join(getUserDatabaseRoot(), KEY_FILE_NAME);
 }
 
+/**
+ * Bản sao bền vững theo user profile để giữ key qua uninstall/reinstall VSIX.
+ */
+function getDurableKeyFilePath() {
+    return path.join(os.homedir(), '.fbo-autocomplete', KEY_FILE_NAME);
+}
+
 function tryReadKeyFromFile(filePath) {
     if (!filePath || !fs.existsSync(filePath)) return null;
     try {
@@ -36,6 +44,17 @@ function tryReadKeyFromFile(filePath) {
 
 function isKeyValidForThisMachine(key) {
     return !!(key && key.length >= 8 && key.substring(0, 8) === machineIdHash);
+}
+
+function tryWriteKeyToFile(filePath, key) {
+    if (!filePath || !key) return false;
+    try {
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
+        fs.writeFileSync(filePath, key, 'utf8');
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 /**
@@ -130,22 +149,30 @@ function generateLicenseKey(extensionKey) {
 function getOrCreateExtensionKey(context) {
     _lastLicenseContext = context;
     const filePath = getKeyFilePath(context);
+    const durablePath = getDurableKeyFilePath();
 
     const existing = tryReadKeyFromFile(filePath);
     if (existing) {
         return existing;
     }
 
+    const fromDurable = tryReadKeyFromFile(durablePath);
+    if (fromDurable && isKeyValidForThisMachine(fromDurable)) {
+        tryWriteKeyToFile(filePath, fromDurable);
+        return fromDurable;
+    }
+
     const legacyGlobalRootKey = path.join(context.globalStorageUri.fsPath, KEY_FILE_NAME);
     const fromLegacyGlobal = tryReadKeyFromFile(legacyGlobalRootKey);
     if (fromLegacyGlobal && isKeyValidForThisMachine(fromLegacyGlobal)) {
-        try {
-            fs.writeFileSync(filePath, fromLegacyGlobal, 'utf8');
-            if (fs.existsSync(legacyGlobalRootKey)) {
+        tryWriteKeyToFile(filePath, fromLegacyGlobal);
+        tryWriteKeyToFile(durablePath, fromLegacyGlobal);
+        if (fs.existsSync(legacyGlobalRootKey)) {
+            try {
                 fs.unlinkSync(legacyGlobalRootKey);
+            } catch {
+                // ignore
             }
-        } catch {
-            // ignore
         }
         return fromLegacyGlobal;
     }
@@ -153,11 +180,8 @@ function getOrCreateExtensionKey(context) {
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const fromSettings = String(config.get('extensionKey', '') || '').trim();
     if (fromSettings && isKeyValidForThisMachine(fromSettings)) {
-        try {
-            fs.writeFileSync(filePath, fromSettings, 'utf8');
-        } catch {
-            // ignore
-        }
+        tryWriteKeyToFile(filePath, fromSettings);
+        tryWriteKeyToFile(durablePath, fromSettings);
         return fromSettings;
     }
 
@@ -168,21 +192,16 @@ function getOrCreateExtensionKey(context) {
     for (const legacyPath of legacyPaths) {
         const fromLegacy = tryReadKeyFromFile(legacyPath);
         if (fromLegacy && isKeyValidForThisMachine(fromLegacy)) {
-            try {
-                fs.writeFileSync(filePath, fromLegacy, 'utf8');
-            } catch {
-                // ignore
-            }
+            tryWriteKeyToFile(filePath, fromLegacy);
+            tryWriteKeyToFile(durablePath, fromLegacy);
             return fromLegacy;
         }
     }
 
     const newKey = generateRandomKey();
-    try {
-        fs.writeFileSync(filePath, newKey, 'utf8');
-    } catch {
-        // ignore
-    }
+    tryWriteKeyToFile(filePath, newKey);
+    tryWriteKeyToFile(durablePath, newKey);
+    updateExtensionKeyInSettings(newKey);
 
     return newKey;
 }
@@ -218,13 +237,22 @@ async function checkLicense(context) {
     if (keyMachineIdPart !== machineIdHash) {
         // Xóa file key cũ và tạo mới cho máy này
         const filePath = getKeyFilePath(context);
+        const durablePath = getDurableKeyFilePath();
         if (fs.existsSync(filePath)) {
             fs.unlinkSync(filePath);
+        }
+        if (fs.existsSync(durablePath)) {
+            try {
+                fs.unlinkSync(durablePath);
+            } catch {
+                // ignore
+            }
         }
         
         // Tạo key mới cho máy này
         const newKey = generateRandomKey();
-        fs.writeFileSync(filePath, newKey, 'utf8');
+        tryWriteKeyToFile(filePath, newKey);
+        tryWriteKeyToFile(durablePath, newKey);
         
         // Cập nhật settings
         updateExtensionKeyInSettings(newKey);

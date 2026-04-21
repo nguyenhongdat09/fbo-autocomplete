@@ -5,8 +5,8 @@
    ============================================ */
 :root {
     /* SSMS White Theme Colors */
-    --null-bg: #FFFFE0;
-    --null-text: #808080;
+    --null-bg: #846E2F;
+    --null-text: #F0F0F0;
     --selected-bg: #0078D4;
     --selected-text: #FFFFFF;
     --header-bg: #F0F0F0;
@@ -22,7 +22,7 @@
     --row-height: 25px;
     --row-number-width: 50px;
     --status-bar-height: 24px;
-    --tab-height: 32px;
+    --tab-height: 25px;
     
     /* Fonts */
     --font-family: Consolas, 'Courier New', monospace;
@@ -61,7 +61,7 @@ body {
 }
 
 .tab {
-    padding: 8px 20px;
+    padding: 4px 12px;
     cursor: pointer;
     background: #E8E8E8;
     border: none;
@@ -69,7 +69,7 @@ body {
     border-right: 1px solid var(--border-color);
     color: var(--text-color);
     font-family: var(--font-family);
-    font-size: var(--font-size);
+    font-size: 12px;
     transition: all 0.2s;
     outline: none;
 }
@@ -82,13 +82,13 @@ body {
     background: var(--background);
     border-bottom-color: var(--selected-bg);
     color: var(--text-color);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .tab-count {
-    margin-left: 5px;
+    margin-left: 4px;
     opacity: 0.7;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 /* ============================================
@@ -421,6 +421,37 @@ td.type-datetime {
 .message-content {
     flex: 1;
     color: var(--text-color);
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: Consolas, "Courier New", monospace;
+    line-height: 1.5;
+}
+
+.message-content .fbo-msg-sql-keyword {
+    color: var(--vscode-editorKeyword-foreground, #569cd6);
+    font-weight: 600;
+}
+
+.message-content .fbo-msg-sql-string {
+    color: var(--vscode-editorString-foreground, #ce9178);
+}
+
+.message-content .fbo-msg-sql-number {
+    color: var(--vscode-editorNumber-foreground, #b5cea8);
+}
+
+.message-content .fbo-msg-sql-comment {
+    color: var(--vscode-editorLineNumber-foreground, #6a9955);
+    font-style: italic;
+}
+
+.message-content .fbo-msg-sql-op {
+    color: var(--vscode-editorForeground, var(--text-color));
+    opacity: 0.9;
+}
+
+.message-content .fbo-msg-sql-ident {
+    color: var(--vscode-editorForeground, var(--text-color));
 }
 
 .message-timestamp {
@@ -572,8 +603,8 @@ tbody {
    AG Grid — nhiều result set xếp dọc (FBO)
    ============================================ */
 #tableContainer {
-    padding: 8px;
-    padding-bottom: calc(var(--status-bar-height) + 12px);
+    padding: 6px;
+    padding-bottom: calc(var(--status-bar-height) + 10px);
     overflow-y: auto;
     flex: 1;
 }
@@ -658,19 +689,51 @@ tbody {
 
 .fbo-ag-grid-host {
     width: 100%;
-    min-height: 120px; /* khớp FBO_AG_GRID_MIN_HEIGHT khi kéo chia batch */
+    min-height: 96px; /* khớp FBO_AG_GRID_MIN_HEIGHT khi kéo chia batch (~80%) */
     border: 1px solid var(--border-color, #ccc);
+    /* Thu ~20% so với theme Balham mặc định (font, padding, hàng, icon…) */
+    --ag-grid-size: 3.2px;
+    --ag-font-size: 11px;
+    --ag-icon-size: 10px;
+}
+
+.fbo-ag-grid-host .ag-paging-panel,
+.fbo-ag-grid-host .ag-paging-row-summary-panel {
+    font-size: 11px;
+}
+
+.fbo-ag-grid-host .ag-picker-field-wrapper,
+.fbo-ag-grid-host .ag-standard-button {
+    font-size: 11px;
 }
 
 /* AG Grid vertical separators for better readability */
 .ag-theme-balham .ag-header-cell,
 .ag-theme-balham-dark .ag-header-cell {
-    border-right: 1px solid var(--border-color, #c0c0c0);
+    border-right: 1px solid rgba(128, 128, 128, 0.55) !important;
+}
+
+/* Chữ header lớn hơn ô dữ liệu ~10% (so với --ag-font-size) */
+.fbo-ag-grid-host .ag-header-cell {
+    font-size: calc(var(--ag-font-size) * 1.1);
 }
 
 .ag-theme-balham .ag-cell,
 .ag-theme-balham-dark .ag-cell {
-    border-right: 1px solid var(--border-color, #c0c0c0);
+    border-right: 1px solid rgba(128, 128, 128, 0.5) !important;
+}
+
+/*
+ * Ô dữ liệu: khoảng cách chữ ↔ viền dưới (trước đây % theme ~1px — gần như không thấy).
+ * align-items:center làm padding-bottom khó “ăn” dưới baseline → căn trên + padding đáy cố định (px).
+ */
+.fbo-ag-grid-host .ag-cell .ag-cell-wrapper {
+    box-sizing: border-box;
+    align-items: flex-start !important;
+    justify-content: flex-start;
+    padding-top: 3px;
+    padding-bottom: 7px;
+    min-height: 100%;
 }
 
 .ag-theme-balham .ag-cell.ag-cell-focus,
@@ -683,6 +746,7 @@ tbody {
 /* Ô được chọn (multi-select / vùng / double-click hàng) */
 .fbo-ag-grid-host .ag-cell.fbo-cell-selected {
     background: rgba(0, 120, 212, 0.22) !important;
+    color: var(--selected-text, #ffffff) !important;
     box-shadow: inset 0 0 0 1px rgba(0, 120, 212, 0.45);
 }
 
@@ -690,8 +754,16 @@ tbody {
     background: rgba(0, 120, 212, 0.28) !important;
 }
 
+/* NULL theo style SSMS: nền vàng nhạt, chữ xám + italic */
+.fbo-ag-grid-host .ag-cell.fbo-cell-null {
+    background: var(--null-bg, #ffffe0) !important;
+    color: var(--null-text, #808080) !important;
+    font-style: italic;
+    border-right: 1px solid rgba(128, 128, 128, 0.6) !important;
+}
+
 .fbo-ag-grid-host .ag-body-horizontal-scroll {
-    min-height: 14px;
+    min-height: 11px;
 }
 
 /* Vạch tách cột ghim trái (freeze) — giống Excel */
@@ -703,41 +775,44 @@ tbody {
 /* Header: hàng 1 = tên cột (full width); hàng 2 = filter / menu / ghim — tránh chữ bị ép thành "m." */
 .fbo-ag-header-with-pin {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    gap: 2px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
     width: 100%;
     height: 100%;
-    min-height: 44px;
-    padding: 3px 4px 2px;
+    min-height: 100%;
+    padding: 1px 3px;
     box-sizing: border-box;
     overflow: hidden;
 }
 
 .fbo-ag-header-label {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 100%;
+    flex: 1 1 auto;
+    width: auto;
+    max-width: none;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 1.2;
-    font-size: 12px;
+    line-height: 1.1;
+    font-size: calc(var(--ag-font-size) * 1.1);
 }
 
 .fbo-ag-header-actions {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
-    width: 100%;
-    min-height: 20px;
+    justify-content: flex-end;
+    gap: 2px;
+    width: auto;
+    min-height: 13px;
 }
 
 .fbo-ag-grid-host .ag-header-cell .ag-header-cell-comp-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
     overflow: visible;
 }
 
@@ -752,8 +827,8 @@ tbody {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     padding: 0;
     border: none;
     border-radius: 4px;
@@ -779,8 +854,8 @@ tbody {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 13px;
+    height: 13px;
     padding: 0;
     border: none;
     border-radius: 4px;

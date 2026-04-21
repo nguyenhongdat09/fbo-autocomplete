@@ -1,4 +1,4 @@
-// @ts-nocheck — TreeItem được gắn thêm thuộc tính fbo* cho cây nhiều cấp.
+﻿// @ts-nocheck â€” TreeItem Ä‘Æ°á»£c gáº¯n thÃªm thuá»™c tÃ­nh fbo* cho cÃ¢y nhiá»u cáº¥p.
 
 const vscode = require("vscode");
 const path = require("path");
@@ -119,7 +119,7 @@ class TreeHelper {
         if (targetTab) {
             await vscode.window.tabGroups.close([targetTab]);
         } else {
-            console.warn(`⚠️ File không có trong Open Editors: ${fileUri}`);
+            console.warn(`âš ï¸ File khÃ´ng cÃ³ trong Open Editors: ${fileUri}`);
         }
         await this.parent.refresh()
     }
@@ -157,7 +157,7 @@ class TreeHelper {
                 element.contextValue === "folder" && element.resourceUri
                     ? element.resourceUri.fsPath
                     : fboTreeLabel(element.label);
-            console.warn(`⚠️ Không tìm thấy file nào trong Open Editors trong phạm vi: ${scope}`);
+            console.warn(`âš ï¸ KhÃ´ng tÃ¬m tháº¥y file nÃ o trong Open Editors trong pháº¡m vi: ${scope}`);
         }
 
         await this.parent.refresh();
@@ -209,7 +209,7 @@ class TreeHelper {
             try {
                 await vscode.window.showTextDocument(vscode.Uri.file(fp), { preview: false, viewColumn: vscode.ViewColumn.Active });
             } catch (err) {
-                vscode.window.showWarningMessage(`Không thể mở file: ${fp}`);
+                vscode.window.showWarningMessage(`KhÃ´ng thá»ƒ má»Ÿ file: ${fp}`);
             }
         }
     }
@@ -255,11 +255,11 @@ class TreeFileProvider extends TreeHelper {
         this._buildPromise = null;
         this._lastSelect = { path: null, time: 0 };
         this.dbStatusBar = null;
-        /** Chuỗi gốc người dùng nhập (để hiển thị / lưu workspace). */
+        /** Chuá»—i gá»‘c ngÆ°á»i dÃ¹ng nháº­p (Ä‘á»ƒ hiá»ƒn thá»‹ / lÆ°u workspace). */
         this._treeFilterRaw = "";
-        /** Lọc dạng substring (lowercase); rỗng nếu chỉ dùng glob. */
+        /** Lá»c dáº¡ng substring (lowercase); rá»—ng náº¿u chá»‰ dÃ¹ng glob. */
         this._treeFilterSubstr = "";
-        /** Glob đơn giản trên tên file / nhãn folder khi có ký tự `*`. */
+        /** Glob Ä‘Æ¡n giáº£n trÃªn tÃªn file / nhÃ£n folder khi cÃ³ kÃ½ tá»± `*`. */
         this._treeFilterGlobRe = null;
     }
 
@@ -386,8 +386,8 @@ class TreeFileProvider extends TreeHelper {
     }
 
     /**
-     * Phần suffix của fboFolderKey: luôn dùng segment chữ thường để gộp Lookup/lookup
-     * (UNC/Windows không phân biệt hoa thường; VS Code có thể trả về path khác nhau từng tab).
+     * Pháº§n suffix cá»§a fboFolderKey: luÃ´n dÃ¹ng segment chá»¯ thÆ°á»ng Ä‘á»ƒ gá»™p Lookup/lookup
+     * (UNC/Windows khÃ´ng phÃ¢n biá»‡t hoa thÆ°á»ng; VS Code cÃ³ thá»ƒ tráº£ vá» path khÃ¡c nhau tá»«ng tab).
      */
     _folderKeySuffixNormalized(segments, endExclusive) {
         return segments.slice(0, endExclusive).map((s) => s.toLowerCase()).join("/");
@@ -541,13 +541,13 @@ class TreeFileProvider extends TreeHelper {
             canSelectMany: true
         });
 
-        // ✅ Build tree trong background
+        // âœ… Build tree trong background
         Promise.resolve().then(async () => {
             await this.buildTreeOptimized();
             this._isInitialized = true;
             this.refreshEvent.fire();
 
-            // ✅ AUTO EXPAND & REVEAL sau khi build xong
+            // âœ… AUTO EXPAND & REVEAL sau khi build xong
             const activeEditor = vscode.window.activeTextEditor;
             if (activeEditor) {
                 const filePath = activeEditor.document.uri.fsPath;
@@ -566,7 +566,7 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // ✅ onDidChangeTextDocument - Update dirty + Auto reveal
+        // âœ… onDidChangeTextDocument - Update dirty + Auto reveal
         vscode.workspace.onDidChangeTextDocument(async (event) => {
             if (!this._isInitialized) return;
 
@@ -579,7 +579,7 @@ class TreeFileProvider extends TreeHelper {
                 this.refreshEvent.fire(treeItem);
             }
 
-            // ✅ AUTO REVEAL khi gõ phím
+            // âœ… AUTO REVEAL khi gÃµ phÃ­m
             const cur_Item = this.getCurrentPathActive();
             if (!cur_Item || !cur_Item.parentGroup) return;
 
@@ -594,7 +594,7 @@ class TreeFileProvider extends TreeHelper {
             } catch (err) { }
         });
 
-        // ✅ onDidSaveTextDocument
+        // âœ… onDidSaveTextDocument
         vscode.workspace.onDidSaveTextDocument((doc) => {
             if (!this._isInitialized) return;
             const filePath = doc.uri.fsPath;
@@ -606,27 +606,27 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // ✅ 🆕 onDidOpenTextDocument - KHI MỞ FILE MỚI (Kéo thả, double click, etc.)
+        // âœ… ðŸ†• onDidOpenTextDocument - KHI Má»ž FILE Má»šI (KÃ©o tháº£, double click, etc.)
         vscode.workspace.onDidOpenTextDocument(async (document) => {
             if (!this._isInitialized) return;
 
-            // Chỉ xử lý file trong workspace
+            // Chá»‰ xá»­ lÃ½ file trong workspace
             if (document.uri.scheme !== 'file') return;
 
             const filePath = document.uri.fsPath;
 
-            // Kiểm tra xem file đã có trong tree chưa
+            // Kiá»ƒm tra xem file Ä‘Ã£ cÃ³ trong tree chÆ°a
             let treeItem = this.getTreeItemByPath(filePath);
 
-            // Nếu chưa có, thêm vào tree (file mới kéo vào)
+            // Náº¿u chÆ°a cÃ³, thÃªm vÃ o tree (file má»›i kÃ©o vÃ o)
             if (!treeItem) {
                 this.addFileToTree(filePath);
                 await this.refreshEvent.fire();
 
-                // Đợi tree update xong
+                // Äá»£i tree update xong
                 await new Promise(resolve => setTimeout(resolve, 100));
 
-                // Lấy lại treeItem sau khi add
+                // Láº¥y láº¡i treeItem sau khi add
                 treeItem = this.getTreeItemByPath(filePath);
             }
 
@@ -644,7 +644,7 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // ✅ onDidChangeVisibleTextEditors - Khi thay đổi editor hiển thị
+        // âœ… onDidChangeVisibleTextEditors - Khi thay Ä‘á»•i editor hiá»ƒn thá»‹
         const debouncedVisibleChange = this.debounce(async () => {
             if (!this._isInitialized) return;
             await this.smartRefresh();
@@ -654,7 +654,7 @@ class TreeFileProvider extends TreeHelper {
             debouncedVisibleChange();
         });
 
-        // ✅ onDidChangeActiveTextEditor - Khi đổi tab
+        // âœ… onDidChangeActiveTextEditor - Khi Ä‘á»•i tab
         vscode.window.onDidChangeActiveTextEditor(async (editor) => {
             if (!editor || !this._isInitialized) return;
 
@@ -662,7 +662,7 @@ class TreeFileProvider extends TreeHelper {
                 const filePath = editor.document.uri.fsPath;
                 let treeItem = this.getTreeItemByPath(filePath);
 
-                // Nếu file chưa có trong tree, add vào
+                // Náº¿u file chÆ°a cÃ³ trong tree, add vÃ o
                 if (!treeItem) {
                     this.addFileToTree(filePath);
                     await this.refreshEvent.fire();
@@ -683,7 +683,11 @@ class TreeFileProvider extends TreeHelper {
                         if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === "function") {
                             this.dbStatusBar.reloadDbOptionsFromGroups();
                         }
-                        this.dbStatusBar.updateText(gLabel + " (App)");
+                        if (typeof this.dbStatusBar.tryAutoUpdateText === "function") {
+                            this.dbStatusBar.tryAutoUpdateText(gLabel + " (App)");
+                        } else {
+                            this.dbStatusBar.updateText(gLabel + " (App)");
+                        }
                     }
                 }
             }, 100);
@@ -711,12 +715,12 @@ class TreeFileProvider extends TreeHelper {
 
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", async () => {
             await this.refresh();
-            vscode.window.showInformationMessage("FBO File Tree đã được reload!");
+            vscode.window.showInformationMessage("FBO File Tree Ä‘Ã£ Ä‘Æ°á»£c reload!");
         });
 
         this._syncTreeViewFilterBadge();
 
-        // ✅ onDidExpandElement - Reveal khi expand group
+        // âœ… onDidExpandElement - Reveal khi expand group
         this.treeView.onDidExpandElement(async (event) => {
             const element = event.element;
             if (element.contextValue === "group") {
@@ -724,13 +728,13 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // ✅ OpenBrowser - Đăng ký commands mở browser
+        // âœ… OpenBrowser - ÄÄƒng kÃ½ commands má»Ÿ browser
         const openBrowser = new OpenBrowser();
         openBrowser.registerCommands(context);
      
-        // trong constructor hoặc run, khởi tạo biến lưu trạng thái
+        // trong constructor hoáº·c run, khá»Ÿi táº¡o biáº¿n lÆ°u tráº¡ng thÃ¡i
         //await openBrowser.openBrowserForFile(filePath);
-        // sau khi this.treeView được tạo (trong run)
+        // sau khi this.treeView Ä‘Æ°á»£c táº¡o (trong run)
        
         this.dbStatusBar = new DBStatusBarManager(context); 
         this.dbStatusBar.show();
@@ -742,10 +746,10 @@ class TreeFileProvider extends TreeHelper {
             return;
         }
         const value = await vscode.window.showInputBox({
-            title: "Lọc cây FBO Project",
-            placeHolder: "VD: SI, Grid, *.xml — để trống để xóa lọc",
+            title: "Lá»c cÃ¢y FBO Project",
+            placeHolder: "VD: SI, Grid, *.xml â€” Ä‘á»ƒ trá»‘ng Ä‘á»ƒ xÃ³a lá»c",
             value: this._treeFilterRaw,
-            prompt: "Khớp chuỗi trong tên/đường dẫn file (không phân biệt hoa thường). Có dấu * thì glob theo tên file hoặc tên folder.",
+            prompt: "Khá»›p chuá»—i trong tÃªn/Ä‘Æ°á»ng dáº«n file (khÃ´ng phÃ¢n biá»‡t hoa thÆ°á»ng). CÃ³ dáº¥u * thÃ¬ glob theo tÃªn file hoáº·c tÃªn folder.",
             ignoreFocusOut: true,
         });
         if (value === undefined) {
@@ -845,7 +849,7 @@ class TreeFileProvider extends TreeHelper {
                 return iconCache.get(key);
             };
 
-            // Build items (group → folder* → file)
+            // Build items (group â†’ folder* â†’ file)
             for (const data of fileData) {
                 const { filePath, folderName, ext, groupName } = data;
 
@@ -885,7 +889,7 @@ class TreeFileProvider extends TreeHelper {
                 item.command = {
                     command: "vscode.open",
                     arguments: [uri],
-                    title: "Mở file"
+                    title: "Má»Ÿ file"
                 };
 
                 if (String(iconRule) === 'Yes') {
@@ -913,7 +917,7 @@ class TreeFileProvider extends TreeHelper {
         const result = await this._buildPromise;
         this._buildPromise = null; 
 
-        // Cập nhật groupItems cho status bar DB và reload lại danh sách DB
+        // Cáº­p nháº­t groupItems cho status bar DB vÃ  reload láº¡i danh sÃ¡ch DB
         if (this.dbStatusBar) {
             this.dbStatusBar.groupItems = this.groupItems;
             if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === 'function') {
@@ -959,7 +963,7 @@ class TreeFileProvider extends TreeHelper {
         item.command = {
             command: "vscode.open",
             arguments: [uri],
-            title: "Mở file"
+            title: "Má»Ÿ file"
         };
 
         if (String(iconRule) === 'Yes') {
@@ -1135,8 +1139,8 @@ class TreeFileProvider extends TreeHelper {
     }
 
     /**
-     * Gốc paste luôn là project path của nhóm (level 1), kể cả khi kéo thả vào folder level 2+.
-     * Tránh join(pathFolderCon, đườngDẫnTươngĐốiTừProject) tạo thêm App_data/App_data/...
+     * Gá»‘c paste luÃ´n lÃ  project path cá»§a nhÃ³m (level 1), ká»ƒ cáº£ khi kÃ©o tháº£ vÃ o folder level 2+.
+     * TrÃ¡nh join(pathFolderCon, Ä‘Æ°á»ngDáº«nTÆ°Æ¡ngÄá»‘iTá»«Project) táº¡o thÃªm App_data/App_data/...
      */
     _getGroupRootPathForDropTarget(target) {
         if (!target || !target.resourceUri) return null;
@@ -1202,3 +1206,5 @@ class TreeFileProvider extends TreeHelper {
 }
 
 module.exports = TreeFileProvider;
+
+

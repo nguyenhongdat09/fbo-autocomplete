@@ -2,6 +2,8 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
+const QUERY_RESULTS_VIEW_ID = "fbo_query_results_panel";
+const QUERY_RESULTS_CONTAINER_CMD = "workbench.view.extension.fbo_query_results_panel_container";
 
 /**
  * Ưu tiên vendor trong media (VSIX nhẹ); fallback node_modules (dev / bản cũ).
@@ -44,55 +46,31 @@ function resolveAgGridAssetPaths(extRoot, rootMedia) {
 class QueryResultPanel {
     // Add static property to track panel
     static currentPanel = null;
+    static _shared = null;
+
+    /**
+     * Dùng singleton để giữ state và WebviewViewProvider xuyên suốt session.
+     * @param {vscode.ExtensionContext} context
+     * @returns {QueryResultPanel}
+     */
+    static getShared(context) {
+        if (!QueryResultPanel._shared) {
+            QueryResultPanel._shared = new QueryResultPanel(context);
+            QueryResultPanel._shared.registerWebviewViewProvider();
+        }
+        return QueryResultPanel._shared;
+    }
 
     constructor(context) {
         this.rootMedia = 'src/DBQuery/media';
         this.context = context;
         this.panel = null;
+        this.view = null;
+        this._providerRegistered = false;
         this.currentResults = null;
     }
 
-    show(queryResults) {
-        console.log('QueryResultPanel.show() called');
-        console.log('Query results:', queryResults);
-
-        const tk = vscode.ColorThemeKind;
-        const kind = vscode.window.activeColorTheme.kind;
-        const theme =
-            kind === tk.Dark || kind === tk.HighContrast ? "dark" : "light";
-        this.currentResults = Object.assign({}, queryResults, { theme });
-
-        try {
-            // ✅ Close existing panel if exists
-            if (QueryResultPanel.currentPanel && QueryResultPanel.currentPanel !== this) {
-                console.log('Disposing old panel...');
-                QueryResultPanel.currentPanel.dispose();
-            }
-
-            // Create or reveal panel
-            if (!this.panel) {
-                console.log('Creating new panel...');
-                this.createPanel();
-                QueryResultPanel.currentPanel = this;
-            } else {
-                console.log('Revealing existing panel...');
-                this.panel.reveal(vscode.ViewColumn.Beside);
-            }
-
-            // Update content
-            console.log('Updating content...');
-            this.updateContent();
-            console.log('Panel shown successfully');
-
-        } catch (error) {
-            console.error('Error showing panel:', error);
-            vscode.window.showErrorMessage('Error showing results: ' + error.message);
-        }
-    }
-
-    createPanel() {
-        console.log('Creating webview panel...');
-
+    getLocalResourceRoots() {
         const extPath = this.context.extensionPath;
         const mediaRoot = path.join(extPath, this.rootMedia);
         const agDist = path.join(extPath, "node_modules", "ag-grid-community", "dist");
@@ -104,26 +82,93 @@ class QueryResultPanel {
         if (fs.existsSync(agStyles)) {
             localResourceRoots.push(vscode.Uri.file(agStyles));
         }
+        return localResourceRoots;
+    }
+
+    /**
+     * @param {vscode.Webview} webview
+     */
+    bindWebview(webview) {
+        webview.options = {
+            enableScripts: true,
+            localResourceRoots: this.getLocalResourceRoots(),
+        };
+        webview.onDidReceiveMessage(
+            message => this.handleWebviewMessage(message),
+            undefined,
+            this.context.subscriptions
+        );
+    }
+
+    registerWebviewViewProvider() {
+        if (this._providerRegistered) return;
+        const provider = {
+            resolveWebviewView: (webviewView) => {
+                this.view = webviewView;
+                this.bindWebview(webviewView.webview);
+                webviewView.onDidDispose(
+                    () => {
+                        if (this.view === webviewView) {
+                            this.view = null;
+                        }
+                    },
+                    null,
+                    this.context.subscriptions
+                );
+                this.updateViewContent();
+            },
+        };
+        const disposable = vscode.window.registerWebviewViewProvider(
+            QUERY_RESULTS_VIEW_ID,
+            provider,
+            { webviewOptions: { retainContextWhenHidden: true } }
+        );
+        this.context.subscriptions.push(disposable);
+        this._providerRegistered = true;
+    }
+
+    show(queryResults) {
+        console.log('QueryResultPanel.show() called');
+        console.log('Query results:', queryResults);
+
+        const tk = vscode.ColorThemeKind;
+        const kind = vscode.window.activeColorTheme.kind;
+        const theme =
+            kind === tk.Dark || kind === tk.HighContrast ? "dark" : "light";
+        this.currentResults = Object.assign({}, queryResults, { theme });
+        this.registerWebviewViewProvider();
+
+        try {
+            // Hiển thị ở Panel (Ctrl+J) qua WebviewView.
+            void vscode.commands.executeCommand(QUERY_RESULTS_CONTAINER_CMD);
+            void vscode.commands.executeCommand(`${QUERY_RESULTS_VIEW_ID}.focus`);
+            this.updateViewContent();
+            // resolveWebviewView có thể chạy async sau tick hiện tại, nên refresh nhẹ lần 2.
+            setTimeout(() => {
+                this.updateViewContent();
+            }, 60);
+
+        } catch (error) {
+            console.error('Error showing panel:', error);
+            vscode.window.showErrorMessage('Error showing results: ' + error.message);
+        }
+    }
+
+    createPanel() {
+        console.log('Creating webview panel...');
 
         this.panel = vscode.window.createWebviewPanel(
             'queryResult',
             '📊 Query Results',
             vscode.ViewColumn.Beside,
             {
-                enableScripts: true,
                 retainContextWhenHidden: true,
-                localResourceRoots,
             }
         );
 
         console.log('Panel created:', !!this.panel);
 
-        // Handle messages from webview
-        this.panel.webview.onDidReceiveMessage(
-            message => this.handleWebviewMessage(message),
-            undefined,
-            this.context.subscriptions
-        );
+        this.bindWebview(this.panel.webview);
 
         // Cleanup on close
         this.panel.onDidDispose(
@@ -163,6 +208,11 @@ class QueryResultPanel {
         console.log('Setting webview HTML...');
         this.panel.webview.html = html;
         console.log('Webview HTML set');
+    }
+
+    updateViewContent() {
+        if (!this.view || !this.currentResults) return;
+        this.view.webview.html = this.getHtmlContent(this.view.webview);
     }
 
     // File: src/DBQuery/QueryResultPanel.js

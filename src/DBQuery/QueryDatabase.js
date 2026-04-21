@@ -34,8 +34,8 @@ function splitScriptByGo(sqlText) {
     let startLine = 0;
     for (let i = 0; i < lines.length; i++) {
         if (GO_LINE_REGEX.test(lines[i])) {
-            const batch = current.join("\n").trim();
-            if (batch) {
+            const batch = current.join("\n");
+            if (batch.trim()) {
                 batches.push(batch);
                 startLines.push(startLine);
             }
@@ -45,8 +45,8 @@ function splitScriptByGo(sqlText) {
             current.push(lines[i]);
         }
     }
-    const last = current.join("\n").trim();
-    if (last) {
+    const last = current.join("\n");
+    if (last.trim()) {
         batches.push(last);
         startLines.push(startLine);
     }
@@ -100,12 +100,15 @@ function runOneBatch(pool, query, batchStartLine) {
  * Thực thi script SQL (có thể chứa nhiều batch phân cách bởi GO), gom messages giống SSMS
  * @param {string} script - toàn bộ script (sẽ tách theo GO)
  * @param {{server:string,database:string,user:string,password:string}} connInfo
+ * @param {number} [lineOffset] Cộng vào dòng đầu batch (0-based) khi script là đoạn chọn trong file
  * @returns {Promise<{messages:string[],hasError:boolean}>}
  */
-async function executeSqlMessageOnly(script, connInfo) {
+async function executeSqlMessageOnly(script, connInfo, lineOffset) {
     if (!connInfo) {
         throw new Error("Không có thông tin kết nối DB.");
     }
+
+    const baseLine = typeof lineOffset === "number" && lineOffset > 0 ? lineOffset : 0;
 
     const { batches, startLines } = splitScriptByGo(script);
     if (batches.length === 0) {
@@ -140,7 +143,7 @@ async function executeSqlMessageOnly(script, connInfo) {
     let hasError = false;
     try {
         for (let i = 0; i < batches.length; i++) {
-            const { messages, hasError: batchError } = await runOneBatch(pool, batches[i], startLines[i]);
+            const { messages, hasError: batchError } = await runOneBatch(pool, batches[i], startLines[i] + baseLine);
             allMessages.push(...messages);
             if (batchError) hasError = true;
         }
@@ -179,11 +182,12 @@ async function runCurrentSqlFile() {
     }
 
     const selection = editor.selection;
-    const sqlText = (selection && !selection.isEmpty)
-        ? doc.getText(selection).trim()
-        : doc.getText().trim();
+    const isSelection = selection && !selection.isEmpty;
+    /** Không trim toàn bộ: trim xóa newline đầu → lệch số dòng lỗi; không trim batch trong splitScriptByGo. */
+    const sqlText = isSelection ? doc.getText(selection) : doc.getText();
+    const lineOffsetForBatches = isSelection ? selection.start.line : 0;
 
-    if (!sqlText) {
+    if (!sqlText.trim()) {
         vscode.window.showErrorMessage("Không có câu lệnh SQL để chạy.");
         return;
     }
@@ -205,7 +209,8 @@ async function runCurrentSqlFile() {
         try {
             const { messages, hasError } = await executeSqlMessageOnly(
                 sqlText,
-                dbStatus.dbInfoSelected.connection
+                dbStatus.dbInfoSelected.connection,
+                lineOffsetForBatches
             );
 
             // Ghi ra OutputChannel giống tab Messages (bỏ qua dòng "Line N" chỉ dùng cho parse)

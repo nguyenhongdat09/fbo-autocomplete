@@ -1,0 +1,8 @@
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\bin\Release\PivotExcel.exe.config
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\bin\Release\PivotExcel.exe
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\bin\Release\PivotExcel.pdb
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.AssemblyReference.cache
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.SuggestedBindingRedirects.cache
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.CoreCompileInputs.cache
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.exe
+E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.pdb
