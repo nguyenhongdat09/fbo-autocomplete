@@ -1,4 +1,3 @@
-const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 const cp = require("child_process");
@@ -46,31 +45,31 @@ class ReloadEntityBySave {
         this.onReloaded = typeof handler === "function" ? handler : undefined;
     }
 
-    run() {
-        return vscode.workspace.onDidSaveTextDocument((document) => {
-            this.onDidSave(document);
-        });
-    }
+    /**
+     * Reload entity cho file XML (chạy ReadXML.exe) — gọi từ hover/command.
+     * @param {string} filePath
+     * @returns {Promise<void>}
+     */
+    reloadFile(filePath) {
+        if (this.disposed) {
+            return Promise.reject(new Error("ReloadEntityBySave disposed"));
+        }
+        if (!filePath || typeof filePath !== "string") {
+            return Promise.reject(new Error("Invalid file path"));
+        }
 
-    onDidSave(document) {
-        if (this.disposed) return;
-        if (!document || document.languageId !== "xml" || document.uri.scheme !== "file") return;
-
-        const filePath = document.uri.fsPath;
         const state = this.getOrCreateState(filePath);
         state.latestMtimeMs = this.getMtimeMs(filePath);
+        state.lastHandledMtimeMs = 0;
 
-        if (state.timer) {
-            clearTimeout(state.timer);
-        }
-        state.timer = setTimeout(() => {
-            state.timer = null;
-            if (state.latestMtimeMs <= state.lastHandledMtimeMs && !state.running) {
-                return;
+        return new Promise((resolve, reject) => {
+            if (!state.pendingResolvers) {
+                state.pendingResolvers = [];
             }
+            state.pendingResolvers.push({ resolve, reject });
             state.needsRun = true;
             this.pump();
-        }, this.options.debounceMs);
+        });
     }
 
     getOrCreateState(filePath) {
@@ -126,11 +125,14 @@ class ReloadEntityBySave {
         const runTargetMtime = state.latestMtimeMs;
         this.activeCount += 1;
 
+        let runError = null;
+        let didReload = false;
         try {
             if (runTargetMtime > state.lastHandledMtimeMs) {
                 await this.execWithRetry(filePath);
                 state.lastHandledMtimeMs = Math.max(state.lastHandledMtimeMs, runTargetMtime);
                 state.failures = 0;
+                didReload = true;
                 if (this.onReloaded) {
                     try {
                         this.onReloaded(filePath);
@@ -140,9 +142,11 @@ class ReloadEntityBySave {
                 }
             }
         } catch (err) {
+            runError = err;
             state.failures += 1;
             console.error(`[FBO ReloadEntityBySave] Reload failed (${state.failures}) for ${filePath}:`, err && err.message ? err.message : err);
         } finally {
+            this.flushPendingResolvers(state, runError, didReload);
             state.running = false;
             this.activeCount = Math.max(0, this.activeCount - 1);
 
@@ -188,6 +192,24 @@ class ReloadEntityBySave {
                 resolve();
             });
         });
+    }
+
+    flushPendingResolvers(state, runError, didReload) {
+        if (!state.pendingResolvers || state.pendingResolvers.length === 0) {
+            return;
+        }
+        const resolvers = state.pendingResolvers;
+        state.pendingResolvers = [];
+        if (runError) {
+            const message = runError && runError.message ? runError.message : String(runError);
+            for (const { reject } of resolvers) {
+                reject(runError instanceof Error ? runError : new Error(message));
+            }
+            return;
+        }
+        for (const { resolve } of resolvers) {
+            resolve();
+        }
     }
 
     cleanupStateIfIdle(filePath) {

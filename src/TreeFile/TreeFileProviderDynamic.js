@@ -4,6 +4,7 @@ const vscode = require("vscode");
 const TreeFileProvider = require("./TreeFileProvider");
 
 class TreeFileProviderDynamic extends TreeFileProvider {
+    // Reuse toàn bộ kiến trúc search/filter đã tách module từ TreeFileProvider.
     _getDynamicThreshold() {
         const raw = vscode.workspace.getConfiguration("fbo-autocomplete").get("fileTreeDynamicMinFiles", 5);
         const n = parseInt(raw, 10);

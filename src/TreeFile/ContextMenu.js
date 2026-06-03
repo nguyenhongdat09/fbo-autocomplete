@@ -23,6 +23,8 @@ class ContextMenuHandler {
             { name: "fboFile.CopyNameOfFileNoEx", handler: () => this.copyNameOfFileNoEx() },
             { name: "fboFile.DeleteFile", handler: async () => await this.deleteFile() },
             { name: "fboFile.FixWebConfig", handler: async (group) => await this.fixWebConfig(group) },
+            { name: "fboFile.OpenWebConfig", handler: async (group) => await this.openWebConfig(group) },
+            { name: "fboFile.ExpandAll", handler: async (group) => await this.expandAll(group) },
             { name: "fboFile.DeleteStruct", handler: async (group) => await this.deleteStruct(group) },
             { name: "fboFile.PasteFilesToGroup", handler: async (group) => await this.PasteFilesToGroup(group) },
             { name: "fboFile.GenerateCopyFile", handler: async () => await this.GenerateCopyFile() },
@@ -34,10 +36,12 @@ class ContextMenuHandler {
                 vscode.commands.registerCommand(name, handler)
             )
         }
-        this.treeView.onDidChangeSelection((e) => {
-            const isFileSelected = e.selection.length > 0 && e.selection.every(item => item.contextValue === 'file');
-            vscode.commands.executeCommand('setContext', 'fboViewFileSelected', isFileSelected);
-        });
+        if (this.treeView && typeof this.treeView.onDidChangeSelection === "function") {
+            this.treeView.onDidChangeSelection((e) => {
+                const isFileSelected = e.selection.length > 0 && e.selection.every(item => item.contextValue === 'file');
+                vscode.commands.executeCommand('setContext', 'fboViewFileSelected', isFileSelected);
+            });
+        }
     }
     getPathsSelect() {
         // Nếu dùng trong TreeView thì lấy từ selection của tree
@@ -111,7 +115,10 @@ class ContextMenuHandler {
             const newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(newBaseName, path.basename(sourcePath, ext))}${ext}`);
             return [sourcePath, newFileName];
         });
-        this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);
+        const pasteResult = await this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);
+        if (typeof this.treeDataProvider.notifyGroupFilesPasted === "function") {
+            await this.treeDataProvider.notifyGroupFilesPasted(targetPath, pasteResult);
+        }
     }
 
     async GenerateCopyFile() {
@@ -171,7 +178,10 @@ class ContextMenuHandler {
             vscode.window.showWarningMessage("Không tìm thấy file nào trong clipboard.");
             return;
         }
-        await this.app_dataChecker.pasteFilesToGroup(group.resourceUri.fsPath, filePaths, 0);
+        const pasteResult = await this.app_dataChecker.pasteFilesToGroup(group.resourceUri.fsPath, filePaths, 0);
+        if (typeof this.treeDataProvider.notifyGroupFilesPasted === "function") {
+            await this.treeDataProvider.notifyGroupFilesPasted(group.resourceUri.fsPath, pasteResult);
+        }
     }
     //#endregion 
     //#region Open Reveal Folder
@@ -294,6 +304,70 @@ class ContextMenuHandler {
         await vscode.env.clipboard.writeText(fileNames.join(','));
     }
     //#endregion
+    //#region Open Web.config
+    async openWebConfig(group) {
+        if (!group) return;
+        try {
+            const file = path.join(group.resourceUri.fsPath, "Web.config");
+            if (!fs.existsSync(file)) {
+                vscode.window.showErrorMessage(`❌ Không tìm thấy file ${file}`);
+                return;
+            }
+            const doc = await vscode.workspace.openTextDocument(file);
+            await vscode.window.showTextDocument(doc, { preview: false });
+        } catch (err) {
+            vscode.window.showErrorMessage(`❌ Không thể mở Web.config: ${err.message}`);
+        }
+    }
+    //#endregion
+    //#region Expand All
+    _fboTreeLabel(label) {
+        if (label == null) return "";
+        return typeof label === "string" ? label : (label.label || "");
+    }
+
+    async _expandTreeNodeRecursive(element) {
+        if (!element || !this.treeView) return;
+        const provider = this.treeDataProvider;
+        if (element.collapsibleState !== vscode.TreeItemCollapsibleState.None) {
+            element.collapsibleState = vscode.TreeItemCollapsibleState.Expanded;
+            try {
+                await this.treeView.reveal(element, { expand: true, focus: false, select: false });
+            } catch (_) { /* node chưa render trong view */ }
+        }
+        const children = await provider.getChildren(element);
+        for (const child of children || []) {
+            if (child.contextValue === "file") continue;
+            await this._expandTreeNodeRecursive(child);
+        }
+    }
+
+    async expandAll(group) {
+        if (!group) return;
+        try {
+            const groupName = this._fboTreeLabel(group.label);
+            const provider = this.treeDataProvider;
+
+            group.collapsibleState = vscode.TreeItemCollapsibleState.Expanded;
+            const storedGroup = provider.groupItems?.get(groupName);
+            if (storedGroup) {
+                storedGroup.collapsibleState = vscode.TreeItemCollapsibleState.Expanded;
+            }
+            if (provider.folderItems) {
+                for (const folderItem of provider.folderItems.values()) {
+                    if (folderItem.fboGroupName === groupName) {
+                        folderItem.collapsibleState = vscode.TreeItemCollapsibleState.Expanded;
+                    }
+                }
+            }
+
+            await this._expandTreeNodeRecursive(group);
+            provider.refreshEvent?.fire();
+        } catch (err) {
+            vscode.window.showErrorMessage(`Expand All: ${err.message}`);
+        }
+    }
+    //#endregion
     //#region Fix Web.config
     async fixWebConfig(group) {
         if (!group) return;
@@ -317,7 +391,7 @@ class ContextMenuHandler {
         try {
             //Join vơi App_Data\Controllers\Structure
             var folderStruct = path.join(group.resourceUri.fsPath,  'App_Data', 'Controllers', 'Structure');
-            var folderDelete = ['App', 'Dir', 'Filter', 'Grid']
+            var folderDelete = ['App', 'Dir', 'Filter', 'Grid', 'Sys']
             folderDelete.forEach(folderName => {
                 var folder = path.join(folderStruct, folderName);
                 //Loop xóa tất cả file trong folder

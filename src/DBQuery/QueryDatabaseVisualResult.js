@@ -228,6 +228,181 @@ function normalizeSourceColumnNames(sourceColNames, rows) {
     return expanded;
 }
 
+function unquoteSqlIdent(name) {
+    const s = String(name || "").trim();
+    if (!s) return "";
+    if (s.startsWith("[") && s.endsWith("]")) return s.slice(1, -1);
+    if (s.startsWith('"') && s.endsWith('"')) return s.slice(1, -1);
+    if (s.startsWith("`") && s.endsWith("`")) return s.slice(1, -1);
+    return s;
+}
+
+function splitSqlSelectList(selectList) {
+    const out = [];
+    let cur = "";
+    let depth = 0;
+    let inSingle = false;
+    let inDouble = false;
+    let inBracket = false;
+    const s = String(selectList || "");
+    for (let i = 0; i < s.length; i++) {
+        const ch = s[i];
+        const next = s[i + 1];
+        if (inSingle) {
+            cur += ch;
+            if (ch === "'" && next === "'") {
+                cur += next;
+                i++;
+            } else if (ch === "'") {
+                inSingle = false;
+            }
+            continue;
+        }
+        if (inDouble) {
+            cur += ch;
+            if (ch === '"') inDouble = false;
+            continue;
+        }
+        if (inBracket) {
+            cur += ch;
+            if (ch === "]") inBracket = false;
+            continue;
+        }
+        if (ch === "'") {
+            inSingle = true;
+            cur += ch;
+            continue;
+        }
+        if (ch === '"') {
+            inDouble = true;
+            cur += ch;
+            continue;
+        }
+        if (ch === "[") {
+            inBracket = true;
+            cur += ch;
+            continue;
+        }
+        if (ch === "(") {
+            depth++;
+            cur += ch;
+            continue;
+        }
+        if (ch === ")") {
+            if (depth > 0) depth--;
+            cur += ch;
+            continue;
+        }
+        if (ch === "," && depth === 0) {
+            out.push(cur.trim());
+            cur = "";
+            continue;
+        }
+        cur += ch;
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out;
+}
+
+function projectNameFromExpr(expr) {
+    const e = String(expr || "").trim();
+    if (!e) return "";
+    const asMatch = e.match(/\bas\s+(\[[^\]]+\]|"[^"]+"|`[^`]+`|[A-Za-z_][A-Za-z0-9_]*)\s*$/i);
+    if (asMatch) return unquoteSqlIdent(asMatch[1]);
+
+    // Không alias: biến @a, biểu thức, hằng số -> (No column name)
+    if (/^@[A-Za-z_][A-Za-z0-9_]*$/i.test(e)) return "";
+    if (/^[0-9]+(\.[0-9]+)?$/.test(e)) return "";
+    if (/^N?'(?:''|[^'])*'$/.test(e)) return "";
+
+    // Cột thường: a, a.b, [a], [a].[b]
+    const parts = e.split(".").map((x) => x.trim()).filter(Boolean);
+    if (parts.length > 0) {
+        const last = parts[parts.length - 1];
+        if (/^\[[^\]]+\]$/.test(last) || /^"[^"]+"$/.test(last) || /^`[^`]+`$/.test(last) || /^[A-Za-z_][A-Za-z0-9_]*$/.test(last)) {
+            return unquoteSqlIdent(last);
+        }
+    }
+    return "";
+}
+
+function extractSelectProjectionNames(queryText) {
+    const q = String(queryText || "");
+    const m = /\bselect\b/i.exec(q);
+    if (!m) return null;
+    const start = m.index + m[0].length;
+    let i = start;
+    let depth = 0;
+    let inSingle = false;
+    let inDouble = false;
+    let inBracket = false;
+    let end = -1;
+    for (; i < q.length; i++) {
+        const ch = q[i];
+        const next = q[i + 1];
+        if (inSingle) {
+            if (ch === "'" && next === "'") {
+                i++;
+            } else if (ch === "'") {
+                inSingle = false;
+            }
+            continue;
+        }
+        if (inDouble) {
+            if (ch === '"') inDouble = false;
+            continue;
+        }
+        if (inBracket) {
+            if (ch === "]") inBracket = false;
+            continue;
+        }
+        if (ch === "'") { inSingle = true; continue; }
+        if (ch === '"') { inDouble = true; continue; }
+        if (ch === "[") { inBracket = true; continue; }
+        if (ch === "(") { depth++; continue; }
+        if (ch === ")") { if (depth > 0) depth--; continue; }
+        if (depth === 0 && /\bf\b/i.test(ch)) {
+            const maybeFrom = q.slice(i, i + 4);
+            const before = i === 0 ? " " : q[i - 1];
+            const after = q[i + 4] || " ";
+            if (/^from$/i.test(maybeFrom) && /\W/.test(before) && /\W/.test(after)) {
+                end = i;
+                break;
+            }
+        }
+    }
+    if (end < 0) return null;
+    const list = q.slice(start, end).trim();
+    if (!list) return null;
+    const exprs = splitSqlSelectList(list);
+    if (!exprs.length) return null;
+    return exprs.map(projectNameFromExpr);
+}
+
+function normalizeColNameKey(n) {
+    return String(n == null ? "" : n).trim().toLowerCase();
+}
+
+function canApplyParsedOrder(parsedNames, sourceColNames) {
+    if (!Array.isArray(parsedNames) || !Array.isArray(sourceColNames)) return false;
+    if (!parsedNames.length || parsedNames.length !== sourceColNames.length) return false;
+    const cntA = new Map();
+    const cntB = new Map();
+    parsedNames.forEach((n) => {
+        const k = normalizeColNameKey(n);
+        cntA.set(k, (cntA.get(k) || 0) + 1);
+    });
+    sourceColNames.forEach((n) => {
+        const k = normalizeColNameKey(n);
+        cntB.set(k, (cntB.get(k) || 0) + 1);
+    });
+    if (cntA.size !== cntB.size) return false;
+    for (const [k, v] of cntA.entries()) {
+        if ((cntB.get(k) || 0) !== v) return false;
+    }
+    return true;
+}
+
 /**
  * @param {sql.ConnectionPool} pool
  * @param {string} query
@@ -275,6 +450,13 @@ async function runOneBatchVisual(pool, query, batchIndex, batchStartLine, result
             }
 
             sourceColNames = normalizeSourceColumnNames(sourceColNames, rs);
+
+            // Giữ đúng thứ tự SELECT khi metadata object làm lệch thứ tự cột (đặc biệt cột trùng tên).
+            // Chỉ áp dụng khi parse được danh sách SELECT và multiset tên cột khớp hoàn toàn.
+            const parsedOrder = extractSelectProjectionNames(query);
+            if (canApplyParsedOrder(parsedOrder, sourceColNames)) {
+                sourceColNames = parsedOrder;
+            }
 
             // mssql có thể gom nhiều cột không tên vào key "" dạng mảng (vd: select @a, @b).
             // Khi metadata chỉ còn 1 key "", bung theo số phần tử để hiển thị đủ số cột.

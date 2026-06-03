@@ -21,12 +21,23 @@ vsc-extension-quickstart.md
 **/*.map
 
 src/**
+!src/extension.js
+!src/constant.js
+!src/updateSettings.js
 !src/Database/**
 !src/DBQuery/**
 !src/FormatXML/**
 !src/HighLightSyntax/**
 !src/dist/**
 !src/ReadXML/**
+!src/TreeFile/**
+!src/VS2008/**
+!src/CompleteCodeWithDB/**
+!src/Translate/**
+!src/ConvertToExcel/**
+!src/CheckLegacy/**
+!src/Definition/**
+!src/CalculationGridDetail/**
 
 
 # Loại bỏ node_modules, nhưng giữ lại các module native cần thiết

@@ -7,6 +7,10 @@ class EntityHoverProvider {
         this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML" , "JsonEntity");
         /** @type {string | null} Nội dung entity lần hover gần nhất (để copy) */
         this._lastEntityContent = null;
+        /** @type {string | null} Đường dẫn file XML lần hover gần nhất (để reload entity) */
+        this._lastEntityFilePath = null;
+        /** @type {import('./ReloadEntityBySave') | null} */
+        this._reloadEntityBySave = null;
         /** @type {Map<string, { mtimeMs: number, data: Array<{Name:string, Content:string}> }>} */
         this._entityCacheByJsonPath = new Map();
         /** @type {Map<string, string>} */
@@ -15,6 +19,13 @@ class EntityHoverProvider {
 
     getLastEntityContent() {
         return this._lastEntityContent || "";
+    }
+
+    /**
+     * @param {import('./ReloadEntityBySave')} reloadEntityBySave
+     */
+    setReloadEntityBySave(reloadEntityBySave) {
+        this._reloadEntityBySave = reloadEntityBySave || null;
     }
 
     /**
@@ -28,6 +39,33 @@ class EntityHoverProvider {
         }
         await vscode.env.clipboard.writeText(text);
         vscode.window.showInformationMessage("Đã copy.");
+    }
+
+    /**
+     * Reload entity file XML đang hover (command entityHoverReload).
+     */
+    async reloadEntityForLastHover() {
+        const filePath = this._lastEntityFilePath;
+        if (!filePath) {
+            vscode.window.showInformationMessage("Không có file XML để reload entity.");
+            return;
+        }
+        if (!this._reloadEntityBySave) {
+            vscode.window.showErrorMessage("Reload entity chưa được khởi tạo.");
+            return;
+        }
+        try {
+            await vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: "Reload Entity",
+                cancellable: false,
+            }, () => this._reloadEntityBySave.reloadFile(filePath));
+            this.invalidateFileCache(filePath);
+            vscode.window.showInformationMessage("Đã reload entity.");
+        } catch (err) {
+            const message = err && err.message ? err.message : String(err);
+            vscode.window.showErrorMessage("Reload entity thất bại: " + message);
+        }
     }
 
      formatXml(xml) {
@@ -65,6 +103,19 @@ class EntityHoverProvider {
     }
     
     
+    appendHoverActionLinks(markdownContent, includeCopy) {
+        if (includeCopy) {
+            markdownContent.appendMarkdown(
+                "[Copy to clipboard](command:fbo-autocomplete.entityHoverCopyContent) | " +
+                "[Reload Entity](command:fbo-autocomplete.entityHoverReload)\n\n"
+            );
+        } else {
+            markdownContent.appendMarkdown(
+                "[Reload Entity](command:fbo-autocomplete.entityHoverReload)\n\n"
+            );
+        }
+    }
+
     provideHover(document, position) {
         const range = document.getWordRangeAtPosition(position, /&[\w.]+;/);
         if (!range) {
@@ -72,10 +123,15 @@ class EntityHoverProvider {
         }
         const entity = document.getText(range).slice(1, -1); // Bỏ '&' và ';'
         const filePath = document.uri.fsPath;
+        this._lastEntityFilePath = filePath;
         // Kiểm tra thư mục JsonEntity
         if (!fs.existsSync(this.jsonEntityFolder)) {
             console.log(this.jsonEntityFolder);
-            return new vscode.Hover("Error: JsonEntity folder not found.");
+            const markdownContent = new vscode.MarkdownString();
+            markdownContent.appendMarkdown("Error: JsonEntity folder not found.\n\n");
+            this.appendHoverActionLinks(markdownContent, false);
+            markdownContent.isTrusted = true;
+            return new vscode.Hover(markdownContent);
         }
         const fileContent = this.loadEntitiesForFile(filePath);
         const entityContent = fileContent ? fileContent.find((item) => item.Name === entity) : null;
@@ -83,7 +139,7 @@ class EntityHoverProvider {
             // Markdown để hiển thị nội dung nổi bật
             const markdownContent = new vscode.MarkdownString();
             markdownContent.appendMarkdown(`### 🎯 Entity Content 🎯 \n\n`);
-            markdownContent.appendMarkdown("[Copy to clipboard](command:fbo-autocomplete.entityHoverCopyContent)\n\n");
+            this.appendHoverActionLinks(markdownContent, true);
             let formattedContent;
 
             formattedContent = this.formatXml(entityContent.Content);
@@ -94,7 +150,13 @@ class EntityHoverProvider {
             markdownContent.isTrusted = true; // Cho phép markdown có nội dung nhúng
             return new vscode.Hover(markdownContent);
         }
-        return new vscode.Hover("Entity not found."); 
+        this._lastEntityContent = null;
+        const markdownContent = new vscode.MarkdownString();
+        markdownContent.appendMarkdown(`### Entity not found: \`${entity}\`\n\n`);
+        markdownContent.appendMarkdown("Entity chưa có trong cache. Bấm **Reload Entity** để đọc lại từ file XML.\n\n");
+        this.appendHoverActionLinks(markdownContent, false);
+        markdownContent.isTrusted = true;
+        return new vscode.Hover(markdownContent);
     }
  
 
@@ -184,6 +246,8 @@ class EntityHoverProvider {
     dispose() {
         this.clearEntityCache();
         this._lastEntityContent = null;
+        this._lastEntityFilePath = null;
+        this._reloadEntityBySave = null;
     }
 
 }

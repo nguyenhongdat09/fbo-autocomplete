@@ -8,9 +8,18 @@ function fboTreeLabel(label) {
     if (label == null) return "";
     return typeof label === "string" ? label : (label.label || "");
 }
+
+/** Group node FBO vs nhóm OTHER (không hiện nút lọc nhanh). */
+function fboIsGroupTreeContext(contextValue) {
+    return contextValue === "group" || contextValue === "groupOther";
+}
 const app_dataChecker = require("./AppDataPathHelper");
 const OpenBrowser = require("./BrowserHandle/OpenBrowser");
 const DBStatusBarManager = require("../DBQuery/dbBar");
+const GroupQuickFilterKinds = require("./searchFile/GroupQuickFilterKinds");
+const GroupFileIndexService = require("./searchFile/GroupFileIndexService");
+const GroupFileWatcherService = require("./searchFile/GroupFileWatcherService");
+const GroupTreeIndexBridge = require("./searchFile/GroupTreeIndexBridge");
 
 class TreeHelper {
     constructor() {
@@ -128,7 +137,7 @@ class TreeHelper {
         if (!element) return;
 
         const uriSet = new Set();
-        if (element.contextValue === "group") {
+        if (fboIsGroupTreeContext(element.contextValue)) {
             const groupName = fboTreeLabel(element.label);
             if (!this.parent.treeData.has(groupName)) return;
             this._collectFileUrisFromItems(this.parent.treeData.get(groupName), uriSet);
@@ -255,6 +264,10 @@ class TreeFileProvider extends TreeHelper {
         this._buildPromise = null;
         this._lastSelect = { path: null, time: 0 };
         this.dbStatusBar = null;
+        this._groupFileIndexService = null;
+        this._groupFileWatcherService = null;
+        this._groupIndexBridge = null;
+        this._searchResultPublisher = null;
         /** Chuá»—i gá»‘c ngÆ°á»i dÃ¹ng nháº­p (Ä‘á»ƒ hiá»ƒn thá»‹ / lÆ°u workspace). */
         this._treeFilterRaw = "";
         /** Lá»c dáº¡ng substring (lowercase); rá»—ng náº¿u chá»‰ dÃ¹ng glob. */
@@ -343,12 +356,90 @@ class TreeFileProvider extends TreeHelper {
         return roots.filter((g) => {
             const label = fboTreeLabel(g.label);
             const raw = this.treeData.get(label) || [];
-            const filtered = this._applyTreeFilterToItems(raw);
+            const filtered = this._applyGroupQuickFilterToGroupItems(label, this._applyTreeFilterToItems(raw));
             if (filtered.length > 0) {
                 return true;
             }
             return this._treeFilterLabelMatches(label);
         });
+    }
+
+    _applyGroupQuickFilterToGroupItems(groupName, items) {
+        return items || [];
+    }
+
+    /**
+     * @param {import('vscode').TreeItem} groupElement node group trên cây
+     * @param {string} kind dir|grid|filter|lookup|report|upload|all
+     */
+    async applyGroupQuickFilter(groupElement, kind) {
+        await this.runGroupFilterSearch(groupElement);
+    }
+
+    _collectGroupRootsForWarmup() {
+        const out = [];
+        for (const [, groupItem] of this.groupItems.entries()) {
+            if (!groupItem || !groupItem.resourceUri) continue;
+            const label = fboTreeLabel(groupItem.label).toUpperCase();
+            if (label === "OTHER") continue;
+            out.push(groupItem.resourceUri.fsPath);
+        }
+        return out;
+    }
+
+    async runGroupFilterSearch(groupElement) {
+        if (!groupElement || !fboIsGroupTreeContext(groupElement.contextValue)) {
+            return;
+        }
+        const groupName = fboTreeLabel(groupElement.label);
+        if (String(groupName).toUpperCase() === "OTHER") {
+            return;
+        }
+        const groupRoot = groupElement.resourceUri && groupElement.resourceUri.fsPath;
+        if (!groupRoot) {
+            vscode.window.showWarningMessage(`Group ${groupName} has no root path.`);
+            return;
+        }
+        if (!this._groupFileIndexService) {
+            vscode.window.showWarningMessage("Group search service is not initialized yet.");
+            return;
+        }
+        const keyword = await vscode.window.showInputBox({
+            title: `Search files in group: ${groupName}`,
+            placeHolder: "Keywords support: * and % (many chars), ? and _ (one char). Space = AND.",
+            ignoreFocusOut: true,
+        });
+        if (keyword === undefined) {
+            return;
+        }
+        const result = await this._groupFileIndexService.search(groupRoot, keyword);
+        result.groupLabel = groupName;
+        if (this._groupIndexBridge) {
+            this._groupIndexBridge.rememberSearch(groupRoot, groupName, keyword);
+        }
+        this._groupFileIndexService.publishSearchResult(result, { reveal: true });
+    }
+
+    /**
+     * Sau paste/copy file vào group — cập nhật cây FBO + index search.
+     * @param {string} groupRoot
+     * @param {{ paths?: string[] }|null|undefined} pasteResult
+     */
+    async notifyGroupFilesPasted(groupRoot, pasteResult) {
+        if (!this._groupIndexBridge || !pasteResult || !pasteResult.paths || !pasteResult.paths.length) {
+            return;
+        }
+        await this._groupIndexBridge.notifyFilesAdded(groupRoot, pasteResult.paths);
+    }
+
+    /**
+     * @param {(result:any)=>void} publisher
+     */
+    setSearchResultPublisher(publisher) {
+        this._searchResultPublisher = typeof publisher === "function" ? publisher : null;
+        if (this._groupFileIndexService) {
+            this._groupFileIndexService.onSearchResult = this._searchResultPublisher;
+        }
     }
 
     _syncTreeViewFilterBadge() {
@@ -530,6 +621,56 @@ class TreeFileProvider extends TreeHelper {
 
     async run(context) {
         this.context = context;
+        const storageRoot = path.join(__dirname, "..", "Database", GroupQuickFilterKinds.STORAGE_DIR_NAME);
+        this._groupFileIndexService = new GroupFileIndexService({
+            storageRoot,
+            ttlMs: GroupQuickFilterKinds.INDEX_TTL_MS,
+            outputChannelName: GroupQuickFilterKinds.OUTPUT_CHANNEL_NAME,
+            warmupConcurrency: GroupQuickFilterKinds.WARMUP_CONCURRENCY,
+            onSearchResult: this._searchResultPublisher,
+        });
+        await this._groupFileIndexService.init();
+        this._groupIndexBridge = new GroupTreeIndexBridge({
+            addFileToTree: (fp) => this.addFileToTree(fp),
+            refreshTree: () => this.refreshEvent.fire(),
+            getIndexService: () => this._groupFileIndexService,
+            publishSearchResult: (r, options) => {
+                if (this._groupFileIndexService) {
+                    this._groupFileIndexService.publishSearchResult(r, options);
+                }
+            },
+        });
+        this._groupFileWatcherService = new GroupFileWatcherService({
+            indexService: this._groupFileIndexService,
+            debounceMs: GroupQuickFilterKinds.WATCH_FLUSH_DEBOUNCE_MS,
+            onIndexChanged: (root) => {
+                if (this._groupIndexBridge) {
+                    this._groupIndexBridge.scheduleRefreshFromIndex(root);
+                }
+            },
+        });
+        const ttlTimer = setInterval(() => {
+            if (this._groupFileIndexService) {
+                this._groupFileIndexService.clearExpired();
+            }
+        }, GroupQuickFilterKinds.CLEANUP_INTERVAL_MS);
+        context.subscriptions.push({ dispose: () => clearInterval(ttlTimer) });
+        context.subscriptions.push({
+            dispose: () => {
+                if (this._groupIndexBridge) {
+                    this._groupIndexBridge.dispose();
+                    this._groupIndexBridge = null;
+                }
+                if (this._groupFileIndexService) {
+                    void this._groupFileIndexService.dispose();
+                    this._groupFileIndexService = null;
+                }
+                if (this._groupFileWatcherService) {
+                    this._groupFileWatcherService.dispose();
+                    this._groupFileWatcherService = null;
+                }
+            }
+        });
 
         const savedFilter = context.workspaceState.get("fboFileTree.filter", "");
         this._setFilterFromString(savedFilter);
@@ -546,6 +687,13 @@ class TreeFileProvider extends TreeHelper {
             await this.buildTreeOptimized();
             this._isInitialized = true;
             this.refreshEvent.fire();
+            if (this._groupFileIndexService) {
+                const roots = this._collectGroupRootsForWarmup();
+                this._groupFileIndexService.warmup(roots);
+                if (this._groupFileWatcherService) {
+                    this._groupFileWatcherService.syncRoots(roots);
+                }
+            }
 
             // âœ… AUTO EXPAND & REVEAL sau khi build xong
             const activeEditor = vscode.window.activeTextEditor;
@@ -723,7 +871,7 @@ class TreeFileProvider extends TreeHelper {
         // âœ… onDidExpandElement - Reveal khi expand group
         this.treeView.onDidExpandElement(async (event) => {
             const element = event.element;
-            if (element.contextValue === "group") {
+            if (fboIsGroupTreeContext(element.contextValue)) {
                 await this.revealActiveFile(element.label);
             }
         });
@@ -746,10 +894,10 @@ class TreeFileProvider extends TreeHelper {
             return;
         }
         const value = await vscode.window.showInputBox({
-            title: "Lá»c cÃ¢y FBO Project",
-            placeHolder: "VD: SI, Grid, *.xml â€” Ä‘á»ƒ trá»‘ng Ä‘á»ƒ xÃ³a lá»c",
+            title: "Filter FBO project tree",
+            placeHolder: "e.g. SI, Grid, *.xml - leave empty to clear filter",
             value: this._treeFilterRaw,
-            prompt: "Khá»›p chuá»—i trong tÃªn/Ä‘Æ°á»ng dáº«n file (khÃ´ng phÃ¢n biá»‡t hoa thÆ°á»ng). CÃ³ dáº¥u * thÃ¬ glob theo tÃªn file hoáº·c tÃªn folder.",
+            prompt: "Substring match on file name or full path (case-insensitive). Use * for glob on file or folder name. Press Enter to apply, Escape to cancel.",
             ignoreFocusOut: true,
         });
         if (value === undefined) {
@@ -855,7 +1003,7 @@ class TreeFileProvider extends TreeHelper {
 
                 if (!this.treeData.has(groupName)) {
                     const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
-                    groupItem.contextValue = "group";
+                    groupItem.contextValue = groupName === "OTHER" ? "groupOther" : "group";
 
                     this.app_dataChecker.filePath = filePath;
                     const groupPathInit = this.app_dataChecker.getProjectPath();
@@ -929,6 +1077,9 @@ class TreeFileProvider extends TreeHelper {
                 }
             }
         }
+        if (this._groupFileWatcherService) {
+            this._groupFileWatcherService.syncRoots(this._collectGroupRootsForWarmup());
+        }
 
         return result;
     }
@@ -985,7 +1136,7 @@ class TreeFileProvider extends TreeHelper {
 
         if (!this.treeData.has(groupName)) {
             const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
-            groupItem.contextValue = "group";
+            groupItem.contextValue = groupName === "OTHER" ? "groupOther" : "group";
 
             this.app_dataChecker.filePath = filePath;
             const groupPath = this.app_dataChecker.getProjectPath();
@@ -1074,13 +1225,15 @@ class TreeFileProvider extends TreeHelper {
             const roots = await this.buildTreeOptimized();
             return this._filterRootGroupItems(roots);
         }
-        if (element.contextValue === "group") {
-            const raw = this.treeData.get(fboTreeLabel(element.label)) || [];
-            return this._applyTreeFilterToItems(raw);
+        if (fboIsGroupTreeContext(element.contextValue)) {
+            const label = fboTreeLabel(element.label);
+            const raw = this.treeData.get(label) || [];
+            return this._applyGroupQuickFilterToGroupItems(label, this._applyTreeFilterToItems(raw));
         }
         if (element.contextValue === "folder" && element.fboFolderKey) {
             const raw = this.folderChildren.get(element.fboFolderKey) || [];
-            return this._applyTreeFilterToItems(raw);
+            const gn = element.fboGroupName || "";
+            return this._applyGroupQuickFilterToGroupItems(gn, this._applyTreeFilterToItems(raw));
         }
         return [];
     }
@@ -1144,7 +1297,7 @@ class TreeFileProvider extends TreeHelper {
      */
     _getGroupRootPathForDropTarget(target) {
         if (!target || !target.resourceUri) return null;
-        if (target.contextValue === "group") {
+        if (fboIsGroupTreeContext(target.contextValue)) {
             return target.resourceUri.fsPath || null;
         }
         if (target.contextValue === "folder" && target.fboGroupName) {
@@ -1163,7 +1316,7 @@ class TreeFileProvider extends TreeHelper {
             await this._openDroppedFsPaths(filePaths);
             return;
         }
-        if (target.contextValue !== "group" && target.contextValue !== "folder") {
+        if (!fboIsGroupTreeContext(target.contextValue) && target.contextValue !== "folder") {
             await this._openDroppedFsPaths(filePaths);
             return;
         }
@@ -1197,7 +1350,8 @@ class TreeFileProvider extends TreeHelper {
         await this._openDroppedFsPaths(toOpen);
         if (toPaste.length) {
             try {
-                await this.app_dataChecker.pasteFilesToGroup(destPath, toPaste, 0);
+                const pasteResult = await this.app_dataChecker.pasteFilesToGroup(destPath, toPaste, 0);
+                await this.notifyGroupFilesPasted(destPath, pasteResult);
             } catch (ex) {
                 console.log(ex);
             }

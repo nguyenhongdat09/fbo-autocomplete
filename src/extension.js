@@ -36,6 +36,7 @@ const { runCurrentSqlFileVisual } = require("./DBQuery/QueryDatabaseVisualResult
 const PeekSqlClass = require("./DBQuery/PeekSql");
 const { registerFormatXml } = require("./FormatXML/registerFormatXml");
 const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
+const SearchResultTreeView = require("./TreeFile/searchFile/SearchResultTreeView");
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -57,6 +58,8 @@ async function activate(context) {
     registerFormatXml(context);
     // Đăng ký Query Results view trong Panel (Ctrl+J)
     ViewPanelResult.getShared(context);
+    const searchResultView = new SearchResultTreeView();
+    searchResultView.run(context);
 
     /*Tree view — chọn provider theo fbo-autocomplete.fileTreeLayout */
     const treeLayout = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('fileTreeLayout', 'nested'));
@@ -67,16 +70,29 @@ async function activate(context) {
                 ? TreeFileProviderDynamic
                 : TreeFileProvider;
     const treeDataProvider = new TreeCtor();
-    treeDataProvider.run(context);
+    if (typeof treeDataProvider.setSearchResultPublisher === "function") {
+        treeDataProvider.setSearchResultPublisher((result, options) => searchResultView.publishResult(result, options));
+    }
+    await treeDataProvider.run(context);
     registerDirtyFileDecorations(context);
 
+    const runGroupQuickFilter = async (element) => {
+        if (treeDataProvider && typeof treeDataProvider.runGroupFilterSearch === 'function') {
+            await treeDataProvider.runGroupFilterSearch(element);
+            return;
+        }
+        if (treeDataProvider && typeof treeDataProvider.applyGroupQuickFilter === 'function') {
+            await treeDataProvider.applyGroupQuickFilter(element, 'all');
+        }
+    };
     context.subscriptions.push(
         vscode.commands.registerCommand('fbo-autocomplete.fboFileTreeFilter', async () => {
             await treeDataProvider.promptTreeFilter();
         }),
         vscode.commands.registerCommand('fbo-autocomplete.fboFileTreeClearFilter', async () => {
             await treeDataProvider.clearTreeFilter();
-        })
+        }),
+        vscode.commands.registerCommand('fbo-autocomplete.groupQuickFilter', runGroupQuickFilter)
     );
     // Enđ trê 
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
@@ -134,7 +150,6 @@ async function activate(context) {
         ReadXMLVS2008.readXmlIfOpenFboDocument(doc, context);
     }
     const reloadEntityBySave = new ReloadEntityBySave(context);
-    const onDidSaveReloadEntity = reloadEntityBySave.run();
 
     // UTF-8 BOM bytes để ghi xuống đĩa (không chèn vào nội dung editor → tránh hiển thị dấu ?)
     const UTF8_BOM = Buffer.from([0xEF, 0xBB, 0xBF]);
@@ -145,6 +160,7 @@ async function activate(context) {
     reloadEntityBySave.setOnReloaded((filePath) => {
         entityHoverProvider.invalidateFileCache(filePath);
     });
+    entityHoverProvider.setReloadEntityBySave(reloadEntityBySave);
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
@@ -347,6 +363,7 @@ async function activate(context) {
     });
     const peekSqlCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.peekSqlCopyContent", () => peekSql.copyContentToClipboard());
     const entityHoverCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyContent", () => entityHoverProvider.copyContentToClipboard());
+    const entityHoverReloadCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverReload", () => entityHoverProvider.reloadEntityForLastHover());
 
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
     const cmpl_mobile = new CompleteCodeMobile();
@@ -358,6 +375,7 @@ async function activate(context) {
     context.subscriptions.push(peekSqlCmd);
     context.subscriptions.push(peekSqlCopyCmd);
     context.subscriptions.push(entityHoverCopyCmd);
+    context.subscriptions.push(entityHoverReloadCmd);
     context.subscriptions.push(peekSqlHover); 
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
@@ -372,7 +390,6 @@ async function activate(context) {
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(onDidOpenTextDocument);
-    context.subscriptions.push(onDidSaveReloadEntity);
     context.subscriptions.push(reloadEntityBySave);
     calculationProvider.register(context); 
     // context.subscriptions.push(openWithVSCode);

@@ -18,6 +18,7 @@
     "onLanguage:xml",
     "onLanguage:sql",
     "onView:fbo_query_results_panel",
+    "onView:fbo_search_result_view",
     "onCommand:fbo-autocomplete.ConvertGridToPivotExcel"
   ],
   "main": "./src/extension.js",
@@ -109,17 +110,22 @@
         },
         {
           "command": "fboFile.FixWebConfig",
-          "when": "view == fbo_file && viewItem == group",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.OpenWebConfig",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation"
+        },
+        {
+          "command": "fboFile.ExpandAll",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation"
         },
         {
           "command": "fboFile.DeleteStruct",
-          "when": "view == fbo_file && viewItem == group",
-          "group": "navigation"
-        },
-        {
-          "command": "fboFile.openCustomBrowser",
-          "when": "view == fbo_file && viewItem == group",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation"
         },
         {
@@ -134,13 +140,13 @@
         },
         {
           "command": "fbo-autocomplete.closeGroupFiles",
-          "when": "view == fbo_file && (viewItem == group || viewItem == folder)",
-          "group": "inline"
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther || viewItem == folder)",
+          "group": "inline@9"
         },
         {
-          "command": "fboFile.openBrowser",
+          "command": "fbo-autocomplete.groupQuickFilter",
           "when": "view == fbo_file && viewItem == group",
-          "group": "inline"
+          "group": "inline@1"
         }
       ],
       "view/title": [
@@ -148,13 +154,13 @@
           "command": "fbo-autocomplete.fboFileTreeFilter",
           "when": "view == fbo_file",
           "group": "navigation@1",
-          "tooltip": "Lọc file / thư mục trong cây"
+          "tooltip": "Filter files and folders in the tree"
         },
         {
           "command": "fbo-autocomplete.fboFileTreeClearFilter",
           "when": "view == fbo_file && fboFileTreeFilterActive",
           "group": "navigation@2",
-          "tooltip": "Xóa bộ lọc"
+          "tooltip": "Clear tree filter"
         },
         {
           "command": "fbo-autocomplete.reloadTree",
@@ -177,6 +183,11 @@
           "id": "fbo_query_results_panel_container",
           "title": "Query Results",
           "icon": "images/play.svg"
+        },
+        {
+          "id": "fbo_search_result_panel_container",
+          "title": "Search Result",
+          "icon": "images/play.svg"
         }
       ]
     },
@@ -192,6 +203,12 @@
           "id": "fbo_query_results_panel",
           "name": "Query Results",
           "type": "webview"
+        }
+      ],
+      "fbo_search_result_panel_container": [
+        {
+          "id": "fbo_search_result_view",
+          "name": "Search Result"
         }
       ]
     },
@@ -451,6 +468,14 @@
         "title": "Fix Web.config"
       },
       {
+        "command": "fboFile.OpenWebConfig",
+        "title": "Open Web.config"
+      },
+      {
+        "command": "fboFile.ExpandAll",
+        "title": "Expand All"
+      },
+      {
         "command": "fboFile.DeleteStruct",
         "title": "Delete Struct"
       },
@@ -464,6 +489,12 @@
         "title": "Open Browser (Custom URL)"
       },
       {
+        "command": "fbo-autocomplete.groupQuickFilter",
+        "title": "FBO: Group filter",
+        "icon": "$(filter)",
+        "category": "FBO"
+      },
+      {
         "command": "fbo-autocomplete.reloadTree",
         "title": "Reload Tree",
         "category": "FBO",
@@ -471,13 +502,13 @@
       },
       {
         "command": "fbo-autocomplete.fboFileTreeFilter",
-        "title": "FBO: Lọc cây Project",
+        "title": "FBO: Filter project tree",
         "category": "FBO",
         "icon": "$(filter)"
       },
       {
         "command": "fbo-autocomplete.fboFileTreeClearFilter",
-        "title": "FBO: Xóa lọc cây Project",
+        "title": "FBO: Clear project tree filter",
         "category": "FBO",
         "icon": "$(clear-all)"
       },
@@ -532,6 +563,10 @@
       {
         "command": "fbo-autocomplete.entityHoverCopyContent",
         "title": "FBO: Copy Entity Hover to Clipboard"
+      },
+      {
+        "command": "fbo-autocomplete.entityHoverReload",
+        "title": "FBO: Reload Entity (from hover)"
       },
       {
         "command": "fbo-autocomplete.selectDatabase",

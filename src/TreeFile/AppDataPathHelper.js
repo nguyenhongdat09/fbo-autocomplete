@@ -34,6 +34,7 @@ class AppDataPathHelper {
         //generate = 1 => chuc nang gereateCopyFile
         let count = 0;
         const openedUris = [];
+        const pastedPaths = [];
         for (const originalPath of filePaths) {
             if(generate == 0)
                 this.filePath = originalPath;
@@ -57,6 +58,7 @@ class AppDataPathHelper {
                 fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
                 fs.copyFileSync(this.filePath, destinationPath);
                 openedUris.push(vscode.Uri.file(destinationPath));
+                pastedPaths.push(destinationPath);
                 count++;
             } catch (err) {
                 vscode.window.showErrorMessage(`❌ Lỗi khi copy file: ${this.filePath} -> ${err.message}`);
@@ -69,8 +71,9 @@ class AppDataPathHelper {
             } catch (err) {
                 vscode.window.showWarningMessage(`Không thể mở file: ${uri.fsPath}`);
             }
-        } 
-    } 
+        }
+        return { count, paths: pastedPaths, openedUris };
+    }
 }
 
 module.exports = AppDataPathHelper;
