@@ -19,6 +19,7 @@
     "onLanguage:sql",
     "onView:fbo_query_results_panel",
     "onView:fbo_search_result_view",
+    "onView:fbo_text_search_result_view",
     "onCommand:fbo-autocomplete.ConvertGridToPivotExcel"
   ],
   "main": "./src/extension.js",
@@ -129,6 +130,11 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.SearchTextInGroup",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation"
+        },
+        {
           "command": "fbo-autocomplete.openBrowserForFile",
           "when": "viewItem == file",
           "group": "inline"
@@ -209,6 +215,10 @@
         {
           "id": "fbo_search_result_view",
           "name": "Search Result"
+        },
+        {
+          "id": "fbo_text_search_result_view",
+          "name": "Text Search"
         }
       ]
     },
@@ -325,6 +335,26 @@
           "default": 5,
           "minimum": 1,
           "description": "Chỉ khi fileTreeLayout = dynamic: số file đang mở trong một group ≥ giá trị này thì dùng cây nhiều cấp; nhỏ hơn thì phẳng dưới group."
+        },
+        "fbo-autocomplete.groupContentSearchExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "*.js",
+            "*.xml",
+            "*.txt",
+            "*.aspx",
+            "*.ent",
+            "*.f"
+          ],
+          "description": "Glob extension khi Search text in group (hiển thị trong QuickPick; có thể bật/tắt mỗi lần search)."
+        },
+        "fbo-autocomplete.groupContentSearchCaseSensitive": {
+          "type": "boolean",
+          "default": false,
+          "description": "Search text in group: phân biệt hoa thường (false = tương đương rg -i)."
         },
         "fbo-autocomplete.licenseCacheDuration": {
           "type": "number",
@@ -480,6 +510,14 @@
         "title": "Delete Struct"
       },
       {
+        "command": "fboFile.SearchTextInGroup",
+        "title": "Search text in group"
+      },
+      {
+        "command": "fbo-autocomplete.openTextSearchMatch",
+        "title": "FBO: Open Text Search Match"
+      },
+      {
         "command": "fboFile.openBrowser",
         "title": "0pen Browser",
         "icon": "$(globe)"
@@ -602,7 +640,6 @@
     "vendor:ag-grid": "node scripts/vendor-ag-grid.js"
   },
   "devDependencies": {
-    "ag-grid-community": "^31.3.2",
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@types/mocha": "^10.0.10",
@@ -610,12 +647,14 @@
     "@types/vscode": "^1.96.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "ag-grid-community": "^31.3.2",
     "babel-loader": "^9.2.1",
     "eslint": "^9.16.0",
     "webpack": "^5.106.0",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "@vscode/ripgrep": "^1.15.9",
     "axios": "^1.7.9",
     "cli-table3": "^0.6.5",
     "crypto-js": "^4.2.0",

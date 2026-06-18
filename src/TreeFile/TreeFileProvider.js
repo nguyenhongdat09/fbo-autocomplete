@@ -20,6 +20,7 @@ const GroupQuickFilterKinds = require("./searchFile/GroupQuickFilterKinds");
 const GroupFileIndexService = require("./searchFile/GroupFileIndexService");
 const GroupFileWatcherService = require("./searchFile/GroupFileWatcherService");
 const GroupTreeIndexBridge = require("./searchFile/GroupTreeIndexBridge");
+const GroupTextSearchFacade = require("./SearchText/GroupTextSearchFacade");
 
 class TreeHelper {
     constructor() {
@@ -418,6 +419,10 @@ class TreeFileProvider extends TreeHelper {
             this._groupIndexBridge.rememberSearch(groupRoot, groupName, keyword);
         }
         this._groupFileIndexService.publishSearchResult(result, { reveal: true });
+    }
+
+    async runGroupTextSearch(groupElement) {
+        return GroupTextSearchFacade.runFromProvider(this, groupElement);
     }
 
     /**

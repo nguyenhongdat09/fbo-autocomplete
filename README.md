@@ -47,3 +47,15 @@
 - Hoặc dùng Ctrl + Shift + P tìm FBO: Show All File in show form bấm vào thì sẽ show tất cả file liên quan trong code showForm('filexxx')
 ## Mở file excel, rpt từ file report
 - **Ctrl + Shift + P** chức năng Open Report File vào file rpt hoặc excel trong thẻ <reportfile> để mở file đó nhanh chóng
+
+## Tìm file theo tên trong group (Search Result)
+- Chuột phải **group** trên cây FBO Project → **FBO: Group filter** (hoặc icon lọc trên group).
+- Nhập từ khóa tên file (hỗ trợ `*` `%` `?` `_`, khoảng trắng = AND).
+- Kết quả hiển thị tab **Search Result** trong panel Search Result (danh sách file khớp).
+
+## Tìm text trong nội dung file group (Search text in group)
+- Chuột phải **group** → **Search text in group**.
+- Bước 1: nhập chuỗi cần tìm (tìm đúng chuỗi, không phân biệt hoa thường mặc định).
+- Bước 2: chọn loại file (`*.js`, `*.xml`, `*.txt`, `*.aspx`, `*.ent`, `*.f` — chỉnh mặc định trong Settings: `fbo-autocomplete.groupContentSearchExtensions`).
+- Kết quả tab **Text Search**: cây **file → dòng match** (preview có highlight). Click dòng → mở file và select đúng vị trí.
+- Phạm vi quét: ưu tiên `App_Data/Controllers` trong group (nếu có).

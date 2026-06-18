@@ -26,6 +26,7 @@ class ContextMenuHandler {
             { name: "fboFile.OpenWebConfig", handler: async (group) => await this.openWebConfig(group) },
             { name: "fboFile.ExpandAll", handler: async (group) => await this.expandAll(group) },
             { name: "fboFile.DeleteStruct", handler: async (group) => await this.deleteStruct(group) },
+            { name: "fboFile.SearchTextInGroup", handler: async (group) => await this.treeDataProvider.runGroupTextSearch?.(group) },
             { name: "fboFile.PasteFilesToGroup", handler: async (group) => await this.PasteFilesToGroup(group) },
             { name: "fboFile.GenerateCopyFile", handler: async () => await this.GenerateCopyFile() },
             { name: "fboFile.RenameFile", handler: async () => this.renameFileCommand() },

@@ -37,6 +37,7 @@ const PeekSqlClass = require("./DBQuery/PeekSql");
 const { registerFormatXml } = require("./FormatXML/registerFormatXml");
 const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
 const SearchResultTreeView = require("./TreeFile/searchFile/SearchResultTreeView");
+const { activateGroupTextSearch } = require("./TreeFile/SearchText/GroupTextSearchBootstrap");
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -74,6 +75,7 @@ async function activate(context) {
         treeDataProvider.setSearchResultPublisher((result, options) => searchResultView.publishResult(result, options));
     }
     await treeDataProvider.run(context);
+    activateGroupTextSearch(context, treeDataProvider);
     registerDirtyFileDecorations(context);
 
     const runGroupQuickFilter = async (element) => {

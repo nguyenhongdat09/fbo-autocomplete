@@ -30,5 +30,6 @@ module.exports = {
     vscode: 'commonjs vscode', // Để VS Code tự load module này
     rocksdb: 'commonjs rocksdb', // Giữ nguyên module rocksdb
     'level-rocksdb': 'commonjs level-rocksdb', // Giữ nguyên module level-rocksdb
+    '@vscode/ripgrep': 'commonjs @vscode/ripgrep',
   },
 };

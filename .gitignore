@@ -1,6 +1,10 @@
 node_modules
 .vscode-test/
 
+# CodeGraph — index cục bộ, không đẩy lên git
+.codegraph/
+.codegraph-*/
+
 # build-package.js — file tạm khi ghi package.json (Windows)
 package.json.__fbo_writing__
 package-lock.json.__fbo_packaging__

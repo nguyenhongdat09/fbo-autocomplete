@@ -5,6 +5,7 @@ const { exec } = require('child_process');
 const path = require('path');
 const DocumentParser = require('../utils/DocumentParser');
 const PathResolver = require('../utils/PathResolver');
+const ReportTemplateHoverProvider = require('./ReportTemplateHoverProvider');
 
 /**
  * Provides commands to open report templates
@@ -13,6 +14,7 @@ const PathResolver = require('../utils/PathResolver');
 class ReportTemplateCommandProvider {
     constructor() {
         this.statusBarItem = null;
+        this.hoverProvider = new ReportTemplateHoverProvider(this);
     }
 
     /**
@@ -25,12 +27,21 @@ class ReportTemplateCommandProvider {
             this.openReportTemplate.bind(this)
         );
 
+        const hoverRegistration = vscode.languages.registerHoverProvider(
+            { scheme: 'file', language: 'xml' },
+            this.hoverProvider
+        );
+
         // Register selection change listener to show status bar
         const selectionListener = vscode.window.onDidChangeTextEditorSelection(
             this.onSelectionChange.bind(this)
         );
 
-        context.subscriptions.push(openCommand, selectionListener);
+        context.subscriptions.push(
+            openCommand,
+            hoverRegistration,
+            selectionListener
+        );
     }
 
     /**
@@ -121,9 +132,19 @@ class ReportTemplateCommandProvider {
     }
 
     /**
-     * Command handler - open report template
+     * Command handler - open report template.
+     * Gọi không đối số: lấy từ cursor (status bar / palette).
+     * Gọi từ hover: (documentPath, fileName, commandArgument).
+     * @param {string} [documentPath]
+     * @param {string} [fileName]
+     * @param {string} [commandArgument]
      */
-    async openReportTemplate() {
+    async openReportTemplate(documentPath, fileName, commandArgument) {
+        if (documentPath && fileName) {
+            this.openReportTemplateFile(documentPath, fileName, commandArgument);
+            return;
+        }
+
         const editor = vscode.window.activeTextEditor;
         if (!editor || editor.document.languageId !== 'xml') {
             return;
