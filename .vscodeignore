@@ -3,6 +3,16 @@
 .vscode-test/**
 test/**
 
+# Dev / IDE / công cụ nội bộ — không ship trong VSIX
+.codegraph/**
+.codegraph-*/
+.cursor/**
+scripts/**
+build-package.js
+debug.log
+PivotExcel/**
+*.vsix
+
 # Loại bỏ file cấu hình và metadata
 .git/**
 .gitignore
@@ -15,33 +25,30 @@ tsconfig.json
 eslint.config.mjs
 .vscode-test.*
 vsc-extension-quickstart.md
- 
 
 # Loại bỏ file map (nếu có)
 **/*.map
 
+# Chỉ ship bundle + asset runtime (không lộ toàn bộ source .js)
 src/**
-!src/extension.js
-!src/constant.js
-!src/updateSettings.js
-!src/Database/**
-!src/DBQuery/**
-!src/FormatXML/**
-!src/HighLightSyntax/**
 !src/dist/**
-!src/ReadXML/**
-!src/TreeFile/**
-!src/VS2008/**
-!src/CompleteCodeWithDB/**
-!src/Translate/**
-!src/ConvertToExcel/**
-!src/CheckLegacy/**
-!src/Definition/**
-!src/CalculationGridDetail/**
+!src/ReadXML/ReadXML.exe
+!src/ReadXML/Newtonsoft.Json.Compact.dll
+!src/ReadXML/Newtonsoft.Json.Compact.xml
+!src/HighLightSyntax/syntaxes/**
+!src/DBQuery/media/**
+!src/DBQuery/GenerateProcessing.js
+!src/DBQuery/GenerateHeaderToReport.js
 
+# Database: chỉ template/runtime cần thiết (không ship LevelDB/cache máy dev)
+!src/Database/AutoComplete/**
+!src/Database/XSD/**
+!src/Database/PivotExcelExe/**
+!src/Database/fbo-license.dat
+!src/Database/extension_for_format.js
+!src/Database/mau_chuan.xlsx
+!src/Database/Json Set Mau .txt
+!src/Database/autocompletesheet-*.json
 
-# Loại bỏ node_modules, nhưng giữ lại các module native cần thiết
-# Giữ lại node_modules để extension chạy ngay
- 
 # Loại bỏ các file JSON config không cần thiết
 **/jsconfig.json

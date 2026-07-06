@@ -5,13 +5,12 @@ const ActionCaseDefinitionProvider = require('./providers/ActionCaseDefinitionPr
 const ButtonDefinitionProvider = require('./providers/ButtonDefinitionProvider');
 const ViewFieldDefinitionProvider = require('./providers/ViewFieldDefinitionProvider');
 const FunctionDefinitionProvider = require('./providers/FunctionDefinitionProvider');
-const RequestActionDefinitionProvider = require('./providers/RequestActionDefinitionProvider');  
-const ReportTemplateDefinitionProvider = require('./providers/ReportTemplateDefinitionProvider');  
-const ReportTemplateCommandProvider = require('./providers/ReportTemplateCommandProvider'); // ✅ NEW
+const RequestActionDefinitionProvider = require('./providers/RequestActionDefinitionProvider');
+const ReportTemplateCommandProvider = require('./providers/ReportTemplateCommandProvider');
 
 /**
  * Main Definition Provider - Orchestrates all sub-providers
- * Follows FastBusiness XML patterns for navigation
+ * (Entity F12 tach rieng -> command peekEntityDefinition)
  */
 class CustomDefinition {
     constructor() {
@@ -23,14 +22,10 @@ class CustomDefinition {
             new ViewFieldDefinitionProvider(),
             new FunctionDefinitionProvider(),
             new RequestActionDefinitionProvider(),
-           // new ReportTemplateDefinitionProvider()
         ];
-         this.reportCommandProvider = new ReportTemplateCommandProvider();
+        this.reportCommandProvider = new ReportTemplateCommandProvider();
     }
 
-    /**
-     * Register definition provider with VSCode
-     */
     run(context) {
         const definitionProvider = vscode.languages.registerDefinitionProvider(
             { scheme: 'file', language: 'xml' },
@@ -42,16 +37,12 @@ class CustomDefinition {
         context.subscriptions.push(definitionProvider);
     }
 
-    /**
-     * Main entry point - tries each provider in sequence
-     */
-    provideDefinition(document, position, token) {
+    async provideDefinition(document, position, token) {
         const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z0-9_]+/);
         if (!wordRange) return null;
 
         const word = document.getText(wordRange);
 
-        // Try each provider until one returns a result
         for (const provider of this.providers) {
             const result = provider.provideDefinition(document, word, position);
             if (result) return result;

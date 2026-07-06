@@ -5,6 +5,7 @@ const path = require("path");
 
 const SEARCH_RESULT_CONTAINER_CMD = "workbench.view.extension.fbo_search_result_panel_container";
 const SEARCH_RESULT_VIEW_ID = "fbo_search_result_view";
+const OPEN_SEARCH_RESULT_FILE_CMD = "fbo-autocomplete.openSearchResultFile";
 
 class SearchResultTreeView {
     constructor() {
@@ -18,6 +19,7 @@ class SearchResultTreeView {
         this.rootItems = [];
         /** @type {Map<string, import('vscode').TreeItem[]>} */
         this.childrenMap = new Map();
+        this._activeGroupRoot = null;
     }
 
     run(context) {
@@ -27,7 +29,10 @@ class SearchResultTreeView {
             showCollapseAll: true,
             canSelectMany: true,
         });
-        context.subscriptions.push(this.treeView);
+        const openFileCommand = vscode.commands.registerCommand(OPEN_SEARCH_RESULT_FILE_CMD, async (uri) => {
+            await this.openFile(uri);
+        });
+        context.subscriptions.push(this.treeView, openFileCommand);
     }
 
     /**
@@ -35,6 +40,15 @@ class SearchResultTreeView {
      * @param {{ reveal?: boolean }} [options] reveal=true: mở panel (chỉ khi user search). false: cập nhật ngầm.
      */
     publishResult(result, options) {
+        if (!result || !result.groupRoot) {
+            return;
+        }
+        const nextRoot = this._normalizeGroupRoot(result.groupRoot);
+        const isUserSearch = options && options.reveal === true;
+        if (!isUserSearch && this._activeGroupRoot && nextRoot !== this._activeGroupRoot) {
+            return;
+        }
+        this._activeGroupRoot = nextRoot;
         this._buildTree(result);
         this.refreshEvent.fire();
         if (this.treeView) {
@@ -53,6 +67,31 @@ class SearchResultTreeView {
         } catch (err) {
             console.error("[FBO SearchResult] showPanel:", err);
         }
+    }
+
+    getActiveGroupRoot() {
+        return this._activeGroupRoot;
+    }
+
+    _normalizeGroupRoot(groupRoot) {
+        const raw = String(groupRoot || "");
+        if (!raw) return "";
+        try {
+            return path.normalize(raw).toLowerCase();
+        } catch {
+            return raw.toLowerCase();
+        }
+    }
+
+    async openFile(uriLike) {
+        if (!uriLike) return;
+        const uri = uriLike instanceof vscode.Uri
+            ? uriLike
+            : vscode.Uri.file(String(uriLike.fsPath || uriLike.path || uriLike));
+        await vscode.window.showTextDocument(uri, {
+            preview: false,
+            viewColumn: vscode.ViewColumn.Active,
+        });
     }
 
     _buildTree(result) {
@@ -111,7 +150,7 @@ class SearchResultTreeView {
             fileItem.resourceUri = vscode.Uri.file(fileAbs);
             fileItem.description = segs.length > 1 ? segs.slice(0, -1).join("/") : "";
             fileItem.command = {
-                command: "vscode.open",
+                command: OPEN_SEARCH_RESULT_FILE_CMD,
                 title: "Open file",
                 arguments: [fileItem.resourceUri],
             };

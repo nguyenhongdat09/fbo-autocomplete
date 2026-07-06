@@ -1,1 +1,0 @@
-[{"Name":"XMLWhenFilterLoading","Content":"<command event=\"Loading\" ><text><![CDATA[\r\nselect 'active$VoucherFilter$(this);' as message\r\nreturn\r\n]]></text></command>"},{"Name":"XMLWhenFilterClosing","Content":"<command event=\"Closing\" ><text><![CDATA[\r\nselect 'close$VoucherFilter$(this);' as message\r\nreturn\r\n]]></text></command>"}]

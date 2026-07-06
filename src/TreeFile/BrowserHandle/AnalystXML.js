@@ -53,6 +53,10 @@ function setStatusBarMessage(message, timeoutMs) {
     console.log(message);
 }
 
+const CURSORIGNORE_TEMPLATE = `# FBO Autocomplete — chỉ ignore file .f (còn lại mở hết cho Cursor)
+**/*.f
+`;
+
 
 class AnalystXML {
     /**
@@ -916,19 +920,18 @@ class AnalystXML {
         this.refreshXmlFileOnSave(filePath);
     }
     copyCursorIgnoreToProject(pathProject) {
-        //Copy file từ this.pathDatabaseCursorIgnore đến pathProject
+        // Ghi .cursorignore vào project — chỉ ignore file .f, còn lại mở hết cho Cursor.
         try {
+            if (!pathProject) {
+                return;
+            }
             this.setPathDatabaseCursorIgore();
-            if (!fs.existsSync(this.pathDatabaseCursorIgnore)) {
-                return;
+            const destPath = path.join(pathProject, '.cursorignore');
+            fs.writeFileSync(destPath, CURSORIGNORE_TEMPLATE, 'utf8');
+            if (this.pathDatabaseCursorIgnore) {
+                fs.mkdirSync(path.dirname(this.pathDatabaseCursorIgnore), { recursive: true });
+                fs.writeFileSync(this.pathDatabaseCursorIgnore, CURSORIGNORE_TEMPLATE, 'utf8');
             }
-            const fileName = path.basename(this.pathDatabaseCursorIgnore);
-            const destPath = path.join(pathProject, fileName);
-            //Neu đã có rồi thì không copy nữa
-            if (fs.existsSync(destPath)) {
-                return;
-            }
-            fs.copyFileSync(this.pathDatabaseCursorIgnore, destPath);
         } catch (error) {
             console.error(`Lỗi khi copy cursor ignore: ${error.message}`);
         }

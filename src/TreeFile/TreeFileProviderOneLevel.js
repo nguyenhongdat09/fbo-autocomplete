@@ -21,6 +21,7 @@ const GroupQuickFilterKinds = require("./searchFile/GroupQuickFilterKinds");
 const GroupFileIndexService = require("./searchFile/GroupFileIndexService");
 const GroupFileWatcherService = require("./searchFile/GroupFileWatcherService");
 const GroupTreeIndexBridge = require("./searchFile/GroupTreeIndexBridge");
+const { resolveGroupFileSearchStorageRoot } = require("./searchFile/GroupFileStoragePaths");
 const GroupTextSearchFacade = require("./SearchText/GroupTextSearchFacade");
 
 class TreeHelper {
@@ -220,6 +221,7 @@ class TreeFileProvider extends TreeHelper {
         this._groupFileWatcherService = null;
         this._groupIndexBridge = null;
         this._searchResultPublisher = null;
+        this._searchActiveGroupGetter = null;
     }
 
     _setFilterFromString(raw) {
@@ -371,6 +373,10 @@ class TreeFileProvider extends TreeHelper {
         }
     }
 
+    setSearchActiveGroupGetter(getter) {
+        this._searchActiveGroupGetter = typeof getter === "function" ? getter : null;
+    }
+
     _syncTreeViewFilterBadge() {
         if (!this.treeView) {
             return;
@@ -381,7 +387,7 @@ class TreeFileProvider extends TreeHelper {
 
     async run(context) {
         this.context = context;
-        const storageRoot = path.join(__dirname, "..", "Database", GroupQuickFilterKinds.STORAGE_DIR_NAME);
+        const storageRoot = resolveGroupFileSearchStorageRoot(context);
         this._groupFileIndexService = new GroupFileIndexService({
             storageRoot,
             ttlMs: GroupQuickFilterKinds.INDEX_TTL_MS,
@@ -398,6 +404,9 @@ class TreeFileProvider extends TreeHelper {
                 if (this._groupFileIndexService) {
                     this._groupFileIndexService.publishSearchResult(r, options);
                 }
+            },
+            getActiveDisplayedGroupRoot: () => {
+                return this._searchActiveGroupGetter ? this._searchActiveGroupGetter() : null;
             },
         });
         this._groupFileWatcherService = new GroupFileWatcherService({

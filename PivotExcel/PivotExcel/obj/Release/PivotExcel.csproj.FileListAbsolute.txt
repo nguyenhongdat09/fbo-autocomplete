@@ -6,3 +6,11 @@ E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotE
 E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.CoreCompileInputs.cache
 E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.exe
 E:\Customize Extension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.pdb
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\bin\Release\PivotExcel.exe.config
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\bin\Release\PivotExcel.exe
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\bin\Release\PivotExcel.pdb
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.AssemblyReference.cache
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.SuggestedBindingRedirects.cache
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.csproj.CoreCompileInputs.cache
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.exe
+E:\CustomizeExtension\fbo-autocomplete\PivotExcel\PivotExcel\obj\Release\PivotExcel.pdb

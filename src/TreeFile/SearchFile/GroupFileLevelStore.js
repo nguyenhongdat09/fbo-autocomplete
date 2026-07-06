@@ -12,12 +12,24 @@ class GroupFileLevelStore {
         this.storageRoot = storageRoot;
         this.dbPath = path.join(storageRoot, "group-file-index-leveldb");
         this.db = null;
+        /** @type {boolean} */
+        this.disabled = false;
     }
 
     async init() {
+        if (this.disabled) return;
         await fs.promises.mkdir(this.storageRoot, { recursive: true });
-        if (!this.db) {
+        if (this.db) return;
+        try {
             this.db = level(this.dbPath);
+            await new Promise((resolve, reject) => {
+                this.db.get("__fbo_healthcheck__", (err) => {
+                    if (err && !err.notFound) reject(err);
+                    else resolve();
+                });
+            });
+        } catch {
+            await this._disableDb();
         }
     }
 
@@ -27,6 +39,7 @@ class GroupFileLevelStore {
      */
     async get(groupRoot) {
         const db = this._ensureDb();
+        if (!db) return null;
         const key = this._toDbKey(groupRoot);
         const raw = await new Promise((resolve) => {
             db.get(key, (err, value) => {
@@ -54,15 +67,20 @@ class GroupFileLevelStore {
      */
     async upsert(groupRoot, filesRel, updatedAt) {
         const db = this._ensureDb();
+        if (!db) return;
         const key = this._toDbKey(groupRoot);
         const value = JSON.stringify({
             groupRoot: String(groupRoot || ""),
             filesRel: Array.isArray(filesRel) ? filesRel : [],
             updatedAt: Number(updatedAt || Date.now()),
         });
-        await new Promise((resolve, reject) => {
-            db.put(key, value, (err) => (err ? reject(err) : resolve()));
-        });
+        try {
+            await new Promise((resolve, reject) => {
+                db.put(key, value, (err) => (err ? reject(err) : resolve()));
+            });
+        } catch {
+            await this._disableDb();
+        }
     }
 
     async close() {
@@ -73,10 +91,30 @@ class GroupFileLevelStore {
     }
 
     _ensureDb() {
+        if (this.disabled) return null;
         if (!this.db) {
-            this.db = level(this.dbPath);
+            try {
+                this.db = level(this.dbPath);
+            } catch {
+                this.disabled = true;
+                return null;
+            }
         }
         return this.db;
+    }
+
+    async _disableDb() {
+        this.disabled = true;
+        if (!this.db) return;
+        const db = this.db;
+        this.db = null;
+        await new Promise((resolve) => {
+            try {
+                db.close(() => resolve());
+            } catch {
+                resolve();
+            }
+        });
     }
 
     _toDbKey(groupRoot) {

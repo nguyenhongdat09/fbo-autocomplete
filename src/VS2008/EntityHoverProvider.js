@@ -1,10 +1,12 @@
 const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
+const ReadXMLRunner = require("./ReadXMLRunner");
   
 class EntityHoverProvider {
     constructor(extensionDirectory, context) {
-        this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML" , "JsonEntity");
+        this.extensionPath = context.extensionPath;
+        this.jsonEntityFolder = ReadXMLRunner.getJsonEntityFolder(context.extensionPath);
         /** @type {string | null} Nội dung entity lần hover gần nhất (để copy) */
         this._lastEntityContent = null;
         /** @type {string | null} Đường dẫn file XML lần hover gần nhất (để reload entity) */
@@ -76,11 +78,12 @@ class EntityHoverProvider {
         // Thêm xuống dòng giữa các thẻ XML
         xml = xml.replace(reg, '$1\r\n$2$3');
         // Xử lý riêng các thẻ <title> và <header> để giữ format mong muốn
-        xml = xml.replace(/<title([^>]*)>[\s\S]*?<\/title>/g, (match, attrs) => {
+        // Bỏ qua thẻ self-closing (<header ... />) — regex cũ khớp tới </header> kế tiếp và làm hỏng cấu trúc
+        xml = xml.replace(/<title(?![^>]*\/>)([^>]*)>[\s\S]*?<\/title>/g, (match, attrs) => {
             return `<title${attrs}>\r\n</title>`;
         });
     
-        xml = xml.replace(/<header([^>]*)>[\s\S]*?<\/header>/g, (match, attrs) => {
+        xml = xml.replace(/<header(?![^>]*\/>)([^>]*)>[\s\S]*?<\/header>/g, (match, attrs) => {
             return `<header${attrs}>\r\n</header>`;
         });
     
@@ -116,26 +119,35 @@ class EntityHoverProvider {
         }
     }
 
-    provideHover(document, position) {
-        const range = document.getWordRangeAtPosition(position, /&[\w.]+;/);
-        if (!range) {
+    async provideHover(document, position) {
+        const entityInfo = ReadXMLRunner.resolveEntityAtPosition(document, position);
+        if (!entityInfo) {
             return null;
         }
-        const entity = document.getText(range).slice(1, -1); // Bỏ '&' và ';'
+
+        const entity = entityInfo.entityName;
         const filePath = document.uri.fsPath;
         this._lastEntityFilePath = filePath;
-        // Kiểm tra thư mục JsonEntity
+
         if (!fs.existsSync(this.jsonEntityFolder)) {
-            console.log(this.jsonEntityFolder);
-            const markdownContent = new vscode.MarkdownString();
-            markdownContent.appendMarkdown("Error: JsonEntity folder not found.\n\n");
-            this.appendHoverActionLinks(markdownContent, false);
-            markdownContent.isTrusted = true;
-            return new vscode.Hover(markdownContent);
+            fs.mkdirSync(this.jsonEntityFolder, { recursive: true });
         }
-        const fileContent = this.loadEntitiesForFile(filePath);
-        const entityContent = fileContent ? fileContent.find((item) => item.Name === entity) : null;
-        if (entityContent) {
+
+        let fileContent = this.loadEntitiesForFile(filePath);
+        let entityContent = fileContent ? fileContent.find((item) => item.Name === entity) : null;
+
+        if (!entityContent) {
+            try {
+                await ReadXMLRunner.runContent(this.extensionPath, filePath, false);
+                this.invalidateFileCache(filePath);
+                fileContent = this.loadEntitiesForFile(filePath);
+                entityContent = fileContent ? fileContent.find((item) => item.Name === entity) : null;
+            } catch (err) {
+                console.error("[FBO EntityHoverProvider] Auto load content failed:", err && err.message ? err.message : err);
+            }
+        }
+
+        if (entityContent && entityContent.Content) {
             // Markdown để hiển thị nội dung nổi bật
             const markdownContent = new vscode.MarkdownString();
             markdownContent.appendMarkdown(`### 🎯 Entity Content 🎯 \n\n`);
@@ -178,20 +190,7 @@ class EntityHoverProvider {
     }
 
     resolveJsonPathForFile(filePath) {
-        const encoded = Buffer.from(filePath, "utf8").toString("base64");
-        const directPath = path.join(this.jsonEntityFolder, `${encoded}.json`);
-        if (fs.existsSync(directPath)) {
-            return directPath;
-        }
-        // Fallback cho dữ liệu cũ/khác chuẩn encode path.
-        const files = fs.readdirSync(this.jsonEntityFolder);
-        for (const file of files) {
-            const decodedPath = Buffer.from(path.basename(file, ".json"), "base64").toString("utf8");
-            if (decodedPath === filePath) {
-                return path.join(this.jsonEntityFolder, file);
-            }
-        }
-        return null;
+        return ReadXMLRunner.findJsonEntityPathByDecodedPath(filePath, this.extensionPath);
     }
 
     loadEntitiesForFile(filePath) {
@@ -211,20 +210,16 @@ class EntityHoverProvider {
         if (cached && cached.mtimeMs === stat.mtimeMs) {
             return cached.data;
         }
-        try {
-            const raw = fs.readFileSync(jsonPath, "utf8");
-            const parsed = JSON.parse(raw);
-            const normalized = Array.isArray(parsed) ? parsed : [];
-            this._entityCacheByJsonPath.set(jsonPath, {
-                mtimeMs: stat.mtimeMs,
-                data: normalized,
-            });
-            return normalized;
-        } catch (err) {
-            console.error("[FBO EntityHoverProvider] Load entity json failed:", err);
+        const normalized = ReadXMLRunner.readContentJson(filePath, this.extensionPath);
+        if (!normalized) {
             this._entityCacheByJsonPath.delete(jsonPath);
             return null;
         }
+        this._entityCacheByJsonPath.set(jsonPath, {
+            mtimeMs: stat.mtimeMs,
+            data: normalized,
+        });
+        return normalized;
     }
 
     clearEntityCache() {
@@ -239,7 +234,7 @@ class EntityHoverProvider {
             this._entityCacheByJsonPath.delete(mappedPath);
             this._jsonPathBySourceFile.delete(filePath);
         }
-        const directPath = path.join(this.jsonEntityFolder, `${Buffer.from(filePath, "utf8").toString("base64")}.json`);
+        const directPath = ReadXMLRunner.resolveJsonEntityPath(filePath, this.extensionPath);
         this._entityCacheByJsonPath.delete(directPath);
     }
 

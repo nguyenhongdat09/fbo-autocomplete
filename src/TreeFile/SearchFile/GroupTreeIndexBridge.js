@@ -1,5 +1,7 @@
 // @ts-nocheck
 
+const path = require("path");
+
 /**
  * Đồng bộ cây FBO + panel Search Result khi index/watcher hoặc paste thay đổi.
  */
@@ -10,6 +12,7 @@ class GroupTreeIndexBridge {
      *   refreshTree: () => void,
      *   getIndexService: () => any,
      *   publishSearchResult: (result: any, options?: { reveal?: boolean }) => void,
+     *   getActiveDisplayedGroupRoot?: () => string|null,
      * }} deps
      */
     constructor(deps) {
@@ -17,6 +20,9 @@ class GroupTreeIndexBridge {
         this.refreshTree = deps.refreshTree;
         this.getIndexService = deps.getIndexService;
         this.publishSearchResult = deps.publishSearchResult;
+        this.getActiveDisplayedGroupRoot = typeof deps.getActiveDisplayedGroupRoot === "function"
+            ? deps.getActiveDisplayedGroupRoot
+            : null;
         /** @type {Map<string, { keyword: string, groupLabel: string }>} */
         this._lastSearchByRoot = new Map();
         /** @type {Map<string, any>} */
@@ -82,8 +88,24 @@ class GroupTreeIndexBridge {
         this._refreshTimers.set(root, timer);
     }
 
+    _normalizeGroupRoot(groupRoot) {
+        const raw = String(groupRoot || "");
+        if (!raw) return "";
+        try {
+            return path.normalize(raw).toLowerCase();
+        } catch {
+            return raw.toLowerCase();
+        }
+    }
+
     async _refreshLastSearchNow(groupRoot) {
         const root = String(groupRoot || "");
+        if (this.getActiveDisplayedGroupRoot) {
+            const activeRoot = this.getActiveDisplayedGroupRoot();
+            if (activeRoot && this._normalizeGroupRoot(activeRoot) !== this._normalizeGroupRoot(root)) {
+                return;
+            }
+        }
         const last = this._lastSearchByRoot.get(root);
         const indexService = this.getIndexService();
         if (!last || !indexService) return;

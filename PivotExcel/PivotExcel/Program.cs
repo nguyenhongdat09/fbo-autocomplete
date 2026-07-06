@@ -233,6 +233,7 @@ namespace PivotExcel
                         ConfigurePivotOptions(pt);
                         ApplyPivotHeaderBackground(pt);
                         ConfigureConditionalFormatting(pt, wsReport);
+                        ApplyBlankTextConditionalFormatting(wsReport);
                         SetAllColumnsWidth(wsMain, 16);
                         SetAllColumnsWidth(wsReport, 16);
                     }
@@ -910,6 +911,37 @@ namespace PivotExcel
                 if (applies2 != null) Marshal.FinalReleaseComObject(applies2);
                 if (applies1 != null) Marshal.FinalReleaseComObject(applies1);
                 if (dataBody != null) Marshal.FinalReleaseComObject(dataBody);
+            }
+        }
+
+        /// <summary>
+        /// Ẩn ô chứa text "(blank)" (Pivot placeholder): Format only cells that contain → Cell Value = (blank).
+        /// Applies to toàn sheet =$1:$1048576, nền và chữ trắng.
+        /// </summary>
+        private static void ApplyBlankTextConditionalFormatting(Excel.Worksheet wsReport)
+        {
+            const int whiteColor = 16777215; // RGB(255,255,255)
+            Excel.Range appliesRange = null;
+            Excel.FormatConditions fcs = null;
+            Excel.FormatCondition cond = null;
+            try
+            {
+                appliesRange = wsReport.Range["$1:$1048576"];
+                fcs = appliesRange.FormatConditions;
+                cond = (Excel.FormatCondition)fcs.Add(
+                    Type: Excel.XlFormatConditionType.xlCellValue,
+                    Operator: Excel.XlFormatConditionOperator.xlEqual,
+                    Formula1: "(blank)",
+                    Formula2: Type.Missing,
+                    String: Type.Missing);
+                cond.Interior.Color = whiteColor;
+                cond.Font.Color = whiteColor;
+            }
+            finally
+            {
+                if (cond != null) Marshal.FinalReleaseComObject(cond);
+                if (fcs != null) Marshal.FinalReleaseComObject(fcs);
+                if (appliesRange != null) Marshal.FinalReleaseComObject(appliesRange);
             }
         }
 

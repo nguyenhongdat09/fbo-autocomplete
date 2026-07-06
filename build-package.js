@@ -336,8 +336,16 @@ function preparePackagingIgnoreFileContent() {
         : "";
     const extraRules = [
         "",
-        "# Added by build-package.js for packaging only",
+        "# Added by build-package.js for packaging only (đồng bộ với .vscodeignore)",
+        ".codegraph/**",
+        ".codegraph-*/**",
+        ".cursor/**",
+        "scripts/**",
+        "build-package.js",
+        "debug.log",
         "PivotExcel/**",
+        "*.vsix",
+        "src/Database/extensionKey.dat",
         "",
     ].join("\n");
     return base + extraRules;

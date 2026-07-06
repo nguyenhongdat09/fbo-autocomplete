@@ -25,7 +25,7 @@ class GroupTextSearchMatchOpener {
             Number(payload.endCharacter) || 0
         );
         const doc = await vscode.workspace.openTextDocument(uri);
-        const editor = await vscode.window.showTextDocument(doc, { preview: true });
+        const editor = await vscode.window.showTextDocument(doc, { preview: false });
         editor.selection = new vscode.Selection(range.start, range.end);
         editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
     }

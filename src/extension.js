@@ -10,6 +10,7 @@ const OpenWithVSCode = require('./VS2008/openWithVSCode');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const ReloadEntityBySave = require('./VS2008/ReloadEntityBySave');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
+const EntityDefinitionProvider = require("./VS2008/EntityDefinitionProvider");
 const CompleteCodeByHandle = require("./CompleteCodeWithDB/CompleteCodeByHandle");
 const Trans = require("./Translate/Translate")
 const cnv = require("./ConvertToExcel/ConvertGridToHeader")
@@ -73,6 +74,9 @@ async function activate(context) {
     const treeDataProvider = new TreeCtor();
     if (typeof treeDataProvider.setSearchResultPublisher === "function") {
         treeDataProvider.setSearchResultPublisher((result, options) => searchResultView.publishResult(result, options));
+    }
+    if (typeof treeDataProvider.setSearchActiveGroupGetter === "function") {
+        treeDataProvider.setSearchActiveGroupGetter(() => searchResultView.getActiveGroupRoot());
     }
     await treeDataProvider.run(context);
     activateGroupTextSearch(context, treeDataProvider);
@@ -367,6 +371,16 @@ async function activate(context) {
     const entityHoverCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyContent", () => entityHoverProvider.copyContentToClipboard());
     const entityHoverReloadCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverReload", () => entityHoverProvider.reloadEntityForLastHover());
 
+    const entityDefinitionProvider = new EntityDefinitionProvider(context.extensionPath);
+    const peekEntityDefinitionCmd = vscode.commands.registerCommand("fbo-autocomplete.peekEntityDefinition", async () => {
+        try {
+            await entityDefinitionProvider.peekEntityDefinition();
+        } catch (err) {
+            console.error("[FBO peekEntityDefinition] Error:", err);
+            vscode.window.showErrorMessage("Peek Definition Entity: " + (err && err.message ? err.message : String(err)));
+        }
+    });
+
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
     const cmpl_mobile = new CompleteCodeMobile();
     cmpl_mobile.run(context);
@@ -376,6 +390,7 @@ async function activate(context) {
     var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm);
     context.subscriptions.push(peekSqlCmd);
     context.subscriptions.push(peekSqlCopyCmd);
+    context.subscriptions.push(peekEntityDefinitionCmd);
     context.subscriptions.push(entityHoverCopyCmd);
     context.subscriptions.push(entityHoverReloadCmd);
     context.subscriptions.push(peekSqlHover); 
