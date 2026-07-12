@@ -1,35 +1,53 @@
 const vscode = require('vscode');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const entityResolver = require("../ReadXMLByJS/entityResolver");
+
 class CheckLegacyCode {
     constructor(context) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
-        this.jsonEntityFolder = path.join(context.extensionPath, 'src', "ReadXML", "JsonEntity");
     }
     run() {
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
 
-        const dirPath = path.dirname(editor.document.uri.fsPath); // 👈 chỉ lấy thư mục chứa file
-        if (!(dirPath.includes('Controllers\\Dir') || dirPath.includes('Controllers\\Filter'))) {
+        const dirPath = path.dirname(editor.document.uri.fsPath).replace(/\\/g, '/').toLowerCase(); // 👈 chỉ lấy thư mục chứa file
+        if (!(dirPath.includes('controllers/dir') || dirPath.includes('controllers/filter'))) {
             return;
         }
+        console.log("[FBO CheckLegacy] Running check for:", editor.document.uri.fsPath);
         var content = vscode.window.activeTextEditor.document.getText();
 
         // Tách phần DOCTYPE (nếu có)
         let doctypeMatch = content.match(/<!DOCTYPE[\s\S]*?\]>/);
         let doctypeSection = doctypeMatch ? doctypeMatch[0] : "";
         let contentWithoutDoctype = doctypeMatch ? content.replace(doctypeSection, "") : content;
-        // Thay thế entity chỉ trong phần ngoài DOCTYPE
-        var ent_content = this.replaceEntity(contentWithoutDoctype);
-        try {
-            for (var ent of ent_content) {
-                if (ent.content !== '') {
-                    contentWithoutDoctype = contentWithoutDoctype.replace(ent.entity, ent.content);
+        // Thay thế entity đệ quy chỉ trong phần ngoài DOCTYPE để giải quyết thực thể lồng nhau
+        let iterations = 0;
+        const maxIterations = 5;
+        let hasReplaced = true;
+        
+        while (hasReplaced && iterations < maxIterations) {
+            hasReplaced = false;
+            iterations++;
+            var ent_content = this.replaceEntity(contentWithoutDoctype);
+            if (ent_content.length === 0) break;
+            
+            try {
+                for (var ent of ent_content) {
+                    if (ent.content !== '') {
+                        const cleanContent = ent.content.replace(/\r?\n/g, ' ');
+                        const nextContent = contentWithoutDoctype.replace(ent.entity, () => cleanContent);
+                        if (nextContent !== contentWithoutDoctype) {
+                            contentWithoutDoctype = nextContent;
+                            hasReplaced = true;
+                        }
+                    }
                 }
+            } catch (er) {
+                console.error(er);
+                break;
             }
-        } catch (er) {
-            console.error(er);
         }
 
         // Ghép lại DOCTYPE với nội dung đã thay thế
@@ -39,24 +57,7 @@ class CheckLegacyCode {
 
         this.checkLegacyItem(editor, field_item, fields_declare)
     }
-    getFilePathEntity() {
-        // Kiểm tra thư mục JsonEntity
-        var filePath = vscode.window.activeTextEditor.document.uri.fsPath;
-        var fileContent;
-        if (!fs.existsSync(this.jsonEntityFolder)) {
-            return;
-        }
-        const files = fs.readdirSync(this.jsonEntityFolder);
-        for (const file of files) {
-            // Dịch ngược tên file từ Base64
-            const decodedPath = Buffer.from(path.basename(file, ".json"), "base64").toString("utf8");
-            if (decodedPath === filePath) {
-                const fileContent = JSON.parse(fs.readFileSync(path.join(this.jsonEntityFolder, file), "utf8"));
-                return fileContent;
-            }
-            if (fileContent) break;
-        }
-    }
+    // getFilePathEntity được xóa vì không dùng đến cache JSON nữa
     escapeRegExp(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape các ký tự đặc biệt
     }
@@ -211,14 +212,37 @@ class CheckLegacyCode {
 
     readEntity(entities) {
         try {
-            this.entitiesContent = this.getFilePathEntity()
-            if (this.entitiesContent)
-                return this.entitiesContent.filter((item) => entities.includes(item.Name));
-            else
+            const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
+            const generalEntities = entityResolver.getEntitiesForFile(filePath);
+            if (!generalEntities) {
                 return [];
-
+            }
+            
+            const result = [];
+            for (const name of entities) {
+                const entityDecl = generalEntities[name];
+                if (entityDecl) {
+                    let content = "";
+                    if (entityDecl.systemUrl) {
+                        if (fs.existsSync(entityDecl.sourceFile)) {
+                            try {
+                                content = entityResolver.readFileContent(entityDecl.sourceFile);
+                            } catch (err) {
+                                content = "";
+                            }
+                        }
+                    } else {
+                        content = entityDecl.value || "";
+                    }
+                    result.push({
+                        Name: name,
+                        Content: content
+                    });
+                }
+            }
+            return result;
         } catch (err) {
-            console.log(err)
+            console.error("[FBO CheckLegacyCode] readEntity failed:", err);
             return [];
         }
     }

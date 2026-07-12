@@ -300,7 +300,7 @@ function run() {
         console.log("📦 Đóng gói extension với vsce...");
         applyPackagingIgnoreOverride();
         try {
-            execSync("vsce package", {
+            execSync("vsce package --allow-package-secrets gcp", {
                 stdio: "inherit",
                 cwd: __dirname,
                 shell: isWin,

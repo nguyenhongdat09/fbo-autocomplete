@@ -1,5 +1,5 @@
 const vscode = require("vscode");
-const ReadXMLRunner = require("./ReadXMLRunner");
+const entityResolver = require("../ReadXMLByJS/entityResolver");
 
 class ReadXMLVS2008 {
     /**
@@ -40,9 +40,11 @@ class ReadXMLVS2008 {
      * @param {import('vscode').ExtensionContext} context
      */
     static readXml(filePath, context) {
-        ReadXMLRunner.runContent(context.extensionPath, filePath, false).catch((error) => {
-            console.error("[FBO ReadXMLVS2008] Mode 0 failed:", error && error.message ? error.message : error);
-        });
+        try {
+            entityResolver.getEntitiesForFile(filePath);
+        } catch (error) {
+            console.error("[FBO ReadXMLVS2008] Pure JS parse failed:", error && error.message ? error.message : error);
+        }
     }
 }
 

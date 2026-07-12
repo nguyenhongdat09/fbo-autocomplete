@@ -1,8 +1,10 @@
 const vscode = require("vscode");
+const fs = require("fs");
 const ReadXMLRunner = require("./ReadXMLRunner");
+const entityResolver = require("../ReadXMLByJS/entityResolver");
 
 /**
- * Peek Definition cho &EntityName; (ReadXML.exe mode 1).
+ * Peek Definition cho &EntityName; (Sử dụng entityResolver thuần JS).
  * Khong dang ky F12 — de Red Hat XML xu ly Go to Definition mac dinh.
  */
 class EntityDefinitionProvider {
@@ -26,26 +28,30 @@ class EntityDefinitionProvider {
 
         const entityName = entityInfo.entityName;
         const filePath = document.uri.fsPath;
-        let pathInfo = ReadXMLRunner.readPathJson(filePath, entityName, this.extensionPath);
 
-        if (!pathInfo || !pathInfo.SourceFile || !(pathInfo.Line > 0)) {
-            try {
-                await ReadXMLRunner.runPath(this.extensionPath, filePath, entityName, false);
-            } catch (err) {
-                console.error("[FBO EntityDefinitionProvider] Mode 1 failed:", err && err.message ? err.message : err);
-                return null;
-            }
-            pathInfo = ReadXMLRunner.readPathJson(filePath, entityName, this.extensionPath);
-        }
+        const generalEntities = entityResolver.getEntitiesForFile(filePath);
+        const entityDecl = generalEntities ? generalEntities[entityName] : null;
 
-        if (!pathInfo || !pathInfo.SourceFile || !(pathInfo.Line > 0)) {
+        if (!entityDecl) {
             return null;
         }
 
-        const targetUri = vscode.Uri.file(pathInfo.SourceFile);
-        const line = Math.max(0, pathInfo.Line - 1);
+        // Nếu là thực thể liên kết ngoài (SYSTEM) và tệp tin liên kết tồn tại, nhảy thẳng vào tệp đó (ví dụ: ListView.xml)
+        if (entityDecl.systemUrl && entityDecl.sourceFile && fs.existsSync(entityDecl.sourceFile)) {
+            const targetUri = vscode.Uri.file(entityDecl.sourceFile);
+            return new vscode.Location(targetUri, new vscode.Position(0, 0));
+        }
+
+        // Ngược lại (thực thể nội bộ), nhảy tới dòng khai báo trong file DTD
+        if (!entityDecl.declaredInFile || !(entityDecl.line > 0)) {
+            return null;
+        }
+
+        const targetUri = vscode.Uri.file(entityDecl.declaredInFile);
+        const line = Math.max(0, entityDecl.line - 1);
         return new vscode.Location(targetUri, new vscode.Position(line, 0));
     }
+
 
     /**
      * Command: peek definition entity tai vi tri con tro (khong dung F12).
@@ -77,13 +83,16 @@ class EntityDefinitionProvider {
             return;
         }
 
-        await vscode.commands.executeCommand(
-            "editor.action.peekLocations",
-            document.uri,
-            position,
-            [location],
-            "peek"
-        );
+        // Mở tệp tin và nhảy trực tiếp tới dòng khai báo (Ctrl+Click / Go to Definition style)
+        try {
+            const targetDoc = await vscode.workspace.openTextDocument(location.uri);
+            const targetEditor = await vscode.window.showTextDocument(targetDoc);
+            targetEditor.selection = new vscode.Selection(location.range.start, location.range.start);
+            targetEditor.revealRange(location.range, vscode.TextEditorRevealType.InCenter);
+        } catch (err) {
+            console.error("[FBO peekEntityDefinition] Jump failed:", err);
+            vscode.window.showErrorMessage("Không thể nhảy tới file đích: " + (err && err.message));
+        }
     }
 }
 

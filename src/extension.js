@@ -134,7 +134,7 @@ async function activate(context) {
     const upsettings = new updateSettings();
     upsettings.updateSettingsJson.bind(upsettings)(context);
 
-    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', false);
+    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', true);
     const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
     completeCodeByHandle.run(context);
 
@@ -167,6 +167,8 @@ async function activate(context) {
         entityHoverProvider.invalidateFileCache(filePath);
     });
     entityHoverProvider.setReloadEntityBySave(reloadEntityBySave);
+
+
     var onHoverEntity = vscode.languages.registerHoverProvider({ language: "xml", scheme: "file" }, {
         provideHover(document, position) {
             return entityHoverProvider.provideHover.bind(entityHoverProvider)(document, position);
@@ -323,9 +325,40 @@ async function activate(context) {
     const chkMessage = new CheckLegacyMessage();
     chkMessage.run(context);
 
+    let chkTimer = null;
+    const runCheckForEditor = (editor) => {
+        if (!editor) return;
+        const filePath = editor.document.uri.fsPath.replace(/\\/g, '/').toLowerCase();
+        const isCorrectLang = (editor.document.languageId || "").toLowerCase() === "xml";
+        const isInCorrectDir = filePath.includes('/controllers/dir/') || filePath.includes('/controllers/filter/');
+        
+        if (isCorrectLang && isInCorrectDir) {
+            if (chkTimer) {
+                clearTimeout(chkTimer);
+            }
+            chkTimer = setTimeout(() => {
+                chk.run.bind(chk)();
+                chkTimer = null;
+            }, 300); // Debounce 300ms khi chuyển editor hoặc mở file
+        }
+    };
+
+    // 1. Quét lỗi ngay khi chuyển tab hoặc mở một file mới
+    const onDidChangeActiveEditor = vscode.window.onDidChangeActiveTextEditor((editor) => {
+        runCheckForEditor(editor);
+    });
+    context.subscriptions.push(onDidChangeActiveEditor);
+
+    // 2. Chạy quét lỗi cho file hiện tại ngay khi khởi động extension
+    runCheckForEditor(vscode.window.activeTextEditor);
+
+    // 3. Quét lỗi khi nhấn lưu bất kỳ file nào trong thư mục controllers/ (cho phép cập nhật khi sửa file DTD phụ)
     if (checkLegacyWhenSave) {
         vscode.workspace.onDidSaveTextDocument((document) => {
-            chk.run.bind(chk)();
+            const filePath = document.uri.fsPath.replace(/\\/g, '/').toLowerCase();
+            if (filePath.includes('/controllers/')) {
+                runCheckForEditor(vscode.window.activeTextEditor);
+            }
         });
     }
 
@@ -372,14 +405,18 @@ async function activate(context) {
     const entityHoverReloadCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverReload", () => entityHoverProvider.reloadEntityForLastHover());
 
     const entityDefinitionProvider = new EntityDefinitionProvider(context.extensionPath);
-    const peekEntityDefinitionCmd = vscode.commands.registerCommand("fbo-autocomplete.peekEntityDefinition", async () => {
-        try {
-            await entityDefinitionProvider.peekEntityDefinition();
-        } catch (err) {
-            console.error("[FBO peekEntityDefinition] Error:", err);
-            vscode.window.showErrorMessage("Peek Definition Entity: " + (err && err.message ? err.message : String(err)));
+
+    // Đăng ký làm Definition Provider để hỗ trợ Ctrl + Click và F12 nhảy trực tiếp tới tệp tin/dòng khai báo thực thể XML
+    const entityDefinitionRegister = vscode.languages.registerDefinitionProvider(
+        { language: "xml", scheme: "file" },
+        {
+            provideDefinition(document, position) {
+                return entityDefinitionProvider.resolveLocation(document, position);
+            }
         }
-    });
+    );
+    context.subscriptions.push(entityDefinitionRegister);
+
 
     const contextMenu = new ContextMenuHandler(context, treeDataProvider);
     const cmpl_mobile = new CompleteCodeMobile();
@@ -390,7 +427,6 @@ async function activate(context) {
     var shaf = vscode.commands.registerCommand('fbo-autocomplete.showAllFileShowForm', showAllFileShowForm);
     context.subscriptions.push(peekSqlCmd);
     context.subscriptions.push(peekSqlCopyCmd);
-    context.subscriptions.push(peekEntityDefinitionCmd);
     context.subscriptions.push(entityHoverCopyCmd);
     context.subscriptions.push(entityHoverReloadCmd);
     context.subscriptions.push(peekSqlHover); 

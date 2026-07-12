@@ -59,10 +59,6 @@
         {
           "command": "fbo-autocomplete.peekSql",
           "when": "resourceExtname == .xml || resourceExtname == .sql"
-        },
-        {
-          "command": "fbo-autocomplete.peekEntityDefinition",
-          "when": "resourceExtname == .xml"
         }
       ],
       "editor/title": [
@@ -597,11 +593,6 @@
         "command": "fbo-autocomplete.peekSql",
         "title": "Peek SQL",
         "icon": "$(search)"
-      },
-      {
-        "command": "fbo-autocomplete.peekEntityDefinition",
-        "title": "Peek Definition Entity",
-        "icon": "$(references)"
       },
       {
         "command": "fbo-autocomplete.peekSqlCopyContent",

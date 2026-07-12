@@ -1,7 +1,8 @@
 const fs = require("fs");
-const ReadXMLRunner = require("./ReadXMLRunner");
+const entityResolver = require("../ReadXMLByJS/entityResolver");
 
 class ReloadEntityBySave {
+
     /**
      * @param {import('vscode').ExtensionContext} context
      * @param {{
@@ -158,21 +159,7 @@ class ReloadEntityBySave {
     }
 
     async execWithRetry(filePath) {
-        const maxAttempts = Math.max(1, Number(this.options.maxRetries) + 1);
-        let lastError = null;
-
-        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-            try {
-                await ReadXMLRunner.runContent(this.extensionPath, filePath, true);
-                return;
-            } catch (err) {
-                lastError = err;
-                if (attempt >= maxAttempts) break;
-                const delayMs = this.options.retryBaseDelayMs * Math.pow(2, attempt - 1);
-                await this.sleep(delayMs);
-            }
-        }
-        throw lastError || new Error("ReadXML.exe mode 0 failed");
+        entityResolver.invalidateCache(filePath);
     }
 
     flushPendingResolvers(state, runError, didReload) {
