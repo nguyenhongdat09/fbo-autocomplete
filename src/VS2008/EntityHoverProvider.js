@@ -54,6 +54,15 @@ class EntityHoverProvider {
      * Copy nội dung Entity phẳng (đã flat hết entity lồng và unescape ký tự đặc biệt) vào clipboard.
      */
     async copyFlatContentToClipboard() {
+        if (!this._lastFlatEntityContent && this._lastEntityName && this._lastEntityFilePath) {
+            const generalEntities = entityResolver.getEntitiesForFile(this._lastEntityFilePath, this._lastEntityName);
+            const entityDecl = generalEntities ? generalEntities[this._lastEntityName] : null;
+            if (entityDecl) {
+                let rawContent = entityDecl.systemUrl && fs.existsSync(entityDecl.sourceFile) ? entityResolver.readFileContent(entityDecl.sourceFile) : (entityDecl.value || "");
+                let flatContent = this.flattenEntityContent(rawContent, this._lastEntityFilePath, [this._lastEntityName]);
+                this._lastFlatEntityContent = this.formatXml(flatContent);
+            }
+        }
         const text = this._lastFlatEntityContent || "";
         if (!text) {
             vscode.window.showInformationMessage("Không có nội dung Entity để copy.");
@@ -163,23 +172,15 @@ class EntityHoverProvider {
     }
 
      formatXml(xml) {
-        const PADDING = ' '.repeat(2); // Đặt indent size
+        if (!xml) return "";
+        const PADDING = ' '.repeat(2); // Indent size
         const reg = /(>)(<)(\/*)/g;
         let pad = 0;
     
         // Thêm xuống dòng giữa các thẻ XML
-        xml = xml.replace(reg, '$1\r\n$2$3');
-        // Xử lý riêng các thẻ <title> và <header> để giữ format mong muốn
-        // Bỏ qua thẻ self-closing (<header ... />) — regex cũ khớp tới </header> kế tiếp và làm hỏng cấu trúc
-        xml = xml.replace(/<title(?![^>]*\/>)([^>]*)>[\s\S]*?<\/title>/g, (match, attrs) => {
-            return `<title${attrs}>\r\n</title>`;
-        });
+        const formatted = xml.replace(reg, '$1\r\n$2$3');
     
-        xml = xml.replace(/<header(?![^>]*\/>)([^>]*)>[\s\S]*?<\/header>/g, (match, attrs) => {
-            return `<header${attrs}>\r\n</header>`;
-        });
-    
-        return xml.split('\r\n').map((node, index) => {
+        return formatted.split(/\r?\n/).map((node) => {
             let indent = 0;
             if (node.match(/.+<\/\w[^>]*>$/)) {
                 indent = 0;
@@ -192,8 +193,7 @@ class EntityHoverProvider {
             }
     
             pad += indent;
-    
-            return PADDING.repeat(pad - indent) + node;
+            return PADDING.repeat(Math.max(0, pad - indent)) + node;
         }).join('\r\n');
     }
     
@@ -215,7 +215,7 @@ class EntityHoverProvider {
         this._lastEntityFilePath = filePath;
         this._lastEntityName = entity;
 
-        const generalEntities = entityResolver.getEntitiesForFile(filePath);
+        const generalEntities = entityResolver.getEntitiesForFile(filePath, entity);
         const entityDecl = generalEntities ? generalEntities[entity] : null;
 
         if (entityDecl) {
@@ -241,16 +241,19 @@ class EntityHoverProvider {
             markdownContent.appendMarkdown(`### 🎯 Entity Content: \`&${entity};\` 🎯 \n\n`);
             this.appendHoverActionLinks(markdownContent);
 
-            // 1. Luôn tính toán Original
+            // 1. Tính toán Original
             let formattedContent = this.formatXml(rawContent);
-            formattedContent = formattedContent.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
             this._lastEntityContent = formattedContent;
 
-            // 2. Luôn tính toán Flat (tính năng đệ quy đã được tối ưu cache nên rất nhẹ)
-            let flatContent = this.flattenEntityContent(rawContent, filePath, [entity]);
-            let formattedFlatContent = this.formatXml(flatContent);
-            formattedFlatContent = formattedFlatContent.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
-            this._lastFlatEntityContent = formattedFlatContent;
+            // 2. Tính toán Flat Lazily (Chỉ tính khi hoverMode === 'flat')
+            let formattedFlatContent = "";
+            if (this.hoverMode === 'flat') {
+                let flatContent = this.flattenEntityContent(rawContent, filePath, [entity]);
+                formattedFlatContent = this.formatXml(flatContent);
+                this._lastFlatEntityContent = formattedFlatContent;
+            } else {
+                this._lastFlatEntityContent = null;
+            }
 
             // 3. Chỉ render markdown hiển thị tùy theo trạng thái hoverMode
             if (this.hoverMode === 'original') {

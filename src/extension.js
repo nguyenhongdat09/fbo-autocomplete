@@ -41,6 +41,7 @@ const { activateGroupTextSearch } = require("./TreeFile/SearchText/GroupTextSear
 const { registerXmlFlatPreview } = require("./ReadXMLByJS/XmlFlatPreview");
 const { removeBlankRows } = require('./Utils/removeBlankRows');
 const formulaHover = require('./ReadXMLByJS/FormulaHover');
+const EntityWatcherEngine = require('./ReadXMLByJS/EntityWatcherEngine');
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -49,6 +50,9 @@ async function activate(context) {
     var constant = new Constant(context);
     const { ensureUserDatabaseRoot } = require("./extensionDatabasePaths");
     ensureUserDatabaseRoot(context);
+
+    // Kích hoạt Engine Watcher 2 chiều cho Entity Cache
+    EntityWatcherEngine.init(context);
 
     // ✅ Sử dụng license check mới (by key)
    // var { checkLicense } = require('./license/checklicense');

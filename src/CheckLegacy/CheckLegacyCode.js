@@ -31,11 +31,11 @@ class CheckLegacyCode {
         console.log("[FBO_PERF_DEBUG] [CheckLegacy] Running check for:", editor.document.uri.fsPath);
         var content = vscode.window.activeTextEditor.document.getText();
 
-        // Tách phần DOCTYPE (nếu có)
-        let doctypeMatch = content.match(/<!DOCTYPE[\s\S]*?\]>/);
-        let doctypeSection = doctypeMatch ? doctypeMatch[0] : "";
-        let contentWithoutDoctype = doctypeMatch ? content.replace(doctypeSection, "") : content;
-        // Thay thế entity đệ quy chỉ trong phần ngoài DOCTYPE để giải quyết thực thể lồng nhau
+        // 🎯 Tối ưu: Chỉ trích xuất & giải mã Entity trong khối <fields> và <views> (bao gồm <category>)
+        // Giúp bỏ qua toàn bộ phần SQL <query>, <commands>, <clientScript>... nặng nề
+        const fieldsBlockRegex = /<fields>([\s\S]*?)<\/fields>/gi;
+        const viewsBlockRegex = /<(views|category)>([\s\S]*?)<\/(views|category)>/gi;
+
         let iterations = 0;
         const maxIterations = 5;
         let hasReplaced = true;
@@ -43,15 +43,27 @@ class CheckLegacyCode {
         while (hasReplaced && iterations < maxIterations) {
             hasReplaced = false;
             iterations++;
-            // Nhường CPU cho Extension Host xử lý các việc khác (Hover, Outline, DocumentLink...)
-            await new Promise(resolve => setTimeout(resolve, 5));
-            if (this.currentCheckId !== checkId) return; // Hủy bỏ nếu có lượt chạy mới
-            
-            var ent_content = this.replaceEntity(contentWithoutDoctype);
+            await new Promise(resolve => setTimeout(resolve, 2));
+            if (this.currentCheckId !== checkId) return;
+
+            // Tìm tất cả các entity chỉ nằm trong phạm vi <fields> hoặc <views>/<category>
+            let targetSections = "";
+            let match;
+            fieldsBlockRegex.lastIndex = 0;
+            while ((match = fieldsBlockRegex.exec(content)) !== null) {
+                targetSections += match[0] + "\n";
+            }
+            viewsBlockRegex.lastIndex = 0;
+            while ((match = viewsBlockRegex.exec(content)) !== null) {
+                targetSections += match[0] + "\n";
+            }
+
+            if (!targetSections) break;
+
+            var ent_content = this.replaceEntity(targetSections);
             if (ent_content.length === 0) break;
-            
+
             try {
-                // Build Map + single regex cho tất cả entity → 1 pass thay vì E passes
                 const entityMap = new Map();
                 for (var ent of ent_content) {
                     if (ent.content !== '') {
@@ -59,15 +71,15 @@ class CheckLegacyCode {
                     }
                 }
                 if (entityMap.size === 0) break;
-                
+
                 const entityRegex = new RegExp(
                     [...entityMap.keys()].map(k => this.escapeRegExp(k)).join('|'), 'g'
                 );
-                const nextContent = contentWithoutDoctype.replace(
+                const nextContent = content.replace(
                     entityRegex, match => entityMap.get(match) || match
                 );
-                if (nextContent !== contentWithoutDoctype) {
-                    contentWithoutDoctype = nextContent;
+                if (nextContent !== content) {
+                    content = nextContent;
                     hasReplaced = true;
                 }
             } catch (er) {
@@ -76,13 +88,9 @@ class CheckLegacyCode {
             }
         }
 
-        // Ghép lại DOCTYPE với nội dung đã thay thế
-        content = doctypeSection + contentWithoutDoctype;
+        if (this.currentCheckId !== checkId) return;
         
-        // Nhường CPU lần cuối trước khi regex field_item
-        await new Promise(resolve => setTimeout(resolve, 5));
-        if (this.currentCheckId !== checkId) return; // Hủy bỏ nếu có lượt chạy mới
-        
+        // Giữ nguyên 100% logic trích xuất field và so sánh
         var field_item = this.getFieldOnView(content);
         var fields_declare = this.getFieldOnFields(content);
 
@@ -93,23 +101,21 @@ class CheckLegacyCode {
             this.statusBarItem.hide();
         }
     }
-    // getFilePathEntity được xóa vì không dùng đến cache JSON nữa
+
     escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape các ký tự đặc biệt
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
-
     replaceEntity(content) {
-        const regex = /&[^;\s]+;/g; //Lay ra entity 
+        const regex = /&[^;\s]+;/g;
         var entities = content.match(regex) || [];
-        // Deduplicate right away to avoid duplicate processing downstream
         const uniqueEntities = [...new Set(entities)];
         
         var parsedEntities = uniqueEntities.map((entity) => {
             return { entity, entity_variable: entity.replace(/&|;/g, '') }
         });
         parsedEntities = parsedEntities.filter((item) =>
-            !['&gt', '&lt'].includes(item.entity)
+            !['&gt', '&lt', '&amp', '&quot', '&apos'].includes(item.entity)
         );
         var entityMapping = this.readEntity(parsedEntities.map((item) => item.entity_variable));
         if (entityMapping.length == 0) return [];
@@ -286,12 +292,10 @@ class CheckLegacyCode {
                 if (entityDecl) {
                     let content = "";
                     if (entityDecl.systemUrl) {
-                        if (fs.existsSync(entityDecl.sourceFile)) {
-                            try {
-                                content = entityResolver.readFileContent(entityDecl.sourceFile);
-                            } catch (err) {
-                                content = "";
-                            }
+                        try {
+                            content = entityResolver.readFileContent(entityDecl.sourceFile);
+                        } catch (err) {
+                            content = "";
                         }
                     } else {
                         content = entityDecl.value || "";

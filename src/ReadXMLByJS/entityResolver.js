@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const EntityLevelStore = require('./EntityLevelStore');
+const EntityWatcherEngine = require('./EntityWatcherEngine');
 
 // Cache lưu trữ kết quả parse của từng file XML: normalizedFilePath -> { mtime, generalEntities, parameterEntities }
 const cache = new Map();
@@ -268,13 +270,15 @@ function resolveFboXmlEntities(mainXmlPath) {
         let paramMatch = decl.match(/^<!ENTITY\s+%\s+([\w.]+)\s+SYSTEM\s+(["'])([^"'\r\n]+)\2\s*>/i);
         if (paramMatch) {
             const name = paramMatch[1];
-            const systemUrl = paramMatch[3];
-            const targetPath = resolvePath(currentFilePath, systemUrl);
-            let value = '';
-            if (fs.existsSync(targetPath)) {
-                value = readAndRecordFile(targetPath);
+            if (!parameterEntities[name]) {
+                const systemUrl = paramMatch[3];
+                const targetPath = resolvePath(currentFilePath, systemUrl);
+                let value = '';
+                if (fs.existsSync(targetPath)) {
+                    value = readAndRecordFile(targetPath);
+                }
+                parameterEntities[name] = { value, systemUrl, sourceFile: targetPath, line: lineNumber, text: decl };
             }
-            parameterEntities[name] = { value, systemUrl, sourceFile: targetPath, line: lineNumber, text: decl };
             return;
         }
         
@@ -282,8 +286,10 @@ function resolveFboXmlEntities(mainXmlPath) {
         paramMatch = decl.match(/^<!ENTITY\s+%\s+([\w.]+)\s+(["'])([\s\S]*?)\2\s*>/i);
         if (paramMatch) {
             const name = paramMatch[1];
-            const value = paramMatch[3];
-            parameterEntities[name] = { value, systemUrl: null, sourceFile: currentFilePath, line: lineNumber, text: decl };
+            if (!parameterEntities[name]) {
+                const value = paramMatch[3];
+                parameterEntities[name] = { value, systemUrl: null, sourceFile: currentFilePath, line: lineNumber, text: decl };
+            }
             return;
         }
         
@@ -338,12 +344,16 @@ function resolveFboXmlEntities(mainXmlPath) {
         let condition = match[1].trim();
         const content = match[2];
         
-        // Phân giải thực thể tham số nếu điều kiện dạng %ParamName;
-        if (condition.startsWith('%') && condition.endsWith(';')) {
-            const name = condition.substring(1, condition.length - 1);
+        // Phân giải thực thể tham số nếu điều kiện dạng %ParamName; hoặc %ParamName
+        let resolveDepth = 0;
+        while (condition.startsWith('%') && resolveDepth < 10) {
+            const name = condition.replace(/^%|;$/g, '').trim();
             if (parameterEntities[name]) {
                 condition = parameterEntities[name].value.trim();
+            } else {
+                break;
             }
+            resolveDepth++;
         }
         
         condition = condition.replace(/["']/g, '').trim().toUpperCase();
@@ -379,7 +389,7 @@ const MAX_CACHE_SIZE = 50;
  * @param {string} filePath 
  * @returns {Record<string, any> | null}
  */
-function getEntitiesForFile(filePath) {
+function getEntitiesForFile(filePath, targetEntity = null) {
     const t0 = Date.now();
     const b = path.basename(filePath);
     console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile START] ${b}`);
@@ -390,34 +400,58 @@ function getEntitiesForFile(filePath) {
     const cached = cache.get(normalized);
     if (cached) {
         const now = Date.now();
-        // Giảm tải mạng (SMB): Nếu vừa kiểm tra stat trong vòng 2 giây thì coi như chưa stale
-        if (cached.lastChecked && now - cached.lastChecked < 2000) {
-            console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile END CACHED FAST] ${b} took ${Date.now() - t0}ms`);
-            return cached.generalEntities;
-        }
-
-        let isStale = false;
-        const tCheck = Date.now();
-        for (const [depPath, cachedMtime] of Object.entries(cached.fileMtimes)) {
-            try {
-                const currentMtime = fs.statSync(depPath).mtimeMs;
-                if (currentMtime !== cachedMtime) {
-                    isStale = true;
-                    break;
+        // debounce 1 giây tránh spam statSync liên tục qua mạng SMB khi di chuột (hover) liên tục
+        if (!cached.lastChecked || now - cached.lastChecked > 1000) {
+            let isValid = true;
+            if (cached.fileMtimes) {
+                let filesToCheck = [];
+                if (targetEntity && cached.generalEntities && cached.generalEntities[targetEntity]) {
+                    const ent = cached.generalEntities[targetEntity];
+                    const set = new Set();
+                    set.add(normalized);
+                    for (const p of Object.keys(cached.fileMtimes)) {
+                        if (p.endsWith('.ent')) set.add(p);
+                    }
+                    if (ent.declaredInFile) set.add(path.normalize(ent.declaredInFile).toLowerCase());
+                    if (ent.sourceFile) set.add(path.normalize(ent.sourceFile).toLowerCase());
+                    filesToCheck = Array.from(set);
+                } else {
+                    const set = new Set();
+                    set.add(normalized);
+                    for (const p of Object.keys(cached.fileMtimes)) {
+                        if (p.endsWith('.ent')) set.add(p);
+                    }
+                    filesToCheck = Array.from(set);
                 }
-            } catch (err) {
-                isStale = true;
-                break;
-            }
-        }
-        console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile] Check stale time: ${Date.now() - tCheck}ms. Is stale: ${isStale}`);
 
-        if (!isStale) {
-            cached.lastChecked = Date.now();
-            // Cập nhật vị trí truy cập gần nhất cho LRU (xóa và set lại để đôn lên cuối Map)
+                for (const depPath of filesToCheck) {
+                    try {
+                        const currentMtime = fs.statSync(depPath).mtimeMs;
+                        if (cached.fileMtimes[depPath] !== undefined && currentMtime !== cached.fileMtimes[depPath]) {
+                            isValid = false;
+                            globalFileContentCache.delete(depPath.toLowerCase());
+                            break;
+                        }
+                    } catch (err) {
+                        isValid = false;
+                        globalFileContentCache.delete(depPath.toLowerCase());
+                        break;
+                    }
+                }
+            }
+            if (!isValid) {
+                console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile] Cache INVALIDATED by targeted file change for ${b}`);
+                cache.delete(normalized);
+                globalFileContentCache.delete(normalized);
+            } else {
+                cached.lastChecked = now;
+                cache.delete(normalized);
+                cache.set(normalized, cached);
+                return cached.generalEntities;
+            }
+        } else {
             cache.delete(normalized);
             cache.set(normalized, cached);
-            console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile END CACHED] ${b} took ${Date.now() - t0}ms`);
             return cached.generalEntities;
         }
     }
@@ -441,22 +475,53 @@ function getEntitiesForFile(filePath) {
         lastChecked: Date.now()
     });
 
+    // Ghi ngầm vào LevelDB (Fire-and-forget background push, không chặn hàm sync)
+    try {
+        const projectId = EntityWatcherEngine.extractProjectId(filePath);
+        const fileId = EntityWatcherEngine.extractFileId(filePath);
+        if (projectId && fileId) {
+            const dependencies = Object.keys(fileMtimes).filter(dep => dep !== normalized);
+            const mtime = fileMtimes[normalized] || Date.now();
+            EntityLevelStore.upsertEntities(projectId, fileId, filePath, mtime, "", generalEntities, dependencies).catch(() => {});
+        }
+    } catch (err) {}
+
     console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile END FRESH] ${b} took ${Date.now() - t0}ms`);
     return generalEntities;
+}
+
+/**
+ * Nạp sẵn cache từ LevelDB lên RAM khi mở file (async priming)
+ */
+function primeCache(filePath, entities) {
+    if (!filePath || !entities) return;
+    const normalized = path.normalize(filePath).toLowerCase();
+    if (!cache.has(normalized)) {
+        cache.set(normalized, {
+            generalEntities: entities,
+            parameterEntities: {},
+            fileMtimes: {},
+            lastChecked: Date.now()
+        });
+        console.log(`[EntityResolver] Primed cache from LevelDB for: ${path.basename(filePath)}`);
+    }
 }
 
 function invalidateCache(filePath) {
     if (filePath) {
         const normalized = path.normalize(filePath).toLowerCase();
         cache.delete(normalized);
+        globalFileContentCache.delete(normalized);
     } else {
         cache.clear();
+        globalFileContentCache.clear();
     }
 }
 
 module.exports = {
     getEntitiesForFile,
     invalidateCache,
+    primeCache,
     readFileContent,
     resolveFboXmlEntities
 };
