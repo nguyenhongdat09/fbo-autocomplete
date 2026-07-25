@@ -1,0 +1,6 @@
+<field name="ma_kh">
+  <header v="Mã khách hàng" e="Customer ID"/>
+</field>
+<field name="ten_kh">
+  <header v="Tên khách hàng" e="Customer Name"/>
+</field>

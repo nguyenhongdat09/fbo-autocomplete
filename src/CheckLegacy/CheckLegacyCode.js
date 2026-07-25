@@ -6,8 +6,11 @@ const entityResolver = require("../ReadXMLByJS/entityResolver");
 class CheckLegacyCode {
     constructor(context) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
+        this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+        this.currentCheckId = 0;
     }
-    run() {
+    
+    async run() {
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
 
@@ -15,7 +18,17 @@ class CheckLegacyCode {
         if (!(dirPath.includes('controllers/dir') || dirPath.includes('controllers/filter'))) {
             return;
         }
-        console.log("[FBO CheckLegacy] Running check for:", editor.document.uri.fsPath);
+        
+        // Sinh ID cho lần chạy này để hủy bỏ (abort) nếu user bấm Ctrl+S liên tục
+        this.currentCheckId++;
+        const checkId = this.currentCheckId;
+
+        this.statusBarItem.text = "$(sync~spin) Checking legacy...";
+        this.statusBarItem.tooltip = "Đang kiểm tra lỗi thiếu field trong XML...";
+        this.statusBarItem.show();
+
+        const tStart = Date.now();
+        console.log("[FBO_PERF_DEBUG] [CheckLegacy] Running check for:", editor.document.uri.fsPath);
         var content = vscode.window.activeTextEditor.document.getText();
 
         // Tách phần DOCTYPE (nếu có)
@@ -30,19 +43,32 @@ class CheckLegacyCode {
         while (hasReplaced && iterations < maxIterations) {
             hasReplaced = false;
             iterations++;
+            // Nhường CPU cho Extension Host xử lý các việc khác (Hover, Outline, DocumentLink...)
+            await new Promise(resolve => setTimeout(resolve, 5));
+            if (this.currentCheckId !== checkId) return; // Hủy bỏ nếu có lượt chạy mới
+            
             var ent_content = this.replaceEntity(contentWithoutDoctype);
             if (ent_content.length === 0) break;
             
             try {
+                // Build Map + single regex cho tất cả entity → 1 pass thay vì E passes
+                const entityMap = new Map();
                 for (var ent of ent_content) {
                     if (ent.content !== '') {
-                        const cleanContent = ent.content.replace(/\r?\n/g, ' ');
-                        const nextContent = contentWithoutDoctype.replace(ent.entity, () => cleanContent);
-                        if (nextContent !== contentWithoutDoctype) {
-                            contentWithoutDoctype = nextContent;
-                            hasReplaced = true;
-                        }
+                        entityMap.set(ent.entity, ent.content.replace(/\r?\n/g, ' '));
                     }
+                }
+                if (entityMap.size === 0) break;
+                
+                const entityRegex = new RegExp(
+                    [...entityMap.keys()].map(k => this.escapeRegExp(k)).join('|'), 'g'
+                );
+                const nextContent = contentWithoutDoctype.replace(
+                    entityRegex, match => entityMap.get(match) || match
+                );
+                if (nextContent !== contentWithoutDoctype) {
+                    contentWithoutDoctype = nextContent;
+                    hasReplaced = true;
                 }
             } catch (er) {
                 console.error(er);
@@ -52,10 +78,20 @@ class CheckLegacyCode {
 
         // Ghép lại DOCTYPE với nội dung đã thay thế
         content = doctypeSection + contentWithoutDoctype;
+        
+        // Nhường CPU lần cuối trước khi regex field_item
+        await new Promise(resolve => setTimeout(resolve, 5));
+        if (this.currentCheckId !== checkId) return; // Hủy bỏ nếu có lượt chạy mới
+        
         var field_item = this.getFieldOnView(content);
         var fields_declare = this.getFieldOnFields(content);
 
-        this.checkLegacyItem(editor, field_item, fields_declare)
+        this.checkLegacyItem(editor, field_item, fields_declare);
+        console.log(`[FBO_PERF_DEBUG] [CheckLegacy] END took ${Date.now() - tStart}ms`);
+        
+        if (this.currentCheckId === checkId) {
+            this.statusBarItem.hide();
+        }
     }
     // getFilePathEntity được xóa vì không dùng đến cache JSON nữa
     escapeRegExp(string) {
@@ -66,26 +102,31 @@ class CheckLegacyCode {
     replaceEntity(content) {
         const regex = /&[^;\s]+;/g; //Lay ra entity 
         var entities = content.match(regex) || [];
-        entities = entities.map((entity) => {
+        // Deduplicate right away to avoid duplicate processing downstream
+        const uniqueEntities = [...new Set(entities)];
+        
+        var parsedEntities = uniqueEntities.map((entity) => {
             return { entity, entity_variable: entity.replace(/&|;/g, '') }
-        })
-        entities = entities.filter((item) =>
+        });
+        parsedEntities = parsedEntities.filter((item) =>
             !['&gt', '&lt'].includes(item.entity)
-        )
-        var entityMapping = this.readEntity(entities.map((item) => item.entity_variable));
-        if (entityMapping.length == 0) return []
-        var entities_content = entities.map((item) => {
+        );
+        var entityMapping = this.readEntity(parsedEntities.map((item) => item.entity_variable));
+        if (entityMapping.length == 0) return [];
+        
+        var entities_content = parsedEntities.map((item) => {
             var entity = item.entity;
             var content = entityMapping.find((ent) =>
                 ent.Name == item.entity_variable
-            )
+            );
             if (content) {
-                var ent_ct = content.Content
-                return { entity, content: ent_ct }
-            } else
-                return { entity, content: '' }
-        })
-        return entities_content
+                var ent_ct = content.Content;
+                return { entity, content: ent_ct };
+            } else {
+                return { entity, content: '' };
+            }
+        });
+        return entities_content;
     }
 
     checkLegacyItem(editor, field_item, fields_declare) {
@@ -112,11 +153,11 @@ class CheckLegacyCode {
         }));
     
         function chua_khai_bao_Field(diagnostics) {
-            const field_dlr = fields_declare.map(item => item.key);
+            const fieldDeclSet = new Set(fields_declare.map(item => item.key));
             field_distinct.forEach(item_distinct => {
                 const fields = item_distinct.fields, line = item_distinct.line || 0;
                 fields.forEach(field => {
-                    if (!field_dlr.includes(field)) {
+                    if (!fieldDeclSet.has(field)) {
                         diagnostic = self.setDiag(line, `Field: ${field} chưa khai báo ở Fields.`, document);
                         diagnostics.push(diagnostic);
                     }
@@ -125,16 +166,14 @@ class CheckLegacyCode {
         }
     
         function chua_khai_bao_Field_xuong_view(diagnostics) {
+            // Build Set tất cả field đã khai báo trên view → tra cứu O(1)
+            const allViewFields = new Set();
+            for (const item of field_distinct) {
+                for (const f of item.fields) allViewFields.add(f);
+            }
             fields_declare.forEach(item_field => {
                 const field = item_field.key, line = item_field.line || 0;
-                let check = true;
-                for (const item_distinct of field_distinct) {
-                    if (item_distinct.fields.includes(field)) {
-                        check = false;
-                        break;
-                    }
-                }
-                if (check) {
+                if (!allViewFields.has(field)) {
                     diagnostic = self.setDiag(line, `Chưa khai báo Field: ${field} xuống thẻ view`, document);
                     diagnostics.push(diagnostic);
                 }
@@ -158,15 +197,24 @@ class CheckLegacyCode {
     getFieldOnFields(content) {
         try {
             const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
-            const fieldsMatches = content.match(fieldsRegex);
-            if (!fieldsMatches) {
+            const fieldsMatch = fieldsRegex.exec(content);
+            if (!fieldsMatch) {
                 return [];
             }
-            var xmlFields = fieldsMatches[0];
+            var xmlFields = fieldsMatch[0];
+            const xmlFieldsStart = fieldsMatch.index;
             const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
             const result = [];
-            // Tách content thành từng dòng để xác định số dòng
-            const lines = content.split('\n');
+            
+            // Đếm số newline trước xmlFieldsStart 1 lần O(N)
+            let baseLineNumber = 1;
+            for (let k = 0; k < xmlFieldsStart; k++) {
+                if (content[k] === '\n') baseLineNumber++;
+            }
+            
+            // Duyệt tuần tự: đếm newline tăng dần O(1) trung bình thay vì findIndex O(L) mỗi lần
+            let lastMatchIdx = 0;
+            let currentLine = baseLineNumber;
 
             let match;
             while ((match = fieldRegex.exec(xmlFields)) !== null) {
@@ -174,10 +222,14 @@ class CheckLegacyCode {
                 var value_t = match[0];
                 // **Bỏ qua field có filterSource="Vacant"**
                 if (/filterSource="Vacant"/.test(value_t)) continue;
-                // **Tìm dòng đầu tiên có chứa key**
-                let lineNumber = lines.findIndex(line => line.includes(`name="${key_t}"`)) + 1;
+                
+                // Đếm newline từ lastMatchIdx đến match.index (tăng dần)
+                for (let k = lastMatchIdx; k < match.index; k++) {
+                    if (xmlFields[k] === '\n') currentLine++;
+                }
+                lastMatchIdx = match.index;
 
-                result.push({ key: key_t, value: value_t, line: lineNumber });
+                result.push({ key: key_t, value: value_t, line: currentLine });
             }
             return result;
         }
@@ -192,16 +244,23 @@ class CheckLegacyCode {
             const regex = /<item value="([^"]+):\s*([^"]+)"/g;
             let match;
             const results = [];
-            // Tách content thành từng dòng
-            const lines = content.split('\n');
+            // Đếm dòng tăng dần theo match.index thay vì findIndex O(L) mỗi lần
+            let lastMatchIdx = 0;
+            let currentLine = 1;
+            
             while ((match = regex.exec(content)) !== null) {
                 var key = match[1].trim().replace(/[0-]/g, '');
                 // Tìm các field nằm trong ngoặc vuông []
                 const fieldMatches = match[2].match(/\[([^\]]+)\]/g) || [];
                 var fields = fieldMatches.map(field => field.replace(/\[|\]/g, "").trim());
-                // Tìm số dòng chứa match
-                let lineNumber = lines.findIndex(line => line.includes(match[0])) + 1;
-                results.push({ key, fields, line: lineNumber });
+                
+                // Đếm newline từ lastMatchIdx đến match.index (tăng dần)
+                for (let k = lastMatchIdx; k < match.index; k++) {
+                    if (content[k] === '\n') currentLine++;
+                }
+                lastMatchIdx = match.index;
+                
+                results.push({ key, fields, line: currentLine });
             }
             return results;
         } catch (error) {
@@ -219,7 +278,10 @@ class CheckLegacyCode {
             }
             
             const result = [];
-            for (const name of entities) {
+            // DEDUPLICATE entities to avoid N * M redundant disk reads on the main thread
+            const uniqueEntities = [...new Set(entities)];
+            
+            for (const name of uniqueEntities) {
                 const entityDecl = generalEntities[name];
                 if (entityDecl) {
                     let content = "";

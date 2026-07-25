@@ -143,11 +143,6 @@ class QueryResultPanel {
             void vscode.commands.executeCommand(QUERY_RESULTS_CONTAINER_CMD);
             void vscode.commands.executeCommand(`${QUERY_RESULTS_VIEW_ID}.focus`);
             this.updateViewContent();
-            // resolveWebviewView có thể chạy async sau tick hiện tại, nên refresh nhẹ lần 2.
-            setTimeout(() => {
-                this.updateViewContent();
-            }, 60);
-
         } catch (error) {
             console.error('Error showing panel:', error);
             vscode.window.showErrorMessage('Error showing results: ' + error.message);
@@ -212,7 +207,10 @@ class QueryResultPanel {
 
     updateViewContent() {
         if (!this.view || !this.currentResults) return;
-        this.view.webview.html = this.getHtmlContent(this.view.webview);
+        const newHtml = this.getHtmlContent(this.view.webview);
+        if (this.view.webview.html !== newHtml) {
+            this.view.webview.html = newHtml;
+        }
     }
 
     // File: src/DBQuery/QueryResultPanel.js

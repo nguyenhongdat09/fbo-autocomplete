@@ -1,4 +1,4 @@
-﻿
+
 // @ts-nocheck
 
 const vscode = require("vscode");
@@ -395,7 +395,14 @@ class TreeFileProvider extends TreeHelper {
             warmupConcurrency: GroupQuickFilterKinds.WARMUP_CONCURRENCY,
             onSearchResult: this._searchResultPublisher,
         });
-        await this._groupFileIndexService.init();
+        try {
+            const tInit = Date.now();
+            console.log(`[FBO_PERF_DEBUG] [TreeOneLevel] Index service init START`);
+            await this._groupFileIndexService.init();
+            console.log(`[FBO_PERF_DEBUG] [TreeOneLevel] Index service init END took ${Date.now() - tInit}ms`);
+        } catch (e) {
+            console.error("[FBO TreeOneLevel] Index service init error:", e);
+        }
         this._groupIndexBridge = new GroupTreeIndexBridge({
             addFileToTree: (fp) => this.addFileToTree(fp),
             refreshTree: () => this.refreshEvent.fire(),
@@ -451,14 +458,24 @@ class TreeFileProvider extends TreeHelper {
             canSelectMany: true
         });
 
-        // âœ… Build tree trong background
+        // ✅ Build tree trong background với try-catch an toàn
         Promise.resolve().then(async () => {
-            await this.buildTreeOptimized();
+            try {
+                const tBuild = Date.now();
+                console.log(`[FBO_PERF_DEBUG] [TreeOneLevel] buildTreeOptimized START`);
+                await this.buildTreeOptimized();
+                console.log(`[FBO_PERF_DEBUG] [TreeOneLevel] buildTreeOptimized END took ${Date.now() - tBuild}ms`);
+            } catch (err) {
+                console.error("[FBO TreeOneLevel] buildTreeOptimized error:", err);
+            }
             this._isInitialized = true;
             this.refreshEvent.fire();
             if (this._groupFileIndexService) {
+                const tWarmup = Date.now();
+                console.log(`[FBO_PERF_DEBUG] [TreeOneLevel] warmup START`);
                 const roots = this._collectGroupRootsForWarmup();
                 this._groupFileIndexService.warmup(roots);
+                console.log(`[FBO_PERF_DEBUG] [TreeOneLevel] warmup END took ${Date.now() - tWarmup}ms`);
                 if (this._groupFileWatcherService) {
                     this._groupFileWatcherService.syncRoots(roots);
                 }
@@ -523,40 +540,32 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // âœ… ðŸ†• onDidOpenTextDocument - KHI Má»ž FILE Má»šI (KÃ©o tháº£, double click, etc.)
+        // ✅ 🆕 onDidOpenTextDocument - KHI MỞ FILE MỚI (Kéo thả, double click, etc.)
         vscode.workspace.onDidOpenTextDocument(async (document) => {
             if (!this._isInitialized) return;
 
-            // Chá»‰ xá»­ lÃ½ file trong workspace
+            // Chỉ xử lý file trong workspace
             if (document.uri.scheme !== 'file') return;
 
             const filePath = document.uri.fsPath;
 
-            // Kiá»ƒm tra xem file Ä‘Ã£ cÃ³ trong tree chÆ°a
+            // Kiểm tra xem file đã có trong tree chưa
             let treeItem = this.getTreeItemByPath(filePath);
 
-            // Náº¿u chÆ°a cÃ³, thÃªm vÃ o tree (file má»›i kÃ©o vÃ o)
+            // Nếu chưa có, thêm vào tree (file mới kéo vào)
             if (!treeItem) {
                 this.addFileToTree(filePath);
-                await this.refreshEvent.fire();
-
-                // Äá»£i tree update xong
-                await new Promise(resolve => setTimeout(resolve, 100));
-
-                // Láº¥y láº¡i treeItem sau khi add
+                this.refreshEvent.fire();
                 treeItem = this.getTreeItemByPath(filePath);
             }
 
-            // Reveal file trong tree
+            // Reveal file trong tree (không await — tránh giữ extension host khi mở từ Search)
             if (treeItem) {
                 const parentGroup = this.getParentGroup(treeItem);
                 if (parentGroup) {
-                    try {
-                        await this.treeView.reveal(parentGroup, { select: false, expand: true });
-                        await this.revealActiveFile(parentGroup.label);
-                    } catch (err) {
-                        // Ignore error
-                    }
+                    void this.treeView.reveal(parentGroup, { select: false, expand: true })
+                        .then(() => this.revealActiveFile(parentGroup.label))
+                        .catch(() => { });
                 }
             }
         });
@@ -571,43 +580,48 @@ class TreeFileProvider extends TreeHelper {
             debouncedVisibleChange();
         });
 
-        // âœ… onDidChangeActiveTextEditor - Khi Ä‘á»•i tab
+        // ✅ onDidChangeActiveTextEditor - Khi đổi tab
         vscode.window.onDidChangeActiveTextEditor(async (editor) => {
             if (!editor || !this._isInitialized) return;
 
-            setTimeout(async () => {
-                const filePath = editor.document.uri.fsPath;
-                let treeItem = this.getTreeItemByPath(filePath);
+            const filePath = editor.document.uri.fsPath;
+            let treeItem = this.getTreeItemByPath(filePath);
 
-                // Náº¿u file chÆ°a cÃ³ trong tree, add vÃ o
-                if (!treeItem) {
-                    this.addFileToTree(filePath);
-                    await this.refreshEvent.fire();
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                    treeItem = this.getTreeItemByPath(filePath);
-                }
+            // Nếu file chưa có trong tree, add vào
+            if (!treeItem) {
+                this.addFileToTree(filePath);
+                this.refreshEvent.fire();
+                treeItem = this.getTreeItemByPath(filePath);
+            }
 
-                if (!treeItem) return;
+            if (!treeItem) return;
 
-                const parentGroup = this.getParentGroup(treeItem);
-                if (parentGroup) {
-                    try {
-                        await this.treeView.reveal(parentGroup, { select: false, expand: true });
-                        await this.revealActiveFile(parentGroup.label);
-                    } catch (err) { }
-                    const gLabel = fboTreeLabel(parentGroup.label);
-                    if (this.dbStatusBar && gLabel && gLabel.toUpperCase() !== "OTHER") {
-                        if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === "function") {
-                            this.dbStatusBar.reloadDbOptionsFromGroups();
-                        }
+            const parentGroup = this.getParentGroup(treeItem);
+            if (parentGroup) {
+                void this.treeView.reveal(parentGroup, { select: false, expand: true })
+                    .then(() => this.revealActiveFile(parentGroup.label))
+                    .catch(() => { });
+                const gLabel = fboTreeLabel(parentGroup.label);
+                if (this.dbStatusBar && gLabel && gLabel.toUpperCase() !== "OTHER") {
+                    const apply_db_label = () => {
                         if (typeof this.dbStatusBar.tryAutoUpdateText === "function") {
                             this.dbStatusBar.tryAutoUpdateText(gLabel + " (App)");
                         } else {
                             this.dbStatusBar.updateText(gLabel + " (App)");
                         }
+                    };
+                    if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === "function") {
+                        Promise.resolve(this.dbStatusBar.reloadDbOptionsFromGroups())
+                            .then(apply_db_label)
+                            .catch((e) => {
+                                console.error("[FBO dbBar] reloadDbOptionsFromGroups error:", e);
+                                apply_db_label();
+                            });
+                    } else {
+                        apply_db_label();
                     }
                 }
-            }, 100);
+            }
         });
 
         // Commands
@@ -782,7 +796,7 @@ class TreeFileProvider extends TreeHelper {
             this.dbStatusBar.groupItems = this.groupItems;
             if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === 'function') {
                 try {
-                    this.dbStatusBar.reloadDbOptionsFromGroups();
+                    await this.dbStatusBar.reloadDbOptionsFromGroups();
                 } catch (e) {
                     console.error("[FBO dbBar] reloadDbOptionsFromGroups error:", e);
                     console.error("[FBO dbBar] stack:", e && e.stack);
@@ -798,6 +812,48 @@ class TreeFileProvider extends TreeHelper {
 
     async buildTree() {
         return this.buildTreeOptimized();
+    }
+
+    ensureFileInTree(file_path) {
+        let tree_item = this.getTreeItemByPath(file_path);
+        if (tree_item) {
+            return tree_item;
+        }
+
+        this.addFileToTree(file_path);
+        tree_item = this.getTreeItemByPath(file_path);
+        if (!tree_item) {
+            return null;
+        }
+
+        const parent_group = this.getParentGroup(tree_item);
+        const group_name = parent_group ? fboTreeLabel(parent_group.label) : "";
+        const items = this.treeData.get(group_name);
+        if (items && items.length > 1) {
+            const config = vscode.workspace.getConfiguration("fbo-autocomplete");
+            const sort_type = config.get("sortTree", "FileName");
+            items.sort((item_a, item_b) => {
+                const file_path_a = item_a.resourceUri.fsPath;
+                const file_path_b = item_b.resourceUri.fsPath;
+                const ext_a = path.extname(file_path_a).toLowerCase();
+                const ext_b = path.extname(file_path_b).toLowerCase();
+                if (ext_a !== ext_b) {
+                    return ext_a.localeCompare(ext_b);
+                }
+                if (String(sort_type) === "folderName") {
+                    const folder_a = path.basename(path.dirname(file_path_a));
+                    const folder_b = path.basename(path.dirname(file_path_b));
+                    const folder_compare = folder_a.localeCompare(folder_b);
+                    if (folder_compare !== 0) {
+                        return folder_compare;
+                    }
+                }
+                return path.basename(file_path_a).localeCompare(path.basename(file_path_b));
+            });
+        }
+
+        this.refreshEvent.fire();
+        return tree_item;
     }
 
     addFileToTree(filePath) {

@@ -1,4 +1,4 @@
-﻿const fs = require("fs");
+const fs = require("fs");
 const path = require("path");
 const { Worker } = require('worker_threads');
 const AnalystASPX = require("./AnalystASPX");
@@ -1003,23 +1003,26 @@ class AnalystXML {
 
         // Đăng ký listener mới
         this.fileOpenListener = v.workspace.onDidOpenTextDocument(async (document) => {
-            const filePath = document.uri.fsPath;
-            this.copyCursorIgnoreToProject(this.extractProjectPath(filePath));
-            var isCorrectFile = this.checkFileToAnalyze(filePath);
-            // Chỉ xử lý file .xml hoặc .aspx
-            if (!isCorrectFile) {
-                return;
-            }
-            const projectFolderPath = this.createProjectFolder(filePath);
-            if (projectFolderPath) {
-                await this.syncDBFunc(projectFolderPath);
-            }
-            // Nếu chưa có JSON thì tự quét toàn project (worker)
-            if (!this.hasProjectJson(filePath)) {
-                this.analystAll(filePath); 
-                await this.syncDBFunc(projectFolderPath, 1);
-                return;
-            }
+            // THEO YÊU CẦU: Tắt toàn bộ logic quét/sync ngầm DB khi mở file
+            // Chỉ tạo DB khi user gọi Search (Lazy Load) để mở file nhanh tuyệt đối
+            
+            // const filePath = document.uri.fsPath;
+            // this.copyCursorIgnoreToProject(this.extractProjectPath(filePath));
+            // var isCorrectFile = this.checkFileToAnalyze(filePath);
+            // // Chỉ xử lý file .xml hoặc .aspx
+            // if (!isCorrectFile) {
+            //     return;
+            // }
+            // const projectFolderPath = this.createProjectFolder(filePath);
+            // if (projectFolderPath) {
+            //     await this.syncDBFunc(projectFolderPath);
+            // }
+            // // Nếu chưa có JSON thì tự quét toàn project (worker)
+            // if (!this.hasProjectJson(filePath)) {
+            //     this.analystAll(filePath); 
+            //     await this.syncDBFunc(projectFolderPath, 1);
+            //     return;
+            // }
         });
 
         return this.fileOpenListener;

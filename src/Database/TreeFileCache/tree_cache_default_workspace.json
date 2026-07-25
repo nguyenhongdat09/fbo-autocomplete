@@ -1,0 +1,202 @@
+{
+  "updatedAt": 1784861890549,
+  "workspace": "",
+  "groups": [
+    {
+      "name": "AMERICAN - FBISP2422",
+      "groupItem": {
+        "label": "AMERICAN - FBISP2422",
+        "collapsibleState": 1,
+        "contextValue": "group",
+        "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\AMERICAN\\FBISP2422"
+      },
+      "items": [
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\AMERICAN\\FBISP2422\\Web.config",
+          "description": "(FBISP2422)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBI\\AMERICAN\\FBISP2422\\Web.config"
+            ]
+          }
+        },
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\AMERICAN\\FBISP2422\\App_Data\\Controllers\\Grid\\SVDetail.xml",
+          "description": "(Grid)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBI\\AMERICAN\\FBISP2422\\App_Data\\Controllers\\Grid\\SVDetail.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\grid_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\grid_icon.svg"
+        }
+      ]
+    },
+    {
+      "name": "ANNHIEN - FBISP24",
+      "groupItem": {
+        "label": "ANNHIEN - FBISP24",
+        "collapsibleState": 1,
+        "contextValue": "group",
+        "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\AnNhien\\FBISP24"
+      },
+      "items": [
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\AnNhien\\FBISP24\\App_Data\\Controllers\\Dir\\SVTran.xml",
+          "description": "(Dir)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBI\\AnNhien\\FBISP24\\App_Data\\Controllers\\Dir\\SVTran.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\dir_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\dir_icon.svg"
+        },
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\AnNhien\\FBISP24\\App_Data\\Controllers\\Grid\\SVDetail.xml",
+          "description": "(Grid)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBI\\AnNhien\\FBISP24\\App_Data\\Controllers\\Grid\\SVDetail.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\grid_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\grid_icon.svg"
+        }
+      ]
+    },
+    {
+      "name": "AUTOPMH - PROGRAMPMH",
+      "groupItem": {
+        "label": "AUTOPMH - PROGRAMPMH",
+        "collapsibleState": 1,
+        "contextValue": "group",
+        "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBO\\AutoPMH\\ProgramPMH"
+      },
+      "items": [
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBO\\AutoPMH\\ProgramPMH\\Web.config",
+          "description": "(ProgramPMH)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBO\\AutoPMH\\ProgramPMH\\Web.config"
+            ]
+          }
+        },
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBO\\AutoPMH\\ProgramPMH\\App_Data\\Controllers\\Dir\\Item.xml",
+          "description": "(Dir)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBO\\AutoPMH\\ProgramPMH\\App_Data\\Controllers\\Dir\\Item.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\dir_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\dir_icon.svg"
+        }
+      ]
+    },
+    {
+      "name": "EPLUS_FBI - FBISP24",
+      "groupItem": {
+        "label": "EPLUS_FBI - FBISP24",
+        "collapsibleState": 1,
+        "contextValue": "group",
+        "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\EPLUS_FBI\\FBISP24"
+      },
+      "items": [
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\EPLUS_FBI\\FBISP24\\App_Data\\Controllers\\Grid\\SVDetail.xml",
+          "description": "(Grid)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBI\\EPLUS_FBI\\FBISP24\\App_Data\\Controllers\\Grid\\SVDetail.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\grid_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\grid_icon.svg"
+        },
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBI\\EPLUS_FBI\\FBISP24\\App_Data\\Controllers\\Templates\\Upload\\PVMaster.xml",
+          "description": "(Upload)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBI\\EPLUS_FBI\\FBISP24\\App_Data\\Controllers\\Templates\\Upload\\PVMaster.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\upload_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\upload_icon.svg"
+        }
+      ]
+    },
+    {
+      "name": "NEWPEARL - R2SP223",
+      "groupItem": {
+        "label": "NEWPEARL - R2SP223",
+        "collapsibleState": 1,
+        "contextValue": "group",
+        "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBO\\Newpearl\\R2SP223"
+      },
+      "items": [
+        {
+          "label": "",
+          "collapsibleState": 0,
+          "contextValue": "file",
+          "resourceUri": "\\\\172.168.5.14\\CustomerPro\\FBO\\Newpearl\\R2SP223\\App_Data\\Controllers\\Dir\\PSHTran.xml",
+          "description": "(Dir)",
+          "command": {
+            "command": "vscode.open",
+            "title": "Má»Ÿ file",
+            "arguments": [
+              "\\\\172.168.5.14\\CustomerPro\\FBO\\Newpearl\\R2SP223\\App_Data\\Controllers\\Dir\\PSHTran.xml"
+            ]
+          },
+          "iconPathLight": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\light\\dir_icon.svg",
+          "iconPathDark": "e:\\CustomizeExtension\\fbo-autocomplete\\images\\dark\\dir_icon.svg"
+        }
+      ]
+    }
+  ],
+  "folders": []
+}

@@ -20,6 +20,7 @@ class SearchResultTreeView {
         /** @type {Map<string, import('vscode').TreeItem[]>} */
         this.childrenMap = new Map();
         this._activeGroupRoot = null;
+        this._before_open_file = null;
     }
 
     run(context) {
@@ -29,10 +30,20 @@ class SearchResultTreeView {
             showCollapseAll: true,
             canSelectMany: true,
         });
-        const openFileCommand = vscode.commands.registerCommand(OPEN_SEARCH_RESULT_FILE_CMD, async (uri) => {
-            await this.openFile(uri);
-        });
-        context.subscriptions.push(this.treeView, openFileCommand);
+        const open_file_command = vscode.commands.registerCommand(
+            OPEN_SEARCH_RESULT_FILE_CMD,
+            async (uri) => {
+                if (this._before_open_file) {
+                    await this._before_open_file(uri);
+                }
+                await vscode.commands.executeCommand("vscode.open", uri, { preview: false });
+            }
+        );
+        context.subscriptions.push(this.treeView, open_file_command);
+    }
+
+    setBeforeOpenFile(handler) {
+        this._before_open_file = typeof handler === "function" ? handler : null;
     }
 
     /**
@@ -81,17 +92,6 @@ class SearchResultTreeView {
         } catch {
             return raw.toLowerCase();
         }
-    }
-
-    async openFile(uriLike) {
-        if (!uriLike) return;
-        const uri = uriLike instanceof vscode.Uri
-            ? uriLike
-            : vscode.Uri.file(String(uriLike.fsPath || uriLike.path || uriLike));
-        await vscode.window.showTextDocument(uri, {
-            preview: false,
-            viewColumn: vscode.ViewColumn.Active,
-        });
     }
 
     _buildTree(result) {

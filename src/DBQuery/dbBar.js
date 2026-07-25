@@ -85,7 +85,7 @@ class DBStatusBarManager {
      *   "<label> (App)" và "<label> (Sys)"
      * Ví dụ: "HUNGTHINH_FBO - R2SP2254 (App)", "HUNGTHINH_FBO - R2SP2254 (Sys)"
      */
-    reloadDbOptionsFromGroups() {
+    async reloadDbOptionsFromGroups() {
         // So sánh groupItems hiện tại với snapshot cũ, nếu không đổi thì bỏ qua
         if (this.groupItems && this.groupItems_old) {
             const sameSize = this.groupItems.size === this.groupItems_old.size;
@@ -110,8 +110,9 @@ class DBStatusBarManager {
         if (!this.groupItems || this.groupItems.size === 0) {
             this.dbOptions = [];
             return;
-        } 
+        }
         const options = [];
+        const load_tasks = [];
         // groupItems là Map<string, TreeItem>, mỗi TreeItem có label & resourceUri
         this.groupItems.forEach((groupItem) => {
             if (!groupItem || !groupItem.label) {
@@ -121,17 +122,26 @@ class DBStatusBarManager {
                 console.warn("[FBO dbBar] Bỏ qua groupItem thiếu resourceUri.fsPath:", groupItem.label);
                 return;
             }
-            const analystWebConfig = new AnalystWebConfig();
             const webConfigPath = path.join(groupItem.resourceUri.fsPath, "Web.config");
-            if(fs.existsSync(webConfigPath)) {  
-                analystWebConfig.loadConfig(webConfigPath);
-                this.listAnalystWebConfig.set(groupItem.label, analystWebConfig);
+            if (fs.existsSync(webConfigPath)) {
+                const group_label = groupItem.label;
+                load_tasks.push((async () => {
+                    const analystWebConfig = new AnalystWebConfig();
+                    await analystWebConfig.loadConfig(webConfigPath);
+                    this.listAnalystWebConfig.set(group_label, analystWebConfig);
+                })().catch((err) => {
+                    console.error(`[FBO dbBar] loadConfig lỗi (${groupItem.label}):`, err && err.message);
+                }));
             }
             const baseLabel = groupItem.label; // VD: "HUNGTHINH_FBO - R2SP2254"
             options.push(`${baseLabel} (App)`);
             options.push(`${baseLabel} (Sys)`);
         });
-       
+
+        if (load_tasks.length > 0) {
+            await Promise.all(load_tasks);
+        }
+
         this.dbOptions = options;
         // Cập nhật snapshot groupItems mới nhất
         this.groupItems_old = new Map(this.groupItems);

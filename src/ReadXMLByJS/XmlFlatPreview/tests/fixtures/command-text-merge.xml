@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE command [
+  <!ENTITY SubEntity "line FROM ENTITY">
+]>
+<command event="Inserted">
+  <text>
+    <![CDATA[
+line A
+]]>
+    &SubEntity;
+    <![CDATA[
+line B
+]]>
+  </text>
+</command>

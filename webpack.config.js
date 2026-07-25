@@ -11,6 +11,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
+    tsconfig: false
   },
   module: {
     rules: [

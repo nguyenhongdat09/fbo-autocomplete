@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE t [
+  <!ENTITY a "A-&b;-Z">
+  <!ENTITY b "B">
+]>
+<t>&a;</t>

@@ -20,7 +20,9 @@
     "onView:fbo_query_results_panel",
     "onView:fbo_search_result_view",
     "onView:fbo_text_search_result_view",
-    "onCommand:fbo-autocomplete.ConvertGridToPivotExcel"
+    "onView:fbo_file",
+    "onCommand:fbo-autocomplete.ConvertGridToPivotExcel",
+    "onCommand:fbo-autocomplete.removeBlankRows"
   ],
   "main": "./src/extension.js",
   "publisher": "Nguyen-Hong-Dat",
@@ -53,18 +55,30 @@
           "command": "my-fbo-toolkit.openWithVS2008"
         },
         {
+          "command": "fbo-autocomplete.removeBlankRows"
+        },
+        {
           "command": "fbo-autocomplete.runSqlFile",
           "when": "resourceExtname == .sql || resourceExtname == .xml"
         },
         {
           "command": "fbo-autocomplete.peekSql",
           "when": "resourceExtname == .xml || resourceExtname == .sql"
+        },
+        {
+          "command": "fbo-autocomplete.previewXmlFlat",
+          "when": "resourceExtname == .xml"
         }
       ],
       "editor/title": [
         {
           "command": "fbo-autocomplete.runSqlFile",
           "when": "resourceExtname == .sql || resourceExtname == .xml",
+          "group": "navigation"
+        },
+        {
+          "command": "fbo-autocomplete.previewXmlFlat",
+          "when": "resourceExtname == .xml",
           "group": "navigation"
         }
       ],
@@ -414,6 +428,10 @@
         "title": "Open With VS 2008"
       },
       {
+        "command": "fbo-autocomplete.removeBlankRows",
+        "title": "Remove Blank Row"
+      },
+      {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
         "title": "FBO: Apply Translate FBO (v -> e)"
       },
@@ -590,6 +608,11 @@
         }
       },
       {
+        "command": "fbo-autocomplete.previewXmlFlat",
+        "title": "Preview XML Flat",
+        "icon": "$(open-preview)"
+      },
+      {
         "command": "fbo-autocomplete.peekSql",
         "title": "Peek SQL",
         "icon": "$(search)"
@@ -637,7 +660,8 @@
     "test": "vscode-test",
     "build": "node ./node_modules/webpack/bin/webpack.js",
     "watch": "node ./node_modules/webpack/bin/webpack.js --watch",
-    "vendor:ag-grid": "node scripts/vendor-ag-grid.js"
+    "vendor:ag-grid": "node scripts/vendor-ag-grid.js",
+    "test:xml-flat-preview": "node scripts/xml-flat-preview.test.js"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",

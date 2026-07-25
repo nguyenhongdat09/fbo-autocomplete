@@ -6,7 +6,6 @@ const fs = require('fs');
 const CompletionProvider = require('./CompleteCodeWithDB/CompleteProvider');
 const RenderXMLToDB = require('./CompleteCodeWithDB/renderXMLToDB');
 const OpenWithVS2008 = require('./VS2008/openWithVS2008');
-const OpenWithVSCode = require('./VS2008/openWithVSCode');
 const ReadXMLVS2008 = require('./VS2008/ReadXMLVS2008');
 const ReloadEntityBySave = require('./VS2008/ReloadEntityBySave');
 const EntityHoverProvider = require("./VS2008/EntityHoverProvider");
@@ -39,6 +38,9 @@ const { registerFormatXml } = require("./FormatXML/registerFormatXml");
 const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
 const SearchResultTreeView = require("./TreeFile/searchFile/SearchResultTreeView");
 const { activateGroupTextSearch } = require("./TreeFile/SearchText/GroupTextSearchBootstrap");
+const { registerXmlFlatPreview } = require("./ReadXMLByJS/XmlFlatPreview");
+const { removeBlankRows } = require('./Utils/removeBlankRows');
+const formulaHover = require('./ReadXMLByJS/FormulaHover');
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -78,7 +80,15 @@ async function activate(context) {
     if (typeof treeDataProvider.setSearchActiveGroupGetter === "function") {
         treeDataProvider.setSearchActiveGroupGetter(() => searchResultView.getActiveGroupRoot());
     }
+    const tTree = Date.now();
+    console.log(`[FBO_PERF_DEBUG] [extension] treeDataProvider.run START`);
     await treeDataProvider.run(context);
+    console.log(`[FBO_PERF_DEBUG] [extension] treeDataProvider.run END took ${Date.now() - tTree}ms`);
+    searchResultView.setBeforeOpenFile((uri) => {
+        if (uri && uri.fsPath && typeof treeDataProvider.ensureFileInTree === "function") {
+            treeDataProvider.ensureFileInTree(uri.fsPath);
+        }
+    });
     activateGroupTextSearch(context, treeDataProvider);
     registerDirtyFileDecorations(context);
 
@@ -144,17 +154,16 @@ async function activate(context) {
     let openWithVS2008 = vscode.commands.registerCommand('my-fbo-toolkit.openWithVS2008', (uri) => {
         OpenWithVS2008.open(uri);
     });
-    // let openWithVSCode = vscode.commands.registerCommand('fbo-autocomplete.OpenWithVSCode', (uri) => {
-    //     OpenWithVSCode.open(uri);
-    // });
+
+    let removeBlankRowsCmd = vscode.commands.registerCommand('fbo-autocomplete.removeBlankRows', removeBlankRows);
  
-    // Mở file XML: listener + quét textDocuments (cold start). Logic + debounce trong ReadXMLVS2008.readXmlIfOpenFboDocument.
-    const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
-        ReadXMLVS2008.readXmlIfOpenFboDocument(document, context);
-    });
-    for (const doc of vscode.workspace.textDocuments) {
-        ReadXMLVS2008.readXmlIfOpenFboDocument(doc, context);
-    }
+    // Mở file XML: Không gọi parse XML trước nữa, để tiết kiệm thời gian mở file. Parse sẽ chạy lazy khi hover hoặc check legacy.
+    // const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
+    //     ReadXMLVS2008.readXmlIfOpenFboDocument(document, context);
+    // });
+    // for (const doc of vscode.workspace.textDocuments) {
+    //     ReadXMLVS2008.readXmlIfOpenFboDocument(doc, context);
+    // }
     const reloadEntityBySave = new ReloadEntityBySave(context);
 
     // UTF-8 BOM bytes để ghi xuống đĩa (không chèn vào nội dung editor → tránh hiển thị dấu ?)
@@ -343,14 +352,14 @@ async function activate(context) {
         }
     };
 
-    // 1. Quét lỗi ngay khi chuyển tab hoặc mở một file mới
-    const onDidChangeActiveEditor = vscode.window.onDidChangeActiveTextEditor((editor) => {
-        runCheckForEditor(editor);
-    });
-    context.subscriptions.push(onDidChangeActiveEditor);
+    // 1. Quét lỗi khi chuyển tab hoặc mở file mới đã bị tắt theo yêu cầu user (để tăng tốc độ mở file)
+    // const onDidChangeActiveEditor = vscode.window.onDidChangeActiveTextEditor((editor) => {
+    //     runCheckForEditor(editor);
+    // });
+    // context.subscriptions.push(onDidChangeActiveEditor);
 
-    // 2. Chạy quét lỗi cho file hiện tại ngay khi khởi động extension
-    runCheckForEditor(vscode.window.activeTextEditor);
+    // 2. Không quét ngay khi khởi động extension nữa
+    // runCheckForEditor(vscode.window.activeTextEditor);
 
     // 3. Quét lỗi khi nhấn lưu bất kỳ file nào trong thư mục controllers/ (cho phép cập nhật khi sửa file DTD phụ)
     if (checkLegacyWhenSave) {
@@ -402,7 +411,9 @@ async function activate(context) {
     });
     const peekSqlCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.peekSqlCopyContent", () => peekSql.copyContentToClipboard());
     const entityHoverCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyContent", () => entityHoverProvider.copyContentToClipboard());
+    const entityHoverCopyFlatCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyFlatContent", () => entityHoverProvider.copyFlatContentToClipboard());
     const entityHoverReloadCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverReload", () => entityHoverProvider.reloadEntityForLastHover());
+    const toggleHoverModeCmd = vscode.commands.registerCommand("fbo-autocomplete.toggleHoverMode", () => entityHoverProvider.toggleHoverMode());
 
     const entityDefinitionProvider = new EntityDefinitionProvider(context.extensionPath);
 
@@ -428,7 +439,9 @@ async function activate(context) {
     context.subscriptions.push(peekSqlCmd);
     context.subscriptions.push(peekSqlCopyCmd);
     context.subscriptions.push(entityHoverCopyCmd);
+    context.subscriptions.push(entityHoverCopyFlatCmd);
     context.subscriptions.push(entityHoverReloadCmd);
+    context.subscriptions.push(toggleHoverModeCmd);
     context.subscriptions.push(peekSqlHover); 
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
@@ -442,10 +455,10 @@ async function activate(context) {
     context.subscriptions.push(copyEntityCommand);
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
+    context.subscriptions.push(removeBlankRowsCmd);
     context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(reloadEntityBySave);
     calculationProvider.register(context); 
-    // context.subscriptions.push(openWithVSCode);
     /*
      var viewpanelsql = new ViewPanelResult(context)
      var disposable = vscode.commands.registerCommand('fbo-autocomplete.showQueryResult', function () {
@@ -454,6 +467,8 @@ async function activate(context) {
      
        context.subscriptions.push(disposable);
     */
+    registerXmlFlatPreview(context);
+    formulaHover.register(context);
     var anl = new AnalystXML();
     anl.run(context);
 }

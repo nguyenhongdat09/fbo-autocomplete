@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cmd SYSTEM "FBO.dtd" [
+  <!ENTITY EntCdata SYSTEM "sub-content-cdata.xml">
+]>
+<command event="Test">
+  <text>&EntCdata;</text>
+</command>

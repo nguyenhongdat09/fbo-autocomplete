@@ -108,6 +108,10 @@ function hasLocalWebpack() {
     );
 }
 
+/** vsce global cũ (vd 3.2.x) không có --allow-package-secrets; dùng npx với bản mới. */
+const VSCE_PACKAGE_CMD =
+    "npx --yes @vscode/vsce@3.9.2 package --allow-package-secrets gcp";
+
 /** Cờ npm: không đọc/ghi lock (kết hợp stash để chắc chắn). */
 const NPM_INSTALL_FLAGS = "--no-audit --no-fund --no-package-lock";
 const NPM_INSTALL_WITH_DEV_FLAGS = `--include=dev ${NPM_INSTALL_FLAGS}`;
@@ -281,10 +285,11 @@ function run() {
             sleepMs(400);
         }
         let packageJson = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
-        /* Chỉ native — AG Grid nằm trong src/DBQuery/media/vendor (scripts/vendor-ag-grid.js). */
+        /* Chỉ native + ripgrep (webpack external) — AG Grid nằm trong media/vendor. */
         packageJson.dependencies = {
             "level-rocksdb": savedDependencies["level-rocksdb"] || "^5.0.0",
             rocksdb: savedDependencies.rocksdb || "^5.2.1",
+            "@vscode/ripgrep": savedDependencies["@vscode/ripgrep"] || "^1.15.9",
         };
         packageJson.devDependencies = {};
         packageJson.main = "./src/dist/extension.js";
@@ -300,7 +305,7 @@ function run() {
         console.log("📦 Đóng gói extension với vsce...");
         applyPackagingIgnoreOverride();
         try {
-            execSync("vsce package --allow-package-secrets gcp", {
+            execSync(VSCE_PACKAGE_CMD, {
                 stdio: "inherit",
                 cwd: __dirname,
                 shell: isWin,

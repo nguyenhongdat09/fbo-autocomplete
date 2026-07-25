@@ -10,14 +10,16 @@ class EntityHoverProvider {
         this.extensionPath = context.extensionPath;
         /** @type {string | null} Nội dung entity lần hover gần nhất (để copy) */
         this._lastEntityContent = null;
+        /** @type {string | null} Nội dung entity phẳng lần hover gần nhất (để copy flat) */
+        this._lastFlatEntityContent = null;
+        /** @type {string | null} Tên entity lần hover gần nhất */
+        this._lastEntityName = null;
         /** @type {string | null} Đường dẫn file XML lần hover gần nhất (để reload entity) */
         this._lastEntityFilePath = null;
         /** @type {import('./ReloadEntityBySave') | null} */
         this._reloadEntityBySave = null;
-    }
-
-    getLastEntityContent() {
-        return this._lastEntityContent || "";
+        /** @type {string} Chế độ hover hiện tại ('original' hoặc 'flat') */
+        this.hoverMode = 'original';
     }
 
     /**
@@ -28,7 +30,15 @@ class EntityHoverProvider {
     }
 
     /**
-     * Copy nội dung Entity hover lần gần nhất vào clipboard (dùng cho command entityHoverCopyContent).
+     * Chuyển đổi trạng thái hover giữa Original và Flat
+     */
+    toggleHoverMode() {
+        this.hoverMode = this.hoverMode === 'original' ? 'flat' : 'original';
+        vscode.window.showInformationMessage(`Đã chuyển sang chế độ hiển thị ${this.hoverMode === 'flat' ? 'Flat' : 'Original'}. Hãy hover lại để xem kết quả.`);
+    }
+
+    /**
+     * Copy nội dung Entity gốc hover lần gần nhất vào clipboard (dùng cho command entityHoverCopyContent).
      */
     async copyContentToClipboard() {
         const text = this._lastEntityContent || "";
@@ -37,7 +47,92 @@ class EntityHoverProvider {
             return;
         }
         await vscode.env.clipboard.writeText(text);
-        vscode.window.showInformationMessage("Đã copy.");
+        vscode.window.showInformationMessage("Đã copy Original.");
+    }
+
+    /**
+     * Copy nội dung Entity phẳng (đã flat hết entity lồng và unescape ký tự đặc biệt) vào clipboard.
+     */
+    async copyFlatContentToClipboard() {
+        const text = this._lastFlatEntityContent || "";
+        if (!text) {
+            vscode.window.showInformationMessage("Không có nội dung Entity để copy.");
+            return;
+        }
+        await vscode.env.clipboard.writeText(text);
+        vscode.window.showInformationMessage("Đã copy Flat.");
+    }
+
+    /**
+     * Giải mã các ký tự XML entity thành ký tự gốc
+     * @param {string} str 
+     * @returns {string}
+     */
+    unescapeXmlEntities(str) {
+        if (!str) return str;
+        return str
+            .replace(/&quot;/g, '"')
+            .replace(/&apos;/g, "'")
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(Number(dec)))
+            .replace(/&#x([0-9a-fA-F]+);/g, (match, hex) => String.fromCharCode(parseInt(hex, 16)))
+            .replace(/&amp;/g, '&');
+    }
+
+    /**
+     * Đệ quy thay thế các &EntityName; bằng nội dung thực thể tương ứng (có cache để chống lỗi vòng lặp/vượt quá stack/tính toán quá lâu)
+     * @param {string} text 
+     * @param {string} filePath 
+     * @param {string[]} expandingStack 
+     * @param {number} depth 
+     * @param {Map<string, string>} memo 
+     * @param {Object} generalEntities
+     * @returns {string}
+     */
+    flattenEntityContent(text, filePath, expandingStack = [], depth = 0, memo = new Map(), generalEntities = null) {
+        if (!text || depth > 20) return text || "";
+
+        if (!generalEntities) {
+            generalEntities = entityResolver.getEntitiesForFile(filePath) || {};
+        }
+        const entityPattern = /&([\w.-]+);/g;
+
+        return text.replace(entityPattern, (match, entName) => {
+            if (expandingStack.includes(entName)) {
+                return match;
+            }
+
+            if (memo.has(entName)) {
+                return memo.get(entName);
+            }
+
+            const entDecl = generalEntities[entName];
+            if (!entDecl) {
+                return match;
+            }
+
+            let rawContent = "";
+            let sourceFile = entDecl.sourceFile || filePath;
+
+            if (entDecl.systemUrl) {
+                if (fs.existsSync(entDecl.sourceFile)) {
+                    try {
+                        rawContent = entityResolver.readFileContent(entDecl.sourceFile);
+                    } catch (err) {
+                        return match;
+                    }
+                } else {
+                    return match;
+                }
+            } else {
+                rawContent = entDecl.value || "";
+            }
+
+            const flat = this.flattenEntityContent(rawContent, sourceFile, [...expandingStack, entName], depth + 1, memo, generalEntities);
+            memo.set(entName, flat);
+            return flat;
+        });
     }
 
     /**
@@ -103,12 +198,9 @@ class EntityHoverProvider {
     }
     
     
-    appendHoverActionLinks(markdownContent, includeCopy) {
-        if (includeCopy) {
-            markdownContent.appendMarkdown(
-                "[Copy to clipboard](command:fbo-autocomplete.entityHoverCopyContent)\n\n"
-            );
-        }
+    appendHoverActionLinks(markdownContent) {
+        const toggleText = this.hoverMode === 'original' ? 'Show Flat' : 'Show Original';
+        markdownContent.appendMarkdown(`[Copy Original](command:fbo-autocomplete.entityHoverCopyContent) | [Copy Flat](command:fbo-autocomplete.entityHoverCopyFlatContent) | [${toggleText}](command:fbo-autocomplete.toggleHoverMode)\n\n`);
     }
 
     async provideHover(document, position) {
@@ -119,7 +211,9 @@ class EntityHoverProvider {
 
         const entity = entityInfo.entityName;
         const filePath = document.uri.fsPath;
+
         this._lastEntityFilePath = filePath;
+        this._lastEntityName = entity;
 
         const generalEntities = entityResolver.getEntitiesForFile(filePath);
         const entityDecl = generalEntities ? generalEntities[entity] : null;
@@ -143,21 +237,34 @@ class EntityHoverProvider {
                 rawContent = entityDecl.value || "";
             }
 
-            // Markdown để hiển thị nội dung nổi bật
             const markdownContent = new vscode.MarkdownString();
             markdownContent.appendMarkdown(`### 🎯 Entity Content: \`&${entity};\` 🎯 \n\n`);
-            this.appendHoverActionLinks(markdownContent, true);
+            this.appendHoverActionLinks(markdownContent);
 
+            // 1. Luôn tính toán Original
             let formattedContent = this.formatXml(rawContent);
             formattedContent = formattedContent.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
             this._lastEntityContent = formattedContent;
 
-            markdownContent.appendMarkdown(`\`\`\`xml\n${formattedContent}\n\`\`\``);
+            // 2. Luôn tính toán Flat (tính năng đệ quy đã được tối ưu cache nên rất nhẹ)
+            let flatContent = this.flattenEntityContent(rawContent, filePath, [entity]);
+            let formattedFlatContent = this.formatXml(flatContent);
+            formattedFlatContent = formattedFlatContent.replace(/<(\w+)([^>]*)>\s*<\/\1>/g, '<$1$2></$1>');
+            this._lastFlatEntityContent = formattedFlatContent;
+
+            // 3. Chỉ render markdown hiển thị tùy theo trạng thái hoverMode
+            if (this.hoverMode === 'original') {
+                markdownContent.appendMarkdown(`#### 📝 Original:\n\`\`\`xml\n${formattedContent}\n\`\`\``);
+            } else {
+                markdownContent.appendMarkdown(`#### ⚡ Flat:\n\`\`\`xml\n${formattedFlatContent}\n\`\`\``);
+            }
+
             markdownContent.isTrusted = true; // Cho phép markdown có nội dung nhúng
             return new vscode.Hover(markdownContent);
         }
 
         this._lastEntityContent = null;
+        this._lastFlatEntityContent = null;
         const markdownContent = new vscode.MarkdownString();
         markdownContent.appendMarkdown(`### Entity not found: \`${entity}\`\n\n`);
         markdownContent.appendMarkdown("Entity không được tìm thấy trong DTD của file XML này.\n\n");
@@ -200,6 +307,8 @@ class EntityHoverProvider {
 
     dispose() {
         this._lastEntityContent = null;
+        this._lastFlatEntityContent = null;
+        this._lastEntityName = null;
         this._lastEntityFilePath = null;
         this._reloadEntityBySave = null;
     }

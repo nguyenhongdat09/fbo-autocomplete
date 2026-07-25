@@ -12,7 +12,27 @@ class GroupTextSearchRipgrepRunner {
      * @returns {string}
      */
     static getRgPath() {
-        return require("@vscode/ripgrep").rgPath;
+        try {
+            const mod = require("@vscode/ripgrep");
+            if (mod && mod.rgPath) {
+                return mod.rgPath;
+            }
+        } catch {
+            // fall through — resolve platform package (VSIX / ESM edge)
+        }
+
+        const arch = process.env.npm_config_arch || process.arch;
+        const binary_name = process.platform === "win32" ? "rg.exe" : "rg";
+        const platform_pkg = `@vscode/ripgrep-${process.platform}-${arch}`;
+        try {
+            return require.resolve(`${platform_pkg}/bin/${binary_name}`);
+        } catch (err) {
+            const msg = err && err.message ? err.message : String(err);
+            throw new Error(
+                `Cannot find ripgrep (${platform_pkg}). ` +
+                `Rebuild/reinstall the extension so @vscode/ripgrep is packaged. ${msg}`
+            );
+        }
     }
 
     /**

@@ -39,6 +39,8 @@ src/**
 !src/DBQuery/media/**
 !src/DBQuery/GenerateProcessing.js
 !src/DBQuery/GenerateHeaderToReport.js
+!src/ReadXMLByJS/XmlFlatPreview/media/**
+
 
 # Database: chỉ template/runtime cần thiết (không ship LevelDB/cache máy dev)
 !src/Database/AutoComplete/**

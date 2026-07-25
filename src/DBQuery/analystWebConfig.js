@@ -8,7 +8,10 @@ class AnalystWebConfig {
         };
     }
 
-    loadConfig(filePath) {
+    /**
+     * @param {string} filePath
+     */
+    async loadConfig(filePath) {
         if (!fs.existsSync(filePath)) {
             throw new Error(`Không tìm thấy file Web.config tại: ${filePath}`);
         }
@@ -22,14 +25,35 @@ class AnalystWebConfig {
         while ((match = regex.exec(xmlData)) !== null) {
             const name = match[1]; // "appConnectionString" hoặc "sysConnectionString"
             const connString = match[2]; // Chuỗi connection string
-            // Parse connection string
-            
             this.dbConnections[name.includes("app") ? "app" : name.includes("sync") ? "app" : "sys"] = this.parseConnectionString(connString);
         }
-        if (this.dbConnections.sys && this.dbConnections.app) {
-            const sysDb = this.dbConnections.sys.database;
-            let appDb = sysDb.replace(/_(S|Sys)$/, "_A").replace(/_Sys$/, "_App");
-            this.dbConnections.app.database = appDb;
+
+        // Đọc sysDatabaseName để ép tên database app và sys
+        const sysDbMatch = /<add\s+key="sysDatabaseName"\s+value="([^"]+)"\s*\/>/.exec(xmlData);
+        if (sysDbMatch) {
+            const sysDbName = sysDbMatch[1]; // VD: AMERICAN_FBISP2422_S
+            let baseName = "";
+            let appSuffix = "";
+            let sysSuffix = "";
+
+            if (sysDbName.endsWith("_S")) {
+                baseName = sysDbName.slice(0, -2);
+                appSuffix = "_A";
+                sysSuffix = "_S";
+            } else if (sysDbName.endsWith("_Sys")) {
+                baseName = sysDbName.slice(0, -4);
+                appSuffix = "_App";
+                sysSuffix = "_Sys";
+            }
+
+            if (baseName) {
+                if (this.dbConnections.app) {
+                    this.dbConnections.app.database = baseName + appSuffix;
+                }
+                if (this.dbConnections.sys) {
+                    this.dbConnections.sys.database = baseName + sysSuffix;
+                }
+            }
         }
     }
 
@@ -40,7 +64,7 @@ class AnalystWebConfig {
             if (key && value) {
                 params[key.trim().toLowerCase()] = value.trim();
             }
-        }); 
+        });
         return {
             server: params["data source"],
             database: params["initial catalog"],

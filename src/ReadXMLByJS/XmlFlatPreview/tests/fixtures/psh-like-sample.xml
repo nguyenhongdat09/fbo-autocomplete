@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE dir SYSTEM "FBO.dtd" [
+  <!ENTITY CommonFields SYSTEM "CommonFields.xml">
+  <!ENTITY GridToolbar SYSTEM "GridToolbar.xml">
+]>
+<dir table="m10$000000">
+  <fields>
+    &CommonFields;
+    <field name="custom_field">
+      <header v="Trường tự chọn" e="Custom Field"/>
+    </field>
+  </fields>
+  <views>
+    <view id="Dir">
+      &GridToolbar;
+    </view>
+  </views>
+</dir>

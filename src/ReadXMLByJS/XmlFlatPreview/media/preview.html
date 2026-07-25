@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {{CSP_META}}
+    <title>XML Flat Preview</title>
+    <style>
+        {{STYLE}}
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button id="btn-refresh" class="btn" title="Refresh nội dung (phím tắt R)">
+                    <span class="icon">&#x21bb;</span> Refresh
+                </button>
+                <button id="btn-copy-flat" class="btn" title="Copy XML đã làm phẳng">
+                    <span class="icon">&#x1f4cb;</span> Copy Flat
+                </button>
+                <button id="btn-copy-original" class="btn" title="Copy XML gốc từ đĩa">
+                    <span class="icon">&#x1f4c4;</span> Copy Original
+                </button>
+                
+                <div class="dropdown">
+                    <button id="btn-settings" class="btn dropdown-trigger">
+                        <span class="icon">&#x2699;</span> Cấu hình <span class="arrow">&#x25be;</span>
+                    </button>
+                    <div class="dropdown-content" id="settings-dropdown">
+                        <label class="dropdown-item">
+                            <input type="checkbox" id="chk-wrap">
+                            Tự động xuống dòng (Wrap)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="toolbar-right">
+                <div class="search-box">
+                    <input type="text" id="txt-search" placeholder="Tìm kiếm trong XML...">
+                    <button id="btn-search-exec" class="btn btn-primary" style="padding: 3px 8px; font-size: 11px; margin-left: 4px; margin-right: 4px;">Tìm</button>
+                    <span id="search-count" class="search-count">0/0</span>
+                    <button id="btn-search-prev" class="search-nav" title="Trước">&#x25b4;</button>
+                    <button id="btn-search-next" class="search-nav" title="Sau">&#x25be;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning banner nếu có -->
+        <div id="warnings-banner" class="warnings-banner hidden">
+            <div class="warnings-title">
+                <span>Cảnh báo phân giải (<span id="warning-count">0</span>):</span>
+                <span id="btn-warnings-toggle" style="cursor: pointer; font-size: 14px; user-select: none;" title="Thu gọn/Mở rộng">&#x25be;</span>
+            </div>
+            <ul id="warnings-list"></ul>
+        </div>
+
+
+        <!-- Stats bar -->
+        <div class="stats-bar">
+            <span class="stat-item"><strong id="stat-total-entities">0</strong> thực thể đã phân giải</span>
+            <span class="stat-item"><strong id="stat-unique-entities">0</strong> duy nhất</span>
+            <span class="stat-item"><strong id="stat-size">0</strong> ký tự</span>
+            <span class="stat-item">Thời gian xử lý: <strong id="stat-duration">0</strong>ms</span>
+        </div>
+
+        <!-- Main workspace -->
+        <div class="workspace">
+            <!-- Code view -->
+            <div class="code-container" id="code-container">
+                <div class="code-view" id="code-view"></div>
+            </div>
+            
+            <!-- Legend sidebar -->
+            <div class="sidebar-container" id="sidebar-container">
+                <button id="btn-toggle-sidebar" class="sidebar-toggle-floating" title="Thu gọn/Mở rộng">&#x25b6;</button>
+                <div class="sidebar" id="sidebar">
+                    <div class="sidebar-header">
+                        <h3>Entity List</h3>
+                    </div>
+                    <div class="sidebar-search">
+                        <input type="text" id="txt-entity-search" placeholder="Filter entities...">
+                    </div>
+                    <div class="sidebar-content" id="sidebar-content">
+                        <div id="legend-list" class="legend-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Excel-like Tooltip Card -->
+    <div id="tooltip-card" class="tooltip-card hidden">
+        <div class="tooltip-header">
+            <span class="tooltip-entity-title" id="tooltip-entity-name">&amp;Entity;</span>
+            <span class="tooltip-close" id="tooltip-close">&times;</span>
+        </div>
+        <div class="tooltip-body">
+            <div class="tooltip-row">
+                <span class="tooltip-label">Loại thực thể:</span>
+                <span class="tooltip-val" id="tooltip-entity-type">-</span>
+            </div>
+            <div class="tooltip-row">
+                <span class="tooltip-label">Độ dài:</span>
+                <span class="tooltip-val" id="tooltip-entity-len">0 chars</span>
+            </div>
+            <div class="tooltip-row" id="row-source-file">
+                <span class="tooltip-label">File khai báo:</span>
+                <span class="tooltip-val tooltip-path" id="tooltip-source-file" title="-">-</span>
+            </div>
+        </div>
+        <div class="tooltip-footer">
+            <button class="tooltip-btn" id="btn-tooltip-copy">Copy nội dung</button>
+            <button class="tooltip-btn btn-primary" id="btn-tooltip-goto">Đi đến khai báo</button>
+        </div>
+    </div>
+
+    {{DATA}}
+    <script>
+        {{SCRIPT}}
+    </script>
+</body>
+</html>
