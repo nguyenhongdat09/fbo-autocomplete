@@ -1,0 +1,109 @@
+body {
+    font-family: var(--vscode-font-family);
+    color: var(--vscode-editor-foreground);
+    background-color: var(--vscode-editor-background);
+    padding: 10px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.source-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.source-item input {
+    background-color: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    padding: 4px;
+    width: 250px;
+}
+
+button {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.primary {
+    background-color: var(--vscode-button-background);
+    font-weight: bold;
+}
+
+.row-tables {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.panel {
+    border: 1px solid var(--vscode-panel-border);
+    padding: 10px;
+    flex: 1;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+th, td {
+    border: 1px solid var(--vscode-panel-border);
+    padding: 4px 8px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--vscode-editor-inactiveSelectionBackground);
+}
+
+.ok {
+    color: var(--vscode-testing-iconPassed);
+}
+
+.bad {
+    color: var(--vscode-testing-iconFailed);
+}
+
+.status {
+    margin-top: 15px;
+    font-style: italic;
+    color: var(--vscode-descriptionForeground);
+}
+
+.loading-icon {
+    display: inline-block;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}

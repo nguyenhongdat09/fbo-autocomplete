@@ -39,6 +39,7 @@ const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExce
 const SearchResultTreeView = require("./TreeFile/searchFile/SearchResultTreeView");
 const { activateGroupTextSearch } = require("./TreeFile/SearchText/GroupTextSearchBootstrap");
 const { registerXmlFlatPreview } = require("./ReadXMLByJS/XmlFlatPreview");
+const { registerCheckingError } = require('./ReadXMLByJS/CheckingError');
 const { removeBlankRows } = require('./Utils/removeBlankRows');
 const formulaHover = require('./ReadXMLByJS/FormulaHover');
 const EntityWatcherEngine = require('./ReadXMLByJS/EntityWatcherEngine');
@@ -460,7 +461,7 @@ async function activate(context) {
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(removeBlankRowsCmd);
-    context.subscriptions.push(onDidOpenTextDocument);
+    // context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(reloadEntityBySave);
     calculationProvider.register(context); 
     /*
@@ -472,6 +473,7 @@ async function activate(context) {
        context.subscriptions.push(disposable);
     */
     registerXmlFlatPreview(context);
+    registerCheckingError(context, treeDataProvider);
     formulaHover.register(context);
     var anl = new AnalystXML();
     anl.run(context);

@@ -2,6 +2,19 @@
 .vscode/**
 .vscode-test/**
 test/**
+test_*.js
+debug-*.log
+_vsix_inspect/**
+
+# Không ship toàn bộ node_modules thô — vsce tự lấy production deps.
+# (build-package.js prune còn sót thì vẫn loại junk native/build.)
+node_modules/**/test/**
+node_modules/**/tests/**
+node_modules/**/docs/**
+node_modules/**/*.md
+node_modules/**/*.map
+node_modules/rocksdb/deps/**
+node_modules/rocksdb/build/**
 
 # Dev / IDE / công cụ nội bộ — không ship trong VSIX
 .codegraph/**
@@ -40,6 +53,7 @@ src/**
 !src/DBQuery/GenerateProcessing.js
 !src/DBQuery/GenerateHeaderToReport.js
 !src/ReadXMLByJS/XmlFlatPreview/media/**
+!src/ReadXMLByJS/CheckingError/media/**
 
 
 # Database: chỉ template/runtime cần thiết (không ship LevelDB/cache máy dev)

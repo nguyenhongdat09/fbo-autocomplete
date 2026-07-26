@@ -295,12 +295,57 @@ function run() {
         packageJson.main = "./src/dist/extension.js";
         writePackageJsonRobust(packageJson);
 
-        console.log("📦 Dọn dẹp dependencies (chỉ production / omit dev)...");
-        printNpmLockHint();
-        execWithRetries(
-            `npm install --omit=dev ${NPM_INSTALL_FLAGS}`,
-            "npm install --omit=dev"
-        );
+        const nmPath = path.resolve(__dirname, "node_modules");
+        const nmStash = path.resolve(__dirname, "node_modules.__fbo_packaging__");
+        let nmStashed = false;
+
+        console.log("📦 Chuẩn bị node_modules sạch cho vsce...");
+        try {
+            if (fs.existsSync(nmStash)) fs.rmSync(nmStash, { recursive: true, force: true });
+        } catch (e) {}
+        try {
+            if (fs.existsSync(nmPath)) {
+                fs.renameSync(nmPath, nmStash);
+                nmStashed = true;
+                console.log("📎 Đã tạm cất node_modules cũ.");
+            }
+        } catch (e) {
+            console.warn("⚠ Không thể đổi tên node_modules (có thể bị khóa). Sẽ dùng npm prune.");
+        }
+
+        if (nmStashed) {
+            console.log("📦 Cài đặt lại node_modules production (rất nhanh vì đã có cache)...");
+            execWithRetries(
+                `npm install --omit=dev ${NPM_INSTALL_FLAGS}`,
+                "npm install --omit=dev"
+            );
+        } else {
+            console.log("📦 Dọn dẹp dependencies (chỉ production / omit dev)...");
+            printNpmLockHint();
+            execWithRetries(
+                `npm install --omit=dev ${NPM_INSTALL_FLAGS}`,
+                "npm install --omit=dev"
+            );
+            console.log("🧹 npm prune — gỡ package không còn trong dependencies...");
+            execWithRetries(
+                `npm prune --omit=dev ${NPM_INSTALL_FLAGS}`,
+                "npm prune --omit=dev"
+            );
+            
+            console.log("🧹 Dọn dẹp thủ công các thư mục nặng (tránh EPERM lock)...");
+            [
+                "googleapis", "exceljs", "mssql", "google-auth-library", 
+                "gaxios", "tedious", "googletrans", "axios", "crypto-js",
+                "cli-table3", "node-machine-id", "strip-ansi"
+            ].forEach((mod) => {
+                const modPath = path.resolve(__dirname, "node_modules", mod);
+                if (fs.existsSync(modPath)) {
+                    try { fs.rmSync(modPath, { recursive: true, force: true }); } catch (e) {}
+                }
+            });
+        }
+
+        assertRuntimeDepsIntact();
 
         console.log("📦 Đóng gói extension với vsce...");
         applyPackagingIgnoreOverride();
@@ -324,15 +369,72 @@ function run() {
         packageJson.main = savedMain;
         writePackageJsonRobust(packageJson);
 
-        console.log("📦 Khôi phục môi trường code (npm install)...");
-        printNpmLockHint();
-        execWithRetries(`npm install ${NPM_INSTALL_FLAGS}`, "npm install (khôi phục dev)");
+        if (nmStashed) {
+            console.log("🔄 Khôi phục node_modules cũ (bỏ qua npm install)...");
+            try {
+                if (fs.existsSync(nmPath)) fs.rmSync(nmPath, { recursive: true, force: true });
+                fs.renameSync(nmStash, nmPath);
+            } catch (e) {
+                console.error("❌ Lỗi khôi phục node_modules:", e.message);
+                nmStashed = false; // Fallback to npm install
+            }
+        }
+
+        if (!nmStashed) {
+            console.log("📦 Khôi phục môi trường code (npm install)...");
+            printNpmLockHint();
+            execWithRetries(`npm install ${NPM_INSTALL_FLAGS}`, "npm install (khôi phục dev)");
+        }
 
         console.log("✅ Hoàn tất!");
     } finally {
         restorePackageJsonFromBackup();
         unstashPackageLock();
     }
+}
+
+/**
+ * Native module (rocksdb/level-rocksdb) và rg.exe không đi qua webpack — chúng phải
+ * nằm nguyên trong node_modules thì VSIX mới chạy được. Dừng build nếu thiếu, thay vì
+ * xuất ra một VSIX hỏng chỉ phát hiện được lúc cài trên máy khác.
+ */
+function assertRuntimeDepsIntact() {
+    let required = [
+        "node_modules/level-rocksdb/level-rocksdb.js",
+        "node_modules/rocksdb/leveldown.js",
+        "node_modules/rocksdb/prebuilds/win32-x64/node.napi.node",
+        "node_modules/abstract-leveldown/package.json",
+        "node_modules/levelup/package.json",
+        "node_modules/level-packager/package.json",
+        "node_modules/node-gyp-build/package.json",
+        "node_modules/@vscode/ripgrep/lib/index.js",
+        "src/dist/extension.js",
+    ];
+
+    // Hỗ trợ cả @vscode/ripgrep cũ (1.15.x) và mới (1.18.x - dùng optional dependencies)
+    const oldRgPath = "node_modules/@vscode/ripgrep/bin/rg.exe";
+    const newRgPath = "node_modules/@vscode/ripgrep-win32-x64/bin/rg.exe";
+    
+    if (fs.existsSync(path.resolve(__dirname, newRgPath))) {
+        required.push(newRgPath);
+    } else {
+        required.push(oldRgPath); // Sẽ báo lỗi ở check dưới nếu không có cả hai
+    }
+
+    const missing = required.filter(
+        (rel) => !fs.existsSync(path.resolve(__dirname, rel))
+    );
+
+    if (missing.length > 0) {
+        console.error("\n❌ Thiếu file bắt buộc để extension chạy được:");
+        missing.forEach((rel) => console.error(`   - ${rel}`));
+        console.error(
+            "\nChạy `npm install` (đầy đủ) rồi build lại. Không đóng gói VSIX ở trạng thái này.\n"
+        );
+        throw new Error(`Thiếu ${missing.length} file runtime bắt buộc.`);
+    }
+
+    console.log(`✓ Đủ ${required.length} file runtime bắt buộc (rocksdb / level-rocksdb / ripgrep / bundle).`);
 }
 
 function preparePackagingIgnoreFileContent() {
@@ -351,6 +453,7 @@ function preparePackagingIgnoreFileContent() {
         "PivotExcel/**",
         "*.vsix",
         "src/Database/extensionKey.dat",
+        "node_modules.__fbo_packaging__/**",
         "",
     ].join("\n");
     return base + extraRules;

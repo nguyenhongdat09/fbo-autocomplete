@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  {{CSP_META}}
+  <title>Checking Error</title>
+  <link rel="stylesheet" href="{{STYLE_URI}}" />
+</head>
+<body>
+  <div class="toolbar sources" id="sources-bar"></div>
+  <div class="toolbar actions">
+    <button id="btn-add-source">+ Thêm nguồn</button>
+    <button id="btn-run-check" class="primary">Checking Error</button>
+  </div>
+
+  <div class="row-tables">
+    <section class="panel">
+      <h3>Table 3 — XML còn lỗi</h3>
+      <table id="table3"><thead><tr><th>XML</th><th>Thiếu ref</th><th>Ent lỗi</th></tr></thead><tbody></tbody></table>
+    </section>
+    <section class="panel">
+      <h3>Table 1 — Ref file thiếu</h3>
+      <table id="table1"><thead><tr><th>XML</th><th>File thiếu</th><th>Nguồn</th></tr></thead><tbody></tbody></table>
+      <button id="btn-generate" disabled>Generate</button>
+    </section>
+  </div>
+
+  <section class="panel">
+    <h3>Table 2 — Entity chưa khai báo</h3>
+    <table id="table2">
+      <thead><tr><th>XML</th><th>Entity</th><th>Trạng thái</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <div id="status" class="status"></div>
+  <script src="{{SCRIPT_URI}}"></script>
+</body>
+</html>
