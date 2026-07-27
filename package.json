@@ -84,11 +84,6 @@
       ],
       "view/item/context": [
         {
-          "command": "fboFile.CheckingError",
-          "when": "view == fbo_file && viewItem == file",
-          "group": "navigation@0"
-        },
-        {
           "command": "fboFile.openRevealFolder",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
@@ -127,6 +122,11 @@
           "command": "fboFile.DeleteFile",
           "when": "view == fbo_file && viewItem == file",
           "group": "navigation"
+        },
+        {
+          "command": "fboFile.CheckingError",
+          "when": "view == fbo_file && viewItem == file",
+          "group": "navigation@99"
         },
         {
           "command": "fboFile.FixWebConfig",

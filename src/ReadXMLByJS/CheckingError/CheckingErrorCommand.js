@@ -2,6 +2,7 @@ const vscode = require('vscode');
 const { checkEntityErrors } = require('./entityResolverChecking');
 const { is_valid_project_root, normalize_to_project_root } = require('./SourcePathHelper');
 const { CheckingErrorPanel } = require('./CheckingErrorPanel');
+const { resolve_checking_files } = require('./CheckingFileResolver');
 
 async function run_checking_error(context, treeDataProvider) {
     const tree_view = treeDataProvider && treeDataProvider.treeView;
@@ -11,7 +12,20 @@ async function run_checking_error(context, treeDataProvider) {
         .map(item => item.resourceUri.fsPath);
 
     if (!file_paths.length) {
-        vscode.window.showErrorMessage('Không có file XML nào được chọn trên fbo_file.');
+        vscode.window.showErrorMessage('Không có file nào được chọn.');
+        return;
+    }
+
+    // Xử lý phân tích ASPX và lọc file hợp lệ
+    const { xml_files, skipped_files } = await resolve_checking_files(file_paths);
+
+    if (skipped_files.length > 0) {
+        const warning_msg = `Đã bỏ qua ${skipped_files.length} file (không phải .xml/.aspx hoặc ASPX không resolve được XML).`;
+        vscode.window.showWarningMessage(warning_msg);
+    }
+
+    if (!xml_files.length) {
+        vscode.window.showErrorMessage('Không tìm thấy file XML hợp lệ nào để kiểm tra (các file chọn không được hỗ trợ).');
         return;
     }
 
@@ -25,7 +39,7 @@ async function run_checking_error(context, treeDataProvider) {
     if (!picked || !picked[0]) return;
 
     const source1 = normalize_to_project_root(picked[0].fsPath) || picked[0].fsPath;
-    if (!is_valid_project_root(source1, file_paths[0])) {
+    if (!is_valid_project_root(source1, xml_files[0])) {
         vscode.window.showErrorMessage('Nguồn 1 không hợp lệ (phải nằm trong project kiểu group TreeFile / CustomerPro).');
         return;
     }
@@ -39,7 +53,7 @@ async function run_checking_error(context, treeDataProvider) {
         cancellable: false
     }, async (progress) => {
         await new Promise(resolve => setTimeout(resolve, 50));
-        result = checkEntityErrors(file_paths, sources);
+        result = checkEntityErrors(xml_files, sources);
     });
 
     if (!result.summary.total) {
@@ -47,7 +61,7 @@ async function run_checking_error(context, treeDataProvider) {
         return;
     }
 
-    CheckingErrorPanel.create_or_show(context, treeDataProvider, file_paths, sources);
+    CheckingErrorPanel.create_or_show(context, treeDataProvider, xml_files, sources);
 }
 
 module.exports = { run_checking_error };

@@ -102,12 +102,18 @@ class ContextMenuHandler {
         if (!input) return;
 
         // Bước 2: Chọn group path đích
-        const targetGroup = await vscode.window.showQuickPick(groupItems, {
+        const quickPickItems = groupItems.map(g => ({
+            label: typeof g.label === 'string' ? g.label : g.label?.label || String(g.label),
+            description: g.resourceUri ? g.resourceUri.fsPath : '',
+            originalGroup: g
+        }));
+
+        const targetSelection = await vscode.window.showQuickPick(quickPickItems, {
             placeHolder: 'Chọn đường dẫn group để lưu các file copy'
         });
-        if (!targetGroup) return;
+        if (!targetSelection) return;
 
-        const targetPath = targetGroup.resourceUri.fsPath;
+        const targetPath = targetSelection.originalGroup.resourceUri.fsPath;
         var changedPaths = files.map((item) => {
             const sourcePath = item?.resourceUri?.fsPath;
             if (!fs.existsSync(sourcePath)) return '';

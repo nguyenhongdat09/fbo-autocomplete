@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const level = require('level-rocksdb');
 
+const CACHE_VERSION = 2;
+
 class EntityLevelStore {
     constructor() {
         this.dbPath = path.join(__dirname, '..', 'Database', 'entity-cache-leveldb');
@@ -65,7 +67,11 @@ class EntityLevelStore {
 
         if (!raw) return null;
         try {
-            return JSON.parse(raw);
+            const parsed = JSON.parse(raw);
+            if (!parsed.version || parsed.version < CACHE_VERSION) {
+                return null;
+            }
+            return parsed;
         } catch {
             return null;
         }
@@ -78,6 +84,7 @@ class EntityLevelStore {
 
         const mainKey = `MAIN:${projectId}:${fileId}`;
         const mainValue = JSON.stringify({
+            version: CACHE_VERSION,
             xml_relative: relativePath,
             mtime: mtime,
             doctype_hash: doctypeHash,

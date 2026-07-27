@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const FboEntParser = require('./FboEntParser');
 const EntityLevelStore = require('./EntityLevelStore');
 const EntityWatcherEngine = require('./EntityWatcherEngine');
 
@@ -132,6 +134,7 @@ function resolveFboXmlEntities(mainXmlPath) {
     const generalEntities = {};
     const parameterEntities = {};
     const fileMtimes = {};
+    const overriddenEntities = [];
 
     function getFileMtime(filePath) {
         try {
@@ -145,6 +148,11 @@ function resolveFboXmlEntities(mainXmlPath) {
         const norm = path.normalize(filePath).toLowerCase();
         fileMtimes[norm] = getFileMtime(filePath);
         return readFileContent(filePath);
+    }
+    
+    function recordFileMtime(filePath) {
+        const norm = path.normalize(filePath).toLowerCase();
+        fileMtimes[norm] = getFileMtime(filePath);
     }
     
     // Phân giải đường dẫn tương đối dựa trên thư mục chứa tệp XML chính
@@ -163,205 +171,13 @@ function resolveFboXmlEntities(mainXmlPath) {
             return path.resolve(path.dirname(currentFilePath), cleanUrl);
         }
     }
-    
-    // Phân tích đệ quy nội dung của DTD
-    function parseDtdContent(content, currentFilePath, lineOffset = 0) {
-        // Build line index 1 lần O(N) để tra cứu số dòng bằng binary search O(log N)
-        const lineIndex = buildLineIndex(content);
-        // Regex sticky cho parameter entity reference %name;
-        const paramRefRegex = /%([\w.]+);/y;
-        
-        let i = 0;
-        while (i < content.length) {
-            const ch = content[i];
-            
-            // 0. Skip comment XML <!-- ... -->
-            if (ch === '<' && content[i + 1] === '!' && content[i + 2] === '-' && content[i + 3] === '-') {
-                const endComment = content.indexOf('-->', i + 4);
-                i = (endComment !== -1) ? endComment + 3 : i + 4;
-                continue;
-            }
-            
-            // 1. Nhận dạng khai báo thực thể <!ENTITY ...>
-            if (ch === '<' && content.startsWith('<!ENTITY', i)) {
-                let end = i + 8;
-                let inQuote = false;
-                let quoteChar = '';
-                
-                while (end < content.length) {
-                    const char = content[end];
-                    if ((char === '"' || char === "'") && content[end - 1] !== '\\') {
-                        if (!inQuote) {
-                            inQuote = true;
-                            quoteChar = char;
-                        } else if (char === quoteChar) {
-                            inQuote = false;
-                        }
-                    }
-                    if (char === '>' && !inQuote) {
-                        break;
-                    }
-                    end++;
-                }
-                
-                const decl = content.substring(i, end + 1);
-                const lineNumber = getLineNumber(lineIndex, i) + lineOffset;
-                processEntityDecl(decl, currentFilePath, lineNumber);
-                i = end + 1;
-                continue;
-            }
-            
-            // 2. Nhận dạng khối điều kiện DTD <![ ... [ ... ]]>
-            if (ch === '<' && content.startsWith('<![', i)) {
-                let depth = 1;
-                let end = i + 3;
-                while (end < content.length - 2) {
-                    if (content.startsWith('<![', end)) {
-                        depth++;
-                        end += 3;
-                    } else if (content.startsWith(']]>', end)) {
-                        depth--;
-                        if (depth === 0) {
-                            break;
-                        }
-                        end += 3;
-                    } else {
-                        end++;
-                    }
-                }
-                
-                const condSection = content.substring(i, end + 3);
-                const matchCond = condSection.match(/^<!\[\s*([^\[]+)\[/);
-                const prefixLines = matchCond ? matchCond[0].split('\n').length - 1 : 0;
-                const parentLinesBefore = getLineNumber(lineIndex, i) - 1;
-                const innerLineOffset = lineOffset + parentLinesBefore + prefixLines;
 
-                processConditionalSection(condSection, currentFilePath, innerLineOffset);
-                i = end + 3;
-                continue;
-            }
-            
-            // 3. Thay thế tham chiếu thực thể tham số %Name; nằm ngoài khai báo
-            if (ch === '%') {
-                paramRefRegex.lastIndex = i;
-                const match = paramRefRegex.exec(content);
-                if (match) {
-                    const name = match[1];
-                    if (parameterEntities[name]) {
-                        const ent = parameterEntities[name];
-                        // Phân tích nội dung entity riêng biệt (cả external lẫn internal)
-                        // thay vì chèn/xóa string content → tránh O(K²)
-                        parseDtdContent(ent.value,
-                            ent.systemUrl ? ent.sourceFile : currentFilePath,
-                            ent.systemUrl ? 0 : lineOffset);
-                        i += match[0].length;
-                        continue;
-                    }
-                }
-            }
-            
-            i++;
-        }
-    }
-    
-    function processEntityDecl(decl, currentFilePath, lineNumber) {
-        
-        // Khai báo thực thể tham số liên kết ngoài: <!ENTITY % Name SYSTEM "Path">
-        let paramMatch = decl.match(/^<!ENTITY\s+%\s+([\w.]+)\s+SYSTEM\s+(["'])([^"'\r\n]+)\2\s*>/i);
-        if (paramMatch) {
-            const name = paramMatch[1];
-            if (!parameterEntities[name]) {
-                const systemUrl = paramMatch[3];
-                const targetPath = resolvePath(currentFilePath, systemUrl);
-                let value = '';
-                if (fs.existsSync(targetPath)) {
-                    value = readAndRecordFile(targetPath);
-                }
-                parameterEntities[name] = { value, systemUrl, sourceFile: targetPath, line: lineNumber, text: decl };
-            }
-            return;
-        }
-        
-        // Khai báo thực thể tham số nội bộ: <!ENTITY % Name "Value">
-        paramMatch = decl.match(/^<!ENTITY\s+%\s+([\w.]+)\s+(["'])([\s\S]*?)\2\s*>/i);
-        if (paramMatch) {
-            const name = paramMatch[1];
-            if (!parameterEntities[name]) {
-                const value = paramMatch[3];
-                parameterEntities[name] = { value, systemUrl: null, sourceFile: currentFilePath, line: lineNumber, text: decl };
-            }
-            return;
-        }
-        
-        // Khai báo thực thể thông thường liên kết ngoài: <!ENTITY Name SYSTEM "Path">
-        let genMatch = decl.match(/^<!ENTITY\s+([\w.]+)\s+SYSTEM\s+(["'])([^"'\r\n]+)\2\s*>/i);
-        if (genMatch) {
-            const name = genMatch[1];
-            const systemUrl = genMatch[3];
-            const targetPath = resolvePath(currentFilePath, systemUrl);
-            
-            // XML General Entity: Khai báo đầu tiên được ưu tiên giữ lại (First declaration wins)
-            if (!generalEntities[name]) {
-                const normPath = path.normalize(targetPath).toLowerCase();
-                fileMtimes[normPath] = getFileMtime(targetPath);
-                generalEntities[name] = {
-                    name,
-                    value: null,
-                    systemUrl,
-                    sourceFile: targetPath,
-                    declaredInFile: currentFilePath,
-                    line: lineNumber,
-                    text: decl
-                };
-            }
-            return;
-        }
-        
-        // Khai báo thực thể thông thường nội bộ: <!ENTITY Name "Value">
-        genMatch = decl.match(/^<!ENTITY\s+([\w.]+)\s+(["'])([\s\S]*?)\2\s*>/i);
-        if (genMatch) {
-            const name = genMatch[1];
-            const value = genMatch[3];
-            if (!generalEntities[name]) {
-                generalEntities[name] = {
-                    name,
-                    value: value,
-                    systemUrl: null,
-                    sourceFile: currentFilePath,
-                    declaredInFile: currentFilePath,
-                    line: lineNumber,
-                    text: decl
-                };
-            }
-            return;
-        }
-    }
-    
-    function processConditionalSection(condSection, currentFilePath, innerLineOffset) {
-        const match = condSection.match(/^<!\[\s*([^\[]+)\[([\s\S]*)\]\]>$/);
-        if (!match) return;
-        
-        let condition = match[1].trim();
-        const content = match[2];
-        
-        // Phân giải thực thể tham số nếu điều kiện dạng %ParamName; hoặc %ParamName
-        let resolveDepth = 0;
-        while (condition.startsWith('%') && resolveDepth < 10) {
-            const name = condition.replace(/^%|;$/g, '').trim();
-            if (parameterEntities[name]) {
-                condition = parameterEntities[name].value.trim();
-            } else {
-                break;
-            }
-            resolveDepth++;
-        }
-        
-        condition = condition.replace(/["']/g, '').trim().toUpperCase();
-        
-        if (condition === 'INCLUDE') {
-            parseDtdContent(content, currentFilePath, innerLineOffset);
-        }
-    }
+    // Khởi tạo và sử dụng FboEntParser
+    const parser = new FboEntParser(
+        readAndRecordFile,
+        resolvePath,
+        recordFileMtime
+    );
     
     // Bắt đầu parse từ khối internal DTD của file XML chính
     if (fs.existsSync(mainXmlPath)) {
@@ -375,11 +191,23 @@ function resolveFboXmlEntities(mainXmlPath) {
             const parentLinesBefore = xmlContent.substring(0, doctypeMatch.index).split('\n').length - 1;
             const prefixLines = prefix.split('\n').length - 1;
             const dtdLineOffset = parentLinesBefore + prefixLines;
-            parseDtdContent(dtdBlock, mainXmlPath, dtdLineOffset);
+            
+            // FboEntParser.parseContent updates the objects directly if we pass them as seeds
+            const result = parser.parseContent(dtdBlock, mainXmlPath, dtdLineOffset, parameterEntities, generalEntities, overriddenEntities);
+            
+            // FboEntParser trả về các object mới (hoặc update seed), ta gán lại
+            for (const key in result.generalEntities) {
+                generalEntities[key] = result.generalEntities[key];
+            }
+            for (const key in result.paramEntities) {
+                parameterEntities[key] = result.paramEntities[key];
+            }
+            overriddenEntities.length = 0;
+            overriddenEntities.push(...result.overriddenEntities);
         }
     }
     
-    return { generalEntities, parameterEntities, fileMtimes };
+    return { generalEntities, parameterEntities, fileMtimes, overriddenEntities };
 }
 
 const MAX_CACHE_SIZE = 50;
@@ -457,7 +285,7 @@ function getEntitiesForFile(filePath, targetEntity = null) {
     }
     
     const tResolve = Date.now();
-    const { generalEntities, parameterEntities, fileMtimes } = resolveFboXmlEntities(filePath);
+    const { generalEntities, parameterEntities, fileMtimes, overriddenEntities } = resolveFboXmlEntities(filePath);
     console.log(`[FBO_PERF_DEBUG] [getEntitiesForFile] resolveFboXmlEntities took: ${Date.now() - tResolve}ms`);
     
     // Giới hạn dung lượng bộ nhớ RAM (LRU Eviction)
@@ -472,6 +300,7 @@ function getEntitiesForFile(filePath, targetEntity = null) {
         generalEntities,
         parameterEntities,
         fileMtimes,
+        overriddenEntities,
         lastChecked: Date.now()
     });
 

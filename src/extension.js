@@ -284,11 +284,21 @@ async function activate(context) {
             vscode.window.showErrorMessage(`This Feature is only Work On Grid File`);
             return;
         }
+        const documentUri = vscode.window.activeTextEditor.document.uri;
+        const currentFileName = pathModule.basename(documentUri.fsPath, pathModule.extname(documentUri.fsPath));
+        const defaultUri = vscode.Uri.joinPath(documentUri, '..', `${currentFileName}.xlsx`);
+
+        // Copy template folder path to clipboard
+        const controllersFolder = pathModule.dirname(pathModule.dirname(documentUri.fsPath));
+        const targetFolder = pathModule.join(controllersFolder, 'Templates', 'Excel');
+        await vscode.env.clipboard.writeText(targetFolder);
+        vscode.window.showInformationMessage(`Đã copy đường dẫn Templates\\Excel vào clipboard để bạn dễ dàng Paste.`);
+
         // Hiển thị hộp thoại chọn đường dẫn lưu file
         const options = {
             title: "Chọn vị trí lưu Excel",
             filters: { 'Excel Files': ['xlsx'] },
-            defaultUri: vscode.Uri.file('output.xlsx')
+            defaultUri: defaultUri
         };
 
         const fileUri = await vscode.window.showSaveDialog(options);

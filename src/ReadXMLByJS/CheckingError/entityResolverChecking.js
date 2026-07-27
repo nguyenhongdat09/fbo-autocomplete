@@ -86,6 +86,7 @@ function scan_undeclared(file_path, xml_short, generalEntities, parameterEntitie
     const used_entities = get_transitively_used_entities(file_path, generalEntities);
 
     const undeclared_names = new Set();
+    
     for (const entity_name of used_entities) {
         if (generalEntities && generalEntities[entity_name]) continue;
         undeclared_names.add(entity_name);

@@ -54,10 +54,20 @@ class ConvertGridToPivotExcel {
             return;
         }
 
+        const documentUri = document.uri;
+        const currentFileName = path.basename(documentUri.fsPath, path.extname(documentUri.fsPath));
+        const defaultUri = vscode.Uri.joinPath(documentUri, '..', `${currentFileName}.xlsx`);
+
+        // Copy template folder path to clipboard
+        const controllersFolder = path.dirname(path.dirname(documentUri.fsPath));
+        const targetFolder = path.join(controllersFolder, 'Templates', 'Excel');
+        await vscode.env.clipboard.writeText(targetFolder);
+        vscode.window.showInformationMessage(`Đã copy đường dẫn Templates\\Excel vào clipboard để bạn dễ dàng Paste.`);
+
         const saveUri = await vscode.window.showSaveDialog({
             title: "Chọn vị trí lưu Pivot Excel",
             filters: { "Excel Files": ["xlsx"] },
-            defaultUri: vscode.Uri.file("output.xlsx"),
+            defaultUri: defaultUri,
             saveLabel: "Xuất Pivot Excel",
         });
         if (!saveUri) {
