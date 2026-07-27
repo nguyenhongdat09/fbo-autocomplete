@@ -10,7 +10,7 @@ class ReloadEntityBySave {
      *   maxConcurrent?: number,
      *   maxRetries?: number,
      *   retryBaseDelayMs?: number
-     * }} options
+     * }} [options]
      */
     constructor(context, options) {
         this.context = context;
@@ -28,7 +28,8 @@ class ReloadEntityBySave {
          *   running: boolean,
          *   latestMtimeMs: number,
          *   lastHandledMtimeMs: number,
-         *   failures: number
+         *   failures: number,
+         *   pendingResolvers?: Array<{resolve: Function, reject: Function}>
          * }>} */
         this.fileStates = new Map();
         this.activeCount = 0;
