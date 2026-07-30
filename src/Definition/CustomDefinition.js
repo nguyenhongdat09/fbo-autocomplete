@@ -33,8 +33,28 @@ class CustomDefinition {
                 provideDefinition: this.provideDefinition.bind(this)
             }
         );
+        
+        // Đăng ký thêm DocumentLinkProvider để xử lý Ctrl+Click không bị preview
+        const linkProvider = vscode.languages.registerDocumentLinkProvider(
+            { scheme: 'file', language: 'xml' },
+            {
+                provideDocumentLinks: async (document, token) => {
+                    const allLinks = [];
+                    for (const provider of this.providers) {
+                        if (typeof provider.provideDocumentLinks === 'function') {
+                            const links = await provider.provideDocumentLinks(document, token);
+                            if (links && links.length > 0) {
+                                allLinks.push(...links);
+                            }
+                        }
+                    }
+                    return allLinks;
+                }
+            }
+        );
+
         this.reportCommandProvider.register(context);
-        context.subscriptions.push(definitionProvider);
+        context.subscriptions.push(definitionProvider, linkProvider);
     }
 
     async provideDefinition(document, position, token) {
@@ -44,7 +64,11 @@ class CustomDefinition {
         const word = document.getText(wordRange);
 
         for (const provider of this.providers) {
-            const result = provider.provideDefinition(document, word, position);
+            const result = await Promise.resolve(
+                provider.provideDefinition(document, word, position)
+            );
+            // true = đã mở file thủ công (preview: false), không trả Location để tránh mở lại dạng preview
+            if (result === true) return null;
             if (result) return result;
         }
 

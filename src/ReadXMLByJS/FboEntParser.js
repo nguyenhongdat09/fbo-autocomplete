@@ -173,6 +173,11 @@ class FboEntParser {
     _processEntityDecl(decl, currentFilePath, lineNumber, paramEntities, generalEntities, overriddenEntities) {
 
         // ── TRƯỜNG HỢP 1: <!ENTITY % Name SYSTEM "path">
+        // Dùng lazy load: KHÔNG tự động parse ngay khi khai báo.
+        // Chỉ lưu thông tin, chờ %name; được gọi thực sự mới parse.
+        // Lý do: Nếu auto-parse ngay, các file .Include.XTran trong InputInvoice.ent
+        // sẽ được đọc theo thứ tự khai báo (PATran trước CPTran), khiến entity IICheck
+        // của PATran chiếm slot trước, bỏ qua IICheck của CPTran khi parse sau.
         let m = decl.match(/^<!ENTITY\s+%\s+([\w.]+)\s+SYSTEM\s+(["'])([^"'\r\n]+)\2\s*>/i);
         if (m) {
             const name = m[1];
@@ -180,19 +185,15 @@ class FboEntParser {
             const resolvedPath = this._resolvePath(currentFilePath, systemUrl);
             
             if (!paramEntities[name]) {
-                const extContent = this._safeRead(resolvedPath);
                 paramEntities[name] = {
-                    value: extContent,
+                    value: null,      // Chưa đọc nội dung
                     systemUrl,
                     sourceFile: resolvedPath,
                     resolvedPath,
                     line: 1,
                     text: decl,
-                    _parsed: true // Đã tự động đọc luôn
+                    _parsed: false    // Chưa parse — sẽ parse khi %name; được gọi
                 };
-                if (extContent !== null) {
-                    this._parseBlock(extContent, resolvedPath, 0, paramEntities, generalEntities, overriddenEntities, false);
-                }
             } else {
                 overriddenEntities.push({
                     name, systemUrl, sourceFile: resolvedPath, line: lineNumber, text: decl, is_parameter: true, declaredInFile: currentFilePath

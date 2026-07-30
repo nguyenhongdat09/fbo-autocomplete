@@ -8,44 +8,38 @@ const PathResolver = require('../utils/PathResolver');
  * Navigate to Lookup/Grid XML file
  */
 class ControllerDefinitionProvider {
-    provideDefinition(document, word, position) {
+    provideDocumentLinks(document, token) {
         const items = DocumentParser.parseItemsController(document);
+        const links = [];
 
         for (const item of items) {
-            if (item.controller !== word) continue;
+            const basePath = PathResolver.getBasePath(item.style);
+            if (!basePath) continue;
 
-            // Check if cursor is on controller attribute
-            const start = item.position;
-            const end = new vscode.Position(start.line, start.character + word.length);
-            const range = new vscode.Range(start, end);
+            let targetFile = path.join(basePath, `${item.controller}.xml`);
 
-            if (!range.contains(position)) continue;
+            if (!PathResolver.fileExists(targetFile) && item.style === 'Grid') {
+                targetFile = path.join(basePath, `${item.controller}.f`);
+            }
 
-            return this.resolveControllerFile(item);
+            if (PathResolver.fileExists(targetFile)) {
+                const start = item.position;
+                const end = new vscode.Position(start.line, start.character + item.controller.length);
+                const range = new vscode.Range(start, end);
+                
+                // Mở file không dùng preview mode qua command
+                const uri = vscode.Uri.parse(`command:fbo-autocomplete.openNonPreview?${encodeURIComponent(JSON.stringify([targetFile]))}`);
+                const link = new vscode.DocumentLink(range, uri);
+                link.tooltip = "Ctrl+Click to open file in new tab (non-preview)";
+                links.push(link);
+            }
         }
-
-        return null;
+        return links;
     }
 
-    resolveControllerFile(item) {
-        const basePath = PathResolver.getBasePath(item.style);
-        if (!basePath) return null;
-
-        let targetFile = path.join(basePath, `${item.controller}.xml`);
-
-        // Grid có thể có extension .f
-        if (!PathResolver.fileExists(targetFile) && item.style === 'Grid') {
-            targetFile = path.join(basePath, `${item.controller}.f`);
-        }
-
-        if (PathResolver.fileExists(targetFile)) {
-            return new vscode.Location(
-                vscode.Uri.file(targetFile),
-                new vscode.Position(0, 0)
-            );
-        }
-
-        vscode.window.showWarningMessage(`Không tìm thấy file: ${targetFile}`);
+    async provideDefinition(document, word, position) {
+        // Chúng ta đã chuyển sang dùng DocumentLink để mở tab cố định (không preview)
+        // Nên trả về null ở Definition để tránh đụng độ và tự nhảy khi hover.
         return null;
     }
 }

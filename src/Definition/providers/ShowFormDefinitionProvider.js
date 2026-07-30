@@ -20,37 +20,37 @@ class ShowFormDefinitionProvider {
         ];
     }
 
-    provideDefinition(document, word, position) {
+    provideDocumentLinks(document, token) {
         const showForms = DocumentParser.parseShowForm(document);
+        const links = [];
 
         for (const show of showForms) {
-            if (show.formName !== word) continue;
+            const projectRoot = PathResolver.getProjectRoot(document.uri.fsPath);
+            const possiblePaths = this.findShowFormRelative(show.formName);
+            
+            for (const [folder, fileName] of possiblePaths) {
+                const filePath = path.join(projectRoot, folder, `${fileName}.xml`);
 
-            return this.resolveShowFormFiles(document, word);
-        }
+                if (PathResolver.fileExists(filePath)) {
+                    const start = show.position;
+                    const end = new vscode.Position(start.line, start.character + show.formName.length);
+                    const range = new vscode.Range(start, end);
 
-        return null;
-    }
-
-    resolveShowFormFiles(document, formName) {
-        const projectRoot = PathResolver.getProjectRoot(document.uri.fsPath);
-        const possiblePaths = this.findShowFormRelative(formName);
-        const locations = [];
-
-        for (const [folder, fileName] of possiblePaths) {
-            const filePath = path.join(projectRoot, folder, `${fileName}.xml`);
-
-            if (PathResolver.fileExists(filePath)) {
-                locations.push(
-                    new vscode.Location(
-                        vscode.Uri.file(filePath),
-                        new vscode.Position(0, 0)
-                    )
-                );
+                    const uri = vscode.Uri.parse(`command:fbo-autocomplete.openNonPreview?${encodeURIComponent(JSON.stringify([filePath]))}`);
+                    const link = new vscode.DocumentLink(range, uri);
+                    link.tooltip = "Ctrl+Click to open form in new tab (non-preview)";
+                    links.push(link);
+                    break; // Ưu tiên tìm thấy file đầu tiên
+                }
             }
         }
 
-        return locations.length > 0 ? locations : null;
+        return links;
+    }
+
+    async provideDefinition(document, word, position) {
+        // Trả về null để tránh nhảy đúp hoặc nhảy tự động khi hover
+        return null;
     }
 
     findShowFormRelative(formName) {

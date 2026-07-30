@@ -16,24 +16,33 @@ const DocumentParser = require('../utils/DocumentParser');
  * - g.request('GetData', 'GetData', ['ma_kh'], o)
  */
 class RequestActionDefinitionProvider {
-    provideDefinition(document, word, position) {
+    provideDocumentLinks(document, token) {
         const requestCalls = DocumentParser.parseRequestCalls(document);
-        const currentLine = position.line;
-        const currentLineText = document.lineAt(currentLine).text;
+        const links = [];
 
-        // Check if cursor is on an action name in request call
         for (const call of requestCalls) {
-            if (call.line !== currentLine) continue;
-            if (call.actionName !== word) continue;
+            const targetLoc = this.resolveRequestTarget(document, call.actionName);
+            
+            if (targetLoc) {
+                const start = call.position;
+                const end = new vscode.Position(start.line, start.character + call.actionName.length);
+                const range = new vscode.Range(start, end);
 
-            // Verify cursor is actually on this specific action name occurrence
-            if (!DocumentParser.isPositionInMatch(position, currentLine, call.actionName, currentLineText)) {
-                continue;
+                const targetPos = targetLoc.range.start;
+                const args = [document.uri.fsPath, targetPos.line, targetPos.character];
+                
+                const uri = vscode.Uri.parse(`command:fbo-autocomplete.openNonPreview?${encodeURIComponent(JSON.stringify(args))}`);
+                const link = new vscode.DocumentLink(range, uri);
+                link.tooltip = "Ctrl+Click to jump to action/response";
+                links.push(link);
             }
-
-            return this.resolveRequestTarget(document, word);
         }
 
+        return links;
+    }
+
+    provideDefinition(document, word, position) {
+        // Trả về null để tránh nhảy đúp hoặc nhảy tự động khi hover
         return null;
     }
 

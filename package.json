@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.41",
+  "version": "0.0.42",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -78,6 +78,11 @@
         },
         {
           "command": "fbo-autocomplete.previewXmlFlat",
+          "when": "resourceExtname == .xml",
+          "group": "navigation"
+        },
+        {
+          "command": "fbo-autocomplete.previewForm",
           "when": "resourceExtname == .xml",
           "group": "navigation"
         }
@@ -622,6 +627,11 @@
         "icon": "$(open-preview)"
       },
       {
+        "command": "fbo-autocomplete.previewForm",
+        "title": "FBO: Preview Form",
+        "icon": "$(layout-panel)"
+      },
+      {
         "command": "fbo-autocomplete.peekSql",
         "title": "Peek SQL",
         "icon": "$(search)"
@@ -669,6 +679,8 @@
     "test": "vscode-test",
     "build": "node ./node_modules/webpack/bin/webpack.js",
     "watch": "node ./node_modules/webpack/bin/webpack.js --watch",
+    "build:preview-form": "node ./node_modules/webpack/bin/webpack.js --config webpack.previewForm.config.js",
+    "watch:preview-form": "node ./node_modules/webpack/bin/webpack.js --config webpack.previewForm.config.js --watch",
     "vendor:ag-grid": "node scripts/vendor-ag-grid.js",
     "test:xml-flat-preview": "node scripts/xml-flat-preview.test.js"
   },
@@ -682,21 +694,27 @@
     "@vscode/test-electron": "^2.4.1",
     "ag-grid-community": "^31.3.2",
     "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.4",
     "eslint": "^9.16.0",
+    "style-loader": "^4.0.0",
     "webpack": "^5.106.0",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "@vscode/ripgrep": "^1.15.9",
+    "@vscode/webview-ui-toolkit": "^1.4.0",
     "axios": "^1.7.9",
     "cli-table3": "^0.6.5",
     "crypto-js": "^4.2.0",
     "exceljs": "^4.4.0",
+    "fast-xml-parser": "^5.10.1",
     "googleapis": "^144.0.0",
     "googletrans": "^1.0.21",
+    "htm": "^3.1.1",
     "level-rocksdb": "^5.0.0",
     "mssql": "^11.0.1",
     "node-machine-id": "^1.1.12",
+    "preact": "^10.29.7",
     "rocksdb": "^5.2.1",
     "strip-ansi": "^7.1.0"
   },

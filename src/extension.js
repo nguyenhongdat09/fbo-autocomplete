@@ -468,6 +468,18 @@ async function activate(context) {
     context.subscriptions.push(translatePaste);
     context.subscriptions.push(transAll);
     context.subscriptions.push(copyEntityCommand);
+    // Mở file từ DocumentLink (không dùng preview mode), hỗ trợ nhảy đến dòng/cột
+    const openNonPreviewCmd = vscode.commands.registerCommand("fbo-autocomplete.openNonPreview", async (filePath, line, char) => {
+        if (filePath && fs.existsSync(filePath)) {
+            let options = { preview: false };
+            if (line !== undefined && char !== undefined) {
+                options.selection = new vscode.Range(new vscode.Position(line, char), new vscode.Position(line, char));
+            }
+            await vscode.window.showTextDocument(vscode.Uri.file(filePath), options);
+        }
+    });
+
+    context.subscriptions.push(openNonPreviewCmd);
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(removeBlankRowsCmd);
@@ -483,6 +495,7 @@ async function activate(context) {
        context.subscriptions.push(disposable);
     */
     registerXmlFlatPreview(context);
+    require('./PreviewForm').registerPreviewForm(context);
     registerCheckingError(context, treeDataProvider);
     formulaHover.register(context);
     var anl = new AnalystXML();

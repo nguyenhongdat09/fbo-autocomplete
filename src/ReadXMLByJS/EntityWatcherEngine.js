@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const path = require('path');
-const entityResolver = require('./entityResolver');
+// const entityResolver = require('./entityResolver'); // Remove circular dependency
 const EntityLevelStore = require('./EntityLevelStore');
 class EntityWatcherEngine {
     constructor() {
@@ -18,7 +18,7 @@ class EntityWatcherEngine {
             
             if (['.ent', '.txt', '.xml', '.inc'].includes(ext)) {
                 // 1. Xóa RAM cache để buộc nạp lại dữ liệu mới nhất
-                entityResolver.invalidateCache(filePath);
+                require('./entityResolver').invalidateCache(filePath);
                 
                 const projectId = this.extractProjectId(filePath);
                 if (projectId) {
@@ -31,7 +31,7 @@ class EntityWatcherEngine {
                 // 3. Khi Ctrl + S trên file XML: Parse lại entity và đẩy trực tiếp vào LevelDB
                 if (ext === '.xml') {
                     try {
-                        entityResolver.getEntitiesForFile(filePath);
+                        require('./entityResolver').getEntitiesForFile(filePath);
                         console.log(`[EntityWatcherEngine] Ctrl+S: Reloaded & updated LevelDB for: ${path.basename(filePath)}`);
                     } catch (err) {
                         console.error('[EntityWatcherEngine] Error updating LevelDB on save:', err);
@@ -72,7 +72,7 @@ class EntityWatcherEngine {
             if (projectId && fileId) {
                 const cached = await EntityLevelStore.getEntities(projectId, fileId);
                 if (cached && cached.entities) {
-                    entityResolver.primeCache(filePath, cached.entities);
+                    require('./entityResolver').primeCache(filePath, cached.entities);
                 }
             }
         }

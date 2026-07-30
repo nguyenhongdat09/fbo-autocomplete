@@ -1,0 +1,258 @@
+.fbo-form-preview {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-editor-foreground);
+}
+
+.general-section {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+/* FIX-09a: Custom tab list for wrapping */
+.fbo-tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  margin-bottom: 10px;
+}
+.fbo-tab-item {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  color: var(--vscode-panelTitle-inactiveForeground);
+}
+.fbo-tab-item.active {
+  color: var(--vscode-panelTitle-activeForeground);
+  border-bottom: 1px solid var(--vscode-panelTitle-activeBorder);
+}
+.fbo-tab-item:hover {
+  color: var(--vscode-panelTitle-activeForeground);
+}
+
+.tabs-section {
+  flex: 1;
+}
+
+/* Footer sticky dưới cùng */
+.footer-section {
+  border-top: 1px solid var(--vscode-panel-border);
+  padding-top: 6px;
+  margin-top: 6px;
+  position: sticky;
+  bottom: 0;
+  background: var(--vscode-editor-background);
+  z-index: 10;
+  /* FIX-14: để nguyên block để grid tự chiếm chiều ngang và giãn anchor 1fr */
+  display: block; 
+}
+
+.category-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+}
+
+/* FIX-02/03: row là CSS grid; overflow hidden để cột 0px thật sự ẩn */
+.form-row {
+  overflow: hidden;
+}
+
+.form-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* FIX-15: label không min-width:0 — tránh grid co hẹp hơn columns XML */
+.form-cell--label {
+  overflow: visible;
+  min-width: unset;
+  z-index: 1;
+}
+
+.form-cell:not(.form-cell--label) {
+  min-width: 0;
+}
+
+/* FIX-03: empty cell giữ chỗ gap '-' */
+.form-cell-empty {
+  /* giữ chỗ, không hiển thị gì */
+}
+
+.field-label {
+  font-weight: 500;
+  /* Giống FBO web: 1 dòng; clip đúng theo bề ngang cột (không wrap, không ellipsis) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  box-sizing: border-box;
+  /* Font gần FBO; cột label còn được +LABEL_COL_PAD_PX trong JS */
+  font-size: 11px;
+  line-height: 1.2;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.description-text {
+  font-size: 0.9em;
+  opacity: 0.7;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 1px dashed var(--vscode-panel-border);
+  background: var(--vscode-editor-inactiveSelectionBackground);
+  min-height: 60px;
+}
+
+.error-banner {
+  color: var(--vscode-errorForeground, #f48771);
+  background: rgba(244, 135, 113, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.loading {
+  opacity: 0.6;
+  padding: 10px;
+}
+
+/* vscode toolkit components: fill width */
+vscode-text-field,
+vscode-dropdown,
+vscode-checkbox {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* FEAT-01: Toolbar & Guide Lines */
+.fbo-toolbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  gap: 8px;
+  padding: 8px 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  background: var(--vscode-editor-background);
+  z-index: 50;
+}
+
+.fbo-toolbar-btn {
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+  border: 1px solid var(--vscode-button-border, transparent);
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 11px;
+}
+.fbo-toolbar-btn:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+.fbo-toolbar-btn.active {
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+.layout-guide-layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.guide-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.guide-line span {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  margin-left: 2px;
+  margin-top: 4px;
+}
+
+.guide-anchor {
+  background-color: rgba(255, 165, 0, 0.85); /* Cam */
+}
+.guide-anchor span {
+  background-color: rgba(255, 165, 0, 0.95);
+  color: #000;
+}
+
+.guide-split {
+  background-color: rgba(0, 200, 200, 0.9); /* Cyan */
+}
+.guide-split span {
+  background-color: rgba(0, 200, 200, 0.95);
+  color: #000;
+}
+
+/* FEAT-02: Guide Hover Tooltip */
+.guide-line {
+  pointer-events: auto; /* enable hover */
+  padding-right: 6px; /* expand hit area */
+  padding-left: 6px;
+  margin-left: -6px; /* visually center the 2px line in the hit area */
+  background-clip: content-box; /* ensure background only affects the 2px width */
+  z-index: 101; /* above normal content */
+}
+
+.guide-tooltip {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 8px;
+  width: max-content;
+  max-width: 250px;
+  background: var(--vscode-editorWidget-background);
+  color: var(--vscode-editorWidget-foreground);
+  border: 1px solid var(--vscode-editorWidget-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  padding: 8px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  z-index: 200;
+  pointer-events: none;
+  white-space: normal;
+}
+
+.guide-tooltip.tooltip-flip {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: 8px;
+}

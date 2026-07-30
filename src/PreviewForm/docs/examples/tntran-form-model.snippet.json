@@ -1,0 +1,234 @@
+{
+  "_comment": "Fixture tham chiếu — viết tay từ TNTran.xml. Chỉ gồm một số field tiêu biểu. KHÔNG phải output auto-generate.",
+  "version": 1,
+  "source_path": "Dir/TNTran.xml",
+  "file_name": "TNTran.xml",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "warnings": [],
+  "fields": {
+    "status": {
+      "name": "status",
+      "kind": "dropdown",
+      "category_index": null,
+      "read_only": false,
+      "disabled": false,
+      "header_v": "Trạng thái",
+      "header_e": "Status",
+      "label_v": "",
+      "label_e": "",
+      "footer_v": "",
+      "footer_e": "",
+      "options": [
+        { "value": "0", "label_v": "0. Lập chứng từ", "label_e": "0. No Action" },
+        { "value": "1", "label_v": "1. Tiếp nhận", "label_e": "1. Receive" },
+        { "value": "4", "label_v": "4. Đã báo giá", "label_e": "4. Quoted" },
+        { "value": "7", "label_v": "7. Hoàn thành sửa chữa", "label_e": "7. Complete Repair" }
+      ],
+      "grid_placeholder": ""
+    },
+    "ma_kh": {
+      "name": "ma_kh",
+      "kind": "input",
+      "category_index": null,
+      "read_only": false,
+      "disabled": false,
+      "header_v": "Mã khách",
+      "header_e": "Customer",
+      "label_v": "",
+      "label_e": "",
+      "footer_v": "",
+      "footer_e": "",
+      "grid_placeholder": ""
+    },
+    "zcdtndgsc": {
+      "_comment": "Grid field dùng <header> thông thường",
+      "name": "zcdtndgsc",
+      "kind": "grid",
+      "category_index": "2",
+      "read_only": false,
+      "disabled": false,
+      "header_v": "",
+      "header_e": "",
+      "label_v": "Chi tiết tiếp nhận",
+      "label_e": "Detail",
+      "footer_v": "",
+      "footer_e": "",
+      "grid_controller": "TNDetail",
+      "grid_placeholder": "zcdtndgsc_Grid"
+    },
+    "zcdtndgscSPTN": {
+      "_comment": "Grid field dùng <label> thay vì <header> — header_v rỗng, label_v mang tên thật",
+      "name": "zcdtndgscSPTN",
+      "kind": "grid",
+      "category_index": "1",
+      "read_only": false,
+      "disabled": false,
+      "header_v": "",
+      "header_e": "",
+      "label_v": "Sản phẩm tiếp nhận",
+      "label_e": "Detail",
+      "footer_v": "",
+      "footer_e": "",
+      "grid_controller": "TNDetailSPTN",
+      "grid_placeholder": "zcdtndgscSPTN_Grid"
+    },
+    "k_dong_y_yn": {
+      "name": "k_dong_y_yn",
+      "kind": "checkbox",
+      "category_index": "15",
+      "read_only": false,
+      "disabled": false,
+      "header_v": "Không đồng ý",
+      "header_e": "No Agree",
+      "label_v": "",
+      "label_e": "",
+      "footer_v": "Ý kiến khách hàng",
+      "footer_e": "Customer reviews",
+      "grid_placeholder": ""
+    },
+    "t_so_luong": {
+      "_comment": "Footer field: categoryIndex=-1, disabled=true (field bị lock nghiệp vụ). kind=input vì type=Decimal/Numeric không được map riêng trong MVP.",
+      "name": "t_so_luong",
+      "kind": "input",
+      "category_index": "-1",
+      "read_only": false,
+      "disabled": true,
+      "header_v": "Số lượng linh kiện",
+      "header_e": "Qty of components",
+      "label_v": "",
+      "label_e": "",
+      "footer_v": "",
+      "footer_e": "",
+      "grid_placeholder": ""
+    },
+    "ma_nv_tn": {
+      "_comment": "Field disabled=true — render mờ trong preview",
+      "name": "ma_nv_tn",
+      "kind": "input",
+      "category_index": "13",
+      "read_only": false,
+      "disabled": true,
+      "header_v": "Nhân viên tiếp nhận",
+      "header_e": "Nhân viên tiếp nhận",
+      "label_v": "",
+      "label_e": "",
+      "footer_v": "",
+      "footer_e": "",
+      "grid_placeholder": ""
+    }
+  },
+  "view": {
+    "id": "Dir",
+    "height": 254,
+    "anchor": 6,
+    "split": 7,
+    "master_columns": [100, 110, 100, 90, 30, 147, 8, 58, 42, 8, 100, 0, 0, 0, 0],
+    "master_total_px": 793,
+    "categories": [
+      {
+        "index": "1",
+        "header_v": "1.1 Sản phẩm tiếp nhận",
+        "header_e": "Reception details",
+        "columns": [809],
+        "columns_total_px": 809,
+        "anchor": 1,
+        "split": null,
+        "declaration_order": 0
+      },
+      {
+        "index": "2",
+        "header_v": "1.2 Chi tiết tiếp nhận",
+        "header_e": "Reception details",
+        "columns": [809],
+        "columns_total_px": 809,
+        "anchor": 1,
+        "split": null,
+        "declaration_order": 1
+      }
+    ],
+    "footer_category": {
+      "index": "-1",
+      "header_v": "",
+      "header_e": "",
+      "columns": [100, 100, 100, 37, 200, 8, 58, 42, 8, 100, 0],
+      "columns_total_px": 753,
+      "anchor": 5,
+      "split": null,
+      "declaration_order": 99
+    },
+    "rows_general": [
+      {
+        "pattern": "111000-1100-",
+        "columns_ref": "master",
+        "column_widths": [100, 110, 100, 90, 30, 147, 8, 58, 42, 8, 100, 0, 0, 0, 0],
+        "raw_item_value": "111000-1100-: [ma_kh].Label, [ma_kh], [ten_kh%l], [status].Label, [status]",
+        "cells": [
+          { "type": "slot", "slot": { "role": "label", "field": "ma_kh" }, "col_span": 1 },
+          { "type": "slot", "slot": { "role": "control", "field": "ma_kh" }, "col_span": 1 },
+          {
+            "_comment": "[ten_kh%l] → role=lookup_name, field='ten_kh' (KHÔNG có %l trong field name). col_span=4 vì pattern 000 liên tiếp sau ký tự 1.",
+            "type": "slot", "slot": { "role": "lookup_name", "field": "ten_kh" }, "col_span": 4
+          },
+          { "type": "span" },
+          { "type": "span" },
+          { "type": "span" },
+          { "type": "empty" },
+          { "type": "slot", "slot": { "role": "label", "field": "status" }, "col_span": 1 },
+          { "type": "slot", "slot": { "role": "control", "field": "status" }, "col_span": 3 },
+          { "type": "span" },
+          { "type": "span" },
+          { "type": "empty" },
+          { "type": "span" },
+          { "type": "span" },
+          { "type": "span" }
+        ]
+      }
+    ],
+    "rows_by_category": {
+      "1": [
+        {
+          "pattern": "1",
+          "columns_ref": "1",
+          "column_widths": [809],
+          "raw_item_value": "1: [zcdtndgscSPTN]",
+          "cells": [
+            { "type": "slot", "slot": { "role": "control", "field": "zcdtndgscSPTN" }, "col_span": 1 }
+          ]
+        }
+      ],
+      "2": [
+        {
+          "pattern": "1",
+          "columns_ref": "2",
+          "column_widths": [809],
+          "raw_item_value": "1: [zcdtndgsc]",
+          "cells": [
+            { "type": "slot", "slot": { "role": "control", "field": "zcdtndgsc" }, "col_span": 1 }
+          ]
+        }
+      ],
+      "-1": [
+        {
+          "_comment": "Pattern '------10-11': pos 6='1' (Lbl, col_span=2 vì '0' ngay sau), pos 7='0'=span, pos 8='-'=empty, pos 9='1' (Ctrl), pos 10='1' (Ctrl). Tổng 3 ký tự '1' = 3 refs.",
+          "pattern": "------10-11",
+          "columns_ref": "-1",
+          "column_widths": [100, 100, 100, 37, 200, 8, 58, 42, 8, 100, 0],
+          "raw_item_value": "------10-11: [t_so_luong].Label, [t_so_luong],[da_tt_nt]",
+          "cells": [
+            { "type": "empty" },
+            { "type": "empty" },
+            { "type": "empty" },
+            { "type": "empty" },
+            { "type": "empty" },
+            { "type": "empty" },
+            { "type": "slot", "slot": { "role": "label", "field": "t_so_luong" }, "col_span": 2 },
+            { "type": "span" },
+            { "type": "empty" },
+            { "type": "slot", "slot": { "role": "control", "field": "t_so_luong" }, "col_span": 1 },
+            { "type": "slot", "slot": { "role": "control", "field": "da_tt_nt" }, "col_span": 1 }
+          ]
+        }
+      ]
+    }
+  }
+}

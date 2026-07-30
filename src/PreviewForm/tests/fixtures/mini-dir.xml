@@ -1,0 +1,39 @@
+<dir>
+  <fields>
+    <field name="ma_kh">
+      <header v="Mã khách" e="Customer"/>
+    </field>
+    <field name="status" categoryIndex="2">
+      <header v="Trạng thái" e="Status"/>
+      <items style="DropDownList">
+        <item value="0"><text v="Tạo mới"/></item>
+        <item value="1"><text v="Xong"/></item>
+      </items>
+    </field>
+    <field name="zcdtndgsc_Grid" categoryIndex="2">
+      <header v=""/>
+      <label v="Chi tiết" e="Detail"/>
+      <items style="Grid" controller="TestDetail" row="1"/>
+    </field>
+    <field name="footer_field" categoryIndex="-1">
+      <header v="Footer Field" e="Footer"/>
+    </field>
+  </fields>
+  <views>
+    <view id="Dir" height="200">
+      <item value="100, 0"/>
+      <item value="11: [ma_kh].Label, [ma_kh]"/>
+      <item value="11: [status].Label, [status]"/>
+      <item value="1: [zcdtndgsc_Grid]"/>
+      <item value="11: [footer_field].Label, [footer_field]"/>
+      <categories>
+        <category index="2" columns="809" anchor="1">
+          <header v="1.2 Chi tiết" e="Detail"/>
+        </category>
+        <category index="-1" columns="100,100" anchor="1">
+          <header v="" e=""/>
+        </category>
+      </categories>
+    </view>
+  </views>
+</dir>

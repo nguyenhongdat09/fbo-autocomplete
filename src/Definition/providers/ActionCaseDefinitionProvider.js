@@ -7,46 +7,69 @@ const DocumentParser = require('../utils/DocumentParser');
  * - If no case found, jump to ResponseComplete handler
  */
 class ActionCaseDefinitionProvider {
-    provideDefinition(document, word, position) {
+    provideDocumentLinks(document, token) {
         const actions = DocumentParser.parseActionId(document);
         const cases = DocumentParser.parseCaseStatements(document);
-        const currentLine = position.line;
+        const links = [];
 
-        // From case 'xxx' => <action id="xxx">
-        const caseMatch = cases.find(
-            c => c.caseName === word && c.line === currentLine
-        );
-        
-        if (caseMatch) {
-            const targetAction = actions.find(a => a.id === word);
+        // 1. Từ case 'xxx' => nhảy đến <action id="xxx">
+        for (const c of cases) {
+            const targetAction = actions.find(a => a.id === c.caseName);
             if (targetAction) {
-                return new vscode.Location(document.uri, targetAction.position);
+                const start = c.position;
+                const end = new vscode.Position(start.line, start.character + c.caseName.length);
+                const range = new vscode.Range(start, end);
+
+                const targetPos = targetAction.position;
+                const args = [document.uri.fsPath, targetPos.line, targetPos.character];
+                const uri = vscode.Uri.parse(`command:fbo-autocomplete.openNonPreview?${encodeURIComponent(JSON.stringify(args))}`);
+                
+                const link = new vscode.DocumentLink(range, uri);
+                link.tooltip = `Ctrl+Click to jump to <action id="${c.caseName}">`;
+                links.push(link);
             }
         }
 
-        // From <action id="xxx"> => case 'xxx'
-        const actionMatch = actions.find(
-            a => a.id === word && a.line === currentLine
-        );
-        
-        if (actionMatch) {
-            const targetCase = cases.find(c => c.caseName === word);
-            
+        // 2. Từ <action id="xxx"> => nhảy đến case 'xxx'
+        for (const a of actions) {
+            let targetPos = null;
+            let tooltip = "";
+
+            const targetCase = cases.find(c => c.caseName === a.id);
             if (targetCase) {
-                return new vscode.Location(document.uri, targetCase.position);
+                targetPos = targetCase.position;
+                tooltip = `Ctrl+Click to jump to case '${a.id}'`;
+            } else {
+                // Không tìm thấy case thì nhảy đến ResponseComplete
+                const handlerPos = DocumentParser.findPattern(
+                    document,
+                    /ResponseComplete\s*\(\s*sender\s*,\s*e\s*\)/
+                );
+                if (handlerPos) {
+                    targetPos = handlerPos;
+                    tooltip = `Ctrl+Click to jump to ResponseComplete handler`;
+                }
             }
 
-            // No case found, jump to ResponseComplete handler
-            const handlerPos = DocumentParser.findPattern(
-                document,
-                /ResponseComplete\s*\(\s*sender\s*,\s*e\s*\)/
-            );
+            if (targetPos) {
+                const start = a.position;
+                const end = new vscode.Position(start.line, start.character + a.id.length);
+                const range = new vscode.Range(start, end);
 
-            if (handlerPos) {
-                return new vscode.Location(document.uri, handlerPos);
+                const args = [document.uri.fsPath, targetPos.line, targetPos.character];
+                const uri = vscode.Uri.parse(`command:fbo-autocomplete.openNonPreview?${encodeURIComponent(JSON.stringify(args))}`);
+                
+                const link = new vscode.DocumentLink(range, uri);
+                link.tooltip = tooltip;
+                links.push(link);
             }
         }
 
+        return links;
+    }
+
+    provideDefinition(document, word, position) {
+        // Đã chuyển sang DocumentLink
         return null;
     }
 }
