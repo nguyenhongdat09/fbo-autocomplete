@@ -23,6 +23,8 @@
 | [`FEAT-01c-prompt-fix-split-position.md`](./FEAT-01c-prompt-fix-split-position.md) | **Prompt fix:** sọc Split=7 = đầu panel phải / đầu Ngày LCT (cột 58) |
 | [`FEAT-01d-prompt-tab-no-inherit-guides.md`](./FEAT-01d-prompt-tab-no-inherit-guides.md) | **Prompt:** tab không kế thừa guide; sọc Anchor = **đầu** cột (không cuối) |
 | [`FEAT-02-prompt-guide-hover-tooltip.md`](./FEAT-02-prompt-guide-hover-tooltip.md) | **Prompt:** hover sọc Anchor/Split → popup giải thích cho Developer |
+| [`FEAT-03-prompt-anchor-live-resize.md`](./FEAT-03-prompt-anchor-live-resize.md) | **Prompt:** kéo rộng Preview → cột/field theo `anchor` **giãn thật** (không chỉ kẻ sọc) |
+| [`FEAT-04-prompt-split-tab-focus-order.md`](./FEAT-04-prompt-split-tab-focus-order.md) | **Prompt:** phím Tab theo Split — hết Phần 1 (trên→dưới) rồi Phần 2; bỏ readOnly/disabled/inactive |
 | [`FEAT-01e-prompt-footer-anchor-guide.md`](./FEAT-01e-prompt-footer-anchor-guide.md) | **Prompt fix:** footer `anchor` kẻ sọc + popup sticky sát thanh guide |
 | [`FEAT-01f-prompt-footer-anchor-start-of-column.md`](./FEAT-01f-prompt-footer-anchor-start-of-column.md) | **Prompt fix:** footer sọc Anchor vẫn ở **cuối** width → phải **đầu** cột (giống General) |
 | [`FEAT-01g-prompt-footer-anchor-end-of-column.md`](./FEAT-01g-prompt-footer-anchor-end-of-column.md) | **Prompt:** footer `anchor` kẻ **cuối** cột (đè chữ label); General/Tab giữ đầu cột |

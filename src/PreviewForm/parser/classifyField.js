@@ -13,6 +13,9 @@ function classifyField(field) {
   // FIX-02: field-level hidden
   const hidden = field['@_hidden'] === 'true' || field['@_width'] === '0';
 
+  // FEAT-04: tab focus inactive
+  const inactive = String(field['@_inactive'] || field['@_inactivate'] || '').toLowerCase() === 'true';
+
   // Phân tích items
   let itemsArray = [];
   if (field.items) {
@@ -61,6 +64,7 @@ function classifyField(field) {
     category_index,
     read_only,
     disabled,
+    inactive,
     hidden,
     header_v,
     header_e,

@@ -54,6 +54,8 @@ src/**
 !src/DBQuery/GenerateHeaderToReport.js
 !src/ReadXMLByJS/XmlFlatPreview/media/**
 !src/ReadXMLByJS/CheckingError/media/**
+# Preview Form webview — Panel load bundle.js từ path này (không nằm trong src/dist)
+!src/PreviewForm/media/bundle.js
 
 
 # Database: chỉ template/runtime cần thiết (không ship LevelDB/cache máy dev)

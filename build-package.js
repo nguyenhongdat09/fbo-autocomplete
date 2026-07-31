@@ -244,8 +244,15 @@ function run() {
             );
         }
 
-        console.log("⚒ Chạy build...");
+        console.log("⚒ Chạy build extension...");
         execSync("npm run build", {
+            stdio: "inherit",
+            cwd: __dirname,
+            shell: isWin,
+        });
+
+        console.log("⚒ Chạy build Preview Form webview (bundle.js)...");
+        execSync("npm run build:preview-form", {
             stdio: "inherit",
             cwd: __dirname,
             shell: isWin,
@@ -409,6 +416,7 @@ function assertRuntimeDepsIntact() {
         "node_modules/node-gyp-build/package.json",
         "node_modules/@vscode/ripgrep/lib/index.js",
         "src/dist/extension.js",
+        "src/PreviewForm/media/bundle.js",
     ];
 
     // Hỗ trợ cả @vscode/ripgrep cũ (1.15.x) và mới (1.18.x - dùng optional dependencies)
