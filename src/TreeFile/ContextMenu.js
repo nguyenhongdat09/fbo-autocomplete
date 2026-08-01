@@ -101,6 +101,24 @@ class ContextMenuHandler {
         });
         if (!input) return;
 
+        let isReplaceExtension = false;
+        if (/^rl\(/i.test(input)) {
+            const options = [
+                { label: 'Thay thế tên file', picked: true, id: 'name' },
+                { label: 'Thay thế tên và đuôi file', picked: false, id: 'nameAndExt' }
+            ];
+            const selectedOptions = await vscode.window.showQuickPick(options, {
+                placeHolder: 'Chọn phạm vi thay thế',
+                canPickMany: true
+            });
+            
+            if (!selectedOptions || selectedOptions.length === 0) return;
+            
+            if (selectedOptions.some(opt => opt.id === 'nameAndExt')) {
+                isReplaceExtension = true;
+            }
+        }
+
         // Bước 2: Chọn group path đích
         const quickPickItems = groupItems.map(g => ({
             label: typeof g.label === 'string' ? g.label : g.label?.label || String(g.label),
@@ -118,8 +136,13 @@ class ContextMenuHandler {
             const sourcePath = item?.resourceUri?.fsPath;
             if (!fs.existsSync(sourcePath)) return '';
             const ext = path.extname(sourcePath);
-            let newBaseName = input;
-            const newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(newBaseName, path.basename(sourcePath, ext))}${ext}`);
+            let newFileName;
+            
+            if (isReplaceExtension) {
+                newFileName = path.join(path.dirname(sourcePath), this.parseRenameInput(input, path.basename(sourcePath)));
+            } else {
+                newFileName = path.join(path.dirname(sourcePath), `${this.parseRenameInput(input, path.basename(sourcePath, ext))}${ext}`);
+            }
             return [sourcePath, newFileName];
         });
         const pasteResult = await this.app_dataChecker.pasteFilesToGroup(targetPath, changedPaths, 1);

@@ -27,6 +27,11 @@ class ReportTemplateCommandProvider {
             this.openReportTemplate.bind(this)
         );
 
+        const revealCommand = vscode.commands.registerCommand(
+            'fbo-autocomplete.revealReportTemplate',
+            this.revealReportTemplate.bind(this)
+        );
+
         const hoverRegistration = vscode.languages.registerHoverProvider(
             { scheme: 'file', language: 'xml' },
             this.hoverProvider
@@ -39,6 +44,7 @@ class ReportTemplateCommandProvider {
 
         context.subscriptions.push(
             openCommand,
+            revealCommand,
             hoverRegistration,
             selectionListener
         );
@@ -258,6 +264,103 @@ class ReportTemplateCommandProvider {
 
         if (selected) {
             this.openFileWithDefaultApp(selected.path, selected.type);
+        }
+    }
+
+    /**
+     * Command handler - reveal report template in OS explorer.
+     * @param {string} [documentPath]
+     * @param {string} [fileName]
+     * @param {string} [commandArgument]
+     */
+    async revealReportTemplate(documentPath, fileName, commandArgument) {
+        if (documentPath && fileName) {
+            this.revealReportTemplateFile(documentPath, fileName, commandArgument);
+            return;
+        }
+
+        const editor = vscode.window.activeTextEditor;
+        if (!editor || editor.document.languageId !== 'xml') {
+            return;
+        }
+
+        const position = editor.selection.active;
+        const wordRange = editor.document.getWordRangeAtPosition(position, /[a-zA-Z0-9_]+/);
+        
+        if (!wordRange) {
+            return;
+        }
+
+        const word = editor.document.getText(wordRange);
+        const reportInfo = this.getReportAtPosition(editor.document, word, position);
+
+        if (!reportInfo) {
+            vscode.window.showWarningMessage('Không tìm thấy report template tại vị trí này');
+            return;
+        }
+
+        this.revealReportTemplateFile(
+            reportInfo.documentPath,
+            reportInfo.fileName,
+            reportInfo.commandArgument
+        );
+    }
+
+    /**
+     * Reveal report template file in OS explorer
+     */
+    revealReportTemplateFile(documentPath, fileName, commandArgument) {
+        const templatePath = PathResolver.resolveReportTemplatePath(
+            documentPath,
+            fileName,
+            commandArgument
+        );
+
+        if (templatePath) {
+            vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(templatePath));
+            return;
+        }
+
+        // Try to find any template
+        const allTemplates = PathResolver.findAllReportTemplates(documentPath, fileName);
+
+        if (allTemplates.length > 0) {
+            if (allTemplates.length === 1) {
+                vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(allTemplates[0].path));
+            } else {
+                this.showQuickPickAndReveal(allTemplates);
+            }
+            return;
+        }
+
+        // Show error
+        const expectedType = (commandArgument || 'pdf').toLowerCase();
+        const expectedFolder = expectedType === 'excel' ? 'Excel' : 'Rpt';
+        const expectedExt = expectedType === 'excel' ? '.xlsx/.xls' : '.rpt';
+
+        vscode.window.showErrorMessage(
+            `Không tìm thấy template: ${fileName}${expectedExt} trong folder Templates/${expectedFolder}`
+        );
+    }
+
+    /**
+     * Show quick pick and reveal selected template
+     */
+    async showQuickPickAndReveal(templates) {
+        const items = templates.map(t => ({
+            label: `${t.type}: ${path.basename(t.path)}`,
+            description: t.path,
+            detail: `Mở bằng ${t.type === 'PDF' ? 'Crystal Reports' : 'Excel'}`,
+            path: t.path,
+            type: t.type.toLowerCase()
+        }));
+
+        const selected = await vscode.window.showQuickPick(items, {
+            placeHolder: 'Chọn template để hiển thị trong thư mục'
+        });
+
+        if (selected) {
+            vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(selected.path));
         }
     }
 }

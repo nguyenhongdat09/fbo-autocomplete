@@ -17,10 +17,14 @@ function FieldControl({ f, role, fieldName, hidden, tab_index }) {
   if (hidden) return null;
 
   if (role === 'label') {
-    return html`<label class="field-label">${display_label(f)}</label>`;
+    const labelText = display_label(f);
+    if (/<[a-z]/i.test(labelText)) {
+      return html`<label class="field-label" dangerouslySetInnerHTML=${{ __html: labelText }}></label>`;
+    }
+    return html`<label class="field-label">${labelText}</label>`;
   }
   if (role === 'description') {
-    return html`<span class="description-text">${f.footer_v || ''}</span>`;
+    return html`<span class="description-html" dangerouslySetInnerHTML=${{ __html: f.footer_v || '' }}></span>`;
   }
   if (role === 'lookup_name') {
     // %l / tên lookup: plain text như form web (không ô input)
@@ -95,8 +99,23 @@ function FormRow({ row, fields, split, anchor, field_tab_indexes = {} }) {
 
   const renderCellList = (cellsArray, targetWidths) => cellsArray.map(c => {
     if (!c) return null;
+
+    const handleClick = () => {
+      if (window.__fbo_preview_vscode) {
+        window.__fbo_preview_vscode.postMessage({
+          type: 'revealViewItem',
+          raw_item_value: row.raw_item_value,
+          field: c.type === 'slot' ? c.slot.field : null,
+          start_col: c.start_col,
+          role: c.type === 'slot' ? c.slot.role : 'empty'
+        });
+      }
+    };
+
     if (c.type === 'empty') {
-      return html`<div class="form-cell-empty" style="grid-column-start: ${c.start_col + 1};"></div>`;
+      const gap_px = Number(targetWidths[c.start_col]) || 0;
+      return html`<div class="form-cell-empty" style="grid-column: ${c.start_col + 1} / span 1; width: ${gap_px}px; min-width: ${gap_px}px; max-width: ${gap_px}px;"
+        onClick=${handleClick}></div>`;
     }
     if (c.type === 'slot') {
       const f = fields[c.slot.field] || { name: c.slot.field, kind: 'input', read_only: false, hidden: false };
@@ -112,7 +131,8 @@ function FormRow({ row, fields, split, anchor, field_tab_indexes = {} }) {
       }
 
       const tab_index = is_label ? -1 : field_tab_indexes[c.slot.field];
-      return html`<div class="form-cell ${is_label ? 'form-cell--label' : ''}" style="${gridStyle}">
+      return html`<div class="form-cell ${is_label ? 'form-cell--label' : ''}" style="${gridStyle}"
+        onClick=${handleClick}>
         <${FieldControl} f=${f} role=${c.slot.role} fieldName=${c.slot.field} hidden=${col_hidden} tab_index=${tab_index} />
       </div>`;
     }
@@ -155,11 +175,11 @@ function FormRow({ row, fields, split, anchor, field_tab_indexes = {} }) {
     const anchor_in_left = anchor != null && anchor > 0 && anchor <= split;
     const anchor_in_right = anchor != null && anchor > split;
     const left_style = anchor_in_left
-      ? `display: grid; grid-template-columns: ${leftTemplateCols}; flex: 1 1 auto; min-width: ${left_min_px}px; width: 100%; align-items: center;`
-      : `display: grid; grid-template-columns: ${leftTemplateCols}; flex: 0 0 auto; min-width: ${left_min_px}px; align-items: center;`;
+      ? `display: grid; grid-template-columns: ${leftTemplateCols}; flex: 1 1 auto; min-width: ${left_min_px}px; width: 100%; align-items: center; justify-items: stretch;`
+      : `display: grid; grid-template-columns: ${leftTemplateCols}; flex: 0 0 auto; min-width: ${left_min_px}px; align-items: center; justify-items: stretch;`;
     const right_style = anchor_in_right
-      ? `display: grid; grid-template-columns: ${rightTemplateCols}; flex: 1 1 auto; min-width: ${right_min_px}px; width: 100%; align-items: center;`
-      : `display: grid; grid-template-columns: ${rightTemplateCols}; flex: 0 0 auto; margin-left: auto; min-width: ${right_min_px}px; align-items: center;`;
+      ? `display: grid; grid-template-columns: ${rightTemplateCols}; flex: 1 1 auto; min-width: ${right_min_px}px; width: 100%; align-items: center; justify-items: stretch;`
+      : `display: grid; grid-template-columns: ${rightTemplateCols}; flex: 0 0 auto; margin-left: auto; min-width: ${right_min_px}px; align-items: center; justify-items: stretch;`;
 
     return html`<div class="form-row-split" style="display: flex; width: 100%; align-items: start; margin-bottom: 6px;">
        <div class="panel-left" style="${left_style}">
@@ -174,7 +194,7 @@ function FormRow({ row, fields, split, anchor, field_tab_indexes = {} }) {
   // Fallback if no split
   const templateCols = getTemplateCols(widths, 0);
   // Removed overflow: hidden inline to rely on css, added width 100%
-  return html`<div class="form-row" style="display: grid; grid-template-columns: ${templateCols}; margin-bottom: 6px; align-items: center; width: 100%;">
+  return html`<div class="form-row" style="display: grid; grid-template-columns: ${templateCols}; margin-bottom: 6px; align-items: center; width: 100%; justify-items: stretch;">
     ${renderCellList(row.cells, widths)}
   </div>`;
 }
@@ -186,7 +206,7 @@ class CategoryPanel extends Component {
   }
 
   render() {
-    const { rows, fields, split, anchor, show_anchor, show_split, is_footer, base_tab_index = 1 } = this.props;
+    const { rows, fields, split, anchor, show_anchor, show_split, base_tab_index = 1 } = this.props;
     const { hover_guide } = this.state;
     if (!rows || rows.length === 0) return null;
 
@@ -257,40 +277,25 @@ class CategoryPanel extends Component {
                               onMouseLeave=${() => this.setState({ hover_guide: null })}><span>S:${split}</span>${tip}</div>`);
       }
 
-      // FEAT-01g: Tính sọc anchor (đầu cột anchor, riêng footer thì cuối cột anchor)
+      // FEAT-01g: Tính sọc anchor (đầu cột anchor)
       if (show_anchor && anchor != null && anchor > 0 && anchor <= widths.length) {
         if (split != null && split > 0 && split <= widths.length) {
           if (anchor <= split) {
-            const tip = hover_guide === 'anchor' ? html`<div class="guide-tooltip">Khi đường này cắt qua field nào thì khi Co giãn Form thì trường đó sẽ neo co giãn theo</div>` : null;
-            let anchor_x = 0;
-            if (is_footer) {
-              anchor_x = rendered_widths.slice(0, anchor).reduce((a, b) => a + b, 0);
-            } else {
-              anchor_x = rendered_widths.slice(0, anchor - 1).reduce((a, b) => a + b, 0);
-            }
+            const tip = hover_guide === 'anchor' ? html`<div class="guide-tooltip">Giãn Field và Label khi co giãn Form với 2 trường hợp sau:<br/>1. Đường này cắt qua Field<br/>2. Đường này cắt hoặc nằm liền kề trước Label</div>` : null;
+            let anchor_x = rendered_widths.slice(0, anchor - 1).reduce((a, b) => a + b, 0);
             guides.push(html`<div class="guide-line guide-anchor" style="left: ${anchor_x}px;" title="anchor=${anchor}"
                                   onMouseEnter=${() => this.setState({ hover_guide: 'anchor' })}
                                   onMouseLeave=${() => this.setState({ hover_guide: null })}><span>A:${anchor}</span>${tip}</div>`);
           } else {
-            const tip = hover_guide === 'anchor' ? html`<div class="guide-tooltip tooltip-flip">Khi đường này cắt qua field nào thì khi Co giãn Form thì trường đó sẽ neo co giãn theo</div>` : null;
-            let anchor_right = 0;
-            if (is_footer) {
-              anchor_right = rendered_widths.slice(anchor).reduce((a, b) => a + b, 0);
-            } else {
-              anchor_right = rendered_widths.slice(anchor - 1).reduce((a, b) => a + b, 0);
-            }
+            const tip = hover_guide === 'anchor' ? html`<div class="guide-tooltip tooltip-flip">Giãn Field và Label khi co giãn Form với 2 trường hợp sau:<br/>1. Đường này cắt qua Field<br/>2. Đường này cắt hoặc nằm liền kề trước Label</div>` : null;
+            let anchor_right = rendered_widths.slice(anchor - 1).reduce((a, b) => a + b, 0);
             guides.push(html`<div class="guide-line guide-anchor" style="right: ${anchor_right}px;" title="anchor=${anchor}"
                                   onMouseEnter=${() => this.setState({ hover_guide: 'anchor' })}
                                   onMouseLeave=${() => this.setState({ hover_guide: null })}><span>A:${anchor}</span>${tip}</div>`);
           }
         } else {
-          const tip = hover_guide === 'anchor' ? html`<div class="guide-tooltip">Khi đường này cắt qua field nào thì khi Co giãn Form thì trường đó sẽ neo co giãn theo</div>` : null;
-          let anchor_x = 0;
-          if (is_footer) {
-            anchor_x = rendered_widths.slice(0, anchor).reduce((a, b) => a + b, 0);
-          } else {
-            anchor_x = rendered_widths.slice(0, anchor - 1).reduce((a, b) => a + b, 0);
-          }
+          const tip = hover_guide === 'anchor' ? html`<div class="guide-tooltip">Giãn Field và Label khi co giãn Form với 2 trường hợp sau:<br/>1. Đường này cắt qua Field<br/>2. Đường này cắt hoặc nằm liền kề trước Label</div>` : null;
+          let anchor_x = rendered_widths.slice(0, anchor - 1).reduce((a, b) => a + b, 0);
           guides.push(html`<div class="guide-line guide-anchor" style="left: ${anchor_x}px;" title="anchor=${anchor}"
                                 onMouseEnter=${() => this.setState({ hover_guide: 'anchor' })}
                                 onMouseLeave=${() => this.setState({ hover_guide: null })}><span>A:${anchor}</span>${tip}</div>`);
@@ -398,7 +403,7 @@ class PreviewFormApp extends Component {
         <!-- Footer Section (sticky) -->
         ${(view.rows_by_category['-1'] && view.rows_by_category['-1'].length > 0) && html`
           <div class="footer-section">
-            <${CategoryPanel} rows=${view.rows_by_category['-1']} fields=${model.fields} split=${view.footer_category ? view.footer_category.split : null} anchor=${view.footer_category ? view.footer_category.anchor : null} show_anchor=${show_anchor} show_split=${show_split} is_footer=${true} base_tab_index=${90000} />
+            <${CategoryPanel} rows=${view.rows_by_category['-1']} fields=${model.fields} split=${view.footer_category ? view.footer_category.split : null} anchor=${view.footer_category ? view.footer_category.anchor : null} show_anchor=${show_anchor} show_split=${show_split} base_tab_index=${90000} />
           </div>
         `}
       </div>

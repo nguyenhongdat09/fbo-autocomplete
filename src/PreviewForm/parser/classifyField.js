@@ -34,15 +34,16 @@ function classifyField(field) {
   else if (type_attr === 'Boolean') kind = 'checkbox';
   else if (type_attr === 'DateTime' || type_attr === 'Date') kind = 'date';
 
-  const header_v = field.header?.['@_v'] || field.header?.v || '';
-  const header_e = field.header?.['@_e'] || field.header?.e || '';
-  const label_v = field.label?.['@_v'] || field.label?.v || '';
-  const label_e = field.label?.['@_e'] || field.label?.e || '';
+  const header_v = unescape_xml(field.header?.['@_v'] || field.header?.v || '');
+  const header_e = unescape_xml(field.header?.['@_e'] || field.header?.e || '');
+  const label_v = unescape_xml(field.label?.['@_v'] || field.label?.v || '');
+  const label_e = unescape_xml(field.label?.['@_e'] || field.label?.e || '');
 
-  // FIX-04: footer_v có thể là raw HTML trong FBO (Description field) — strip tags
+  // FEAT-05: Giữ HTML trong footer/header sau khi decode entity, không strip tags
   const raw_footer_v = field.footer?.['@_v'] || field.footer?.v || '';
-  const footer_v = strip_html(raw_footer_v);
-  const footer_e = field.footer?.['@_e'] || field.footer?.e || '';
+  const footer_v = unescape_xml(raw_footer_v);
+  const raw_footer_e = field.footer?.['@_e'] || field.footer?.e || '';
+  const footer_e = unescape_xml(raw_footer_e);
 
   const options = [];
   if (kind === 'dropdown') {
@@ -81,10 +82,15 @@ function classifyField(field) {
   return result;
 }
 
-/** Strip HTML tags để hiển thị text thuần (FIX-04) */
-function strip_html(str) {
+/** Unescape XML entities để render HTML (FEAT-05) */
+function unescape_xml(str) {
   if (!str) return '';
-  return str.replace(/<[^>]*>/g, '').trim();
+  return str.replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&apos;/g, "'")
+            .trim();
 }
 
 module.exports = { classifyField };

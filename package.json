@@ -610,6 +610,10 @@
         "title": "FBO: Open Report Template"
       },
       {
+        "command": "fbo-autocomplete.revealReportTemplate",
+        "title": "FBO: Reveal Report Template Location"
+      },
+      {
         "command": "fbo-autocomplete.runQuery",
         "title": "FBO: Execute SQL Query"
       },
@@ -715,6 +719,7 @@
     "mssql": "^11.0.1",
     "node-machine-id": "^1.1.12",
     "preact": "^10.29.7",
+    "preact-render-to-string": "^6.7.0",
     "rocksdb": "^5.2.1",
     "strip-ansi": "^7.1.0"
   },

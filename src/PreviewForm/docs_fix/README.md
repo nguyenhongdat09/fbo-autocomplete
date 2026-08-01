@@ -18,6 +18,7 @@
 | [`FIX-16-prompt-label-pad-just-enough.md`](./FIX-16-prompt-label-pad-just-enough.md) | **Prompt:** giảm `LABEL_COL_PAD_PX` cho vừa như form web (ảnh 2) |
 | [`FIX-17-prompt-footer-fallback-master-columns.md`](./FIX-17-prompt-footer-fallback-master-columns.md) | **Prompt:** footer `-1` không khai `<category index="-1">` → `column_widths` = master (vd Filter SITran) |
 | [`FIX-18-prompt-footer-right-align-short-input.md`](./FIX-18-prompt-footer-right-align-short-input.md) | **Prompt:** footer TNTran lệch giữa + input dài → phải sát phải, input ~100px như web |
+| [`FIX-19-prompt-readonly-underline-full-cell.md`](./FIX-19-prompt-readonly-underline-full-cell.md) | **Prompt:** `%l`/readOnly gạch dưới chỉ dài chữ → phải full width cell (tab 4.1 `ten_dv`) |
 | [`FEAT-01-prompt-anchor-split-guides.md`](./FEAT-01-prompt-anchor-split-guides.md) | **Prompt tính năng:** nút bật/tắt sọc Anchor & Split (2 màu) |
 | [`FEAT-01b-prompt-fix-anchor-position.md`](./FEAT-01b-prompt-fix-anchor-position.md) | **Prompt fix:** sọc Anchor=6 = mép phải cột 147 / cuối ten_bp |
 | [`FEAT-01c-prompt-fix-split-position.md`](./FEAT-01c-prompt-fix-split-position.md) | **Prompt fix:** sọc Split=7 = đầu panel phải / đầu Ngày LCT (cột 58) |
@@ -25,6 +26,12 @@
 | [`FEAT-02-prompt-guide-hover-tooltip.md`](./FEAT-02-prompt-guide-hover-tooltip.md) | **Prompt:** hover sọc Anchor/Split → popup giải thích cho Developer |
 | [`FEAT-03-prompt-anchor-live-resize.md`](./FEAT-03-prompt-anchor-live-resize.md) | **Prompt:** kéo rộng Preview → cột/field theo `anchor` **giãn thật** (không chỉ kẻ sọc) |
 | [`FEAT-04-prompt-split-tab-focus-order.md`](./FEAT-04-prompt-split-tab-focus-order.md) | **Prompt:** phím Tab theo Split — hết Phần 1 (trên→dưới) rồi Phần 2; bỏ readOnly/disabled/inactive |
+| [`FEAT-05-prompt-description-html-footer.md`](./FEAT-05-prompt-description-html-footer.md) | **Prompt:** Description/Label HTML + pattern `-` giữ gap 30px (CTNTran) |
+| [`FEAT-05b-prompt-gap-dash-inputs-stuck.md`](./FEAT-05b-prompt-gap-dash-inputs-stuck.md) | **Prompt trao đổi:** input vẫn dính — debug empty 30px + padding cặp `11` |
+| [`FEAT-06-prompt-copy-for-agent.md`](./FEAT-06-prompt-copy-for-agent.md) | ~~Copy for Agent~~ → **hủy** (xem FEAT-07) |
+| [`FEAT-07-prompt-remove-copy-fix-gap-dash.md`](./FEAT-07-prompt-remove-copy-fix-gap-dash.md) | **Prompt:** gỡ Copy for Agent + fix gap `-` CTNTran (input dính) |
+| [`FEAT-08-prompt-inspect-reveal-xml-item.md`](./FEAT-08-prompt-inspect-reveal-xml-item.md) | **Prompt:** hover inspect (name/col/width) + click reveal `<item>` XML |
+| [`FEAT-08b-prompt-reveal-entity-ref.md`](./FEAT-08b-prompt-reveal-entity-ref.md) | **Prompt fix:** click `ngay_ct` (flat từ `&Revert.Field.0;`) không nhảy được XML |
 | [`FEAT-01e-prompt-footer-anchor-guide.md`](./FEAT-01e-prompt-footer-anchor-guide.md) | **Prompt fix:** footer `anchor` kẻ sọc + popup sticky sát thanh guide |
 | [`FEAT-01f-prompt-footer-anchor-start-of-column.md`](./FEAT-01f-prompt-footer-anchor-start-of-column.md) | **Prompt fix:** footer sọc Anchor vẫn ở **cuối** width → phải **đầu** cột (giống General) |
 | [`FEAT-01g-prompt-footer-anchor-end-of-column.md`](./FEAT-01g-prompt-footer-anchor-end-of-column.md) | **Prompt:** footer `anchor` kẻ **cuối** cột (đè chữ label); General/Tab giữ đầu cột |

@@ -44,7 +44,7 @@ class ReportTemplateHoverProvider {
         md.appendMarkdown(`**${attrLabel}:** \`${form.fileName}\`  \n`);
         md.appendMarkdown(`**commandArgument:** \`${cmdArg}\` → ${appName}  \n\n`);
         md.appendMarkdown(
-            `[$(file-symlink-file) Open template](command:fbo-autocomplete.openReportTemplate?${payload})`
+            `[$(file-symlink-file) Open template](command:fbo-autocomplete.openReportTemplate?${payload})&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[$(folder-opened) Reveal in Explorer](command:fbo-autocomplete.revealReportTemplate?${payload})`
         );
 
         return new vscode.Hover(md);
