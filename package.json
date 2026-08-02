@@ -68,6 +68,14 @@
         {
           "command": "fbo-autocomplete.previewXmlFlat",
           "when": "resourceExtname == .xml"
+        },
+        {
+          "command": "fbo-autocomplete.previewForm",
+          "when": "resourceExtname == .xml"
+        },
+        {
+          "command": "fbo-autocomplete.showAllFileShowForm",
+          "when": "resourceExtname == .xml || resourceExtname == .js"
         }
       ],
       "editor/title": [
@@ -603,7 +611,7 @@
       },
       {
         "command": "fbo-autocomplete.showAllFileShowForm",
-        "title": "FBO: Show All File in show form"
+        "title": "Show All File in show form"
       },
       {
         "command": "fbo-autocomplete.openReportTemplate",
@@ -632,7 +640,7 @@
       },
       {
         "command": "fbo-autocomplete.previewForm",
-        "title": "FBO: Preview Form",
+        "title": "Preview Form",
         "icon": "$(layout-panel)"
       },
       {
