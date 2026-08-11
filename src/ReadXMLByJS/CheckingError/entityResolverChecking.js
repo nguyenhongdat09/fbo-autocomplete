@@ -109,7 +109,16 @@ function scan_undeclared(file_path, xml_short, generalEntities, parameterEntitie
             for (let i = 0; i < roots.length; i++) {
                 const root = roots[i];
                 if (!root) continue;
-                const source_xml = map_to_source(root, rel_info.relative_path);
+                let source_xml = map_to_source(root, rel_info.relative_path);
+                
+                // Nếu relative_path là .f, nhưng trong source lại chứa .xml thì fallback
+                if (!fs.existsSync(source_xml) && source_xml.toLowerCase().endsWith('.f')) {
+                    const fallback_xml = source_xml.substring(0, source_xml.length - 2) + '.xml';
+                    if (fs.existsSync(fallback_xml)) {
+                        source_xml = fallback_xml;
+                    }
+                }
+                
                 if (!fs.existsSync(source_xml)) continue;
 
                 let entities_on_source = null;
@@ -302,6 +311,8 @@ function checkEntityErrors(file_paths, source_roots) {
         ? true
         : table1_missing.every(r => r.source_index !== null);
 
+    const any_missing_has_source = table1_missing.some(r => r.source_index !== null);
+
     return {
         checked_files: list,
         errors,
@@ -312,7 +323,8 @@ function checkEntityErrors(file_paths, source_roots) {
             total: missing_count + undeclared_count,
             missing_count,
             undeclared_count,
-            all_missing_have_source
+            all_missing_have_source,
+            any_missing_has_source
         }
     };
 }

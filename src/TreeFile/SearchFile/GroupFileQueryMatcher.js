@@ -16,23 +16,30 @@ class GroupFileQueryMatcher {
     matches(relPath) {
         if (!this.compiledTerms.length) return true;
         const target = String(relPath || "").toLowerCase();
-        // AND semantics: all terms must match.
-        return this.compiledTerms.every((term) => {
-            if (term.type === "regex") {
-                return term.regex.test(target);
-            }
-            return target.includes(term.value);
+        // OR semantics: at least one comma-separated group must match
+        return this.compiledTerms.some((andGroup) => {
+            // AND semantics: all space-separated terms within the group must match
+            return andGroup.every((term) => {
+                if (term.type === "regex") {
+                    return term.regex.test(target);
+                }
+                return target.includes(term.value);
+            });
         });
     }
 
     /**
      * @param {string} raw
-     * @returns {{type:"regex",regex:RegExp}|{type:"plain",value:string}[]}
      */
     _compileTerms(raw) {
         if (!raw) return [];
-        const terms = raw.split(/\s+/).map((x) => x.trim()).filter(Boolean);
-        return terms.map((t) => this._compileOneTerm(t));
+        // Split by comma for OR groups
+        const orGroups = raw.split(',').map((x) => x.trim()).filter(Boolean);
+        return orGroups.map((group) => {
+            // Split by space for AND terms within the group
+            const andTerms = group.split(/\s+/).map((x) => x.trim()).filter(Boolean);
+            return andTerms.map((t) => this._compileOneTerm(t));
+        });
     }
 
     /**

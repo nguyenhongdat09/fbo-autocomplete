@@ -66,8 +66,9 @@ class GroupFileWatcherService {
     _createVscodeWatcher(root) {
         try {
             const pattern = new vscode.RelativePattern(vscode.Uri.file(root), "**/*");
-            const watcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, true);
+            const watcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
             watcher.onDidCreate((uri) => this._enqueue(root, "create", uri && uri.fsPath));
+            watcher.onDidChange((uri) => this._enqueue(root, "create", uri && uri.fsPath));
             watcher.onDidDelete((uri) => this._enqueue(root, "delete", uri && uri.fsPath));
             this.watchers.set(root, watcher);
         } catch {

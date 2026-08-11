@@ -13,8 +13,14 @@ class AnalystASPX {
         //\\172.168.5.14\CustomerPro\FBI\THW\SP229\App_Data\Controllers\Grid\DCDetail.xml
         //Cắt đường dần từ App_Data trở đi VD: \\172.168.5.14\CustomerPro\FBI\THW\SP229\
         var relevantParts = pathParts.slice(0, customerProIndex + 4); // Lấy đến phần  SP229
-        relevantParts = relevantParts.concat(folderPlus);
-        const projectPath = relevantParts.join("\\");
+        let basePath = relevantParts.join("\\");
+        
+        try {
+            const ProjectMappingHelper = require('../../Database/ProjectMappingHelper');
+            basePath = ProjectMappingHelper.getActualRoot(basePath);
+        } catch (e) {}
+        
+        const projectPath = require('path').join(basePath, ...folderPlus);
         //Check xem projectPath có phải là đường dẫn có thật không
         if (!fs.existsSync(projectPath)) {
             console.log("Project path does not exist:", projectPath);

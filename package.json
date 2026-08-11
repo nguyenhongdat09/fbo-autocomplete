@@ -152,6 +152,11 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.ConfigProjectRoot",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation"
+        },
+        {
           "command": "fboFile.ExpandAll",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation"
@@ -540,6 +545,10 @@
       {
         "command": "fboFile.OpenWebConfig",
         "title": "Open Web.config"
+      },
+      {
+        "command": "fboFile.ConfigProjectRoot",
+        "title": "Config Project Root Path"
       },
       {
         "command": "fboFile.ExpandAll",

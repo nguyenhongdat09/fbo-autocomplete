@@ -72,8 +72,20 @@ async function resolve_checking_files(file_paths) {
     // Dedupe và chuẩn hóa
     const unique_xml_files = [];
     const seen = new Set();
-    for (const xml of xml_files) {
+    for (let xml of xml_files) {
         if (!xml) continue;
+
+        // Bổ sung xử lý: nếu .xml không tồn tại, thử tìm .f
+        if (!fs.existsSync(xml)) {
+            const ext = path.extname(xml).toLowerCase();
+            if (ext === '.xml') {
+                const fPath = xml.substring(0, xml.length - 4) + '.f';
+                if (fs.existsSync(fPath)) {
+                    xml = fPath;
+                }
+            }
+        }
+
         const norm = path.normalize(xml).toLowerCase();
         if (!seen.has(norm)) {
             seen.add(norm);

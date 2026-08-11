@@ -92,7 +92,7 @@ class CheckingErrorPanel {
 
         const generate_enabled = !!(
             this.last_result.summary.missing_count > 0 &&
-            this.last_result.summary.all_missing_have_source
+            this.last_result.summary.any_missing_has_source
         );
 
         this.panel.webview.postMessage({
@@ -166,9 +166,9 @@ class CheckingErrorPanel {
                 if (
                     !this.last_result ||
                     !(this.last_result.summary.missing_count > 0) ||
-                    !this.last_result.summary.all_missing_have_source
+                    !this.last_result.summary.any_missing_has_source
                 ) {
-                    vscode.window.showWarningMessage('Chưa đủ nguồn cho mọi file thiếu — không thể Generate.');
+                    vscode.window.showWarningMessage('Không có file thiếu nào tìm được nguồn — không thể Generate.');
                     return;
                 }
                 this.panel.webview.postMessage({ type: 'loading', status_text: 'Đang copy file...' });

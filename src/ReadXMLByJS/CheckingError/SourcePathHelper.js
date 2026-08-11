@@ -83,6 +83,14 @@ function find_in_sources_by_relative(source_roots, relative_path) {
         if (fs.existsSync(candidate)) {
             return { source_index: i, source_file_path: candidate };
         }
+        
+        // Thêm fallback: nếu relative_path là .f nhưng source root chứa .xml
+        if (candidate.toLowerCase().endsWith('.f')) {
+            const fallback = candidate.substring(0, candidate.length - 2) + '.xml';
+            if (fs.existsSync(fallback)) {
+                return { source_index: i, source_file_path: fallback };
+            }
+        }
     }
     return null;
 }

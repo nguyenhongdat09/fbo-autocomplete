@@ -7,8 +7,8 @@ class AppDataPathHelper {
         this.filePath = filePath; 
     }
 
-    getProjectPath() {
-        var parts = this.filePath.split(path.sep);
+    getBaseProjectPath() {
+        var parts = this.filePath.split(/[/\\]/);
         const index = parts.findIndex(p => p.toLowerCase() === "customerpro");
         if (index === -1 || parts.length < index + 4) {
             return '';
@@ -17,9 +17,16 @@ class AppDataPathHelper {
         return parts.slice(0, index + (index2 === -1 ? 4 : 3)).join(path.sep);
     }
 
+    getProjectPath() {
+        const base = this.getBaseProjectPath();
+        if (!base) return '';
+        const ProjectMappingHelper = require('../Database/ProjectMappingHelper');
+        return ProjectMappingHelper.getActualRoot(base);
+    }
+
     getGroupName() {
-        var projectPath = this.getProjectPath().split('\\'); 
-        return projectPath.length != 1 ? projectPath.slice(-2).join(' - ') : 'Other';
+        var projectPath = this.getBaseProjectPath().split(/[/\\]/); 
+        return projectPath.length > 1 ? projectPath.slice(-2).join(' - ') : 'Other';
     }
 
     getPathAfterProject() {

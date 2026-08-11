@@ -24,6 +24,7 @@ class ContextMenuHandler {
             { name: "fboFile.DeleteFile", handler: async () => await this.deleteFile() },
             { name: "fboFile.FixWebConfig", handler: async (group) => await this.fixWebConfig(group) },
             { name: "fboFile.OpenWebConfig", handler: async (group) => await this.openWebConfig(group) },
+            { name: "fboFile.ConfigProjectRoot", handler: async (group) => await this.configProjectRoot(group) },
             { name: "fboFile.ExpandAll", handler: async (group) => await this.expandAll(group) },
             { name: "fboFile.DeleteStruct", handler: async (group) => await this.deleteStruct(group) },
             { name: "fboFile.SearchTextInGroup", handler: async (group) => await this.treeDataProvider.runGroupTextSearch?.(group) },
@@ -347,6 +348,33 @@ class ContextMenuHandler {
             await vscode.window.showTextDocument(doc, { preview: false });
         } catch (err) {
             vscode.window.showErrorMessage(`❌ Không thể mở Web.config: ${err.message}`);
+        }
+    }
+    //#endregion
+    //#region Config Project Root
+    async configProjectRoot(group) {
+        if (!group) return;
+        try {
+            this.app_dataChecker.filePath = group.resourceUri.fsPath;
+            const baseRoot = this.app_dataChecker.getBaseProjectPath();
+            if (!baseRoot) {
+                vscode.window.showErrorMessage("Không xác định được đường dẫn gốc của dự án.");
+                return;
+            }
+            const input = await vscode.window.showInputBox({
+                prompt: `Nhập thư mục con (ví dụ: Program) cho dự án ${this.app_dataChecker.getGroupName()}`,
+                placeHolder: "Để trống nếu muốn xóa cấu hình ngoại lệ",
+                ignoreFocusOut: true
+            });
+            if (input === undefined) return; // User cancelled
+            
+            const ProjectMappingHelper = require('../Database/ProjectMappingHelper');
+            ProjectMappingHelper.setMapping(baseRoot, input.trim());
+            
+            vscode.window.showInformationMessage(`✅ Đã lưu cấu hình ngoại lệ. Đang tải lại cây...`);
+            vscode.commands.executeCommand('fbo-autocomplete.reloadTree');
+        } catch (err) {
+            vscode.window.showErrorMessage(`❌ Lỗi cấu hình Project Root: ${err.message}`);
         }
     }
     //#endregion

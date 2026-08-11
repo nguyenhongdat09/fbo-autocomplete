@@ -50,7 +50,11 @@
 
 ## Tìm file theo tên trong group (Search Result)
 - Chuột phải **group** trên cây FBO Project → **FBO: Group filter** (hoặc icon lọc trên group).
-- Nhập từ khóa tên file (hỗ trợ `*` `%` `?` `_`, khoảng trắng = AND).
+- Nhập từ khóa tên file với các cú pháp được hỗ trợ:
+  - **Khoảng trắng (Toán tử AND)**: Tìm file chứa tất cả các từ khóa. VD: `SVTR grid xml` (lấy file chứa cả 3 từ).
+  - **Dấu phẩy `,` (Toán tử OR)**: Khớp 1 trong các từ khóa. VD: `SVTran,ARTran dir xml` (tìm file SVTran HOẶC ARTran nằm trong thư mục dir có đuôi xml).
+  - `*` **hoặc** `%`: Đại diện cho nhiều ký tự bất kỳ. VD: `SV*TR` hoặc `SV%TR` (khớp với `SVTR`, `SVAATR`, `SV_12_TR`...).
+  - `?` **hoặc** `_`: Đại diện cho **đúng 1 ký tự** bất kỳ. VD: `SV?R` hoặc `SV_R` (khớp với `SVAR`, `SV1R` nhưng không khớp `SVAAR`).
 - Kết quả hiển thị tab **Search Result** trong panel Search Result (danh sách file khớp).
 
 ## Tìm text trong nội dung file group (Search text in group)

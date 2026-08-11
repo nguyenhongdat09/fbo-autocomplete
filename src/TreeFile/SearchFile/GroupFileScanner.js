@@ -24,6 +24,16 @@ class GroupFileScanner {
         const startDir = this.getScanStartDir(baseRoot);
         const out = [];
         await this._walk(startDir, baseRoot, out);
+
+        const mainDir = path.join(baseRoot, "Main");
+        try {
+            if (fs.existsSync(mainDir)) {
+                await this._walk(mainDir, baseRoot, out, ".aspx");
+            }
+        } catch {
+            // Ignore errors
+        }
+
         out.sort((a, b) => a.localeCompare(b));
         return out;
     }
@@ -48,12 +58,22 @@ class GroupFileScanner {
         const baseRoot = String(groupRoot);
         const normalizedAbs = path.normalize(String(absPath));
         const startDir = path.normalize(this.getScanStartDir(baseRoot));
-        if (!normalizedAbs.startsWith(startDir)) return false;
-        if (this.includeExtensions) {
-            const ext = path.extname(normalizedAbs).toLowerCase();
-            if (!this.includeExtensions.has(ext)) return false;
+        
+        if (normalizedAbs.startsWith(startDir)) {
+            if (this.includeExtensions) {
+                const ext = path.extname(normalizedAbs).toLowerCase();
+                if (!this.includeExtensions.has(ext)) return false;
+            }
+            return true;
         }
-        return true;
+
+        const mainDir = path.normalize(path.join(baseRoot, "Main"));
+        if (normalizedAbs.startsWith(mainDir + path.sep) || normalizedAbs === mainDir) {
+            const ext = path.extname(normalizedAbs).toLowerCase();
+            if (ext === ".aspx") return true;
+        }
+
+        return false;
     }
 
     /**
@@ -73,7 +93,7 @@ class GroupFileScanner {
      * @param {string} groupRoot
      * @param {string[]} out
      */
-    async _walk(currentDir, groupRoot, out) {
+    async _walk(currentDir, groupRoot, out, allowedExt = null) {
         /** @type {fs.Dirent[]} */
         let entries = [];
         try {
@@ -84,14 +104,19 @@ class GroupFileScanner {
         for (const e of entries) {
             const absPath = path.join(currentDir, e.name);
             if (e.isDirectory()) {
-                await this._walk(absPath, groupRoot, out);
+                await this._walk(absPath, groupRoot, out, allowedExt);
                 continue;
             }
             if (!e.isFile()) continue;
-            if (this.includeExtensions) {
+            
+            if (allowedExt) {
+                const ext = path.extname(e.name).toLowerCase();
+                if (ext !== allowedExt) continue;
+            } else if (this.includeExtensions) {
                 const ext = path.extname(e.name).toLowerCase();
                 if (!this.includeExtensions.has(ext)) continue;
             }
+            
             const rel = path.relative(groupRoot, absPath);
             if (!rel || rel.startsWith("..") || path.isAbsolute(rel)) continue;
             out.push(rel);

@@ -219,6 +219,14 @@ class AnalystXML {
                     aspxName: aspxName,
                     xmlPath: xmlFilePath
                 });
+            } else {
+                var fFilePath = `${pathIncludeXMLGrid}\\${controllerName}.f`;
+                if (fs.existsSync(fFilePath)) {
+                    results.push({
+                        aspxName: aspxName,
+                        xmlPath: fFilePath
+                    });
+                }
             }
         }
         return results;
@@ -252,6 +260,15 @@ class AnalystXML {
                 var detailResults = this.regexAnalyzeXMLDetail(aspxName, pathIncludeXMLFilter, contentXML);
                 results = results.concat(formExtractDataResults);
                 results = results.concat(detailResults);
+            } else if (!excludeController.includes(controllerName)) {
+                var fFilePath = `${pathIncludeXMLFilter}\\${controllerName}.f`;
+                if (fs.existsSync(fFilePath)) {
+                    results.push({ aspxName: aspxName, xmlPath: fFilePath }); 
+                    var formExtractDataResults = this.regexAnalyzeXMLFormExtractData(aspxName, fFilePath);
+                    var detailResults = this.regexAnalyzeXMLDetail(aspxName, pathIncludeXMLFilter, contentXML);
+                    results = results.concat(formExtractDataResults);
+                    results = results.concat(detailResults);
+                }
             }
         }
 
@@ -267,6 +284,15 @@ class AnalystXML {
                 var detailResults = this.regexAnalyzeXMLDetail(aspxName, pathIncludeXMLFilter, contentXML);
                 results = results.concat(formExtractDataResults2);
                 results = results.concat(detailResults);
+            } else if (!excludeController2.includes(controllerName2)) {
+                var fFilePath2 = `${pathIncludeXMLFilter}\\${controllerName2}.f`;
+                if (fs.existsSync(fFilePath2)) {
+                    results.push({ aspxName: aspxName, xmlPath: fFilePath2 });
+                    var formExtractDataResults2 = this.regexAnalyzeXMLFormExtractData(aspxName, fFilePath2);
+                    var detailResults = this.regexAnalyzeXMLDetail(aspxName, pathIncludeXMLFilter, contentXML);
+                    results = results.concat(formExtractDataResults2);
+                    results = results.concat(detailResults);
+                }
             }
         }
 
@@ -287,7 +313,7 @@ class AnalystXML {
         */
         const results = [];
         //Check thêm folder chứa nó có phải là Grid không   
-        if (!filePath.endsWith('Approval.xml') && !filePath.includes('\\Grid\\')) {
+        if (!filePath.endsWith('Approval.xml') && !filePath.endsWith('Approval.f') && !filePath.includes('\\Grid\\')) {
             return results;
         }
 
@@ -296,8 +322,8 @@ class AnalystXML {
         const fileName = pathParts.pop(); // Get filename
         const folderPath = pathParts.join("\\"); // Get folder path
 
-        // Get base name by removing "Approval.xml"
-        const baseName = fileName.replace('Approval.xml', '');
+        // Get base name by removing "Approval.xml" or "Approval.f"
+        const baseName = fileName.replace('Approval.xml', '').replace('Approval.f', '');
 
         // Suffixes to check: Item, Detail, Files
         const suffixes = ['ApprovalItem.xml', 'ApprovalDetail.xml', 'ApprovalFiles.xml'];
@@ -312,6 +338,14 @@ class AnalystXML {
                     aspxName: aspxName,
                     xmlPath: newFilePath
                 });
+            } else {
+                const fFilePath = `${folderPath}\\${baseName}${suffix.replace('.xml', '.f')}`;
+                if (fs.existsSync(fFilePath)) {
+                    results.push({
+                        aspxName: aspxName,
+                        xmlPath: fFilePath
+                    });
+                }
             }
         });
 
@@ -324,7 +358,7 @@ class AnalystXML {
         const folderPath = pathParts.join("\\");
         const results = [];
 
-        if (!fileName.endsWith('Filter.xml')) {
+        if (!fileName.endsWith('Filter.xml') && !fileName.endsWith('Filter.f')) {
             return results;
         }
 
@@ -336,10 +370,15 @@ class AnalystXML {
 
         suffixes.forEach(({ suffix, folder }) => {
             suffix.forEach(suf => {
-                const baseName = fileName.replace('Filter.xml', suf);
+                const baseName = fileName.replace('Filter.xml', suf).replace('Filter.f', suf);
                 const newPath = `${folderPath.replace('Filter', folder)}\\${baseName}`;
                 if (fs.existsSync(newPath)) {
                     results.push({ aspxName, xmlPath: newPath });
+                } else {
+                    const fPath = `${folderPath.replace('Filter', folder)}\\${baseName.replace('.xml', '.f')}`;
+                    if (fs.existsSync(fPath)) {
+                        results.push({ aspxName, xmlPath: fPath });
+                    }
                 }
             });
         });
@@ -359,7 +398,7 @@ class AnalystXML {
         var pathParts = filePathXML.split(/[/\\]/);
         var fileName = pathParts.pop(); // Lấy tên file
         var folderPath = pathParts.join("\\"); // Lấy đường dẫn folder
-        var baseName = fileName.replace('.xml', 'ImportForm.xml');
+        var baseName = fileName.replace('.xml', 'ImportForm.xml').replace('.f', 'ImportForm.f');
         var importFormPath = `${folderPath}\\${baseName}`;
         var results = [];
         if (fs.existsSync(importFormPath)) {
@@ -367,6 +406,14 @@ class AnalystXML {
                 aspxName: aspxName,
                 xmlPath: importFormPath
             });
+        } else if (importFormPath.endsWith('.xml')) {
+            var fPath = importFormPath.replace('.xml', '.f');
+            if (fs.existsSync(fPath)) {
+                results.push({
+                    aspxName: aspxName,
+                    xmlPath: fPath
+                });
+            }
         }
         return results;
     }
@@ -374,8 +421,14 @@ class AnalystXML {
 
     confirmExistsXML(aspxName, controllerName, pathIncludeXML) {
         var xmlFilePath = `${pathIncludeXML}\\${controllerName}.xml`;
-        //file path = \\172.168.5.14\CustomerPro\FBI\THW\SP229\App_Data\Controllers\Dir\ActiveUsers.xml then log it 
         if (!fs.existsSync(xmlFilePath)) {
+            var fFilePath = `${pathIncludeXML}\\${controllerName}.f`;
+            if (fs.existsSync(fFilePath)) {
+                return {
+                    aspxName: aspxName,
+                    xmlPath: fFilePath
+                };
+            }
             return null;
         }
         return {
@@ -448,7 +501,12 @@ class AnalystXML {
         
         // Lấy đường dẫn đến folder project (CustomerPro + 3 folder con)
         const projectParts = parts.slice(0, customerProIndex + 4);
-        return projectParts.join('\\');
+        let basePath = projectParts.join('\\');
+        try {
+            const ProjectMappingHelper = require('../../Database/ProjectMappingHelper');
+            basePath = ProjectMappingHelper.getActualRoot(basePath);
+        } catch (e) {}
+        return basePath;
     }
 
     /**
