@@ -167,6 +167,11 @@
           "group": "navigation"
         },
         {
+          "command": "fboFile.NewSqlTemp",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation"
+        },
+        {
           "command": "fboFile.SearchTextInGroup",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation"
@@ -295,6 +300,11 @@
           ],
           "default": "folderName",
           "description": "Sort theo tên file hoặc folder chứa file"
+        },
+        "fbo-autocomplete.sqlTempFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Đường dẫn thư mục để tạo file .sql tạm khi chọn chức năng New .sql Temp"
         },
         "fbo-autocomplete.iconRule": {
           "type": "string",
@@ -559,21 +569,16 @@
         "title": "Delete Struct"
       },
       {
+        "command": "fboFile.NewSqlTemp",
+        "title": "New .sql Temp"
+      },
+      {
         "command": "fboFile.SearchTextInGroup",
         "title": "Search text in group"
       },
       {
         "command": "fbo-autocomplete.openTextSearchMatch",
         "title": "FBO: Open Text Search Match"
-      },
-      {
-        "command": "fboFile.openBrowser",
-        "title": "0pen Browser",
-        "icon": "$(globe)"
-      },
-      {
-        "command": "fboFile.openCustomBrowser",
-        "title": "Open Browser (Custom URL)"
       },
       {
         "command": "fbo-autocomplete.groupQuickFilter",

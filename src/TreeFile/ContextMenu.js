@@ -27,6 +27,7 @@ class ContextMenuHandler {
             { name: "fboFile.ConfigProjectRoot", handler: async (group) => await this.configProjectRoot(group) },
             { name: "fboFile.ExpandAll", handler: async (group) => await this.expandAll(group) },
             { name: "fboFile.DeleteStruct", handler: async (group) => await this.deleteStruct(group) },
+            { name: "fboFile.NewSqlTemp", handler: async (group) => await this.newSqlTemp(group) },
             { name: "fboFile.SearchTextInGroup", handler: async (group) => await this.treeDataProvider.runGroupTextSearch?.(group) },
             { name: "fboFile.PasteFilesToGroup", handler: async (group) => await this.PasteFilesToGroup(group) },
             { name: "fboFile.GenerateCopyFile", handler: async () => await this.GenerateCopyFile() },
@@ -467,6 +468,46 @@ class ContextMenuHandler {
         }
     }
 
+    //#endregion
+    //#region New .sql Temp
+    async newSqlTemp(group) {
+        if (!group) return;
+        try {
+            const folderPath = this.config.get('sqlTempFolder');
+            if (!folderPath) {
+                vscode.window.showErrorMessage(`Chưa cấu hình đường dẫn thư mục tạo file .sql. Vui lòng cấu hình 'fbo-autocomplete.sqlTempFolder' trong Settings.`);
+                return;
+            }
+            if (!fs.existsSync(folderPath)) {
+                vscode.window.showErrorMessage(`Thư mục '${folderPath}' không tồn tại. Vui lòng kiểm tra lại cấu hình.`);
+                return;
+            }
+
+            let baseName = group.label || "temp";
+            baseName = baseName.toLowerCase().replace(/[\s-]+/g, '_');
+            baseName = baseName.replace(/^_+|_+$/g, '');
+            if (!baseName) baseName = "temp";
+
+            let fileName = `${baseName}.sql`;
+            let filePath = path.join(folderPath, fileName);
+            let counter = 2;
+
+            while (fs.existsSync(filePath)) {
+                fileName = `${baseName} (${counter}).sql`;
+                filePath = path.join(folderPath, fileName);
+                counter++;
+            }
+
+            fs.writeFileSync(filePath, '');
+
+            const document = await vscode.workspace.openTextDocument(vscode.Uri.file(filePath));
+            await vscode.window.showTextDocument(document);
+
+            vscode.window.showInformationMessage(`Đã tạo file ${fileName}`);
+        } catch (err) {
+            vscode.window.showErrorMessage(`Không thể tạo file .sql: ${err.message}`);
+        }
+    }
     //#endregion
     //#region Delete File
     async deleteFile() {
