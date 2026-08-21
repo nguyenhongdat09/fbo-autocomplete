@@ -6,14 +6,29 @@ const CACHE_VERSION = 2;
 
 class EntityLevelStore {
     constructor() {
-        this.dbPath = path.join(__dirname, '..', 'Database', 'entity-cache-leveldb');
+        this.dbPath = null;
         this.db = null;
         this.disabled = false;
-        this.initPromise = this.init();
+        this.initPromise = null;
+    }
+
+    _resolveDbPath() {
+        try {
+            const { getUserDatabaseRoot } = require('../extensionDatabasePaths');
+            const root = getUserDatabaseRoot();
+            if (root) {
+                return path.join(root, 'entity-cache-leveldb');
+            }
+        } catch {
+            // Extension context not yet initialized
+        }
+        const os = require('os');
+        return path.join(os.tmpdir(), 'fbo-autocomplete', 'entity-cache-leveldb');
     }
 
     async init() {
         if (this.disabled) return;
+        this.dbPath = this._resolveDbPath();
         await fs.promises.mkdir(path.dirname(this.dbPath), { recursive: true });
         if (this.db) return;
         try {
@@ -47,13 +62,20 @@ class EntityLevelStore {
         }
     }
 
+    async _ensureInitialized() {
+        if (!this.initPromise) {
+            this.initPromise = this.init();
+        }
+        await this.initPromise;
+    }
+
     _ensureDb() {
         if (this.disabled) return null;
         return this.db;
     }
 
     async getEntities(projectId, fileId) {
-        await this.initPromise;
+        await this._ensureInitialized();
         const db = this._ensureDb();
         if (!db) return null;
 
@@ -78,7 +100,7 @@ class EntityLevelStore {
     }
 
     async upsertEntities(projectId, fileId, relativePath, mtime, doctypeHash, entities, dependencies) {
-        await this.initPromise;
+        await this._ensureInitialized();
         const db = this._ensureDb();
         if (!db) return;
 
@@ -139,7 +161,7 @@ class EntityLevelStore {
     }
 
     async invalidateByDependency(projectId, depFilePath) {
-        await this.initPromise;
+        await this._ensureInitialized();
         const db = this._ensureDb();
         if (!db) return [];
 
@@ -195,7 +217,14 @@ class EntityLevelStore {
         if (!this.db) return;
         const db = this.db;
         this.db = null;
-        await new Promise((resolve) => db.close(() => resolve()));
+        this.initPromise = null;
+        await new Promise((resolve) => {
+            try {
+                db.close(() => resolve());
+            } catch {
+                resolve();
+            }
+        });
     }
 }
 

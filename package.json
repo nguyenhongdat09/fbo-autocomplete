@@ -142,44 +142,39 @@
           "group": "navigation@99"
         },
         {
-          "command": "fboFile.FixWebConfig",
-          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
-        },
-        {
-          "command": "fboFile.OpenWebConfig",
-          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
-        },
-        {
-          "command": "fboFile.ConfigProjectRoot",
-          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
-        },
-        {
-          "command": "fboFile.ExpandAll",
-          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
-        },
-        {
-          "command": "fboFile.DeleteStruct",
-          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
-        },
-        {
           "command": "fboFile.NewSqlTemp",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
+          "group": "navigation@1"
+        },
+        {
+          "command": "fboFile.FixWebConfig",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation@2"
         },
         {
           "command": "fboFile.SearchTextInGroup",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
-          "group": "navigation"
+          "group": "navigation@3"
         },
         {
-          "command": "fbo-autocomplete.openBrowserForFile",
-          "when": "viewItem == file",
-          "group": "inline"
+          "command": "fboFile.ExpandAll",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation@4"
+        },
+        {
+          "command": "fboFile.DeleteStruct",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation@5"
+        },
+        {
+          "command": "fboFile.ConfigProjectRoot",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation@6"
+        },
+        {
+          "command": "fboFile.OpenWebConfig",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation@7"
         },
         {
           "command": "fbo-autocomplete.closeFile",
@@ -603,11 +598,6 @@
         "title": "FBO: Clear project tree filter",
         "category": "FBO",
         "icon": "$(clear-all)"
-      },
-      {
-        "command": "fbo-autocomplete.openBrowserForFile",
-        "title": "0pen FBO Link",
-        "icon": "$(link-external)"
       },
       {
         "command": "fbo-autocomplete.closeFile",

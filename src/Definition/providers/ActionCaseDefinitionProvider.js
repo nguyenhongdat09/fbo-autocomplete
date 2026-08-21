@@ -12,20 +12,34 @@ class ActionCaseDefinitionProvider {
         const cases = DocumentParser.parseCaseStatements(document);
         const links = [];
 
-        // 1. Từ case 'xxx' => nhảy đến <action id="xxx">
+        // 1. Từ case 'xxx' => nhảy đến <action id="xxx"> hoặc request(...)
+        const requests = DocumentParser.parseRequestCalls(document);
         for (const c of cases) {
+            let targetPos = null;
+            let tooltip = "";
+
             const targetAction = actions.find(a => a.id === c.caseName);
             if (targetAction) {
+                targetPos = targetAction.position;
+                tooltip = `Ctrl+Click to jump to <action id="${c.caseName}">`;
+            } else {
+                const targetReq = requests.find(r => r.contextName === c.caseName);
+                if (targetReq && targetReq.contextPosition) {
+                    targetPos = targetReq.contextPosition;
+                    tooltip = `Ctrl+Click to jump to request('${targetReq.actionName}', '${c.caseName}')`;
+                }
+            }
+
+            if (targetPos) {
                 const start = c.position;
                 const end = new vscode.Position(start.line, start.character + c.caseName.length);
                 const range = new vscode.Range(start, end);
 
-                const targetPos = targetAction.position;
                 const args = [document.uri.fsPath, targetPos.line, targetPos.character];
                 const uri = vscode.Uri.parse(`command:fbo-autocomplete.openNonPreview?${encodeURIComponent(JSON.stringify(args))}`);
                 
                 const link = new vscode.DocumentLink(range, uri);
-                link.tooltip = `Ctrl+Click to jump to <action id="${c.caseName}">`;
+                link.tooltip = tooltip;
                 links.push(link);
             }
         }

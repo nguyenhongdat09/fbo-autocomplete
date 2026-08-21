@@ -503,8 +503,24 @@ async function activate(context) {
 }
 
 // This method is called when your extension is deactivated
-function deactivate() {
+async function deactivate() {
     console.log('🛑 Extension deactivated');
+    try {
+        const EntityLevelStore = require('./ReadXMLByJS/EntityLevelStore');
+        if (EntityLevelStore && typeof EntityLevelStore.close === 'function') {
+            await EntityLevelStore.close();
+        }
+    } catch (e) {
+        console.error('Error closing EntityLevelStore:', e);
+    }
+    try {
+        const ProjectMappingHelper = require('./Database/ProjectMappingHelper');
+        if (ProjectMappingHelper && typeof ProjectMappingHelper.dispose === 'function') {
+            ProjectMappingHelper.dispose();
+        }
+    } catch (e) {
+        console.error('Error disposing ProjectMappingHelper:', e);
+    }
 }
 
 module.exports = {

@@ -178,8 +178,10 @@ class DocumentParser {
             if (i === excludeLine) continue;
 
             const lineText = document.lineAt(i).text;
-            if (pattern.test(lineText)) {
-                return new vscode.Position(i, 0);
+            const match = lineText.match(pattern);
+            if (match) {
+                const col = lineText.indexOf(match[0]);
+                return new vscode.Position(i, col >= 0 ? col : 0);
             }
         }
         return null;
@@ -214,38 +216,62 @@ class DocumentParser {
         return position.character >= startChar && position.character <= endChar;
     }
 
-
     /**
-   * Parse f.request() or g.request() calls
-   * Patterns:
-   * - f.request('ActionName', 'Context', ['params'], o)
-   * - f.request(o, 'ActionName', 'Context', [''], [''], true)
-   */
+     * Parse f.request() or g.request() calls
+     * Patterns:
+     * - f.request('ActionName', 'Context', ['params'], o)
+     * - f.request(o, 'ActionName', 'Context', [''], [''], true)
+     * - o.grid.request(o, 'ActionName', 'Context', ['ma_vt', ...], o.grid.$h, true)
+     */
     static parseRequestCalls(document) {
         const results = [];
-        // Pattern matches: f.request('xxx', ... ) or g.request('xxx', ...)
-        const pattern = /[\w.]+\.request\s*\(\s*(?:[\w.]+\s*,\s*)?['"]([^'"]+)['"]/g
-
-
+        const reqRegex = /(?:[\w.]+\.)?request\s*\(/g;
 
         for (let i = 0; i < document.lineCount; i++) {
             const lineText = document.lineAt(i).text;
+            reqRegex.lastIndex = 0;
             let match;
 
-            // Reset regex lastIndex for each line
-            pattern.lastIndex = 0;
+            while ((match = reqRegex.exec(lineText)) !== null) {
+                const parenIdx = match.index + match[0].length - 1;
+                const argsPart = lineText.substring(parenIdx + 1);
 
-            while ((match = pattern.exec(lineText)) !== null) {
-                const actionName = match[1];
-                const startIndex = match.index + match[0].indexOf(actionName);
+                // Chỉ lấy phần trước mảng tham số [...] nếu có
+                const arrayIdx = argsPart.indexOf('[');
+                const beforeArray = arrayIdx !== -1 ? argsPart.substring(0, arrayIdx) : argsPart;
 
-                results.push({
-                    actionName,
-                    line: i,
-                    position: new vscode.Position(i, startIndex),
-                    text: lineText.trim(),
-                    fullMatch: match[0]
-                });
+                const strRegex = /['"]([^'"]+)['"]/g;
+                let strMatch;
+                const stringArgs = [];
+
+                while ((strMatch = strRegex.exec(beforeArray)) !== null) {
+                    const val = strMatch[1];
+                    const startChar = parenIdx + 1 + strMatch.index + 1; // +1 để bỏ qua dấu quote mở đầu
+                    stringArgs.push({
+                        value: val,
+                        position: new vscode.Position(i, startChar),
+                        length: val.length
+                    });
+                }
+
+                if (stringArgs.length >= 1) {
+                    const actionArg = stringArgs[0];
+                    const contextArg = stringArgs.length >= 2 ? stringArgs[1] : null;
+
+                    results.push({
+                        actionName: actionArg.value,
+                        actionPosition: actionArg.position,
+                        actionLength: actionArg.length,
+                        contextName: contextArg ? contextArg.value : null,
+                        contextPosition: contextArg ? contextArg.position : null,
+                        contextLength: contextArg ? contextArg.length : 0,
+                        // Compatibility properties
+                        position: actionArg.position,
+                        line: i,
+                        text: lineText.trim(),
+                        fullMatch: match[0]
+                    });
+                }
             }
         }
 
