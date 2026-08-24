@@ -430,9 +430,26 @@ class TreeFileProvider extends TreeHelper {
                 this._groupFileIndexService.clearExpired();
             }
         }, GroupQuickFilterKinds.CLEANUP_INTERVAL_MS);
-        context.subscriptions.push({ dispose: () => clearInterval(ttlTimer) });
+        let focus_debounce_timer = null;
+        const focus_sub = vscode.window.onDidChangeWindowState((state) => {
+            if (state && state.focused) {
+                if (focus_debounce_timer) clearTimeout(focus_debounce_timer);
+                focus_debounce_timer = setTimeout(() => {
+                    focus_debounce_timer = null;
+                    if (this._groupFileWatcherService) {
+                        void this._groupFileWatcherService.reconcileAll();
+                    }
+                }, 800);
+            }
+        });
+        context.subscriptions.push(focus_sub);
+
         context.subscriptions.push({
             dispose: () => {
+                if (focus_debounce_timer) {
+                    clearTimeout(focus_debounce_timer);
+                    focus_debounce_timer = null;
+                }
                 if (this._groupIndexBridge) {
                     this._groupIndexBridge.dispose();
                     this._groupIndexBridge = null;

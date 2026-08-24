@@ -113,7 +113,12 @@ async function activate(context) {
         vscode.commands.registerCommand('fbo-autocomplete.fboFileTreeClearFilter', async () => {
             await treeDataProvider.clearTreeFilter();
         }),
-        vscode.commands.registerCommand('fbo-autocomplete.groupQuickFilter', runGroupQuickFilter)
+        vscode.commands.registerCommand('fbo-autocomplete.groupQuickFilter', runGroupQuickFilter),
+        vscode.commands.registerCommand('fbo-autocomplete.refreshFileIndex', async () => {
+            if (treeDataProvider && treeDataProvider._groupFileWatcherService) {
+                await treeDataProvider._groupFileWatcherService.reconcileAll();
+            }
+        })
     );
     // Enđ trê 
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');

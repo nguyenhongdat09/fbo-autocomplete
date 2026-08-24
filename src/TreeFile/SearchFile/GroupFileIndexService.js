@@ -51,18 +51,32 @@ class GroupFileIndexService {
         }
     }
 
+    _isUncPath(p) {
+        const str = String(p || "").trim();
+        return str.startsWith("\\\\") || str.startsWith("//");
+    }
+
     /**
      * @param {string} groupRoot
      * @param {string} keyword
      */
     async search(groupRoot, keyword) {
-        const idx = await this.ensureIndex(groupRoot, false);
+        const root = String(groupRoot || "");
+        const is_unc = this._isUncPath(root);
+        let force_scan = false;
+        if (is_unc) {
+            const in_mem = this.mem.get(root);
+            if (!in_mem || (Date.now() - in_mem.loadedAt) > 30000) {
+                force_scan = true;
+            }
+        }
+        const idx = await this.ensureIndex(root, force_scan);
         const q = String(keyword || "").trim().toLowerCase();
         const matcher = new GroupFileQueryMatcher(q);
         let filesRel = idx.filesRel;
         filesRel = filesRel.filter((rel) => matcher.matches(rel));
         return {
-            groupRoot,
+            groupRoot: root,
             keyword: q,
             totalIndexed: idx.filesRel.length,
             totalMatched: filesRel.length,
@@ -118,6 +132,49 @@ class GroupFileIndexService {
         this.mem.set(root, inMem);
         this._log(`scan done: ${root} (${filesRel.length})`);
         return inMem;
+    }
+
+    /**
+     * Reconcile memory and LevelDB cache against disk files.
+     * @param {string} groupRoot
+     * @returns {Promise<boolean>} true if changed
+     */
+    async reconcileGroup(groupRoot) {
+        const root = String(groupRoot || "");
+        if (!root) return false;
+        try {
+            const files_rel = await this.scanner.scanGroup(root);
+            const current = this.mem.get(root) || (await this.store.get(root));
+            const prev_files = current && Array.isArray(current.filesRel) ? current.filesRel : [];
+
+            if (prev_files.length === files_rel.length) {
+                let is_identical = true;
+                for (let i = 0; i < files_rel.length; i++) {
+                    if (files_rel[i] !== prev_files[i]) {
+                        is_identical = false;
+                        break;
+                    }
+                }
+                if (is_identical) {
+                    return false;
+                }
+            }
+
+            const now = Date.now();
+            const in_mem = { filesRel: files_rel, loadedAt: now, source: "scan" };
+            this.mem.set(root, in_mem);
+            await this.store.upsert(root, files_rel, now);
+            this._log(`reconcile updated: ${root} (${files_rel.length} files)`);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async forceRefresh(groupRoot) {
+        const root = String(groupRoot || "");
+        if (!root) return;
+        return await this.ensureIndex(root, true);
     }
 
     /**
