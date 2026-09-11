@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/nguyenhongdat09/fbo-autocomplete.git"
   },
-  "version": "0.0.42",
+  "version": "0.0.44",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -15,8 +15,10 @@
     "Snippets"
   ],
   "activationEvents": [
+    "onStartupFinished",
     "onLanguage:xml",
     "onLanguage:sql",
+    "onLanguage:markdown",
     "onView:fbo_query_results_panel",
     "onView:fbo_search_result_view",
     "onView:fbo_text_search_result_view",
@@ -52,33 +54,55 @@
       ],
       "fbo-autocomplete.fboSubmenu": [
         {
-          "command": "my-fbo-toolkit.openWithVS2008"
-        },
-        {
-          "command": "fbo-autocomplete.removeBlankRows"
+          "command": "fbo-autocomplete.peekSql",
+          "when": "resourceExtname == .xml || resourceExtname == .sql",
+          "group": "navigation@1"
         },
         {
           "command": "fbo-autocomplete.runSqlFile",
-          "when": "resourceExtname == .sql || resourceExtname == .xml"
+          "when": "resourceExtname == .sql || resourceExtname == .xml",
+          "group": "navigation@2"
         },
         {
-          "command": "fbo-autocomplete.peekSql",
-          "when": "resourceExtname == .xml || resourceExtname == .sql"
-        },
-        {
-          "command": "fbo-autocomplete.previewXmlFlat",
-          "when": "resourceExtname == .xml"
+          "command": "fbo-autocomplete.removeBlankRows",
+          "group": "navigation@3"
         },
         {
           "command": "fbo-autocomplete.previewForm",
-          "when": "resourceExtname == .xml"
+          "when": "resourceExtname == .xml",
+          "group": "navigation@4"
+        },
+        {
+          "command": "fbo-autocomplete.previewFormula",
+          "when": "resourceExtname == .xml",
+          "group": "navigation@5"
+        },
+        {
+          "command": "fbo-autocomplete.previewXmlFlat",
+          "when": "resourceExtname == .xml",
+          "group": "navigation@6"
+        },
+        {
+          "command": "fbo-autocomplete.designRetrieveFlow",
+          "when": "resourceExtname == .xml",
+          "group": "navigation@7"
         },
         {
           "command": "fbo-autocomplete.showAllFileShowForm",
-          "when": "resourceExtname == .xml || resourceExtname == .js"
+          "when": "resourceExtname == .xml || resourceExtname == .js",
+          "group": "navigation@8"
+        },
+        {
+          "command": "my-fbo-toolkit.openWithVS2008",
+          "group": "navigation@9"
         }
       ],
       "editor/title": [
+        {
+          "command": "fbo-autocomplete.peekSql",
+          "when": "resourceExtname == .xml || resourceExtname == .sql",
+          "group": "navigation"
+        },
         {
           "command": "fbo-autocomplete.runSqlFile",
           "when": "resourceExtname == .sql || resourceExtname == .xml",
@@ -90,7 +114,17 @@
           "group": "navigation"
         },
         {
+          "command": "fbo-autocomplete.previewFormula",
+          "when": "resourceExtname == .xml",
+          "group": "navigation"
+        },
+        {
           "command": "fbo-autocomplete.previewForm",
+          "when": "resourceExtname == .xml",
+          "group": "navigation"
+        },
+        {
+          "command": "fbo-autocomplete.designRetrieveFlow",
           "when": "resourceExtname == .xml",
           "group": "navigation"
         }
@@ -98,53 +132,58 @@
       "view/item/context": [
         {
           "command": "fboFile.openRevealFolder",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.CopyPath",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.CopyFile",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.CopyNameOfFile",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.CopyNameOfFileNoEx",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.GenerateCopyFile",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.RenameFile",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.DeleteFile",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation"
         },
         {
           "command": "fboFile.CheckingError",
-          "when": "view == fbo_file && viewItem == file",
+          "when": "view == fbo_file && viewItem =~ /^file/",
           "group": "navigation@99"
         },
         {
           "command": "fboFile.NewSqlTemp",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation@1"
+        },
+        {
+          "command": "fboFile.NewSqlTempOnWorkspace",
+          "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
+          "group": "navigation@8"
         },
         {
           "command": "fboFile.FixWebConfig",
@@ -178,7 +217,7 @@
         },
         {
           "command": "fbo-autocomplete.closeFile",
-          "when": "viewItem == file",
+          "when": "viewItem =~ /^file/",
           "group": "inline"
         },
         {
@@ -452,12 +491,25 @@
     ],
     "commands": [
       {
-        "command": "my-fbo-toolkit.openWithVS2008",
-        "title": "Open With VS 2008"
+        "command": "fbo-autocomplete.peekSql",
+        "title": "Peek SQL",
+        "icon": "$(search)"
+      },
+      {
+        "command": "fbo-autocomplete.runSqlFile",
+        "title": "Run SQL File",
+        "icon": {
+          "light": "images/play.svg",
+          "dark": "images/play.svg"
+        }
       },
       {
         "command": "fbo-autocomplete.removeBlankRows",
         "title": "Remove Blank Row"
+      },
+      {
+        "command": "my-fbo-toolkit.openWithVS2008",
+        "title": "Open With VS 2008"
       },
       {
         "command": "fbo-autocomplete.ApplyTranslateFBO",
@@ -486,6 +538,10 @@
       {
         "command": "fbo-autocomplete.ConvertGridToPivotExcel",
         "title": "FBO: Convert Grid To Pivot Excel"
+      },
+      {
+        "command": "fbo-autocomplete.ConvertExcelFromUpload",
+        "title": "FBO: Convert Excel From Upload"
       },
       {
         "command": "fbo-autocomplete.CheckLegacyDirFilter",
@@ -568,6 +624,10 @@
         "title": "New .sql Temp"
       },
       {
+        "command": "fboFile.NewSqlTempOnWorkspace",
+        "title": "New .sql Temp on Workspace"
+      },
+      {
         "command": "fboFile.SearchTextInGroup",
         "title": "Search text in group"
       },
@@ -630,27 +690,19 @@
         "title": "FBO: Execute SQL Query"
       },
       {
-        "command": "fbo-autocomplete.runSqlFile",
-        "title": "Run SQL File",
-        "icon": {
-          "light": "images/play.svg",
-          "dark": "images/play.svg"
-        }
-      },
-      {
         "command": "fbo-autocomplete.previewXmlFlat",
         "title": "Preview XML Flat",
         "icon": "$(open-preview)"
       },
       {
+        "command": "fbo-autocomplete.previewFormula",
+        "title": "Preview Formula",
+        "icon": "$(symbol-operator)"
+      },
+      {
         "command": "fbo-autocomplete.previewForm",
         "title": "Preview Form",
         "icon": "$(layout-panel)"
-      },
-      {
-        "command": "fbo-autocomplete.peekSql",
-        "title": "Peek SQL",
-        "icon": "$(search)"
       },
       {
         "command": "fbo-autocomplete.peekSqlCopyContent",
@@ -675,6 +727,11 @@
       {
         "command": "fbo-autocomplete.analyzeXmlProject",
         "title": "FBO: Analyze XML Project (Enable File Monitoring)"
+      },
+      {
+        "command": "fbo-autocomplete.designRetrieveFlow",
+        "title": "Design Retrieve Flow",
+        "icon": "$(git-pull-request)"
       }
     ],
     "languages": [
@@ -697,12 +754,17 @@
     "watch": "node ./node_modules/webpack/bin/webpack.js --watch",
     "build:preview-form": "node ./node_modules/webpack/bin/webpack.js --config webpack.previewForm.config.js",
     "watch:preview-form": "node ./node_modules/webpack/bin/webpack.js --config webpack.previewForm.config.js --watch",
+    "build:formula-preview": "node ./node_modules/webpack/bin/webpack.js --config webpack.formulaPreview.config.js",
+    "watch:formula-preview": "node ./node_modules/webpack/bin/webpack.js --config webpack.formulaPreview.config.js --watch",
     "vendor:ag-grid": "node scripts/vendor-ag-grid.js",
-    "test:xml-flat-preview": "node scripts/xml-flat-preview.test.js"
+    "test:xml-flat-preview": "node scripts/xml-flat-preview.test.js",
+    "test:formula-preview": "node src/FormulaPreview/tests/run-all.js",
+    "test:convert-excel-upload": "node src/ConvertExcelFromUpload/tests/run-all.js"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.29.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@types/vscode": "^1.96.0",
@@ -719,9 +781,11 @@
   "dependencies": {
     "@vscode/ripgrep": "^1.15.9",
     "@vscode/webview-ui-toolkit": "^1.4.0",
+    "@xyflow/react": "12.11.3",
     "axios": "^1.7.9",
     "cli-table3": "^0.6.5",
     "crypto-js": "^4.2.0",
+    "dagre": "0.8.5",
     "exceljs": "^4.4.0",
     "fast-xml-parser": "^5.10.1",
     "googleapis": "^144.0.0",
@@ -732,6 +796,8 @@
     "node-machine-id": "^1.1.12",
     "preact": "^10.29.7",
     "preact-render-to-string": "^6.7.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "rocksdb": "^5.2.1",
     "strip-ansi": "^7.1.0"
   },

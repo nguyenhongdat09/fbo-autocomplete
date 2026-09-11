@@ -262,14 +262,24 @@ class PeekSql {
         if (!this._lastPeekRange.contains(position)) return null;
 
         const md = new vscode.MarkdownString();
-        md.appendMarkdown("### Peek SQL\n\n");
-        md.appendMarkdown("[Copy to clipboard](command:fbo-autocomplete.peekSqlCopyContent)\n\n");
+        md.supportThemeIcons = true;
+        md.supportHtml = true;
+        md.isTrusted = true;
+
+        const typeLabel = this._lastPeekIsTable ? 'Table Schema' : 'Object Definition';
+        const typeIcon = this._lastPeekIsTable ? '$(table)' : '$(symbol-method)';
+
+        md.appendMarkdown(`**$(database) Peek SQL** &nbsp;•&nbsp; ${typeIcon} *${typeLabel}*\n\n`);
+        md.appendMarkdown(`[$(copy) Copy to Clipboard](command:fbo-autocomplete.peekSqlCopyContent "Sao chép nội dung SQL vào Clipboard")\n\n`);
+        md.appendMarkdown(`---\n\n<br/>\n\n`);
+
         if (this._lastPeekIsTable) {
             md.appendMarkdown(this._lastPeekContent);
         } else {
             md.appendCodeblock(this._lastPeekContent, "sql");
         }
-        md.isTrusted = true;
+        md.appendMarkdown(`\n\n<br/>\n`);
+
         return new vscode.Hover(md, this._lastPeekRange);
     }
 }

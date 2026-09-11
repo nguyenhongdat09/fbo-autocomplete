@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src {{cspSource}} 'unsafe-inline'; script-src {{cspSource}} 'unsafe-inline';">
+    <title>Thiết kế Lấy dữ liệu (Retrieve Flow Designer)</title>
+    <link rel="stylesheet" href="{{styleUri}}">
+</head>
+<body>
+    <div class="top-bar">
+        <h2>
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.254V3.25v.004a.75.75 0 1 1 0-.008v.008zM4.25 1.5a1.75 1.75 0 0 0-.75 3.336v6.328a1.75 1.75 0 1 0 1.5 0V8.25h3.086l1.207 1.207a1.75 1.75 0 1 0 1.06-.94L9.06 7.224A1.75 1.75 0 0 0 8.086 6.75H5V4.836A1.75 1.75 0 0 0 4.25 1.5zm0 10.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5zm7.5-3a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5z"/></svg>
+            Retrieve Flow Designer (FlowMulti)
+        </h2>
+        <div class="header-actions">
+            <button id="btnLoadYCNDXA" class="btn-secondary btn-sm" title="Tải cấu hình mẫu bảng phân tách theo kỳ ($)">📂 Load YCNDXA ($)</button>
+            <button id="btnLoadZCWIMO" class="btn-secondary btn-sm" title="Tải cấu hình mẫu bảng đơn không tách kỳ">📂 Load zcWIMO</button>
+            <button id="btnRefreshPreview" class="btn-secondary btn-sm" title="Làm mới preview">🔄 Refresh Preview</button>
+            <button id="btnGenerate" class="btn-primary" title="Tạo 4 file XML và 1 file SQL temp">🚀 Generate</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Form Pane -->
+        <div class="form-pane" id="formPane">
+            <!-- Section 0: Chế độ bảng -->
+            <div class="card-section">
+                <div class="section-title">0. Chế độ bảng (Table Partition Mode)</div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="src_table_mode" value="partitioned" checked>
+                        Bảng tách kỳ theo tháng ($) — vd: d64$, m64$
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="src_table_mode" value="single">
+                        Bảng đơn (Không $) — vd: phsx, ctsx, isx
+                    </label>
+                </div>
+            </div>
+
+            <!-- Section 1: Định danh Controller -->
+            <div class="card-section">
+                <div class="section-title">1. Định danh & Mã chứng từ</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Identity (Prefix Controller) <span class="req">*</span></label>
+                        <input type="text" id="identity" placeholder="YCNDXA" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Chứng từ đích (dest_tran) <span class="req">*</span></label>
+                        <input type="text" id="dest_tran" placeholder="YCNTran" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã CT nguồn (src_ma_ct) <span class="req">*</span></label>
+                        <input type="text" id="src_ma_ct" placeholder="DXA" required>
+                    </div>
+                    <div class="form-group mode-partitioned-only">
+                        <label>Ext bảng nguồn (src_ext) <span class="req">*</span></label>
+                        <input type="text" id="src_ext" placeholder="64">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Bảng đích -->
+            <div class="card-section">
+                <div class="section-title">2. Bảng đích (Destination Tables)</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Bảng Detail đích (dest_d_table) <span class="req">*</span></label>
+                        <input type="text" id="dest_d_table" placeholder="dycn$">
+                    </div>
+                    <div class="form-group">
+                        <label>Bảng Master đích (dest_m_table) <span class="req">*</span></label>
+                        <input type="text" id="dest_m_table" placeholder="mycn$">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Bảng nguồn -->
+            <div class="card-section">
+                <div class="section-title">3. Bảng nguồn (Source Tables)</div>
+                <div class="form-grid mode-partitioned-only">
+                    <div class="form-group">
+                        <label>Bảng tổng hợp nguồn (src_c_table)</label>
+                        <input type="text" id="src_c_table" placeholder="c64$000000">
+                    </div>
+                    <div class="form-group">
+                        <label>Bảng chi tiết nguồn (Tự suy biến)</label>
+                        <input type="text" id="src_d_table_preview" readonly disabled placeholder="d{ext}$">
+                    </div>
+                </div>
+                <div class="form-grid mode-single-only" style="display: none;">
+                    <div class="form-group">
+                        <label>Bảng Inquiry nguồn (src_inquiry_table) <span class="req">*</span></label>
+                        <input type="text" id="src_inquiry_table" placeholder="isx">
+                    </div>
+                    <div class="form-group">
+                        <label>Bảng Master nguồn (src_master_table) <span class="req">*</span></label>
+                        <input type="text" id="src_master_table" placeholder="phsx">
+                    </div>
+                    <div class="form-group">
+                        <label>Bảng Detail nguồn (src_detail_table) <span class="req">*</span></label>
+                        <input type="text" id="src_detail_table" placeholder="ctsx">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Cột Số Lượng & SL Đã Lấy -->
+            <div class="card-section">
+                <div class="section-title">4. Cột Số lượng & Số lượng đã lấy</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Cột SL nguồn (src_qty_col)</label>
+                        <input type="text" id="src_qty_col" placeholder="so_luong" value="so_luong">
+                    </div>
+                    <div class="form-group">
+                        <label>Cột SL đã lấy nguồn (src_taken_col) <span class="req">*</span></label>
+                        <input type="text" id="src_taken_col" placeholder="sl_ycn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kiểu dữ liệu SQL (src_taken_sql_type)</label>
+                        <input type="text" id="src_taken_sql_type" placeholder="numeric(19,4)" value="numeric(19,4)">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề cột đã lấy (src_taken_header_v)</label>
+                        <input type="text" id="src_taken_header_v" placeholder="Sl đã lấy">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Điều kiện lọc & Finding Lookup Detail -->
+            <div class="card-section">
+                <div class="section-title">5. Điều kiện lọc & Finding Lookup Detail</div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Trạng thái lọc nguồn (finding_status_list) <span class="req">*</span></label>
+                        <input type="text" id="finding_status_list" placeholder="2 hoặc 1, 2 hoặc 2, 3, 4" value="2" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Điều kiện lọc MultiGrid (multigrid_filter_extra)</label>
+                        <input type="text" id="multigrid_filter_extra" placeholder="and trang_thai_giao_hang in ('5')">
+                    </div>
+                    <div class="form-group">
+                        <label>Lookup Detail Table</label>
+                        <input type="text" id="lookup_detail_table" placeholder="d64$%Partition hoặc ctsx">
+                    </div>
+                    <div class="form-group">
+                        <label>Lookup Detail Alias</label>
+                        <input type="text" id="lookup_detail_alias" placeholder="z3">
+                    </div>
+                    <div class="form-group">
+                        <label>Lookup Detail Remain Expr</label>
+                        <input type="text" id="lookup_detail_remain_expr" placeholder="z3.sl_ycn < z3.so_luong">
+                    </div>
+                    <div class="form-group full-width" style="font-size: 11px; color: var(--vscode-descriptionForeground); margin-top: -6px;">
+                        Để trống 3 ô Lookup Detail = không lọc SL còn trên Lookup (arg '', '', ''). Placeholder chỉ là ví dụ gợi ý.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Trường vết (Trace Fields) -->
+            <div class="card-section">
+                <div class="section-title">
+                    6. Trường vết chuyển tiếp (Trace Fields)
+                    <button type="button" id="btnAddTraceField" class="btn-secondary btn-sm" style="margin-left: auto;">+ Thêm trường vết</button>
+                </div>
+                <div id="traceFieldsList" class="trace-fields-list"></div>
+            </div>
+
+            <!-- Section 7: Transfer & Set Items -->
+            <div class="card-section">
+                <div class="section-title">7. Cấu hình Transfer (f1, f2, setItemValues)</div>
+                <div class="form-grid">
+                    <div class="form-group full-width" style="margin-bottom: 4px;">
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                            <input type="checkbox" id="include_ma_nt" checked>
+                            Có mã ngoại tệ (ma_nt) trên MultiGrid / Transfer
+                        </label>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>f1 (Trường nguồn)</label>
+                        <input type="text" id="f1" placeholder="so_luong0, so_luong, stt_rec, stt_rec0, so_ct, line_nbr">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>f2 (Trường đích)</label>
+                        <input type="text" id="f2" placeholder="so_luong, so_luong_ban, stt_rec_dxa, stt_rec0dxa, dxa_so, dxa_ln">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>master_set_fields (Set trường Master)</label>
+                        <input type="text" id="master_set_fields" placeholder="stt_rec_dxa, dxa_so">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>transfer_map_fields (Trường map transfer)</label>
+                        <input type="text" id="transfer_map_fields" placeholder="ma_vt, ten_vt%l, dvt, he_so, ma_lo_ban, lo_yn">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>other_copy_field (ENTITY OtherCopyField)</label>
+                        <input type="text" id="other_copy_field" placeholder="nhieu_dvt, he_so, ma_vt, dvt, ngay_ct, ma_lo_ban, lo_yn">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: sysfilterdeclares -->
+            <div class="card-section">
+                <div class="section-title">
+                    8. Khai báo sysfilterdeclares
+                    <button type="button" id="btnAddSysfilterRow" class="btn-secondary btn-sm" style="margin-left: auto;">+ Thêm dòng sysfilter</button>
+                </div>
+                <div class="table-container">
+                    <table id="sysfilterTable">
+                        <thead>
+                            <tr>
+                                <th>Hậu tố ID</th>
+                                <th>Tên trường (name)</th>
+                                <th>Biểu thức SQL (exname)</th>
+                                <th style="width: 40px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 9: Tiêu đề & Thông báo -->
+            <div class="card-section">
+                <div class="section-title">9. Tiêu đề & Thông báo (Titles & Messages)</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Tiêu đề Filter</label>
+                        <input type="text" id="title_filter_v" placeholder="Chọn đơn hàng bán">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề MultiForm</label>
+                        <input type="text" id="title_multiform_v" placeholder="Phiếu đơn hàng bán">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề MultiGrid</label>
+                        <input type="text" id="title_multigrid_v" placeholder="Danh sách đơn hàng bán">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề Từ ngày</label>
+                        <input type="text" id="title_filter_date_v" placeholder="Đơn hàng bán từ ngày">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề Số chứng từ</label>
+                        <input type="text" id="title_filter_so_v" placeholder="Số đơn hàng bán">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Thông báo khi không có dữ liệu</label>
+                        <input type="text" id="filter_none_message_v" placeholder="Không có dữ liệu theo điều kiện đang lọc.">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 10: Tên Procedure & Cấu hình Nâng Cao -->
+            <div class="card-section">
+                <div class="section-title" id="advancedHeader">10. Stored Procedure & Nâng cao</div>
+                <div class="collapsible-content" id="advancedContent">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Tên Procedure BeforeAfterUpdate</label>
+                            <input type="text" id="proc_name" placeholder="fsd_FastBusiness$Voucher$BeforeAfterUpdate$YCNTranFromSOTran">
+                        </div>
+                        <div class="form-group full-width" style="margin-bottom: 4px;">
+                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" id="use_he_so_convert">
+                                Dùng chuyển đổi hệ số (he_so)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Trường ngày cha (dest_parent_date_field)</label>
+                            <input type="text" id="dest_parent_date_field" placeholder="ngay_lct" value="ngay_lct">
+                        </div>
+                        <div class="form-group">
+                            <label>Trường đơn vị cha (dest_parent_unit_field)</label>
+                            <input type="text" id="dest_parent_unit_field" placeholder="ma_dvcs" value="ma_dvcs">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Pane -->
+        <div class="preview-pane">
+            <div class="preview-tabs">
+                <div class="preview-tab active" data-tab="Filter">Filter.xml</div>
+                <div class="preview-tab" data-tab="MultiForm">MultiForm.xml</div>
+                <div class="preview-tab" data-tab="MultiGrid">MultiGrid.xml</div>
+                <div class="preview-tab" data-tab="Lookup">Lookup.xml</div>
+                <div class="preview-tab" data-tab="SQL">BeforeAfterUpdate.sql</div>
+            </div>
+            <div class="preview-content">
+                <textarea class="code-viewer" id="codeViewer" readonly spellcheck="false"></textarea>
+            </div>
+            <div class="status-bar" id="statusBar">
+                <span class="badge badge-info" id="statusBadge">READY</span>
+                <span id="statusText">Nhập tham số hoặc tải preset để xem preview.</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{scriptUri}}"></script>
+</body>
+</html>

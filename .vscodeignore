@@ -56,6 +56,11 @@ src/**
 !src/ReadXMLByJS/CheckingError/media/**
 # Preview Form webview — Panel load bundle.js từ path này (không nằm trong src/dist)
 !src/PreviewForm/media/bundle.js
+# Formula Preview webview — Panel load bundle.js từ path này
+!src/FormulaPreview/media/preview.html
+!src/FormulaPreview/media/bundle.js
+# Retrieve Flow webview
+!src/RetrieveFlow/media/**
 
 
 # Database: chỉ template/runtime cần thiết (không ship LevelDB/cache máy dev)
@@ -65,8 +70,10 @@ src/**
 !src/Database/fbo-license.dat
 !src/Database/extension_for_format.js
 !src/Database/mau_chuan.xlsx
+!src/Database/upload_chuan.xlsx
 !src/Database/Json Set Mau .txt
 !src/Database/autocompletesheet-*.json
+!src/Database/RetrieveFlowTemplates/**
 
 # Loại bỏ các file JSON config không cần thiết
 **/jsconfig.json

@@ -1,5 +1,10 @@
 const tr = require("googletrans").default;
-const vscode = require('vscode');
+let vscode;
+try {
+    vscode = require('vscode');
+} catch (e) {
+    vscode = null;
+}
 
 class TranslatedText {
 

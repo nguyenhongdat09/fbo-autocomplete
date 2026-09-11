@@ -1,3 +1,5 @@
+const vscode = require('vscode');
+const { exec } = require('child_process');
 const fs = require('fs');
 const ExcelJS = require('exceljs');
 const pathModule = require('path');
@@ -182,10 +184,23 @@ class ConvertGridToHeader {
 
             // Lưu file mới mà vẫn giữ nguyên format
             return workbook.xlsx.writeFile(outputPath);
-        }).then(() => {
+        }).then(async () => {
             console.log(`Xuất file Excel thành công: ${outputPath}`);
+            vscode.window.showInformationMessage(`Đã xuất file: ${outputPath}`);
+            try {
+                const excel_uri = vscode.Uri.file(outputPath);
+                const is_opened = await vscode.env.openExternal(excel_uri);
+                if (!is_opened && process.platform === 'win32') {
+                    exec(`start "" "${outputPath}"`);
+                }
+            } catch (open_err) {
+                if (process.platform === 'win32') {
+                    exec(`start "" "${outputPath}"`);
+                }
+            }
         }).catch(err => {
             console.error('Lỗi khi ghi file Excel:', err);
+            vscode.window.showErrorMessage('Lỗi khi ghi file Excel: ' + err.message);
         });
     }
     getExcelColumnName(colIndex) {

@@ -57,11 +57,16 @@ class FormulaHoverProvider {
 
         // 5. Build UI Hover
         const md = new vscode.MarkdownString(undefined, true);
-        md.isTrusted = false;
-        md.appendMarkdown(`**g.$a.${alias}**\n\n`);
+        md.supportThemeIcons = true;
+        md.supportHtml = true;
+        md.isTrusted = true;
+
+        md.appendMarkdown(`**$(calculator) Grid Formula:** \`g.$a.${alias}\`\n\n`);
+        md.appendMarkdown(`---\n\n<br/>\n\n`);
         
-        // Nếu là formula, có thể hiển thị dạng code JS cho đẹp
+        // Hiển thị dạng code JavaScript với highlight và padding
         md.appendCodeblock(entry.display, 'javascript');
+        md.appendMarkdown(`\n\n<br/>\n`);
 
         return new vscode.Hover(md, wordRange);
     }

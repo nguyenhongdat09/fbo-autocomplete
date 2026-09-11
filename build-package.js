@@ -258,6 +258,13 @@ function run() {
             shell: isWin,
         });
 
+        console.log("⚒ Chạy build Formula Preview webview (bundle.js)...");
+        execSync("npm run build:formula-preview", {
+            stdio: "inherit",
+            cwd: __dirname,
+            shell: isWin,
+        });
+
         console.log("📋 Sao chép files BrowserHandle vào dist...");
         const filesToCopy = [
             "AnalystXML.worker.js",
@@ -417,6 +424,8 @@ function assertRuntimeDepsIntact() {
         "node_modules/@vscode/ripgrep/lib/index.js",
         "src/dist/extension.js",
         "src/PreviewForm/media/bundle.js",
+        "src/FormulaPreview/media/bundle.js",
+        "src/FormulaPreview/media/preview.html",
     ];
 
     // Hỗ trợ cả @vscode/ripgrep cũ (1.15.x) và mới (1.18.x - dùng optional dependencies)

@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "FastBusiness Keywords Highlight",
   "scopeName": "fastbusiness.injection",
- "injectionSelector": "L:text.xml, L:string.unquoted.cdata.xml",
+  "injectionSelector": "L:string.unquoted.cdata.xml -comment",
    "patterns": [
     {
       "comment": "TEST - Match # followed by word characters",
@@ -30,14 +30,19 @@
       "name": "keyword.operator.js.fastbusiness"
     },
     {
+      "comment": "FastBusiness JS core built-in objects - f, g, sender",
+      "match": "\\b(f|g|sender)\\b",
+      "name": "variable.language.fbo.fastbusiness"
+    },
+    {
       "comment": "SQL DML keywords (case-insensitive)",
       "match": "(?i)\\b(select|insert|update|delete|exec|execute)\\b",
-      "name": "keyword.dml.sql.fastbusiness"
+      "name": "keyword.control.dml.sql.fastbusiness"
     },
     {
       "comment": "SQL DDL keywords (case-insensitive)",
       "match": "(?i)\\b(create|alter|drop|table|procedure|function|index)\\b",
-      "name": "keyword.ddl.sql.fastbusiness"
+      "name": "keyword.control.ddl.sql.fastbusiness"
     },
     {
       "comment": "SQL Control flow (case-insensitive)",
@@ -47,12 +52,12 @@
     {
       "comment": "SQL Clauses - short (case-insensitive, ONLY with space after)",
       "match": "(?i)\\b(on|and|as|or|in|by|set)(?=\\s)",
-      "name": "keyword.clause.short.sql.fastbusiness"
+      "name": "keyword.control.clause.sql.fastbusiness"
     },
     {
       "comment": "SQL Clauses - other keywords (case-insensitive)",
       "match": "(?i)\\b(from|where|join|not|into|exists|order|group|having|union|distinct|top|left|right|inner|outer|cross|with|values|nolock)\\b",
-      "name": "keyword.clause.sql.fastbusiness"
+      "name": "keyword.control.clause.sql.fastbusiness"
     },
     {
       "comment": "SQL Window functions (case-insensitive)",
@@ -132,13 +137,8 @@
       "name": "variable.parameter.sql.fastbusiness"
     }, 
     {
-      "comment": "SQL user variables - with $ prefix (@$variable)",
-      "match": "@\\$[a-zA-Z_][a-zA-Z0-9_]*\\b",
-      "name": "variable.other.dollar.sql.fastbusiness"
-    },
-    {
-      "comment": "SQL user variables - normal (@variable)",
-      "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
+      "comment": "SQL user variables and partition placeholders - @var, @$var, @@sys, $$partition$current, $partition",
+      "match": "(@{1,2}\\$?|\\${1,2})[a-zA-Z0-9_$]+",
       "name": "variable.parameter.sql.fastbusiness"
     },
     {

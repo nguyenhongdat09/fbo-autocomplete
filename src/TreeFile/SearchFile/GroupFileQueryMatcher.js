@@ -52,7 +52,7 @@ class GroupFileQueryMatcher {
         if (!/[*%?_]/.test(term)) {
             return { type: "plain", value: term };
         }
-        const escaped = term.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+        const escaped = term.replace(/[.+^${}()|[\]\\*?]/g, "\\$&");
         const regexPattern = escaped
             .replace(/\\\*/g, ".*")
             .replace(/%/g, ".*")

@@ -1,6 +1,8 @@
-const vscode = require('vscode');
+let vscode;
+try {
+    vscode = require('vscode');
+} catch (e) {}
 const path = require('path');
-// const entityResolver = require('./entityResolver'); // Remove circular dependency
 const EntityLevelStore = require('./EntityLevelStore');
 class EntityWatcherEngine {
     constructor() {

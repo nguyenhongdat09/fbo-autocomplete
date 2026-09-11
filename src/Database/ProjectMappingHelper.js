@@ -1,6 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const vscode = require('vscode');
+let vscode = null;
+try {
+    vscode = require('vscode');
+} catch {
+    vscode = null;
+}
 
 class ProjectMappingHelper {
     constructor() {
@@ -48,7 +53,7 @@ class ProjectMappingHelper {
             console.error("Error loading projectMapping.json:", err);
         }
         
-        if (!this.watcher) {
+        if (!this.watcher && vscode && vscode.workspace) {
             this.watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(path.dirname(filePath), path.basename(filePath)));
             this.watcher.onDidChange(() => {
                 this.isLoaded = false; // Force reload

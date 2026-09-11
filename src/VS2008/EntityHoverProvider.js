@@ -196,11 +196,16 @@ class EntityHoverProvider {
             return PADDING.repeat(Math.max(0, pad - indent)) + node;
         }).join('\r\n');
     }
-    
-    
+     
     appendHoverActionLinks(markdownContent) {
+        const toggleIcon = this.hoverMode === 'original' ? '$(eye)' : '$(reply)';
         const toggleText = this.hoverMode === 'original' ? 'Show Flat' : 'Show Original';
-        markdownContent.appendMarkdown(`[Copy Original](command:fbo-autocomplete.entityHoverCopyContent) | [Copy Flat](command:fbo-autocomplete.entityHoverCopyFlatContent) | [${toggleText}](command:fbo-autocomplete.toggleHoverMode)\n\n`);
+        markdownContent.appendMarkdown(
+            `[$(copy) Copy](command:fbo-autocomplete.entityHoverCopyContent "Copy nội dung gốc") &nbsp;|&nbsp; ` +
+            `[$(clippy) Copy Flat](command:fbo-autocomplete.entityHoverCopyFlatContent "Copy nội dung phẳng đã giải mã") &nbsp;|&nbsp; ` +
+            `[${toggleIcon} ${toggleText}](command:fbo-autocomplete.toggleHoverMode "Chuyển chế độ hiển thị") &nbsp;|&nbsp; ` +
+            `[$(refresh) Reload](command:fbo-autocomplete.entityHoverReload "Reload lại Entity từ đĩa")\n\n`
+        );
     }
 
     async provideHover(document, position) {
@@ -238,14 +243,39 @@ class EntityHoverProvider {
             }
 
             const markdownContent = new vscode.MarkdownString();
-            markdownContent.appendMarkdown(`### 🎯 Entity Content: \`&${entity};\` 🎯 \n\n`);
+            markdownContent.supportThemeIcons = true;
+            markdownContent.supportHtml = true;
+            markdownContent.isTrusted = true;
+
+            const modeBadge = this.hoverMode === 'original' ? 'Original' : 'Flat';
+            const entityType = entityDecl.systemUrl ? 'External Entity' : 'Internal Entity';
+
+            // 1. Header chuẩn VS Code Codicons
+            markdownContent.appendMarkdown(`**$(symbol-variable) &${entity};** &nbsp;•&nbsp; *${entityType}* &nbsp;•&nbsp; \`${modeBadge}\`\n\n`);
+
+            // 2. Nguồn file định nghĩa kèm link click để nhảy tới file/dòng
+            if (entityDecl.sourceFile) {
+                const sourceFileName = path.basename(entityDecl.sourceFile);
+                if (fs.existsSync(entityDecl.sourceFile)) {
+                    const lineSuffix = entityDecl.line ? `:${entityDecl.line}` : '';
+                    const fileUri = vscode.Uri.file(entityDecl.sourceFile).with({
+                        fragment: entityDecl.line ? `L${entityDecl.line}` : ''
+                    });
+                    markdownContent.appendMarkdown(`$(file-code) Nguồn: [${sourceFileName}${lineSuffix}](${fileUri.toString()})\n\n`);
+                } else {
+                    markdownContent.appendMarkdown(`$(file-code) Nguồn: \`${sourceFileName}\` *(chưa tạo)*\n\n`);
+                }
+            }
+
+            // 3. Action bar
             this.appendHoverActionLinks(markdownContent);
 
-            // 1. Tính toán Original
+            markdownContent.appendMarkdown(`---\n\n<br/>\n\n`);
+
+            // 4. Tính toán nội dung và hiển thị với padding trên dưới thoáng đãng
             let formattedContent = this.formatXml(rawContent);
             this._lastEntityContent = formattedContent;
 
-            // 2. Tính toán Flat Lazily (Chỉ tính khi hoverMode === 'flat')
             let formattedFlatContent = "";
             if (this.hoverMode === 'flat') {
                 let flatContent = this.flattenEntityContent(rawContent, filePath, [entity]);
@@ -255,23 +285,19 @@ class EntityHoverProvider {
                 this._lastFlatEntityContent = null;
             }
 
-            // 3. Chỉ render markdown hiển thị tùy theo trạng thái hoverMode
-            if (this.hoverMode === 'original') {
-                markdownContent.appendMarkdown(`#### 📝 Original:\n\`\`\`xml\n${formattedContent}\n\`\`\``);
-            } else {
-                markdownContent.appendMarkdown(`#### ⚡ Flat:\n\`\`\`xml\n${formattedFlatContent}\n\`\`\``);
-            }
+            const displayContent = this.hoverMode === 'original' ? formattedContent : formattedFlatContent;
+            markdownContent.appendMarkdown(`\`\`\`xml\n${displayContent}\n\`\`\`\n\n<br/>\n`);
 
-            markdownContent.isTrusted = true; // Cho phép markdown có nội dung nhúng
             return new vscode.Hover(markdownContent);
         }
 
         this._lastEntityContent = null;
         this._lastFlatEntityContent = null;
         const markdownContent = new vscode.MarkdownString();
-        markdownContent.appendMarkdown(`### Entity not found: \`${entity}\`\n\n`);
-        markdownContent.appendMarkdown("Entity không được tìm thấy trong DTD của file XML này.\n\n");
+        markdownContent.supportThemeIcons = true;
         markdownContent.isTrusted = true;
+        markdownContent.appendMarkdown(`**$(warning) Không tìm thấy Entity:** \`&${entity};\`\n\n`);
+        markdownContent.appendMarkdown(`Entity không được định nghĩa trong DTD của file XML này.\n\n`);
         return new vscode.Hover(markdownContent);
     }
  

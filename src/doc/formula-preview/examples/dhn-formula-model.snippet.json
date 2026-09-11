@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "_comment": "Fixture viết tay rút gọn từ DHNDetail g.$a — không phải output auto. Dùng đối chiếu test/plain_vi.",
+  "source_path": "Grid/DHNDetail.xml",
+  "file_name": "DHNDetail.xml",
+  "companion_dir_path": "Dir/DHNTran.xml",
+  "warnings": [],
+  "fields": {
+    "so_luong": { "name": "so_luong", "header_v": "Số lượng", "header_e": "Quantity", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "qty_price" },
+    "gia_nt": { "name": "gia_nt", "header_v": "Giá nt", "header_e": "FC Price", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "qty_price" },
+    "tien_nt2": { "name": "tien_nt2", "header_v": "Tiền hàng nt", "header_e": "FC Amount", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "amount" },
+    "tien2": { "name": "tien2", "header_v": "Tiền", "header_e": "Amount", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "amount" },
+    "tl_ck": { "name": "tl_ck", "header_v": "Tỷ lệ chiết khấu (%)", "header_e": "Discount Rate (%)", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "discount" },
+    "ck_nt": { "name": "ck_nt", "header_v": "Chiết khấu nt", "header_e": "FC Discount Amount", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "discount" },
+    "ck": { "name": "ck", "header_v": "Chiết khấu", "header_e": "Discount Amount", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "discount" },
+    "thue_suat": { "name": "thue_suat", "header_v": "Thuế suất", "header_e": "Tax Rate", "source": "grid", "type": "decimal", "hidden": false, "read_only": true, "group": "tax" },
+    "thue_nt": { "name": "thue_nt", "header_v": "Thuế nt", "header_e": "FC Tax", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "tax" },
+    "thue": { "name": "thue", "header_v": "Thuế", "header_e": "Tax Amount", "source": "grid", "type": "decimal", "hidden": false, "read_only": false, "group": "tax" },
+    "phi_dvtn_yn": { "name": "phi_dvtn_yn", "header_v": "Phí DV-TN", "header_e": "DV-TN Fee", "source": "grid", "type": "boolean", "hidden": false, "read_only": false, "group": "fee" },
+    "tien_mthang_nt": { "name": "tien_mthang_nt", "header_v": "Tiền + Phí MT nt ", "header_e": "EPC", "source": "grid", "type": "decimal", "hidden": true, "read_only": false, "group": "fee" },
+    "ty_gia": { "name": "ty_gia", "header_v": "Tỷ giá", "header_e": "Ex. Rate", "source": "master", "type": "decimal", "hidden": false, "read_only": false, "group": "master" },
+    "t_ck_nt": { "name": "t_ck_nt", "header_v": "Tiền chiết khấu", "header_e": "Discount Amount", "source": "master", "type": "decimal", "hidden": false, "read_only": true, "group": "master" },
+    "t_tt_nt": { "name": "t_tt_nt", "header_v": "Tổng thanh toán", "header_e": "Total", "source": "master", "type": "decimal", "hidden": false, "read_only": true, "group": "master" }
+  },
+  "entries": [
+    {
+      "alias": "tien_nt2_sl",
+      "kind": "formula",
+      "raw": "[tien_nt2]:=[so_luong]*[gia_nt]",
+      "target": "tien_nt2",
+      "formula": "[so_luong]*[gia_nt]",
+      "plain_vi": "Tiền hàng nt = Số lượng × Giá nt",
+      "refs": ["so_luong", "gia_nt"],
+      "group": "amount"
+    },
+    {
+      "alias": "tien2",
+      "kind": "formula",
+      "raw": "[tien2]:=[tien_nt2]*[$ty_gia]",
+      "target": "tien2",
+      "formula": "[tien_nt2]*[$ty_gia]",
+      "plain_vi": "Tiền = Tiền hàng nt × Tỷ giá",
+      "refs": ["tien_nt2", "ty_gia"],
+      "group": "amount"
+    },
+    {
+      "alias": "ck_nt",
+      "kind": "formula",
+      "raw": "[ck_nt]:=[tien_nt2]*[tl_ck]/100",
+      "target": "ck_nt",
+      "formula": "[tien_nt2]*[tl_ck]/100",
+      "plain_vi": "Chiết khấu nt = Tiền hàng nt × Tỷ lệ chiết khấu (%) / 100",
+      "refs": ["tien_nt2", "tl_ck"],
+      "group": "discount"
+    },
+    {
+      "alias": "thue_nt",
+      "kind": "formula",
+      "raw": "[thue_nt]:=([tien_nt2] - [ck_nt])*[thue_suat]/100",
+      "target": "thue_nt",
+      "formula": "([tien_nt2] - [ck_nt])*[thue_suat]/100",
+      "plain_vi": "Thuế nt = (Tiền hàng nt − Chiết khấu nt) × Thuế suất / 100",
+      "refs": ["tien_nt2", "ck_nt", "thue_suat"],
+      "group": "tax"
+    },
+    {
+      "alias": "tien_mthang_nt",
+      "kind": "formula",
+      "raw": "[tien_mthang_nt]:=([phi_dvtn_yn] == 0 ? [tien_nt2] : 0)",
+      "target": "tien_mthang_nt",
+      "formula": "([phi_dvtn_yn] == 0 ? [tien_nt2] : 0)",
+      "plain_vi": "Nếu không tick Phí DV-TN thì lấy Tiền hàng nt, không thì 0",
+      "refs": ["phi_dvtn_yn", "tien_nt2"],
+      "group": "fee"
+    },
+    {
+      "alias": "t_ck_nt",
+      "kind": "aggregate",
+      "raw": "['t_ck_nt', 'ck_nt']",
+      "master": "t_ck_nt",
+      "grid_col": "ck_nt",
+      "plain_vi": "Cộng dồn Chiết khấu nt trên lưới thành Tiền chiết khấu trên phiếu",
+      "refs": ["ck_nt"],
+      "group": "master"
+    },
+    {
+      "alias": "t_tt_nt",
+      "kind": "formula",
+      "raw": "[t_tt_nt]:=[t_tien_nt2]-[t_ck_nt]+[t_thue_nt]+[t_thue_dvtn_nt]",
+      "target": "t_tt_nt",
+      "formula": "[t_tien_nt2]-[t_ck_nt]+[t_thue_nt]+[t_thue_dvtn_nt]",
+      "plain_vi": "Tổng thanh toán nt = Tổng tiền nt − Tiền chiết khấu + Thuế nt + Tổng thuế DVTN nt",
+      "refs": ["t_tien_nt2", "t_ck_nt", "t_thue_nt", "t_thue_dvtn_nt"],
+      "group": "master"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "so_luong",
+      "trigger_field": "so_luong",
+      "title_vi": "Khi sửa Số lượng",
+      "formula_aliases": ["tien_nt2_sl", "tien2", "ck_nt", "ck_tl", "thue_nt", "thue_tl", "tien_mthang_nt", "tien_mthang", "tienmt", "s5", "thue_dvtn_nt", "thue_dvtn"],
+      "aggregate_aliases": ["t_tien_hang_nt", "t_tien_hang", "t_tien_bvmt_nt", "t_tien_bvmt", "t_ck_nt", "t_ck", "t_thue_nt", "t_thue", "t_thue_dvtn_nt", "t_thue_dvtn"],
+      "master_aliases": ["t_thue_nt_net", "t_thue_net", "t_tien_nt2", "t_tien2", "t_tt_nt", "t_tt"],
+      "extra_js": true,
+      "extra_js_note": "calcGiaDvtn$GridVoucherDetail$All — không mô phỏng MVP"
+    }
+  ],
+  "groups": ["qty_price", "amount", "discount", "tax", "fee", "master"],
+  "playground": {
+    "default_scenario_id": "so_luong",
+    "values": {
+      "so_luong": 10,
+      "gia_nt": 100000,
+      "ty_gia": 1,
+      "tl_ck": 5,
+      "thue_suat": 10,
+      "phi_dvtn_yn": false,
+      "ty_le": 0
+    }
+  }
+}

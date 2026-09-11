@@ -1,7 +1,7 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
-const { execFile } = require("child_process");
+const { exec, execFile } = require("child_process");
 const { resolveBundledDatabaseRoot } = require("../extensionDatabasePaths");
 
 class ConvertGridToPivotExcel {
@@ -96,6 +96,16 @@ class ConvertGridToPivotExcel {
         );
 
         vscode.window.showInformationMessage(`Đã xuất file: ${saveUri.fsPath}`);
+        try {
+            const is_opened = await vscode.env.openExternal(saveUri);
+            if (!is_opened && process.platform === "win32") {
+                exec(`start "" "${saveUri.fsPath}"`);
+            }
+        } catch (open_err) {
+            if (process.platform === "win32") {
+                exec(`start "" "${saveUri.fsPath}"`);
+            }
+        }
     }
 
     _resolvePivotExePath() {

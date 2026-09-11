@@ -36,6 +36,9 @@ function buildFormulaMap(gaBlockFlat) {
 
     gaBlockFlat = unescapeXmlEntities(gaBlockFlat);
 
+    // Loại bỏ các marker CDATA còn sót lại do entity xen giữa (ví dụ: ]]> &Entity; <![CDATA[)
+    gaBlockFlat = gaBlockFlat.replace(/\]\]>/g, '').replace(/<!\[CDATA\[/g, '');
+
     // Loại bỏ "g.$a = {" và "}"
     let body = gaBlockFlat.replace(/^g\.\$a\s*=\s*\{/, '');
     body = body.replace(/};?\s*$/, '');
@@ -54,8 +57,8 @@ function buildFormulaMap(gaBlockFlat) {
         let alias = entryStr.substring(0, colonIndex).trim();
         let value = entryStr.substring(colonIndex + 1).trim();
 
-        // Bỏ quote quanh alias nếu có
-        alias = alias.replace(/^['"]|['"]$/g, '');
+        // Bỏ quote và marker CDATA quanh alias nếu có
+        alias = alias.replace(/^\]\]>/, '').replace(/^<!\[CDATA\[/, '').replace(/^['"]|['"]$/g, '').trim();
         
         let entry = {
             alias,
@@ -78,15 +81,44 @@ function buildFormulaMap(gaBlockFlat) {
                 entry.display = innerString;
             }
         } else if (value.startsWith('[') && value.endsWith(']')) {
-            entry.kind = 'aggregate';
-            // Clean format array
-            entry.display = value.replace(/\s+/g, ' ');
+            const innerArrayStr = value.substring(1, value.length - 1).trim();
+            const elements = splitByTopLevelComma(innerArrayStr).map(el => el.trim());
+
+            if (elements.length === 2) {
+                entry.kind = 'aggregate';
+                entry.master = cleanIdentifierOrBracket(elements[0]);
+                entry.grid_col = cleanIdentifierOrBracket(elements[1]);
+                entry.display = value.replace(/\s+/g, ' ');
+            } else if (elements.length === 3) {
+                entry.kind = 'aggregate_filter';
+                entry.master = cleanIdentifierOrBracket(elements[0]);
+                entry.grid_col = cleanIdentifierOrBracket(elements[1]);
+                entry.filter = elements[2].replace(/^['"]|['"]$/g, '');
+                entry.display = value.replace(/\s+/g, ' ');
+            } else {
+                entry.kind = 'aggregate';
+                entry.display = value.replace(/\s+/g, ' ');
+            }
         }
 
         map.set(alias, entry);
     }
 
     return map;
+}
+
+/**
+ * Loại bỏ dấu ngoặc vuông và dấu nháy quanh tên trường (chỉ khi là identifier đơn)
+ * @param {string} str 
+ * @returns {string}
+ */
+function cleanIdentifierOrBracket(str) {
+    if (!str) return '';
+    let s = str.trim().replace(/^['"]|['"]$/g, '').trim();
+    // Chỉ [name] hoặc [$name] thuần — không phải biểu thức
+    const m = s.match(/^\[\$?([A-Za-z_][\w]*)\]$/);
+    if (m) return m[1];
+    return s;
 }
 
 /**

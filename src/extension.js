@@ -36,12 +36,18 @@ const { runCurrentSqlFileVisual } = require("./DBQuery/QueryDatabaseVisualResult
 const PeekSqlClass = require("./DBQuery/PeekSql");
 const { registerFormatXml } = require("./FormatXML/registerFormatXml");
 const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
+const { registerConvertExcelFromUpload } = require("./ConvertExcelFromUpload");
 const SearchResultTreeView = require("./TreeFile/SearchFile/SearchResultTreeView");
 const { activateGroupTextSearch } = require("./TreeFile/SearchText/GroupTextSearchBootstrap");
 const { registerXmlFlatPreview } = require("./ReadXMLByJS/XmlFlatPreview");
+const { registerFormulaPreview } = require("./FormulaPreview");
+const { registerRetrieveFlow } = require("./RetrieveFlow");
 const { registerCheckingError } = require('./ReadXMLByJS/CheckingError');
+const { registerFboSemanticTokens } = require('./HighLightSyntax/FboSemanticTokensProvider');
 const { removeBlankRows } = require('./Utils/removeBlankRows');
 const formulaHover = require('./ReadXMLByJS/FormulaHover');
+const { registerCategoryHover } = require('./ReadXMLByJS/CategoryHover');
+const { registerDataFormatHover } = require('./ReadXMLByJS/DataFormatHover');
 const EntityWatcherEngine = require('./ReadXMLByJS/EntityWatcherEngine');
 /**
  * @param {vscode.ExtensionContext} context
@@ -313,7 +319,7 @@ async function activate(context) {
             return;
         }
         // Gọi hàm export với đường dẫn đã chọn
-        cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
+        await cvtToEx.exportToExcel.bind(cvtToEx)(path, fileUri.fsPath);
     });
 
     const pivotExcelConverter = new ConvertGridToPivotExcel();
@@ -327,6 +333,12 @@ async function activate(context) {
             }
         }
     );
+
+    registerConvertExcelFromUpload(context, {
+        getIndexService: () => (treeDataProvider && typeof treeDataProvider.getGroupFileIndexService === 'function')
+            ? treeDataProvider.getGroupFileIndexService()
+            : (treeDataProvider ? treeDataProvider._groupFileIndexService : null)
+    });
 
     const translateAuto = new TranslateAuto(trans);
     let transautoComplete = translateAuto.activate();
@@ -500,11 +512,16 @@ async function activate(context) {
        context.subscriptions.push(disposable);
     */
     registerXmlFlatPreview(context);
+    registerFormulaPreview(context);
+    registerRetrieveFlow(context);
     require('./PreviewForm').registerPreviewForm(context);
     registerCheckingError(context, treeDataProvider);
     formulaHover.register(context);
     var anl = new AnalystXML();
     anl.run(context);
+    registerFboSemanticTokens(context);
+    registerCategoryHover(context);
+    registerDataFormatHover(context);
 }
 
 // This method is called when your extension is deactivated

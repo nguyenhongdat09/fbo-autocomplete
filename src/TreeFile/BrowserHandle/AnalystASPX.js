@@ -4,29 +4,33 @@ class AnalystASPX {
     }
     //Tạo hàm lấy url từ file đang đứng 
     getUrlFromFilePath(filePath, folderPlus) {
-        //Xét đường dẫn có dạng  phần folder CustomerPro trở lên
-        const pathParts = filePath.split(/[/\\]/);
-        const customerProIndex = pathParts.findIndex(part => part.toLowerCase() === 'customerpro');
-        if (customerProIndex === -1 || customerProIndex + 1 >= pathParts.length) {
-            return null; // Không tìm thấy folder CustomerPro hoặc không có phần sau nó
+        const AppDataPathHelper = require('../AppDataPathHelper');
+        const helper = new AppDataPathHelper(filePath);
+        let base_path = helper.getProjectPath();
+
+        if (!base_path) {
+            // Fallback: Xét đường dẫn có dạng phần folder CustomerPro trở lên
+            const path_parts = filePath.split(/[/\\]/);
+            const customer_pro_index = path_parts.findIndex(part => part.toLowerCase() === 'customerpro');
+            if (customer_pro_index !== -1 && customer_pro_index + 1 < path_parts.length) {
+                const relevant_parts = path_parts.slice(0, customer_pro_index + 4);
+                base_path = relevant_parts.join("\\");
+                try {
+                    const ProjectMappingHelper = require('../../Database/ProjectMappingHelper');
+                    base_path = ProjectMappingHelper.getActualRoot(base_path);
+                } catch (e) {}
+            }
         }
-        //\\172.168.5.14\CustomerPro\FBI\THW\SP229\App_Data\Controllers\Grid\DCDetail.xml
-        //Cắt đường dần từ App_Data trở đi VD: \\172.168.5.14\CustomerPro\FBI\THW\SP229\
-        var relevantParts = pathParts.slice(0, customerProIndex + 4); // Lấy đến phần  SP229
-        let basePath = relevantParts.join("\\");
+
+        if (!base_path) return null;
         
-        try {
-            const ProjectMappingHelper = require('../../Database/ProjectMappingHelper');
-            basePath = ProjectMappingHelper.getActualRoot(basePath);
-        } catch (e) {}
-        
-        const projectPath = require('path').join(basePath, ...folderPlus);
-        //Check xem projectPath có phải là đường dẫn có thật không
-        if (!fs.existsSync(projectPath)) {
-            console.log("Project path does not exist:", projectPath);
+        const project_path = require('path').join(base_path, ...folderPlus);
+        //Check xem project_path có phải là đường dẫn có thật không
+        if (!fs.existsSync(project_path)) {
+            console.log("Project path does not exist:", project_path);
             return null;
         }
-        return projectPath;
+        return project_path;
     }
     async getAllASSPXFiles(projectPath) {
         const mainDir = projectPath;

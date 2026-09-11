@@ -1,109 +1,286 @@
-body {
-    font-family: var(--vscode-font-family);
-    color: var(--vscode-editor-foreground);
-    background-color: var(--vscode-editor-background);
-    padding: 10px;
+/* ═══════════════════════════════════════════════════════════════
+   Checking Error Panel — Modern VS Code Desktop UI
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+    --font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    --font-size: var(--vscode-font-size, 13px);
+    --bg-color: var(--vscode-editor-background);
+    --fg-color: var(--vscode-editor-foreground);
+    --border-color: var(--vscode-panel-border, rgba(128, 128, 128, 0.2));
+    --card-bg: var(--vscode-sideBar-background, rgba(30, 30, 30, 0.5));
+    --header-bg: var(--vscode-sideBarSectionHeader-background, rgba(255, 255, 255, 0.04));
+    --hover-bg: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.08));
+    --input-bg: var(--vscode-input-background, #2d2d2d);
+    --input-fg: var(--vscode-input-foreground, #cccccc);
+    --input-border: var(--vscode-input-border, rgba(128, 128, 128, 0.3));
+    --btn-bg: var(--vscode-button-secondaryBackground, #3a3d41);
+    --btn-fg: var(--vscode-button-secondaryForeground, #ffffff);
+    --btn-hover: var(--vscode-button-secondaryHoverBackground, #45494e);
+    --btn-primary-bg: var(--vscode-button-background, #0e639c);
+    --btn-primary-fg: var(--vscode-button-foreground, #ffffff);
+    --btn-primary-hover: var(--vscode-button-hoverBackground, #1177bb);
+    --success-fg: var(--vscode-testing-iconPassed, #4ec9b0);
+    --success-bg: rgba(78, 201, 176, 0.15);
+    --error-fg: var(--vscode-testing-iconFailed, #f14c4c);
+    --error-bg: rgba(241, 76, 76, 0.15);
+    --warn-fg: #e5c07b;
+    --warn-bg: rgba(229, 192, 123, 0.15);
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    color: var(--fg-color);
+    background-color: var(--bg-color);
+    padding: 16px;
+    line-height: 1.5;
+}
+
+/* ── Toolbar & Sources ── */
 .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
 .source-item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    background: var(--card-bg);
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.source-item label {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground, #999);
+    white-space: nowrap;
 }
 
 .source-item input {
-    background-color: var(--vscode-input-background);
-    color: var(--vscode-input-foreground);
-    border: 1px solid var(--vscode-input-border);
-    padding: 4px;
-    width: 250px;
+    background-color: var(--input-bg);
+    color: var(--input-fg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    padding: 5px 10px;
+    width: 280px;
+    font-family: var(--font-family);
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.source-item input:focus {
+    border-color: var(--vscode-focusBorder, #007acc);
+    box-shadow: 0 0 0 1px var(--vscode-focusBorder, #007acc);
+}
+
+/* ── Buttons ── */
 button {
-    background-color: var(--vscode-button-background);
-    color: var(--vscode-button-foreground);
-    border: none;
-    padding: 4px 8px;
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-family: var(--font-family);
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    user-select: none;
 }
 
-button:hover {
-    background-color: var(--vscode-button-hoverBackground);
+button:hover:not(:disabled) {
+    background-color: var(--btn-hover);
+    transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 button:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
+    transform: none;
 }
 
 button.primary {
-    background-color: var(--vscode-button-background);
-    font-weight: bold;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+button.primary:hover:not(:disabled) {
+    background-color: var(--btn-primary-hover);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-check {
+    padding: 3px 10px;
+    font-size: 11px;
+    border-radius: 4px;
+    background-color: var(--btn-bg);
+}
+
+.btn-check:hover:not(:disabled) {
+    background-color: var(--btn-primary-bg);
+    color: #fff;
+}
+
+/* ── Grid Layout & Cards ── */
 .row-tables {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .panel {
-    border: 1px solid var(--vscode-panel-border);
-    padding: 10px;
-    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
 }
 
-h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.1em;
+.panel h3 {
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--vscode-textLink-foreground, #4fc1ff);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
+/* ── Modern Tables ── */
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-}
-
-th, td {
-    border: 1px solid var(--vscode-panel-border);
-    padding: 4px 8px;
-    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 12px;
+    font-size: 12px;
 }
 
 th {
-    background-color: var(--vscode-editor-inactiveSelectionBackground);
+    background-color: var(--header-bg);
+    color: var(--vscode-descriptionForeground, #aaa);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.ok {
-    color: var(--vscode-testing-iconPassed);
+th:first-child {
+    border-top-left-radius: 6px;
 }
 
-.bad {
-    color: var(--vscode-testing-iconFailed);
+th:last-child {
+    border-top-right-radius: 6px;
 }
 
+td {
+    padding: 7px 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.12);
+    transition: background-color 0.15s ease;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover td {
+    background-color: var(--hover-bg);
+}
+
+/* ── Badges & Status Pills ── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.badge.ok {
+    background-color: var(--success-bg);
+    color: var(--success-fg);
+    border: 1px solid rgba(78, 201, 176, 0.3);
+}
+
+.badge.bad {
+    background-color: var(--error-bg);
+    color: var(--error-fg);
+    border: 1px solid rgba(241, 76, 76, 0.3);
+}
+
+.count-pill {
+    display: inline-block;
+    min-width: 20px;
+    padding: 1px 6px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.count-pill.has-error {
+    background-color: var(--error-bg);
+    color: var(--error-fg);
+}
+
+.count-pill.zero {
+    opacity: 0.5;
+}
+
+/* ── Status Bar ── */
 .status {
-    margin-top: 15px;
-    font-style: italic;
-    color: var(--vscode-descriptionForeground);
+    margin-top: 14px;
+    padding: 8px 12px;
+    background: var(--card-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground, #999);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
 }
 
 .loading-icon {
     display: inline-block;
-    animation: blink 1s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.3; }
-    100% { opacity: 1; }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

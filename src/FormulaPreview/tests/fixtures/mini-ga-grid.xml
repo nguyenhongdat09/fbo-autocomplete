@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grid>
+  <fields>
+    <field name="so_luong" type="Decimal">
+      <header v="Số lượng" e="Quantity" />
+    </field>
+    <field name="gia_nt" type="Decimal">
+      <header v="Giá nt" e="FC Price" />
+    </field>
+    <field name="tien_nt2" type="Decimal">
+      <header v="Tiền hàng nt" e="FC Amount" />
+    </field>
+    <field name="tien2" type="Decimal">
+      <header v="Tiền" e="Amount" />
+    </field>
+    <field name="tl_ck" type="Decimal">
+      <header v="Tỷ lệ CK" e="Discount Rate" />
+    </field>
+    <field name="ck_nt" type="Decimal">
+      <header v="Chiết khấu nt" e="FC Discount" />
+    </field>
+    <field name="thue_suat" type="Decimal">
+      <header v="Thuế suất" e="Tax Rate" />
+    </field>
+    <field name="thue_nt" type="Decimal">
+      <header v="Thuế nt" e="FC Tax" />
+    </field>
+    <field name="phi_dvtn_yn" type="Boolean">
+      <header v="Phí DV-TN" e="DV-TN Fee" />
+    </field>
+    <field name="tien_mthang_nt" type="Decimal" hidden="true">
+      <header v="Tiền + Phí MT nt" e="EPC" />
+    </field>
+  </fields>
+  <scripts>
+    <![CDATA[
+    function load$Grid(g) {
+      g.$a = {
+        tien_nt2_sl: '[tien_nt2]:=[so_luong]*[gia_nt]',
+        tien2: '[tien2]:=[tien_nt2]*[$ty_gia]',
+        ck_nt: '[ck_nt]:=[tien_nt2]*[tl_ck]/100',
+        thue_nt: '[thue_nt]:=([tien_nt2] - [ck_nt])*[thue_suat]/100',
+        tien_mthang_nt: '[tien_mthang_nt]:=([phi_dvtn_yn] == 0 ? [tien_nt2] : 0)',
+        t_tien_hang_nt: ['t_tien_hang_nt', 'tien_mthang_nt'],
+        t_ck_nt: ['t_ck_nt', 'ck_nt'],
+        t_thue_nt: ['t_thue_nt', 'thue_nt', '[phi_dvtn_yn] == 0'],
+        t_thue_dvtn_nt: ['t_thue_dvtn_nt', 'thue_nt', '[phi_dvtn_yn] != 0'],
+        t_tt_nt: '[t_tt_nt]:=[t_tien_hang_nt]-[t_ck_nt]+[t_thue_nt]'
+      };
+    }
+
+    function onChange$GridVoucherDetail$(o) {
+      var name = o.field.Name;
+      var g = o.grid;
+      switch (name) {
+        case 'so_luong':
+          g.validExpression(o, [g.$a.tien_nt2_sl, g.$a.tien2, g.$a.ck_nt, g.$a.thue_nt], [g.$a.t_tien_hang_nt, g.$a.t_ck_nt], [g.$a.t_tt_nt]);
+          break;
+        case 'gia_nt':
+          g.validExpression(o, [g.$a.tien_nt2_sl, g.$a.tien2, g.$a.ck_nt, g.$a.thue_nt]);
+          break;
+        case 'phi_dvtn_yn':
+          g.validExpression(o, [g.$a.tien_mthang_nt], [g.$a.t_tien_hang_nt]);
+          break;
+      }
+    }
+    ]]>
+  </scripts>
+</grid>

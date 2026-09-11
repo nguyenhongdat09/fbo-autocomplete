@@ -171,19 +171,60 @@ class CheckingErrorPanel {
                     vscode.window.showWarningMessage('Không có file thiếu nào tìm được nguồn — không thể Generate.');
                     return;
                 }
-                this.panel.webview.postMessage({ type: 'loading', status_text: 'Đang copy file...' });
-                
-                let gen;
+
+                let total_copied = 0;
+                let total_failed = 0;
+                let round = 0;
+                const MAX_ROUNDS = 10;
+                const entityResolver = require('../entityResolver');
+
                 await vscode.window.withProgress({
                     location: vscode.ProgressLocation.Notification,
-                    title: "Generating Files...",
+                    title: "Auto Generating Files...",
                     cancellable: false
                 }, async (progress) => {
-                    await new Promise(r => setTimeout(r, 50));
-                    gen = await generate_missing_files(this.last_result.table1_missing, this.treeDataProvider);
+                    while (round < MAX_ROUNDS) {
+                        round++;
+                        progress.report({ message: `Vòng ${round}: Đang copy file thiếu... (Đã copy ${total_copied})` });
+                        this.panel.webview.postMessage({
+                            type: 'loading',
+                            status_text: `Vòng ${round}: Đang copy file... (Đã copy ${total_copied})`
+                        });
+
+                        const gen = await generate_missing_files(this.last_result.table1_missing, this.treeDataProvider);
+                        total_copied += gen.copied;
+                        total_failed += gen.failed;
+
+                        // Nếu vòng này không copy được thêm file nào thì dừng ngay
+                        if (gen.copied === 0) {
+                            break;
+                        }
+
+                        // Xóa cache để lượt check tiếp theo đọc được file mới tạo
+                        if (entityResolver && typeof entityResolver.invalidateCache === 'function') {
+                            entityResolver.invalidateCache();
+                        }
+
+                        // Quét lại ngay lập tức để tìm các file phụ thuộc tiếp theo
+                        progress.report({ message: `Vòng ${round}: Đang quét lại các file phụ thuộc...` });
+                        await new Promise(r => setTimeout(r, 50));
+                        this.last_result = checkEntityErrors(this.checked_files, this.sources);
+
+                        // Kiểm tra xem còn file thiếu nào mà nguồn có hay không
+                        const can_continue = !!(
+                            this.last_result.summary.missing_count > 0 &&
+                            this.last_result.summary.any_missing_has_source
+                        );
+
+                        if (!can_continue) {
+                            break;
+                        }
+                    }
                 });
 
-                await this.run_check_and_render(`Generate xong: copy ${gen.copied}, lỗi ${gen.failed}. Đã check lại.`);
+                const summary_msg = `Auto Generate hoàn tất sau ${round} vòng: Đã copy ${total_copied} file${total_failed > 0 ? `, lỗi ${total_failed}` : ''}.`;
+                await this.run_check_and_render(summary_msg);
+                vscode.window.showInformationMessage(summary_msg);
                 break;
             }
             case 'open_entity_decl': {

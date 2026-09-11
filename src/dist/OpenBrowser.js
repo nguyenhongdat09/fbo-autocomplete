@@ -16,6 +16,19 @@ class OpenBrowser {
      * Output: EPLUS_FBI hoặc folder con thứ 2 sau CustomerPro
      */
     extractProjectNameFromPath(filePath) {
+        const AppDataPathHelper = require('../AppDataPathHelper');
+        const helper = new AppDataPathHelper(filePath);
+        const base = helper.getBaseProjectPath();
+        if (base) {
+            const parts = base.split(/[/\\]/).filter(Boolean);
+            if (parts.length >= 2) {
+                return parts[parts.length - 2];
+            }
+            if (parts.length === 1) {
+                return parts[0];
+            }
+        }
+
         const normalizedPath = filePath.replace(/\//g, '\\');
         if (!normalizedPath.includes('CustomerPro')) {
             return null;

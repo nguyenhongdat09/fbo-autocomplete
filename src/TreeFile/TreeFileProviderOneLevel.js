@@ -14,6 +14,10 @@ function fboIsGroupTreeContext(contextValue) {
     return contextValue === "group" || contextValue === "groupOther";
 }
 
+function fboIsFileTreeContext(contextValue) {
+    return contextValue === "file" || contextValue === "file_f";
+}
+
 const app_dataChecker = require("./AppDataPathHelper");
 const OpenBrowser = require("./BrowserHandle/OpenBrowser");
 const DBStatusBarManager = require("../DBQuery/dbBar");
@@ -35,38 +39,206 @@ class TreeHelper {
     }
 
     getGroupName(filePath) {
+        if (!filePath) return "OTHER";
+        const norm = filePath.replace(/\\/g, "/").toLowerCase();
+        if (this._groupNameCache && this._groupNameCache.has(norm)) {
+            return this._groupNameCache.get(norm);
+        }
+        if (norm.includes("/.cursor") || norm.includes("/.gemini") || norm.endsWith(".plan.md") || norm.endsWith("/plan.md") || norm.endsWith(".md.plan") || norm.endsWith(".plan") || norm.endsWith("/implementation_plan.md")) {
+            if (this._groupNameCache) this._groupNameCache.set(norm, "OTHER");
+            return "OTHER";
+        }
         this.app_dataChecker.filePath = filePath;
-        return this.app_dataChecker.getGroupName().toUpperCase();
+        const g = (this.app_dataChecker.getGroupName() || "OTHER").toUpperCase();
+        if (this._groupNameCache) this._groupNameCache.set(norm, g);
+        return g;
     }
 
     getParentGroup(treeItem) {
+        if (!treeItem) return null;
         for (const [group, items] of this.parent.treeData) {
-            if (items.includes(treeItem)) return new vscode.TreeItem(group, vscode.TreeItemCollapsibleState.Expanded);
+            if (items.includes(treeItem)) {
+                return this.parent.groupItems.get(group) || new vscode.TreeItem(group, vscode.TreeItemCollapsibleState.Expanded);
+            }
         }
         return null;
     }
 
     getTreeItemByPath(filePath) {
-        for (const [group, items] of this.parent.treeData) {
-            const foundItem = items.find(item => item.resourceUri.fsPath === filePath);
-            if (foundItem) return foundItem;
+        if (!filePath) return null;
+        const normTarget = path.normalize(filePath).toLowerCase();
+        if (this.parent.fileItemMap && this.parent.fileItemMap.has(normTarget)) {
+            return this.parent.fileItemMap.get(normTarget);
+        }
+        for (const [, items] of this.parent.treeData) {
+            const foundItem = items.find(
+                item => fboIsFileTreeContext(item.contextValue) && item.resourceUri && item.resourceUri.fsPath && path.normalize(item.resourceUri.fsPath).toLowerCase() === normTarget
+            );
+            if (foundItem) {
+                if (this.parent.fileItemMap) this.parent.fileItemMap.set(normTarget, foundItem);
+                return foundItem;
+            }
+        }
+        return null;
+    }
+
+    _extractFsPathFromTab(tab) {
+        if (!tab) return null;
+        const input = tab.input;
+
+        // 1. Ultra Fast-Path: Standard VS Code TabInputText / TabInputCustom
+        if (input) {
+            if (input.uri && input.uri.scheme === "file" && input.uri.fsPath) {
+                return input.uri.fsPath;
+            }
+            if (input.modified && input.modified.scheme === "file" && input.modified.fsPath) {
+                return input.modified.fsPath;
+            }
+            if (input.original && input.original.scheme === "file" && input.original.fsPath) {
+                return input.original.fsPath;
+            }
+        }
+
+        const cleanWindowsPath = (p) => {
+            if (!p || typeof p !== "string") return null;
+            let cleaned = p.trim();
+            if (cleaned.startsWith("file:///")) {
+                cleaned = decodeURIComponent(cleaned.substring(8));
+            } else if (cleaned.startsWith("file://")) {
+                cleaned = decodeURIComponent(cleaned.substring(7));
+            }
+            // Strip leading slash before drive letter on Windows (e.g. /C:/ -> C:/)
+            cleaned = cleaned.replace(/^\/([a-zA-Z]:)/, "$1").replace(/\//g, "\\");
+            if (/^[a-zA-Z]:\\/.test(cleaned) || cleaned.startsWith("\\\\")) {
+                return path.normalize(cleaned);
+            }
+            return null;
+        };
+
+        const parsePossibleUri = (val) => {
+            if (!val) return null;
+            if (typeof val === "string") {
+                const cleaned = cleanWindowsPath(val);
+                if (cleaned) return cleaned;
+                try {
+                    if (val.startsWith("file://")) {
+                        return vscode.Uri.parse(val).fsPath;
+                    }
+                    if (val.includes("/") || val.includes("\\")) {
+                        return cleanWindowsPath(val) || vscode.Uri.file(val).fsPath;
+                    }
+                } catch {
+                    return val;
+                }
+                return val;
+            }
+            if (typeof val === "object") {
+                if (val.fsPath && typeof val.fsPath === "string") {
+                    const cleaned = cleanWindowsPath(val.fsPath);
+                    if (cleaned) return cleaned;
+                    return val.fsPath;
+                }
+                if (val.path && typeof val.path === "string") {
+                    const cleaned = cleanWindowsPath(val.path);
+                    if (cleaned) return cleaned;
+                }
+                if (val.scheme === "file" && val.path) {
+                    try {
+                        return vscode.Uri.from(val).fsPath;
+                    } catch {
+                        return cleanWindowsPath(val.path) || val.path;
+                    }
+                }
+            }
+            return null;
+        };
+
+        let fp = null;
+
+        // 2. Fast-Path: check direct fields on input
+        if (input && typeof input === "object") {
+            fp = parsePossibleUri(input.sourceUri)
+                || parsePossibleUri(input.uri)
+                || parsePossibleUri(input.modified)
+                || parsePossibleUri(input.original)
+                || parsePossibleUri(input.resource)
+                || parsePossibleUri(input.targetUri);
+
+            // 3) Deep search in input object properties
+            if (!fp) {
+                const deepFindPath = (obj, depth = 0) => {
+                    if (!obj || depth > 2) return null;
+                    if (typeof obj === "string") {
+                        const p = parsePossibleUri(obj);
+                        if (p && (p.includes("/") || p.includes("\\"))) return p;
+                    }
+                    if (typeof obj === "object") {
+                        const p = parsePossibleUri(obj);
+                        if (p && (p.includes("/") || p.includes("\\"))) return p;
+                        for (const key of Object.keys(obj)) {
+                            const res = deepFindPath(obj[key], depth + 1);
+                            if (res) return res;
+                        }
+                    }
+                    return null;
+                };
+                fp = deepFindPath(input);
+            }
+        }
+
+        // 3) Special for Cursor plans / Antigravity plans: check if tab.label matches any plan in ~/.cursor/plans or brain
+        if (!fp && tab.label) {
+            const rawLabel = String(tab.label).trim();
+            const baseLabel = path.basename(rawLabel.replace(/\\/g, "/"));
+
+            // Fast path: Only perform disk lookup if label looks like a plan / md file
+            if (/\.(plan(\.md)?|md)$/i.test(baseLabel) || /plan/i.test(rawLabel)) {
+                const userHome = process.env.USERPROFILE || process.env.HOME || "";
+                const cursorPlansDir = path.join(userHome, ".cursor", "plans");
+                const geminiBrainDir = path.join(userHome, ".gemini", "antigravity-ide", "brain");
+
+                const candidate1 = path.join(cursorPlansDir, rawLabel);
+                const candidate2 = path.join(cursorPlansDir, baseLabel);
+                const candidate3 = path.join(geminiBrainDir, rawLabel);
+
+                if (fs.existsSync(candidate1)) {
+                    fp = candidate1;
+                } else if (fs.existsSync(candidate2)) {
+                    fp = candidate2;
+                } else if (fs.existsSync(candidate3)) {
+                    fp = candidate3;
+                } else if (fs.existsSync(cursorPlansDir)) {
+                    try {
+                        const planFiles = fs.readdirSync(cursorPlansDir);
+                        const cleanLabel = baseLabel.toLowerCase().replace(/\.plan\.md$/, "").replace(/\.md$/, "");
+                        const found = planFiles.find(f => {
+                            const fl = f.toLowerCase();
+                            return fl === baseLabel.toLowerCase() || fl.includes(cleanLabel) || cleanLabel.includes(fl.replace(/\.plan\.md$/, ""));
+                        });
+                        if (found) {
+                            fp = path.join(cursorPlansDir, found);
+                        }
+                    } catch { }
+                }
+            }
+        }
+
+        if (fp && typeof fp === "string") {
+            if (fp.includes("Untitled") || fp.includes("untitled")) {
+                return null;
+            }
+            return fp;
         }
         return null;
     }
 
     async getOpenEditors() {
-        const openTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+        const openTabs = (vscode.window.tabGroups && vscode.window.tabGroups.all)
+            ? vscode.window.tabGroups.all.flatMap(group => group.tabs)
+            : [];
+
         const filePaths = openTabs
-            .map(tab => {
-                if (tab.input instanceof vscode.TabInputText) {
-                    const uri = tab.input.uri;
-                    if (uri.scheme === 'untitled' || !uri.fsPath || uri.fsPath.includes('Untitled')) {
-                        return null;
-                    }
-                    return uri.fsPath;
-                }
-                return null;
-            })
+            .map(tab => this._extractFsPathFromTab(tab))
             .filter(filePath => filePath !== null);
         return [...new Set(filePaths)];
     }
@@ -78,26 +250,22 @@ class TreeHelper {
 
     async closeFile(element) {
         if (!element || !element.resourceUri) return;
-        const fileUri = element.resourceUri.toString();
+        const targetPath = path.normalize(element.resourceUri.fsPath).toLowerCase();
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
         const targetTab = tabs.find(tab => {
-            const input = tab.input;
-            if (!input || typeof input !== "object") return false;
-            if ("uri" in input && input.uri.toString() === fileUri) {
-                return true;
-            }
-            if ("resource" in input && input.resource.toString() === fileUri) {
-                return true;
-            }
-            return false;
+            const fp = this._extractFsPathFromTab(tab);
+            return fp && path.normalize(fp).toLowerCase() === targetPath;
         });
 
         if (targetTab) {
-            await vscode.window.tabGroups.close([targetTab]);
-        } else {
-            console.warn(`âš ï¸ File khÃ´ng cÃ³ trong Open Editors: ${fileUri}`);
+            try {
+                await vscode.window.tabGroups.close([targetTab]);
+            } catch (err) {
+                console.warn(`Lỗi khi đóng tab: ${err}`);
+            }
         }
-        await this.parent.refresh()
+        this.parent.removeSingleFile(element.resourceUri.fsPath);
+        this.parent.refreshEvent.fire();
     }
 
     async closeGroupFiles(element) {
@@ -106,34 +274,45 @@ class TreeHelper {
         const groupName = fboTreeLabel(element.label);
         if (!this.parent.treeData.has(groupName)) return;
 
-        const files = this.parent.treeData.get(groupName).map(item => item.resourceUri.toString());
+        const filePaths = (this.parent.treeData.get(groupName) || [])
+            .map(item => item.resourceUri && item.resourceUri.fsPath)
+            .filter(Boolean)
+            .map(fp => path.normalize(fp).toLowerCase());
+
         const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
 
         const targetTabs = tabs.filter(tab => {
-            const input = tab.input;
-            if (!input || typeof input !== "object") return false;
-            if ("uri" in input && files.includes(input.uri.toString())) return true;
-            if ("resource" in input && files.includes(input.resource.toString())) return true;
-            return false;
+            const fp = this._extractFsPathFromTab(tab);
+            return fp && filePaths.includes(path.normalize(fp).toLowerCase());
         });
 
         if (targetTabs.length > 0) {
-            await vscode.window.tabGroups.close(targetTabs);
-        } else {
-            console.warn(`âš ï¸ KhÃ´ng tÃ¬m tháº¥y file nÃ o trong Open Editors cho nhÃ³m: ${groupName}`);
+            try {
+                await vscode.window.tabGroups.close(targetTabs);
+            } catch (err) {
+                console.warn(`Lỗi khi đóng tabs nhóm: ${err}`);
+            }
         }
 
-        await this.parent.refresh();
+        this.parent.treeData.delete(groupName);
+        this.parent.groupItems.delete(groupName);
+        this.parent.refreshEvent.fire();
     }
 
     getCurrentPathActive() {
+        let filePath = null;
         const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor || !activeEditor.document) return null;
-        const filePath = activeEditor.document.uri.fsPath;
+        if (activeEditor && activeEditor.document && activeEditor.document.uri && activeEditor.document.uri.scheme === "file") {
+            filePath = activeEditor.document.uri.fsPath;
+        } else {
+            const activeTab = vscode.window.tabGroups?.activeTabGroup?.activeTab;
+            filePath = this._extractFsPathFromTab(activeTab);
+        }
+        if (!filePath) return null;
         const treeItem = this.getTreeItemByPath(filePath);
         if (!treeItem) return null;
         const parentGroup = this.getParentGroup(treeItem);
-        return { filePath: filePath, treeItem: treeItem, parentGroup: parentGroup }
+        return { filePath: filePath, treeItem: treeItem, parentGroup: parentGroup };
     }
 
     async revealActiveFile(group_label) {
@@ -149,30 +328,83 @@ class TreeHelper {
     }
 
     _parseDroppedFsPaths(dataTransfer) {
-        const item = dataTransfer.get(this.typeDr);
-        const droppedValue = item?.value;
-        if (!droppedValue) return [];
-        const uriListText = typeof droppedValue === "string"
-            ? droppedValue
-            : (typeof droppedValue?.asString === "function" ? droppedValue.asString() : null);
-        if (!uriListText) return [];
-        return uriListText
-            .split(/\r?\n/)
-            .map(s => s.trim())
-            .filter(s => !!s && !s.startsWith("#"))
-            .map(s => {
-                try { return vscode.Uri.parse(s); } catch { return null; }
-            })
-            .filter(uri => !!uri && uri.scheme === "file")
-            .map(uri => uri.fsPath);
+        const results = [];
+        const processString = (str) => {
+            if (!str || typeof str !== "string") return;
+            const lines = str.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+            for (const line of lines) {
+                if (line.startsWith("#")) continue;
+                // Bỏ qua nếu là JSON hoặc chứa ký tự đặc trưng của VS Code TreeView mime
+                if (line.startsWith("{") || line.startsWith("[") || line.includes("itemHandles") || line.includes('"id":')) continue;
+                try {
+                    if (line.startsWith("file://")) {
+                        const parsed = vscode.Uri.parse(line).fsPath;
+                        if (parsed) results.push(parsed);
+                    } else if (line.includes("/") || line.includes("\\")) {
+                        results.push(vscode.Uri.file(line).fsPath);
+                    }
+                } catch {
+                    if (line.includes("/") || line.includes("\\")) {
+                        results.push(line);
+                    }
+                }
+            }
+        };
+
+        // 1. Check text/uri-list
+        const uriListItem = dataTransfer.get("text/uri-list") || dataTransfer.get(this.typeDr);
+        if (uriListItem) {
+            const val = typeof uriListItem.value === "string" ? uriListItem.value : (typeof uriListItem.asString === "function" ? uriListItem.asString() : null);
+            processString(val);
+        }
+
+        // Nếu text/uri-list đã có kết quả thì dùng luôn, tránh đọc các mime khác
+        if (!results.length) {
+            // 2. Check text/plain
+            const textPlainItem = dataTransfer.get("text/plain");
+            if (textPlainItem) {
+                const val = typeof textPlainItem.value === "string" ? textPlainItem.value : (typeof textPlainItem.asString === "function" ? textPlainItem.asString() : null);
+                processString(val);
+            }
+        }
+
+        // 3. Fallback iterate through all items in dataTransfer (bỏ qua mime nội bộ của VS Code tree)
+        if (!results.length && typeof dataTransfer.forEach === "function") {
+            try {
+                dataTransfer.forEach((item, mimeType) => {
+                    if (mimeType && (mimeType.startsWith("application/vnd.code.tree") || mimeType.includes("tree"))) return;
+                    if (mimeType === "text/uri-list" || mimeType === this.typeDr || mimeType === "text/plain") return;
+                    const val = typeof item.value === "string" ? item.value : (typeof item.asString === "function" ? item.asString() : null);
+                    processString(val);
+                });
+            } catch { }
+        }
+
+        // Chỉ giữ lại các đường dẫn file thực sự tồn tại trên ổ đĩa
+        return [...new Set(results.filter(fp => {
+            if (!fp || typeof fp !== "string") return false;
+            try {
+                return fs.existsSync(fp);
+            } catch {
+                return false;
+            }
+        }))];
     }
 
     async _openDroppedFsPaths(filePaths) {
         for (const fp of filePaths) {
+            // Add directly to tree first
+            this.parent.addFileToTree(fp);
+            this.parent.refreshEvent.fire();
+
             try {
                 await vscode.window.showTextDocument(vscode.Uri.file(fp), { preview: false, viewColumn: vscode.ViewColumn.Active });
             } catch (err) {
-                vscode.window.showWarningMessage(`KhÃ´ng thá»ƒ má»Ÿ file: ${fp}`);
+                try {
+                    await vscode.commands.executeCommand('vscode.open', vscode.Uri.file(fp));
+                } catch {
+                    vscode.window.showWarningMessage(`Không thể mở file: ${fp}`);
+                }
             }
         }
     }
@@ -208,6 +440,8 @@ class TreeFileProvider extends TreeHelper {
         this.dragMimeTypes = [this.typeDr];
         this.treeView = null;
         this.groupItems = new Map();
+        this.fileItemMap = new Map();
+        this._groupNameCache = new Map();
         this.context = null;
         this.debouncedRefresh = this.debounce(() => this.refresh(), 300);
         this._isInitialized = false;
@@ -280,7 +514,7 @@ class TreeFileProvider extends TreeHelper {
         if (!this._hasActiveTreeFilter()) {
             return items;
         }
-        return items.filter((it) => it.contextValue === "file" && this._treeFilterFileMatches(it));
+        return items.filter((it) => fboIsFileTreeContext(it.contextValue) && this._treeFilterFileMatches(it));
     }
 
     _filterRootGroupItems(roots) {
@@ -289,6 +523,9 @@ class TreeFileProvider extends TreeHelper {
         }
         return roots.filter((g) => {
             const label = fboTreeLabel(g.label);
+            if (String(label).toUpperCase() === "OTHER") {
+                return true;
+            }
             const raw = this.treeData.get(label) || [];
             const filtered = this._applyGroupQuickFilterFlat(label, this._applyTreeFilterToFlatFileItems(raw));
             if (filtered.length > 0) return true;
@@ -346,6 +583,10 @@ class TreeFileProvider extends TreeHelper {
             this._groupIndexBridge.rememberSearch(groupRoot, groupName, keyword);
         }
         this._groupFileIndexService.publishSearchResult(result, { reveal: true });
+    }
+
+    getGroupFileIndexService() {
+        return this._groupFileIndexService;
     }
 
     async runGroupTextSearch(groupElement) {
@@ -587,7 +828,7 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // âœ… onDidChangeVisibleTextEditors - Khi thay Ä‘á»•i editor hiá»ƒn thá»‹
+        // ✅ onDidChangeVisibleTextEditors - Khi thay đổi editor hiển thị
         const debouncedVisibleChange = this.debounce(async () => {
             if (!this._isInitialized) return;
             await this.smartRefresh();
@@ -596,6 +837,33 @@ class TreeFileProvider extends TreeHelper {
         vscode.window.onDidChangeVisibleTextEditors(() => {
             debouncedVisibleChange();
         });
+
+        // ✅ onDidChangeTabs - Khi mở/đổi tab (hỗ trợ cả custom editor, plan tabs, etc.)
+        if (vscode.window.tabGroups && vscode.window.tabGroups.onDidChangeTabs) {
+            const debouncedTabChange = this.debounce(async () => {
+                if (!this._isInitialized) return;
+                await this.smartRefresh();
+            }, 300);
+
+            context.subscriptions.push(vscode.window.tabGroups.onDidChangeTabs(async (event) => {
+                if (!this._isInitialized) return;
+                if (event && (event.opened?.length > 0 || event.changed?.length > 0)) {
+                    const touchedTabs = [...(event.opened || []), ...(event.changed || [])];
+                    let added = false;
+                    for (const tab of touchedTabs) {
+                        const fp = this._extractFsPathFromTab(tab);
+                        if (fp && !this.getTreeItemByPath(fp)) {
+                            this.addFileToTree(fp);
+                            added = true;
+                        }
+                    }
+                    if (added) {
+                        this.refreshEvent.fire();
+                    }
+                }
+                debouncedTabChange();
+            }));
+        }
 
         // ✅ onDidChangeActiveTextEditor - Khi đổi tab
         vscode.window.onDidChangeActiveTextEditor(async (editor) => {
@@ -642,6 +910,20 @@ class TreeFileProvider extends TreeHelper {
         });
 
         // Commands
+        const refreshConfig = (config) => {
+            this.refresh();
+        };
+
+        const config = vscode.workspace.getConfiguration('fbo-autocomplete');
+        context.subscriptions.push(
+            vscode.workspace.onDidChangeConfiguration(e => {
+                if (e.affectsConfiguration('fbo-autocomplete.sortTree') ||
+                    e.affectsConfiguration('fbo-autocomplete.folderNestingThreshold')) {
+                    refreshConfig(config);
+                }
+            })
+        );
+
         vscode.commands.registerCommand("fbo-autocomplete.reloadTree", async () => {
             if (this.treeView.visible) {
                 await this.refresh();
@@ -663,10 +945,10 @@ class TreeFileProvider extends TreeHelper {
 
         let disposable = vscode.commands.registerCommand("fbo-autocomplete.TreeTabReload", async () => {
             await this.refresh();
-            vscode.window.showInformationMessage("FBO File Tree Ä‘Ã£ Ä‘Æ°á»£c reload!");
+            vscode.window.showInformationMessage("FBO File Tree đã được reload!");
         });
 
-        // âœ… onDidExpandElement - Reveal khi expand group
+        // ✅ onDidExpandElement - Reveal khi expand group
         this.treeView.onDidExpandElement(async (event) => {
             const element = event.element;
             if (fboIsGroupTreeContext(element.contextValue)) {
@@ -674,14 +956,10 @@ class TreeFileProvider extends TreeHelper {
             }
         });
 
-        // âœ… OpenBrowser - ÄÄƒng kÃ½ commands má»Ÿ browser
+        // ✅ OpenBrowser - Đăng ký commands mở browser
         const openBrowser = new OpenBrowser();
         openBrowser.registerCommands(context);
      
-        // trong constructor hoáº·c run, khá»Ÿi táº¡o biáº¿n lÆ°u tráº¡ng thÃ¡i
-        //await openBrowser.openBrowserForFile(filePath);
-        // sau khi this.treeView Ä‘Æ°á»£c táº¡o (trong run)
-       
         this.dbStatusBar = new DBStatusBarManager(context); 
         this.dbStatusBar.show();
         this._syncTreeViewFilterBadge();
@@ -696,6 +974,7 @@ class TreeFileProvider extends TreeHelper {
         this._buildPromise = (async () => {
             this.treeData.clear();
             this.groupItems.clear();
+            this.fileItemMap.clear();
 
             const openFiles = await this.getOpenEditors();
 
@@ -714,11 +993,7 @@ class TreeFileProvider extends TreeHelper {
                 const fileName = path.basename(filePath);
                 const ext = path.extname(filePath).toLowerCase();
 
-                this.app_dataChecker.filePath = filePath;
-                let groupName = this.app_dataChecker.getGroupName().toUpperCase();
-                if (filePath.toLowerCase().endsWith(".md.plan")) {
-                    groupName = "OTHER";
-                }
+                let groupName = this.getGroupName(filePath);
 
                 return {
                     filePath,
@@ -764,7 +1039,8 @@ class TreeFileProvider extends TreeHelper {
                 const { filePath, folderName, fileName, ext, groupName, dirname } = data;
 
                 if (!this.treeData.has(groupName)) {
-                    const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
+                    const groupItemState = groupName === "OTHER" ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
+                    const groupItem = new vscode.TreeItem(groupName, groupItemState);
                     groupItem.contextValue = groupName === "OTHER" ? "groupOther" : "group";
 
                     this.app_dataChecker.filePath = filePath;
@@ -780,14 +1056,15 @@ class TreeFileProvider extends TreeHelper {
                 const uri = vscode.Uri.file(filePath);
                 const item = new vscode.TreeItem(uri, vscode.TreeItemCollapsibleState.None);
                 item.resourceUri = uri;
-                item.contextValue = "file";
+                const fileExt = path.extname(filePath).toLowerCase();
+                item.contextValue = fileExt === ".f" ? "file_f" : "file";
 
                 item.description = `(${folderName})`;
 
                 item.command = {
                     command: "vscode.open",
                     arguments: [uri],
-                    title: "Má»Ÿ file"
+                    title: "Mở file"
                 };
 
                 if (String(iconRule) === 'Yes') {
@@ -799,6 +1076,7 @@ class TreeFileProvider extends TreeHelper {
                     }
                 }
 
+                this.fileItemMap.set(path.normalize(filePath).toLowerCase(), item);
                 this.treeData.get(groupName).push(item);
             }
 
@@ -808,7 +1086,7 @@ class TreeFileProvider extends TreeHelper {
         const result = await this._buildPromise;
         this._buildPromise = null; 
 
-        // Cáº­p nháº­t groupItems cho status bar DB vÃ  reload láº¡i danh sÃ¡ch DB
+        // Cập nhật groupItems cho status bar DB và reload lại danh sách DB
         if (this.dbStatusBar) {
             this.dbStatusBar.groupItems = this.groupItems;
             if (typeof this.dbStatusBar.reloadDbOptionsFromGroups === 'function') {
@@ -829,6 +1107,33 @@ class TreeFileProvider extends TreeHelper {
 
     async buildTree() {
         return this.buildTreeOptimized();
+    }
+
+    getParentGroup(treeItem) {
+        for (const [group, items] of this.treeData) {
+            if (items.includes(treeItem)) {
+                return this.groupItems.get(group);
+            }
+        }
+        return null;
+    }
+
+    getTreeItemByPath(filePath) {
+        if (!filePath) return null;
+        const normTarget = path.normalize(filePath).toLowerCase();
+        if (this.fileItemMap && this.fileItemMap.has(normTarget)) {
+            return this.fileItemMap.get(normTarget);
+        }
+        for (const [, items] of this.treeData) {
+            const foundItem = items.find(
+                item => fboIsFileTreeContext(item.contextValue) && item.resourceUri && item.resourceUri.fsPath && path.normalize(item.resourceUri.fsPath).toLowerCase() === normTarget
+            );
+            if (foundItem) {
+                if (this.fileItemMap) this.fileItemMap.set(normTarget, foundItem);
+                return foundItem;
+            }
+        }
+        return null;
     }
 
     ensureFileInTree(file_path) {
@@ -874,26 +1179,26 @@ class TreeFileProvider extends TreeHelper {
     }
 
     addFileToTree(filePath) {
+        if (!filePath) return;
         const uri = vscode.Uri.file(filePath);
-        if (uri.scheme !== 'file') return;
+        if (uri.scheme !== 'file') {
+            return;
+        }
 
         const folderName = path.basename(path.dirname(filePath));
-        this.app_dataChecker.filePath = filePath;
-        let groupName = this.app_dataChecker.getGroupName().toUpperCase();
-        if (filePath.toLowerCase().endsWith(".md.plan")) {
-            groupName = "OTHER";
-        }
+        let groupName = this.getGroupName(filePath);
         if (!groupName) return;
 
         const item = new vscode.TreeItem(uri, vscode.TreeItemCollapsibleState.None);
         item.resourceUri = uri;
-        item.contextValue = "file";
+        const addFileExt = path.extname(filePath).toLowerCase();
+        item.contextValue = addFileExt === ".f" ? "file_f" : "file";
         item.description = `(${folderName})`;
 
         item.command = {
             command: "vscode.open",
             arguments: [uri],
-            title: "Má»Ÿ file"
+            title: "Mở file"
         };
 
         const config = vscode.workspace.getConfiguration('fbo-autocomplete');
@@ -917,7 +1222,8 @@ class TreeFileProvider extends TreeHelper {
         }
 
         if (!this.treeData.has(groupName)) {
-            const groupItem = new vscode.TreeItem(groupName, vscode.TreeItemCollapsibleState.Collapsed);
+            const groupItemState = groupName === "OTHER" ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
+            const groupItem = new vscode.TreeItem(groupName, groupItemState);
             groupItem.contextValue = groupName === "OTHER" ? "groupOther" : "group";
 
             this.app_dataChecker.filePath = filePath;
@@ -930,6 +1236,7 @@ class TreeFileProvider extends TreeHelper {
             this.groupItems.set(groupName, groupItem);
         }
 
+        this.fileItemMap.set(path.normalize(filePath).toLowerCase(), item);
         this.treeData.get(groupName).push(item);
     }
 
@@ -952,8 +1259,13 @@ class TreeFileProvider extends TreeHelper {
     }
 
     removeSingleFile(filePath) {
+        if (!filePath) return;
+        const normTarget = path.normalize(filePath).toLowerCase();
+        if (this.fileItemMap) {
+            this.fileItemMap.delete(normTarget);
+        }
         for (const [group, items] of this.treeData) {
-            const index = items.findIndex(item => item.resourceUri.fsPath === filePath);
+            const index = items.findIndex(item => item.resourceUri && item.resourceUri.fsPath && path.normalize(item.resourceUri.fsPath).toLowerCase() === normTarget);
             if (index !== -1) {
                 items.splice(index, 1);
                 if (items.length === 0) {
@@ -985,7 +1297,7 @@ class TreeFileProvider extends TreeHelper {
 
     getParent(element) {
         if (!element) return null;
-        if (element.contextValue === "file") {
+        if (fboIsFileTreeContext(element.contextValue)) {
             return this.getParentGroup(element);
         }
         return null;
@@ -1036,7 +1348,7 @@ class TreeFileProvider extends TreeHelper {
     }
 
     handleDrag(source, dataTransfer, token) {
-        const filesOnly = source.every(item => item.contextValue === 'file');
+        const filesOnly = source.every(item => fboIsFileTreeContext(item.contextValue));
         if (!filesOnly) return;
 
         // Use standard "text/uri-list" so OS Explorer/VS Code Explorer drops work too.

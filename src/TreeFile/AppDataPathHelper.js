@@ -1,6 +1,11 @@
 const fs = require("fs");
 const path = require("path");
-const vscode = require("vscode");
+let vscode = null;
+try {
+    vscode = require("vscode");
+} catch {
+    vscode = null;
+}
 
 class AppDataPathHelper {
     constructor(filePath) {
@@ -8,33 +13,71 @@ class AppDataPathHelper {
     }
 
     getBaseProjectPath() {
-        var parts = this.filePath.split(/[/\\]/);
-        const index = parts.findIndex(p => p.toLowerCase() === "customerpro");
-        if (index === -1 || parts.length < index + 4) {
+        if (!this.filePath || typeof this.filePath !== "string") {
             return '';
         }
-        const index2 = parts.findIndex(p => p.toLowerCase() === "fdn");
-        return parts.slice(0, index + (index2 === -1 ? 4 : 3)).join(path.sep);
+
+        // 0. Nếu là file plan / .cursor / .gemini / implementation_plan.md -> không thuộc project FBO cụ thể nào -> trả về '' (nhóm Other)
+        const normPath = this.filePath.replace(/\\/g, '/').toLowerCase();
+        if (normPath.includes('/.cursor') || normPath.includes('/.gemini') || normPath.endsWith('.plan.md') || normPath.endsWith('/plan.md') || normPath.endsWith('.md.plan') || normPath.endsWith('.plan') || normPath.endsWith('/implementation_plan.md')) {
+            return '';
+        }
+
+        // 1. Nếu đường dẫn chứa App_Data (case-insensitive) -> lấy phần trước App_Data
+        const app_data_match = this.filePath.match(/^(.*?)[/\\]App_Data([/\\]|$)/i);
+        if (app_data_match && app_data_match[1]) {
+            return app_data_match[1];
+        }
+
+        // 2. Logic theo CustomerPro (hỗ trợ UNC path và cấu trúc CustomerPro)
+        const parts = this.filePath.split(/[/\\]/);
+        const index = parts.findIndex(p => p.toLowerCase() === "customerpro");
+        if (index !== -1 && parts.length >= index + 4) {
+            const index2 = parts.findIndex(p => p.toLowerCase() === "fdn");
+            return parts.slice(0, index + (index2 === -1 ? 4 : 3)).join(path.sep);
+        }
+
+        // 3. Fallback: Nếu filePath là Web.config hoặc nằm trong thư mục chứa Web.config / App_Data
+        try {
+            let current_dir = fs.existsSync(this.filePath) && fs.statSync(this.filePath).isDirectory()
+                ? this.filePath
+                : path.dirname(this.filePath);
+
+            while (current_dir) {
+                if (fs.existsSync(path.join(current_dir, 'Web.config')) || fs.existsSync(path.join(current_dir, 'App_Data'))) {
+                    return current_dir;
+                }
+                const parent_dir = path.dirname(current_dir);
+                if (!parent_dir || parent_dir === current_dir) break;
+                current_dir = parent_dir;
+            }
+        } catch (e) {
+            // ignore fs errors
+        }
+
+        return '';
     }
 
     getProjectPath() {
-        const base = this.getBaseProjectPath();
-        if (!base) return '';
+        const base_path = this.getBaseProjectPath();
+        if (!base_path) return '';
         const ProjectMappingHelper = require('../Database/ProjectMappingHelper');
-        return ProjectMappingHelper.getActualRoot(base);
+        return ProjectMappingHelper.getActualRoot(base_path);
     }
 
     getGroupName() {
-        var projectPath = this.getBaseProjectPath().split(/[/\\]/); 
-        return projectPath.length > 1 ? projectPath.slice(-2).join(' - ') : 'Other';
+        const base_path = this.getBaseProjectPath();
+        if (!base_path) return 'Other';
+        const parts = base_path.split(/[/\\]/).filter(Boolean); 
+        return parts.length > 1 ? parts.slice(-2).join(' - ') : (parts[0] || 'Other');
     }
 
     getPathAfterProject() {
-        const projectPath = this.getProjectPath();
-        if (!projectPath) return [];
-        const remainingPath = this.filePath.substring(projectPath.length);
-        const cleanRemaining = remainingPath.replace(/^[/\\]+/, ""); // loại bỏ dấu `\` đầu nếu có
-        return [projectPath, cleanRemaining];
+        const project_path = this.getProjectPath();
+        if (!project_path) return [];
+        const remaining_path = this.filePath.substring(project_path.length);
+        const clean_remaining = remaining_path.replace(/^[/\\]+/, ""); // loại bỏ dấu `\` đầu nếu có
+        return [project_path, clean_remaining];
     }
 
     async pasteFilesToGroup(targetGroupPath, filePaths, generate = 0) {

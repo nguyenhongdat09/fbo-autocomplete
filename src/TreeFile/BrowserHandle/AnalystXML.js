@@ -447,6 +447,19 @@ class AnalystXML {
      * Output: EPLUS_FBI_FBISP24
      */
     extractProjectName(xmlFilePath) {
+        const AppDataPathHelper = require('../AppDataPathHelper');
+        const helper = new AppDataPathHelper(xmlFilePath);
+        const base = helper.getBaseProjectPath();
+        if (base) {
+            const parts = base.split(/[/\\]/).filter(Boolean);
+            if (parts.length >= 2) {
+                return `${parts[parts.length - 2]}_${parts[parts.length - 1]}`;
+            }
+            if (parts.length === 1) {
+                return parts[0];
+            }
+        }
+
         // Chuẩn hóa đường dẫn (chuyển / thành \)
         const normalizedPath = xmlFilePath.replace(/\//g, '\\');
 
@@ -480,6 +493,13 @@ class AnalystXML {
 
 
     extractProjectPath(xmlFilePath) {
+        const AppDataPathHelper = require('../AppDataPathHelper');
+        const helper = new AppDataPathHelper(xmlFilePath);
+        const project_path = helper.getProjectPath();
+        if (project_path) {
+            return project_path;
+        }
+
         // Chuẩn hóa đường dẫn (chuyển / thành \)
         const normalizedPath = xmlFilePath.replace(/\//g, '\\');
 

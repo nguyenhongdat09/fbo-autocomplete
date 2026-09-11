@@ -42,32 +42,34 @@
         el_t1.innerHTML = '';
         (result.table1_missing || []).forEach(row => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${escape_attr(row.xml_short)}</td>
-                <td title="${escape_attr(row.missing_path)}">${escape_attr(row.relative_path || row.missing_path)}</td>
-                <td>${escape_attr(row.source_label)}</td>`;
+            tr.innerHTML = `<td><strong>${escape_attr(row.xml_short)}</strong></td>
+                <td title="${escape_attr(row.missing_path)}"><code>${escape_attr(row.relative_path || row.missing_path)}</code></td>
+                <td><span class="badge ok">${escape_attr(row.source_label)}</span></td>`;
             el_t1.appendChild(tr);
         });
 
         el_t3.innerHTML = '';
         (result.table3_xml_errors || []).forEach(row => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${escape_attr(row.xml_short)}</td>
-                <td>${row.missing_count}</td><td>${row.undeclared_count}</td>`;
+            const missingPill = `<span class="count-pill ${row.missing_count > 0 ? 'has-error' : 'zero'}">${row.missing_count}</span>`;
+            const undeclaredPill = `<span class="count-pill ${row.undeclared_count > 0 ? 'has-error' : 'zero'}">${row.undeclared_count}</span>`;
+            tr.innerHTML = `<td><strong>${escape_attr(row.xml_short)}</strong></td>
+                <td>${missingPill}</td><td>${undeclaredPill}</td>`;
             el_t3.appendChild(tr);
         });
 
         el_t2.innerHTML = '';
         (result.table2_entities || []).forEach((row, row_index) => {
             const tr = document.createElement('tr');
-            const icon = row.status === 'ok' ? '✔ OK' : '✖';
+            const icon = row.status === 'ok' ? '✔ OK' : '✖ Thiếu';
             const klass = row.status === 'ok' ? 'ok' : 'bad';
             const detail = row.status === 'ok'
-                ? `${row.source_label}: ${row.decl_file || ''} :${row.decl_line || ''}`
+                ? `${row.source_label}: ${row.decl_file || ''}${row.decl_line ? ' :' + row.decl_line : ''}`
                 : row.source_label;
-            tr.innerHTML = `<td>${escape_attr(row.xml_short)}</td>
-                <td>&amp;${escape_attr(row.entity_name)};</td>
-                <td class="${klass}">${icon} ${escape_attr(detail)}</td>
-                <td><button data-check="${row_index}" ${row.status !== 'ok' ? 'disabled' : ''}>Check</button></td>`;
+            tr.innerHTML = `<td><strong>${escape_attr(row.xml_short)}</strong></td>
+                <td><code>&amp;${escape_attr(row.entity_name)};</code></td>
+                <td><span class="badge ${klass}"><span>${icon}</span> <span>${escape_attr(detail)}</span></span></td>
+                <td><button class="btn-check" data-check="${row_index}" ${row.status !== 'ok' ? 'disabled' : ''}>Check</button></td>`;
             el_t2.appendChild(tr);
         });
         el_t2.querySelectorAll('button[data-check]').forEach(btn => {
