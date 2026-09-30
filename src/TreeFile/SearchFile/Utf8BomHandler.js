@@ -4,22 +4,23 @@ const fs = require("fs");
 const path = require("path");
 
 const BOM = Buffer.from([0xEF, 0xBB, 0xBF]);
+const BOM_EXTENSIONS = new Set([".xml", ".aspx", ".ent"]);
 
 class Utf8BomHandler {
     /** @type {Set<string>} */
     static _processing = new Set();
 
     /**
-     * Tự động kiểm tra và thêm UTF-8 BOM nếu là file .xml và chưa có BOM
+     * Tự động kiểm tra và thêm UTF-8 BOM nếu là file .xml/.aspx/.ent và chưa có BOM
      * @param {string} abs_path Đường dẫn tuyệt đối của file
      * @returns {Promise<boolean>} true nếu đã chuyển sang UTF-8 BOM, false nếu không cần chuyển
      */
     static async ensureBom(abs_path) {
         if (!abs_path || typeof abs_path !== "string") return false;
 
-        // Chỉ xử lý riêng cho file .xml
+        // Chỉ xử lý riêng cho file text FBO cần BOM (.xml, .aspx, .ent)
         const ext = path.extname(abs_path).toLowerCase();
-        if (ext !== ".xml") return false;
+        if (!BOM_EXTENSIONS.has(ext)) return false;
 
         const normalized_path = path.normalize(abs_path);
         if (this._processing.has(normalized_path)) return false;

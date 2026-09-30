@@ -9,6 +9,9 @@ class TextSearchResultTreeView {
         this.refreshEvent = new vscode.EventEmitter();
         this.onDidChangeTreeData = this.refreshEvent.event;
         this.treeView = null;
+        this.typeDr = "text/uri-list";
+        this.dragMimeTypes = [this.typeDr];
+        this.dropMimeTypes = [];
         /** @type {import('vscode').TreeItem[]} */
         this.rootItems = [];
         /** @type {Map<string, import('vscode').TreeItem[]>} */
@@ -23,7 +26,9 @@ class TextSearchResultTreeView {
     run(context) {
         this.treeView = vscode.window.createTreeView(GroupTextSearchKinds.VIEW_ID, {
             treeDataProvider: this,
+            dragAndDropController: this,
             showCollapseAll: true,
+            canSelectMany: true,
         });
         context.subscriptions.push(this.treeView);
     }
@@ -145,6 +150,7 @@ class TextSearchResultTreeView {
             lineItem.contextValue = "textSearchResultLine";
             lineItem.description = `L${Number(m.line) || 1}`;
             lineItem.fboTextSearchNodeKey = lineKey;
+            lineItem.fboTextSearchFilePath = file.absPath;
             lineItem.iconPath = new vscode.ThemeIcon("debug-stackframe");
 
             const payload = TextSearchResultTreeView._matchPayload(file.absPath, m.range);
@@ -189,6 +195,27 @@ class TextSearchResultTreeView {
         }
         return this.childrenMap.get(element.fboTextSearchNodeKey) || [];
     }
+
+    /**
+     * Kéo file node (hoặc dòng match — attach file chứa match) sang explorer/chat.
+     * @param {import('vscode').TreeItem[]} source
+     * @param {import('vscode').DataTransfer} dataTransfer
+     */
+    handleDrag(source, dataTransfer) {
+        const uris = new Set();
+        for (const item of source || []) {
+            if (!item) continue;
+            if (item.contextValue === "textSearchResultFile" && item.resourceUri) {
+                uris.add(item.resourceUri.toString());
+            } else if (item.contextValue === "textSearchResultLine" && item.fboTextSearchFilePath) {
+                uris.add(vscode.Uri.file(item.fboTextSearchFilePath).toString());
+            }
+        }
+        if (!uris.size) return;
+        dataTransfer.set(this.typeDr, new vscode.DataTransferItem([...uris].join("\r\n")));
+    }
+
+    async handleDrop() { }
 }
 
 module.exports = TextSearchResultTreeView;

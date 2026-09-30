@@ -130,12 +130,17 @@ function preprocessXml(xmlText) {
  */
 function resolveFboXmlEntities(mainXmlPath) {
     const mainXmlDir = path.dirname(mainXmlPath);
-    
+
+    /** @type {Record<string, any>} */
     const generalEntities = {};
+    /** @type {Record<string, any>} */
     const parameterEntities = {};
+    /** @type {Record<string, number>} */
     const fileMtimes = {};
+    /** @type {any[]} */
     const overriddenEntities = [];
 
+    /** @param {string} filePath */
     function getFileMtime(filePath) {
         try {
             return fs.statSync(filePath).mtimeMs;
@@ -144,18 +149,24 @@ function resolveFboXmlEntities(mainXmlPath) {
         }
     }
 
+    /** @param {string} filePath */
     function readAndRecordFile(filePath) {
         const norm = path.normalize(filePath).toLowerCase();
         fileMtimes[norm] = getFileMtime(filePath);
         return readFileContent(filePath);
     }
-    
+
+    /** @param {string} filePath */
     function recordFileMtime(filePath) {
         const norm = path.normalize(filePath).toLowerCase();
         fileMtimes[norm] = getFileMtime(filePath);
     }
-    
+
     // Phân giải đường dẫn tương đối dựa trên thư mục chứa tệp XML chính
+    /**
+     * @param {string} currentFilePath
+     * @param {string} targetUrl
+     */
     function resolvePath(currentFilePath, targetUrl) {
         let cleanUrl = targetUrl.replace(/\\/g, '/');
         if (cleanUrl.startsWith('file:///')) {
@@ -196,11 +207,15 @@ function resolveFboXmlEntities(mainXmlPath) {
             const result = parser.parseContent(dtdBlock, mainXmlPath, dtdLineOffset, parameterEntities, generalEntities, overriddenEntities);
             
             // FboEntParser trả về các object mới (hoặc update seed), ta gán lại
-            for (const key in result.generalEntities) {
-                generalEntities[key] = result.generalEntities[key];
+            /** @type {Record<string, any>} */
+            const resGeneral = result.generalEntities || {};
+            /** @type {Record<string, any>} */
+            const resParam = result.paramEntities || {};
+            for (const key in resGeneral) {
+                generalEntities[key] = resGeneral[key];
             }
-            for (const key in result.paramEntities) {
-                parameterEntities[key] = result.paramEntities[key];
+            for (const key in resParam) {
+                parameterEntities[key] = resParam[key];
             }
             overriddenEntities.length = 0;
             overriddenEntities.push(...result.overriddenEntities);
@@ -321,6 +336,8 @@ function getEntitiesForFile(filePath, targetEntity = null) {
 
 /**
  * Nạp sẵn cache từ LevelDB lên RAM khi mở file (async priming)
+ * @param {string} filePath
+ * @param {Record<string, any>} entities
  */
 function primeCache(filePath, entities) {
     if (!filePath || !entities) return;
@@ -336,6 +353,7 @@ function primeCache(filePath, entities) {
     }
 }
 
+/** @param {string} [filePath] */
 function invalidateCache(filePath) {
     if (filePath) {
         const normalized = path.normalize(filePath).toLowerCase();
@@ -347,10 +365,23 @@ function invalidateCache(filePath) {
     }
 }
 
+/**
+ * Trả về fileMtimes (path -> mtime) của cache entry hiện tại.
+ * Gọi SAU getEntitiesForFile — dùng cho bên ngoài validate dependency nhanh bằng statSync song song.
+ * @param {string} filePath
+ * @returns {Record<string, number> | null}
+ */
+function getEntityDepMtimes(filePath) {
+    const normalized = path.normalize(filePath).toLowerCase();
+    const cached = cache.get(normalized);
+    return cached ? (cached.fileMtimes || null) : null;
+}
+
 module.exports = {
     getEntitiesForFile,
     invalidateCache,
     primeCache,
     readFileContent,
-    resolveFboXmlEntities
+    resolveFboXmlEntities,
+    getEntityDepMtimes
 };

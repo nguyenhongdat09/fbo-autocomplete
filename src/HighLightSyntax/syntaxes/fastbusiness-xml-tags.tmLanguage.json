@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "FastBusiness XML Tags Fix",
+  "scopeName": "fastbusiness.xml.tags",
+  "injectionSelector": "L:text.xml",
+  "patterns": [
+    {
+      "comment": "FastBusiness <text> and </text> XML Tags đồng bộ màu sắc với mọi thẻ XML",
+      "match": "(</?)(text)\\b([^>]*?)(/?>)",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.tag.xml"
+        },
+        "2": {
+          "name": "entity.name.tag.xml"
+        },
+        "3": {
+          "name": "text.xml"
+        },
+        "4": {
+          "name": "punctuation.definition.tag.xml"
+        }
+      }
+    }
+  ]
+}

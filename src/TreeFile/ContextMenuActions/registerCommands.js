@@ -14,7 +14,7 @@ function registerCommands(handler) {
         { name: "fboFile.ExpandAll", handler: async (group) => await handler.expandAll(group) },
         { name: "fboFile.DeleteStruct", handler: async (group) => await handler.deleteStruct(group) },
         { name: "fboFile.NewSqlTemp", handler: async (group) => await handler.newSqlTemp(group) },
-        { name: "fboFile.NewSqlTempOnWorkspace", handler: async (group) => await handler.newSqlTempOnWorkspace(group) },
+        { name: "fboFile.NewTxtTemp", handler: async (group) => await handler.newTxtTemp(group) },
         { name: "fboFile.SearchTextInGroup", handler: async (group) => await handler.treeDataProvider.runGroupTextSearch?.(group) },
         { name: "fboFile.PasteFilesToGroup", handler: async (group) => await handler.PasteFilesToGroup(group) },
         { name: "fboFile.GenerateCopyFile", handler: async () => await handler.GenerateCopyFile() },

@@ -4,8 +4,13 @@ const path = require('path');
 const os = require('os');
 class updateSettingsJson {
     getUserSettingsPath() {
-        const ideType = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('ideType', 'vscode'));
-        const appName = ideType.toLowerCase() === 'cursor' ? 'Cursor' : 'Code';
+        const ideType = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('ideType', 'vscode')).toLowerCase();
+        let appName = 'Code';
+        if (ideType === 'cursor') {
+            appName = 'Cursor';
+        } else if (ideType === 'antigravity') {
+            appName = 'Antigravity IDE';
+        }
         let appDataPath = '';
 
         if (process.platform === 'win32') {
@@ -35,8 +40,8 @@ class updateSettingsJson {
                 // Lấy đường dẫn thư mục XSD trong extension
                 var  extensionPath = path.join(context.extensionPath, 'src', 'Database', 'XSD');
                 var extensionPathMobile = path.join(context.extensionPath, 'src', 'Database', 'Mobile');
-                var ideType = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('ideType', 'vscode'));
-                extensionPathMobile = ideType.toLowerCase() === 'cursor' ? extensionPathMobile.replace('.vscode', '.cursor') : extensionPathMobile.replace('.cursor', '.vscode');
+                var ideType = String(vscode.workspace.getConfiguration('fbo-autocomplete').get('ideType', 'vscode')).toLowerCase();
+                extensionPathMobile = ideType === 'cursor' ? extensionPathMobile.replace('.vscode', '.cursor') : extensionPathMobile.replace('.cursor', '.vscode');
                 // 🛑 Xóa toàn bộ "xml.fileAssociations"
                 settings["xml.fileAssociations"] = [
                     { "pattern": "**/Controllers/Dir/*.xml", "systemId": path.join(extensionPath, "Dir.xsd") },

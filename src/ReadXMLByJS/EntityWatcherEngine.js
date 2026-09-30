@@ -7,6 +7,7 @@ const EntityLevelStore = require('./EntityLevelStore');
 class EntityWatcherEngine {
     constructor() {
         this.disposables = [];
+        this._reparseTimers = new Map(); // Debounce re-parse entity sau save
     }
 
     /**
@@ -30,14 +31,11 @@ class EntityWatcherEngine {
                     }
                 }
 
-                // 3. Khi Ctrl + S trên file XML: Parse lại entity và đẩy trực tiếp vào LevelDB
+                // 3. Khi Ctrl + S trên file XML: Parse lại entity và đẩy vào LevelDB.
+                // Re-parse nặng (statSync/readFileSync chuỗi .ent qua SMB, sync trên extension host)
+                // → defer + debounce 500ms để thao tác lưu tức thời, không block ngay lúc save
                 if (ext === '.xml') {
-                    try {
-                        require('./entityResolver').getEntitiesForFile(filePath);
-                        console.log(`[EntityWatcherEngine] Ctrl+S: Reloaded & updated LevelDB for: ${path.basename(filePath)}`);
-                    } catch (err) {
-                        console.error('[EntityWatcherEngine] Error updating LevelDB on save:', err);
-                    }
+                    this.scheduleReparse(filePath);
                 }
             }
         });
@@ -63,6 +61,25 @@ class EntityWatcherEngine {
             context.subscriptions.push(saveListener, openListener, activeListener);
         }
         console.log('[EntityWatcherEngine] Initialized 2-way watcher listener');
+    }
+
+    /**
+     * Debounce re-parse entity sau save — gom nhiều lần save liên tiếp thành 1 lần parse,
+     * chạy sau khi save xong để không chặn thao tác lưu.
+     * @param {string} filePath
+     */
+    scheduleReparse(filePath) {
+        const t = this._reparseTimers.get(filePath);
+        if (t) clearTimeout(t);
+        this._reparseTimers.set(filePath, setTimeout(() => {
+            this._reparseTimers.delete(filePath);
+            try {
+                require('./entityResolver').getEntitiesForFile(filePath);
+                console.log(`[EntityWatcherEngine] Deferred reparse done: ${path.basename(filePath)}`);
+            } catch (err) {
+                console.error('[EntityWatcherEngine] Error updating LevelDB on save:', err);
+            }
+        }, 500));
     }
 
     async primeDocumentCache(document) {
@@ -107,6 +124,8 @@ class EntityWatcherEngine {
     }
 
     dispose() {
+        for (const t of this._reparseTimers.values()) clearTimeout(t);
+        this._reparseTimers.clear();
         for (const d of this.disposables) {
             d.dispose();
         }

@@ -63,3 +63,27 @@
 - Bước 2: chọn loại file (`*.js`, `*.xml`, `*.txt`, `*.aspx`, `*.ent`, `*.f` — chỉnh mặc định trong Settings: `fbo-autocomplete.groupContentSearchExtensions`).
 - Kết quả tab **Text Search**: cây **file → dòng match** (preview có highlight). Click dòng → mở file và select đúng vị trí.
 - Phạm vi quét: ưu tiên `App_Data/Controllers` trong group (nếu có).
+
+## Tìm symbol toàn project (Workspace Symbol — Ctrl+T)
+- Bấm **Ctrl+T** rồi gõ tên → nhảy tới: `field`, `item`, entity `&X;`, action/button `id`, `controller`, lời gọi `exec proc`/`showForm('X')`, object trong file `.sql` (proc/function/view/trigger), và cả **file** theo tên.
+- Cú pháp query: khoảng trắng = AND, `*`/`%` = nhiều ký tự, `?`/`_` = 1 ký tự. VD: `ma_*` , `SV dir`.
+- Phạm vi mặc định: **chỉ project chứa file đang mở**. Đổi `fbo-autocomplete.workspaceSymbolScope` = `all` để search mọi project trên FBO tree.
+- Cần build all thì chạy : **FBO: Rebuild Symbol Index**.
+- Lưu ý: file `.f` (mã hóa tự sinh từ `.xml`) không được index.
+
+## Find All References (Shift+F12) và Rename (F2)
+- Đặt cursor lên symbol rồi **Shift+F12** — hỗ trợ: `name="X"` của `<field>`/`<item>`, `[X]` trong view item, `&X;` entity, `id="X"` của `<action>`/`<button>`, `controller="X"`, `showForm('X')`, tên proc/table trong `<query>`/`<command>` hoặc file `.sql`.
+- **F2** để rename — sau khi nhập tên mới chọn phạm vi: **Chỉ trong file này** (đổi trong file đang mở, gồm cả chỗ chưa save) hoặc **Tất cả project** (xuyên XML + SQL + JS). Mỗi chỗ đổi hiện trong **Refactor Preview** kèm checkbox — tick/bỏ tick từng chỗ rồi Apply, không đổi một nhát.
+- Tìm kiếm là word-literal (có word boundary: `ma_kh` không dính `ma_kh2`), match cả trong file đang sửa chưa save.
+
+## Diff với project chuẩn (Diff With Reference Project)
+- Chuột phải file trên **FBO File tree** hoặc trong editor → **FBO → Diff With Reference Project**.
+- Chọn group project đích (hoặc **Chọn thư mục project...**). Extension tự tìm file cùng relative path; không có thì tìm theo tên file.
+- Kết quả mở `vscode.diff`: trái = project đích, phải = file hiện tại. Nhớ lựa chọn lần trước.
+- Dùng để review phần customize so với bản chuẩn.
+
+## Trace Field — field đi đâu về đâu
+- Cursor lên field → **FBO → Trace Field** (context menu / Ctrl+Shift+P), hoặc nhập tên tay.
+- Bước 2: menu chọn mục cần trace — **mặc định bật tất cả** (icon `✓`), click mục để bật/tắt, xong chọn **▶ Chạy trace** (bỏ `DB objects` thì không connect DB → nhanh hơn). Tracing chạy dưới notification có nút **Cancel** để hủy giữa chừng.
+- Panel kết quả gồm các section: khai báo field → view/item layout → command/query trong XML → client script (`f.x`/`g.x`) → file `.sql` → DB objects (proc/view/function chứa field — cần chọn DB trên status bar) → file trùng tên.
+- Click 1 dòng → mở file đúng line ở **Group 1** (không đè panel).

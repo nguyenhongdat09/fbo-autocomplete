@@ -1,40 +1,232 @@
 const vscode = require('vscode');
-const fs = require('fs');
 const path = require('path');
-const entityResolver = require("../ReadXMLByJS/entityResolver");
+const { Worker } = require('worker_threads');
+const { escapeRegExp } = require('./CheckLegacyUtils');
+const { replaceEntity, getEntityContentsForDoc } = require('./CheckLegacyEntity');
+const { checkLegacyItem, getFieldOnFields, getFieldOnView } = require('./CheckLegacyFields');
+const { checkStructureRules } = require('./CheckLegacyStructure');
+const { checkGridRules } = require('./CheckLegacyGrid');
 
 class CheckLegacyCode {
+    /** @param {vscode.ExtensionContext} context */
     constructor(context) {
         this.diagnosticCollection = vscode.languages.createDiagnosticCollection("checkLegacyCode");
-        this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+        // Status bar: toggle On/Off check legacy khi save + nút check full toàn bộ rule
+        // (không tạo item spinner riêng — show/hide nó làm nút Check Legacy nhảy vị trí, gây click hụt;
+        //  trạng thái đang check hiển thị ngay trên text của fullCheckItem)
+        this.toggleItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
+        this.toggleItem.command = 'fbo-autocomplete.toggleCheckLegacy';
+        this.fullCheckItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 98);
+        this.fullCheckItem.command = 'fbo-autocomplete.CheckLegacyDirFilter';
+        this.fullCheckItem.text = '$(search) Check Legacy';
+        this.fullCheckItem.tooltip = 'Check toàn bộ rule legacy cho file Dir/Filter/Grid đang mở';
+        this.fullCheckItem.show();
+        context.subscriptions.push(this.toggleItem, this.fullCheckItem);
+        this.refreshToggleItem();
         this.currentCheckId = 0;
+        // Single-flight: đang check mà bấm/save tiếp → chỉ gom 1 lần chạy lại,
+        // không xếp hàng N task worker (click nhanh trước đây nhân đôi thời gian chờ)
+        this._checking = false;
+        /** @type {string|undefined|null} mode của lần chạy lại đang chờ ('save'|'full') */
+        this._rerunAfterCheck = null;
+        // Worker thread: check entity/expand/rules ngoài main thread → Ctrl+S không bị block
+        this._worker = null;
+        this._workerDisabled = false;
+        this._taskSeq = 0;
+        /** @type {Map<number, {resolve:Function, reject:Function, type:string}>} */
+        this._pendingTasks = new Map();
+        // Spawn sớm: trả chi phí khởi tạo lúc activate, không phải lúc save đầu tiên
+        this._ensureWorker();
     }
-    
-    async run() {
+
+    _ensureWorker() {
+        if (this._workerDisabled) return null;
+        if (this._worker) return this._worker;
+        try {
+            const w = new Worker(path.join(__dirname, "CheckLegacyWorker.js"));
+            w.on("message", (msg) => {
+                const p = this._pendingTasks.get(msg && msg.id);
+                if (!p) return;
+                this._pendingTasks.delete(msg.id);
+                p.resolve(msg);
+            });
+            w.on("error", (err) => {
+                console.warn("[CheckLegacy] worker error:", err && err.message);
+                this._killWorker();
+            });
+            w.on("exit", () => {
+                // Worker chết dù exit code nào cũng phải clear ref — giữ lại sẽ postMessage
+                // vào worker zombie, task pending mãi → nút Check "không ăn"
+                this._killWorker();
+            });
+            w.unref();
+            this._worker = w;
+            return w;
+        } catch (err) {
+            console.warn("[CheckLegacy] worker spawn failed — fallback inline:", err && err.message);
+            this._workerDisabled = true;
+            return null;
+        }
+    }
+
+    _killWorker() {
+        const w = this._worker;
+        this._worker = null;
+        // Cho phép retry 1 lần — lần sau vẫn crash thì disable hẳn (inline path)
+        if (this._workerRetried) this._workerDisabled = true;
+        this._workerRetried = true;
+        for (const p of this._pendingTasks.values()) p.reject(new Error("worker died"));
+        this._pendingTasks.clear();
+        if (w) { try { w.terminate(); } catch { /* ignore */ } }
+    }
+
+    /** Gửi task sang worker. null nếu worker không khả dụng → caller fallback inline. */
+    _sendTask(msg) {
+        const w = this._ensureWorker();
+        if (!w) return null;
+        const id = ++this._taskSeq;
+        return new Promise((resolve, reject) => {
+            this._pendingTasks.set(id, { resolve, reject, type: msg.type });
+            try {
+                w.postMessage({ ...msg, id });
+            } catch (err) {
+                this._pendingTasks.delete(id);
+                reject(err);
+            }
+        });
+    }
+
+    /**
+     * Warm entity cache khi mở/chuyển sang file — warm trong worker để lúc save
+     * check chỉ tra Map (entitySessionCache của worker tách biệt main thread).
+     * @param {vscode.TextEditor | undefined} editor
+     */
+    async warmEntities(editor) {
+        try {
+            if (!editor) return;
+            const dirPath = path.dirname(editor.document.uri.fsPath).replace(/\\/g, '/').toLowerCase();
+            if (!(dirPath.includes('controllers/dir') || dirPath.includes('controllers/filter') || dirPath.includes('controllers/grid'))) return;
+            if ((editor.document.languageId || '').toLowerCase() !== 'xml') return;
+            const filePath = editor.document.uri.fsPath;
+            const content = editor.document.getText();
+            const doctypeMatch = content.match(/<!DOCTYPE\s+\w+[\s\S]*?\[[\s\S]*?\]\s*>/i);
+            const doctype = doctypeMatch ? doctypeMatch[0] : '';
+            // Đang có check chạy/chờ trong worker → warm thừa (check tự resolve entity),
+            // bỏ qua để không làm nút Check Legacy phải xếp sau warm
+            for (const t of this._pendingTasks.values()) { if (t.type === 'check') return; }
+            const p = this._sendTask({ type: "warm", filePath, doctype });
+            if (p) { try { await p; } catch { /* ignore */ } return; }
+            await getEntityContentsForDoc(filePath, doctype); // worker chết → warm cache inline
+        } catch (err) { /* warm best-effort, không ảnh hưởng check */ }
+    }
+
+    /** Cập nhật text nút toggle theo setting checkLegacyWhenSave */
+    refreshToggleItem() {
+        const on = vscode.workspace.getConfiguration('fbo-autocomplete').get('checkLegacyWhenSave', true);
+        this.toggleItem.text = on ? '$(pass) Legacy On' : '$(circle-slash) Legacy Off';
+        this.toggleItem.tooltip = `Check legacy khi lưu (Ctrl+S): ${on ? 'ON' : 'OFF'} — click để ${on ? 'tắt' : 'bật'}`;
+        this.toggleItem.show();
+    }
+
+    /**
+     * @param {'save'|'full'} [mode] 'save' = chỉ Dir/Filter, chỉ check field chưa khai báo + thừa/thiếu phần tử.
+     * 'full' = check toàn bộ rule (gồm Grid, structure, field chưa xuống view) — dùng cho nút Check Legacy.
+     */
+    async run(mode) {
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
+        const full = mode === 'full';
 
         const dirPath = path.dirname(editor.document.uri.fsPath).replace(/\\/g, '/').toLowerCase(); // 👈 chỉ lấy thư mục chứa file
-        if (!(dirPath.includes('controllers/dir') || dirPath.includes('controllers/filter'))) {
+        const isGrid = dirPath.includes('controllers/grid');
+        if (!(dirPath.includes('controllers/dir') || dirPath.includes('controllers/filter') || isGrid)) {
+            // Nút bấm (full) trên file không hợp lệ → báo rõ thay vì "click không ăn"
+            if (full) vscode.window.showInformationMessage('Check Legacy: file đang mở không phải Dir/Filter/Grid XML.');
             return;
         }
-        
+        if (isGrid && !full) return; // save: bỏ qua Grid — Grid chỉ check khi bấm nút Check Legacy
+
+        // Đang check mà bấm/save tiếp → gom thành đúng 1 lần chạy lại sau khi xong
+        // (tránh xếp hàng N task full-check trong worker — mỗi click cũ từng nhân thêm thời gian chờ)
+        if (this._checking) {
+            if (full || this._rerunAfterCheck !== 'full') this._rerunAfterCheck = full ? 'full' : 'save';
+            return;
+        }
+        this._checking = true;
+
         // Sinh ID cho lần chạy này để hủy bỏ (abort) nếu user bấm Ctrl+S liên tục
         this.currentCheckId++;
         const checkId = this.currentCheckId;
 
-        this.statusBarItem.text = "$(sync~spin) Checking legacy...";
-        this.statusBarItem.tooltip = "Đang kiểm tra lỗi thiếu field trong XML...";
-        this.statusBarItem.show();
+        this.fullCheckItem.text = "$(sync~spin) Checking…";
 
         const tStart = Date.now();
-        console.log("[FBO_PERF_DEBUG] [CheckLegacy] Running check for:", editor.document.uri.fsPath);
-        var content = vscode.window.activeTextEditor.document.getText();
+        try {
+            await this._runCheck(editor, checkId, isGrid, full, tStart);
+        } finally {
+            this.fullCheckItem.text = '$(search) Check Legacy';
+            this._checking = false;
+            const rerun = this._rerunAfterCheck;
+            this._rerunAfterCheck = null;
+            if (rerun) {
+                this.run(rerun).catch(err => console.warn("[CheckLegacy] rerun failed:", err && err.message));
+            }
+        }
+    }
+
+    /**
+     * @param {vscode.TextEditor} editor
+     * @param {number} checkId
+     * @param {boolean} isGrid
+     * @param {boolean} full
+     * @param {number} tStart
+     */
+    async _runCheck(editor, checkId, isGrid, full, tStart) {
+        const filePath = editor.document.uri.fsPath;
+        const docUri = editor.document.uri;
+        console.log("[FBO_PERF_DEBUG] [CheckLegacy] Running check for:", filePath);
+        var originalContent = editor.document.getText();
+
+        const doctypeMatch = originalContent.match(/<!DOCTYPE\s+\w+[\s\S]*?\[[\s\S]*?\]\s*>/i);
+        const doctype = doctypeMatch ? doctypeMatch[0] : '';
+
+        // === Worker path: check ngoài main thread ===
+        const task = this._sendTask({ type: "check", filePath, content: originalContent, isGrid, doctype, full });
+        if (task) {
+            try {
+                const res = await task;
+                if (this.currentCheckId !== checkId) return;
+                if (res.error) throw new Error(res.error);
+                const diagnostics = (res.diags || []).map(d => new vscode.Diagnostic(
+                    new vscode.Range(d.sl, d.sc, d.el, d.ec),
+                    d.message,
+                    d.severity != null ? d.severity : vscode.DiagnosticSeverity.Error
+                ));
+                this.diagnosticCollection.set(docUri, diagnostics);
+                const t = res.timings || {};
+                console.log(`[FBO_PERF_DEBUG] [CheckLegacy] END (worker) took ${Date.now() - tStart}ms — resolve:${t.resolve}ms expand:${t.expand}ms(${t.iters}it) rules:${t.rules}ms`);
+                for (const m of res.errors || []) vscode.window.showErrorMessage(m);
+                return;
+            } catch (err) {
+                console.warn("[CheckLegacy] worker check failed → inline:", err && err.message);
+                // rơi xuống inline path bên dưới
+            }
+        }
+
+        // === Inline path (fallback khi worker không khả dụng) ===
+        var content = originalContent;
+
+        // 🎯 Tối ưu: entity chỉ đổi khi DOCTYPE hoặc file .ent/include đổi → resolve 1 lần,
+        // cache theo doctype để các lần save sau chỉ tốn statSync song song validate dep
+        const entityContents = await getEntityContentsForDoc(filePath, doctype);
+        if (this.currentCheckId !== checkId) return;
 
         // 🎯 Tối ưu: Chỉ trích xuất & giải mã Entity trong khối <fields> và <views> (bao gồm <category>)
         // Giúp bỏ qua toàn bộ phần SQL <query>, <commands>, <clientScript>... nặng nề
         const fieldsBlockRegex = /<fields>([\s\S]*?)<\/fields>/gi;
-        const viewsBlockRegex = /<(views|category)>([\s\S]*?)<\/(views|category)>/gi;
+        // Chỉ lấy <views>...</views> — KHÔNG match </category> làm ranh giới (category nằm lồng trong views,
+        // nếu không &ListCategory;/&PostCategory; sau </category> đầu tiên sẽ không được expand)
+        const viewsBlockRegex = /<views>[\s\S]*?<\/views>/gi;
 
         let iterations = 0;
         const maxIterations = 5;
@@ -60,7 +252,7 @@ class CheckLegacyCode {
 
             if (!targetSections) break;
 
-            var ent_content = this.replaceEntity(targetSections);
+            var ent_content = replaceEntity(targetSections, entityContents);
             if (ent_content.length === 0) break;
 
             try {
@@ -73,7 +265,7 @@ class CheckLegacyCode {
                 if (entityMap.size === 0) break;
 
                 const entityRegex = new RegExp(
-                    [...entityMap.keys()].map(k => this.escapeRegExp(k)).join('|'), 'g'
+                    [...entityMap.keys()].map(k => escapeRegExp(k)).join('|'), 'g'
                 );
                 const nextContent = content.replace(
                     entityRegex, match => entityMap.get(match) || match
@@ -89,230 +281,30 @@ class CheckLegacyCode {
         }
 
         if (this.currentCheckId !== checkId) return;
-        
-        // Giữ nguyên 100% logic trích xuất field và so sánh
-        var field_item = this.getFieldOnView(content);
-        var fields_declare = this.getFieldOnFields(content);
 
-        this.checkLegacyItem(editor, field_item, fields_declare);
-        console.log(`[FBO_PERF_DEBUG] [CheckLegacy] END took ${Date.now() - tStart}ms`);
-        
-        if (this.currentCheckId === checkId) {
-            this.statusBarItem.hide();
-        }
-    }
-
-    escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    replaceEntity(content) {
-        const regex = /&[^;\s]+;/g;
-        var entities = content.match(regex) || [];
-        const uniqueEntities = [...new Set(entities)];
-        
-        var parsedEntities = uniqueEntities.map((entity) => {
-            return { entity, entity_variable: entity.replace(/&|;/g, '') }
-        });
-        parsedEntities = parsedEntities.filter((item) =>
-            !['&gt', '&lt', '&amp', '&quot', '&apos'].includes(item.entity)
-        );
-        var entityMapping = this.readEntity(parsedEntities.map((item) => item.entity_variable));
-        if (entityMapping.length == 0) return [];
-        
-        var entities_content = parsedEntities.map((item) => {
-            var entity = item.entity;
-            var content = entityMapping.find((ent) =>
-                ent.Name == item.entity_variable
-            );
-            if (content) {
-                var ent_ct = content.Content;
-                return { entity, content: ent_ct };
-            } else {
-                return { entity, content: '' };
-            }
-        });
-        return entities_content;
-    }
-
-    checkLegacyItem(editor, field_item, fields_declare) {
-        const self = this; // Giữ lại `this`
-        const error_item = field_item.filter((item) => item.key.length !== item.fields.length);
+        /** @type {vscode.Diagnostic[]} */
         const diagnostics = [];
-        const document = editor.document;
-        let diagnostic;
-        function thua_thieu(diagnostics) {
-            error_item.forEach((item) => {
-                let line = item.line || 0;
-                if (item.key.length > item.fields.length) {
-                    diagnostic = self.setDiag(line, `Lỗi "thừa" phần tử 1: \n - Số phần tử 1 là "${item.key.length}" \n - Số field là "${item.fields.length}" `, document);
-                } else {
-                    diagnostic = self.setDiag(line, `Lỗi "thiếu" phần tử 1: \n - Số phần tử 1 là "${item.key.length}" \n - Số field là "${item.fields.length}"`, document);
-                }
-                diagnostics.push(diagnostic);
-            });
+        if (isGrid) {
+            // Grid: views dùng <field name="x"/> chứ không dùng <item value="pattern: [f]"> → bỏ qua check field/view cũ
+            checkGridRules(editor, content, originalContent, diagnostics);
+        } else {
+            // Giữ nguyên 100% logic trích xuất field và so sánh
+            var field_item = getFieldOnView(content);
+            var fields_declare = getFieldOnFields(content);
+
+            // <views>/<fields> còn entity chưa expand (&ListView; &XxxField;...) → không đủ dữ kiện đối chiếu
+            const viewsContent = (content.match(/<views>[\s\S]*?<\/views>/gi) || []).join('\n');
+            const fieldsContent = (content.match(/<fields>[\s\S]*?<\/fields>/gi) || []).join('\n');
+            const entityLeftRe = /&(?!(gt|lt|amp|quot|apos);)[\w.]+;/;
+            const hasUnresolvedViewEntities = entityLeftRe.test(viewsContent);
+            const hasUnresolvedFieldsEntities = entityLeftRe.test(fieldsContent);
+
+            checkLegacyItem(editor, field_item, fields_declare, diagnostics, hasUnresolvedViewEntities, hasUnresolvedFieldsEntities, { fieldNotOnView: full });
+            if (full) checkStructureRules(editor, content, diagnostics, true);
         }
-    
-        const field_distinct = field_item.map(item => ({
-            fields: [...new Set(item.fields)],
-            line: item.line
-        }));
-    
-        function chua_khai_bao_Field(diagnostics) {
-            const fieldDeclSet = new Set(fields_declare.map(item => item.key));
-            field_distinct.forEach(item_distinct => {
-                const fields = item_distinct.fields, line = item_distinct.line || 0;
-                fields.forEach(field => {
-                    if (!fieldDeclSet.has(field)) {
-                        diagnostic = self.setDiag(line, `Field: ${field} chưa khai báo ở Fields.`, document);
-                        diagnostics.push(diagnostic);
-                    }
-                });
-            });
-        }
-    
-        function chua_khai_bao_Field_xuong_view(diagnostics) {
-            // Build Set tất cả field đã khai báo trên view → tra cứu O(1)
-            const allViewFields = new Set();
-            for (const item of field_distinct) {
-                for (const f of item.fields) allViewFields.add(f);
-            }
-            fields_declare.forEach(item_field => {
-                const field = item_field.key, line = item_field.line || 0;
-                if (!allViewFields.has(field)) {
-                    diagnostic = self.setDiag(line, `Chưa khai báo Field: ${field} xuống thẻ view`, document);
-                    diagnostics.push(diagnostic);
-                }
-            });
-        }
-    
-        // Gọi các hàm xử lý
-        thua_thieu(diagnostics);
-        chua_khai_bao_Field(diagnostics);
-        chua_khai_bao_Field_xuong_view(diagnostics);
-        self.diagnosticCollection.set(editor.document.uri, diagnostics);
+        this.diagnosticCollection.set(editor.document.uri, diagnostics);
+        console.log(`[FBO_PERF_DEBUG] [CheckLegacy] END took ${Date.now() - tStart}ms`);
     }
-    
-
-    setDiag(line, message, document) {
-        let _line = line - 1
-        let range = new vscode.Range(_line, 0, _line, document.lineAt(_line).text.length);
-        return new vscode.Diagnostic(range, message, vscode.DiagnosticSeverity.Error);
-    }
-
-    getFieldOnFields(content) {
-        try {
-            const fieldsRegex = /<fields>([\s\S]*?)<\/fields>/g;
-            const fieldsMatch = fieldsRegex.exec(content);
-            if (!fieldsMatch) {
-                return [];
-            }
-            var xmlFields = fieldsMatch[0];
-            const xmlFieldsStart = fieldsMatch.index;
-            const fieldRegex = /<field[^>]*name="([^"]+)"[^>]*>[\s\S]*?<\/field>/g;
-            const result = [];
-            
-            // Đếm số newline trước xmlFieldsStart 1 lần O(N)
-            let baseLineNumber = 1;
-            for (let k = 0; k < xmlFieldsStart; k++) {
-                if (content[k] === '\n') baseLineNumber++;
-            }
-            
-            // Duyệt tuần tự: đếm newline tăng dần O(1) trung bình thay vì findIndex O(L) mỗi lần
-            let lastMatchIdx = 0;
-            let currentLine = baseLineNumber;
-
-            let match;
-            while ((match = fieldRegex.exec(xmlFields)) !== null) {
-                var key_t = match[1];
-                var value_t = match[0];
-                // **Bỏ qua field có filterSource="Vacant"**
-                if (/filterSource="Vacant"/.test(value_t)) continue;
-                
-                // Đếm newline từ lastMatchIdx đến match.index (tăng dần)
-                for (let k = lastMatchIdx; k < match.index; k++) {
-                    if (xmlFields[k] === '\n') currentLine++;
-                }
-                lastMatchIdx = match.index;
-
-                result.push({ key: key_t, value: value_t, line: currentLine });
-            }
-            return result;
-        }
-        catch (error) {
-            vscode.window.showErrorMessage(`Error parsing XML`);
-            return [];
-        }
-    }
-
-    getFieldOnView(content) {
-        try {
-            const regex = /<item value="([^"]+):\s*([^"]+)"/g;
-            let match;
-            const results = [];
-            // Đếm dòng tăng dần theo match.index thay vì findIndex O(L) mỗi lần
-            let lastMatchIdx = 0;
-            let currentLine = 1;
-            
-            while ((match = regex.exec(content)) !== null) {
-                var key = match[1].trim().replace(/[0-]/g, '');
-                // Tìm các field nằm trong ngoặc vuông []
-                const fieldMatches = match[2].match(/\[([^\]]+)\]/g) || [];
-                var fields = fieldMatches.map(field => field.replace(/\[|\]/g, "").trim());
-                
-                // Đếm newline từ lastMatchIdx đến match.index (tăng dần)
-                for (let k = lastMatchIdx; k < match.index; k++) {
-                    if (content[k] === '\n') currentLine++;
-                }
-                lastMatchIdx = match.index;
-                
-                results.push({ key, fields, line: currentLine });
-            }
-            return results;
-        } catch (error) {
-            vscode.window.showErrorMessage(`Error parsing XML`);
-            return [];
-        }
-    }
-
-    readEntity(entities) {
-        try {
-            const filePath = vscode.window.activeTextEditor.document.uri.fsPath;
-            const generalEntities = entityResolver.getEntitiesForFile(filePath);
-            if (!generalEntities) {
-                return [];
-            }
-            
-            const result = [];
-            // DEDUPLICATE entities to avoid N * M redundant disk reads on the main thread
-            const uniqueEntities = [...new Set(entities)];
-            
-            for (const name of uniqueEntities) {
-                const entityDecl = generalEntities[name];
-                if (entityDecl) {
-                    let content = "";
-                    if (entityDecl.systemUrl) {
-                        try {
-                            content = entityResolver.readFileContent(entityDecl.sourceFile);
-                        } catch (err) {
-                            content = "";
-                        }
-                    } else {
-                        content = entityDecl.value || "";
-                    }
-                    result.push({
-                        Name: name,
-                        Content: content
-                    });
-                }
-            }
-            return result;
-        } catch (err) {
-            console.error("[FBO CheckLegacyCode] readEntity failed:", err);
-            return [];
-        }
-    }
-
 }
 
 module.exports = CheckLegacyCode;

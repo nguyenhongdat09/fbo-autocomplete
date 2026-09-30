@@ -1,3 +1,4 @@
+// @ts-nocheck
 const fs = require("fs");
 const path = require("path");
 const { Worker } = require('worker_threads');
@@ -78,10 +79,12 @@ class AnalystXML {
         this.pathDatabaseCursorIgnore = '';
         this.saveTimeouts = new Map(); // Debounce: lưu timeout theo từng file
         this.analystAllTimeouts = new Map(); // Debounce cho analystAll theo project
+        this._jsonWriteQueues = new Map(); // Serialize write file_xml_to_aspx_info.json theo path
         this.syncDB = new SyncDBOpenBrowser();
         this.projectsMissingJsonWarned = new Set(); // Tránh spam cảnh báo khi thiếu JSON
         this.projectsAnalysisInProgress = new Set(); // Tránh chạy analystAll trùng nhau
         this.projectsDbSynced = new Set(); // Tránh sync DB lặp lại gây nặng
+        this.cursorIgnoreChecked = new Set(); // .cursorignore chỉ check/ghi 1 lần mỗi đích trong session
         this.workersByProject = new Map(); // Worker theo project
     }
     //Xử lý path Database (user: globalStorage/Database)
@@ -537,7 +540,11 @@ class AnalystXML {
     normalizePathKey(p) {
         if (!p) return p;
         try {
-            return p.replace(/\//g, '\\\\').replace(/\\+/g, '\\\\').toLowerCase();
+            let s = String(p).replace(/\//g, '\\');
+            // Strip extended-length prefix: \\?\UNC\server\share → \\server\share
+            if (/^\\\\\?\\UNC\\/i.test(s)) s = '\\\\' + s.slice(8);
+            else if (/^\\\\\?\\/i.test(s)) s = s.slice(4);
+            return s.replace(/\\+/g, '\\\\').toLowerCase();
         } catch (e) {
             return p.replace(/\//g, '\\\\').toLowerCase();
         }
@@ -607,7 +614,10 @@ class AnalystXML {
                 xmlPathMap: xmlPathMap // Map để tra cứu nhanh
             };
 
-            await fs.promises.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2), 'utf-8');
+            // Ghi atomic: tmp + rename → tránh file nửa vời nếu host bị kill giữa write
+            const tmpPath = `${jsonFilePath}.tmp-${process.pid}`;
+            await fs.promises.writeFile(tmpPath, JSON.stringify(jsonData, null, 2), 'utf-8');
+            await fs.promises.rename(tmpPath, jsonFilePath);
             console.log(`Đã lưu ${xmlResults.length} file XML vào ${jsonFilePath}`);
             await this.syncDBFunc(projectFolderPath, 1);
             return true;
@@ -740,13 +750,28 @@ class AnalystXML {
         if (!projectFolderPath || !aspxName || !newXmlPaths || newXmlPaths.length === 0) {
             return false;
         }
+        // Serialize theo path: 2 writer (worker + save khác) ghi đè → file torn
+        const key = path.join(projectFolderPath, this.json_save_name);
+        const prev = this._jsonWriteQueues.get(key) || Promise.resolve();
+        const task = prev.then(() => this._updateJsonWithNewXmlPathsInner(projectFolderPath, aspxName, newXmlPaths));
+        this._jsonWriteQueues.set(key, task.catch(() => { }));
+        return task;
+    }
+
+    async _updateJsonWithNewXmlPathsInner(projectFolderPath, aspxName, newXmlPaths) {
         try {
             const jsonFilePath = path.join(projectFolderPath, this.json_save_name);
 
-            // Đọc JSON hiện tại
+            // Đọc JSON hiện tại — file corrupt (write bị cắt ngang trên UNC) thì quarantine + build lại
             let jsonData = { xmlList: [], xmlPathMap: {} };
             if (fs.existsSync(jsonFilePath)) {
-                jsonData = JSON.parse(await fs.promises.readFile(jsonFilePath, 'utf-8'));
+                try {
+                    jsonData = JSON.parse(await fs.promises.readFile(jsonFilePath, 'utf-8'));
+                } catch (parseErr) {
+                    const corruptPath = `${jsonFilePath}.corrupt-${Date.now()}`;
+                    try { await fs.promises.rename(jsonFilePath, corruptPath); } catch (_) { /* ignore */ }
+                    console.warn(`[AnalystXML] JSON corrupt → quarantine sang: ${corruptPath}`);
+                }
             }
 
             // Lấy danh sách hiện tại
@@ -783,7 +808,10 @@ class AnalystXML {
                 xmlPathMap: xmlPathMap
             };
 
-            await fs.promises.writeFile(jsonFilePath, JSON.stringify(updatedJsonData, null, 2), 'utf-8');
+            // Ghi atomic: tmp + rename → kill giữa chừng không làm file chính bị nửa vời
+            const tmpPath = `${jsonFilePath}.tmp-${process.pid}`;
+            await fs.promises.writeFile(tmpPath, JSON.stringify(updatedJsonData, null, 2), 'utf-8');
+            await fs.promises.rename(tmpPath, jsonFilePath);
             console.log(`Đã cập nhật JSON: ${xmlList.length} file XML`);
             return true;
         } catch (error) {
@@ -1005,10 +1033,20 @@ class AnalystXML {
             }
             this.setPathDatabaseCursorIgore();
             const destPath = path.join(pathProject, '.cursorignore');
-            fs.writeFileSync(destPath, CURSORIGNORE_TEMPLATE, 'utf8');
-            if (this.pathDatabaseCursorIgnore) {
-                fs.mkdirSync(path.dirname(this.pathDatabaseCursorIgnore), { recursive: true });
-                fs.writeFileSync(this.pathDatabaseCursorIgnore, CURSORIGNORE_TEMPLATE, 'utf8');
+            // Template cố định → mỗi đích chỉ check tồn tại/ghi 1 lần mỗi session,
+            // tránh writeFileSync qua SMB lặp lại mỗi lần save (làm save chậm)
+            if (!this.cursorIgnoreChecked.has(destPath)) {
+                if (!fs.existsSync(destPath)) {
+                    fs.writeFileSync(destPath, CURSORIGNORE_TEMPLATE, 'utf8');
+                }
+                this.cursorIgnoreChecked.add(destPath);
+            }
+            if (this.pathDatabaseCursorIgnore && !this.cursorIgnoreChecked.has(this.pathDatabaseCursorIgnore)) {
+                if (!fs.existsSync(this.pathDatabaseCursorIgnore)) {
+                    fs.mkdirSync(path.dirname(this.pathDatabaseCursorIgnore), { recursive: true });
+                    fs.writeFileSync(this.pathDatabaseCursorIgnore, CURSORIGNORE_TEMPLATE, 'utf8');
+                }
+                this.cursorIgnoreChecked.add(this.pathDatabaseCursorIgnore);
             }
         } catch (error) {
             console.error(`Lỗi khi copy cursor ignore: ${error.message}`);

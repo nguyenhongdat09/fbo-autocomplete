@@ -1,16 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 
+const UTF8_BOM = '\ufeff';
+
 /**
- * Tạo file .sql tạm với cơ chế tự động tăng số thứ tự nếu trùng tên:
- * name.sql -> name (2).sql -> name (3).sql
- * 
+ * Tạo file tạm với cơ chế tự động tăng số thứ tự nếu trùng tên:
+ * name.ext -> name (2).ext -> name (3).ext
+ *
  * @param {string} folder_path - Đường dẫn thư mục chứa file tạm
  * @param {string} base_name_raw - Tên cơ sở (sẽ được chuẩn hóa)
+ * @param {string} [extension='.sql'] - Đuôi file (có hoặc không có dấu chấm đầu)
  * @param {string} [initial_content=''] - Nội dung ban đầu ghi vào file
  * @returns {{ filePath: string, fileName: string }}
  */
-function createSqlTempFile(folder_path, base_name_raw, initial_content = '') {
+function createTempFile(folder_path, base_name_raw, extension = '.sql', initial_content = '') {
     if (!folder_path) {
         throw new Error("Chưa chỉ định đường dẫn thư mục tạm.");
     }
@@ -18,10 +21,11 @@ function createSqlTempFile(folder_path, base_name_raw, initial_content = '') {
         throw new Error(`Thư mục '${folder_path}' không tồn tại.`);
     }
 
+    const ext = extension.startsWith('.') ? extension : `.${extension}`;
     let base_name = base_name_raw || "temp";
-    // Nếu base_name_raw có đuôi .sql thì bỏ đi trước khi chuẩn hóa
-    if (base_name.toLowerCase().endsWith('.sql')) {
-        base_name = base_name.slice(0, -4);
+    // Nếu base_name_raw có đuôi extension thì bỏ đi trước khi chuẩn hóa
+    if (base_name.toLowerCase().endsWith(ext)) {
+        base_name = base_name.slice(0, -ext.length);
     }
     base_name = base_name.toLowerCase().replace(/[\s-]+/g, '_');
     base_name = base_name.replace(/^_+|_+$/g, '');
@@ -29,22 +33,34 @@ function createSqlTempFile(folder_path, base_name_raw, initial_content = '') {
         base_name = "temp";
     }
 
-    let file_name = `${base_name}.sql`;
+    let file_name = `${base_name}${ext}`;
     let file_path = path.join(folder_path, file_name);
     let counter = 2;
 
     while (fs.existsSync(file_path)) {
-        file_name = `${base_name} (${counter}).sql`;
+        file_name = `${base_name} (${counter})${ext}`;
         file_path = path.join(folder_path, file_name);
         counter++;
     }
 
-    fs.writeFileSync(file_path, initial_content, 'utf8');
+    fs.writeFileSync(file_path, UTF8_BOM + initial_content, 'utf8');
 
     return {
         filePath: file_path,
         fileName: file_name
     };
+}
+
+/**
+ * Tạo file .sql tạm — wrapper của createTempFile với extension '.sql'
+ *
+ * @param {string} folder_path - Đường dẫn thư mục chứa file tạm
+ * @param {string} base_name_raw - Tên cơ sở (sẽ được chuẩn hóa)
+ * @param {string} [initial_content=''] - Nội dung ban đầu ghi vào file
+ * @returns {{ filePath: string, fileName: string }}
+ */
+function createSqlTempFile(folder_path, base_name_raw, initial_content = '') {
+    return createTempFile(folder_path, base_name_raw, '.sql', initial_content);
 }
 
 /**
@@ -105,6 +121,7 @@ function resolveSqlTempFolder(folder_path, is_antigravity = undefined, custom_sk
 }
 
 module.exports = {
+    createTempFile,
     createSqlTempFile,
     isAntigravityIde,
     resolveSqlTempFolder

@@ -37,7 +37,10 @@ const JS_TOKEN_RE = /(&[A-Za-z_][\w.-]*;)|(\/\/[^\r\n]*|\/\*.*?\*\/)|('(?:\\.|[^
 // Nhóm 8: SQL Data types -> Type (xanh mint)
 // Nhóm 9: Function calls: name(...) -> Vàng Accent
 // Nhóm 10: Executed procedures: exec ProcName / exec dbo.ProcName -> Vàng Accent
-const SQL_TOKEN_RE = /(&[A-Za-z_][\w.-]*;)|(--[^\r\n]*|\/\*.*?\*\/)|((?:\bN)?'(?:''|[^'])*')|(#[a-zA-Z0-9_$]+)|((?:@{1,2}\$?|\${1,2})[a-zA-Z0-9_$]+|[a-zA-Z_][a-zA-Z0-9_]*\$\$partition\$(?:current|previous))|(\b\d+(?:\.\d+)?\b)|(\b(?:SELECT|FROM|WHERE|INSERT|INTO|UPDATE|DELETE|JOIN|LEFT|RIGHT|INNER|OUTER|CROSS|ON|AND|OR|NOT|AS|IN|EXISTS|GROUP|BY|ORDER|HAVING|UNION|ALL|TOP|DISTINCT|VALUES|SET|EXEC|EXECUTE|DECLARE|BEGIN|END|IF|ELSE|RETURN|WHILE|CREATE|ALTER|DROP|TABLE|VIEW|PROCEDURE|FUNCTION|NOLOCK|IS|NULL|CASE|WHEN|THEN|WITH|OVER|PARTITION|GOTO)\b)|(\b(?:varchar|nvarchar|char|nchar|int|tinyint|smallint|bigint|decimal|numeric|money|float|datetime|smalldatetime|date|time|bit|text|ntext|binary|varbinary)\b)|(\b[a-zA-Z_$][a-zA-Z0-9_$]*(?=\s*\())|(?<=\b(?:exec|EXEC)\s+)([a-zA-Z_][a-zA-Z0-9_$.]*)/gi;
+const SQL_TOKEN_RE = /(&[A-Za-z_][\w.-]*;)|(--[^\r\n]*|\/\*.*?\*\/)|((?:\bN)?'(?:''|[^'])*')|(#[a-zA-Z0-9_$]+)|((?:@{1,2}\$?|\${1,2})[a-zA-Z0-9_$]+|[a-zA-Z_][a-zA-Z0-9_]*\$\$partition\$(?:current|previous))|(\b\d+(?:\.\d+)?\b)|(\b(?:SELECT|FROM|WHERE|INSERT|INTO|UPDATE|DELETE|JOIN|LEFT|RIGHT|INNER|OUTER|CROSS|ON|AND|OR|NOT|AS|IN|EXISTS|GROUP|BY|ORDER|HAVING|UNION|ALL|TOP|DISTINCT|VALUES|SET|EXEC|EXECUTE|DECLARE|BEGIN|END|IF|ELSE|RETURN|WHILE|CREATE|ALTER|DROP|TABLE|VIEW|PROCEDURE|FUNCTION|NOLOCK|IS|NULL|CASE|WHEN|THEN|WITH|OVER|PARTITION|GOTO)\b)|(\b(?:varchar|nvarchar|char|nchar|int|tinyint|smallint|bigint|decimal|numeric|money|float|datetime|smalldatetime|date|time|bit|text|ntext|binary|varbinary)\b)|(\b[a-zA-Z_$][a-zA-Z0-9_$]*(?=\s*\())|(?:\b(?:exec|EXEC)\s+([a-zA-Z_][a-zA-Z0-9_$.]*))/gi;
+
+// Static Tag Regex bảo vệ toàn diện các thẻ XML FBO
+const FBO_TAG_RE = /<\/?(?:text|views?|fields?|commands?|script|action|query|queries|categories|category|items?|header|label|response|css|toolbar|grid|dir|voucher|options?|var|processing|checking|order)\b[^>]*\/?>/gi;
 
 // Cache lưu phân tích block theo document version để đạt tốc độ tức thời 0ms khi cuộn
 let cachedDocKey = '';
@@ -59,9 +62,22 @@ function getDocumentCache(document) {
     let inXmlComment = false;
     let inBlockComment = false;
     let inEntity = false;
+    let inStandaloneCdata = false;
 
     for (let i = 0; i < lineCount; i++) {
         const line = lines[i];
+
+        // ⚡ Fast-path: 85-90% các dòng code SQL/JS không có <, >, /*, */ -> giữ nguyên mode ngay lập tức trong 0ms
+        if (!line.includes('<') && !line.includes('>') && !line.includes('/*') && !line.includes('*/')) {
+            if (inXmlComment) {
+                lineModes[i] = null;
+            } else if (currentMode) {
+                lineModes[i] = inBlockComment ? 'comment' : currentMode;
+            } else {
+                lineModes[i] = null;
+            }
+            continue;
+        }
 
         // 1. Kiểm tra XML comment <!-- ... -->
         if (inXmlComment) {
@@ -93,20 +109,44 @@ function getDocumentCache(document) {
             lineModes[i] = null;
             continue;
         }
-        if (/<(?:commands|command|action|query)\b/i.test(line)) {
+        if (/<(?:commands|command|action|query|queries|processing|checking|order)\b/i.test(line)) {
             currentMode = 'sql';
             inBlockComment = false;
             lineModes[i] = null;
             continue;
         }
-        if (/<\/(?:commands|command|action|query)>/i.test(line)) {
+        if (/<\/(?:commands|command|action|query|queries|processing|checking|order)>/i.test(line)) {
             currentMode = null;
             inBlockComment = false;
             lineModes[i] = null;
             continue;
         }
 
-        // 3. Kiểm tra khối <!ENTITY ... "
+        // 3. Đóng khối DOCTYPE [ ... ]> (Chỉ khi dòng chỉ chứa ]> đơn lẻ, tuyệt đối không match ]]> của CDATA)
+        if (/^\s*\]\s*>\s*$/i.test(line) && !line.includes(']]>')) {
+            inEntity = false;
+            currentMode = null;
+            inBlockComment = false;
+            lineModes[i] = null;
+            continue;
+        }
+
+        // 4. Các thẻ cấu trúc XML lớn ngoài cùng
+        if (/<\/?(?:fields|views)\b/i.test(line)) {
+            inEntity = false;
+            currentMode = null;
+            inBlockComment = false;
+            lineModes[i] = null;
+            continue;
+        }
+
+        // 5. Bỏ qua tất cả các dòng chỉ chứa thẻ XML thuần túy (không chứa CDATA)
+        if (/^\s*<\/?[a-zA-Z_][\w.-]*(?:\s+[^>]*)?\/?>\s*$/i.test(line) && !line.includes('<![CDATA[')) {
+            lineModes[i] = null;
+            continue;
+        }
+
+        // 6. Kiểm tra khối <!ENTITY ... "
         if (/<!ENTITY\s+[\w.-]+\s+"/i.test(line)) {
             if (/">\s*$/i.test(line.trim())) {
                 // Khai báo hằng số 1 dòng: <!ENTITY foo "bar"> -> giữ màu XML
@@ -120,7 +160,7 @@ function getDocumentCache(document) {
             lineModes[i] = null;
             continue;
         }
-        if (inEntity && (line.trim() === '">' || line.trim().endsWith('">'))) {
+        if (inEntity && (line.trim() === '">' || line.trim().endsWith('">') || /">\s*$/i.test(line.trim()))) {
             inEntity = false;
             currentMode = null;
             inBlockComment = false;
@@ -128,7 +168,26 @@ function getDocumentCache(document) {
             continue;
         }
 
-        // 3. Nếu đang trong block JS / SQL
+        // 7. Nhận diện CDATA độc lập nếu currentMode đang là null
+        if (!currentMode && line.includes('<![CDATA[')) {
+            if (!line.includes(']]>')) {
+                currentMode = 'sql';
+                inStandaloneCdata = true;
+                lineModes[i] = 'sql';
+                continue;
+            } else {
+                lineModes[i] = 'sql';
+                continue;
+            }
+        }
+        if (inStandaloneCdata && line.includes(']]>')) {
+            currentMode = null;
+            inStandaloneCdata = false;
+            lineModes[i] = 'sql';
+            continue;
+        }
+
+        // 8. Nếu đang trong block JS / SQL
         if (currentMode) {
             if (inBlockComment) {
                 lineModes[i] = 'comment';
@@ -251,6 +310,16 @@ class FboSemanticTokensProvider {
             const regex = currentMode === 'js' ? JS_TOKEN_RE : SQL_TOKEN_RE;
             regex.lastIndex = 0;
 
+            // Thu thập các vùng thẻ XML trên dòng để tuyệt đối không tô Semantic Token đè lên thẻ XML
+            const xmlTagRanges = [];
+            if (text.includes('<')) {
+                FBO_TAG_RE.lastIndex = 0;
+                let tagMatch;
+                while ((tagMatch = FBO_TAG_RE.exec(text)) !== null) {
+                    xmlTagRanges.push({ start: tagMatch.index, end: tagMatch.index + tagMatch[0].length });
+                }
+            }
+
             let match;
             while ((match = regex.exec(text)) !== null) {
                 if (match[1]) {
@@ -261,6 +330,14 @@ class FboSemanticTokensProvider {
                 const tokenStr = match[0];
                 const char = match.index;
                 const len = tokenStr.length;
+
+                // Nếu token nằm bên trong vùng thẻ XML thì bỏ qua để TextMate tô màu thẻ XML chuẩn
+                if (xmlTagRanges.length > 0) {
+                    const tokenEnd = char + len;
+                    if (xmlTagRanges.some(r => char < r.end && tokenEnd > r.start)) {
+                        continue;
+                    }
+                }
 
                 let tokenTypeIdx = -1;
 
@@ -289,7 +366,14 @@ class FboSemanticTokensProvider {
                     else if (match[6]) tokenTypeIdx = 5; // number
                     else if (match[7]) tokenTypeIdx = 0; // keyword
                     else if (match[8]) tokenTypeIdx = 6; // datatype -> type (xanh mint)
-                    else if (match[9] || match[10]) tokenTypeIdx = 1; // function call / exec stored proc -> function (vàng)
+                    else if (match[9]) tokenTypeIdx = 1; // function call: name(...) -> Vàng Accent
+                    else if (match[10]) {
+                        // exec ProcName / exec dbo.ProcName -> Vàng Accent cho tên procedure
+                        const procName = match[10];
+                        const procOffset = tokenStr.lastIndexOf(procName);
+                        builder.push(i, char + procOffset, procName.length, 1, 0);
+                        continue;
+                    }
                 }
 
                 if (tokenTypeIdx >= 0) {
@@ -323,5 +407,6 @@ function registerFboSemanticTokens(context) {
 
 module.exports = {
     registerFboSemanticTokens,
+    FboSemanticTokensProvider,
     legend
 };

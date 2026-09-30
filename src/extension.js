@@ -35,6 +35,7 @@ const calculationProvider = require('./CalculationGridDetail/provider');
 const { runCurrentSqlFileVisual } = require("./DBQuery/QueryDatabaseVisualResult");
 const PeekSqlClass = require("./DBQuery/PeekSql");
 const { registerFormatXml } = require("./FormatXML/registerFormatXml");
+const { registerDirTitleCase } = require("./DirTitleCase/registerDirTitleCase");
 const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
 const { registerConvertExcelFromUpload } = require("./ConvertExcelFromUpload");
 const SearchResultTreeView = require("./TreeFile/SearchFile/SearchResultTreeView");
@@ -49,6 +50,11 @@ const formulaHover = require('./ReadXMLByJS/FormulaHover');
 const { registerCategoryHover } = require('./ReadXMLByJS/CategoryHover');
 const { registerDataFormatHover } = require('./ReadXMLByJS/DataFormatHover');
 const EntityWatcherEngine = require('./ReadXMLByJS/EntityWatcherEngine');
+const { registerWorkspaceSymbols } = require('./WorkspaceSymbol');
+const { registerProjectDiff } = require('./ProjectDiff');
+const { registerReferences } = require('./References');
+const { registerRenameRefactor } = require('./RenameRefactor');
+const { registerFieldTracer } = require('./FieldTracer');
 /**
  * @param {vscode.ExtensionContext} context
  */ 
@@ -71,6 +77,7 @@ async function activate(context) {
     }
 
     registerFormatXml(context);
+    registerDirTitleCase(context);
     // Đăng ký Query Results view trong Panel (Ctrl+J)
     ViewPanelResult.getShared(context);
     const searchResultView = new SearchResultTreeView();
@@ -86,7 +93,9 @@ async function activate(context) {
                 : TreeFileProvider;
     const treeDataProvider = new TreeCtor();
     if (typeof treeDataProvider.setSearchResultPublisher === "function") {
-        treeDataProvider.setSearchResultPublisher((result, options) => searchResultView.publishResult(result, options));
+        /** @param {any} result @param {any} [options] */
+        const publishSearchResult = (result, options) => searchResultView.publishResult(result, options);
+        treeDataProvider.setSearchResultPublisher(publishSearchResult);
     }
     if (typeof treeDataProvider.setSearchActiveGroupGetter === "function") {
         treeDataProvider.setSearchActiveGroupGetter(() => searchResultView.getActiveGroupRoot());
@@ -95,14 +104,43 @@ async function activate(context) {
     console.log(`[FBO_PERF_DEBUG] [extension] treeDataProvider.run START`);
     await treeDataProvider.run(context);
     console.log(`[FBO_PERF_DEBUG] [extension] treeDataProvider.run END took ${Date.now() - tTree}ms`);
-    searchResultView.setBeforeOpenFile((uri) => {
+    /** @param {vscode.Uri} uri */
+    const beforeOpenFile = (uri) => {
         if (uri && uri.fsPath && typeof treeDataProvider.ensureFileInTree === "function") {
             treeDataProvider.ensureFileInTree(uri.fsPath);
         }
-    });
+    };
+    searchResultView.setBeforeOpenFile(beforeOpenFile);
     activateGroupTextSearch(context, treeDataProvider);
     registerDirtyFileDecorations(context);
 
+    // ==== Symbol / References / Diff / Rename / FieldTracer ====
+    // Nguồn group root chung cho các feature mới: lấy từ groupItems trên FBO File tree
+    /** @returns {{name:string, root:string}[]} */
+    const getGroupRoots = () => {
+        /** @type {{name:string, root:string}[]} */
+        const out = [];
+        const items = treeDataProvider && treeDataProvider.groupItems;
+        if (items && typeof items.forEach === "function") {
+            items.forEach((item, name) => {
+                if (item && item.resourceUri && String(name).toUpperCase() !== "OTHER") {
+                    out.push({ name: String(name), root: item.resourceUri.fsPath });
+                }
+            });
+        }
+        return out;
+    };
+    const getIndexService = () => (treeDataProvider && typeof treeDataProvider.getGroupFileIndexService === 'function')
+        ? treeDataProvider.getGroupFileIndexService()
+        : (treeDataProvider ? treeDataProvider._groupFileIndexService : null);
+
+    const wsSymbols = registerWorkspaceSymbols(context, { getGroupRoots, getIndexService });
+    registerProjectDiff(context, { getGroupRoots, getIndexService });
+    registerReferences(context, { getGroupRoots });
+    registerRenameRefactor(context, { getGroupRoots });
+    registerFieldTracer(context, { getGroupRoots, getIndexService, symbolIndex: wsSymbols.symbolIndex });
+
+    /** @param {any} element */
     const runGroupQuickFilter = async (element) => {
         if (treeDataProvider && typeof treeDataProvider.runGroupFilterSearch === 'function') {
             await treeDataProvider.runGroupFilterSearch(element);
@@ -160,7 +198,6 @@ async function activate(context) {
     const upsettings = new updateSettings();
     upsettings.updateSettingsJson.bind(upsettings)(context);
 
-    const checkLegacyWhenSave = config.get('checkLegacyWhenSave', true);
     const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
     completeCodeByHandle.run(context);
 
@@ -263,7 +300,9 @@ async function activate(context) {
 
     const cvtToEx = new cnv();
     let AddFieldToReport = vscode.commands.registerCommand('fbo-autocomplete.AddFieldToReport', function () {
-        var path = vscode.window.activeTextEditor.document.uri.fsPath;
+        const ed = vscode.window.activeTextEditor;
+        if (!ed) return;
+        var path = ed.document.uri.fsPath;
 
         const folderPath = pathModule.dirname(path);
         const folderName = pathModule.basename(folderPath);
@@ -288,14 +327,16 @@ async function activate(context) {
     });
 
     let cvtExcel = vscode.commands.registerCommand('fbo-autocomplete.ConvertToExcel', async function () {
-        var path = vscode.window.activeTextEditor.document.uri.fsPath;
+        const ed = vscode.window.activeTextEditor;
+        if (!ed) return;
+        var path = ed.document.uri.fsPath;
         const folderPath = pathModule.dirname(path);
         const folderName = pathModule.basename(folderPath);
         if (folderName !== 'Grid') {
             vscode.window.showErrorMessage(`This Feature is only Work On Grid File`);
             return;
         }
-        const documentUri = vscode.window.activeTextEditor.document.uri;
+        const documentUri = ed.document.uri;
         const currentFileName = pathModule.basename(documentUri.fsPath, pathModule.extname(documentUri.fsPath));
         const defaultUri = vscode.Uri.joinPath(documentUri, '..', `${currentFileName}.xlsx`);
 
@@ -360,18 +401,28 @@ async function activate(context) {
     const chk = new CheckLegacyCode(context);
 
     let CheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.CheckLegacyDirFilter', async () => {
-        chk.run.bind(chk)();
+        chk.run.bind(chk)('full'); // nút Check Legacy trên status bar → check toàn bộ rule (kể cả Grid)
+    });
+
+    // Toggle On/Off check legacy khi save — nút trên status bar, ghi vào setting checkLegacyWhenSave
+    let toggleCheckLegacy = vscode.commands.registerCommand('fbo-autocomplete.toggleCheckLegacy', async () => {
+        const cfg = vscode.workspace.getConfiguration('fbo-autocomplete');
+        const cur = cfg.get('checkLegacyWhenSave', true);
+        await cfg.update('checkLegacyWhenSave', !cur, vscode.ConfigurationTarget.Global);
+        chk.refreshToggleItem();
     });
 
     const chkMessage = new CheckLegacyMessage();
     chkMessage.run(context);
 
+    /** @type {NodeJS.Timeout | null} */
     let chkTimer = null;
+    /** @param {vscode.TextEditor | undefined} editor */
     const runCheckForEditor = (editor) => {
         if (!editor) return;
         const filePath = editor.document.uri.fsPath.replace(/\\/g, '/').toLowerCase();
         const isCorrectLang = (editor.document.languageId || "").toLowerCase() === "xml";
-        const isInCorrectDir = filePath.includes('/controllers/dir/') || filePath.includes('/controllers/filter/');
+        const isInCorrectDir = filePath.includes('/controllers/dir/') || filePath.includes('/controllers/filter/') || filePath.includes('/controllers/grid/');
         
         if (isCorrectLang && isInCorrectDir) {
             if (chkTimer) {
@@ -384,24 +435,38 @@ async function activate(context) {
         }
     };
 
-    // 1. Quét lỗi khi chuyển tab hoặc mở file mới đã bị tắt theo yêu cầu user (để tăng tốc độ mở file)
-    // const onDidChangeActiveEditor = vscode.window.onDidChangeActiveTextEditor((editor) => {
-    //     runCheckForEditor(editor);
-    // });
-    // context.subscriptions.push(onDidChangeActiveEditor);
+    // 1. Warm entity cache khi chuyển tab/mở file Dir/Filter/Grid — resolve entity nặng chạy lúc mở,
+    //    để lúc save check chỉ tra Map (nhanh), không block extension host ngay sau save
+    /** @type {NodeJS.Timeout | null} */
+    let warmTimer = null;
+    /** @param {vscode.TextEditor | undefined} editor */
+    const warmEntitiesForEditor = (editor) => {
+        if (!editor) return;
+        const filePath = editor.document.uri.fsPath.replace(/\\/g, '/').toLowerCase();
+        const isCorrectLang = (editor.document.languageId || "").toLowerCase() === "xml";
+        const isInCorrectDir = filePath.includes('/controllers/dir/') || filePath.includes('/controllers/filter/') || filePath.includes('/controllers/grid/');
+        if (!isCorrectLang || !isInCorrectDir) return;
+        if (warmTimer) clearTimeout(warmTimer);
+        warmTimer = setTimeout(() => {
+            warmTimer = null;
+            chk.warmEntities(editor);
+        }, 500); // đợi render xong mới warm — không làm chậm thời điểm mở file
+    };
+    const onDidChangeActiveEditor = vscode.window.onDidChangeActiveTextEditor(warmEntitiesForEditor);
+    context.subscriptions.push(onDidChangeActiveEditor);
 
-    // 2. Không quét ngay khi khởi động extension nữa
-    // runCheckForEditor(vscode.window.activeTextEditor);
+    // 2. Warm luôn editor đang mở khi extension khởi động (delay lớn để không ảnh hưởng activate)
+    setTimeout(() => warmEntitiesForEditor(vscode.window.activeTextEditor), 2000);
 
     // 3. Quét lỗi khi nhấn lưu bất kỳ file nào trong thư mục controllers/ (cho phép cập nhật khi sửa file DTD phụ)
-    if (checkLegacyWhenSave) {
-        vscode.workspace.onDidSaveTextDocument((document) => {
-            const filePath = document.uri.fsPath.replace(/\\/g, '/').toLowerCase();
-            if (filePath.includes('/controllers/')) {
-                runCheckForEditor(vscode.window.activeTextEditor);
-            }
-        });
-    }
+    // Đọc setting live để nút toggle Legacy On/Off trên status bar ăn ngay, không cần reload
+    vscode.workspace.onDidSaveTextDocument((document) => {
+        if (!vscode.workspace.getConfiguration('fbo-autocomplete').get('checkLegacyWhenSave', true)) return;
+        const filePath = document.uri.fsPath.replace(/\\/g, '/').toLowerCase();
+        if (filePath.includes('/controllers/')) {
+            runCheckForEditor(vscode.window.activeTextEditor);
+        }
+    });
 
     // Command chạy SQL từ file .sql hoặc .xml (selection hoặc toàn file), DB từ status bar
     const runSqlFileCmd = vscode.commands.registerCommand(
@@ -425,9 +490,10 @@ async function activate(context) {
                     }
                 }
             } catch (err) {
+                const errObj = /** @type {{stack?: string, message?: string}} */ (err);
                 console.error("[FBO runSqlFile] Error:", err);
-                console.error("[FBO runSqlFile] Stack:", err && err.stack);
-                vscode.window.showErrorMessage("Run SQL File: " + (err && err.message));
+                console.error("[FBO runSqlFile] Stack:", errObj && errObj.stack);
+                vscode.window.showErrorMessage("Run SQL File: " + (errObj && errObj.message));
             }
         }
     );
@@ -437,8 +503,9 @@ async function activate(context) {
         try {
             await peekSql.runPeekSql();
         } catch (err) {
+            const errObj = /** @type {{message?: string}} */ (err);
             console.error("[FBO peekSql] Error:", err);
-            vscode.window.showErrorMessage("Peek SQL: " + (err && err.message));
+            vscode.window.showErrorMessage("Peek SQL: " + (errObj && errObj.message));
         }
     });
     const peekSqlCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.peekSqlCopyContent", () => peekSql.copyContentToClipboard());
@@ -477,6 +544,7 @@ async function activate(context) {
     context.subscriptions.push(peekSqlHover); 
     context.subscriptions.push(shaf);
     context.subscriptions.push(CheckLegacy);
+    context.subscriptions.push(toggleCheckLegacy);
     context.subscriptions.push(cvtExcel);
     context.subscriptions.push(convertGridToPivotExcelCmd);
     context.subscriptions.push(transautoWithKey);
@@ -488,6 +556,7 @@ async function activate(context) {
     // Mở file từ DocumentLink (không dùng preview mode), hỗ trợ nhảy đến dòng/cột
     const openNonPreviewCmd = vscode.commands.registerCommand("fbo-autocomplete.openNonPreview", async (filePath, line, char) => {
         if (filePath && fs.existsSync(filePath)) {
+            /** @type {vscode.TextDocumentShowOptions} */
             let options = { preview: false };
             if (line !== undefined && char !== undefined) {
                 options.selection = new vscode.Range(new vscode.Position(line, char), new vscode.Position(line, char));

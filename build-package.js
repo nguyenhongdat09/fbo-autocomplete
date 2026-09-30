@@ -266,8 +266,10 @@ function run() {
         });
 
         console.log("📋 Sao chép files BrowserHandle vào dist...");
+        // Lưu ý: AnalystXML.worker.js KHÔNG copy raw — webpack bundle sẵn vào
+        // src/dist/AnalystXML.worker.js (entry trong webpack.config.js). Copy raw
+        // sẽ đè bundle và gãy require tương đối (../AppDataPathHelper không ship trong vsix).
         const filesToCopy = [
-            "AnalystXML.worker.js",
             "AnalystXML.js",
             "OpenBrowser.js",
             "AnalystASPX.js",

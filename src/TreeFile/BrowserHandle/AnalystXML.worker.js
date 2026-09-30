@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 const { parentPort, workerData } = require('worker_threads');
-const AnalystXML = require(/* webpackIgnore: true */ './AnalystXML');
+const AnalystXML = require('./AnalystXML');
 function postProgress(increment, message) {
     if (!parentPort) return;
     parentPort.postMessage({ type: 'progress', increment, message });

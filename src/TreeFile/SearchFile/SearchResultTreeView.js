@@ -186,13 +186,19 @@ class SearchResultTreeView {
      * @param {import('vscode').DataTransfer} dataTransfer
      */
     handleDrag(source, dataTransfer) {
-        const fileItems = (source || []).filter((item) => item && item.contextValue === "searchResultFile" && item.resourceUri);
-        if (!fileItems.length) return;
-        const uriList = fileItems
-            .map((item) => item.resourceUri.toString())
-            .join("\r\n");
-        if (!uriList) return;
-        dataTransfer.set(this.typeDr, new vscode.DataTransferItem(uriList));
+        const uris = new Set();
+        const collect = (item) => {
+            if (!item) return;
+            if (item.contextValue === "searchResultFile") {
+                if (item.resourceUri) uris.add(item.resourceUri.toString());
+                return;
+            }
+            const children = this.childrenMap.get(item.fboSearchNodeKey) || [];
+            for (const child of children) collect(child);
+        };
+        for (const item of source || []) collect(item);
+        if (!uris.size) return;
+        dataTransfer.set(this.typeDr, new vscode.DataTransferItem([...uris].join("\r\n")));
     }
 
     // Search Result tree is drag-source only for now.

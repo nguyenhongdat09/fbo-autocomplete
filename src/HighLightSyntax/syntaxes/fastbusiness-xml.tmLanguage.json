@@ -5,6 +5,32 @@
   "injectionSelector": "L:string.unquoted.cdata.xml -comment",
    "patterns": [
     {
+      "comment": "Single quoted strings (SQL and JS) in CDATA",
+      "match": "(?i:N)?'([^']|'')*'",
+      "name": "string.quoted.single.sql.fastbusiness"
+    },
+    {
+      "comment": "Double quoted strings in CDATA",
+      "match": "\"(?:\\\\.|[^\"\\\\])*\"",
+      "name": "string.quoted.double.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL line comments starting with -- in CDATA",
+      "match": "--.*$",
+      "name": "comment.line.double-dash.sql.fastbusiness"
+    },
+    {
+      "comment": "SQL and JS block comments /* ... */ in CDATA",
+      "begin": "/\\*",
+      "end": "\\*/",
+      "name": "comment.block.sql.fastbusiness"
+    },
+    {
+      "comment": "JS line comments // in CDATA",
+      "match": "//.*$",
+      "name": "comment.line.double-slash.js.fastbusiness"
+    },
+    {
       "comment": "TEST - Match # followed by word characters",
       "match": "#\\w+",
       "name": "entity.name.type.table.temp.sql.fastbusiness"

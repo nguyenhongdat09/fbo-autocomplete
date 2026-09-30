@@ -34,7 +34,9 @@ function run() {
         const file1 = createSqlTempFile(resolved_antigravity, "TestVoucher", "SELECT 1;");
         assert.strictEqual(fs.existsSync(file1.filePath), true);
         assert.strictEqual(file1.fileName, "testvoucher.sql");
-        assert.strictEqual(fs.readFileSync(file1.filePath, "utf8"), "SELECT 1;");
+        const file1_buf = fs.readFileSync(file1.filePath);
+        assert.deepStrictEqual([...file1_buf.slice(0, 3)], [0xEF, 0xBB, 0xBF], "File .sql phải bắt đầu bằng UTF-8 BOM");
+        assert.strictEqual(file1_buf.toString("utf8", 3), "SELECT 1;");
 
         // Test case 5: Tạo file tiếp theo trùng tên -> đánh số (2)
         const file2 = createSqlTempFile(resolved_antigravity, "TestVoucher", "SELECT 2;");

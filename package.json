@@ -43,6 +43,13 @@
         "injectTo": [
           "text.xml"
         ]
+      },
+      {
+        "scopeName": "fastbusiness.xml.tags",
+        "path": "./src/HighLightSyntax/syntaxes/fastbusiness-xml-tags.tmLanguage.json",
+        "injectTo": [
+          "text.xml"
+        ]
       }
     ],
     "menus": {
@@ -95,6 +102,15 @@
         {
           "command": "my-fbo-toolkit.openWithVS2008",
           "group": "navigation@9"
+        },
+        {
+          "command": "fbo-autocomplete.diffWithReference",
+          "group": "navigation@10"
+        },
+        {
+          "command": "fbo-autocomplete.traceField",
+          "when": "resourceExtname == .xml || resourceExtname == .sql",
+          "group": "navigation@11"
         }
       ],
       "editor/title": [
@@ -176,12 +192,17 @@
           "group": "navigation@99"
         },
         {
+          "command": "fbo-autocomplete.diffWithReference",
+          "when": "view == fbo_file && viewItem =~ /^file/",
+          "group": "navigation@100"
+        },
+        {
           "command": "fboFile.NewSqlTemp",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation@1"
         },
         {
-          "command": "fboFile.NewSqlTempOnWorkspace",
+          "command": "fboFile.NewTxtTemp",
           "when": "view == fbo_file && (viewItem == group || viewItem == groupOther)",
           "group": "navigation@8"
         },
@@ -317,14 +338,24 @@
           "default": "autocomplete",
           "description": "Chế độ dịch tự động khi người dùng nhập liệu: 'autocomplete' (dịch tự động sau khi nhập xong), 'keyboard' (dịch khi nhấn phím alt + shift + q), hoặc 'none' (không dịch)."
         },
+        "fbo-autocomplete.workspaceSymbolScope": {
+          "type": "string",
+          "enum": [
+            "current",
+            "all"
+          ],
+          "default": "current",
+          "description": "Phạm vi Ctrl+T: 'current' = chỉ project của file đang mở, 'all' = tất cả project trên FBO tree."
+        },
         "fbo-autocomplete.ideType": {
           "type": "string",
           "enum": [
             "vscode",
-            "cursor"
+            "cursor",
+            "antigravity"
           ],
           "default": "vscode",
-          "description": "Chọn IDE khi cập nhật settings.json: 'vscode' (Code) hoặc 'cursor' (Cursor)."
+          "description": "Chọn IDE khi cập nhật settings.json: 'vscode' (Code), 'cursor' (Cursor) hoặc 'antigravity' (Antigravity IDE)."
         },
         "fbo-autocomplete.sortTree": {
           "type": "string",
@@ -369,6 +400,16 @@
           "type": "boolean",
           "default": true,
           "description": "Kiểm tra legacy khi lưu file. Nếu bật, extension sẽ tự động kiểm tra thư mục legacy khi lưu."
+        },
+        "fbo-autocomplete.fixDirTitleCaseOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Tự viết thường chữ cái đầu của title v=\"...\" trong file Controllers\\Dir khi lưu (Ctrl+S / autoSave)."
+        },
+        "fbo-autocomplete.fixDirTitleCaseRealtime": {
+          "type": "boolean",
+          "default": true,
+          "description": "Tự viết thường chữ cái đầu của title v=\"...\" trong file Controllers\\Dir ngay khi nội dung thay đổi (debounce 500ms)."
         },
         "fbo-autocomplete.Vs2008Path": {
           "type": "string",
@@ -491,6 +532,18 @@
     ],
     "commands": [
       {
+        "command": "fbo-autocomplete.diffWithReference",
+        "title": "Diff With Reference Project"
+      },
+      {
+        "command": "fbo-autocomplete.traceField",
+        "title": "Trace Field"
+      },
+      {
+        "command": "fbo-autocomplete.rebuildSymbolIndex",
+        "title": "FBO: Rebuild Symbol Index"
+      },
+      {
         "command": "fbo-autocomplete.peekSql",
         "title": "Peek SQL",
         "icon": "$(search)"
@@ -545,7 +598,11 @@
       },
       {
         "command": "fbo-autocomplete.CheckLegacyDirFilter",
-        "title": "FBO: Check Legacy Dir/Filter"
+        "title": "FBO: Check Legacy Dir/Filter/Grid"
+      },
+      {
+        "command": "fbo-autocomplete.toggleCheckLegacy",
+        "title": "FBO: Toggle Check Legacy On/Off"
       },
       {
         "command": "fbo-autocomplete.CheckLegacyMessage",
@@ -624,8 +681,8 @@
         "title": "New .sql Temp"
       },
       {
-        "command": "fboFile.NewSqlTempOnWorkspace",
-        "title": "New .sql Temp on Workspace"
+        "command": "fboFile.NewTxtTemp",
+        "title": "New .txt Temp"
       },
       {
         "command": "fboFile.SearchTextInGroup",
