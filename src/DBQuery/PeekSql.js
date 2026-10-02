@@ -41,7 +41,7 @@ class PeekSql {
     }
 
     /**
-     * Lấy type của object (P, FN, IF, TF, V, U) hoặc null nếu không tồn tại.
+     * Lấy type của object (P, FN, IF, TF, V, U, TR) hoặc null nếu không tồn tại.
      * @param {sql.ConnectionPool} pool
      * @param {string} objectName
      * @returns {Promise<string | null>}
@@ -52,7 +52,7 @@ class PeekSql {
         const result = await request.query(
             `SELECT type
              FROM sys.objects
-             WHERE type IN ('P','FN','IF','TF','V','U') AND is_ms_shipped = 0 AND name = @name`
+             WHERE type IN ('P','FN','IF','TF','V','U','TR') AND is_ms_shipped = 0 AND name = @name`
         );
         if (!result.recordset || result.recordset.length === 0) return null;
         const t = result.recordset[0].type;
@@ -138,6 +138,8 @@ class PeekSql {
             s = s.replace(/\bCREATE\s+FUNCTION\b/i, "ALTER FUNCTION");
         } else if (t === "V") {
             s = s.replace(/\bCREATE\s+VIEW\b/i, "ALTER VIEW");
+        } else if (t === "TR") {
+            s = s.replace(/\bCREATE\s+TRIGGER\b/i, "ALTER TRIGGER");
         } else {
             return s;
         }
@@ -174,6 +176,7 @@ class PeekSql {
             return;
         }
 
+        /** @type {any} */
         const dbStatus = DBStatusBarManager.current;
         if (!dbStatus || !dbStatus.dbInfoSelected || !dbStatus.dbInfoSelected.connection) {
             vscode.window.showErrorMessage("Chưa chọn database. Hãy chọn DB trên status bar.");
@@ -197,7 +200,8 @@ class PeekSql {
         try {
             pool = await sql.connect(config);
         } catch (err) {
-            vscode.window.showErrorMessage("Lỗi kết nối DB: " + (err && err.message));
+            const errObj = /** @type {any} */ (err);
+            vscode.window.showErrorMessage("Lỗi kết nối DB: " + (errObj && errObj.message));
             return;
         }
 
@@ -240,7 +244,8 @@ class PeekSql {
 
             await vscode.commands.executeCommand("editor.action.showHover");
         } catch (err) {
-            vscode.window.showErrorMessage("Peek SQL lỗi: " + (err && err.message));
+            const errObj = /** @type {any} */ (err);
+            vscode.window.showErrorMessage("Peek SQL lỗi: " + (errObj && errObj.message));
         } finally {
             try {
                 await pool.close();

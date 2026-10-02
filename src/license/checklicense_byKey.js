@@ -153,6 +153,9 @@ function getOrCreateExtensionKey(context) {
 
     const existing = tryReadKeyFromFile(filePath);
     if (existing) {
+        if (!tryReadKeyFromFile(durablePath)) {
+            tryWriteKeyToFile(durablePath, existing);
+        }
         return existing;
     }
 
@@ -201,22 +204,8 @@ function getOrCreateExtensionKey(context) {
     const newKey = generateRandomKey();
     tryWriteKeyToFile(filePath, newKey);
     tryWriteKeyToFile(durablePath, newKey);
-    updateExtensionKeyInSettings(newKey);
 
     return newKey;
-}
-
-/**
- * Cập nhật settings với extensionKey
- */
-function updateExtensionKeyInSettings(extensionKey) {
-    const config = vscode.workspace.getConfiguration('fbo-autocomplete');
-    const currentKey = config.get('extensionKey', '');
-    
-    // Chỉ cập nhật nếu khác
-    if (currentKey !== extensionKey) {
-        config.update('extensionKey', extensionKey, vscode.ConfigurationTarget.Global);
-    }
 }
 
 /**
@@ -254,9 +243,6 @@ async function checkLicense(context) {
         tryWriteKeyToFile(filePath, newKey);
         tryWriteKeyToFile(durablePath, newKey);
         
-        // Cập nhật settings
-        updateExtensionKeyInSettings(newKey);
-        
         vscode.window.showErrorMessage(
             `❌ License key invalid! The key was generated on a different machine.\n\nNew Extension Key: ${newKey}\n\nPlease contact admin to get a new license key.`,
             'Copy Extension Key'
@@ -270,17 +256,14 @@ async function checkLicense(context) {
         return false;
     }
     
-    // Bước 3: Cập nhật vào settings để user thấy
-    updateExtensionKeyInSettings(extensionKey);
-    
-    // Bước 4: Lấy license key từ settings (user nhập)
+    // Bước 3: Lấy license key từ settings (user nhập)
     const config = vscode.workspace.getConfiguration('fbo-autocomplete');
     const userLicenseKey = config.get('licenseKey', '');
     
-    // Bước 5: Tạo license key đúng từ extension key
+    // Bước 4: Tạo license key đúng từ extension key
     const correctLicenseKey = generateLicenseKey(extensionKey);
     
-    // Bước 6: So sánh
+    // Bước 5: So sánh
     if (userLicenseKey === correctLicenseKey) {
         return true;
     }
@@ -342,6 +325,7 @@ function clearLicenseCache(context) {
 
 // Export để dùng trong extension
 exports.checkLicense = checkLicense;
+exports.getOrCreateExtensionKey = getOrCreateExtensionKey;
 exports.refreshLicense = refreshLicense;
 exports.clearLicenseCache = clearLicenseCache;
 exports.generateLicenseKey = generateLicenseKey; // Export để test

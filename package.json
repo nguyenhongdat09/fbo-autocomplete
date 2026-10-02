@@ -416,12 +416,6 @@
           "default": "C:\\\\Program Files (x86)\\\\Microsoft Visual Studio 9.0\\\\Common7\\\\IDE\\\\devenv.exe",
           "description": "Đường dẫn để mở file bằng VS2008."
         },
-        "fbo-autocomplete.extensionKey": {
-          "type": "string",
-          "default": "",
-          "description": "🔑 Extension Key (auto-generated, read-only). Copy this key and send to admin to get License Key.",
-          "readOnly": true
-        },
         "fbo-autocomplete.licenseKey": {
           "type": "string",
           "default": "",
@@ -603,6 +597,10 @@
       {
         "command": "fbo-autocomplete.toggleCheckLegacy",
         "title": "FBO: Toggle Check Legacy On/Off"
+      },
+      {
+        "command": "fbo-autocomplete.copyExtensionKey",
+        "title": "FBO: Copy Extension Key"
       },
       {
         "command": "fbo-autocomplete.CheckLegacyMessage",

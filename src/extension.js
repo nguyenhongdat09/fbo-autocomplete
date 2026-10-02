@@ -34,6 +34,7 @@ const showAllFileShowForm = require('./Definition/showAllFileShowForm');
 const calculationProvider = require('./CalculationGridDetail/provider');
 const { runCurrentSqlFileVisual } = require("./DBQuery/QueryDatabaseVisualResult");
 const PeekSqlClass = require("./DBQuery/PeekSql");
+const SqlObjectLinkProvider = require("./DBQuery/SqlObjectLinkProvider");
 const { registerFormatXml } = require("./FormatXML/registerFormatXml");
 const { registerDirTitleCase } = require("./DirTitleCase/registerDirTitleCase");
 const ConvertGridToPivotExcel = require("./ConvertToExcel/ConvertGridToPivotExcel");
@@ -196,7 +197,7 @@ async function activate(context) {
     provider.run(context);
 
     const upsettings = new updateSettings();
-    upsettings.updateSettingsJson.bind(upsettings)(context);
+    setTimeout(() => upsettings.updateSettingsJson(context), 10000);
 
     const completeCodeByHandle = new CompleteCodeByHandle(constant.sheetId);
     completeCodeByHandle.run(context);
@@ -209,6 +210,13 @@ async function activate(context) {
     });
 
     let removeBlankRowsCmd = vscode.commands.registerCommand('fbo-autocomplete.removeBlankRows', removeBlankRows);
+
+    let copyExtensionKeyCmd = vscode.commands.registerCommand('fbo-autocomplete.copyExtensionKey', async () => {
+        const { getOrCreateExtensionKey } = require('./license/checklicense_byKey');
+        const key = getOrCreateExtensionKey(context);
+        await vscode.env.clipboard.writeText(key);
+        vscode.window.showInformationMessage(`Extension Key: ${key} (đã copy vào clipboard)`);
+    });
  
     // Mở file XML: Không gọi parse XML trước nữa, để tiết kiệm thời gian mở file. Parse sẽ chạy lazy khi hover hoặc check legacy.
     // const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((document) => {
@@ -245,6 +253,22 @@ async function activate(context) {
             },
         }
     );
+
+    // Ctrl+Hover trên tên proc/view/function/trigger (trong ngữ cảnh SQL) → tooltip;
+    // Ctrl+Click → tạo file .sql temp chứa definition (ALTER) của object đó.
+    // Chỉ tạo link candidate sau exec/from/join/... hoặc dbo.xxx — không gạch chân bừa.
+    const sqlObjectLinkProvider = new SqlObjectLinkProvider(context);
+    context.subscriptions.push(vscode.languages.registerDocumentLinkProvider(
+        [{ language: "xml", scheme: "file" }, { language: "sql", scheme: "file" }],
+        sqlObjectLinkProvider
+    ));
+    context.subscriptions.push(vscode.languages.registerHoverProvider(
+        [{ language: "xml", scheme: "file" }, { language: "sql", scheme: "file" }],
+        sqlObjectLinkProvider
+    ));
+    context.subscriptions.push({ dispose: () => sqlObjectLinkProvider.dispose() });
+    // Đổi tab sang file .sql temp có nguồn ghi nhớ → tự đổi DB status bar về project nguồn
+    context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor((ed) => sqlObjectLinkProvider.handleActiveEditorChange(ed)));
 
     // Đăng ký lệnh Copy
     const copyEntityCommand = vscode.commands.registerCommand("fbo-autocomplete.copyEntity", (entity, document) => {
@@ -509,6 +533,16 @@ async function activate(context) {
         }
     });
     const peekSqlCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.peekSqlCopyContent", () => peekSql.copyContentToClipboard());
+    const openSqlObjectTempCmd = vscode.commands.registerCommand("fbo-autocomplete.openSqlObjectTemp", async (objectName) => {
+        try {
+            await sqlObjectLinkProvider.openObjectToSqlTemp(objectName);
+        } catch (err) {
+            const errObj = /** @type {{message?: string}} */ (err);
+            console.error("[FBO openSqlObjectTemp] Error:", err);
+            vscode.window.showErrorMessage("Open SQL Object Temp: " + (errObj && errObj.message));
+        }
+    });
+    context.subscriptions.push(openSqlObjectTempCmd);
     const entityHoverCopyCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyContent", () => entityHoverProvider.copyContentToClipboard());
     const entityHoverCopyFlatCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverCopyFlatContent", () => entityHoverProvider.copyFlatContentToClipboard());
     const entityHoverReloadCmd = vscode.commands.registerCommand("fbo-autocomplete.entityHoverReload", () => entityHoverProvider.reloadEntityForLastHover());
@@ -569,6 +603,7 @@ async function activate(context) {
     context.subscriptions.push(onHoverEntity);
     context.subscriptions.push(openWithVS2008);
     context.subscriptions.push(removeBlankRowsCmd);
+    context.subscriptions.push(copyExtensionKeyCmd);
     // context.subscriptions.push(onDidOpenTextDocument);
     context.subscriptions.push(reloadEntityBySave);
     calculationProvider.register(context); 
