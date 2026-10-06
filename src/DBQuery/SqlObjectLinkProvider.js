@@ -12,6 +12,7 @@
 const vscode = require("vscode");
 const sql = require("mssql");
 const fs = require("fs");
+const path = require("path");
 const DBStatusBarManager = require("./dbBar");
 const PeekSql = require("./PeekSql");
 const { createSqlTempFile, resolveSqlTempFolder, isAntigravityIde } = require("../Utils/sqlTempFile");
@@ -36,6 +37,37 @@ const MIN_NAME_LENGTH = 3;
 
 // globalState key: map "đường dẫn file .sql temp (lowercase)" -> thông tin nguồn (project/DB)
 const SOURCE_MAP_KEY = "fbo.sqlTempSourceMap";
+
+// Manifest do fastbusiness-mcp (clone_things) ghi cạnh file .sql temp —
+// process ngoài không ghi được globalState nên dùng file JSON làm kênh chung.
+// { "<filePath.lower()>": {object_name, group_label, db_type, server, database, created_at} }
+const MANIFEST_NAME = ".fbo_sql_temp_source.json";
+// Cache theo mtime — tránh đọc đĩa mỗi lần đổi tab
+const _manifestCache = new Map(); // manifestPath -> { mtimeMs, data }
+
+/**
+ * Fallback đọc nguồn từ manifest cạnh file .sql (fastbusiness-mcp ghi).
+ * @param {string} filePath
+ * @returns {{object_name: string, group_label: string, db_type: string, server: string, database: string, created_at: string} | null}
+ */
+function readManifestSource(filePath) {
+    try {
+        const manifest_path = path.join(path.dirname(String(filePath)), MANIFEST_NAME);
+        if (!fs.existsSync(manifest_path)) return null;
+        const mtime_ms = fs.statSync(manifest_path).mtimeMs;
+        const key = String(filePath).toLowerCase();
+        const cached = _manifestCache.get(manifest_path);
+        if (cached && cached.mtimeMs === mtime_ms) {
+            return cached.data[key] || null;
+        }
+        const data = JSON.parse(fs.readFileSync(manifest_path, "utf8")) || {};
+        _manifestCache.set(manifest_path, { mtimeMs: mtime_ms, data });
+        if (_manifestCache.size > 50) _manifestCache.clear();
+        return data[key] || null;
+    } catch (err) {
+        return null;
+    }
+}
 
 // Token SQL keyword / XML structural hay gặp — bỏ qua để giảm query
 const SKIP_WORDS = new Set([
@@ -380,28 +412,61 @@ class SqlObjectLinkProvider {
      * @param {string} objectName
      */
     async _rememberSource(filePath, objectName) {
-        if (!this._context || !this._context.globalState) return;
         /** @type {any} */
         const dbStatus = DBStatusBarManager.current;
         const info = dbStatus && dbStatus.dbInfoSelected;
-        if (!info) return;
+        if (!info || !info.groupLabel) return;
 
-        const map = Object.assign({}, this._context.globalState.get(SOURCE_MAP_KEY));
-        map[String(filePath).toLowerCase()] = {
+        await SqlObjectLinkProvider.recordSource(this._context, filePath, {
             object_name: objectName,
-            group_label: info.groupLabel || "",
+            group_label: info.groupLabel,
             db_type: info.dbType || "",
             server: (info.connection && info.connection.server) || "",
-            database: (info.connection && info.connection.database) || "",
+            database: (info.connection && info.connection.database) || ""
+        });
+    }
+
+    /**
+     * Ghi nguồn cho file .sql temp: globalState (nội bộ extension) + manifest
+     * .fbo_sql_temp_source.json cạnh file (kênh chung với fastbusiness-mcp —
+     * file tạo bởi ai cũng đọc được, user mở trực tiếp check được).
+     * @param {vscode.ExtensionContext | null | undefined} context
+     * @param {string} filePath
+     * @param {{object_name?: string, group_label: string, db_type?: string, server?: string, database?: string}} source
+     */
+    static async recordSource(context, filePath, source) {
+        if (!filePath || !source || !source.group_label) return;
+        const key = String(filePath).toLowerCase();
+        const entry = {
+            object_name: source.object_name || "",
+            group_label: source.group_label,
+            db_type: source.db_type || "app",
+            server: source.server || "",
+            database: source.database || "",
             created_at: new Date().toISOString()
         };
 
-        // Prune: giữ tối đa 500 entry mới nhất (theo thứ tự ghi)
-        const keys = Object.keys(map);
-        while (keys.length > 500) {
-            delete map[keys.shift()];
+        if (context && context.globalState) {
+            const map = Object.assign({}, context.globalState.get(SOURCE_MAP_KEY));
+            map[key] = entry;
+            // Prune: giữ tối đa 500 entry mới nhất (theo thứ tự ghi)
+            const keys = Object.keys(map);
+            while (keys.length > 500) {
+                delete map[keys.shift()];
+            }
+            await context.globalState.update(SOURCE_MAP_KEY, map);
         }
-        await this._context.globalState.update(SOURCE_MAP_KEY, map);
+
+        try {
+            const manifest_path = path.join(path.dirname(String(filePath)), MANIFEST_NAME);
+            let data = {};
+            if (fs.existsSync(manifest_path)) {
+                data = JSON.parse(fs.readFileSync(manifest_path, "utf8")) || {};
+            }
+            data[key] = entry;
+            fs.writeFileSync(manifest_path, JSON.stringify(data, null, 1), "utf8");
+            _manifestCache.delete(manifest_path);
+        } catch (e) { /* không chặn flow chính */ }
     }
 
     /**
@@ -411,9 +476,14 @@ class SqlObjectLinkProvider {
      * @returns {{object_name: string, group_label: string, db_type: string, server: string, database: string, created_at: string} | null}
      */
     static getSourceInfo(context, filePath) {
-        if (!context || !context.globalState || !filePath) return null;
-        const map = context.globalState.get(SOURCE_MAP_KEY) || {};
-        return map[String(filePath).toLowerCase()] || null;
+        if (!filePath) return null;
+        const key = String(filePath).toLowerCase();
+        if (context && context.globalState) {
+            const map = context.globalState.get(SOURCE_MAP_KEY) || {};
+            if (map[key]) return map[key];
+        }
+        // Fallback: manifest do fastbusiness-mcp ghi cạnh file .sql temp
+        return readManifestSource(filePath);
     }
 
     /**
@@ -424,24 +494,37 @@ class SqlObjectLinkProvider {
      */
     handleActiveEditorChange(editor) {
         try {
-            /** @type {any} */
-            const dbStatus = DBStatusBarManager.current;
-            if (!dbStatus || !editor) return;
-
-            const doc = editor.document;
+            const doc = editor && editor.document;
             if (!doc || doc.uri.scheme !== "file") return;
             if (!(doc.fileName || "").toLowerCase().endsWith(".sql")) return;
 
+            /** @type {any} */
+            const dbStatus = DBStatusBarManager.current;
+            if (!dbStatus) {
+                console.log(`[FBO sqlTemp] ${doc.fileName}: DBStatusBar chưa init → bỏ qua`);
+                return;
+            }
+
             const info = SqlObjectLinkProvider.getSourceInfo(this._context, doc.uri.fsPath);
-            if (!info || !info.group_label) return;
+            if (!info || !info.group_label) {
+                console.log(`[FBO sqlTemp] ${doc.fileName}: không có nguồn ghi nhớ → giữ DB hiện tại`);
+                return;
+            }
 
             const label = `${info.group_label} (${info.db_type === "sys" ? "Sys" : "App"})`;
-            if (dbStatus.selectedDB === label) return;
+            if (dbStatus.selectedDB === label) {
+                console.log(`[FBO sqlTemp] ${doc.fileName}: DB hiện tại đã là '${label}' → không cần đổi`);
+                return;
+            }
             // Label không có trong dbOptions (project chưa load) → bỏ qua để không phá DB hiện tại
-            if (Array.isArray(dbStatus.dbOptions) && dbStatus.dbOptions.length > 0 && !dbStatus.dbOptions.includes(label)) return;
+            if (Array.isArray(dbStatus.dbOptions) && dbStatus.dbOptions.length > 0 && !dbStatus.dbOptions.includes(label)) {
+                console.log(`[FBO sqlTemp] ${doc.fileName}: '${label}' không có trong dbOptions → bỏ qua`);
+                return;
+            }
 
             if (typeof dbStatus.tryAutoUpdateText === "function") {
-                dbStatus.tryAutoUpdateText(label);
+                const switched = dbStatus.tryAutoUpdateText(label);
+                if (!switched) console.log(`[FBO sqlTemp] ${doc.fileName}: DB đang pin → không switch sang '${label}'`);
             } else if (typeof dbStatus.updateText === "function") {
                 dbStatus.updateText(label);
             }

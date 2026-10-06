@@ -1,6 +1,8 @@
 const vscode = require("vscode");
 const fs = require("fs");
 const { createSqlTempFile, createTempFile, resolveSqlTempFolder, isAntigravityIde } = require("../../Utils/sqlTempFile");
+const DBStatusBarManager = require("../../DBQuery/dbBar");
+const SqlObjectLinkProvider = require("../../DBQuery/SqlObjectLinkProvider");
 
 async function newSqlTemp(group) {
     if (!group) return;
@@ -21,6 +23,26 @@ async function newSqlTemp(group) {
 
         const raw_label = group ? (typeof group.label === "string" ? group.label : (group.label?.label || "temp")) : "temp";
         const { filePath: file_path, fileName: file_name } = createSqlTempFile(target_folder, raw_label, '');
+
+        // Ghi nhớ nguồn = group tạo file → đổi tab sang file này tự switch DB về group
+        try {
+            /** @type {any} */
+            const db_status = DBStatusBarManager.current;
+            let db_type = "app";
+            if (db_status && db_status.dbInfoSelected
+                && db_status.dbInfoSelected.groupLabel === raw_label
+                && db_status.dbInfoSelected.dbType) {
+                db_type = db_status.dbInfoSelected.dbType;
+            }
+            const analyst = db_status && db_status.listAnalystWebConfig && db_status.listAnalystWebConfig.get(raw_label);
+            const conn = analyst && analyst.dbConnections && analyst.dbConnections[db_type];
+            await SqlObjectLinkProvider.recordSource(this.context, file_path, {
+                group_label: raw_label,
+                db_type: db_type,
+                server: (conn && conn.server) || "",
+                database: (conn && conn.database) || ""
+            });
+        } catch (e) { /* không chặn tạo file */ }
 
         const document = await vscode.workspace.openTextDocument(vscode.Uri.file(file_path));
         await vscode.window.showTextDocument(document);
