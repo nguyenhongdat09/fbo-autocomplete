@@ -1,4 +1,5 @@
 // File: Definition/providers/ReportTemplateCommandProvider.js
+// @ts-nocheck
 
 const vscode = require('vscode');
 const { exec } = require('child_process');
@@ -120,7 +121,7 @@ class ReportTemplateCommandProvider {
 
         const fileType = (reportInfo.commandArgument || 'pdf').toLowerCase();
         const icon = fileType === 'excel' ? '📊' : '📄';
-        const appName = fileType === 'excel' ? 'Excel' : 'Crystal Reports';
+        const appName = fileType === 'excel' ? 'Excel' : 'FastReport/Crystal Reports';
 
         this.statusBarItem.text = `${icon} Click để mở ${reportInfo.fileName} bằng ${appName}`;
         this.statusBarItem.tooltip = 'Nhấn Ctrl+Shift+O hoặc click vào đây';
@@ -207,11 +208,9 @@ class ReportTemplateCommandProvider {
 
         // Show error
         const expectedType = (commandArgument || 'pdf').toLowerCase();
-        const expectedFolder = expectedType === 'excel' ? 'Excel' : 'Rpt';
-        const expectedExt = expectedType === 'excel' ? '.xlsx/.xls' : '.rpt';
 
         vscode.window.showErrorMessage(
-            `Không tìm thấy template: ${fileName}${expectedExt} trong folder Templates/${expectedFolder}`
+            `Không tìm thấy template: ${fileName}${PathResolver.getReportSearchDescription(expectedType)}`
         );
     }
 
@@ -238,7 +237,7 @@ class ReportTemplateCommandProvider {
                 return;
             }
 
-            const fileTypeDisplay = fileType === 'excel' ? 'Excel' : 'Crystal Reports';
+            const fileTypeDisplay = PathResolver.getTemplateAppName(filePath, fileType);
             vscode.window.setStatusBarMessage(
                 `✓ Đã mở ${fileTypeDisplay}: ${path.basename(filePath)}`,
                 3000
@@ -253,7 +252,7 @@ class ReportTemplateCommandProvider {
         const items = templates.map(t => ({
             label: `${t.type}: ${path.basename(t.path)}`,
             description: t.path,
-            detail: `Mở bằng ${t.type === 'PDF' ? 'Crystal Reports' : 'Excel'}`,
+            detail: `Mở bằng ${t.type}`,
             path: t.path,
             type: t.type.toLowerCase()
         }));
@@ -335,11 +334,9 @@ class ReportTemplateCommandProvider {
 
         // Show error
         const expectedType = (commandArgument || 'pdf').toLowerCase();
-        const expectedFolder = expectedType === 'excel' ? 'Excel' : 'Rpt';
-        const expectedExt = expectedType === 'excel' ? '.xlsx/.xls' : '.rpt';
 
         vscode.window.showErrorMessage(
-            `Không tìm thấy template: ${fileName}${expectedExt} trong folder Templates/${expectedFolder}`
+            `Không tìm thấy template: ${fileName}${PathResolver.getReportSearchDescription(expectedType)}`
         );
     }
 
@@ -350,7 +347,7 @@ class ReportTemplateCommandProvider {
         const items = templates.map(t => ({
             label: `${t.type}: ${path.basename(t.path)}`,
             description: t.path,
-            detail: `Mở bằng ${t.type === 'PDF' ? 'Crystal Reports' : 'Excel'}`,
+            detail: `Mở bằng ${t.type}`,
             path: t.path,
             type: t.type.toLowerCase()
         }));

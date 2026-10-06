@@ -1,4 +1,5 @@
 // File: Definition/providers/ReportTemplateDefinitionProvider.js
+// @ts-nocheck
 
 const vscode = require('vscode');
 const { exec } = require('child_process');
@@ -11,7 +12,10 @@ const PathResolver = require('../utils/PathResolver');
  * 
  * Navigation logic:
  * - reportFile="DCTran_01" + commandArgument="Pdf" 
- *   => Open with Crystal Reports: .../Controllers/Templates/Rpt/DCTran_01.rpt
+ *   => Open FastReport: .../Controllers/Templates/Frx/External/DCTran_01.frx
+ *      → .../Templates/Frx/DCTran_01.frx
+ *      → .../Templates/Rpt/External/DCTran_01.rpt
+ *      → .../Templates/Rpt/DCTran_01.rpt (Crystal Reports)
  * 
  * - templateFile="DCTran_01BI" + commandArgument="Excel"
  *   => Open with Excel: .../Controllers/Templates/Excel/DCTran_01BI.xlsx
@@ -87,11 +91,9 @@ class ReportTemplateDefinitionProvider {
 
         // Show helpful error message
         const expectedType = (commandArgument || 'pdf').toLowerCase();
-        const expectedFolder = expectedType === 'excel' ? 'Excel' : 'Rpt';
-        const expectedExt = expectedType === 'excel' ? '.xlsx/.xls' : '.rpt';
 
         vscode.window.showErrorMessage(
-            `Không tìm thấy template: ${fileName}${expectedExt} trong folder Templates/${expectedFolder}`
+            `Không tìm thấy template: ${fileName}${PathResolver.getReportSearchDescription(expectedType)}`
         );
     }
 
@@ -123,7 +125,7 @@ class ReportTemplateDefinitionProvider {
             }
 
             // Show success message in status bar
-            const fileTypeDisplay = fileType === 'excel' ? 'Excel' : 'Crystal Reports';
+            const fileTypeDisplay = PathResolver.getTemplateAppName(filePath, fileType);
             vscode.window.setStatusBarMessage(
                 `✓ Đã mở ${fileTypeDisplay}: ${require('path').basename(filePath)}`,
                 3000
@@ -138,7 +140,7 @@ class ReportTemplateDefinitionProvider {
         const items = templates.map(t => ({
             label: `${t.type}: ${require('path').basename(t.path)}`,
             description: t.path,
-            detail: `Mở bằng ${t.type === 'PDF' ? 'Crystal Reports' : 'Excel'}`,
+            detail: `Mở bằng ${t.type}`,
             path: t.path,
             type: t.type.toLowerCase()
         }));

@@ -29,7 +29,7 @@ class ReportTemplateHoverProvider {
         }
 
         const cmdArg = form.commandArgument || "pdf";
-        const appName = String(cmdArg).toLowerCase() === "excel" ? "Excel" : "Crystal Reports";
+        const appName = String(cmdArg).toLowerCase() === "excel" ? "Excel" : "Frx/External → Frx → Rpt/External → Rpt";
         const attrLabel = form.fileType === "templateFile" ? "templateFile" : "reportFile";
 
         const payload = encodeURIComponent(JSON.stringify([
